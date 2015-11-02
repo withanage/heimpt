@@ -12,5 +12,5 @@ The platform consists of three modules: (1) meTypeset, (2) a WYSIWYG editor,and 
 (3) XML documents are converted to desired output formats that can then be offered to users, including HTML, PDF, and ePub. This step is accomplished with the help of an open source tool, Apache FOP (Formatting Objects Processor).
 
 #Software Development
-Dulip Withanage,  Heidelberg  University Library
-Katharina Wäschle, Heidelberg  University Library 
+* Dulip Withanage,  Heidelberg  University Library
+* Katharina Wäschle, Heidelberg  University Library 
