@@ -1,3 +1,9 @@
 [submodule "static/tools/meTypeset"]
 	path = static/tools/meTypeset
 	url = https://github.com/UB-Heidelberg/meTypeset.git
+[submodule "static/tools/xml2pdf-py"]
+	path = static/tools/xml2pdf-py
+	url = https://github.com/kadowa/xml2pdf-py
+[submodule "static/tools/xml2pdf-php"]
+	path = static/tools/xml2pdf-php
+	url = https://github.com/kadowa/xml2pdf-php
