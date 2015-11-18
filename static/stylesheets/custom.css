@@ -43,7 +43,8 @@ div.front, div.footer { }
 	margin-bottom: 5em;
 	line-height: 1.5;
 	text-align:justify;
-	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif }
+	font-family: "DejaVu Sans Condensed", sans 
+}
 
 div.metadata { font-family: sans-serif }
 div.centered { text-align: center }
@@ -127,7 +128,7 @@ h1, h2, h3, h4, h5, h6 {
    display: block;
    margin-top: 0em;
    margin-bottom: 1em;
-   font-family: arial, sans-serif;
+   font-family: "DejaVu Sans ExtraLight", arial, sans-serif;
    font-weight: normal;
    color: black;
    text-align: center;
@@ -143,8 +144,6 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 0.5em;
   margin-right: 1em;
   font-size: 140% }
-  
-
 
 div.section, div.back-section {
   margin-top: 1em; margin-bottom: 0.5em }
