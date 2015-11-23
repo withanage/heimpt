@@ -10,6 +10,8 @@ The platform consists of three modules: (1) meTypeset, (2) a WYSIWYG editor,and 
  (2)  The WYSIWYG editor, provides an interactive interface to confirm the information detected by meTypeset and to generate a suitable layout for the desired output format. The editor is written in both HTML and JavaScript, and handles data in XML format, so that each monograph is efficiently standardized and can be re-used. The editor is designed in a WYSIWYG (what you see is what you get) format that enables users to work with both text and images as they envision them.
 
 (3) XML documents are converted to desired output formats that can then be offered to users, including HTML, PDF, and ePub.
+#Documentation
+ * [Wiki](http://github.com/withanage/mpt/wiki)
 
 #Software Development
 * Dulip Withanage,  Heidelberg  University Library
