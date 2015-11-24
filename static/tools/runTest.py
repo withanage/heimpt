@@ -91,7 +91,7 @@ class Pipeline:
 		os.system(cmd)
 
 	def prince(self, path, css_fn=""):
-		cmd = " ".join([path, self.html_fn, "-o", self.pdf_path + self.test_name + "." + "prince" + ".pdf"])
+		cmd = " ".join([path, self.html_fn, "-s", css_fn, "-o", self.pdf_path + self.test_name + "." + "prince" + ".pdf"])
 		logging.info(cmd)
 		os.system(cmd)
 
