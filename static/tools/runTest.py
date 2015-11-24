@@ -23,7 +23,7 @@ class Pipeline:
 		self.fo_fn = os.path.join(self.base_dir, "static", "tests", self.test_collection, "src", "fo", self.test_name+".fo")
 		self.html_fn = os.path.join(self.base_dir, "static", "tests", self.test_collection, "src", "html", self.test_name+".html")
 		
-		self.pdf_path = os.path.join(self.base_dir, "static", "tests", self.test_collection, "pdf")
+		self.pdf_path = os.path.join(self.base_dir, "static", "tests", self.test_collection, "pdf", "")
 
 	def doc2xml(self):
 		logging.info("DOCX -> XML")
@@ -77,18 +77,33 @@ class Pipeline:
 		logging.info("Writing to %s"%self.html_fn)
 		html.write(self.html_fn, encoding="utf-8")
 		
+# 	def pdf(self, tool, input_format="FO", css="", *args):
+# 		if input_format == "FO":
+# 			inp = self.fo_fn
+# 		elif input_format == "HTML":
+# 			inp = self.html_fn
+# 
+# 		out = self.pdf_path + test_name + "." + tool + ".pdf"
 
-	def mPDF(self, css_fn=""):
-		pass
+	def mpdf(self, path, css_fn=""):
+		cmd = " ".join(["php", path, "--css", css_fn, "--html", self.html_fn, "-o", self.pdf_path + self.test_name + "." + "mpdf" + ".pdf"])
+		logging.info(cmd)
+		os.system(cmd)
 
-	def Prince(self, css_fn=""):
-		pass
+	def prince(self, path, css_fn=""):
+		cmd = " ".join([path, self.html_fn, "-o", self.pdf_path + self.test_name + "." + "prince" + ".pdf"])
+		logging.info(cmd)
+		os.system(cmd)
 
-	def FOP():
-		pass
+	def fop(self, path):
+		cmd = " ".join([path, self.fo_fn, self.pdf_path + self.test_name + "." + "fop" + ".pdf"])
+		logging.info(cmd)
+		os.system(cmd)
 
-	def AntennaHouseFormatter(self, css_fn=""):
-		pass
+	def ahf(self, path):
+		cmd = " ".join([path, "-d", self.fo_fn, "-o", self.pdf_path + self.test_name + "." + "ahf" + ".pdf"])
+		logging.info(cmd)
+		os.system(cmd)
 
 def usage():
 	sys.stderr.write("./test.py -c config\n")
@@ -125,10 +140,14 @@ def main():
 	xslt_fo=cfg.get("stylesheets", "xslt_fo")
 
 	P.xml2fo(xslt_fo)
-
 	P.xml2html(xslt_html)
 	
 	css=cfg.get("stylesheets", "css")
+	
+	P.mpdf(cfg.get("tools", "mpdf"), css)
+	P.prince(cfg.get("tools", "prince"), css)
+	P.fop(cfg.get("tools", "fop"))
+	P.ahf(cfg.get("tools", "ahf"))
 
 	
 
