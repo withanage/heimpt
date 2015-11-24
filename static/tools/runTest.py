@@ -3,9 +3,6 @@
 import sys, os, logging, ConfigParser, getopt
 from lxml import etree
 
-sys.path.insert(0, os.path.realpath('./tools/meTypeset/bin'))
-from meTypeset import MeTypeset
-
 logging.basicConfig(level=logging.INFO)
 
 class Pipeline:
