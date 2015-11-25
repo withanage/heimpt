@@ -74,31 +74,21 @@ class Pipeline:
 		logging.info("Writing to %s"%self.html_fn)
 		html.write(self.html_fn, encoding="utf-8")
 		
-# 	def pdf(self, tool, input_format="FO", css="", *args):
-# 		if input_format == "FO":
-# 			inp = self.fo_fn
-# 		elif input_format == "HTML":
-# 			inp = self.html_fn
-# 
-# 		out = self.pdf_path + test_name + "." + tool + ".pdf"
+ 	def pdf(self, tool, path, css_fn):
+ 		out = self.pdf_path + self.test_name + "." + tool + ".pdf"
+ 		
+ 		if tool == "mpdf":
+ 			cmd = " ".join(["php", path, "--css", css_fn, "--html", self.html_fn, "-o", self.pdf_path + self.test_name + "." + "mpdf" + ".pdf"])
+ 		elif tool == "prince":
+ 			cmd = " ".join([path, self.html_fn, "-s", css_fn, "-o", self.pdf_path + self.test_name + "." + "prince" + ".pdf"])
+ 		elif tool == "fop":
+ 			cmd = " ".join([path, self.fo_fn, self.pdf_path + self.test_name + "." + "fop" + ".pdf"])
+ 		elif tool == "ahf":
+ 		 	cmd = " ".join([path, "-d", self.fo_fn, "-o", self.pdf_path + self.test_name + "." + "ahf" + ".pdf"])
+ 		else:
+ 			sys.stderr.write("Unknown tool %s\n Tool options are 'mpdf', 'prince', 'fop' and 'ahf'.\n"%tool)
+ 			sys.exit()
 
-	def mpdf(self, path, css_fn=""):
-		cmd = " ".join(["php", path, "--css", css_fn, "--html", self.html_fn, "-o", self.pdf_path + self.test_name + "." + "mpdf" + ".pdf"])
-		logging.info(cmd)
-		os.system(cmd)
-
-	def prince(self, path, css_fn=""):
-		cmd = " ".join([path, self.html_fn, "-s", css_fn, "-o", self.pdf_path + self.test_name + "." + "prince" + ".pdf"])
-		logging.info(cmd)
-		os.system(cmd)
-
-	def fop(self, path):
-		cmd = " ".join([path, self.fo_fn, self.pdf_path + self.test_name + "." + "fop" + ".pdf"])
-		logging.info(cmd)
-		os.system(cmd)
-
-	def ahf(self, path):
-		cmd = " ".join([path, "-d", self.fo_fn, "-o", self.pdf_path + self.test_name + "." + "ahf" + ".pdf"])
 		logging.info(cmd)
 		os.system(cmd)
 
@@ -106,6 +96,7 @@ def usage():
 	sys.stderr.write("./test.py -c config\n")
 
 def main():
+	# Process config and command line options
 	options, rest = getopt.getopt(sys.argv[1:], "c:", ["config="])
 
 	cfg_fn = ""
@@ -129,22 +120,22 @@ def main():
 	base_dir = cfg.get("general", "base_dir")
 	test_collection = cfg.get("general", "test_collection")
 	test_name = cfg.get("general", "test_name")
-
-	P = Pipeline(base_dir, test_collection, test_name)
-	P.doc2xml()
-
 	xslt_html=cfg.get("stylesheets", "xslt_html")
 	xslt_fo=cfg.get("stylesheets", "xslt_fo")
+	css=cfg.get("stylesheets", "css")
+	
+	P = Pipeline(base_dir, test_collection, test_name)
+	P.doc2xml()
 
 	P.xml2fo(xslt_fo)
 	P.xml2html(xslt_html)
 	
-	css=cfg.get("stylesheets", "css")
-	
-	P.mpdf(cfg.get("tools", "mpdf"), css)
-	P.prince(cfg.get("tools", "prince"), css)
-	P.fop(cfg.get("tools", "fop"))
-	P.ahf(cfg.get("tools", "ahf"))
+	for tool, path in cfg.items("tools"):
+		P.pdf(tool, path, css)
+#	P.mpdf(cfg.get("tools", "mpdf"), css)
+#	P.prince(cfg.get("tools", "prince"), css)
+#	P.fop(cfg.get("tools", "fop"), css)
+#	P.ahf(cfg.get("tools", "ahf"), css)
 
 	
 
