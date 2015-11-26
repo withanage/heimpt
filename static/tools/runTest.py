@@ -21,6 +21,14 @@ class Pipeline:
 		self.html_fn = os.path.join(self.base_dir, "static", "tests", self.test_collection, "src", "html", self.test_name+".html")
 		
 		self.pdf_path = os.path.join(self.base_dir, "static", "tests", self.test_collection, "pdf", "")
+		
+	def validate_paths(self):
+		if not os.path.isdir(self.doc_path):
+			return False
+		if not os.path.isdir(self.pdf_path):
+			return False
+		
+		return True
 
 	def doc2xml(self):
 		logging.info("DOCX -> XML")
@@ -112,11 +120,12 @@ def main():
 		exit(1)
 
 	if not(os.path.isfile(cfg_fn)):
-		sys.stderr.write("File %s not found"%cfg_fn)
+		sys.stderr.write("Config file %s not found"%cfg_fn)
 		exit(1)
 
 	cfg = ConfigParser.ConfigParser()
 	cfg.read(cfg_fn)
+	
 	base_dir = cfg.get("general", "base_dir")
 	test_collection = cfg.get("general", "test_collection")
 	test_name = cfg.get("general", "test_name")
@@ -124,20 +133,42 @@ def main():
 	xslt_fo=cfg.get("stylesheets", "xslt_fo")
 	css=cfg.get("stylesheets", "css")
 	
+	start=cfg.get("pipeline","start")
+	if not start in ["1", "2", "3"]:
+		logging.error("Invalid value %s for start. Allowed values are 1, 2 or 3."%start)
+		exit(1)
+	
+	# Run pipeline
 	P = Pipeline(base_dir, test_collection, test_name)
-	P.doc2xml()
-
-	P.xml2fo(xslt_fo)
-	P.xml2html(xslt_html)
 	
-	for tool, path in cfg.items("tools"):
-		P.pdf(tool, path, css)
-#	P.mpdf(cfg.get("tools", "mpdf"), css)
-#	P.prince(cfg.get("tools", "prince"), css)
-#	P.fop(cfg.get("tools", "fop"), css)
-#	P.ahf(cfg.get("tools", "ahf"), css)
-
+	if P.validate_paths() == False:
+		logging.error("Invalid file paths specified in %s"%cfg_fn)
+		exit(1)
 	
+	if start == "1":
+		if os.path.isfile(P.doc_fn):
+			# Step 1: DOCX to XML
+			P.doc2xml()
+		else:
+			logging.error("DOCX file %s not found"%P.doc_fn)
+			exit(1)
+
+	if start == "1" or start == "2":
+		if os.path.isfile(P.xml_fn):
+			# Step 2: XML to FO/HTML
+			P.xml2fo(xslt_fo)
+			P.xml2html(xslt_html)
+		else:
+			logging.error("XML file %s not found"%P.doc_fn)
+			exit(1)
+
+	if os.path.isfile(P.fo_fn) and os.path.isfile(P.html_fn):
+		# Step 3: PDF rendering
+		for tool, path in cfg.items("tools"):
+			P.pdf(tool, path, css)
+	else:
+		logging.error("HTML %s and FO %s not found"%(P.html_fn, P.fo_fn))
+		exit(1)
 
 if __name__ == "__main__":
 	main()
