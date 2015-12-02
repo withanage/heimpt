@@ -55,6 +55,10 @@ class Pipeline:
 		xsl = etree.parse(xsl_fn)
 		transformer = etree.XSLT(xsl)
 		
+		# |  - extensions: a dict mapping ``(namespace, name)`` pairs to
+		#extension functions or extension elements
+		#(http://www.antennahouse.com/names/XSL/Extensions)
+		
 		# Transform XML
 		xml = etree.parse(self.xml_fn)
 		fo = transformer(xml)
@@ -162,13 +166,19 @@ def main():
 			logging.error("XML file %s not found"%P.doc_fn)
 			exit(1)
 
-	if os.path.isfile(P.fo_fn) and os.path.isfile(P.html_fn):
-		# Step 3: PDF rendering
-		for tool, path in cfg.items("tools"):
+	if os.path.isfile(P.fo_fn):
+		# Step 3: FO to PDF
+		for tool, path in cfg.items("fo_tools"):
 			P.pdf(tool, path, css)
 	else:
-		logging.error("HTML %s and FO %s not found"%(P.html_fn, P.fo_fn))
-		exit(1)
+		logging.error("FO file %s not found"%(P.fo_fn))
+		
+	if os.path.isfile(P.html_fn):
+		# Step 3: HTML to PDF
+		for tool, path in cfg.items("html_tools"):
+			P.pdf(tool, path, css)
+	else:
+		logging.error("HTML file %s not found"%(P.html_fn))
 
 if __name__ == "__main__":
 	main()
