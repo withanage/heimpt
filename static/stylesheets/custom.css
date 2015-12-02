@@ -243,5 +243,32 @@ div.def-list div.def-list-head {
 a       { text-decoration: none }
 a:hover { text-decoration: underline }
 
+/* footnotes */
+.fn {
+  float: footnote;
+}
+
+.fn {
+  counter-increment: footnote;
+}
+
+.fn::footnote-call {
+  content: counter(footnote);
+  font-size: 9pt;
+  vertical-align: super;
+  line-height: none;
+}
+
+.fn::footnote-marker {
+  font-weight: bold;
+}
+
+@page {
+  @footnotes {
+    border-top: 0.6pt solid black;
+    padding-top: 8pt;
+  }
+}
+
 /* ---------------- End ------------------------------ */
 
