@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format"
+    xmlns:axf="http://www.antennahouse.com/names/XSL/Extensions">
+    <fo:layout-master-set>
+        <fo:simple-page-master master-name="cover" page-height="11in" page-width="8.5in" margin-top="0.5in" margin-bottom="1.0in" margin-left="1.25in" margin-right="1.25in">
+            <fo:region-body region-name="body" margin-top="24pt" margin-bottom="0in" margin-left="0in" margin-right="0in"/>
+        </fo:simple-page-master>
+        <fo:simple-page-master master-name="blank" page-height="11in" page-width="8.5in" margin-top="0.5in" margin-bottom="1.0in" margin-left="1.25in" margin-right="1.25in">
+            <fo:region-body region-name="body" margin-top="24pt" margin-bottom="0in" margin-left="0in" margin-right="0in"/>
+        </fo:simple-page-master>
+        <fo:simple-page-master master-name="first" page-height="11in" page-width="8.5in" margin-top="0.5in" margin-bottom="1in" margin-left="1.25in" margin-right="1.25in">
+            <fo:region-body region-name="body" margin-top="24pt" margin-bottom="0in" margin-left="0in" margin-right="0in"/>
+        </fo:simple-page-master>
+        <fo:simple-page-master master-name="verso" page-height="11in" page-width="8.5in" margin-top="0.5in" margin-bottom="1.0in" margin-left="1.25in" margin-right="1.25in">
+            <fo:region-body region-name="body" margin-top="36pt" margin-bottom="0in" margin-left="0in" margin-right="0in"/>
+            <fo:region-before region-name="verso-header" display-align="before" extent="36pt"/>
+        </fo:simple-page-master>
+        <fo:simple-page-master master-name="recto" page-height="11in" page-width="8.5in" margin-top="0.5in" margin-bottom="1.0in" margin-left="1.25in" margin-right="1.25in">
+            <fo:region-body region-name="body" margin-top="36pt" margin-bottom="0in" margin-left="0in" margin-right="0in"/>
+            <fo:region-before region-name="recto-header" extent="36pt" display-align="before"/>
+        </fo:simple-page-master>
+        <fo:page-sequence-master master-name="cover-sequence">
+            <fo:repeatable-page-master-alternatives>
+                <fo:conditional-page-master-reference master-reference="cover"/>
+                <fo:conditional-page-master-reference master-reference="blank" blank-or-not-blank="blank"/>
+            </fo:repeatable-page-master-alternatives></fo:page-sequence-master>
+        <fo:page-sequence-master master-name="content-sequence">
+            <fo:single-page-master-reference master-reference="first"/>
+            <fo:repeatable-page-master-alternatives>
+                <fo:conditional-page-master-reference odd-or-even="even" master-reference="verso"/>
+                <fo:conditional-page-master-reference odd-or-even="odd" master-reference="recto"/>
+            </fo:repeatable-page-master-alternatives>
+        </fo:page-sequence-master>
+        <fo:page-sequence-master master-name="diagnostics-sequence">
+            <fo:repeatable-page-master-alternatives><fo:conditional-page-master-reference odd-or-even="odd" master-reference="recto"/>
+                <fo:conditional-page-master-reference odd-or-even="even" master-reference="verso"/>
+            </fo:repeatable-page-master-alternatives>
+        </fo:page-sequence-master>
+    </fo:layout-master-set>
+
+    <fo:bookmark-tree>
+        <fo:bookmark internal-destination="h1" starting-state="show">
+            <fo:bookmark-title>H1</fo:bookmark-title>
+            <fo:bookmark internal-destination="h2">
+                <fo:bookmark-title>H2</fo:bookmark-title>
+                <fo:bookmark internal-destination="h3">
+                    <fo:bookmark-title>H3</fo:bookmark-title>
+                </fo:bookmark>
+            </fo:bookmark>
+        </fo:bookmark>
+    </fo:bookmark-tree>
+
+    <fo:page-sequence master-reference="content-sequence">
+
+       <fo:flow flow-name="body">
+        <fo:block id="h1">
+            <fo:block font-size="16pt" line-height="18pt" start-indent="0pc" font-family="sans-serif" font-weight="bold" keep-with-next.within-page="always">Headline 1</fo:block>
+        </fo:block>
+        <fo:block id="h2">
+            <fo:block space-before="12pt" font-size="14pt" line-height="16pt" start-indent="0pc" font-family="sans-serif" font-weight="bold" keep-with-next.within-page="always">Headline 2</fo:block>
+        </fo:block>
+        <fo:block id="h3">
+            <fo:block space-before="12pt" font-size="12pt" line-height="14pt" start-indent="0pc" font-family="sans-serif" font-weight="bold" keep-with-next.within-page="always">Headline 3</fo:block>
+        </fo:block>
+     </fo:flow>
+    </fo:page-sequence>
+</fo:root>
