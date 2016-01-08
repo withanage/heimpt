@@ -16,3 +16,4 @@ The platform consists of three modules: (1) meTypeset, (2) a WYSIWYG editor,and 
 #Software Development
 * Dulip Withanage,  Heidelberg  University Library
 * Katharina Wäschle, Heidelberg  University Library 
+* Frank Krabbes , Heidelberg  University Library 
