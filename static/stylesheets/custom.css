@@ -22,12 +22,16 @@ merchantability or fitness for any particular purpose.
 
 
 /* --------------- Page setup ------------------------ */
-
+@page {
+    margin: 1.5cm;
+    marks: crop;
+}
 /* page and text defaults */
 
-body { margin-left: 5%;
-     margin-right: 5%;
-     background-color: #ffffff }
+body { 
+
+     background-color: #ffffff 
+}
 
 
 div > *:first-child { margin-top:0em }
@@ -40,20 +44,33 @@ p.abstract {
     font-size: 60%;
 }
 
+p.abstract::before {
+    content: 'Abstract ';
+    font-weight: bold;
+    font-family: serif;
+}
+
+ /* h2::before { content: 'Kapitel ' counter(chapter); }
+h2 { string-set: header content(before) ' : ' content(text); }
+h1::after { content: '.'; } */
+
 div.double { 
     margin-top: 0.5em;
-    column-count: 2; 
+    column-count: 2;
+    column-gap: auto;
     page-break-inside: auto;
-    column-fill: auto;
+    column-fill: balanced;
+    column-width: 8cm;
+}
+
+img {
+    align: center;
+    width: 6cm;
 }
 
 div.front, div.footer { }
 
 .back, .body { 
-	margin-left: 2em;
-	margin-right: 2em;
-	margin-top: 2em;
-	margin-bottom: 2em;
 	line-height: 1.3;
 	text-align:justify;
 	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif }
@@ -146,14 +163,26 @@ h1, h2, h3, h4, h5, h6 {
    text-align: center;
    page-break-after: avoid;
   }
+  
 
-footnote {
-  page-break-inside: avoid;
-}
+ /* h2::before { content: 'Kapitel ' counter(chapter); }
+h2 { string-set: header content(before) ' : ' content(text); }
+h1::after { content: '.'; } */
+
+ /* Footnotes */
+
 
 @page:right{
   @bottom-right {
     content: counter(page);
+    font-size: 8pt;
+  }
+}
+
+@page:left{
+  @bottom-left {
+    content: counter(page);
+    font-size: 10pt;
   }
 }
 
@@ -259,11 +288,10 @@ a:hover { text-decoration: underline }
 
 /* footnotes */
 .fn {
-  float: footnote;
-}
-
-.fn {
+  float: prince-column-footnote;
   counter-increment: footnote;
+  page-break-inside: auto;
+  font-size: 70%;
 }
 
 .fn::footnote-call {
@@ -274,12 +302,11 @@ a:hover { text-decoration: underline }
 }
 
 .fn::footnote-marker {
-  font-weight: bold;
+ /* font-weight: bold; */
 }
 
 @page {
-  @footnotes {
-    border-top: 0.6pt solid black;
+  @footnotes { 
     padding-top: 8pt;
   }
 }
