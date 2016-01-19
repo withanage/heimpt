@@ -64,8 +64,10 @@ div.double {
 }
 
 img {
-    align: center;
-    width: 6cm;
+    width: 100%;
+    float: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 div.front, div.footer { }
@@ -287,11 +289,20 @@ a       { text-decoration: none }
 a:hover { text-decoration: underline }
 
 /* footnotes */
-.fn {
+.fn-column {
   float: prince-column-footnote;
   counter-increment: footnote;
   page-break-inside: auto;
   font-size: 70%;
+  footnote-style-position: inside;
+}
+
+.fn {
+  float: footnote;
+  counter-increment: footnote;
+  page-break-inside: auto;
+  font-size: 70%;
+  footnote-style-position: inside;
 }
 
 .fn::footnote-call {
