@@ -134,3 +134,45 @@ h2.chapterTitle:before {
   margin-bottom: 5px;
   text-indent: 25px;
 }
+
+h2.column {
+  column-span: 1;
+}
+
+p.cn, p.jp{
+  font-family: Droid Sans Fallback;
+}
+
+p.jp {
+  writing-mode: vertical-lr;
+}
+
+p.ar {
+  text-align: right;
+}
+
+.multicolumn {
+  columns: 2;
+  column-fill: auto;
+}
+
+.fancy1 {
+  font-family: Cheddar Jack;
+  font-size: 24pt;
+  color: rgb(123,34,53);
+}
+
+.fancy2 {
+  font-family: eufm10;
+  font-size: 24pt;
+}
+
+.fancy3 {
+  font-family: LittleBird;
+  font-size: 24pt;
+}
+
+.fancy4 {
+  font-family: Hanging Letters;
+  font-size: 24pt;
+}
