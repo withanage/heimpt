@@ -11,11 +11,12 @@ article-meta {
   display: none;
 }
 
-body { 
+sec sec { 
   display: block;
   text-align: justify;
   line-height: 130%;
   font-size: 13pt;
+  columns: 2;
 }
 
 p { 
@@ -26,6 +27,7 @@ p {
 }
 
 footnote {
+/*  footnote-position: inside; */
   float: footnote;
   counter-increment: footnote;
   font-size: 80%;
@@ -35,9 +37,10 @@ body > sec > title {
   display: block;
   font-family: "FreeSerifBold", Georgia, sans-serif;
   font-size: 16pt;
-  margin: 12pt 0 0; 
+  margin: 16pt 0 14pt; 
   padding: 0;
   text-align: center;
+  column-span: 2;
 }
 
 body > sec > sec > title {
