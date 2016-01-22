@@ -1,0 +1,100 @@
+@page {
+  marks: crop;
+  size: 155mm 235mm;
+  @footnotes {
+    margin-top: 14pt;
+  }
+}
+
+@page :first {
+  margin-top: 5cm;
+  @top-right {
+    content: "";
+  }
+  @top-left {
+    content: "";
+  }
+}
+
+@page :left {
+  margin-left: 1.2cm;
+  margin-right: 2cm;
+  margin-top margin-bottom: 2.5cm;
+  @top-left {
+    content: counter(page) " – " string(chaptitle);
+    font-size: 10pt;
+  }
+}
+
+@page :right {
+  margin-right: 2cm;
+  margin-left: 1.2cm;
+  margin-top margin-bottom: 2.5cm;
+  @top-right {
+    content: counter(page) " – " string(sectitle);
+    font-size: 10pt;
+  }
+}
+
+journal-meta {
+  display: none;
+}
+
+article-meta {
+  display: none;
+}
+
+body {
+  font-family: "Amiri", serif;
+  font-size: 12pt;
+}
+
+sec sec { 
+  display: block;
+  text-align: justify;
+  line-height: 120%;
+  font-size: 12pt;
+}
+
+p { 
+  display: block;
+  margin: 0;
+  padding: 0;
+/*  text-indent: 10pt; */
+}
+
+footnote {
+  footnote-style-position: inside;
+  float: footnote;
+  counter-increment: footnote;
+  font-size: 80%;
+  line-height: 100%;
+  margin-bottom: 5pt;
+}
+
+body > sec > title {
+  display: block;
+  font-family: "Liberation Sans", sans-serif;
+  font-size: 14pt;
+  margin: 16pt 0 14pt; 
+  padding: 0;
+  text-align: center;
+  string-set: chaptitle content();
+}
+
+body > sec > sec > title {
+  display: block;
+  font-family: "Liberation Sans", sans-serif;
+  text-align: left;
+  margin: 10pt 0 14pt;
+  string-set: sectitle content();
+}
+
+italic {
+  font-style: italic;
+}
+
+boxed-text {
+  display: block;
+  margin: 15pt;
+}
