@@ -56,11 +56,18 @@
   <body>
     <sec>
       <title>Part I: Getting Acquainted</title>
-      <!--fig position="float" orientation="portrait">
-        <caption>
-          <title>Figure 1. Gazing onto Shanghai. Photo by M. Sander.</title>
-        </caption>
-      </fig-->
+      <fig-group>
+        <fig id="fig1" position="float">
+          
+          <label>Figure 1. Gazing onto Shanghai. Photo by M. Sander</label>
+          
+          <graphic xlink:href="48-75-269-1-2-20160127.jpg" />
+          
+        </fig>
+       
+        
+      </fig-group>
+   
       <p>This ethnography explores how expatriate teenagers in Shanghai experience high international mobility. It examines their moves into and out of the city with their families, their ways of life, and the ways they make sense of the many moves and places in their lives. This first part introduces who these expatriate teenagers are. I begin by summarizing the general situation and size of the expatriate communities in Shanghai and provide illustrative examples of the daily routines of international school life for expatriate youths. I then present two peer groups and their activities, before I zoom in on the individual experiences and viewpoints of four expatriate teenagers. Finally, I explain my methodological approaches and challenges accessing the social world of expatriate youths, as well as my overall position in the field.</p>
     </sec>
     <sec>
