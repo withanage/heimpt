@@ -31,17 +31,16 @@ for body, back in chapters:
 
 	for sec in body.iter('sec'):
 		for p in sec.iter('p'):
-			for ref in p.findall('xref'):
+			for ref in p.iter('xref'):
 				if ref.get('ref-type'):
 					rid = ref.get('rid')
 					if rid:
-						# delete content
-						ref.clear()
-						# make footnote tag
+						# make xref a footnote
 						ref.tag = 'footnote'
 						# copy content from reference
-						ref.text = refs[rid].text.lstrip("[]0123456789 \t")
-						ref.extend(list(refs[rid]))
+						if refs.has_key(rid):
+							ref.text = refs[rid].text.lstrip("[]0123456789 \t")
+							ref.extend(list(refs[rid]))
 
 	#remove reference list
 	back.remove(rlist)
