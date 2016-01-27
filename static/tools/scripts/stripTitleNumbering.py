@@ -13,7 +13,7 @@ for child in root:
 			for title in sec.iter('title'):
 				stripped = title.text.lstrip("123456789.")
 				if title.text != stripped:
-					title.set('numbered', "true")
+					title.set('class', "numbered")
 					title.text = stripped.lstrip(" \t")
 
 print ElementTree.tostring(root)
