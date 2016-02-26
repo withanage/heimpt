@@ -65,8 +65,12 @@
         <speech id="1">
           <speaker>Paul</speaker>
           <p> I speak Portuguese, I don't speak German. My mom is Brazilian.</p>
+        </speech>
+        <speech id="2">
           <speaker>Interviewer</speaker>
           <p> Your mom is Brazilian, your dad is German, but you grew up in America?</p>
+        </speech>
+        <speech id="3">
           <speaker>Paul</speaker>
           <p> And China. And Brazil. But I speak very little German. I can understand it. Okay. But I can't speak it really. I can say like: hello, thank you, please. &lt;L&gt; <xref ref-type="fn" rid="bibd2e58">1</xref>
           </p>
