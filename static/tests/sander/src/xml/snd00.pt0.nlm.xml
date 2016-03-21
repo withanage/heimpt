@@ -10,13 +10,8 @@
     </journal-meta>
     <article-meta>
       <article-id pub-id-type="doi">10.1000/123456</article-id>
-      <article-categories>
-        <subj-group>
-          <subject>Sample Articles</subject>
-        </subj-group>
-      </article-categories>
       <title-group>
-        <article-title>A Sample Article Title</article-title>
+        <article-title>Introduction</article-title>
       </title-group>
       <contrib-group>
         <contrib contrib-type="author">
@@ -26,8 +21,8 @@
           </name>
           <xref ref-type="aff" rid="bremen"/>
         </contrib>
-        <aff id="bremen"><institution content-type="dept">Referat f&#252;r Forschung und wissenschaftlichen Nachwuchs</institution>,
-                <institution>Universit&#228;t Bremen</institution>,
+        <aff id="bremen"><institution content-type="dept">Referat f&#252;r Forschung und wissenschaftlichen Nachwuchs,
+Universit&#228;t Bremen</institution>,
                 <addr-line><named-content content-type="city">Bremen</named-content></addr-line>,
                 <country>Deutschland</country></aff>
       </contrib-group>
@@ -39,17 +34,16 @@
       <fpage>1</fpage>
       <lpage>2</lpage>
       <permissions>
-        <copyright-statement>&#169; 2015, Heidelberg University Publishing</copyright-statement>
-        <copyright-year>2015</copyright-year>
+        <copyright-statement>&#169; 2016, Heidelberg University Publishing</copyright-statement>
+        <copyright-year>2016</copyright-year>
         <copyright-holder>Heidelberg University Publishing</copyright-holder>
         <license xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://creativecommons.org/licenses/by/3.0/">
           <license-p>Dieses Werk ist unter der Creative Commons-Lizenz 4.0 (CC BY-SA 4.0 <ext-link ext-link-type="uri" xlink:href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">)</ext-link> ver&#246;ffentlicht.
             credited.</license-p>
         </license>
       </permissions>
-      <self-uri>https://www.martineve.com/</self-uri>
       <abstract>
-        <p>This is a sample abstract that forms part of the metadataSample.xml file in meTypeset.</p>
+        <p></p>
       </abstract>
     </article-meta>
   </front>
@@ -62,15 +56,15 @@
         <p>
        
         
-        <speech id="1">
+        <speech id="s1">
           <speaker>Paul</speaker>
           <p> I speak Portuguese, I don't speak German. My mom is Brazilian.</p>
         </speech>
-        <speech id="2">
+        <speech id="s2">
           <speaker>Interviewer</speaker>
           <p> Your mom is Brazilian, your dad is German, but you grew up in America?</p>
         </speech>
-        <speech id="3">
+        <speech id="s3">
           <speaker>Paul</speaker>
           <p> And China. And Brazil. But I speak very little German. I can understand it. Okay. But I can't speak it really. I can say like: hello, thank you, please. &lt;L&gt; <xref ref-type="fn" rid="bibd2e58">1</xref>
           </p>
@@ -143,7 +137,7 @@
         <p>Two other recent contributions to migration studies (<xref rid="ID0e2fbbf1-4841-435d-8caf-51940061c269" ref-type="bibr" id="IDb394c2c8-1576-4311-a2b3-b9e818ef0eab">Hatfield 2010</xref>; <xref rid="ID5cedb00f-38eb-44a4-a73f-05d91cd81bd7" ref-type="bibr" id="ID00ba00e9-9cf4-469b-b646-7df00b60d073">Hutchins 2011</xref>) focused on the experiences and perspectives of children in the dynamics of family migration. Both studies address the cases of British households, whose children&#8217;s backgrounds resemble those of the youths I met in Shanghai.</p>
         <p>Teresa Hutchins&#8217;s (<xref rid="ID5cedb00f-38eb-44a4-a73f-05d91cd81bd7" ref-type="bibr" id="ID44d583e6-47df-4fe6-bd32-846c375df519">2011</xref>) study explores the experiences of families who have recently moved from the UK to Australia. Her ethnographic account privileges the perspective of the children in her study group, ages five to seventeen at the time of the interviews, and discusses the ways in which they experienced and made sense of the migration. Hutchins particularly analyzes the family&#8217;s decision-making process prior to moving abroad and illustrates how different unspoken conceptions of childhood influence this process, as parents often argue for making decisions in their children&#8217;s &#8220;best interest.&#8221; As &#8220;individual members of the family often have different interests, [&#8230;] family migration decision-making is based upon a process of negotiating individual influence and power within the family&#8221; (Hutchins <xref rid="ID5cedb00f-38eb-44a4-a73f-05d91cd81bd7" ref-type="bibr" id="IDfd3ed37c-af63-4514-835f-fdcdb9e6d76f">2011</xref>, 1233). While her article lays open the use of parental power in these negotiations and demonstrates how this power often results in the young actors&#8217; exclusion from the decision-making process, Hutchins also identifies ways in which children actively attempt to influence the decision or the overall migration process. Hutchins&#8217; findings prompted me to discuss the events and decisions that led to the move to Shanghai with Paul and his peers. Their perspectives describe a lack of their involvement in this decision. Drinking coffee on Wulumuqi Road, Paul tells me that he had not wanted to move to China initially because he had not &#8220;even googled it before&#8221; and thought it would be all &#8220;mud houses&#8221; and &#8220;bamboo forests.&#8221; He remembers his father telling him about the move to China in a very straightforward way: </p>
         <p>
-          <speech id="4">
+          <speech id="s4">
             <speaker>Paul</speaker>
             <p>
               he doesn't try to butter you up or anything. He&#8230; If your dog dies, he won't make up an excuse. &lt;L&gt; He would just tell you he ran over the dog, you know. So he was kinda like: &#8220;Paul, we are moving to China.&#8221; Oh.
