@@ -10,6 +10,7 @@
     </journal-meta>
     <article-meta>
       <article-id pub-id-type="doi">10.1000/123456</article-id>
+     
       <title-group>
         <article-title>Introduction</article-title>
       </title-group>
@@ -42,6 +43,7 @@ Universit&#228;t Bremen</institution>,
             credited.</license-p>
         </license>
       </permissions>
+      
       <abstract>
         <p></p>
       </abstract>
@@ -59,12 +61,10 @@ Universit&#228;t Bremen</institution>,
         <speech id="s1">
           <speaker>Paul</speaker>
           <p> I speak Portuguese, I don't speak German. My mom is Brazilian.</p>
-        </speech>
-        <speech id="s2">
+          </speech><speech id="s2">
           <speaker>Interviewer</speaker>
           <p> Your mom is Brazilian, your dad is German, but you grew up in America?</p>
-        </speech>
-        <speech id="s3">
+          </speech><speech id="s3">
           <speaker>Paul</speaker>
           <p> And China. And Brazil. But I speak very little German. I can understand it. Okay. But I can't speak it really. I can say like: hello, thank you, please. &lt;L&gt; <xref ref-type="fn" rid="bibd2e58">1</xref>
           </p>
