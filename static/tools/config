@@ -1,0 +1,69 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Test configuration for DOC2PDF conversion with various PDF tools and
+; pipelines for the Monograph Publication Tool (MPT).
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;
+; General Setting ;
+;;;;;;;;;;;;;;;;;;;
+
+[general]
+
+; Full path to your installation
+base_dir = /home/<userfolder>/projects/mpt
+
+; Name of the subdirectory, where your test files (docx, xml etc.) are.
+test_collection = misc
+
+; Name of the particular test that is used in the filenames.
+test_name =  footnote
+
+;;;;;;;;;;;;;;;;;;;;;
+; Pipeline Settings ;
+;;;;;;;;;;;;;;;;;;;;;
+
+[pipeline]
+
+; At which step in the conversion pipeline to start.
+; 1: (DOCX -> XML)
+; 2: (XML -> FO/HTML)
+; 3: (FO/HTML -> PDF)
+; Default is 1;
+start = 3 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; XML Conversion and Style Settings ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[stylesheets]
+
+; XML2HTML transformation
+xslt_html=../stylesheets/jats-html.xsl
+
+; XML2FO transformation
+xslt_fo=../stylesheets/jats-xslfo.xsl
+;xslt_fo=../stylesheets/docbook-xsl-1.79.0/fo/docbook.xsl
+; CSS styles
+css=../stylesheets/custom.css
+;css=xml2pdf/css-for-print/pdf-styles.css
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+; PDF Rendering Settings ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Tools to use for PDF conversion. Supported tools are mPDF
+; (mpdf), Prince (prince), Antenna House Formatter (ahf) and Apache
+; FOP (fop). Specify a path to the binary or command to include a 
+; tool in the test run.
+
+[fo_tools]
+ahf=/usr/AHFormatterV6_64/run.sh
+fop=fop
+
+[html_tools]
+ 
+mpdf=../tools/xml2pdf-php/mpdf.php
+prince=prince
