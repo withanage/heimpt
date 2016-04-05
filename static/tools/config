@@ -12,7 +12,7 @@
 [general]
 
 ; Full path to your installation
-base_dir = /home/<userfolder>/projects/mpt
+base_dir = /home/wit/projects/mpt
 
 ; Name of the subdirectory, where your test files (docx, xml etc.) are.
 test_collection = misc
@@ -60,7 +60,7 @@ css=../stylesheets/custom.css
 ; tool in the test run.
 
 [fo_tools]
-ahf=/usr/AHFormatterV6_64/run.sh
+ahf=/usr/AHFormatterV61_64/run.sh
 fop=fop
 
 [html_tools]
