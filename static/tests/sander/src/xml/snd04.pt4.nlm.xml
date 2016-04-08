@@ -53,15 +53,22 @@
     </front>
     <body>
         <sec>
-            
-            <title>Part IV: Living</title>
-            <!--fig position="float" orientation="portrait"> <p>Figure 20. The Shop: Students Walking through the Small Alley, June 2011. Photo by M. Sander.</p> <fig-->
-            <disp-quote>
-                <p>Mia: It&#8217;s really like that, if you&#8217;re homesick, because you&#8217;re
-                    somewhere in a foreign country or in a foreign city, you just have to do
-                        something.<xref ref-type="fn" rid="bibd2e46">1</xref>
-                </p>
-            </disp-quote>
+
+            <title/>
+            <p>Part IV: Living</p>
+            <!--fig position="float" orientation="portrait">
+            <p>Figure 20. The Shop: Students Walking through the Small Alley, June 2011. Photo
+                    by M. Sander.</p>
+            </fig-->
+
+            <p>
+                <disp-quote id="SQ1">
+                    <p>Mia: It&#8217;s really like that, if you&#8217;re homesick, because
+                        you&#8217;re somewhere in a foreign country or in a foreign city, you just
+                        have to do something.</p>
+                </disp-quote>
+            </p>
+
             <p>This part of the book examines expatriate teenagers&#8217; narratives and practices
                 of emplacement in Shanghai. While it continues to address the students as part of
                 the expatriate community with its processes of demarcation and detachment from local
@@ -107,11 +114,15 @@
                 its local citizens.</p>
             <sec>
                 <title>Chapter 1: &#8220;My Time is Now:&#8221; The Role of Age</title>
-                <p>The focus on children&#8217;s futures and adults&#8217; investment in this can
-                    also blind us to their agency as social actors in their own right (<xref
-                        rid="IDe9ef7145-ceb7-4739-9a95-9b050852c6bc" ref-type="bibr"
-                        id="IDfb41c1d8-303b-407b-84e4-7909c6b0cac5">James and James 2008,
-                    65</xref>). </p>
+                <p>
+                    <disp-quote id="SQ2">
+                        <p>The focus on children&#8217;s futures and adults&#8217; investment in
+                            this can also blind us to their agency as social actors in their own
+                            right (<xref rid="IDe9ef7145-ceb7-4739-9a95-9b050852c6bc"
+                                ref-type="bibr" id="IDfb41c1d8-303b-407b-84e4-7909c6b0cac5">James
+                                and James 2008, 65</xref>). </p>
+                    </disp-quote>
+                </p>
                 <p>Migration experiences are evidently age-specific, as the ethnographic vignettes
                     on the decision-making process about moving in Part II, Chapter 1 show. Older
                     siblings, for example, choose to stay, or at least consider staying, whereas
@@ -148,11 +159,9 @@
                     <p>
                         <speech id="s2">
                             <speaker>Lara</speaker>
-                            <p>
-                                It is more difficult. I just experienced that. At my age it just
-                                sucks. You have your friends, your boyfriend, whatever.<xref id="ID298042309" ref-type="fn" rid="bibd2e138">3</xref>
-                                
-                                
+                            <p> It is more difficult. I just experienced that. At my age it just
+                                sucks. You have your friends, your boyfriend, whatever.<xref
+                                    id="ID298042309" ref-type="fn" rid="bibd2e138">3</xref>
                             </p>
                         </speech>
                     </p>
@@ -214,8 +223,9 @@
                         outgrowing the realm of the family.</p>
                 </sec>
                 <sec>
-                    
-                    <title>1.2. Future benefits and the art project &#8220;My time is now&#8221;</title>
+
+                    <title>1.2. Future benefits and the art project &#8220;My time is
+                        now&#8221;</title>
                     <p>As shown in earlier parts of the book, experiences abroad are often
                         considered to be beneficial capital for the future: the hardship of moving
                         at an early age will pay off when the children grow up and enter
@@ -249,14 +259,19 @@
                         The source of this focus on children&#8217;s and adolescents&#8217; futures
                         James and James see in society&#8217;s interest in securing people&#8217;s
                         contributions in the years to come:</p>
-                    <p>Thus the provisions that all societies make in some shape or form to ensure
-                        the health, education and well-being of their children in the
-                        present&#8212;their welfare&#8212;are also an investment in their future, as
-                        individual adults, and in the future of the society of which they will form
-                        a part and to which they are expected to make a contribution at some point
-                        in the future (<xref rid="IDe9ef7145-ceb7-4739-9a95-9b050852c6bc"
-                            ref-type="bibr" id="ID04dbd83f-374b-4d62-a125-b1d37dd7d6cf">ibid.,
-                            64</xref>).</p>
+                    <p>
+                        <disp-quote id="IQ1">
+                            <p>Thus the provisions that all societies make in some shape or form to
+                                ensure the health, education and well-being of their children in the
+                                present&#8212;their welfare&#8212;are also an investment in their
+                                future, as individual adults, and in the future of the society of
+                                which they will form a part and to which they are expected to make a
+                                contribution at some point in the future (<xref
+                                    rid="IDe9ef7145-ceb7-4739-9a95-9b050852c6bc" ref-type="bibr"
+                                    id="ID04dbd83f-374b-4d62-a125-b1d37dd7d6cf">ibid.,
+                                64</xref>).</p>
+                        </disp-quote>
+                    </p>
                     <p>Alex, for instance, in a group discussion with Bjorn and Don, explains his
                         view of grown-up life:</p>
                     <p>
@@ -387,7 +402,7 @@
                         the school community.</p>
                 </sec>
                 <sec>
-                    
+
                     <title>1.3. Rejecting &#8220;old people&#8221;&#8212;claiming spaces</title>
                     <p>While the expatriate students like to emphasize their own social
                         ties&#8212;for instance when talking about the experience of moving to
@@ -465,7 +480,7 @@
                 </sec>
             </sec>
             <sec>
-               
+
                 <title>Chapter 2: Nightlife : Going Out</title>
                 <sec>
                     <title>2.1. Shanghai&#8217;s n ightlife s paces</title>
@@ -606,6 +621,8 @@
                         Westerners&#8217; practices of consumption in Shanghai, in particular in the
                         famous Bund area, which is lined with buildings from the city&#8217;s
                         colonial past.</p>
+                    <p>
+                <disp-quote id="IQ2">
                     <p>Zooming in on the restaurant, the cafe, and the villa garden as chronotopes
                         of nostalgic dwelling brings into view scripted spaces of Western cultural
                         superiority. In spite of the "semiotic skills" and "openness toward others"
@@ -615,7 +632,9 @@
                             rid="ID7d35b0e8-b56c-4ff3-8edf-f1e995019d74" ref-type="bibr"
                             id="IDce392e54-172d-4034-84be-ba26c6f4a5ca">Lagerkvist 2007,
                         163</xref>).</p>
-                    <p>Lagerkvist describes these immersions as &#8220;imaginary journeys into the
+                    </disp-quote>
+            </p>
+            <p>Lagerkvist describes these immersions as &#8220;imaginary journeys into the
                         past, as well as into the future,&#8221; and calls this multisensory
                         practice &#8220;time travel&#8221; (<xref
                             rid="ID7d35b0e8-b56c-4ff3-8edf-f1e995019d74" ref-type="bibr"
@@ -632,6 +651,8 @@
                         involvement of foreign travelers (<xref
                             rid="ID7d35b0e8-b56c-4ff3-8edf-f1e995019d74" ref-type="bibr"
                             id="ID5652c584-5490-4bca-9c3d-26d073989d25">ibid., 167</xref>).</p>
+                    <p>
+                <disp-quote id="IQ3">
                     <p>But reminiscing only comes into being through the appropriation of the memory
                         dispositif, and conversely, the "cosmopolitan visitors" come into being
                         through these mediatized performances. In other words, they are constituted
@@ -641,7 +662,9 @@
                             rid="ID7d35b0e8-b56c-4ff3-8edf-f1e995019d74" ref-type="bibr"
                             id="ID5d43712e-5ae6-4b11-924b-4d7c17d3003a">Lagerkvist 2007,
                         168</xref>).</p>
-                    <p>Lagerkvist&#8217;s argument about the roles foreign tourists (or residents)
+                    </disp-quote>
+            </p>
+            <p>Lagerkvist&#8217;s argument about the roles foreign tourists (or residents)
                         play in reminiscing about Shanghai&#8217;s past is interesting in the
                         context of Fechter and Walsh&#8217;s call for investigating colonial
                         dis/continuities in expatriate lifeworlds (<xref
@@ -1041,6 +1064,8 @@
                             the location sitting empty, with tastefully-arranged furniture and
                             enveloped in a warm light. The accompanying text informs the online
                             visitor:</p>
+                        <p>
+                    <disp-quote id="IQ4">
                         <p>Welcome to 5000 Years of History!!! To the story of the silk road, to
                             rumours and legends, to Mogao caves and their past. With its fantastic
                             interior, its traditional paintings, and its cultural relics, the bar
@@ -1051,7 +1076,9 @@
                                 rid="ID08f3a090-443b-4d78-a0de-7f90010b9f68" ref-type="bibr"
                                 id="IDddc1364b-41f8-4bae-8fc6-5fe93f710154">&#8220;Mural Bar and
                                 Restaurant | Shanghai&#8221; 2013</xref>).</p>
-                        <p>My personal impression of the club was quite different. While the
+                        </disp-quote>
+                </p>
+                <p>My personal impression of the club was quite different. While the
                             cave-like atmosphere is strongly supported by its basement location, the
                             theme &#8220;5000 years of history&#8221; is easily forgotten when the
                             place is packed to its limits on a Friday night. Interestingly, the
@@ -1194,6 +1221,8 @@
                             associated with various parts of suburban commercial spaces in the US.
                             Based on the observations of these spatial and social practices, Kato
                             argues:</p>
+                        <p>
+                    <disp-quote id="IQ5">
                         <p>Teenagers&#8217; social in-between place may be embodied in their
                             experiences of locating and performing with their bodies in public
                             space. While performing in commercial space, young people share physical
@@ -1207,7 +1236,9 @@
                                 rid="ID9b6999f2-adb6-45f2-bc8e-260b50645006" ref-type="bibr"
                                 id="ID028e06d0-ae1a-403d-ad02-775665f041a9">Kato 2009,
                             53</xref>).</p>
-                        <p>While engaging with nightlife spaces, expatriate teenagers in
+                        </disp-quote>
+                </p>
+                <p>While engaging with nightlife spaces, expatriate teenagers in
                             Shanghai&#8212;like the young people in the suburban malls Kato
                             anaylzes&#8212;&#8220;share physical space with adults and explore their
                             positionalities vis-&#224;-vis the norms associated with the
@@ -1582,6 +1613,8 @@
                             they also normalize certain forms of sexual sociability (Farrer and
                             Field <xref rid="IDb0732cba-aaaf-453d-85bd-db802edf069f" ref-type="bibr"
                                 id="ID7d27f32a-cfca-4c3e-a942-e93765a51e74">2012</xref>).</p>
+                        <p>
+                    <disp-quote id="IQ6">
                         <p>Despite the complexities of these racial and gendered topographies of
                             contact, the ethnographic evidence here points to the continued
                             relevance of postcolonial racial categories in a gendered competition
@@ -1593,7 +1626,9 @@
                                 rid="IDaa1cf9f0-6452-4e2d-af50-825da053aac2" ref-type="bibr"
                                 id="ID2ce96a6a-7f64-44e1-bd5a-66ca6ff8cb36">Farrer 2011,
                             761</xref>).</p>
-                        <p>Farrer&#8217;s (<xref rid="IDaa1cf9f0-6452-4e2d-af50-825da053aac2"
+                        </disp-quote>
+                </p>
+                <p>Farrer&#8217;s (<xref rid="IDaa1cf9f0-6452-4e2d-af50-825da053aac2"
                                 ref-type="bibr" id="ID4c94495a-a5e3-4c7f-8a8b-3078c4dbf440"
                                 >2011</xref>) argument that nightlife spaces in Shanghai serve as
                             ethnosexual contact zones between locals and expatriates, simultaneously
@@ -1612,6 +1647,8 @@
                             backgrounds&#8212;outside the group still exists and might be linked to
                             what Chatterton and Hollands describe as lifestyle performance and
                             distinction:</p>
+                        <p>
+                    <disp-quote id="IQ7">
                         <p>Motivations for engaging in nightlife activity have also changed. While
                             immensely varied, changes in the nightclub and pub/bar sectors mean that
                             music, socialising, atmosphere, dancing and lifestyle performance and
@@ -1625,9 +1662,9 @@
                                 rid="IDd6225296-7924-449f-8be5-df0780db3d88" ref-type="bibr"
                                 id="IDe1fbbf07-89e4-4c4b-8cb4-db6bf45d6342">Chatterton and Hollands
                                 2003, 69</xref>).</p>
-                        <p>International encounters are a popular theme for nightlife stories told
-                            in school during the following week, whether the story-teller met
-                            &#8220;crazy Australians,&#8221; &#8220;cool Canadians,&#8221; or
+                        </disp-quote>                                            </p>
+                <p>International encounters are a popular theme for nightlife stories told in school
+                    during the following week, whether the story-teller met &#8220;crazy Australians,&#8221; &#8220;cool Canadians,&#8221; or
                             generally anyone who was from elsewhere. These retellings stress the
                             cosmopolitan possibilities of Shanghai&#8217;s nightscapes. The
                             encounters themselves, however, were&#8212;in my impression&#8212;fewer
@@ -1679,6 +1716,8 @@
                             According to Hannerz, privileged migrants (such as the expatriates under
                             study) are particularly involved in processes of connecting and building
                             up the image of world cities:</p>
+                        <p>
+                    <disp-quote id="IQ8">
                         <p>The managerial elites, as people in strong organizations, may stand a
                             better chance than others to extend their habitats from the world cities
                             into their other locations; corporate cultures are exported, to become
@@ -1696,7 +1735,9 @@
                                 rid="IDce4491f7-5d11-4747-9973-66228a00b9cc" ref-type="bibr"
                                 id="ID901d81b4-40de-4a5e-a382-e9d95a7d630b">1996</xref>] 2001,
                             138&#8211;139).</p>
-                        <p>Hannerz&#8217;s description points to the fact that the young expatriate
+                        </disp-quote>
+                </p>
+                <p>Hannerz&#8217;s description points to the fact that the young expatriate
                             students also contribute to Shanghai&#8217;s global nightscapes and
                             global image through their involvement in the nightlife scene and its
                             representation to others. Based on Field&#8217;s (<xref
@@ -1730,6 +1771,8 @@
                                 rid="ID61dbb008-1c7a-4e73-875c-4d073dbb62bb" ref-type="bibr"
                                 id="IDafa08426-ba24-460e-84f1-fe4f1875416d">Northcote 2006,
                             7</xref>). On the other hand,</p>
+                        <p>
+                    <disp-quote id="IQ9">
                         <p>club-goers themselves see nightclubs as inextricably part of the urban
                             scape. Nightclubs are, along with pubs, cafes, restaurants and theatres,
                             a prominent component of city night-life, and club-goers themselves do
@@ -1745,7 +1788,9 @@
                                 rid="ID61dbb008-1c7a-4e73-875c-4d073dbb62bb" ref-type="bibr"
                                 id="IDc73cfbfb-f8ad-4506-bafe-a56218a5545b">Northcote 2006,
                                 7&#8211;8</xref>).</p>
-                        <p>Likewise, students regularly reduce their relationship with Shanghai to
+                        </disp-quote>
+                </p>
+                <p>Likewise, students regularly reduce their relationship with Shanghai to
                             nightlife activities. Nightlife therefore plays a key role in the
                             migration process of expat youths by enabling them to identify Shanghai
                             as &#8220;their&#8221; city.</p>
@@ -1948,15 +1993,19 @@
                             ref-type="bibr" id="ID8fcc42c6-089f-4285-a1f0-1a47eec6788f">2011,
                             175</xref>), for instance, explains the spatial practice of
                         &#8220;chilling&#8221; among Belgian youths: </p>
-                    <p>It refers to quite diverse activities and atmospheres. Most often it stands
-                        for meeting up with friends in a very &#8220;relaxed&#8221; ambience
+                    <p>
+                    <disp-quote id="IQ10">
+                        <p>It refers to quite diverse activities and atmospheres. Most often it
+                            stands for meeting up with friends in a very &#8220;relaxed&#8221; ambience
                         (sitting, hanging [sic] and often lying on the ground). On the other hand
                         the same word was used to refer to more active behaviour, like wandering,
                         roaming or cycling around in the city, physical activity games (football,
                         teasing each other, etc.), or even playing party games. Essential for
                         &#8220;chilling&#8221; is that it is an activity you do with friends and not
                         with parents.</p>
-                    <p>Likewise, &#8220;chilling&#8221; is a common term for German expatriate
+                    </disp-quote>
+                </p>
+                <p>Likewise, &#8220;chilling&#8221; is a common term for German expatriate
                         youths used to describe their communal leisure practices, which are mostly
                         related to places such as their friends&#8217; homes or the shop.</p>
                     <p>The importance of these spaces for teenagers has also been proven in other
@@ -1966,7 +2015,8 @@
                         descriptions of teenagers&#8217; spatial practices in the Belgian city of
                         Mechelen, for instance, also points out the relevance of such spaces for
                         students&#8217; relations to the school environment.</p>
-                    <p>The presence of quality public space (traffic calming measures, comfortable
+                    <p> <disp-quote id="IQ11">
+                        <p>The presence of quality public space (traffic calming measures, comfortable
                         spaces for hanging around and sitting) and the availability of services
                         (food shops, snack bars, and public transport) around secondary schools are
                         highly important for teenagers. Where such public spaces were available near
@@ -1975,7 +2025,7 @@
                         within 10 minutes after the courses (<xref
                             rid="ID6a0770ec-8bc7-4876-bf83-8c4d7806bd0f" ref-type="bibr"
                             id="ID18bfa2e4-b26a-4623-80a8-083538d7299b">Vanderstede 2011,
-                        180</xref>).</p>
+                        180</xref>).</p></disp-quote></p>
                     <p>The shop&#8217;s appeal as a hangout place is thus, first of all, connected
                         to its proximity to the school and the space it provides for recreation and
                         meeting friends during and immediately after school. At the same time, being
@@ -2138,15 +2188,14 @@
                         these larger, everyday spatial experiences, the shop&#8212;despite its own
                         rules or access regulations prescribed by the school&#8212;appears as one of
                         the few &#8220;open spaces&#8221; the teenagers use. </p>
-                    
-                            <p>I argue that it is this openness, and the fact that this liminal space
-                                provides them with the freedom and flexibility to simply hang out,
-                                that attracts the students most. Bjorn explains the usage of the
-                                shop by comparing it to public spaces in Germany. In his comparison,
-                                however, he chooses public spaces that&#8212;similar to
-                                Hassenpflug&#8217;s depiction of &#8220;open space&#8221; in Chinese
-                                cities&#8212;can be claimed by hanging out in them communally, by
-                                listening to music or drinking beer:</p>
+
+                    <p>I argue that it is this openness, and the fact that this liminal space
+                        provides them with the freedom and flexibility to simply hang out, that
+                        attracts the students most. Bjorn explains the usage of the shop by
+                        comparing it to public spaces in Germany. In his comparison, however, he
+                        chooses public spaces that&#8212;similar to Hassenpflug&#8217;s depiction of
+                        &#8220;open space&#8221; in Chinese cities&#8212;can be claimed by hanging
+                        out in them communally, by listening to music or drinking beer:</p>
                     <p>
                         <speech id="s73">
                             <speaker>Bjorn</speaker>
@@ -2203,14 +2252,18 @@
                         child&#8212;that is, less-than-adult&#8212;can be put aside.&#8221; The
                         concept of streets therefore also highlights the liminal stage of youth in
                         society:</p>
-                    <p>Within these interstitial spaces young people can express feelings of
+                    <p>
+                    <disp-quote id="IQ13">
+                        <p>Within these interstitial spaces young people can express feelings of
                         belonging and of being apart and celebrate a developing sense of selfhood.
                         In essence, therefore, streets can be grouped among those places where the
                         newness of hybrid identities, no longer a child not yet adult, may be
                         articulated (<xref rid="ID1eeee0bd-75ea-4160-a328-012659fc07bc"
                             ref-type="bibr" id="IDb2647e47-5b1c-42fa-8c1c-8f78ada8ebc8"
                         >ibid.</xref>).</p>
-                    <p>The following three images, taken over the course of my fieldwork, depict the
+                    </disp-quote>
+                </p>
+                <p>The following three images, taken over the course of my fieldwork, depict the
                         various seating areas in the shop and provide insight into the
                         students&#8217; ways of hanging out there and using the area as an open
                         space or, more age-specifically, as a liminal space&#8212;as a street
@@ -2303,6 +2356,8 @@
                         ref-type="bibr" id="ID02f91ccb-37ca-47eb-a356-ccf7568337f0">1999</xref>),
                     describe this divide and the inherent exclusion of both Chinese and foreign
                     migrants who attempt to claim urban citizenship in Shanghai as follows: </p>
+ <p>
+                    <disp-quote id="IQ14">
                 <p>The very criteria for being identified as Shanghainese are vague, in view of the
                     fact that neither by birth or language, yet definite identifications as
                     Shanghainese (or not) can be made [&#8230;] The system of waiguo and waidiren
@@ -2314,6 +2369,8 @@
                     taking up residence (<xref rid="ID0faa37a7-a5ae-41f2-86ba-3369e51df931"
                         ref-type="bibr" id="ID0aef4648-6166-46d8-8d3c-6e28a9b2cff9">Donald and
                         Gammack 2007, 153&#8211;154</xref>).</p>
+                </disp-quote>
+                </p>
                 <p>Donald and Gammack suggest a general atmosphere of Shanghai, a &#8220;sense of
                     self&#8221; that &#8220;operates according to principles of exclusion.&#8221; In
                     the chapters of the previous part, &#8220;Arriving,&#8221; I have shown that
@@ -2338,7 +2395,8 @@
                     of social relations, subjectivity and identity&#8221; (<xref
                         rid="IDe6ebb9fc-dfad-415d-b6ff-0e7304deeb71" ref-type="bibr"
                         id="ID5a9b5cd1-af67-4e4a-80b8-11c0fa4553d1">1996</xref>, 16):</p>
-                <p>Diaspora space is the point at which boundaries of inclusion and exclusion, of
+                <p>  
+                    <disp-quote id="IQ15"><p>Diaspora space is the point at which boundaries of inclusion and exclusion, of
                     belonging and otherness, of &#8220;us&#8221; and &#8220;them,&#8221; are
                     contested. My argument is that diaspora space as a conceptual category is
                     &#8220;inhabited,&#8221; not only by those who have migrated and their
@@ -2349,14 +2407,16 @@
                         rid="IDe6ebb9fc-dfad-415d-b6ff-0e7304deeb71" ref-type="bibr"
                         id="ID3dc5e214-aff8-4959-9ef0-4702bfaba988">ibid. 1996,
                     208&#8211;209</xref>).</p>
+                </disp-quote>
+                </p>
                 <p>Brah&#8217;s term &#8220;diaspora space&#8221; aims to conceptualize the
                     entanglement of the experiences of &#8220;migrants&#8221; and
                     &#8220;locals.&#8221; Applying her analytical concept to my work allows me to
                     focus on the relations between the two heterogeneous groups, expatriates and
                     &#8220;those who are constructed and represented as indigenous&#8221; (<xref
                         rid="IDe6ebb9fc-dfad-415d-b6ff-0e7304deeb71" ref-type="bibr"
-                        id="IDed334e54-cf6e-42f7-8c0d-5bb8e989ec20">ibid.</xref>). To that end,
-                    this chapter investigates this &#8220;diaspora space&#8221; by exploring the
+                        id="IDed334e54-cf6e-42f7-8c0d-5bb8e989ec20">ibid.</xref>). To that end, this
+                    chapter investigates this &#8220;diaspora space&#8221; by exploring the
                     relationships between expatriate teenagers and China or Chinese citizens, to
                     further understand the boundaries I have observed and described throughout this
                     ethnography. It also highlights how the students perceive their (lack of)
@@ -2657,7 +2717,9 @@
                         but the perceived difference also includes height, overall stature, hair
                         texture, or eye shape. &#8220;White&#8221; therefore does not stand for skin
                         color alone, but for an intricate web of aspects, as Dyer highlights:</p>
-                    <p>A person is deemed quite visibly white because of a quite complicated
+                    <p>
+                    <disp-quote id="IQ16">
+                        <p>A person is deemed quite visibly white because of a quite complicated
                         interaction of elements, of which flesh tones within the pink to beige range
                         are only one: the shape of nose, eyes and lips, the colour and set of hair,
                         even body shape may all be mobilised to determine someone&#8217;s
@@ -2668,7 +2730,9 @@
                         deciding whether someone is &#8220;white&#8221; or &#8220;yellow&#8221;
                         (Dyer [<xref rid="ID443ba1d0-623e-4f24-b80b-606b541d6f1d" ref-type="bibr"
                             id="IDbd062318-b150-4ca8-b67c-64d6c865e365">1997</xref>] 2008, 42).</p>
-                    <p>The expatriate students observed that, in China, being white often means
+                    </disp-quote>
+                </p>
+                <p>The expatriate students observed that, in China, being white often means
                         receiving preferential treatment, because in many cases it is synonymous
                         with spending power. While the perceptions of racial superiority among
                         expatriate youths in Shanghai are not as extreme as the accounts collected
@@ -2681,7 +2745,9 @@
                             rid="IDb320f3c1-fda8-474a-9f25-2910a7da615a" ref-type="bibr"
                             id="IDa03697bf-98ee-4ebb-b5a8-4ff6ec318945">2011</xref>), who researched
                         racism in Taiwan and Mainland China, sums up his encounters:</p>
-                    <p>The line of reasoning of white racial superiority (that the most advanced
+                    <p>
+                    <disp-quote id="IQ17">
+                        <p>The line of reasoning of white racial superiority (that the most advanced
                         societies are predominantly white), exists today in most segments of Chinese
                         culture and the result is that mainstream society associates wealth, status,
                         education and power in the west with individuals of visible and identifiable
@@ -2689,7 +2755,9 @@
                             rid="IDb320f3c1-fda8-474a-9f25-2910a7da615a" ref-type="bibr"
                             id="ID55b19ad7-625b-40db-9ac6-ddb10dd191f9">Johnson 2011,
                         43</xref>).</p>
-                    <p>The students&#8217; feelings of being ascribed a &#8220;special status&#8221;
+                    </disp-quote>
+                </p>
+                <p>The students&#8217; feelings of being ascribed a &#8220;special status&#8221;
                         in Shanghai are based, as Johnson&#8217;s findings suggest, on the tight
                         link between whiteness and &#8220;wealth, status, education and
                             power.&#8221;<xref ref-type="fn" rid="bibd2e1766">50</xref>
@@ -2881,14 +2949,18 @@
                         Indonesia (<xref rid="ID0bbd646f-0e84-4833-a4f4-421f9698f34e"
                             ref-type="bibr" id="ID9e73cdf0-9f0d-402f-a573-23ea6e7c9602">2007b,
                             59&#8211;82</xref>), and also notes that</p>
-                    <p>their movements through public space similarly reflect and shape their
+                    <p>
+                    <disp-quote id="IQ18">
+                        <p>their movements through public space similarly reflect and shape their
                         experiences of, and attitudes towards &#8220;Indonesia.&#8221; In
                         particular, many expatriates feel rather uncomfortable being looked at by
                         Indonesians, and their wish to avoid this &#8220;gaze of the Other&#8221;
                         therefore informs many of their spatial practices (<xref
                             rid="ID0bbd646f-0e84-4833-a4f4-421f9698f34e" ref-type="bibr"
                             id="IDa7f8c487-f0c4-4529-9d96-fb235c9e9d7b">ibid., 67</xref>).</p>
-                    <p>Thus not only their own view of the city, but also the process of being
+                    </disp-quote>
+                </p>
+                <p>Thus not only their own view of the city, but also the process of being
                         viewed, shapes the ways expatriates respond to these urban landscapes and
                         might be one of their many motives behind avoiding certain spaces&#8212;such
                         as the subway&#8212;and embracing others, such as nightclubs or bars.</p>
@@ -3267,8 +3339,10 @@
                         persistence. One mother interviewed by Greenspan describes the difficulties
                         her family experienced when attempting to enroll her children in a Chinese
                         school: </p>
-                    <p>My husband literally banged on gates to get us in. He went to probably ten
-                        [schools]. He would bang on the gates and say: &#8220;I want to come
+                    <p>
+                    <disp-quote id="IQ19">
+                        <p>My husband literally banged on gates to get us in. He went to probably
+                            ten [schools]. He would bang on the gates and say: &#8220;I want to come
                         here&#8221; and they would answer &#8220;laowai,<xref ref-type="fn"
                             rid="bibd2e2133">63</xref> why are you here? Go away.&#8221; He had to
                         go back a few times. Eventually we ended up near Loushanguan Lu ditie
@@ -3276,7 +3350,8 @@
                             rid="IDf97e7077-99a6-4752-b49f-e9acb2b7d6ca" ref-type="bibr"
                             id="ID782f883b-f377-41d7-a278-ac0af6bc6eda">Greenspan
                             2011b</xref>).<xref ref-type="fn" rid="bibd2e2139">64</xref>
-                    </p>
+                        </p></disp-quote></p>
+             
                     <p>The extraordinary efforts foreigners have to make to send their children to a
                         local Chinese school become apparent in Greenspan&#8217;s interviews. During
                         a joint talk with James Farrer at a workshop organized by Heidelberg
@@ -3421,7 +3496,9 @@
                         the different narratives of these long-term settlers serve as &#8220;claims
                         to cosmopolitan urban citizenship in the emerging global city.&#8221; He
                         explains: </p>
-                    <p>These narrative typologies show that Western expatriate narratives of
+                    <p>
+                    <disp-quote id="IQ20">
+                        <p>These narrative typologies show that Western expatriate narratives of
                         emplacement cannot be reduced to a single postcolonial temporality, though
                         postcolonial imaginaries remain a useful expression of simultaneous
                         belonging and dislocation in the twenty-first-century Asian global city.
@@ -3441,7 +3518,9 @@
                         entitlement in comparisons with other &#8220;foreigners.&#8221; (<xref
                             rid="IDb0732cba-aaaf-453d-85bd-db802edf069f" ref-type="bibr"
                             id="IDd5a7bc30-d45b-4a61-9cb3-5d98472b17f8">Farrer 2010, 15</xref>).</p>
-                    <p>Like Farrer&#8217;s informants&#8217; &#8220;claims to relative virtue or
+                    </disp-quote>
+                </p>
+                <p>Like Farrer&#8217;s informants&#8217; &#8220;claims to relative virtue or
                         entitlement,&#8221; Antonia&#8217;s claims to being Shanghainese should be
                         seen as distinct among her expatriate classmates. At the same time, Antonia,
                         like Farrer&#8217;s informants, has a high ideal of being a
