@@ -1,4 +1,5 @@
-<article xmlns:ns0="http://www.w3.org/1999/xlink">
+<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article>
   <front>
     <journal-meta>
       <journal-id journal-id-type="publisher-id">Heidelberg University Publishing</journal-id>
@@ -18,7 +19,7 @@
             <surname>Sander</surname>
             <given-names>Marie</given-names>
           </name>
-          <xref ref-type="aff" rid="bremen" />
+          <xref ref-type="aff" rid="bremen"/>
         </contrib>
         <aff id="bremen"><institution content-type="dept">Referat f&#252;r Forschung und
             wissenschaftlichen Nachwuchs, Universit&#228;t Bremen</institution>,
@@ -36,13 +37,17 @@
         <copyright-statement>&#169; 2016, Heidelberg University Publishing</copyright-statement>
         <copyright-year>2016</copyright-year>
         <copyright-holder>Heidelberg University Publishing</copyright-holder>
-        <license ns0:href="http://creativecommons.org/licenses/by/3.0/">
-          <license-p>Dieses Werk ist unter der Creative Commons-Lizenz 4.0 (CC BY-SA 4.0 <ext-link ext-link-type="uri" ns0:href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">)</ext-link>
+        <copyright-holder>Heidelberg University Publishing</copyright-holder>
+        <license xmlns:xlink="http://www.w3.org/1999/xlink"
+          xlink:href="http://creativecommons.org/licenses/by/3.0/">
+          <license-p>Dieses Werk ist unter der Creative Commons-Lizenz 4.0 (CC BY-SA 4.0 <ext-link
+            ext-link-type="uri"
+            xlink:href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">)</ext-link>
             ver&#246;ffentlicht. credited.</license-p>
         </license>
       </permissions>
       <abstract>
-        <p />
+        <p/>
       </abstract>
     </article-meta>
   </front>
@@ -283,14 +288,17 @@
           other words, in a conversation such as the one I have with Mia, the practice of writing is
           embedded in its larger context. This conversation is just one example of how research is a
           practice, an engagement with the youths, as Massey concisely describes:</p>
-        <p>Here what we might have called representation is no longer a process of fixing, but an
+        <p> <disp-quote id="IQ2">
+          <p>Here what we might have called representation is no longer a process of fixing, but an
           element in a continuous production; a part of it all, and itself constantly becoming. This
           is a position which rejects a strict separation between world and text and which
           understands scientific activity as being just that&#8212;an activity, a practice, an
           embedded engagement in the world of which it is a part. Not representation but
           experimentation (<xref id="ID1e04001c-dd98-4abc-85f8-9c9ba94da195" ref-type="bibr"
             rid="ID3d0861e1-0f35-485d-aae3-192bebbde788">2005, 28</xref>). </p>
-        <p>No one who writes about real people in real life can ignore the fact that words may have
+        </disp-quote>
+      </p>
+      <p>No one who writes about real people in real life can ignore the fact that words may have
           consequences for the people they write about&#8212;and alter their images of Self,
           labeling by others, their relationships, or the politics structuring their everyday
           practices. Caroline Brettell and other anthropologists (<xref
@@ -323,13 +331,16 @@
           informants in the Andes in Bolivia were continuously concerned about &#8220;the
           book&#8221; he would write. Goldstein argues that one can see ethnographic writing in a
           positive light, as a form of indigenous media, or a means of self-representation. </p>
-        <p>Even in more ordinary sorts of fieldwork contexts, in which the final product of the
+        <p> <disp-quote id="IQ3">
+          <p>Even in more ordinary sorts of fieldwork contexts, in which the final product of the
           ethnographer/informant encounter is not a visual but a textual representation, informants
           may regard ethnography as a resource that they can use for their own purposes, and so seek
           to establish control over the ways in which they will be represented by the ethnographer
             (<xref id="IDbae8fd41-9b15-4153-8169-fc3818ceaa45" ref-type="bibr"
             rid="ID71c7431a-fa0e-4721-ba3b-1989a635fe2e">Goldstein 2002, 487</xref>).</p>
-        <p>In Goldstein&#8217;s case, the informants strategically emphasized and performed certain
+        </disp-quote>
+      </p>
+      <p>In Goldstein&#8217;s case, the informants strategically emphasized and performed certain
           aspects they considered important and most likely to secure financial benefits in the
           future, for instance by attracting NGOs. Consequently, he also experienced a lot of
           mistrust, because they feared his writings might highlight aspects that could endanger
@@ -420,10 +431,12 @@
       </sec>
       <sec>
         <title>Chapter 3: Joining Two Peer Groups </title>
-        <p>A relatively youthful appearance is undoubtedly helpful when hanging around street
+         <p>
+        <disp-quote id="SQ1"><p>A relatively youthful appearance is undoubtedly helpful when hanging around street
           corners with teenagers (<xref id="ID26ffffcb-5816-47e1-857f-bd8b0edcdab0" ref-type="bibr"
             rid="ID9f344bae-af75-4674-88ed-51e358d5b529">Wulff 1995, 7</xref>).</p>
-        <p>I was incredibly nervous of the teenagers. I felt 12 years old again (</p>
+        </disp-quote>
+      </p><p>I was incredibly nervous of the teenagers. I felt 12 years old again (</p>
         <p>Joining the teenagers outside the realm of school, in particular during their nightlife
           activities, proved tremendously valuable in helping me to establish my position among
           them. These occasions helped me to contextualize the students&#8217; verbalized
@@ -464,360 +477,369 @@
           groups in particular. These two groups consisted of one all-girls group and one all-boys
             group.<xref ref-type="fn" rid="bibd2e170">7</xref>
         </p>
-      
-      <sec>
-        <title>3.1 Fieldwork with &#8220;the girls:&#8221; real ambitions and fake
-          Louboutins</title>
-        <p>&#8220;The girls&#8221; are Antonia, Mia, Kressi, Charlie, Olivia, and Andrea. They were
-          between fifteen and seventeen years old when I first met them at school. Antonia in
-          particular played a vital role in my interactions with them, as it was her invitation to
-          join nightlife activities that lead to my forming closer contacts with the rest of the
-          group and many others at the German school. The way she included me and openly stated
-          &#8220;Marie is one of us&#8221; provided essential opportunities for my work. Antonia,
-          child of a Chinese-German marriage, was born in Germany, but grew up in Shanghai and has
-          been going to the same school all her life&#8212;this is rare among expatriate children.
-          She is a determined, smart young woman, who has high expectations for herself and highly
-          values intelligence and analytical minds. Other students sometimes seem to find her active
-          and passionate participation in discussions in the classroom annoying. Antonia and I have
-          gotten along well from the beginning and, with her generous, independent, and opinionated
-          ways, she forms a key figure in my research. Mia, an ambitious and eloquent girl, and her
-          artistic friend Kressi, are the youngest members of the group because they have both
-          skipped a grade. They are new to the class and at first not allowed to go out as often as
-          the others. Over the course of the school year, however, they do become permanent members
-          of the group. Mia has a typical expat biography and has moved several times in her life.
-          Kressi, in contrast, moved to Shanghai at an early age. She was born in Germany to
-          Vietnamese parents with Cantonese roots and seems to have family all over the world.
-          Charlie, born in Germany to Chinese parents and very much liked by everyone at school due
-          to her friendly ways, and Olivia from Belgium, admired for her beauty, arrange and
-          participate in group activities on a regular basis. Andrea, the only one of the girls
-          attending another class, is one of the few students who lives downtown. Andrea is a
-          quirky, creative student who likes to make people laugh and has a particular reputation
-          for partying&#8212;especially dancing&#8212;Shanghai&#8217;s nights away with Antonia. </p>
-        <p>I am lucky to have met this group and am happy to accompany them to various activities.
-          When, for instance, in the beginning of May, the geography teacher invites me to join his
-          class for an excursion, I arrange with &#8220;the girls&#8221; (without Charlie, who is in
-          a different class) to join their group. The students are supposed to do photo walks
-          through different parts of Shanghai to document elements of globalization. I meet the
-          teacher and students at 3 p.m. at school. Andrea, Antonia, and Mia greet me when I arrive
-          just on time and inform me that we will pick up Kressi and Olivia at home on our way
-          downtown. However, one group only consists of two students and the teacher asks me to join
-          them, as there has to be a minimum of three in each group for safety reasons. The girls
-          protest. Luckily, another student shows up and I can stay in &#8220;my&#8221; group.
-          Antonia&#8217;s driver is waiting outside to take us. The girls have chosen the area of
-          Tianzifang, a block of old Shanghainese lane houses that have been turned into small
-          shops, caf&#233;s, and restaurants. I am glad to hang out with the girls who I know best,
-          particularly as I had had a rough night due to food poisoning. I am also glad to join in
-          on some expatriate luxury and hop into the big, air-conditioned van instead of the crowded
-          metro. </p>
-        <p>We drive to two different compounds to pick up Olivia and Kressi. Although I had been to
-          several expatriate family homes for my research on &#8220;trailing spouses&#8221; in 2007,
-          it is the first time I really see how these two students live. Big villas surrounded by
-          green spaces and high walls. The girls, who are naturally not startled by their
-          friends&#8217; houses, discuss Olivia&#8217;s romantic situation. Somehow, maybe due to my
-          presence, the discussion shifts all of a sudden to foreign languages and language
-          proficiency. Antonia shares a story from the last MUN (Model United Nations)<xref
-            ref-type="fn" rid="bibd2e191">8</xref> conference, where she met a Korean girl who grew
-          up in Germany and England. This girl had offered to speak German with Antonia, in case
-          English was too difficult for her. Remembering this girl&#8217;s comment, Antonia becomes
-          furious and all the girls join in. Everybody sees this remark as extremely insulting. This
-          protest is not only a form of friendly support but is also justified, as Antonia&#8217;s
-          English is quite flawless. However, sitting among them on the back seat of the van, I
-          silently consider how the Korean girl&#8217;s comment also indirectly implies that they
-          lack certain cosmopolitan competencies, thus calling for communal critique. Andrea&#8217;s
-          quick-witted input is requested and she contemplates aloud what the right response to such
-          an insulting and deprecatory remark might be. We further discuss the topic of language
-          skills and everyone shares stories about children in their community who grew up
-          bilingually. Olivia, who speaks Flemish at home, tells us that she only learned German in
-          fifth grade. Antonia feels she speaks neither German nor Chinese very well. Andrea shares
-          how she gave up studying Chinese, to be immediately criticized by Antonia for it. One
-          should expect that, after so many years in Shanghai, they should be able to speak Chinese,
-          Antonia declares, but that they cannot because they are content to &#8220;live in the
-          expat bubble.&#8221; I notice that the bubble metaphor seems omnipresent among expatriates
-          in Shanghai&#8212;Paul, for instance, whose story I told in the introduction, also used
-          it. I wonder if my presence triggers such remarks. Andrea talks about the difficulties of
-          learning Chinese. I share that, although I have taken numerous evening classes in Chinese
-          and just resumed taking lessons a few weeks ago, I myself am also far from going beyond
-          simple everyday topics. </p>
-        <p>The girls plan a Lord of the Rings night and discuss what kind of (German) candies their
-          parents should buy. Antonia says that in no way could she send her mom shopping. She has
-          no time for that, between owning three companies and never sleeping for more than five
-          hours a night. Even her dad, who is a general manager, has more time. I silently guess
-          that their ayi does all the grocery shopping.<xref ref-type="fn" rid="bibd2e206">9</xref>
-          Upon asking about a classmate of theirs, I accidently trigger several stories about
-          different students and couples and feel like a whole world of gossip opens up. Who is
-          wearing inappropriate clothes or has ended relationships in inappropriate ways, who is
-          simply using girls, who is surprisingly getting along with whom, and who is &#8220;setting
-          back emancipation for at least 200 years,&#8221; among other topics, arise. In between all
-          this gossip, the subject of conversation turns to me and my boyfriend, whom they met at a
-          concert, and my former relationships and why they ended. Fieldwork means sharing. This
-          gossip about acquaintances and first romances, as well as school grades, language skills,
-          and career ambitions is common among the girls. On the one hand, the moral implications of
-          listening or even participating in gossip demanded constant reflection about my role and
-          obligations as a researcher and remained difficult for me throughout my fieldwork. On the
-          other hand, gossip was an important element that enabled me to gain information about the
-          students&#8217; daily lives&#8212;see Marie Gillespie's (<xref
-            id="ID61d7e5b9-eb89-4a2b-b021-08b872e1f477" ref-type="bibr"
-            rid="ID4364dbec-f90a-4db0-ab0e-a5b04f1c2640">1999</xref>) work on how gossip about soap
-          operas among South Asian youth in London is linked to negotiating their own social
-          networks&#8212;as well as to maintain the ongoing process of social access (<xref
-            id="IDb21a2617-8cf1-483e-ae16-c073185451b3" ref-type="bibr"
-            rid="ID8bd21cd0-67be-4904-818c-ce8efcf8d037">Carmel 2011, 552</xref>). </p>
-        <p>After all the gossip, Andrea laughs and wonders what I must be writing about them. I sigh
-          and tell them that I honestly do not know and that I sometimes feel they could write it
-          better themselves. They protest and encourage me. While I am often tremendously worried
-          about my research subjects reading my writing, this is one of the rewarding moments of
-          working with students who are truly interested in and supportive of my work. </p>
-        <p>Meanwhile, the interaction with the Chinese driver employed by Antonia&#8217;s family is
-          limited to navigating him to the right compounds and the girls&#8217; houses. He is
-          apparently presumed to know the way to the Tianzifang complex. When, almost an hour later,
-          he shouts &#8220;Dao le!&#8221; (&#8220;We&#8217;re here!&#8221;), all of the girls cry
-          out that this cannot be true. We note that we ended up in Taicang Road instead of Taikang
-          Road. The driver, without commenting and apparently used to hectic shouting and
-          complaints&#8212;maybe even to foreigners&#8217; mispronunciations of Chinese street
-          names&#8212;drives on and brings us to the desired destination. I get out last and am the
-          only one to say goodbye to the driver. Antonia apologizes to everyone for her driver
-          bringing us to the wrong location at first. No one seems to notice.</p>
-        <p>When we arrive, we head towards a caf&#233; known for its delicious milkshakes, called
-          Kommune, which offers outdoor seating in the midst of small alleys and, like all coffee
-          shops in Tianzifang, has prices for an expat income rather than the average Shanghainese.
-          Here, a milkshake costs around RMB 38 (&#8364;4.18).<xref ref-type="fn" rid="bibd2e225"
-            >10</xref> On the way there, Mia, Kressi, and Olivia take photos. I take photos of them
-          taking photos, but as we all have a research agenda today, it feels okay. Drinking
-          milkshakes, chatting, and taking pictures keeps us entertained for a while. Mia and Kressi
-          buy some of the cafe&#8217;s well-designed drinking glasses for their own rooms. We then
-          leave to explore the area further with our cameras. We look at a stall offering earrings
-          and Olivia, who always wears big earrings, buys a pair. We then stop at a piercing and
-          tattoo studio.</p>
-        <p>Antonia flips through a folder full of tattoo images. She already has a small tattoo on
-          her neck and is now looking for a nice image of a salamander for a second tattoo. She
-          remembers how she discovered the best image so far at a place close to Olivia&#8217;s home
-          in Belgium. She does not find one she likes in this studio&#8217;s catalogue, but shares
-          that it is probably wiser to wait until she turns eighteen anyway, so that her parents
-          cannot object. The girls discuss the ideal placement of tattoos and Andrea shares that her
-          aunt in Germany runs a tattoo studio, stressing that she does not do the tattoos herself,
-          anymore, but that she manages the store. I note that it seems important to stress her
-          aunt&#8217;s higher position in the business. We pass a store with ethnic clothing that I
-          like and, in the next store, I spot a pair of trousers. Mia then takes a photo of them so
-          I can eventually get a pair made in the same style, as this pair is too expensive for me.
-          We stroll along the lanes, window-shopping, enjoying the shared practices of &#8220;doing
-          fashion&#8221; (<xref id="ID1c9c7c72-1a77-4821-a014-3bde602629dc" ref-type="bibr"
-            rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">Liechty 2003</xref>); buying, trying on, or
-          talking about clothes. These topics are familiar to me and I easily join their
-          conversations. </p>
-        <p>All the while, the students take pictures for the photo documentation project on
-          globalization. Their research project allows me to feel comfortable with my own research
-          agenda. This is not the norm. Being with them sometimes feels a lot like being with
-          friends, while at other moments my academic agenda becomes central again and my role
-          shifts. One night, for example, when we were cooking together at Kressi&#8217;s house and
-          getting ready to go to a club downtown, I felt very much like a part of the group. Then
-          the girls started to discuss outfits and Olivia mentioned her Louboutins (infamously
-          high-heeled designer shoes) and everything changed. My facial expression must have
-          revealed my inner surprise at her having such expensive stilettos at the age of sixteen.
-          Antonia asked what I was thinking about and whether I had found something to write about.
-          I felt a little embarrassed, as I was discovered again as the researcher, but then
-          admitted what had shocked me. Revealing my thoughts, the girls all started laughing,
-          leaving me confused for a moment until they all shouted that these shoes were of course
-          only copies from one of Shanghai&#8217;s many &#8220;fake markets.&#8221; I realized, in
-          that moment, that my shifting from friend to researcher, though not easy for me, was okay
-          with &#8220;the girls.&#8221; They always met my research project with interest and
-          continuously asked me about my latest writings, findings, and ideas. While certain
-          intimate topics gave me the feeling of having passed a threshold towards trust and
-          acceptance, other topics were obviously triggered by my mere presence and research
-          questions. The discussions about language skills, nationalities, and the &#8220;expatriate
-          bubble&#8221; on the way to Tianzifang, for instance, are in strong relation to my
-          research themes as the girls understand them. Nonetheless, these topics do not seem new to
-          them, but seem to have been discussed many times before. Thus it is often the apparent
-          routineness of certain conversational themes that leads me to conclude that these issues
-          are important to them. </p>
-        <p>We step into a small shop selling knickknacks and Olivia starts talking about her
-          situation with her ex-boyfriend who is leaving Shanghai. They have just separated and the
-          girls wonder if she should still give him the present she has prepared for him&#8212;a
-          slideshow with pictures of their time in Shanghai, accompanied by &#8220;their&#8221;
-          songs. The girls suggest she should simply ask him if he still wants it. I silently think
-          about the difficulties of first romantic relationships that are constantly in danger of
-          being torn apart by parental decisions to move on. The girls, on the contrary, seem quite
-          pragmatic.</p>
-        <p>We move on, stroll through a boutique selling leather bags, and another offering all
-          kinds of hats. Finally, we all sit down on the pavement, exhausted from all the
-          impressions surrounding us. I take a few pictures. The girls talk about their prom next
-          year and their ideas for a talent night that they want to propose for the next term. We
-          then hop into a cab to meet the rest of their class and the teacher for dinner, a
-          discussion of the excursion, and the exchange of photos at an American diner.</p>
-      </sec>
-      <sec>
-        <title>3.2 Fieldwork with &#8220;the boys:&#8221; repulsive moments and aesthetic
-          jellyfish</title>
-        <p>In the beginning, the all-boys group included Bjorn, Alex, Peter, Don, Marco, and
-          Giovanni. They were later joined by Bjorn&#8217;s brother and two students from the grade
-          below. When I first interacted with them at school, I was, for some reason, a little bit
-          intimidated, particularly by Alex, who is the oldest in class and who I had seen become
-          angry at a fellow student. However, during the first interview with him, Bjorn, and Don, I
-          find them all to be quite nice and eager to share their viewpoints. They are smoking
-          heavily during the interview and particularly like to showcase their nightlife
-          experiences. Alex, even until the end of my fieldwork stay, sometimes accidently uses the
-          German polite form &#8220;Sie&#8221; to address me and our relationship remains distant,
-          albeit friendly. Although I have never conducted a follow-up interview with Don, I have
-          had several casual conversations with him. Bjorn and I have become closer over the months,
-          mainly through sharing music, since we both like the same reggae artists. I conduct two
-          individual follow-up interviews with him. The beginning of my relationship with Peter and
-          Marco is different. We talk outside of school, at the club Mural, before I hold their
-          initial interviews. These two boys are in a different class from the one I regularly
-          visit. Besides a long first interview with the two of them, I conduct a follow-up
-          interview with Peter alone in June 2012. Giovanni, although we have interacted before, is
-          first interviewed during my short stay in September 2011 and again in June 2012. All the
-          boys are self-reflective and interesting to talk to. They classify themselves as the peer
-          group that goes out, drinks, consumes cannabis, feels that school is not the most
-          important thing in life, and highly values people who are equally cool, relaxed,
-          or&#8212;as they put it&#8212;&#8220;chilled.&#8221; </p>
-        <p>These two groups I accompany, who label each other as &#8220;the boys&#8221; or
-          &#8220;the girls&#8221; respectively, sometimes unite their nightlife activities.
-          Occasionally exploring the boys&#8217; nightlife activities in the spring of 2011, without
-          &#8220;the girls&#8221; with whom I have already built a stronger relationship, feels
-          strange at first. Nonetheless, I soon enjoy accompanying &#8220;the boys&#8221; to the
-          club Mural on Friday nights. Over weeks of joining them at school, sharing dinner,
-          partying, and discussing their lives with them, I feel increasingly comfortable around
-          them and find their company and outlook on life enjoyable. But just when I get to this
-          point of ease in our interaction, we come to the last time I go out with them before I
-          have to leave Shanghai in July 2011. The school year has ended.</p>
-        <p>That summer night in July, the boys and girls at first hang out together at Mural, before
-          the girls move on to a different club. I decide to stay behind with the boys and step
-          outside to get some air and to see what is going on. The boys discuss going to another
-          club called Shelter. But standing outside, talking about music, location, and the like,
-          everyone seems to be waiting for something. Listening to the ongoing conversations, I
-          begin to understand that a decision about the next location cannot be made without Alex,
-          who has disappeared with a Chinese girl in the back alley. Bjorn&#8217;s brother, who
-          joined the group recently, goes back and keeps some of the boys up to date on what is
-          going on. I start feeling uncomfortable and I am unsure of how to behave. Are the boys
-          bragging or joking? What is really happening back there? While I am trying to figure out
-          my own position on the matter, an extremely drunk Chinese girl appears on the scene.
-          Staggering on her high heels she finally opts to sit down on the stairs. I watch her as
-          she leans back against Matthias who has come along this night and happened to sit on the
-          stairs. Matthias, who used to be in a band with Paul&#8212;whose story I told in the
-          introduction&#8212;and who has been extremely helpful by introducing me to students from
-          other schools, only entered the 11th grade recently. The Chinese girl leaning back against
-          Matthias provokes much amusement among the group. The boys joke and tease Matthias. The
-          funny conversation and light amusement, however, suddenly change when one of the boys
-          suggests peeing on the girl. Thinking this is a joke, I am startled when the others join
-          in the conversation by suggesting different angles from which to undertake this disgusting
-          and humiliating act. Shocked at this behavior by the boys whom I considered to be so
-          mature, I intervene and openly state that I am disgusted by the idea and that I will not
-          allow it to happen. I leave to get water and coke for everyone, telling them that they
-          apparently need to sober up. While giving a bottle of water to the Chinese girl, I start
-          talking to her. I try to learn her address and maneuver her toward a cab. She vomits. I
-          then put her into a taxi and give the driver her address. Bjorn tells me off: I ruined all
-          the fun, he says. I should stop acting like a social worker and will not be allowed to
-          cite his interviews any longer. I know that, for the first time, I am stretching my
-          boundaries from participating to interrupting.<xref ref-type="fn" rid="bibd2e257"
-            >11</xref> I try to stay calm and stick to my opinion. He finally asks me for a sip from
-          my drink, which I offer him jokingly, under the condition that he lets me cite his
-          interviews, again. He agrees; crisis averted. When Alex appears back on the scene,
-          everyone applauds, I am too tired or too cowardly to try to figure out what actually
-          happened and the whole group moves on to Shelter, another club. Some of the boys purchase
-          marijuana at a street barbecue stall and we sit outside, waiting for the club to stop
-          charging at 3 a.m. After dancing only for a bit, I soon leave for my apartment, still
-          shocked to have seen such a different side of the boys. Is this typical
-          &#8220;adolescent&#8221; behavior, I wonder? Is this the infamous &#8220;peer
-          pressure?&#8221; What, if anything, does all of this have to do with racism? Do we have to
-          understand such behavior or fantasies in the light of performances of masculinity? </p>
-        <p>Soon afterward, I pack these ambivalent thoughts along with all my belongings and leave
-          for Germany. When I return to Shanghai for follow-up visits in September 2011 and June
-          2012, I have great discussions with all of the boys, again. However, the experience of
-          that night remains in the forefront on my mind. During my last follow-up visit, graduation
-          is immanent and everyone is reminiscing about the good times they have had in Shanghai.
-          The troublesome night at Mural and Shelter comes up, too. Stories of other nights follow,
-          about Marco falling asleep and the other boys forgetting him in front of a club, where he
-          later woke up minus his phone and cash. Laughter accompanies these stories. Another
-          anecdote is shared about how someone else fell asleep and one of them stuck his penis in
-          the sleeper&#8217;s ear. Laughter again. I am startled again by the combination of tight
-          friendships and, at the same time, brutal practices of teasing, mobbing, and physical
-          harassment. I become particularly interested in these more brutal aspects and hierarchies
-          during this last stay in the summer of 2012.</p>
-        <p>&#8220;The boys&#8221; regularly meet at Alex&#8217;s place. &#8220;The girls&#8221; are
-          not allowed to come to these gatherings and even Kressi, who has since become
-          Bjorn&#8217;s girlfriend, has called these regular gatherings &#8220;exclusive,&#8221; so
-          I think it impossible to join. After an interview with Peter, however, he offers to
-          contact Alex, Bjorn, and Don to ask when they have time to record another interview. While
-          downtown for an interview with Andrea, Peter texts me, saying I should join the other boys
-          at an Indian restaurant in the outskirts of the city and conduct the interview there.
-          However, it is almost an hour drive and it is impossible for me to make it on time. After
-          texting back and forth, we agree that Peter and I will join them later, at Alex&#8217;s
-          parents&#8217; house. I am excited to join them at last for their ritual boys&#8217;
-          evening. </p>
-        <p>At 10 p.m. I am waiting for Peter in front of a Lianhua supermarket close to the compound
-          gate. He calls and arranges for Bjorn&#8217;s brother to pick me up on his scooter. He
-          pulls up a few minutes later, I jump on, and we ride through the dark, through the shiny
-          new and empty lanes of the compound, passing well-trimmed lawns and big villas. Mid-way I
-          spot Peter, headphones on, cycling on his bike. After several turns, left and right, we
-          arrive. I jump off and open the gate for the boys to drive inside. </p>
-        <p>I follow Peter and Bjorn&#8217;s brother into the house via the terrace, through the huge
-          living room, and upstairs, into Alex&#8217;s room. Here, about ten boys are lying and
-          sitting on the couch and the big bed, smoking, drinking beer, and watching a movie. A dog
-          greets me and, in my insecure situation, not knowing what to do, I focus on the dog and
-          start to pet it. The TV screen shows sharks tearing something or someone apart. Cuddling
-          the dog to keep my eyes away from the screen, I panic at the thought of being stuck
-          watching a horror movie with a bunch of drunken and stoned teenage boys. Trying to calm
-          myself&#8212;how grateful I am to the dog!&#8212;I soon realize, to my surprise, that we
-          are only watching </p>
-        <p>Some of the guys step out onto the adjacent balcony to smoke marijuana and I get a spot
-          on the couch between one of Antonia&#8217;s friends&#8212;a former student at the school
-          but, like me, a temporary guest of the group&#8212;and Giovanni. Antonia's friend
-          curiously asks me why I am here or, as he rephrases it, who I came with. Simply shrugging
-          my shoulders and mumbling something about my interview, I realize that my academic
-          intention does not answer the question. Hardly any girls are allowed to join these
-          gatherings and not all boys, either. When I then respond that Peter invited me, everything
-          seems clear. No further questions asked. Peter, as I later found out in discussions with
-          Bjorn and also some of the girls, is thought to be one of the heads of the group. He can
-          therefore invite anyone, even me. I open a beer and try to grasp the overall mood. I
-          realize that the interview is a stupid idea that night and decide that witnessing what is
-          going on is more important than interrupting their &#8220;boys&#8217; night&#8221;
-          rituals. I am startled at how relaxed (or perhaps stoned) everyone is, and how nicely they
-          behave. Instead of the expected roughness and meanness, I find the boys lying next to each
-          other on the bed, leaning against each other, almost hugging, watching a beautiful movie,
-          and making loud remarks on the aesthetics of water plants and jellyfish. When the movie
-          abruptly stops because only the first part has been downloaded, the boys want to put music
-          on. Bjorn, Don, and Peter are calling for Anton&#237;n Dvo&#345;&#225;k&#8217;s 9th
-          symphony. The music is played at a high volume and everyone is asked to be quiet. Peter
-          lies flat on his stomach on the bed with his head reaching over the end, nodding along
-          with the rhythm. Bjorn moves his arms in a conductor&#8217;s manner. It is a beautiful
-          sight: ten rough boys, lying around humming along with the melodies of
-          Dvo&#345;&#225;k&#8217;s &#8220;From the New World.&#8221; They had discussed this piece
-          for months in music class and now seem to love it. Alex expresses how he finds the oboe a
-          beautiful instrument. An oboe solo, extremely moving indeed, has preceded his remark.
-          After the symphony ends, two boys get ready to go get food from KFC.<xref ref-type="fn"
-            rid="bibd2e287">12</xref> The way in which Peter and Bjorn give them their orders allows
-          the hierarchies to still shine through a little. We start to watch the movie The Naked Gun
-          2&#189;. Bjorn laughs loudly at every joke. We stop the movie for some reason. The boys
-          return with the food and some boys leave. A few of them have to go to school the next day.
-          Giovanni also leaves. Peter enjoys his chicken wings. Don only talks about the news of the
-          &#8220;Abistreich&#8221; cancellation (he received an email on his smart phone).<xref
-            ref-type="fn" rid="bibd2e297">13</xref> We watch a little more of The Naked Gun 2&#189;.
-          Peter and Don want to leave, so I opt to join them and we share a cab. I chip in 20 RMB,
-          and they drop me off in front of the guesthouse that I am staying in.</p>
-        <p>I enjoy &#8220;the boys&#8217;&#8217;&#8217; company and their outlook on life, and am
-          particularly intrigued by their ways because their behavior and relationships toward each
-          other are less familiar to me than those of &#8220;the girls.&#8221; At the same time, the
-          group dynamics and their behavior trouble me and I am uncertain about what is performed
-          for me and what is really going on in their lives. As I get to know them individually,
-          however, I become more and more familiar and less intimidated by their ways as a group. At
-          the same time, the moments spent with the group help me to better understand the gendered
-          experiences of being an expat teen in Shanghai, as well as to follow their individual
-          stories.</p>
-        <p>The next chapter focuses on these personal stories and introduces four individuals: two
-          of them, Antonia and Bjorn, as my primary contacts for &#8220;the girls&#8221; and
-          &#8220;the boys,&#8221; Arnaud, as someone from a different school, and finally Xia, as
-          someone who is less involved in activities outside of school.</p>
-      </sec>
+
+        <sec>
+          <title>3.1 Fieldwork with &#8220;the girls:&#8221; real ambitions and fake
+            Louboutins</title>
+          <p>&#8220;The girls&#8221; are Antonia, Mia, Kressi, Charlie, Olivia, and Andrea. They
+            were between fifteen and seventeen years old when I first met them at school. Antonia in
+            particular played a vital role in my interactions with them, as it was her invitation to
+            join nightlife activities that lead to my forming closer contacts with the rest of the
+            group and many others at the German school. The way she included me and openly stated
+            &#8220;Marie is one of us&#8221; provided essential opportunities for my work. Antonia,
+            child of a Chinese-German marriage, was born in Germany, but grew up in Shanghai and has
+            been going to the same school all her life&#8212;this is rare among expatriate children.
+            She is a determined, smart young woman, who has high expectations for herself and highly
+            values intelligence and analytical minds. Other students sometimes seem to find her
+            active and passionate participation in discussions in the classroom annoying. Antonia
+            and I have gotten along well from the beginning and, with her generous, independent, and
+            opinionated ways, she forms a key figure in my research. Mia, an ambitious and eloquent
+            girl, and her artistic friend Kressi, are the youngest members of the group because they
+            have both skipped a grade. They are new to the class and at first not allowed to go out
+            as often as the others. Over the course of the school year, however, they do become
+            permanent members of the group. Mia has a typical expat biography and has moved several
+            times in her life. Kressi, in contrast, moved to Shanghai at an early age. She was born
+            in Germany to Vietnamese parents with Cantonese roots and seems to have family all over
+            the world. Charlie, born in Germany to Chinese parents and very much liked by everyone
+            at school due to her friendly ways, and Olivia from Belgium, admired for her beauty,
+            arrange and participate in group activities on a regular basis. Andrea, the only one of
+            the girls attending another class, is one of the few students who lives downtown. Andrea
+            is a quirky, creative student who likes to make people laugh and has a particular
+            reputation for partying&#8212;especially dancing&#8212;Shanghai&#8217;s nights away with
+            Antonia. </p>
+          <p>I am lucky to have met this group and am happy to accompany them to various activities.
+            When, for instance, in the beginning of May, the geography teacher invites me to join
+            his class for an excursion, I arrange with &#8220;the girls&#8221; (without Charlie, who
+            is in a different class) to join their group. The students are supposed to do photo
+            walks through different parts of Shanghai to document elements of globalization. I meet
+            the teacher and students at 3 p.m. at school. Andrea, Antonia, and Mia greet me when I
+            arrive just on time and inform me that we will pick up Kressi and Olivia at home on our
+            way downtown. However, one group only consists of two students and the teacher asks me
+            to join them, as there has to be a minimum of three in each group for safety reasons.
+            The girls protest. Luckily, another student shows up and I can stay in &#8220;my&#8221;
+            group. Antonia&#8217;s driver is waiting outside to take us. The girls have chosen the
+            area of Tianzifang, a block of old Shanghainese lane houses that have been turned into
+            small shops, caf&#233;s, and restaurants. I am glad to hang out with the girls who I
+            know best, particularly as I had had a rough night due to food poisoning. I am also glad
+            to join in on some expatriate luxury and hop into the big, air-conditioned van instead
+            of the crowded metro. </p>
+          <p>We drive to two different compounds to pick up Olivia and Kressi. Although I had been
+            to several expatriate family homes for my research on &#8220;trailing spouses&#8221; in
+            2007, it is the first time I really see how these two students live. Big villas
+            surrounded by green spaces and high walls. The girls, who are naturally not startled by
+            their friends&#8217; houses, discuss Olivia&#8217;s romantic situation. Somehow, maybe
+            due to my presence, the discussion shifts all of a sudden to foreign languages and
+            language proficiency. Antonia shares a story from the last MUN (Model United
+              Nations)<xref ref-type="fn" rid="bibd2e191">8</xref> conference, where she met a
+            Korean girl who grew up in Germany and England. This girl had offered to speak German
+            with Antonia, in case English was too difficult for her. Remembering this girl&#8217;s
+            comment, Antonia becomes furious and all the girls join in. Everybody sees this remark
+            as extremely insulting. This protest is not only a form of friendly support but is also
+            justified, as Antonia&#8217;s English is quite flawless. However, sitting among them on
+            the back seat of the van, I silently consider how the Korean girl&#8217;s comment also
+            indirectly implies that they lack certain cosmopolitan competencies, thus calling for
+            communal critique. Andrea&#8217;s quick-witted input is requested and she contemplates
+            aloud what the right response to such an insulting and deprecatory remark might be. We
+            further discuss the topic of language skills and everyone shares stories about children
+            in their community who grew up bilingually. Olivia, who speaks Flemish at home, tells us
+            that she only learned German in fifth grade. Antonia feels she speaks neither German nor
+            Chinese very well. Andrea shares how she gave up studying Chinese, to be immediately
+            criticized by Antonia for it. One should expect that, after so many years in Shanghai,
+            they should be able to speak Chinese, Antonia declares, but that they cannot because
+            they are content to &#8220;live in the expat bubble.&#8221; I notice that the bubble
+            metaphor seems omnipresent among expatriates in Shanghai&#8212;Paul, for instance, whose
+            story I told in the introduction, also used it. I wonder if my presence triggers such
+            remarks. Andrea talks about the difficulties of learning Chinese. I share that, although
+            I have taken numerous evening classes in Chinese and just resumed taking lessons a few
+            weeks ago, I myself am also far from going beyond simple everyday topics. </p>
+          <p>The girls plan a Lord of the Rings night and discuss what kind of (German) candies
+            their parents should buy. Antonia says that in no way could she send her mom shopping.
+            She has no time for that, between owning three companies and never sleeping for more
+            than five hours a night. Even her dad, who is a general manager, has more time. I
+            silently guess that their ayi does all the grocery shopping.<xref ref-type="fn"
+              rid="bibd2e206">9</xref> Upon asking about a classmate of theirs, I accidently trigger
+            several stories about different students and couples and feel like a whole world of
+            gossip opens up. Who is wearing inappropriate clothes or has ended relationships in
+            inappropriate ways, who is simply using girls, who is surprisingly getting along with
+            whom, and who is &#8220;setting back emancipation for at least 200 years,&#8221; among
+            other topics, arise. In between all this gossip, the subject of conversation turns to me
+            and my boyfriend, whom they met at a concert, and my former relationships and why they
+            ended. Fieldwork means sharing. This gossip about acquaintances and first romances, as
+            well as school grades, language skills, and career ambitions is common among the girls.
+            On the one hand, the moral implications of listening or even participating in gossip
+            demanded constant reflection about my role and obligations as a researcher and remained
+            difficult for me throughout my fieldwork. On the other hand, gossip was an important
+            element that enabled me to gain information about the students&#8217; daily
+            lives&#8212;see Marie Gillespie's (<xref id="ID61d7e5b9-eb89-4a2b-b021-08b872e1f477"
+              ref-type="bibr" rid="ID4364dbec-f90a-4db0-ab0e-a5b04f1c2640">1999</xref>) work on how
+            gossip about soap operas among South Asian youth in London is linked to negotiating
+            their own social networks&#8212;as well as to maintain the ongoing process of social
+            access (<xref id="IDb21a2617-8cf1-483e-ae16-c073185451b3" ref-type="bibr"
+              rid="ID8bd21cd0-67be-4904-818c-ce8efcf8d037">Carmel 2011, 552</xref>). </p>
+          <p>After all the gossip, Andrea laughs and wonders what I must be writing about them. I
+            sigh and tell them that I honestly do not know and that I sometimes feel they could
+            write it better themselves. They protest and encourage me. While I am often tremendously
+            worried about my research subjects reading my writing, this is one of the rewarding
+            moments of working with students who are truly interested in and supportive of my work. </p>
+          <p>Meanwhile, the interaction with the Chinese driver employed by Antonia&#8217;s family
+            is limited to navigating him to the right compounds and the girls&#8217; houses. He is
+            apparently presumed to know the way to the Tianzifang complex. When, almost an hour
+            later, he shouts &#8220;Dao le!&#8221; (&#8220;We&#8217;re here!&#8221;), all of the
+            girls cry out that this cannot be true. We note that we ended up in Taicang Road instead
+            of Taikang Road. The driver, without commenting and apparently used to hectic shouting
+            and complaints&#8212;maybe even to foreigners&#8217; mispronunciations of Chinese street
+            names&#8212;drives on and brings us to the desired destination. I get out last and am
+            the only one to say goodbye to the driver. Antonia apologizes to everyone for her driver
+            bringing us to the wrong location at first. No one seems to notice.</p>
+          <p>When we arrive, we head towards a caf&#233; known for its delicious milkshakes, called
+            Kommune, which offers outdoor seating in the midst of small alleys and, like all coffee
+            shops in Tianzifang, has prices for an expat income rather than the average
+            Shanghainese. Here, a milkshake costs around RMB 38 (&#8364;4.18).<xref ref-type="fn"
+              rid="bibd2e225">10</xref> On the way there, Mia, Kressi, and Olivia take photos. I
+            take photos of them taking photos, but as we all have a research agenda today, it feels
+            okay. Drinking milkshakes, chatting, and taking pictures keeps us entertained for a
+            while. Mia and Kressi buy some of the cafe&#8217;s well-designed drinking glasses for
+            their own rooms. We then leave to explore the area further with our cameras. We look at
+            a stall offering earrings and Olivia, who always wears big earrings, buys a pair. We
+            then stop at a piercing and tattoo studio.</p>
+          <p>Antonia flips through a folder full of tattoo images. She already has a small tattoo on
+            her neck and is now looking for a nice image of a salamander for a second tattoo. She
+            remembers how she discovered the best image so far at a place close to Olivia&#8217;s
+            home in Belgium. She does not find one she likes in this studio&#8217;s catalogue, but
+            shares that it is probably wiser to wait until she turns eighteen anyway, so that her
+            parents cannot object. The girls discuss the ideal placement of tattoos and Andrea
+            shares that her aunt in Germany runs a tattoo studio, stressing that she does not do the
+            tattoos herself, anymore, but that she manages the store. I note that it seems important
+            to stress her aunt&#8217;s higher position in the business. We pass a store with ethnic
+            clothing that I like and, in the next store, I spot a pair of trousers. Mia then takes a
+            photo of them so I can eventually get a pair made in the same style, as this pair is too
+            expensive for me. We stroll along the lanes, window-shopping, enjoying the shared
+            practices of &#8220;doing fashion&#8221; (<xref
+              id="ID1c9c7c72-1a77-4821-a014-3bde602629dc" ref-type="bibr"
+              rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">Liechty 2003</xref>); buying, trying on,
+            or talking about clothes. These topics are familiar to me and I easily join their
+            conversations. </p>
+          <p>All the while, the students take pictures for the photo documentation project on
+            globalization. Their research project allows me to feel comfortable with my own research
+            agenda. This is not the norm. Being with them sometimes feels a lot like being with
+            friends, while at other moments my academic agenda becomes central again and my role
+            shifts. One night, for example, when we were cooking together at Kressi&#8217;s house
+            and getting ready to go to a club downtown, I felt very much like a part of the group.
+            Then the girls started to discuss outfits and Olivia mentioned her Louboutins
+            (infamously high-heeled designer shoes) and everything changed. My facial expression
+            must have revealed my inner surprise at her having such expensive stilettos at the age
+            of sixteen. Antonia asked what I was thinking about and whether I had found something to
+            write about. I felt a little embarrassed, as I was discovered again as the researcher,
+            but then admitted what had shocked me. Revealing my thoughts, the girls all started
+            laughing, leaving me confused for a moment until they all shouted that these shoes were
+            of course only copies from one of Shanghai&#8217;s many &#8220;fake markets.&#8221; I
+            realized, in that moment, that my shifting from friend to researcher, though not easy
+            for me, was okay with &#8220;the girls.&#8221; They always met my research project with
+            interest and continuously asked me about my latest writings, findings, and ideas. While
+            certain intimate topics gave me the feeling of having passed a threshold towards trust
+            and acceptance, other topics were obviously triggered by my mere presence and research
+            questions. The discussions about language skills, nationalities, and the
+            &#8220;expatriate bubble&#8221; on the way to Tianzifang, for instance, are in strong
+            relation to my research themes as the girls understand them. Nonetheless, these topics
+            do not seem new to them, but seem to have been discussed many times before. Thus it is
+            often the apparent routineness of certain conversational themes that leads me to
+            conclude that these issues are important to them. </p>
+          <p>We step into a small shop selling knickknacks and Olivia starts talking about her
+            situation with her ex-boyfriend who is leaving Shanghai. They have just separated and
+            the girls wonder if she should still give him the present she has prepared for
+            him&#8212;a slideshow with pictures of their time in Shanghai, accompanied by
+            &#8220;their&#8221; songs. The girls suggest she should simply ask him if he still wants
+            it. I silently think about the difficulties of first romantic relationships that are
+            constantly in danger of being torn apart by parental decisions to move on. The girls, on
+            the contrary, seem quite pragmatic.</p>
+          <p>We move on, stroll through a boutique selling leather bags, and another offering all
+            kinds of hats. Finally, we all sit down on the pavement, exhausted from all the
+            impressions surrounding us. I take a few pictures. The girls talk about their prom next
+            year and their ideas for a talent night that they want to propose for the next term. We
+            then hop into a cab to meet the rest of their class and the teacher for dinner, a
+            discussion of the excursion, and the exchange of photos at an American diner.</p>
+        </sec>
+        <sec>
+          <title>3.2 Fieldwork with &#8220;the boys:&#8221; repulsive moments and aesthetic
+            jellyfish</title>
+          <p>In the beginning, the all-boys group included Bjorn, Alex, Peter, Don, Marco, and
+            Giovanni. They were later joined by Bjorn&#8217;s brother and two students from the
+            grade below. When I first interacted with them at school, I was, for some reason, a
+            little bit intimidated, particularly by Alex, who is the oldest in class and who I had
+            seen become angry at a fellow student. However, during the first interview with him,
+            Bjorn, and Don, I find them all to be quite nice and eager to share their viewpoints.
+            They are smoking heavily during the interview and particularly like to showcase their
+            nightlife experiences. Alex, even until the end of my fieldwork stay, sometimes
+            accidently uses the German polite form &#8220;Sie&#8221; to address me and our
+            relationship remains distant, albeit friendly. Although I have never conducted a
+            follow-up interview with Don, I have had several casual conversations with him. Bjorn
+            and I have become closer over the months, mainly through sharing music, since we both
+            like the same reggae artists. I conduct two individual follow-up interviews with him.
+            The beginning of my relationship with Peter and Marco is different. We talk outside of
+            school, at the club Mural, before I hold their initial interviews. These two boys are in
+            a different class from the one I regularly visit. Besides a long first interview with
+            the two of them, I conduct a follow-up interview with Peter alone in June 2012.
+            Giovanni, although we have interacted before, is first interviewed during my short stay
+            in September 2011 and again in June 2012. All the boys are self-reflective and
+            interesting to talk to. They classify themselves as the peer group that goes out,
+            drinks, consumes cannabis, feels that school is not the most important thing in life,
+            and highly values people who are equally cool, relaxed, or&#8212;as they put
+            it&#8212;&#8220;chilled.&#8221; </p>
+          <p>These two groups I accompany, who label each other as &#8220;the boys&#8221; or
+            &#8220;the girls&#8221; respectively, sometimes unite their nightlife activities.
+            Occasionally exploring the boys&#8217; nightlife activities in the spring of 2011,
+            without &#8220;the girls&#8221; with whom I have already built a stronger relationship,
+            feels strange at first. Nonetheless, I soon enjoy accompanying &#8220;the boys&#8221; to
+            the club Mural on Friday nights. Over weeks of joining them at school, sharing dinner,
+            partying, and discussing their lives with them, I feel increasingly comfortable around
+            them and find their company and outlook on life enjoyable. But just when I get to this
+            point of ease in our interaction, we come to the last time I go out with them before I
+            have to leave Shanghai in July 2011. The school year has ended.</p>
+          <p>That summer night in July, the boys and girls at first hang out together at Mural,
+            before the girls move on to a different club. I decide to stay behind with the boys and
+            step outside to get some air and to see what is going on. The boys discuss going to
+            another club called Shelter. But standing outside, talking about music, location, and
+            the like, everyone seems to be waiting for something. Listening to the ongoing
+            conversations, I begin to understand that a decision about the next location cannot be
+            made without Alex, who has disappeared with a Chinese girl in the back alley.
+            Bjorn&#8217;s brother, who joined the group recently, goes back and keeps some of the
+            boys up to date on what is going on. I start feeling uncomfortable and I am unsure of
+            how to behave. Are the boys bragging or joking? What is really happening back there?
+            While I am trying to figure out my own position on the matter, an extremely drunk
+            Chinese girl appears on the scene. Staggering on her high heels she finally opts to sit
+            down on the stairs. I watch her as she leans back against Matthias who has come along
+            this night and happened to sit on the stairs. Matthias, who used to be in a band with
+            Paul&#8212;whose story I told in the introduction&#8212;and who has been extremely
+            helpful by introducing me to students from other schools, only entered the 11th grade
+            recently. The Chinese girl leaning back against Matthias provokes much amusement among
+            the group. The boys joke and tease Matthias. The funny conversation and light amusement,
+            however, suddenly change when one of the boys suggests peeing on the girl. Thinking this
+            is a joke, I am startled when the others join in the conversation by suggesting
+            different angles from which to undertake this disgusting and humiliating act. Shocked at
+            this behavior by the boys whom I considered to be so mature, I intervene and openly
+            state that I am disgusted by the idea and that I will not allow it to happen. I leave to
+            get water and coke for everyone, telling them that they apparently need to sober up.
+            While giving a bottle of water to the Chinese girl, I start talking to her. I try to
+            learn her address and maneuver her toward a cab. She vomits. I then put her into a taxi
+            and give the driver her address. Bjorn tells me off: I ruined all the fun, he says. I
+            should stop acting like a social worker and will not be allowed to cite his interviews
+            any longer. I know that, for the first time, I am stretching my boundaries from
+            participating to interrupting.<xref ref-type="fn" rid="bibd2e257">11</xref> I try to
+            stay calm and stick to my opinion. He finally asks me for a sip from my drink, which I
+            offer him jokingly, under the condition that he lets me cite his interviews, again. He
+            agrees; crisis averted. When Alex appears back on the scene, everyone applauds, I am too
+            tired or too cowardly to try to figure out what actually happened and the whole group
+            moves on to Shelter, another club. Some of the boys purchase marijuana at a street
+            barbecue stall and we sit outside, waiting for the club to stop charging at 3 a.m. After
+            dancing only for a bit, I soon leave for my apartment, still shocked to have seen such a
+            different side of the boys. Is this typical &#8220;adolescent&#8221; behavior, I wonder?
+            Is this the infamous &#8220;peer pressure?&#8221; What, if anything, does all of this
+            have to do with racism? Do we have to understand such behavior or fantasies in the light
+            of performances of masculinity? </p>
+          <p>Soon afterward, I pack these ambivalent thoughts along with all my belongings and leave
+            for Germany. When I return to Shanghai for follow-up visits in September 2011 and June
+            2012, I have great discussions with all of the boys, again. However, the experience of
+            that night remains in the forefront on my mind. During my last follow-up visit,
+            graduation is immanent and everyone is reminiscing about the good times they have had in
+            Shanghai. The troublesome night at Mural and Shelter comes up, too. Stories of other
+            nights follow, about Marco falling asleep and the other boys forgetting him in front of
+            a club, where he later woke up minus his phone and cash. Laughter accompanies these
+            stories. Another anecdote is shared about how someone else fell asleep and one of them
+            stuck his penis in the sleeper&#8217;s ear. Laughter again. I am startled again by the
+            combination of tight friendships and, at the same time, brutal practices of teasing,
+            mobbing, and physical harassment. I become particularly interested in these more brutal
+            aspects and hierarchies during this last stay in the summer of 2012.</p>
+          <p>&#8220;The boys&#8221; regularly meet at Alex&#8217;s place. &#8220;The girls&#8221;
+            are not allowed to come to these gatherings and even Kressi, who has since become
+            Bjorn&#8217;s girlfriend, has called these regular gatherings &#8220;exclusive,&#8221;
+            so I think it impossible to join. After an interview with Peter, however, he offers to
+            contact Alex, Bjorn, and Don to ask when they have time to record another interview.
+            While downtown for an interview with Andrea, Peter texts me, saying I should join the
+            other boys at an Indian restaurant in the outskirts of the city and conduct the
+            interview there. However, it is almost an hour drive and it is impossible for me to make
+            it on time. After texting back and forth, we agree that Peter and I will join them
+            later, at Alex&#8217;s parents&#8217; house. I am excited to join them at last for their
+            ritual boys&#8217; evening. </p>
+          <p>At 10 p.m. I am waiting for Peter in front of a Lianhua supermarket close to the
+            compound gate. He calls and arranges for Bjorn&#8217;s brother to pick me up on his
+            scooter. He pulls up a few minutes later, I jump on, and we ride through the dark,
+            through the shiny new and empty lanes of the compound, passing well-trimmed lawns and
+            big villas. Mid-way I spot Peter, headphones on, cycling on his bike. After several
+            turns, left and right, we arrive. I jump off and open the gate for the boys to drive
+            inside. </p>
+          <p>I follow Peter and Bjorn&#8217;s brother into the house via the terrace, through the
+            huge living room, and upstairs, into Alex&#8217;s room. Here, about ten boys are lying
+            and sitting on the couch and the big bed, smoking, drinking beer, and watching a movie.
+            A dog greets me and, in my insecure situation, not knowing what to do, I focus on the
+            dog and start to pet it. The TV screen shows sharks tearing something or someone apart.
+            Cuddling the dog to keep my eyes away from the screen, I panic at the thought of being
+            stuck watching a horror movie with a bunch of drunken and stoned teenage boys. Trying to
+            calm myself&#8212;how grateful I am to the dog!&#8212;I soon realize, to my surprise,
+            that we are only watching </p>
+          <p>Some of the guys step out onto the adjacent balcony to smoke marijuana and I get a spot
+            on the couch between one of Antonia&#8217;s friends&#8212;a former student at the school
+            but, like me, a temporary guest of the group&#8212;and Giovanni. Antonia's friend
+            curiously asks me why I am here or, as he rephrases it, who I came with. Simply
+            shrugging my shoulders and mumbling something about my interview, I realize that my
+            academic intention does not answer the question. Hardly any girls are allowed to join
+            these gatherings and not all boys, either. When I then respond that Peter invited me,
+            everything seems clear. No further questions asked. Peter, as I later found out in
+            discussions with Bjorn and also some of the girls, is thought to be one of the heads of
+            the group. He can therefore invite anyone, even me. I open a beer and try to grasp the
+            overall mood. I realize that the interview is a stupid idea that night and decide that
+            witnessing what is going on is more important than interrupting their &#8220;boys&#8217;
+            night&#8221; rituals. I am startled at how relaxed (or perhaps stoned) everyone is, and
+            how nicely they behave. Instead of the expected roughness and meanness, I find the boys
+            lying next to each other on the bed, leaning against each other, almost hugging,
+            watching a beautiful movie, and making loud remarks on the aesthetics of water plants
+            and jellyfish. When the movie abruptly stops because only the first part has been
+            downloaded, the boys want to put music on. Bjorn, Don, and Peter are calling for
+            Anton&#237;n Dvo&#345;&#225;k&#8217;s 9th symphony. The music is played at a high volume
+            and everyone is asked to be quiet. Peter lies flat on his stomach on the bed with his
+            head reaching over the end, nodding along with the rhythm. Bjorn moves his arms in a
+            conductor&#8217;s manner. It is a beautiful sight: ten rough boys, lying around humming
+            along with the melodies of Dvo&#345;&#225;k&#8217;s &#8220;From the New World.&#8221;
+            They had discussed this piece for months in music class and now seem to love it. Alex
+            expresses how he finds the oboe a beautiful instrument. An oboe solo, extremely moving
+            indeed, has preceded his remark. After the symphony ends, two boys get ready to go get
+            food from KFC.<xref ref-type="fn" rid="bibd2e287">12</xref> The way in which Peter and
+            Bjorn give them their orders allows the hierarchies to still shine through a little. We
+            start to watch the movie The Naked Gun 2&#189;. Bjorn laughs loudly at every joke. We
+            stop the movie for some reason. The boys return with the food and some boys leave. A few
+            of them have to go to school the next day. Giovanni also leaves. Peter enjoys his
+            chicken wings. Don only talks about the news of the &#8220;Abistreich&#8221;
+            cancellation (he received an email on his smart phone).<xref ref-type="fn"
+              rid="bibd2e297">13</xref> We watch a little more of The Naked Gun 2&#189;. Peter and
+            Don want to leave, so I opt to join them and we share a cab. I chip in 20 RMB, and they
+            drop me off in front of the guesthouse that I am staying in.</p>
+          <p>I enjoy &#8220;the boys&#8217;&#8217;&#8217; company and their outlook on life, and am
+            particularly intrigued by their ways because their behavior and relationships toward
+            each other are less familiar to me than those of &#8220;the girls.&#8221; At the same
+            time, the group dynamics and their behavior trouble me and I am uncertain about what is
+            performed for me and what is really going on in their lives. As I get to know them
+            individually, however, I become more and more familiar and less intimidated by their
+            ways as a group. At the same time, the moments spent with the group help me to better
+            understand the gendered experiences of being an expat teen in Shanghai, as well as to
+            follow their individual stories.</p>
+          <p>The next chapter focuses on these personal stories and introduces four individuals: two
+            of them, Antonia and Bjorn, as my primary contacts for &#8220;the girls&#8221; and
+            &#8220;the boys,&#8221; Arnaud, as someone from a different school, and finally Xia, as
+            someone who is less involved in activities outside of school.</p>
+        </sec>
       </sec>
       <sec>
         <title>Chapter 4: Meeting Individuals: Four Students&#8217; Narratives of the Self</title>
-        <p>Cultural identities are the points of identification, the unstable points of
+        <p> 
+          <disp-quote id="SQ2"> <p>Cultural identities are the points of identification, the unstable points of
           identification or suture, which are made, within the discourses of history and culture.
           Not an essence but a positioning (<xref id="ID26f78149-b58b-4efb-ac6c-3ac7f73e3046"
             ref-type="bibr" rid="IDff8ef84b-d848-4489-b33e-fceab8e0f6a9">Hall 1990, 226, emphasis in
             the original</xref>).</p>
-        <p>In the realm of postcolonial studies, many authors (see, among others, Bhabha [<xref
+        </disp-quote>
+      </p>
+      <p>In the realm of postcolonial studies, many authors (see, among others, Bhabha <xref
             id="ID1d749dd7-9f45-4d8e-858e-3a1ffc411349" ref-type="bibr"
-            rid="ID4b6740e8-7911-4bcb-af8f-a88daa1db5e2">1994</xref>]; Hall 1990; <xref
+            rid="ID4b6740e8-7911-4bcb-af8f-a88daa1db5e2">1994</xref>; Hall 1990; <xref
             id="IDbc418e9c-c0b1-41c9-baa5-120a64f9dbea" ref-type="bibr"
             rid="ID8c04ec18-8198-4956-a741-68bdfcaa6d69">1994</xref>; 1996a; and 1997; Brah 1996)
           have pointed out how the cultural construction of (collective) identities plays an
@@ -1026,24 +1048,18 @@
           <p>During our interviews, Antonia looks at the different influences on her life and tries
             to grasp and narrate them from just such a perspective, to demonstrate that she feels
             uncomfortable positioning herself as being either &#8220;German&#8221; or
-            &#8220;Chinese.&#8221; Instead of simply making &#8220;expatriate&#8221; (<xref
-              id="ID36e3f555-4417-4ffe-8475-3adb5daf44f4" ref-type="bibr" rid="TO_LINK">or,
-              similarly, &#8220;Third Culture Kid&#8221;</xref>) her main identity reference, she
+            &#8220;Chinese.&#8221; Instead of simply making &#8220;expatriate&#8221; (or,
+              similarly, &#8220;Third Culture Kid&#8221;) her main identity reference, she
             strategically claims a hybrid form of urban citizenship to express her narrative of the
             self: &#8220;I consider myself Shanghainese.&#8221; This positioning is not about
             rejecting being Chinese, German, or expat, but about embracing all these points of
             references in its amalgamated state. This is of course her subjective positioning and
-            does not necessarily reflect the common discourse of being Shanghainese (<xref
-              id="ID3352a308-170a-401f-993f-9d017156fd98" ref-type="bibr" rid="TO_LINK"
-              >shanghairen</xref>), which, despite the idea of migration and Westernization making
-            up much of the discourse on Shanghai&#8217;s specific culture (<xref
-              id="ID85036637-f27a-4e99-82d6-e9704c92b70c" ref-type="bibr" rid="TO_LINK"
-              >haipai</xref>) (<xref id="ID290c5c49-d0be-4603-873d-0fd6566c610c" ref-type="bibr"
-              rid="ID3b70c61c-1bee-46b5-93cd-9bd400b58f41">Farrer 2002, 88&#8211;92</xref>), is
+            does not necessarily reflect the common discourse of being Shanghainese (shanghairen), which, despite the idea of migration and Westernization making
+            up much of the discourse on Shanghai&#8217;s specific culture (haipai) (<xref id="ID290c5c49-d0be-4603-873d-0fd6566c610c" ref-type="bibr"
+                rid="ID5c2c952c-a8a2-417a-8b51-0b4fd2a889f4">Farrer 2002, 88&#8211;92</xref>), is
             usually tied to being born in Shanghai, speaking Shanghainese, and having a Shanghai
-            residence permit (<xref id="ID983e4a25-3842-4f2d-b43e-dd7aacbe0c27" ref-type="bibr"
-              rid="TO_LINK">hukou</xref>) (<xref id="IDfa2df50d-7c03-47ba-80a5-75f7f782380a"
-              ref-type="bibr" rid="TO_LINK">see Schoon 2007</xref>). As Antonia points out, the
+            residence permit (hukou) (<xref id="IDfa2df50d-7c03-47ba-80a5-75f7f782380a"
+              ref-type="bibr" rid="ID9c3e188d-cfab-4885-9701-f423a29c703a">see Schoon 2007</xref>). As Antonia points out, the
             Chinese locals might not accept her self-identification as Shanghainese. </p>
           <p>While drinking coffee and gazing at the passing cars, bikes, bicycles, and pedestrians
             on Hengshan Road, Antonia explains her close relationship to the city:</p>
@@ -1074,14 +1090,13 @@
           </p>
           <p>Antonia speaks enthusiastically about exploring Shanghai and experiencing the urban
             environment. The city provides a host of impressions that energize her. Antonia feels
-            that Shanghai is her home (<xref id="ID279f7447-eb00-410e-81fc-bf61698f1ffa"
-              ref-type="bibr" rid="TO_LINK">see Part II, Chapter 2 for a detailed
-            discussion</xref>). To her, the urban experience of living in Shanghai is a point of
+            that Shanghai is her home (see Part II, Chapter 2 for a detailed
+            discussion). To her, the urban experience of living in Shanghai is a point of
             identity reference that bridges the various differences in her life because, to her, the
             city includes all of them.</p>
           <p>Antonia&#8217;s story shows, in the words of Stuart Hall (<xref
               id="ID6b25dc3d-2fc9-43a1-be64-fad224a67e8f" ref-type="bibr"
-              rid="ID79026dc3-6162-4949-b9fa-f74413e509f1">1990, 227</xref>), that &#8220;the
+              rid="IDff8ef84b-d848-4489-b33e-fceab8e0f6a9">1990, 227</xref>), that &#8220;the
             boundaries of difference are continually repositioned in relation to different points of
             reference.&#8221; While Antonia stresses her ways of bridging the boundaries between
             German, Chinese, and expatriate circles that she experiences as being tied to certain
@@ -1163,7 +1178,8 @@
               rid="ID2a9f3b82-c8a8-43c3-8cc9-1dd01fa3b7ac">2005</xref>) has likewise found
             underlying the concept of TCKs and which led her to criticize TCK identity as being an
             unproductive means of coping with the migration experience. Kn&#246;rr, based on her
-            study of German expatriate youths who lived in Africa, argues:</p>
+            study of German expatriate youths who lived in Africa, argues:</p>   <p>
+        <disp-quote id="IQ4">
           <p>Creating a &#8220;TCK&#8221; world and ideology of difference as a result of having
             been brought up in an expatriate environment may well not be primarily a sign of actual
             third-culturedness, but of a transformation of an expatriate ideology of &#8220;natural
@@ -1173,7 +1189,9 @@
             its further personal development (<xref id="ID693d0c6c-3f41-48ce-b281-f8435993d864"
               ref-type="bibr" rid="ID75dc4fec-53ac-430d-b02d-1b6eae93b4d7">Kn&#246;rr 2005,
               75</xref>).</p>
-          <p>The expatriate youths I accompanied constantly experienced how a high social standing
+          </disp-quote>
+      </p>
+      <p>The expatriate youths I accompanied constantly experienced how a high social standing
             is attributed to them due to their financial means in comparison to the local living
             standard, their private and international education, their many travels, and their
             multi-lingualism. Everybody believes they will be the makers of the future, whether this
@@ -1865,222 +1883,225 @@
       </sec>
       <sec>
         <title>Chapter 5: The Common Ground: Capturing the Heterogeneous Experiences of Expatriate
-            Youths</title>
-          <p>Emily: <italic>It is such a hard question to answer that. Where are you from? [&#8230;]
-              And you can't.</italic>
-          </p>
-          <p>At different places, times, in relation to different questions, the boundaries are
-            re-sited. They become, not only what they have, at certain times, certainly
-            been&#8212;mutually excluding categories, but also what they sometimes
-            are&#8212;differential points along a sliding scale (<xref
-              id="IDf05ebb2b-38af-45f8-b6b7-2a1fc7c018e0" ref-type="bibr"
-              rid="IDff8ef84b-d848-4489-b33e-fceab8e0f6a9">Stuart Hall 1990, 228</xref>).</p>
-          <p>My introduction of expatriate youths in general, the first ethnographic descriptions of
-            their life at school, and the interviews with several individuals that appear here have
-            already shown how heterogeneous experiences of growing up as a young, international
-            school student in Shanghai can be. To do justice to this heterogeneity, I continue to
-            share many direct voices from various students and their different migration experiences
-            throughout this ethnography. </p>
-          <p>During eleven months of fieldwork from mid-August 2010 to early July 2011,<xref
-              ref-type="fn" rid="bibd2e1096">37</xref> a short stay after the summer school break in
-            September 2011, and another two-week stay in May/June 2012, I held a total of thirty-one
-            group and individual interviews with forty-three students.<xref ref-type="fn"
-              rid="bibd2e1103">38</xref> The majority of these students were between fifteen and
-            eighteen years old and enrolled at the German school I introduced above, or a
-            Singaporean, British, French, or American Christian school. I additionally conducted one
-            expert interview with a school counselor at another American school and discussed my
-            research topic with a few teachers, but decided to use these as background information
-            only. Similarly, six months of prior fieldwork on the adult expatriate community in
-            Shanghai, which I conducted in 2007, provided further context for my work.<xref
-              ref-type="fn" rid="bibd2e1110">39</xref> This ethnography, however, is based on a
-            voice-centered approach that focuses on the students&#8217; own words and perspectives
-            because youths&#8217; own accounts of migration experiences have largely been ignored
-            until recently (<xref id="IDc764f338-0285-4480-8a1a-62622a6ac5b1" ref-type="bibr"
-              rid="ID6a106188-04ca-465c-b7ac-3af5f6de72f1">see Dobson 2009</xref>).</p>
-          <p>The questions for the group discussions and the first round of individual interviews
-            focused on addressing issues related to moving to Shanghai and everyday activities
-            there. Both the group discussions and the individual interviews were semi-structured.
-            This means that, although a specific set of questions was posed, these could vary in
-            order and emphasis to offer teenagers and myself enough flexibility to introduce and
-            respond to other issues. This approach therefore acknowledged my own research agenda to
-            understand specific issues from the teenagers&#8217; point of view, as well as the
-            students&#8217; agency by providing space for them to present new topics. The second
-            round of semi-structured interviews dealt with new issues that were either
-            under-represented or unclear in the first round, for instance reflections upon the
-            students&#8217; position or integration in China and the experience and meaning of
-            specific locations in Shanghai. These were conducted at the end of the school year in
-            spring/summer 2011 or after the break, during my return visit in September 2011. A third
-            round of interviews with the same students focused on the topic of leaving and plans for
-            the immediate future and was recorded during the last follow-up stay in May&#8211;June
-            2012. Between 2012 and 2015, further interviews with students were conducted in Germany
-            to discuss issues of returning. </p>
-          <p>All interviews were transcribed, coded, and interpreted in the context of my field
-            notes and theoretical foundations.<xref ref-type="fn" rid="bibd2e1126">40</xref> The
-            program Atlas.ti ensured a systematic process.<xref ref-type="fn" rid="bibd2e1135"
-              >41</xref> Throughout the interpretation, I worked with the original quotes and only
-            translated German quotes into English as a very last step in my text production. For the
-            final translations, I omitted some fillers, repetitions, and pauses for better
-            readability. Due to my focus on the youth&#8217;s own voices, these interviews form the
-            centerpiece of my ethnography. I also worked with various visual materials and methods
-            to gain further perspectives on the youths&#8217; experiences.<xref ref-type="fn"
-              rid="bibd2e1142">42</xref> While visual materials are included throughout the
-            ethnography, five images were selected to introduce each of the book&#8217;s five parts.
-            These images aim to provide a space for each part&#8217;s ethnographic and theoretical
-            arguments to unfold. </p>
-          <p>Numerous, free, English-language magazines that circulate in Shanghai, as well as
-            advertisements, flyers, websites, and online forums provided further insights into the
-            lifestyles of the expatriate community.<xref ref-type="fn" rid="bibd2e1162">43</xref> As
-            part of his inquiry into middle class youth culture in Nepal, anthropologist Mark
-            Liechty (<xref id="ID6e2800e0-4746-4b24-a579-258dd79cfbb9" ref-type="bibr"
-              rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">2003</xref>) read magazines targeted at
-            Nepali teenagers as part of a &#8220;global, intertextual media assemblage that
-            constructs its own privileged world of reality-in-images.&#8221; He further writes,
-            &#8220;it is onto this transnational public sphere, the media-assembled space of
-            imagination, that local merchants project their dreams of a local &#8216;youth
-            culture&#8217;&#8221; (<xref id="ID827d71c1-6160-4bf0-b39a-3c4549b309f2" ref-type="bibr"
-              rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">ibid., 219</xref>). Following
-            Liechty&#8217;s understanding, I collected media in Shanghai to understand how an
-            expatriate culture or community is created. Liechty&#8217;s concept of media assemblage
-            as &#8220;an intricate web of linkages that promote and channel consumer desires in
-            never-ending circuits&#8221; (<xref id="ID445be377-1556-4e37-8bd2-9d3ecff7836f"
-              ref-type="bibr" rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">ibid., 260</xref>)
-            illuminates how media can fuel, as Brosius (<xref
-              id="ID0c79f9c3-c66b-490c-8834-eff4a823ea07" ref-type="bibr"
-              rid="ID00a90000-aab6-4993-81ab-60e0355aa290">2010, 37</xref>) has phrased it, &#8220;a
-            consumer ethic that affirms and &#8216;naturalises&#8217; cultural values and habitus of
-            the middle class&#8221; (and, in my case, the expatriate community). The media
-            assemblage (<xref id="ID79b7eb8c-c322-48fb-b299-85f5a81b9026" ref-type="bibr"
-              rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">Liechty 2003 </xref> and <xref
-              id="IDcfbdb8f1-f683-4bd7-a77c-6061db21d617" ref-type="bibr"
-              rid="IDb32fb48a-8751-4a82-b704-3fab8c192ec9">Brosius 2011</xref>) functions as a
-            methodological tool in the quest for a wider context of how expatriate communities are
-            produced by tracing expatriates&#8217; consumption, education, work, travel, and leisure
-            habits. The magazines and forums proved particularly helpful because their main purpose
-            was to introduce newcomers to Shanghai to the expat lifestyle and consumption habits. In
-            her examination of practices of the new middle class in India, Brosius pinpoints
-            media&#8217;s potential for offering an introduction or guidance: &#8220;These
-            intertwined forms of media are crucial when it comes to their capacity to educate
-            &#8216;uncultured&#8217; newcomers, creating immediacy and intimacy&#8221; (<xref
-              id="IDcfbdb8f1-f683-4bd7-a77c-6061db21d616" ref-type="bibr"
-              rid="ID00a90000-aab6-4993-81ab-60e0355aa290">2010, 36</xref>). The media assemblage
-            facilitates understanding the community&#8217;s current discourses and contextualizes my
-            focus on expatriate teenagers.</p>
-          <p>Additionally, I collected mental maps at the end of several group discussions and
-            during a geography class. Thirteen students at the German school, three at a British
-            school, seventeen students from a Singaporean school, and one student from an American
-            school were asked to record on paper their mental maps of everyday, important places in
-            Shanghai. Mental maps, a common method in geographical research, are particularly useful
-            for understanding everyday spatial practices. Mental mapping allows the research partner
-            to establish a focus from his or her own perspective and thus&#8212;despite being
-            limited by a guiding question&#8212;leaves more room for subjective experiences than
-            interviewing alone (<xref id="IDd2234122-cb44-4153-8826-6d2015b219bf" ref-type="bibr"
-              rid="IDb7e78d3d-a9d1-4b65-8411-4fecf503c9b1">Ploch 1995, 24</xref>). Consequently, the
-            drawings of students&#8217; &#8220;personal Shanghais&#8221; are subjective
-            interpretations based on their active reflections and ways of giving spaces meaning
-              (<xref id="ID82b775cf-5094-4c63-8fca-fc6314136a06" ref-type="bibr"
-              rid="IDb7e78d3d-a9d1-4b65-8411-4fecf503c9b1">ibid., 25</xref>).</p>
-          <p>The various materials and methods that I employed to capture expatriate youths&#8217;
-            experiences all illustrate the heterogeneity of the group I chose to study. Many factors
-            influence their transient time in Shanghai, whether it is their first time abroad or
-            their families are constantly moving. The students may need to negotiate differences
-            within their family or between family and school, regardless of whether their parents
-            also have migrant biographies. However, based on the theoretical understanding of
-            transculturality as progress, practice, and perspective that I present in the
-            introduction, we can see that these different individual experiences have several things
-            in common. One major unifying point is the various processes of negotiating cultural
-            identities and forms of belonging that seem to affect all youths growing up on the move;
-            I highlighted these in the four individual narratives provided by Antonia, Bjorn,
-            Arnaud, and Xia, as well as in Paul&#8217;s story in the introduction. These five
-            student portraits and their reflections upon their social worlds and their position
-            within them illustrate how teenagers have myriad ways of forging, performing, and
-            contesting their own feelings and sense of belonging. I do not aim to create a typology
-            that fixes certain experiences into set categories, but my research does show that
-            common ground underlies the students&#8217; diverse experiences and subjective
-            narratives. My own transcultural perspective, my heuristic viewpoint from which I
-            capture the various influences, connections, and practices that youths draw from in
-            their everyday lives, reveals that mobility brings with it the shifting of various
-            points of reference and boundaries. As Stuart Hall&#8217;s quote above describes,
-            expatriate students must find their own place of belonging somewhere within these points
-            of reference and boundaries, be it within a peer group, the expatriate community,
-            Shanghai itself, or to a nation, global youth culture, a privileged class, or a
-            cosmopolitan elite. Due to the shifting places, practices, and people around them, these
-            youths are all aware of the processes of developing ties, of arriving, of the efforts
-            and boundaries that go into feelings of belonging and the construction and performance
-            of cultural and collective identities. My investigation into their daily negotiations
-            shows that, on the one hand, the construction or performance of collective identities
-            entails the creation of cultural (and spatial) boundaries, and that these are sometimes
-            entangled with racism, classism, sexism, or forms of fundamentalism. On the other hand,
-            the creation of such collective cultural identities also opens up a much-needed shared
-            space that helps the individual to cope with daily and emotional challenges when living
-            in a culturally diverse or unknown environment. The concept of TCKs aims to foster such
-            collective identities. My ethnographic examples, however, demonstrate that expatriate
-            youths are often moving along borders that commonly mark collective identities and that
-            they frequently rethink, bridge, cross, and shift these borders to find their own
-            position, their own cultural identity. It is this common ground that I conceptualize as
-            a &#8220;transcultural perspective.&#8221;</p>
-          <p>Antonia, the child of a Chinese-German marriage, formulated her transcultural
-            perspective as an experience of borders between being &#8220;Chinese&#8221; and
-            &#8220;German&#8221; and chose to claim Shanghai as the major source of her hybrid
-            cultural identity. Bjorn, who grew up in a small village in Germany, particularly
-            highlighted his awareness of class and class differences when contemplating the
-            influence that the move to Shanghai had on his life. Arnaud, a French-educated, Belgium
-            national whose Chinese parents moved to Europe to eventually return to Shanghai,
-            reflected on and articulated his worries about feeling different from his parents.
-            Chinese student Xia, enrolled at the German school, expressed his general awareness of
-            borders between himself and his fellow students who are European nationals, particularly
-            in regard to the constraints his Chinese passport and family background place on him. He
-            also reflected upon the difficulties of dealing with differences between school and
-            home. </p>
-          <p>Their accounts demonstrate that these teenagers are very interested in sharing and
-            discussing their views, in opening up a shared space in which they can articulate their
-            transcultural perspectives, and investigating the roles of mobility, cultural practices,
-            and differences in their lives. The &#8220;narratives of the self&#8221; (<xref
-              id="IDd6f7223d-d270-4298-84f6-bb1d0db1f075" ref-type="bibr"
-              rid="ID16d2619c-37c2-4576-a4e0-8ac07186369a">Giddens 1991</xref>) that the expatriate
-            youths offered during interviews were triggered by questions about home or the
-            challenges they faced, but were often also introduced by the teenagers themselves. </p>
-          <p>These self-reflective practices of re-positioning demonstrate, as I have laid out in
-            the introduction, that we should move away from grouping such experiences under the
-            static TCK label and employ transcultural perspectives that allow us to understand the
-            flexibility of youths&#8217; practices and identities, as well as their ways of drawing
-            boundaries. Upon engaging with this theoretical framework, it becomes clear that taking
-            a transcultural perspective is exactly what these youths do in order to process their
-            many moves and to grasp the shifting points of identification in their lives. At first
-            glance, these transcultural perspectives may stand in contradiction to students&#8217;
-            everyday spatial practices of demarcation and class-consciousness that I discuss in
-            relation to housing in Part III, Chapter 2.1 and the community of international schools
-            in Part III, Chapter3. However, as discussed in the introduction, mobility can evoke
-            both a desire for stability and a desire to broaden one&#8217;s point of view to manage
-            the differences one experiences. Dwelling on the move itself does not eliminate, but
-            rather fuels the wish to create familiar spaces, despite the next move being on the
-            horizon. This dialectic becomes visible in more detail in the coming chapters, which
-            zoom in on the students&#8217; everyday lives in Shanghai. While my concept of
-            transcultural perspectives proves invaluable to understanding the experiences arising
-            from these shifting borders and the subsequent emergence of new, subjective forms of
-            cultural identity, it also requires a detailed ethnographic perspective that brings
-            daily experiences to the fore, a necessity that became apparent in my introductory
-            example of Paul&#8217;s narrative, which seems rather insubstantial for lacking it.
-            Therefore, a solid analysis of everyday practices is necessary for understanding how
-            individuals gain transcultural perspectives and the meanings they assign to them.</p>
-          <p>Despite individual differences in how they deal with moving from one city or country to
-            the next, the expatriate students in this ethnography all share the challenge of
-            maintaining old ties while creating new ones in new communities. Their moves are what
-            Giddens (<xref id="ID1dbefe91-a4bb-4c57-99bf-258a56c6c28e" ref-type="bibr"
-              rid="ID16d2619c-37c2-4576-a4e0-8ac07186369a">1991, 112&#8211;114</xref>) calls
-            &#8220;fateful moments,&#8221; meaning &#8220;times when events come together in such a
-            way that an individual stands, as it were, at a crossroads in his existence&#8221;
-              (<xref id="ID2c7c143a-0aa0-4753-bbb3-1b628c409fd4" ref-type="bibr"
-              rid="ID16d2619c-37c2-4576-a4e0-8ac07186369a">ibid., 113</xref>). This ethnography
-            highlights these crossroads and the changes privileged migration brings with it by
-            recounting the move to and away from Shanghai. While writing from my point of view,<xref
-              ref-type="fn" rid="bibd2e1188">44</xref> I understand their activities and emphasis on
-            exploring Shanghai as a means of dealing with the difficulties the move forced them to
-            confront, by linking everyday practices to their migration experiences. While focusing
-            on the small-scale processes of everyday life, the next four parts therefore trace and
-            examine the larger themes of leaving (Part II), arriving in Shanghai (Part III), living
-            there (Part IV) and, finally, moving on (Part V).</p>
-        </sec>
-      
+          Youths</title>
+        <p>
+          <disp-quote id="SQ3">
+            <p>Emily: <italic>It is such a hard question to answer that. Where are you from? [&#8230;]
+            And you can't.</italic>
+        </p>
+        </disp-quote>
+        </p>
+        <p>
+          <disp-quote id="SQ4">
+        <p>At different places, times, in relation to different questions, the boundaries are
+          re-sited. They become, not only what they have, at certain times, certainly
+          been&#8212;mutually excluding categories, but also what they sometimes
+          are&#8212;differential points along a sliding scale (<xref
+            id="IDf05ebb2b-38af-45f8-b6b7-2a1fc7c018e0" ref-type="bibr"
+            rid="IDff8ef84b-d848-4489-b33e-fceab8e0f6a9">Stuart Hall 1990, 228</xref>).</p></disp-quote>
+        </p>
+        <p>My introduction of expatriate youths in general, the first ethnographic descriptions of
+          their life at school, and the interviews with several individuals that appear here have
+          already shown how heterogeneous experiences of growing up as a young, international school
+          student in Shanghai can be. To do justice to this heterogeneity, I continue to share many
+          direct voices from various students and their different migration experiences throughout
+          this ethnography. </p>
+        <p>During eleven months of fieldwork from mid-August 2010 to early July 2011,<xref
+            ref-type="fn" rid="bibd2e1096">37</xref> a short stay after the summer school break in
+          September 2011, and another two-week stay in May/June 2012, I held a total of thirty-one
+          group and individual interviews with forty-three students.<xref ref-type="fn"
+            rid="bibd2e1103">38</xref> The majority of these students were between fifteen and
+          eighteen years old and enrolled at the German school I introduced above, or a Singaporean,
+          British, French, or American Christian school. I additionally conducted one expert
+          interview with a school counselor at another American school and discussed my research
+          topic with a few teachers, but decided to use these as background information only.
+          Similarly, six months of prior fieldwork on the adult expatriate community in Shanghai,
+          which I conducted in 2007, provided further context for my work.<xref ref-type="fn"
+            rid="bibd2e1110">39</xref> This ethnography, however, is based on a voice-centered
+          approach that focuses on the students&#8217; own words and perspectives because
+          youths&#8217; own accounts of migration experiences have largely been ignored until
+          recently (<xref id="IDc764f338-0285-4480-8a1a-62622a6ac5b1" ref-type="bibr"
+            rid="ID6a106188-04ca-465c-b7ac-3af5f6de72f1">see Dobson 2009</xref>).</p>
+        <p>The questions for the group discussions and the first round of individual interviews
+          focused on addressing issues related to moving to Shanghai and everyday activities there.
+          Both the group discussions and the individual interviews were semi-structured. This means
+          that, although a specific set of questions was posed, these could vary in order and
+          emphasis to offer teenagers and myself enough flexibility to introduce and respond to
+          other issues. This approach therefore acknowledged my own research agenda to understand
+          specific issues from the teenagers&#8217; point of view, as well as the students&#8217;
+          agency by providing space for them to present new topics. The second round of
+          semi-structured interviews dealt with new issues that were either under-represented or
+          unclear in the first round, for instance reflections upon the students&#8217; position or
+          integration in China and the experience and meaning of specific locations in Shanghai.
+          These were conducted at the end of the school year in spring/summer 2011 or after the
+          break, during my return visit in September 2011. A third round of interviews with the same
+          students focused on the topic of leaving and plans for the immediate future and was
+          recorded during the last follow-up stay in May&#8211;June 2012. Between 2012 and 2015,
+          further interviews with students were conducted in Germany to discuss issues of returning. </p>
+        <p>All interviews were transcribed, coded, and interpreted in the context of my field notes
+          and theoretical foundations.<xref ref-type="fn" rid="bibd2e1126">40</xref> The program
+          Atlas.ti ensured a systematic process.<xref ref-type="fn" rid="bibd2e1135">41</xref>
+          Throughout the interpretation, I worked with the original quotes and only translated
+          German quotes into English as a very last step in my text production. For the final
+          translations, I omitted some fillers, repetitions, and pauses for better readability. Due
+          to my focus on the youth&#8217;s own voices, these interviews form the centerpiece of my
+          ethnography. I also worked with various visual materials and methods to gain further
+          perspectives on the youths&#8217; experiences.<xref ref-type="fn" rid="bibd2e1142"
+            >42</xref> While visual materials are included throughout the ethnography, five images
+          were selected to introduce each of the book&#8217;s five parts. These images aim to
+          provide a space for each part&#8217;s ethnographic and theoretical arguments to unfold. </p>
+        <p>Numerous, free, English-language magazines that circulate in Shanghai, as well as
+          advertisements, flyers, websites, and online forums provided further insights into the
+          lifestyles of the expatriate community.<xref ref-type="fn" rid="bibd2e1162">43</xref> As
+          part of his inquiry into middle class youth culture in Nepal, anthropologist Mark Liechty
+            (<xref id="ID6e2800e0-4746-4b24-a579-258dd79cfbb9" ref-type="bibr"
+            rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">2003</xref>) read magazines targeted at
+          Nepali teenagers as part of a &#8220;global, intertextual media assemblage that constructs
+          its own privileged world of reality-in-images.&#8221; He further writes, &#8220;it is onto
+          this transnational public sphere, the media-assembled space of imagination, that local
+          merchants project their dreams of a local &#8216;youth culture&#8217;&#8221; (<xref
+            id="ID827d71c1-6160-4bf0-b39a-3c4549b309f2" ref-type="bibr"
+            rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">ibid., 219</xref>). Following
+          Liechty&#8217;s understanding, I collected media in Shanghai to understand how an
+          expatriate culture or community is created. Liechty&#8217;s concept of media assemblage as
+          &#8220;an intricate web of linkages that promote and channel consumer desires in
+          never-ending circuits&#8221; (<xref id="ID445be377-1556-4e37-8bd2-9d3ecff7836f"
+            ref-type="bibr" rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">ibid., 260</xref>)
+          illuminates how media can fuel, as Brosius (<xref
+            id="ID0c79f9c3-c66b-490c-8834-eff4a823ea07" ref-type="bibr"
+            rid="ID00a90000-aab6-4993-81ab-60e0355aa290">2010, 37</xref>) has phrased it, &#8220;a
+          consumer ethic that affirms and &#8216;naturalises&#8217; cultural values and habitus of
+          the middle class&#8221; (and, in my case, the expatriate community). The media assemblage
+            (<xref id="ID79b7eb8c-c322-48fb-b299-85f5a81b9026" ref-type="bibr"
+            rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">Liechty 2003 </xref> and <xref
+            id="IDcfbdb8f1-f683-4bd7-a77c-6061db21d617" ref-type="bibr"
+            rid="IDb32fb48a-8751-4a82-b704-3fab8c192ec9">Brosius 2011</xref>) functions as a
+          methodological tool in the quest for a wider context of how expatriate communities are
+          produced by tracing expatriates&#8217; consumption, education, work, travel, and leisure
+          habits. The magazines and forums proved particularly helpful because their main purpose
+          was to introduce newcomers to Shanghai to the expat lifestyle and consumption habits. In
+          her examination of practices of the new middle class in India, Brosius pinpoints
+          media&#8217;s potential for offering an introduction or guidance: &#8220;These intertwined
+          forms of media are crucial when it comes to their capacity to educate
+          &#8216;uncultured&#8217; newcomers, creating immediacy and intimacy&#8221; (<xref
+            id="IDcfbdb8f1-f683-4bd7-a77c-6061db21d616" ref-type="bibr"
+            rid="ID00a90000-aab6-4993-81ab-60e0355aa290">2010, 36</xref>). The media assemblage
+          facilitates understanding the community&#8217;s current discourses and contextualizes my
+          focus on expatriate teenagers.</p>
+        <p>Additionally, I collected mental maps at the end of several group discussions and during
+          a geography class. Thirteen students at the German school, three at a British school,
+          seventeen students from a Singaporean school, and one student from an American school were
+          asked to record on paper their mental maps of everyday, important places in Shanghai.
+          Mental maps, a common method in geographical research, are particularly useful for
+          understanding everyday spatial practices. Mental mapping allows the research partner to
+          establish a focus from his or her own perspective and thus&#8212;despite being limited by
+          a guiding question&#8212;leaves more room for subjective experiences than interviewing
+          alone (<xref id="IDd2234122-cb44-4153-8826-6d2015b219bf" ref-type="bibr"
+            rid="IDb7e78d3d-a9d1-4b65-8411-4fecf503c9b1">Ploch 1995, 24</xref>). Consequently, the
+          drawings of students&#8217; &#8220;personal Shanghais&#8221; are subjective
+          interpretations based on their active reflections and ways of giving spaces meaning (<xref
+            id="ID82b775cf-5094-4c63-8fca-fc6314136a06" ref-type="bibr"
+            rid="IDb7e78d3d-a9d1-4b65-8411-4fecf503c9b1">ibid., 25</xref>).</p>
+        <p>The various materials and methods that I employed to capture expatriate youths&#8217;
+          experiences all illustrate the heterogeneity of the group I chose to study. Many factors
+          influence their transient time in Shanghai, whether it is their first time abroad or their
+          families are constantly moving. The students may need to negotiate differences within
+          their family or between family and school, regardless of whether their parents also have
+          migrant biographies. However, based on the theoretical understanding of transculturality
+          as progress, practice, and perspective that I present in the introduction, we can see that
+          these different individual experiences have several things in common. One major unifying
+          point is the various processes of negotiating cultural identities and forms of belonging
+          that seem to affect all youths growing up on the move; I highlighted these in the four
+          individual narratives provided by Antonia, Bjorn, Arnaud, and Xia, as well as in
+          Paul&#8217;s story in the introduction. These five student portraits and their reflections
+          upon their social worlds and their position within them illustrate how teenagers have
+          myriad ways of forging, performing, and contesting their own feelings and sense of
+          belonging. I do not aim to create a typology that fixes certain experiences into set
+          categories, but my research does show that common ground underlies the students&#8217;
+          diverse experiences and subjective narratives. My own transcultural perspective, my
+          heuristic viewpoint from which I capture the various influences, connections, and
+          practices that youths draw from in their everyday lives, reveals that mobility brings with
+          it the shifting of various points of reference and boundaries. As Stuart Hall&#8217;s
+          quote above describes, expatriate students must find their own place of belonging
+          somewhere within these points of reference and boundaries, be it within a peer group, the
+          expatriate community, Shanghai itself, or to a nation, global youth culture, a privileged
+          class, or a cosmopolitan elite. Due to the shifting places, practices, and people around
+          them, these youths are all aware of the processes of developing ties, of arriving, of the
+          efforts and boundaries that go into feelings of belonging and the construction and
+          performance of cultural and collective identities. My investigation into their daily
+          negotiations shows that, on the one hand, the construction or performance of collective
+          identities entails the creation of cultural (and spatial) boundaries, and that these are
+          sometimes entangled with racism, classism, sexism, or forms of fundamentalism. On the
+          other hand, the creation of such collective cultural identities also opens up a
+          much-needed shared space that helps the individual to cope with daily and emotional
+          challenges when living in a culturally diverse or unknown environment. The concept of TCKs
+          aims to foster such collective identities. My ethnographic examples, however, demonstrate
+          that expatriate youths are often moving along borders that commonly mark collective
+          identities and that they frequently rethink, bridge, cross, and shift these borders to
+          find their own position, their own cultural identity. It is this common ground that I
+          conceptualize as a &#8220;transcultural perspective.&#8221;</p>
+        <p>Antonia, the child of a Chinese-German marriage, formulated her transcultural perspective
+          as an experience of borders between being &#8220;Chinese&#8221; and &#8220;German&#8221;
+          and chose to claim Shanghai as the major source of her hybrid cultural identity. Bjorn,
+          who grew up in a small village in Germany, particularly highlighted his awareness of class
+          and class differences when contemplating the influence that the move to Shanghai had on
+          his life. Arnaud, a French-educated, Belgium national whose Chinese parents moved to
+          Europe to eventually return to Shanghai, reflected on and articulated his worries about
+          feeling different from his parents. Chinese student Xia, enrolled at the German school,
+          expressed his general awareness of borders between himself and his fellow students who are
+          European nationals, particularly in regard to the constraints his Chinese passport and
+          family background place on him. He also reflected upon the difficulties of dealing with
+          differences between school and home. </p>
+        <p>Their accounts demonstrate that these teenagers are very interested in sharing and
+          discussing their views, in opening up a shared space in which they can articulate their
+          transcultural perspectives, and investigating the roles of mobility, cultural practices,
+          and differences in their lives. The &#8220;narratives of the self&#8221; (<xref
+            id="IDd6f7223d-d270-4298-84f6-bb1d0db1f075" ref-type="bibr"
+            rid="ID16d2619c-37c2-4576-a4e0-8ac07186369a">Giddens 1991</xref>) that the expatriate
+          youths offered during interviews were triggered by questions about home or the challenges
+          they faced, but were often also introduced by the teenagers themselves. </p>
+        <p>These self-reflective practices of re-positioning demonstrate, as I have laid out in the
+          introduction, that we should move away from grouping such experiences under the static TCK
+          label and employ transcultural perspectives that allow us to understand the flexibility of
+          youths&#8217; practices and identities, as well as their ways of drawing boundaries. Upon
+          engaging with this theoretical framework, it becomes clear that taking a transcultural
+          perspective is exactly what these youths do in order to process their many moves and to
+          grasp the shifting points of identification in their lives. At first glance, these
+          transcultural perspectives may stand in contradiction to students&#8217; everyday spatial
+          practices of demarcation and class-consciousness that I discuss in relation to housing in
+          Part III, Chapter 2.1 and the community of international schools in Part III, Chapter3.
+          However, as discussed in the introduction, mobility can evoke both a desire for stability
+          and a desire to broaden one&#8217;s point of view to manage the differences one
+          experiences. Dwelling on the move itself does not eliminate, but rather fuels the wish to
+          create familiar spaces, despite the next move being on the horizon. This dialectic becomes
+          visible in more detail in the coming chapters, which zoom in on the students&#8217;
+          everyday lives in Shanghai. While my concept of transcultural perspectives proves
+          invaluable to understanding the experiences arising from these shifting borders and the
+          subsequent emergence of new, subjective forms of cultural identity, it also requires a
+          detailed ethnographic perspective that brings daily experiences to the fore, a necessity
+          that became apparent in my introductory example of Paul&#8217;s narrative, which seems
+          rather insubstantial for lacking it. Therefore, a solid analysis of everyday practices is
+          necessary for understanding how individuals gain transcultural perspectives and the
+          meanings they assign to them.</p>
+        <p>Despite individual differences in how they deal with moving from one city or country to
+          the next, the expatriate students in this ethnography all share the challenge of
+          maintaining old ties while creating new ones in new communities. Their moves are what
+          Giddens (<xref id="ID1dbefe91-a4bb-4c57-99bf-258a56c6c28e" ref-type="bibr"
+            rid="ID16d2619c-37c2-4576-a4e0-8ac07186369a">1991, 112&#8211;114</xref>) calls
+          &#8220;fateful moments,&#8221; meaning &#8220;times when events come together in such a
+          way that an individual stands, as it were, at a crossroads in his existence&#8221; (<xref
+            id="ID2c7c143a-0aa0-4753-bbb3-1b628c409fd4" ref-type="bibr"
+            rid="ID16d2619c-37c2-4576-a4e0-8ac07186369a">ibid., 113</xref>). This ethnography
+          highlights these crossroads and the changes privileged migration brings with it by
+          recounting the move to and away from Shanghai. While writing from my point of view,<xref
+            ref-type="fn" rid="bibd2e1188">44</xref> I understand their activities and emphasis on
+          exploring Shanghai as a means of dealing with the difficulties the move forced them to
+          confront, by linking everyday practices to their migration experiences. While focusing on
+          the small-scale processes of everyday life, the next four parts therefore trace and
+          examine the larger themes of leaving (Part II), arriving in Shanghai (Part III), living
+          there (Part IV) and, finally, moving on (Part V).</p>
+      </sec>
+
     </sec>
   </body>
   <back>
@@ -2540,7 +2561,9 @@
           Family, Enjoy Shanghai, Time Out Shanghai, and several others.</p>
       </fn>
       <fn id="bibd2e1188">
-        <p> My point of view, or in Gupta and Ferguson&#8217;s <xref id="IDbdc33807164d43aa-9a56-2fe32bab9d00" ref-type="bibr" rid="IDbdc33807-164d-43aa-9a56-2fe32bab9d69"> (1997) </xref> words, my
+        <p> My point of view, or in Gupta and Ferguson&#8217;s <xref
+            id="IDbdc33807164d43aa-9a56-2fe32bab9d00" ref-type="bibr"
+            rid="IDbdc33807-164d-43aa-9a56-2fe32bab9d69"> (1997) </xref> words, my
           &#8220;location,&#8221; is not a stable point of reference either. The
           &#8220;Location&#8221; as the fieldworker&#8217;s standpoint and position in society, as
           for instance German, white, female graduate student, is not something &#8220;one
@@ -2599,7 +2622,8 @@
               <given-names>James</given-names>
             </name>
           </person-group>
-          <chapter-title>&#8216;The Field&#8217; as Site, Method, and Location in Anthropology</chapter-title>
+          <chapter-title>&#8216;The Field&#8217; as Site, Method, and Location in
+            Anthropology</chapter-title>
           <source>Anthropological Locations: Boundaries and Grounds of a Field Science</source>
           <date>
             <year>1997</year>
