@@ -1,5 +1,4 @@
-<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
-<article>
+<article xmlns:ns0="http://www.w3.org/1999/xlink">
   <front>
     <journal-meta>
       <journal-id journal-id-type="publisher-id">Heidelberg University Publishing</journal-id>
@@ -11,7 +10,8 @@
     <article-meta>
       <article-id pub-id-type="doi">10.1000/123456</article-id>
       <title-group>
-        <article-title>Part I: Getting Acquainted</article-title>
+        <article-title>Passing Through Shanghai.
+          Ethnographic Insights into the Mobile Lives of Expatriate Youths</article-title>
       </title-group>
       <contrib-group>
         <contrib contrib-type="author">
@@ -19,7 +19,7 @@
             <surname>Sander</surname>
             <given-names>Marie</given-names>
           </name>
-          <xref ref-type="aff" rid="bremen"/>
+          <xref ref-type="aff" rid="bremen" />
         </contrib>
         <aff id="bremen"><institution content-type="dept">Referat f&#252;r Forschung und
             wissenschaftlichen Nachwuchs, Universit&#228;t Bremen</institution>,
@@ -38,16 +38,13 @@
         <copyright-year>2016</copyright-year>
         <copyright-holder>Heidelberg University Publishing</copyright-holder>
         <copyright-holder>Heidelberg University Publishing</copyright-holder>
-        <license xmlns:xlink="http://www.w3.org/1999/xlink"
-          xlink:href="http://creativecommons.org/licenses/by/3.0/">
-          <license-p>Dieses Werk ist unter der Creative Commons-Lizenz 4.0 (CC BY-SA 4.0 <ext-link
-            ext-link-type="uri"
-            xlink:href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">)</ext-link>
+        <license ns0:href="http://creativecommons.org/licenses/by/3.0/">
+          <license-p>Dieses Werk ist unter der Creative Commons-Lizenz 4.0 (CC BY-SA 4.0 <ext-link ext-link-type="uri" ns0:href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">)</ext-link>
             ver&#246;ffentlicht. credited.</license-p>
         </license>
       </permissions>
       <abstract>
-        <p/>
+        <p />
       </abstract>
     </article-meta>
   </front>
@@ -78,29 +75,21 @@
         <p>The metropolis of Shanghai is in part shaped by such expatriate youths, along with
           foreign tourists, university students, and transnational professionals, as well as Chinese
           citizens returning from stays abroad; all these individuals comprise an Appaduraic
-          ethnoscape (<xref id="ID621a9e20-afc2-4031-a8dc-df15c270b3a2" ref-type="bibr"
-            rid="IDbdc33807-164d-43aa-9a56-2fe32bab9d68">1996</xref>), where various cultural flows
+          ethnoscape (<xref id="ID621a9e20-afc2-4031-a8dc-df15c270b3a2" ref-type="bibr" rid="IDbdc33807-164d-43aa-9a56-2fe32bab9d68">1996</xref>), where various cultural flows
           converge. As these different kinds of migrants bring and follow transnational capital and
           global enterprises to Shanghai, many of them become part of Shanghai&#8217;s heterogeneous
           international community. They shape, are integrated into, and identify with its spaces and
           the lifestyle and consumption habits associated with it. Shanghai, one of China&#8217;s
           most thriving cities, hosts a considerably large expatriate community. The Shanghai
-          Statistical Bureau lists a total of 164,359 foreigners residing in Shanghai in <xref
-            id="IDf683d181-08dc-48e8-86cf-d7992de5e521" ref-type="bibr"
-            rid="IDe70cdb73-3b08-42a0-9370-1376bcc6c3eb">2011</xref>, including&#160;37,223
+          Statistical Bureau lists a total of 164,359 foreigners residing in Shanghai in <xref id="IDf683d181-08dc-48e8-86cf-d7992de5e521" ref-type="bibr" rid="IDe70cdb73-3b08-42a0-9370-1376bcc6c3eb">2011</xref>, including&#160;37,223
           Japanese, 16,805 American, and 8,040 German citizens (Shanghai Statistical Bureau 2013).
-          According to sociologist James Farrer&#8217;s (<xref
-            id="ID12f1b592-df7d-4c60-926c-7a6aee3207f0" ref-type="bibr"
-            rid="IDe70cdb73-3b08-42a0-9370-1376bcc6c3eb">2011</xref>) conversations with consulate
+          According to sociologist James Farrer&#8217;s (<xref id="ID12f1b592-df7d-4c60-926c-7a6aee3207f0" ref-type="bibr" rid="IDe70cdb73-3b08-42a0-9370-1376bcc6c3eb">2011</xref>) conversations with consulate
           and chamber of commerce officials in 2006, unofficial estimates are higher. He reckons
           that, in 2006, &#8220;70,000 to 100,000 Japanese, 20,000 to 30,000 Americans, and 12,000
-          to 20,000 Germans were living in Shanghai on various types of visas&#8221; (<xref
-            id="ID0435bda6-2015-481b-a81a-517930ca8bc5" ref-type="bibr"
-            rid="IDe70cdb73-3b08-42a0-9370-1376bcc6c3eb">Farrer 2011</xref>). </p>
+          to 20,000 Germans were living in Shanghai on various types of visas&#8221; (<xref id="ID0435bda6-2015-481b-a81a-517930ca8bc5" ref-type="bibr" rid="IDe70cdb73-3b08-42a0-9370-1376bcc6c3eb">Farrer 2011</xref>). </p>
         <p>This community commonly labels itself &#8220;expatriate,&#8221; a term that is derived
           from the Latin &#8220;ex patria&#8221; and refers to someone living outside their native
-          country (<xref id="ID3164ab18-aced-4383-a2c2-3fed55b438ed" ref-type="bibr"
-            rid="ID20ad2101-f635-4556-815c-2c8683123c11">Coles and Fechter 2008, 5</xref>). The term
+          country (<xref id="ID3164ab18-aced-4383-a2c2-3fed55b438ed" ref-type="bibr" rid="ID20ad2101-f635-4556-815c-2c8683123c11">Coles and Fechter 2008, 5</xref>). The term
           is commonly shortened to expat. In Shanghai, it is used by human resource departments to
           describe employees who have been posted to Shanghai by their companies. It is also
           commonly used to refer to foreigners with a certain upper-class lifestyle. The actors of
@@ -108,9 +97,7 @@
           &#8220;expat children.&#8221; It is for this simple reason of self-ascription that I chose
           to work with the term &#8220;expatriates.&#8221; That &#8220;this term has itself become
           an identity referent with a set of shared meanings understood by those who adopt the
-          label, manifest in particular practices such as socialising in certain areas&#8221; (<xref
-            id="ID4909b2ef-a7df-4a52-8636-87ad95efb966" ref-type="bibr"
-            rid="ID9e54014f-2255-471b-9fb7-aef4856a6a2d">Butcher 2009, 1361</xref>), will become
+          label, manifest in particular practices such as socialising in certain areas&#8221; (<xref id="ID4909b2ef-a7df-4a52-8636-87ad95efb966" ref-type="bibr" rid="ID9e54014f-2255-471b-9fb7-aef4856a6a2d">Butcher 2009, 1361</xref>), will become
           clear throughout this ethnography.</p>
         <p>The expatriate families under discussion all enjoy a privileged status. The
           parents&#8217; postings to Shanghai are usually tied to high financial benefits and
@@ -207,8 +194,7 @@
           poster, again. </p>
         <p>When a boy from the group working next to the girls looks over at their poster, his eyes
           squint to examine their heading. Olivia asks, with surprise in her voice: &#8220;Can you
-          actually see anything? Your eyes are so narrow!&#8221;<xref ref-type="fn" rid="bibd2e77"
-            >1</xref> Antonia jumps in: &#8220;Hey, are you dissing Chinese eyes?&#8221; Olivia
+          actually see anything? Your eyes are so narrow!&#8221;<xref ref-type="fn" rid="bibd2e77">1</xref> Antonia jumps in: &#8220;Hey, are you dissing Chinese eyes?&#8221; Olivia
           responds: &#8220;No, I just find that fascinating.&#8221; Some mumbling goes on between
           the boy and his group. They ask Antonia to paint the headline for their poster and Antonia
           agrees to do so for 10 kuai. She walks over to their poster and I join, still somewhat
@@ -223,8 +209,7 @@
           rules and the ways students&#8217; behaviors are strictly regulated and immediately wonder
           if it is actually okay for me to drink coffee in class&#8212;as for instance the English
           teacher does. I struggle with my in-between position and, like other ethnographers working
-          with youth (<xref id="IDb8f1af6f-6c28-4bcf-a734-102b02f8edc4" ref-type="bibr"
-            rid="IDbc734357-e9b2-4353-a0ea-a2d68d40f8ab">Wei&#223;k&#246;ppel 2001, 75</xref>),
+          with youth (<xref id="IDb8f1af6f-6c28-4bcf-a734-102b02f8edc4" ref-type="bibr" rid="IDbc734357-e9b2-4353-a0ea-a2d68d40f8ab">Wei&#223;k&#246;ppel 2001, 75</xref>),
           often find myself thrown back into my own adolescence. The school setting&#8212;an
           environment I have not revisited since my own graduation nine years
           prior&#8212;particularly evokes memories of my teenage years. The whole routine still
@@ -244,8 +229,7 @@
           but to the students as well. In contrast to Wei&#223;k&#246;ppel, who during her research
           at a middle school in Germany (Realschule) rejected students&#8217; offers to use the
           casual German &#8220;Du&#8221; in order to keep the age difference as a form of managing
-          distance that to her felt necessary (<xref id="ID488b0519-06ad-4db3-9666-ffae13f439f8"
-            ref-type="bibr" rid="IDbc734357-e9b2-4353-a0ea-a2d68d40f8ab">Wei&#223;k&#246;ppel 2001,
+          distance that to her felt necessary (<xref id="ID488b0519-06ad-4db3-9666-ffae13f439f8" ref-type="bibr" rid="IDbc734357-e9b2-4353-a0ea-a2d68d40f8ab">Wei&#223;k&#246;ppel 2001,
             75</xref>), I decided to meet the students on the same level, or at least to the extent
           that this is possible in a research situation. I therefore offered my first name (and, in
           the German context, the informal &#8220;Du&#8221;) as a way of addressing me. However,
@@ -294,21 +278,17 @@
           is a position which rejects a strict separation between world and text and which
           understands scientific activity as being just that&#8212;an activity, a practice, an
           embedded engagement in the world of which it is a part. Not representation but
-          experimentation (<xref id="ID1e04001c-dd98-4abc-85f8-9c9ba94da195" ref-type="bibr"
-            rid="ID3d0861e1-0f35-485d-aae3-192bebbde788">2005, 28</xref>). </p>
+          experimentation (<xref id="ID1e04001c-dd98-4abc-85f8-9c9ba94da195" ref-type="bibr" rid="ID3d0861e1-0f35-485d-aae3-192bebbde788">2005, 28</xref>). </p>
         </disp-quote>
       </p>
       <p>No one who writes about real people in real life can ignore the fact that words may have
           consequences for the people they write about&#8212;and alter their images of Self,
           labeling by others, their relationships, or the politics structuring their everyday
-          practices. Caroline Brettell and other anthropologists (<xref
-            id="ID4019d142-b2b2-49c4-a086-0dd9062457be" ref-type="bibr"
-            rid="ID0e2b0f81-9e4d-4078-9e91-4deb51a9feb7">1993</xref>) address this issue and ask
+          practices. Caroline Brettell and other anthropologists (<xref id="ID4019d142-b2b2-49c4-a086-0dd9062457be" ref-type="bibr" rid="ID0e2b0f81-9e4d-4078-9e91-4deb51a9feb7">1993</xref>) address this issue and ask
           what happens when they read what we write. What are the consequences for the researched,
           the ethnographer, the relationship between them, and for the writing itself? While this
           question was unknown to early ethnographers whose language of writing often differed from
-          those whom they studied (Brettell <xref id="IDdc7c25f8-5d9a-47ba-a24b-3e7677d730e8"
-            ref-type="bibr" rid="ID0e2b0f81-9e4d-4078-9e91-4deb51a9feb7">1993</xref>), it certainly
+          those whom they studied (Brettell <xref id="IDdc7c25f8-5d9a-47ba-a24b-3e7677d730e8" ref-type="bibr" rid="ID0e2b0f81-9e4d-4078-9e91-4deb51a9feb7">1993</xref>), it certainly
           causes me great concern and prompts serious contemplation. The problem of securing
           anonymity troubles me in particular and proves difficult in regards to maintaining my own
           scientific standards when describing specific locations and practices. While many students
@@ -325,8 +305,7 @@
           will not recognize their peers. Consequently, I very carefully omit all hostile or
           derogatory remarks that the teenagers make against their peers. Hostilities exist, but are
           not crucial to my work. </p>
-        <p>Daniel Goldstein (<xref id="ID330afe9a-b2fb-498b-a404-779f340d201f" ref-type="bibr"
-            rid="ID71c7431a-fa0e-4721-ba3b-1989a635fe2e">2002</xref>) comments on the impact of the
+        <p>Daniel Goldstein (<xref id="ID330afe9a-b2fb-498b-a404-779f340d201f" ref-type="bibr" rid="ID71c7431a-fa0e-4721-ba3b-1989a635fe2e">2002</xref>) comments on the impact of the
           ethnographer&#8217;s presence as that of a future author in the field, describing how his
           informants in the Andes in Bolivia were continuously concerned about &#8220;the
           book&#8221; he would write. Goldstein argues that one can see ethnographic writing in a
@@ -336,8 +315,7 @@
           ethnographer/informant encounter is not a visual but a textual representation, informants
           may regard ethnography as a resource that they can use for their own purposes, and so seek
           to establish control over the ways in which they will be represented by the ethnographer
-            (<xref id="IDbae8fd41-9b15-4153-8169-fc3818ceaa45" ref-type="bibr"
-            rid="ID71c7431a-fa0e-4721-ba3b-1989a635fe2e">Goldstein 2002, 487</xref>).</p>
+            (<xref id="IDbae8fd41-9b15-4153-8169-fc3818ceaa45" ref-type="bibr" rid="ID71c7431a-fa0e-4721-ba3b-1989a635fe2e">Goldstein 2002, 487</xref>).</p>
         </disp-quote>
       </p>
       <p>In Goldstein&#8217;s case, the informants strategically emphasized and performed certain
@@ -433,8 +411,7 @@
         <title>Chapter 3: Joining Two Peer Groups </title>
          <p>
         <disp-quote id="SQ1"><p>A relatively youthful appearance is undoubtedly helpful when hanging around street
-          corners with teenagers (<xref id="ID26ffffcb-5816-47e1-857f-bd8b0edcdab0" ref-type="bibr"
-            rid="ID9f344bae-af75-4674-88ed-51e358d5b529">Wulff 1995, 7</xref>).</p>
+          corners with teenagers (<xref id="ID26ffffcb-5816-47e1-857f-bd8b0edcdab0" ref-type="bibr" rid="ID9f344bae-af75-4674-88ed-51e358d5b529">Wulff 1995, 7</xref>).</p>
         </disp-quote>
       </p><p>I was incredibly nervous of the teenagers. I felt 12 years old again (</p>
         <p>Joining the teenagers outside the realm of school, in particular during their nightlife
@@ -442,8 +419,7 @@
           them. These occasions helped me to contextualize the students&#8217; verbalized
           reflections upon their lives and to grasp their experiences and understandings of
           mobility, being young, and belonging to the expatriate community. These opportunities also
-          made it possible for me to prove that I could be trusted.<xref ref-type="fn"
-            rid="bibd2e147">4</xref> While teachers actively try to avoid such situations by making
+          made it possible for me to prove that I could be trusted.<xref ref-type="fn" rid="bibd2e147">4</xref> While teachers actively try to avoid such situations by making
           sure they do not frequent the same clubs or bars, my role and participation in activities
           gradually became accepted after months of engaging with the teenagers outside of school
           and sharing my own story with them.<xref ref-type="fn" rid="bibd2e154">5</xref> This
@@ -457,17 +433,13 @@
           youths&#8217; own perspectives and voices.</p>
         <p>In line with these fieldwork practices, I chose a relational approach that acknowledged
           the ties between me and the youths I researched, and the influence of those ties on
-          matters of access as well as on my perspective.<xref ref-type="fn" rid="bibd2e163"
-            >6</xref> While Shanghai as the research site and expatriate teenagers as the main
+          matters of access as well as on my perspective.<xref ref-type="fn" rid="bibd2e163">6</xref> While Shanghai as the research site and expatriate teenagers as the main
           actors of my study had been set from the start, the paths I followed to understand their
-          lives were often improvised. Coleman and Collins (<xref
-            id="IDecd1f76d-17a4-47bf-a1a4-d1babbe48f39" ref-type="bibr"
-            rid="IDab5c4e05-c9b2-45c2-8a14-d9f6910f7fe7">2006</xref>) highlight the role the
+          lives were often improvised. Coleman and Collins (<xref id="IDecd1f76d-17a4-47bf-a1a4-d1babbe48f39" ref-type="bibr" rid="IDab5c4e05-c9b2-45c2-8a14-d9f6910f7fe7">2006</xref>) highlight the role the
           researcher&#8217;s choice of focus plays, arguing that &#8220;fields are as much
           &#8216;performed&#8217; as &#8216;discovered,&#8217; framed by boundaries that shift
           according to the analytical and rhetorical preferences of the ethnographer and, more
-          rarely, the informant&#8221; (<xref id="ID011051fd-65ad-44af-a1fd-348cbf245e9b"
-            ref-type="bibr" rid="IDb91b887f-3456-412e-962b-574a1718b738">Coleman and Collins 2006,
+          rarely, the informant&#8221; (<xref id="ID011051fd-65ad-44af-a1fd-348cbf245e9b" ref-type="bibr" rid="IDb91b887f-3456-412e-962b-574a1718b738">Coleman and Collins 2006,
             17</xref>). Thus my &#8220;field,&#8221; my point of view on expatriate youths and the
           accounts I gathered, was influenced by my own stance, perspective, and abilities.
           Additionally, different gatekeepers played a crucial role in my navigation in the field,
@@ -556,8 +528,7 @@
             their parents should buy. Antonia says that in no way could she send her mom shopping.
             She has no time for that, between owning three companies and never sleeping for more
             than five hours a night. Even her dad, who is a general manager, has more time. I
-            silently guess that their ayi does all the grocery shopping.<xref ref-type="fn"
-              rid="bibd2e206">9</xref> Upon asking about a classmate of theirs, I accidently trigger
+            silently guess that their ayi does all the grocery shopping.<xref ref-type="fn" rid="bibd2e206">9</xref> Upon asking about a classmate of theirs, I accidently trigger
             several stories about different students and couples and feel like a whole world of
             gossip opens up. Who is wearing inappropriate clothes or has ended relationships in
             inappropriate ways, who is simply using girls, who is surprisingly getting along with
@@ -570,12 +541,10 @@
             demanded constant reflection about my role and obligations as a researcher and remained
             difficult for me throughout my fieldwork. On the other hand, gossip was an important
             element that enabled me to gain information about the students&#8217; daily
-            lives&#8212;see Marie Gillespie's (<xref id="ID61d7e5b9-eb89-4a2b-b021-08b872e1f477"
-              ref-type="bibr" rid="ID4364dbec-f90a-4db0-ab0e-a5b04f1c2640">1999</xref>) work on how
+            lives&#8212;see Marie Gillespie's (<xref id="ID61d7e5b9-eb89-4a2b-b021-08b872e1f477" ref-type="bibr" rid="ID4364dbec-f90a-4db0-ab0e-a5b04f1c2640">1999</xref>) work on how
             gossip about soap operas among South Asian youth in London is linked to negotiating
             their own social networks&#8212;as well as to maintain the ongoing process of social
-            access (<xref id="IDb21a2617-8cf1-483e-ae16-c073185451b3" ref-type="bibr"
-              rid="ID8bd21cd0-67be-4904-818c-ce8efcf8d037">Carmel 2011, 552</xref>). </p>
+            access (<xref id="IDb21a2617-8cf1-483e-ae16-c073185451b3" ref-type="bibr" rid="ID8bd21cd0-67be-4904-818c-ce8efcf8d037">Carmel 2011, 552</xref>). </p>
           <p>After all the gossip, Andrea laughs and wonders what I must be writing about them. I
             sigh and tell them that I honestly do not know and that I sometimes feel they could
             write it better themselves. They protest and encourage me. While I am often tremendously
@@ -594,8 +563,7 @@
           <p>When we arrive, we head towards a caf&#233; known for its delicious milkshakes, called
             Kommune, which offers outdoor seating in the midst of small alleys and, like all coffee
             shops in Tianzifang, has prices for an expat income rather than the average
-            Shanghainese. Here, a milkshake costs around RMB 38 (&#8364;4.18).<xref ref-type="fn"
-              rid="bibd2e225">10</xref> On the way there, Mia, Kressi, and Olivia take photos. I
+            Shanghainese. Here, a milkshake costs around RMB 38 (&#8364;4.18).<xref ref-type="fn" rid="bibd2e225">10</xref> On the way there, Mia, Kressi, and Olivia take photos. I
             take photos of them taking photos, but as we all have a research agenda today, it feels
             okay. Drinking milkshakes, chatting, and taking pictures keeps us entertained for a
             while. Mia and Kressi buy some of the cafe&#8217;s well-designed drinking glasses for
@@ -614,9 +582,7 @@
             clothing that I like and, in the next store, I spot a pair of trousers. Mia then takes a
             photo of them so I can eventually get a pair made in the same style, as this pair is too
             expensive for me. We stroll along the lanes, window-shopping, enjoying the shared
-            practices of &#8220;doing fashion&#8221; (<xref
-              id="ID1c9c7c72-1a77-4821-a014-3bde602629dc" ref-type="bibr"
-              rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">Liechty 2003</xref>); buying, trying on,
+            practices of &#8220;doing fashion&#8221; (<xref id="ID1c9c7c72-1a77-4821-a014-3bde602629dc" ref-type="bibr" rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">Liechty 2003</xref>); buying, trying on,
             or talking about clothes. These topics are familiar to me and I easily join their
             conversations. </p>
           <p>All the while, the students take pictures for the photo documentation project on
@@ -808,8 +774,7 @@
             stop the movie for some reason. The boys return with the food and some boys leave. A few
             of them have to go to school the next day. Giovanni also leaves. Peter enjoys his
             chicken wings. Don only talks about the news of the &#8220;Abistreich&#8221;
-            cancellation (he received an email on his smart phone).<xref ref-type="fn"
-              rid="bibd2e297">13</xref> We watch a little more of The Naked Gun 2&#189;. Peter and
+            cancellation (he received an email on his smart phone).<xref ref-type="fn" rid="bibd2e297">13</xref> We watch a little more of The Naked Gun 2&#189;. Peter and
             Don want to leave, so I opt to join them and we share a cab. I chip in 20 RMB, and they
             drop me off in front of the guesthouse that I am staying in.</p>
           <p>I enjoy &#8220;the boys&#8217;&#8217;&#8217; company and their outlook on life, and am
@@ -832,16 +797,11 @@
         <p> 
           <disp-quote id="SQ2"> <p>Cultural identities are the points of identification, the unstable points of
           identification or suture, which are made, within the discourses of history and culture.
-          Not an essence but a positioning (<xref id="ID26f78149-b58b-4efb-ac6c-3ac7f73e3046"
-            ref-type="bibr" rid="IDff8ef84b-d848-4489-b33e-fceab8e0f6a9">Hall 1990, 226, emphasis in
+          Not an essence but a positioning (<xref id="ID26f78149-b58b-4efb-ac6c-3ac7f73e3046" ref-type="bibr" rid="IDff8ef84b-d848-4489-b33e-fceab8e0f6a9">Hall 1990, 226, emphasis in
             the original</xref>).</p>
         </disp-quote>
       </p>
-      <p>In the realm of postcolonial studies, many authors (see, among others, Bhabha <xref
-            id="ID1d749dd7-9f45-4d8e-858e-3a1ffc411349" ref-type="bibr"
-            rid="ID4b6740e8-7911-4bcb-af8f-a88daa1db5e2">1994</xref>; Hall 1990; <xref
-            id="IDbc418e9c-c0b1-41c9-baa5-120a64f9dbea" ref-type="bibr"
-            rid="ID8c04ec18-8198-4956-a741-68bdfcaa6d69">1994</xref>; 1996a; and 1997; Brah 1996)
+      <p>In the realm of postcolonial studies, many authors (see, among others, Bhabha <xref id="ID1d749dd7-9f45-4d8e-858e-3a1ffc411349" ref-type="bibr" rid="ID4b6740e8-7911-4bcb-af8f-a88daa1db5e2">1994</xref>; Hall 1990; <xref id="IDbc418e9c-c0b1-41c9-baa5-120a64f9dbea" ref-type="bibr" rid="ID8c04ec18-8198-4956-a741-68bdfcaa6d69">1994</xref>; 1996a; and 1997; Brah 1996)
           have pointed out how the cultural construction of (collective) identities plays an
           important role for people living in a diaspora or in other culturally complex
           environments. Similarly, my fieldwork and in-depth interviews with expatriate youths
@@ -862,24 +822,18 @@
           in life. Furthermore, the mind map shows that the students also consider how &#8220;viel
           nachdenken&#8221; (much contemplating) or &#8220;philosophieren&#8221; (philosophizing)
           can help one to find one&#8217;s identity. Such ways of thinking about their own position
-          in the world demonstrate the power of reflexivity that Anthony Giddens (<xref
-            id="ID6edaa286-f986-4630-b72d-116bc069770e" ref-type="bibr"
-            rid="ID16d2619c-37c2-4576-a4e0-8ac07186369a">1991</xref>) conceptualized as
+          in the world demonstrate the power of reflexivity that Anthony Giddens (<xref id="ID6edaa286-f986-4630-b72d-116bc069770e" ref-type="bibr" rid="ID16d2619c-37c2-4576-a4e0-8ac07186369a">1991</xref>) conceptualized as
           humans&#8217; ways of forging &#8220;narratives of the self.&#8221;</p>
 
         <p>The following four student portraits illustrate such &#8220;narratives or the self&#8221;
           and highlight expatriate students&#8217; individual processes of cultural identity
           positioning. These narratives have to be seen in the context of fieldwork and the
-          encounters between the students and myself out of which they emerged.<xref ref-type="fn"
-            rid="bibd2e338">15</xref> However, the students gave these accounts not only to feed my
+          encounters between the students and myself out of which they emerged.<xref ref-type="fn" rid="bibd2e338">15</xref> However, the students gave these accounts not only to feed my
           story, but also to make sense of their own experiences and selves through narrative. As
-          Nigel Rapport&#8217;s (<xref id="ID39e2f0c2-132a-48e6-baee-26110a53a7e5" ref-type="bibr"
-            rid="ID245f1d50-d856-4096-abe4-bc9f39a6dc08">2000</xref>) approach highlights, it is
+          Nigel Rapport&#8217;s (<xref id="ID39e2f0c2-132a-48e6-baee-26110a53a7e5" ref-type="bibr" rid="ID245f1d50-d856-4096-abe4-bc9f39a6dc08">2000</xref>) approach highlights, it is
           through such &#8220;narrative constructions of past, present and future, of relations of
           sameness and difference,&#8221; that the young people&#8217;s &#8220;self is given
-          content, is delineated and embodied&#8221; (<xref
-            id="IDa38839dd-e1df-4cbc-8a15-fd75857e0264" ref-type="bibr"
-            rid="ID245f1d50-d856-4096-abe4-bc9f39a6dc08">ibid., 76</xref>). While all people go
+          content, is delineated and embodied&#8221; (<xref id="IDa38839dd-e1df-4cbc-8a15-fd75857e0264" ref-type="bibr" rid="ID245f1d50-d856-4096-abe4-bc9f39a6dc08">ibid., 76</xref>). While all people go
           through such processes of negotiating their individual identities through narratives, the
           following four teenagers&#8217; discursive understandings of the self reveal that their
           identity practices are particularly shaped by their experiences with multiple moves. Their
@@ -916,80 +870,19 @@
           <p>
             <speech id="s1">
               <speaker>Antonia</speaker>
-              <p>When I come to Germany, I have to get used to it. Every time. What I also find
-                annoying in Germany are things like inviting people, like, they take the bill,
-                &#8220;well, you have to pay 4.20.&#8221; But I don&#8217;t have twenty cents right
-                then. Things like that. That&#8217;s much more relaxed with my friends here. German
-                original: Antonia: Wenn ich nach Deutschland komme, muss ich mich dran
-                gew&#246;hnen. Immer. Was mich auch immer nervt in Deutschland ist so Sachen wie mit
-                dem Einladen, wie, die nehmen dann die Rechnung, &#8220;ja, du musst 4,20
-                zahlen.&#8221; So, ich hab gerade keine zwanzig Cent. Solche Sachen. Da ist das hier
-                bei meinen Freunden viel entspannter.</p>
-            </speech>
-            <speech>
-              <speaker>Antonia</speaker>
-              <p>Antonia: <italic>Others see me as a foreigner. They are nonetheless very nice to
-                  me, but somehow, they always see me as this exotic animal. &lt;L&gt; Oh! A
-                  foreigner who can speak Chinese well! It&#8217;s like that. [&#8230;] Well, not
-                  always. It&#8217;s not that I am being excluded or anything. But, you&#8217;re not
-                  really a part of Chinese society.</italic>
-                <xref ref-type="fn" rid="bibd2e383">17</xref>
+              <p><italic>When I come to Germany, I have to get used to it. Every time. What I also find annoying in Germany are things like inviting people, like, they take the bill, &#8220;well, you have to pay 4.20.&#8221; But I don&#8217;t have twenty cents right then. Things like that. That&#8217;s much more relaxed with my friends here.</italic>
+                <xref ref-type="fn" rid="bibd2e322">16</xref>
               </p>
             </speech>
-            <speech>
-              <speaker>Antonia</speaker>
-              <p>Antonia: <italic>Actually I am also in the expat bubble. Maybe a little less than
-                  others. But I am in it anyway.</italic>
-                <xref ref-type="fn" rid="bibd2e413">19</xref>
-              </p>
-            </speech>
-            <speech>
-              <speaker> Antonia</speaker>
-              <p>
-                <italic>I do notice that it is a different group of people. Although they are partly
-                  Chinese, partly Germans who&#8217;ve spent almost their whole life in Germany,
-                  somehow you change here. Because it&#8217;s really a different group of people. As
-                  if it&#8217;s a different nationality.</italic>
-                <xref ref-type="fn" rid="bibd2e439">21</xref>
-              </p>
-            </speech>
-            <speech>
-              <speaker>Antonia</speaker>
-              <p>Antonia: <italic>In my head Shanghai is always, I don&#8217;t know, this host of
-                  many things, just all these impressions, the whole time. [&#8230;] It makes me
-                  totally hyper&#8212;every time I&#8217;m in the city of Shanghai, in this area.
-                  [&#8230;] When I came back [from Germany] to Shanghai I went shopping with my
-                  friend, but we didn&#8217;t even get to the shopping part. We had something to eat
-                  and simply walked through one street and were full of energy and happy to be in
-                  Shanghai again. [&#8230;] As soon as I am in the city, or take a taxi from club to
-                  club, or go shopping&#8230; I am just, I get&#8230; Well, it doesn&#8217;t seem
-                  like &#8220;Oh my God so much stuff,&#8221; but rather as if I had more
-                  energy.</italic>
-                <xref ref-type="fn" rid="bibd2e471">22</xref>
-              </p>
-            </speech>
-          </p>
-          <p>It is Chinese custom to invite your friends and pay for everyone. Antonia and her
-            friends sometimes also share the cost of eating out or going for a drink, but she finds
-            practices in Germany, such as splitting the bill, particularly pedantic. Antonia
-            generally distances herself from such cultural practices that she considers typically
-            German and describes many incidents in Germany that she has found rather alienating. In
-            the interview that we recorded in June 2012, Antonia also voices her concern about her
-            upcoming move to Germany and her anxieties about being able to fit in.</p>
-          <p>While not considering herself &#8220;really German,&#8221; she also talks about the
-            experience of being perceived as a foreigner in Shanghai.</p>
+            </p>
+            <p>It is Chinese custom to invite your friends and pay for everyone. Antonia and her friends sometimes also share the cost of eating out or going for a drink, but she finds practices in Germany, such as splitting the bill, particularly pedantic. Antonia generally distances herself from such cultural practices that she considers typically German and describes many incidents in Germany that she has found rather alienating. In the interview that we recorded in June 2012, Antonia also voices her concern about her upcoming move to Germany and her anxieties about being able to fit in.</p>
+            <p>While not considering herself &#8220;really German,&#8221; she also talks about the experience of being perceived as a foreigner in Shanghai.</p>
           <p>
             <speech id="s2">
               <speaker>Antonia</speaker>
-              <p>Others see me as a foreigner. They are nonetheless very nice to me, but somehow,
-                they always see me as this exotic animal. &lt;L&gt; Oh! A foreigner who can speak
-                Chinese well! It&#8217;s like that. [&#8230;] Well, not always. It&#8217;s not that
-                I am being excluded or anything. But, you&#8217;re not really a part of Chinese
-                society. German original: Antonia: Andere sehen mich als Ausl&#228;nderin. Die sind
-                dann zwar total freundlich zu mir. Aber halt irgendwie. Die sehen mich immer wie so
-                ein exotisches Tier. &lt;L&gt; Oh! Eine Ausl&#228;nderin die gut Chinesisch kann!
-                Das ist so. [&#8230;] Also nicht immer. Nicht dass ich ausgeschlossen werde oder so.
-                Aber, man ist nicht wirklich ein Teil der chinesischen Gesellschaft.</p>
+              <p><italic>Others see me as a foreigner. They are nonetheless very nice to me, but somehow, they always see me as this exotic animal. &lt;L&gt; Oh! A foreigner who can speak Chinese well! It&#8217;s like that. [&#8230;] Well, not always. It&#8217;s not that I am being excluded or anything. But, you&#8217;re not really a part of Chinese society.</italic>
+                  <xref ref-type="fn" rid="bibd2e338">17</xref>
+               </p>
             </speech>
           </p>
           <p>Antonia speaks Chinese at home with her grandmother and her ayi. In the interview quote
@@ -1002,36 +895,30 @@
             Shanghai, Antonia&#8212;along with other individuals in her life&#8212;finds that both
             models of cultural identity are contestable and neither seems to fit her. Furthermore,
             being a child of a mixed marriage and speaking both languages at home also means that
-            difference is also present in the intimacy of the domestic sphere.<xref ref-type="fn"
-              rid="bibd2e398"/> Family life therefore does not offer a clear point of reference with
+            difference is also present in the intimacy of the domestic sphere.<xref ref-type="fn" rid="bibd2e398">18</xref> Family life therefore does not offer a clear point of reference with
             which to position herself, either. </p>
           <p>When we discuss the expatriate lifestyle in Shanghai, Antonia shares how she sees
             herself as part of the expatriate collective:</p>
           <p>
             <speech id="s3">
               <speaker>Antonia</speaker>
-              <p>Actually I am also in the expat bubble. Maybe a little less than others. But I am
-                in it anyway. German original: Antonia: Ich bin eigentlich auch in der Expatbubble.
-                Vielleicht ein bisschen weniger als andere. Aber ich bin es auf jeden Fall. </p>
+              <p><italic>Actually I am also in the expat bubble. Maybe a little less than others. But I am in it anyway.</italic>
+                  <xref ref-type="fn" rid="bibd2e362">19</xref> 
+               </p>
             </speech>
           </p>
           <p>Antonia addresses the exclusion of Chinese locals by using the term
             &#8220;bubble&#8221; to describe expatriate life, a metaphor that was also used by Paul,
             whose experiences I laid out in the introduction. She simultaneously attributes a sense
-            of community to her &#8220;expat bubble,&#8221;<xref ref-type="fn" rid="bibd2e428"/> as
+            of community to her &#8220;expat bubble,&#8221;<xref ref-type="fn" rid="bibd2e428">20</xref> as
             well as being different from not only German but also Chinese society, which she
             particularly notices upon every return to Shanghai after holidays in Germany.</p>
           <p>
             <speech id="s4">
               <speaker> Antonia</speaker>
-              <p>I do notice that it is a different group of people. Although they are partly
-                Chinese, partly Germans who&#8217;ve spent almost their whole life in Germany,
-                somehow you change here. Because it&#8217;s really a different group of people. As
-                if it&#8217;s a different nationality. German original: Antonia: Ich merke schon,
-                das ist eine andere Gruppe von Menschen. Obwohl das so, teilweise Chinesen sind,
-                teilweise Deutsche die fast ihr ganzes Leben in Deutschland gelebt haben, irgendwie,
-                man ver&#228;ndert sich hier. Denn es ist wirklich eine andere Gruppe von Menschen.
-                Als w&#228;r es eine andere Nationalit&#228;t.</p>
+              <p><italic>I do notice that it is a different group of people. Although they are partly Chinese, partly Germans who&#8217;ve spent almost their whole life in Germany, somehow you change here. Because it&#8217;s really a different group of people. As if it&#8217;s a different nationality.</italic>
+                  <xref ref-type="fn" rid="bibd2e382">21</xref>
+               </p>
             </speech>
           </p>
           <p>While she does not consider herself to be an integral part of the &#8220;expatriate
@@ -1055,37 +942,18 @@
             rejecting being Chinese, German, or expat, but about embracing all these points of
             references in its amalgamated state. This is of course her subjective positioning and
             does not necessarily reflect the common discourse of being Shanghainese (shanghairen), which, despite the idea of migration and Westernization making
-            up much of the discourse on Shanghai&#8217;s specific culture (haipai) (<xref id="ID290c5c49-d0be-4603-873d-0fd6566c610c" ref-type="bibr"
-                rid="ID5c2c952c-a8a2-417a-8b51-0b4fd2a889f4">Farrer 2002, 88&#8211;92</xref>), is
+            up much of the discourse on Shanghai&#8217;s specific culture (haipai) (<xref id="ID290c5c49-d0be-4603-873d-0fd6566c610c" ref-type="bibr" rid="ID5c2c952c-a8a2-417a-8b51-0b4fd2a889f4">Farrer 2002, 88&#8211;92</xref>), is
             usually tied to being born in Shanghai, speaking Shanghainese, and having a Shanghai
-            residence permit (hukou) (<xref id="IDfa2df50d-7c03-47ba-80a5-75f7f782380a"
-              ref-type="bibr" rid="ID9c3e188d-cfab-4885-9701-f423a29c703a">see Schoon 2007</xref>). As Antonia points out, the
+            residence permit (hukou) (<xref id="IDfa2df50d-7c03-47ba-80a5-75f7f782380a" ref-type="bibr" rid="ID9c3e188d-cfab-4885-9701-f423a29c703a">see Schoon 2007</xref>). As Antonia points out, the
             Chinese locals might not accept her self-identification as Shanghainese. </p>
           <p>While drinking coffee and gazing at the passing cars, bikes, bicycles, and pedestrians
             on Hengshan Road, Antonia explains her close relationship to the city:</p>
           <p>
             <speech id="s5">
               <speaker>Antonia</speaker>
-              <p>In my head Shanghai is always, I don&#8217;t know, this host of many things, just
-                all these impressions, the whole time. [&#8230;] It makes me totally
-                hyper&#8212;every time I&#8217;m in the city of Shanghai, in this area. [&#8230;]
-                When I came back [from Germany] to Shanghai I went shopping with my friend, but we
-                didn&#8217;t even get to the shopping part. We had something to eat and simply
-                walked through one street and were full of energy and happy to be in Shanghai again.
-                [&#8230;] As soon as I am in the city, or take a taxi from club to club, or go
-                shopping&#8230; I am just, I get&#8230; Well, it doesn&#8217;t seem like &#8220;Oh
-                my God so much stuff,&#8221; but rather as if I had more energy. German original:
-                Antonia: Shanghai ist in meinem Kopf f&#252;r mich immer so. Ich wei&#223; nicht. So
-                ein Haufen von vielem einfach. Einfach so, ganz viele Eindr&#252;cke die ganze Zeit.
-                [&#8230;] Mich macht das voll hyper. Immer wenn ich sofort in der Stadt von Shanghai
-                bin, so in diesen Gegenden. [&#8230;] Also als ich zur&#252;ck [aus Deutschland] in
-                Shanghai war, war ich mit meiner Freundin shoppen und wir sind gar nicht zum
-                Einkaufen gegangen, gekommen. Wir waren essen und sind einfach nur durch eine
-                Stra&#223;e gelaufen und waren aufgedreht und froh wieder in Shanghai zu sein.
-                [&#8230;] Sobald ich in die Stadt komme und in der Stadt bin, oder mit dem Taxi
-                fahre von Club zu Club oder shoppen gehe&#160;... Ich bin einfach, ich
-                wird&#160;&#8230; Also es kommt mir nicht so vor &#8220;oh Gott viel Zeug,&#8221;
-                sondern dann so eher, als h&#228;tte ich mehr Energie.</p>
+              <p><italic>In my head Shanghai is always, I don&#8217;t know, this host of many things, just all these impressions, the whole time. [&#8230;] It makes me totally hyper&#8212;every time I&#8217;m in the city of Shanghai, in this area. [&#8230;] When I came back [from Germany] to Shanghai I went shopping with my friend, but we didn&#8217;t even get to the shopping part. We had something to eat and simply walked through one street and were full of energy and happy to be in Shanghai again. [&#8230;] As soon as I am in the city, or take a taxi from club to club, or go shopping&#8230; I am just, I get&#8230; Well, it doesn&#8217;t seem like &#8220;Oh my God so much stuff,&#8221; but rather as if I had more energy.</italic>
+                  <xref ref-type="fn" rid="bibd2e411">22</xref>
+               </p>
             </speech>
           </p>
           <p>Antonia speaks enthusiastically about exploring Shanghai and experiencing the urban
@@ -1094,9 +962,7 @@
             discussion). To her, the urban experience of living in Shanghai is a point of
             identity reference that bridges the various differences in her life because, to her, the
             city includes all of them.</p>
-          <p>Antonia&#8217;s story shows, in the words of Stuart Hall (<xref
-              id="ID6b25dc3d-2fc9-43a1-be64-fad224a67e8f" ref-type="bibr"
-              rid="IDff8ef84b-d848-4489-b33e-fceab8e0f6a9">1990, 227</xref>), that &#8220;the
+          <p>Antonia&#8217;s story shows, in the words of Stuart Hall (<xref id="ID6b25dc3d-2fc9-43a1-be64-fad224a67e8f" ref-type="bibr" rid="IDff8ef84b-d848-4489-b33e-fceab8e0f6a9">1990, 227</xref>), that &#8220;the
             boundaries of difference are continually repositioned in relation to different points of
             reference.&#8221; While Antonia stresses her ways of bridging the boundaries between
             German, Chinese, and expatriate circles that she experiences as being tied to certain
@@ -1131,8 +997,7 @@
             boys I feel most comfortable talking to and who becomes one of my key male informants
             over the course of my fieldwork.</p>
           <p>Throughout our many conversations, it becomes clear that Bjorn&#8217;s narratives of
-            the self (<xref id="ID7efef0fa-4a5a-4217-b176-4031061b4e47" ref-type="bibr"
-              rid="ID16d2619c-37c2-4576-a4e0-8ac07186369a">Giddens 1991</xref>) position him as
+            the self (<xref id="ID7efef0fa-4a5a-4217-b176-4031061b4e47" ref-type="bibr" rid="ID16d2619c-37c2-4576-a4e0-8ac07186369a">Giddens 1991</xref>) position him as
             someone who must come to grips with the move from a rural area with a narrow social
             demographic to an urban, culturally-diverse area in general, and with new social class
             distinctions in particular. In contrast to many of his classmates, Bjorn has just
@@ -1149,33 +1014,15 @@
           <p>
             <speech id="s6">
               <speaker>Bjorn</speaker>
-              <p>Expat. Expat is a little like the senator status at Lufthansa. You are treated
-                better. If you&#8217;re a senator or a first class passenger at Lufthansa for
-                instance, you get, for example, into this Lufthansa Lounge and you don&#8217;t sit
-                with all the others, the somehow ordinary, down there on these nasty seats. Instead,
-                you are sitting on a massage chair, drinking your drink, eating a little caviar.
-                That&#8217;s being an expat. Being an expat is: &#8220;What does your daddy
-                do?&#8221; &#8220;He does this and that.&#8221; &#8220;Well, and what do you do
-                here?&#8221; &#8220;I drink up all the money that my dad earns.&#8221; That&#8217;s
-                an expat. German original: Bjorn: Expat. Expat ist wie so ein bisschen
-                Senator-Status bei Lufthansa. Man wird besser behandelt einfach. Wenn du Senator
-                oder first class zum Beispiel bei Lufthansa bist oder so, dann kommst du zum
-                Beispiel in diese Lufthansa-Lounge und hockst nicht mit allen anderen, den normalen
-                irgendwie, da unten auf diesen ekligen Sesseln. Sondern hockst auf deinem
-                Massage-Stuhl, trinkst da deinen Drink noch mal, isst noch ein bisschen Kaviar. So
-                ist Expat sein. Expat sein ist: &#8220;Ja, was macht dein Daddy?&#8221; &#8220;Ja,
-                der arbeitet das und das.&#8221; &#8220;Ja, und was machst du hier?&#8221;
-                &#8220;Ich vertrink eigentlich nur das Geld, das mein Papa verdient.&#8221; Das ist
-                Expat.</p>
+              <p><italic>Expat. Expat is a little like the senator status at Lufthansa. You are treated better. If you&#8217;re a senator or a first class passenger at Lufthansa for instance, you get, for example, into this Lufthansa Lounge and you don&#8217;t sit with all the others, the somehow ordinary, down there on these nasty seats. Instead, you are sitting on a massage chair, drinking your drink, eating a little caviar. That&#8217;s being an expat. Being an expat is: &#8220;What does your daddy do?&#8221; &#8220;He does this and that.&#8221; &#8220;Well, and what do you do here?&#8221; &#8220;I drink up all the money that my dad earns.&#8221; That&#8217;s an expat.</italic>  <xref ref-type="fn" rid="bibd2e452">24</xref>
+                </p>
             </speech>
           </p>
           <p>Bjorn, by exaggerating the comforts offered by an expatriate lifestyle, emphasizes the
             issue of class that preoccupies him. He chooses the metaphor of flying first class to
             describe his expatriate life, a metaphor that, for him, is tied to class-consciousness
             and distinctions from the &#8220;ordinary.&#8221; Bjorn highlights the practice of
-            making distinctions that anthropologist Jacqueline Kn&#246;rr (<xref
-              id="ID97e2e107-8bed-4482-9e75-1a704ce15f46" ref-type="bibr"
-              rid="ID2a9f3b82-c8a8-43c3-8cc9-1dd01fa3b7ac">2005</xref>) has likewise found
+            making distinctions that anthropologist Jacqueline Kn&#246;rr (<xref id="ID97e2e107-8bed-4482-9e75-1a704ce15f46" ref-type="bibr" rid="ID2a9f3b82-c8a8-43c3-8cc9-1dd01fa3b7ac">2005</xref>) has likewise found
             underlying the concept of TCKs and which led her to criticize TCK identity as being an
             unproductive means of coping with the migration experience. Kn&#246;rr, based on her
             study of German expatriate youths who lived in Africa, argues:</p>   <p>
@@ -1186,8 +1033,7 @@
             superiority&#8221; over the local African population to a &#8220;TCK&#8221; ideology of
             &#8220;cultural superiority&#8221; over the &#8220;ordinary&#8221; local German
             population&#8212;a transformation, which neither supports a child's (re-)integration nor
-            its further personal development (<xref id="ID693d0c6c-3f41-48ce-b281-f8435993d864"
-              ref-type="bibr" rid="ID75dc4fec-53ac-430d-b02d-1b6eae93b4d7">Kn&#246;rr 2005,
+            its further personal development (<xref id="ID693d0c6c-3f41-48ce-b281-f8435993d864" ref-type="bibr" rid="ID75dc4fec-53ac-430d-b02d-1b6eae93b4d7">Kn&#246;rr 2005,
               75</xref>).</p>
           </disp-quote>
       </p>
@@ -1223,11 +1069,9 @@
           <p>
             <speech id="s7">
               <speaker>Bjorn</speaker>
-              <p>Shanghai&#8217;s the best thing that can happen to you, if you&#8217;re a villager.
-                You&#8217;re opened up to everything. Also to opinions. You are not stuck. German
-                original: Bjorn: Shanghai ist schon das Beste was einem passieren kann, wenn man ein
-                Dorfmensch ist. Man &#246;ffnet sich so zu allem. Zu Meinungen auch. Man ist nicht
-                festgefahren.</p>
+              <p><italic>Shanghai&#8217;s the best thing that can happen to you, if you&#8217;re a villager. You&#8217;re opened up to everything. Also to opinions. You are not stuck.</italic>
+                  <xref ref-type="fn" rid="bibd2e512">25</xref>
+               </p>
             </speech>
           </p>
           <p>He labels himself (or his pre-Shanghai-self) a villager (Dorfmensch) who learned both
@@ -1251,8 +1095,7 @@
           <p>
             <speech id="s8">
               <speaker>Bjorn</speaker>
-              <p>
-                <italic>I can live with them for free and work at the consulate. That would be it.
+              <p><italic>I can live with them for free and work at the consulate. That would be it.
                   I&#8217;d arrive there and would already have everything made, somehow. But
                   that&#8217;s actually not what I want. That&#8217;s why I also don&#8217;t want to
                   study in Germany, because looking for an apartment will always be easy, because
@@ -1528,22 +1371,9 @@
           <p>
             <speech id="s28">
               <speaker>Xia</speaker>
-              <p>Yes. &lt;L&gt; Or swim towards somewhere else. Yes. &lt;L&gt;. German original:
-                Interviewer: Das hei&#223;t ein bisschen werfen sie dir quasi mangelnden
-                Patriotismus vor. Ja? Xia: Quasi. Also mein Vater hat zwar so, so Angst. So eine
-                Beschreibung mit einer Pflanze. Das hat eigentlich mein Opa, so ein Gedicht,
-                geschrieben. Und da ist eine Pflanze, die auf dem Wasser schwebt, keine Wurzel hat.
-                Und mein Vater hat Angst, dass ich auch so bin und dann sp&#228;ter dann damit
-                Probleme habe und so. Und irgendwie nicht wei&#223;, wo die Wurzeln sind, und dann,
-                ja. Interviewer: Und deswegen meint er halt, oder versucht, oder legt dir nahe, dass
-                China sozusagen f&#252;r dich deine Wurzeln sind. Aber du bist da ein bisschen
-                skeptisch ob das so funktioniert? Xia: Naja. Ich denke mal die Wurzel ist eigentlich
-                da wo die Leute sind, die du am meisten magst. Und meine Freunde habe ich ja von der
-                Schule. Problem ist dann, dass die immer&#160;&#8230; Dass immer, die viel aus den
-                verschiedenen Staaten kommen. [&#8230;es ist unklar] ob ich die in Zukunft
-                wiedersehen werde oder nicht. Interviewer: Hmm. Das hei&#223;t die schwimmen ja
-                eigentlich auch alle so ein bisschen? Xia: Ja. &lt;L&gt; Oder schwimmen woanders hin
-                oder. Ja. &lt;L&gt;.</p>
+              <p><italic>Yes. &lt;L&gt; Or swim towards somewhere else. Yes. &lt;L&gt;.</italic>
+                  <xref ref-type="fn" rid="bibd2e677">28</xref>
+               </p>
             </speech>
           </p>
           <p>The use of aquatic plants as an image of rootlessness symbolizes Xia&#8217;s
@@ -1588,15 +1418,12 @@
           <p>
             <speech id="s32">
               <speaker>Xia</speaker>
-              <p>At school I speak German the whole time and at home I speak Chinese the whole time.
+              <p><italic>At school I speak German the whole time and at home I speak Chinese the whole time.
                 And at school I think in German and at home in Chinese. The change is
                 quite&#160;&#8230; Sometimes it works well, sometimes not so much. After the
-                holidays, to switch from Chinese to German, sometimes that doesn&#8217;t work out
-                really well. German original: Xia: In der Schule spreche ich die ganze Zeit deutsch
-                und zu Hause die ganze Zeit chinesisch. Und dabei denke ich in der Schule auf
-                Deutsch und zu Hause auf Chinesisch. Der Wechsel ist ziemlich&#160;&#8230; Manchmal
-                klappt es gut, manchmal klappt es nicht so gut. [&#8230;] Nach den Ferien von
-                Chinesisch auf Deutsch &#252;berwechseln, das ist dann manchmal nicht so gut. </p>
+                holidays, to switch from Chinese to German, sometimes that doesn&#8217;t work out really well.</italic>
+                  <xref ref-type="fn" rid="bibd2e753">30</xref>
+               </p>
             </speech>
           </p>
           <p>When I ask if or how these different worlds require him to act accordingly, Xia
@@ -1605,46 +1432,32 @@
           <p>
             <speech id="s33">
               <speaker>Xia</speaker>
-              <p>There are many situations &lt;x&gt; and some situations may be alien to me. I am
-                quite familiar with what a Chinese family is like, or how it is at a German school.
-                But I am not familiar with what it is like for the Germans at home, or for the
-                Chinese at school. German original: Xia: Es gibt viele Situationen &lt;x&gt; und
-                manche Situationen die mir vielleicht fremd sind. Mir ist es ziemlich vertraut wie
-                es in einer chinesischen Familie so ist, oder wie in einer deutschen Schule. Aber
-                mir ist nicht so vertraut wie es bei den Deutschen zu Hause ist, oder bei den
-                Chinesen in der Schule. </p>
+              <p><italic>There are many situations &lt;x&gt; and some situations may be alien to me. I am quite familiar with what a Chinese family is like, or how it is at a German school. But I am not familiar with what it is like for the Germans at home, or for the Chinese at school.</italic>
+                  <xref ref-type="fn" rid="bibd2e766">31</xref> 
+               </p>
             </speech>
           </p>
           <p>For Xia, managing various zones and differences during his everyday life has become
-            normal. Steve Vertovec (<xref id="IDb7df6959-5e25-44fb-8503-0a4d3cf9def8"
-              ref-type="bibr" rid="ID86adadbe-0def-4262-a3d9-743e53a35e3e">1997, 294</xref>) refers
+            normal. Steve Vertovec (<xref id="IDb7df6959-5e25-44fb-8503-0a4d3cf9def8" ref-type="bibr" rid="ID86adadbe-0def-4262-a3d9-743e53a35e3e">1997, 294</xref>) refers
             to the competency in improvising from various, sometimes crisscrossing cultural and
             linguistic systems as &#8220;milieu moving.&#8221; Xia&#8217;s competence in
             &#8220;milieu moving&#8221; also brings about specific challenges. He must learn to
             &#8220;navigate processes of identification&#8221; with different norms and practices
             and &#8220;learn how to manage tensions between conformity and individuality&#8221;
-              (<xref id="ID1e1b915d-a632-4ab7-a79d-364e87eaa00d" ref-type="bibr"
-              rid="ID5682a293-bb45-43dd-a96d-017cdef98a6c">Sporton, Valentine, and Nielsen 2006,
+              (<xref id="ID1e1b915d-a632-4ab7-a79d-364e87eaa00d" ref-type="bibr" rid="ID5682a293-bb45-43dd-a96d-017cdef98a6c">Sporton, Valentine, and Nielsen 2006,
               214</xref>). </p>
           <p>Xia&#8217;s experience brings us back to the methodological discussions in the
-            introduction. His situation is similar to that of anthropologist Danau Tanu (<xref
-              id="ID707cd484-480f-4f4f-b433-173af00160f2" ref-type="bibr"
-              rid="IDad22d086-d68a-43ad-aa95-cc3a3d8e0589">2011</xref>) who, as we have seen, claims
+            introduction. His situation is similar to that of anthropologist Danau Tanu (<xref id="ID707cd484-480f-4f4f-b433-173af00160f2" ref-type="bibr" rid="IDad22d086-d68a-43ad-aa95-cc3a3d8e0589">2011</xref>) who, as we have seen, claims
             that TCK literature underrepresents such ruptures in the everyday routine. Tanu
             describes her life as an Asian child in an international school abroad as living in
             &#8220;&#8216;Western&#8217; culture by day and &#8216;Asian&#8217; culture by
-            night&#8221; (Tanu <xref id="ID4dc5110e-ca49-4d6e-b6cf-9dc44cb5538f" ref-type="bibr"
-              rid="IDad22d086-d68a-43ad-aa95-cc3a3d8e0589">2011</xref>, 223). Although such milieus
+            night&#8221; (Tanu <xref id="ID4dc5110e-ca49-4d6e-b6cf-9dc44cb5538f" ref-type="bibr" rid="IDad22d086-d68a-43ad-aa95-cc3a3d8e0589">2011</xref>, 223). Although such milieus
             are not as homogeneous as Tanu&#8217;s description may suggest, students like Xia do
             experience ruptures when moving between them and bridging different cultural practices
-            in their everyday routines. This is a prime example of the practice P&#252;tz (<xref
-              id="IDa1339e92-bd83-4aa8-b72b-7191fdc346b4" ref-type="bibr"
-              rid="ID92f198ab-f196-4497-ac2d-a161e7a9e929">2004, 13</xref>) calls &#8220;everyday
+            in their everyday routines. This is a prime example of the practice P&#252;tz (<xref id="IDa1339e92-bd83-4aa8-b72b-7191fdc346b4" ref-type="bibr" rid="ID92f198ab-f196-4497-ac2d-a161e7a9e929">2004, 13</xref>) calls &#8220;everyday
             transculturality.&#8221; Xia often reflects upon his shifting cultural frame of
             reference as well as his own position and acts accordingly. Such reflections exemplify
-            P&#252;tz&#8217;s notion of &#8220;strategic transculturality&#8221; (<xref
-              id="ID7070f22a-095f-4b6b-a4f1-8ecb0bb9d465" ref-type="bibr"
-              rid="ID92f198ab-f196-4497-ac2d-a161e7a9e929">ibid., 28</xref>), the competency of
+            P&#252;tz&#8217;s notion of &#8220;strategic transculturality&#8221; (<xref id="ID7070f22a-095f-4b6b-a4f1-8ecb0bb9d465" ref-type="bibr" rid="ID92f198ab-f196-4497-ac2d-a161e7a9e929">ibid., 28</xref>), the competency of
             moving reflexively within different symbolic systems (see Introduction).</p>
           <p>At school, I observe how Xia has difficulty getting along with some of the students.
             They are different from him, Xia explains, because they came from Germany to China and,
@@ -1655,13 +1468,9 @@
           <p>
             <speech id="s34">
               <speaker>Xia</speaker>
-              <p>Maybe because I only moved to Germany at the age of seven, [&#8230;] I get along
-                much better with the Chinese people at my school, well, those who have the same
-                culture that I have. Better than with the Chinese who are only here and with the
-                Germans. German original: Xia: Vielleicht gerade weil ich erst mit sieben nach
-                Deutschland gezogen bin, [&#8230;] versteh ich mich viel besser mit chinesischen
-                Leuten an meiner Schule, also die, die die gleiche Kultur haben wie ich. Besser als,
-                als mit den Chinesen die nur hier sind und mit den Deutschen halt.</p>
+              <p><italic>Maybe because I only moved to Germany at the age of seven, [&#8230;] I get along much better with the Chinese people at my school, well, those who have the same culture that I have. Better than with the Chinese who are only here and with the Germans.</italic>
+                  <xref ref-type="fn" rid="bibd2e785">32</xref>
+               </p>
             </speech>
           </p>
           <p>Xia&#8217;s reflections call to mind something I have overheard in conversations among
@@ -1672,17 +1481,10 @@
           <p>
             <speech id="s35">
               <speaker>Xia</speaker>
-              <p>[I feel] more comfortable in the interactions, then [things are] also less
-                disconcerting, and also because we share quite similar experiences so that we look
-                at some things from the same perspective. For example, we are put under much more
-                pressure from early on. We are being spoiled in a different way. Spoiled by
-                parents&#8217; attention. Different than maybe, I don&#8217;t know, by getting gifts
-                or something. German original: Xia: [Ich f&#252;hle mich] wohler im Umgang, dann
-                [gibt es] weniger Befremdliches, und ziemlich auch [weil wir] die gleiche Erfahrung
-                gemacht [haben], so dass wir manche Sachen aus der gleichen Perspektive sehen. Zum
-                Beispiel uns wird einfach, schon seit klein auf mehr unter Druck gesetzt. Auf andere
-                Weise verw&#246;hnt. Verw&#246;hnt durch Aufmerksamkeit der Eltern. Anders als durch
-                vielleicht, ich wei&#223; nicht, Geschenke oder so was.</p>
+              <p><italic>[I feel] more comfortable in the interactions, then [things are] also less disconcerting, and also because we share quite similar experiences so that we look at some things from the same perspective. For example, we are put under much more pressure from early on.</italic> 
+                  <italic>We are being spoiled in a different way. Spoiled by parents&#8217; attention. Different than maybe, I don&#8217;t know, by getting gifts or something.</italic>
+                  <xref ref-type="fn" rid="bibd2e802">33</xref>
+               </p>
             </speech>
           </p>
           <p>One binding experience of these &#8220;GBC&#8221; students seems to be their
@@ -1717,13 +1519,9 @@
           <p>
             <speech id="s39">
               <speaker>Xia</speaker>
-              <p>I see that&#8230; I like it when I look at people from my perspective, but I would
-                also like to look at things from their perspective. German original: Interviewer:
-                Meinst du, dass es aufgrund der verschiedenen, nicht Kulturen, ja, aber
-                Rollen&#160;&#8230; Xia: Perspektiven. Interviewer: Perspektive w&#252;rdest du
-                sagen? Perspektive so auf das eigene Leben sozusagen? Xia: Ich seh das. Ich finde
-                das gut wenn ich Leute aus meiner Perspektive betrachte, aber ich w&#252;rd auch
-                gern [auf] Sachen aus deren Perspektive heraus schauen.</p>
+              <p><italic>I see that&#8230; I like it when I look at people from my perspective, but I would also like to look at things from their perspective.</italic>
+                  <xref ref-type="fn" rid="bibd2e830">34</xref> 
+               </p>
             </speech>
           </p>
           <p>In his everyday life, Xia experiences the different practices and views of students
@@ -1766,22 +1564,9 @@
           <p>
             <speech id="s44">
               <speaker>Xia</speaker>
-              <p>Yes. And I also have a Chinese passport. That&#8217;s a foreigner. My parents have
-                often warned me about that. That is relational: Because I have a Chinese passport, I
-                know that I am legally a foreigner. And maybe will be treated like that in Germany.
-                And that&#8217;s why I also feel like that. [&#8230;] I think it&#8217;s right for
-                my parents to teach me that. German original: Xia: Also ich pers&#246;nlich finde.
-                Also meine anderen chinesischen Freunde haben sich so viel besser, eigentlich viel
-                besser integriert oder so. Sie sind auch schon l&#228;nger als ich&#160;&#8230;
-                Interviewer: Also denen f&#228;llt das leichter? Xia: Viel leichter! Ich hab dann
-                halt erst mit sieben. Und da war ich auch Ausl&#228;nder und musste alles lernen.
-                Interviewer: Das hei&#223;t du meinst du bist immer ein bisschen Ausl&#228;nder
-                geblieben? Xia: Ja. Und ich hab auch einen chinesischen Pass. Das ist ein
-                Ausl&#228;nder. Meine Eltern haben mich darum auch oft ermahnt. Das ist dann halt
-                gegenseitig. Dadurch dass ich einen chinesischen Pass habe, wei&#223; ich, dass ich
-                legal ein Ausl&#228;nder bin. Und vielleicht auch in Deutschland so behandelt werde.
-                Und deswegen f&#252;hl ich mich auch so. [&#8230;] Ich finde es auch richtig, dass
-                meine Eltern mir das so beigebracht haben.</p>
+              <p><italic>Yes. And I also have a Chinese passport. That&#8217;s a foreigner. My parents have often warned me about that. That is relational: Because I have a Chinese passport, I know that I am legally a foreigner. And maybe will be treated like that in Germany. And that&#8217;s why I also feel like that. [&#8230;] I think it&#8217;s right for my parents to teach me that.</italic>
+                  <xref ref-type="fn" rid="bibd2e881">35</xref>
+               </p>
             </speech>
           </p>
           <p>Xia&#8217;s description of himself as a &#8220;foreigner&#8221;&#8212;although he is a
@@ -1896,9 +1681,7 @@
         <p>At different places, times, in relation to different questions, the boundaries are
           re-sited. They become, not only what they have, at certain times, certainly
           been&#8212;mutually excluding categories, but also what they sometimes
-          are&#8212;differential points along a sliding scale (<xref
-            id="IDf05ebb2b-38af-45f8-b6b7-2a1fc7c018e0" ref-type="bibr"
-            rid="IDff8ef84b-d848-4489-b33e-fceab8e0f6a9">Stuart Hall 1990, 228</xref>).</p></disp-quote>
+          are&#8212;differential points along a sliding scale (<xref id="IDf05ebb2b-38af-45f8-b6b7-2a1fc7c018e0" ref-type="bibr" rid="IDff8ef84b-d848-4489-b33e-fceab8e0f6a9">Stuart Hall 1990, 228</xref>).</p></disp-quote>
         </p>
         <p>My introduction of expatriate youths in general, the first ethnographic descriptions of
           their life at school, and the interviews with several individuals that appear here have
@@ -1906,22 +1689,18 @@
           student in Shanghai can be. To do justice to this heterogeneity, I continue to share many
           direct voices from various students and their different migration experiences throughout
           this ethnography. </p>
-        <p>During eleven months of fieldwork from mid-August 2010 to early July 2011,<xref
-            ref-type="fn" rid="bibd2e1096">37</xref> a short stay after the summer school break in
+        <p>During eleven months of fieldwork from mid-August 2010 to early July 2011,<xref ref-type="fn" rid="bibd2e1096">36</xref> a short stay after the summer school break in
           September 2011, and another two-week stay in May/June 2012, I held a total of thirty-one
-          group and individual interviews with forty-three students.<xref ref-type="fn"
-            rid="bibd2e1103">38</xref> The majority of these students were between fifteen and
+          group and individual interviews with forty-three students.<xref ref-type="fn" rid="bibd2e1103">37</xref> The majority of these students were between fifteen and
           eighteen years old and enrolled at the German school I introduced above, or a Singaporean,
           British, French, or American Christian school. I additionally conducted one expert
           interview with a school counselor at another American school and discussed my research
           topic with a few teachers, but decided to use these as background information only.
           Similarly, six months of prior fieldwork on the adult expatriate community in Shanghai,
-          which I conducted in 2007, provided further context for my work.<xref ref-type="fn"
-            rid="bibd2e1110">39</xref> This ethnography, however, is based on a voice-centered
+          which I conducted in 2007, provided further context for my work.<xref ref-type="fn" rid="bibd2e1110">38</xref> This ethnography, however, is based on a voice-centered
           approach that focuses on the students&#8217; own words and perspectives because
           youths&#8217; own accounts of migration experiences have largely been ignored until
-          recently (<xref id="IDc764f338-0285-4480-8a1a-62622a6ac5b1" ref-type="bibr"
-            rid="ID6a106188-04ca-465c-b7ac-3af5f6de72f1">see Dobson 2009</xref>).</p>
+          recently (<xref id="IDc764f338-0285-4480-8a1a-62622a6ac5b1" ref-type="bibr" rid="ID6a106188-04ca-465c-b7ac-3af5f6de72f1">see Dobson 2009</xref>).</p>
         <p>The questions for the group discussions and the first round of individual interviews
           focused on addressing issues related to moving to Shanghai and everyday activities there.
           Both the group discussions and the individual interviews were semi-structured. This means
@@ -1939,43 +1718,33 @@
           recorded during the last follow-up stay in May&#8211;June 2012. Between 2012 and 2015,
           further interviews with students were conducted in Germany to discuss issues of returning. </p>
         <p>All interviews were transcribed, coded, and interpreted in the context of my field notes
-          and theoretical foundations.<xref ref-type="fn" rid="bibd2e1126">40</xref> The program
-          Atlas.ti ensured a systematic process.<xref ref-type="fn" rid="bibd2e1135">41</xref>
+          and theoretical foundations.<xref ref-type="fn" rid="bibd2e1126">39</xref> The program
+          Atlas.ti ensured a systematic process.<xref ref-type="fn" rid="bibd2e1135">40</xref>
           Throughout the interpretation, I worked with the original quotes and only translated
           German quotes into English as a very last step in my text production. For the final
           translations, I omitted some fillers, repetitions, and pauses for better readability. Due
           to my focus on the youth&#8217;s own voices, these interviews form the centerpiece of my
           ethnography. I also worked with various visual materials and methods to gain further
-          perspectives on the youths&#8217; experiences.<xref ref-type="fn" rid="bibd2e1142"
-            >42</xref> While visual materials are included throughout the ethnography, five images
+          perspectives on the youths&#8217; experiences.<xref ref-type="fn" rid="bibd2e1142">41</xref> While visual materials are included throughout the ethnography, five images
           were selected to introduce each of the book&#8217;s five parts. These images aim to
           provide a space for each part&#8217;s ethnographic and theoretical arguments to unfold. </p>
         <p>Numerous, free, English-language magazines that circulate in Shanghai, as well as
           advertisements, flyers, websites, and online forums provided further insights into the
-          lifestyles of the expatriate community.<xref ref-type="fn" rid="bibd2e1162">43</xref> As
+          lifestyles of the expatriate community.<xref ref-type="fn" rid="bibd2e1162">42</xref> As
           part of his inquiry into middle class youth culture in Nepal, anthropologist Mark Liechty
-            (<xref id="ID6e2800e0-4746-4b24-a579-258dd79cfbb9" ref-type="bibr"
-            rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">2003</xref>) read magazines targeted at
+            (<xref id="ID6e2800e0-4746-4b24-a579-258dd79cfbb9" ref-type="bibr" rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">2003</xref>) read magazines targeted at
           Nepali teenagers as part of a &#8220;global, intertextual media assemblage that constructs
           its own privileged world of reality-in-images.&#8221; He further writes, &#8220;it is onto
           this transnational public sphere, the media-assembled space of imagination, that local
-          merchants project their dreams of a local &#8216;youth culture&#8217;&#8221; (<xref
-            id="ID827d71c1-6160-4bf0-b39a-3c4549b309f2" ref-type="bibr"
-            rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">ibid., 219</xref>). Following
+          merchants project their dreams of a local &#8216;youth culture&#8217;&#8221; (<xref id="ID827d71c1-6160-4bf0-b39a-3c4549b309f2" ref-type="bibr" rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">ibid., 219</xref>). Following
           Liechty&#8217;s understanding, I collected media in Shanghai to understand how an
           expatriate culture or community is created. Liechty&#8217;s concept of media assemblage as
           &#8220;an intricate web of linkages that promote and channel consumer desires in
-          never-ending circuits&#8221; (<xref id="ID445be377-1556-4e37-8bd2-9d3ecff7836f"
-            ref-type="bibr" rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">ibid., 260</xref>)
-          illuminates how media can fuel, as Brosius (<xref
-            id="ID0c79f9c3-c66b-490c-8834-eff4a823ea07" ref-type="bibr"
-            rid="ID00a90000-aab6-4993-81ab-60e0355aa290">2010, 37</xref>) has phrased it, &#8220;a
+          never-ending circuits&#8221; (<xref id="ID445be377-1556-4e37-8bd2-9d3ecff7836f" ref-type="bibr" rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">ibid., 260</xref>)
+          illuminates how media can fuel, as Brosius (<xref id="ID0c79f9c3-c66b-490c-8834-eff4a823ea07" ref-type="bibr" rid="ID00a90000-aab6-4993-81ab-60e0355aa290">2010, 37</xref>) has phrased it, &#8220;a
           consumer ethic that affirms and &#8216;naturalises&#8217; cultural values and habitus of
           the middle class&#8221; (and, in my case, the expatriate community). The media assemblage
-            (<xref id="ID79b7eb8c-c322-48fb-b299-85f5a81b9026" ref-type="bibr"
-            rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">Liechty 2003 </xref> and <xref
-            id="IDcfbdb8f1-f683-4bd7-a77c-6061db21d617" ref-type="bibr"
-            rid="IDb32fb48a-8751-4a82-b704-3fab8c192ec9">Brosius 2011</xref>) functions as a
+            (<xref id="ID79b7eb8c-c322-48fb-b299-85f5a81b9026" ref-type="bibr" rid="ID7e958cd4-9c4f-4c3f-9c6f-14410224052b">Liechty 2003 </xref> and <xref id="IDcfbdb8f1-f683-4bd7-a77c-6061db21d617" ref-type="bibr" rid="IDb32fb48a-8751-4a82-b704-3fab8c192ec9">Brosius 2011</xref>) functions as a
           methodological tool in the quest for a wider context of how expatriate communities are
           produced by tracing expatriates&#8217; consumption, education, work, travel, and leisure
           habits. The magazines and forums proved particularly helpful because their main purpose
@@ -1983,9 +1752,7 @@
           her examination of practices of the new middle class in India, Brosius pinpoints
           media&#8217;s potential for offering an introduction or guidance: &#8220;These intertwined
           forms of media are crucial when it comes to their capacity to educate
-          &#8216;uncultured&#8217; newcomers, creating immediacy and intimacy&#8221; (<xref
-            id="IDcfbdb8f1-f683-4bd7-a77c-6061db21d616" ref-type="bibr"
-            rid="ID00a90000-aab6-4993-81ab-60e0355aa290">2010, 36</xref>). The media assemblage
+          &#8216;uncultured&#8217; newcomers, creating immediacy and intimacy&#8221; (<xref id="IDcfbdb8f1-f683-4bd7-a77c-6061db21d616" ref-type="bibr" rid="ID00a90000-aab6-4993-81ab-60e0355aa290">2010, 36</xref>). The media assemblage
           facilitates understanding the community&#8217;s current discourses and contextualizes my
           focus on expatriate teenagers.</p>
         <p>Additionally, I collected mental maps at the end of several group discussions and during
@@ -1996,12 +1763,9 @@
           understanding everyday spatial practices. Mental mapping allows the research partner to
           establish a focus from his or her own perspective and thus&#8212;despite being limited by
           a guiding question&#8212;leaves more room for subjective experiences than interviewing
-          alone (<xref id="IDd2234122-cb44-4153-8826-6d2015b219bf" ref-type="bibr"
-            rid="IDb7e78d3d-a9d1-4b65-8411-4fecf503c9b1">Ploch 1995, 24</xref>). Consequently, the
+          alone (<xref id="IDd2234122-cb44-4153-8826-6d2015b219bf" ref-type="bibr" rid="IDb7e78d3d-a9d1-4b65-8411-4fecf503c9b1">Ploch 1995, 24</xref>). Consequently, the
           drawings of students&#8217; &#8220;personal Shanghais&#8221; are subjective
-          interpretations based on their active reflections and ways of giving spaces meaning (<xref
-            id="ID82b775cf-5094-4c63-8fca-fc6314136a06" ref-type="bibr"
-            rid="IDb7e78d3d-a9d1-4b65-8411-4fecf503c9b1">ibid., 25</xref>).</p>
+          interpretations based on their active reflections and ways of giving spaces meaning (<xref id="ID82b775cf-5094-4c63-8fca-fc6314136a06" ref-type="bibr" rid="IDb7e78d3d-a9d1-4b65-8411-4fecf503c9b1">ibid., 25</xref>).</p>
         <p>The various materials and methods that I employed to capture expatriate youths&#8217;
           experiences all illustrate the heterogeneity of the group I chose to study. Many factors
           influence their transient time in Shanghai, whether it is their first time abroad or their
@@ -2055,9 +1819,7 @@
         <p>Their accounts demonstrate that these teenagers are very interested in sharing and
           discussing their views, in opening up a shared space in which they can articulate their
           transcultural perspectives, and investigating the roles of mobility, cultural practices,
-          and differences in their lives. The &#8220;narratives of the self&#8221; (<xref
-            id="IDd6f7223d-d270-4298-84f6-bb1d0db1f075" ref-type="bibr"
-            rid="ID16d2619c-37c2-4576-a4e0-8ac07186369a">Giddens 1991</xref>) that the expatriate
+          and differences in their lives. The &#8220;narratives of the self&#8221; (<xref id="IDd6f7223d-d270-4298-84f6-bb1d0db1f075" ref-type="bibr" rid="ID16d2619c-37c2-4576-a4e0-8ac07186369a">Giddens 1991</xref>) that the expatriate
           youths offered during interviews were triggered by questions about home or the challenges
           they faced, but were often also introduced by the teenagers themselves. </p>
         <p>These self-reflective practices of re-positioning demonstrate, as I have laid out in the
@@ -2086,15 +1848,11 @@
         <p>Despite individual differences in how they deal with moving from one city or country to
           the next, the expatriate students in this ethnography all share the challenge of
           maintaining old ties while creating new ones in new communities. Their moves are what
-          Giddens (<xref id="ID1dbefe91-a4bb-4c57-99bf-258a56c6c28e" ref-type="bibr"
-            rid="ID16d2619c-37c2-4576-a4e0-8ac07186369a">1991, 112&#8211;114</xref>) calls
+          Giddens (<xref id="ID1dbefe91-a4bb-4c57-99bf-258a56c6c28e" ref-type="bibr" rid="ID16d2619c-37c2-4576-a4e0-8ac07186369a">1991, 112&#8211;114</xref>) calls
           &#8220;fateful moments,&#8221; meaning &#8220;times when events come together in such a
-          way that an individual stands, as it were, at a crossroads in his existence&#8221; (<xref
-            id="ID2c7c143a-0aa0-4753-bbb3-1b628c409fd4" ref-type="bibr"
-            rid="ID16d2619c-37c2-4576-a4e0-8ac07186369a">ibid., 113</xref>). This ethnography
+          way that an individual stands, as it were, at a crossroads in his existence&#8221; (<xref id="ID2c7c143a-0aa0-4753-bbb3-1b628c409fd4" ref-type="bibr" rid="ID16d2619c-37c2-4576-a4e0-8ac07186369a">ibid., 113</xref>). This ethnography
           highlights these crossroads and the changes privileged migration brings with it by
-          recounting the move to and away from Shanghai. While writing from my point of view,<xref
-            ref-type="fn" rid="bibd2e1188">44</xref> I understand their activities and emphasis on
+          recounting the move to and away from Shanghai. While writing from my point of view,<xref ref-type="fn" rid="bibd2e1188">43</xref> I understand their activities and emphasis on
           exploring Shanghai as a means of dealing with the difficulties the move forced them to
           confront, by linking everyday practices to their migration experiences. While focusing on
           the small-scale processes of everyday life, the next four parts therefore trace and
@@ -2153,6 +1911,23 @@
           &#8220;found&#8221; by researchers are products of what occurred between two or more
           people&#8212;the researcher and the researched. The narrative in an interview or the
           responses in a survey [&#8230;] are jointly constructed&#8221; (Way 2004, 171).</p>
+      </fn>
+      <fn id="bibd2e362">
+        <p> German original: Antonia: <italic>Ich bin eigentlich auch in der Expatbubble. Vielleicht ein bisschen weniger als andere. Aber ich bin es auf jeden Fall. </italic>
+        </p>
+      </fn>
+      <fn id="bibd2e382">
+        <p> German original: Antonia: <italic>Ich merke schon, das ist eine andere Gruppe von Menschen. Obwohl das so, teilweise Chinesen sind, teilweise Deutsche die fast ihr ganzes Leben in Deutschland gelebt haben, irgendwie, man ver&#228;ndert sich hier. Denn es ist wirklich eine andere Gruppe von Menschen. Als w&#228;r es eine andere Nationalit&#228;t.</italic>
+        </p>
+      </fn>
+      <fn id="bibd2e411">
+        <p> German original: Antonia: Shanghai ist in meinem Kopf f&#252;r mich immer so. Ich wei&#223; nicht. So ein Haufen von vielem einfach. Einfach so, ganz viele Eindr&#252;cke die ganze Zeit. [&#8230;] Mich macht das voll hyper. Immer wenn ich sofort in der Stadt von Shanghai bin, so in diesen Gegenden. [&#8230;] Also als ich zur&#252;ck [aus Deutschland] in Shanghai war, war ich mit meiner Freundin shoppen und wir sind gar nicht zum Einkaufen gegangen, gekommen. Wir waren essen und sind einfach nur durch eine Stra&#223;e gelaufen und waren aufgedreht und froh wieder in Shanghai zu sein. [&#8230;] Sobald ich in die Stadt komme und in der Stadt bin, oder mit dem Taxi fahre von Club zu Club oder shoppen gehe&#160;... Ich bin einfach, ich wird&#160;&#8230; Also es kommt mir nicht so vor &#8220;oh Gott viel Zeug,&#8221; sondern dann so eher, als h&#228;tte ich mehr Energie.</p>
+      </fn>
+      <fn id="bibd2e452">
+        <p> German original: Bjorn: Expat. Expat ist wie so ein bisschen Senator-Status bei Lufthansa. Man wird besser behandelt einfach. Wenn du Senator oder first class zum Beispiel bei Lufthansa bist oder so, dann kommst du zum Beispiel in diese Lufthansa-Lounge und hockst nicht mit allen anderen, den normalen irgendwie, da unten auf diesen ekligen Sesseln. Sondern hockst auf deinem Massage-Stuhl, trinkst da deinen Drink noch mal, isst noch ein bisschen Kaviar. So ist Expat sein. Expat sein ist: <italic>&#8220;</italic>Ja, was macht dein Daddy?<italic>&#8221;</italic> 
+          <italic>&#8220;</italic>Ja, der arbeitet das und das.<italic>&#8221;</italic> 
+          <italic>&#8220;</italic>Ja, und was machst du hier?<italic>&#8221;</italic> 
+          <italic>&#8220;</italic>Ich vertrink eigentlich nur das Geld, das mein Papa verdient.<italic>&#8221;</italic> Das ist Expat.</p>
       </fn>
       <fn id="bibd2e170">
         <p> These friendships were obviously based on gender, something I had already observed when
@@ -2298,6 +2073,10 @@
             ein bisschen weniger als andere. Aber ich bin es auf jeden Fall. </italic>
         </p>
       </fn>
+      <fn id="bibd2e512">
+        <p> German original: Bjorn: <italic>Shanghai ist schon das Beste was einem passieren kann, wenn man ein Dorfmensch ist. Man &#246;ffnet sich so zu allem. Zu Meinungen auch. Man ist nicht festgefahren.</italic>
+        </p>
+      </fn>
       <fn id="bibd2e428">
         <p> I will discuss this aspect of demarcation, or &#8220;the bubble,&#8221; throughout this
           ethnography, particularly in Part III, Chapter 2.1 on gated communities, in Part III,
@@ -2312,6 +2091,9 @@
             wirklich eine andere Gruppe von Menschen. Als w&#228;r es eine andere
             Nationalit&#228;t.</italic>
         </p>
+      </fn>
+      <fn id="bibd2e677">
+        <p> German original: Interviewer: <italic>Das hei&#223;t ein bisschen werfen sie dir quasi mangelnden Patriotismus vor. Ja?</italic> Xia:<italic> Quasi. Also mein Vater hat zwar so, so Angst. So eine Beschreibung mit einer Pflanze. Das hat eigentlich mein Opa, so ein Gedicht, geschrieben. Und da ist eine Pflanze, die auf dem Wasser schwebt, keine Wurzel hat. Und mein Vater hat Angst, dass ich auch so bin und dann sp&#228;ter dann damit Probleme habe und so. Und irgendwie nicht wei&#223;, wo die Wurzeln sind, und dann, ja.</italic> Interviewer: <italic>Und deswegen meint er halt, oder versucht, oder legt dir nahe, dass China sozusagen f&#252;r dich deine </italic>Wurzeln sind. Aber du bist da ein bisschen skeptisch ob das so funktioniert? Xia: Naja. Ich denke mal die Wurzel ist eigentlich da wo die Leute sind, die du am meisten magst. Und meine Freunde habe ich ja von der Schule. Problem ist dann, dass die immer&#160;&#8230; Dass immer, die viel aus den verschiedenen Staaten kommen. [&#8230;es ist unklar] ob ich die in Zukunft wiedersehen werde oder nicht. Interviewer: Hmm. Das hei&#223;t die schwimmen ja eigentlich auch alle so ein bisschen? Xia: Ja. &lt;L&gt; Oder schwimmen woanders hin oder. Ja. &lt;L&gt;.</p>
       </fn>
       <fn id="bibd2e471">
         <p> German original: Antonia: Shanghai ist in meinem Kopf f&#252;r mich immer so. Ich
@@ -2342,6 +2124,10 @@
           <italic>&#8220;</italic>Ja, und was machst du hier?<italic>&#8221;</italic>
           <italic>&#8220;</italic>Ich vertrink eigentlich nur das Geld, das mein Papa
             verdient.<italic>&#8221;</italic> Das ist Expat.</p>
+      </fn>
+      <fn id="bibd2e322">
+        <p> German original: Antonia: <italic>Wenn ich nach Deutschland komme, muss ich mich dran gew&#246;hnen. Immer. Was mich auch immer nervt in Deutschland ist so Sachen wie mit dem Einladen, wie, die nehmen dann die Rechnung, &#8220;ja, du musst 4,20 zahlen.&#8221; So, ich hab gerade keine zwanzig Cent. Solche Sachen. Da ist das hier bei meinen Freunden viel entspannter.</italic>
+        </p>
       </fn>
       <fn id="bibd2e569">
         <p> German original: Bjorn: <italic>Shanghai ist schon das Beste was einem passieren kann,
@@ -2386,6 +2172,27 @@
           verh&#228;ltnism&#228;&#223;ig strenger. Interviewer: Ja. Xia: Also die kennen halt nicht
           diese Kindererziehung wie in Deutschland. Naja. Die stehen auch dieser deutschen Erziehung
           ziemlich kritisch gegen&#252;ber.</p>
+      </fn>
+      <fn id="bibd2e753">
+        <p> German original: Xia: <italic>In der Schule spreche ich die ganze Zeit deutsch und zu Hause die ganze Zeit chinesisch. Und dabei denke ich in der Schule auf Deutsch und zu Hause auf Chinesisch. Der Wechsel ist ziemlich&#160;&#8230; Manchmal klappt es gut, manchmal klappt es nicht so gut. [&#8230;] Nach den Ferien von Chinesisch auf Deutsch &#252;berwechseln, das ist dann manchmal nicht so gut. </italic>
+        </p>
+      </fn>
+      <fn id="bibd2e766">
+        <p> German original: Xia: <italic>Es gibt viele Situationen &lt;x&gt; und manche Situationen die mir vielleicht fremd sind. Mir ist es ziemlich vertraut wie es in einer chinesischen Familie so ist, oder wie in einer deutschen Schule. Aber mir ist nicht so vertraut wie es bei den Deutschen zu Hause ist, oder bei den Chinesen in der Schule. </italic>
+        </p>
+      </fn>
+      <fn id="bibd2e785">
+        <p> German original: Xia: <italic>Vielleicht gerade weil ich erst mit sieben nach Deutschland gezogen bin, [&#8230;] versteh ich mich viel besser mit chinesischen Leuten an meiner Schule, also die, die die gleiche Kultur haben wie ich. Besser als, als mit den Chinesen die nur hier sind und mit den Deutschen halt.</italic>
+        </p>
+      </fn>
+      <fn id="bibd2e802">
+        <p> German original: Xia: <italic>[Ich f&#252;hle mich] </italic>wohler im Umgang, dann [gibt es] weniger Befremdliches, und ziemlich auch [weil wir] die gleiche Erfahrung gemacht [haben], so dass wir manche Sachen aus der gleichen Perspektive sehen. Zum Beispiel uns wird einfach, schon seit klein auf mehr unter Druck gesetzt. Auf andere Weise verw&#246;hnt. Verw&#246;hnt durch Aufmerksamkeit der Eltern. Anders als durch vielleicht, ich wei&#223; nicht, Geschenke oder so was.</p>
+      </fn>
+      <fn id="bibd2e830">
+        <p> German original: Interviewer: <italic>Meinst du, dass es aufgrund der verschiedenen, nicht Kulturen, ja, aber Rollen&#160;&#8230;</italic> Xia: <italic>Perspektiven. </italic>Interviewer:<italic> Perspektive w&#252;rdest du sagen? Perspektive so auf das eigene Leben sozusagen?</italic> Xia: <italic>Ich seh das. Ich finde das gut wenn ich Leute aus meiner Perspektive betrachte, aber ich w&#252;rd auch gern </italic>[auf] Sachen aus deren Perspektive heraus schauen.</p>
+      </fn>
+      <fn id="bibd2e881">
+        <p> German original: Xia: Also ich pers&#246;nlich finde. Also meine anderen chinesischen Freunde haben sich so viel besser, eigentlich viel besser integriert oder so. Sie sind auch schon l&#228;nger als ich&#160;&#8230; Interviewer: Also denen f&#228;llt das leichter? Xia: Viel leichter! Ich hab dann halt erst mit sieben. Und da war ich auch Ausl&#228;nder und musste alles lernen. Interviewer: Das hei&#223;t du meinst du bist immer ein bisschen Ausl&#228;nder geblieben? Xia: Ja. Und ich hab auch einen chinesischen Pass. Das ist ein Ausl&#228;nder. Meine Eltern haben mich darum auch oft ermahnt. Das ist dann halt gegenseitig. Dadurch dass ich einen chinesischen Pass habe, wei&#223; ich, dass ich legal ein Ausl&#228;nder bin. Und vielleicht auch in Deutschland so behandelt werde. Und deswegen f&#252;hl ich mich auch so. [&#8230;] Ich finde es auch richtig, dass meine Eltern mir das so beigebracht haben.</p>
       </fn>
       <fn id="bibd2e817">
         <p> German original: Xia: <italic>In der Schule spreche ich die ganze Zeit deutsch und zu
@@ -2561,9 +2368,7 @@
           Family, Enjoy Shanghai, Time Out Shanghai, and several others.</p>
       </fn>
       <fn id="bibd2e1188">
-        <p> My point of view, or in Gupta and Ferguson&#8217;s <xref
-            id="IDbdc33807164d43aa-9a56-2fe32bab9d00" ref-type="bibr"
-            rid="IDbdc33807-164d-43aa-9a56-2fe32bab9d69"> (1997) </xref> words, my
+        <p> My point of view, or in Gupta and Ferguson&#8217;s <xref id="IDbdc33807164d43aa-9a56-2fe32bab9d00" ref-type="bibr" rid="IDbdc33807-164d-43aa-9a56-2fe32bab9d69"> (1997) </xref> words, my
           &#8220;location,&#8221; is not a stable point of reference either. The
           &#8220;Location&#8221; as the fieldworker&#8217;s standpoint and position in society, as
           for instance German, white, female graduate student, is not something &#8220;one
