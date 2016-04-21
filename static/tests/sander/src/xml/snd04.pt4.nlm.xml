@@ -1,4 +1,5 @@
-<article>
+<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:ns0="http://www.w3.org/1999/xlink" xmlns:xlink="http://www.w3.org/1999/xlink">
     <front>
         <journal-meta>
             <journal-id journal-id-type="publisher-id">Heidelberg University Publishing</journal-id>
@@ -32,7 +33,8 @@
             <fpage>1</fpage>
             <lpage>2</lpage>
             <permissions>
-                <copyright-statement>&#169; 2016, Marie Sander</copyright-statement>
+                <copyright-statement>&#169; 2016, Marie Sander
+                    Publishing</copyright-statement>
                 <copyright-year>2016</copyright-year>
                 <copyright-holder>Marie Sander</copyright-holder>
                 <license xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://creativecommons.org/licenses/by/3.0/">
@@ -50,7 +52,7 @@
 
             <title>Part IV: Living</title>
             <p>
-                <disp-quote id="SQ1">
+                <disp-quote>
                     <p>Mia: It&#8217;s really like that, if you&#8217;re homesick, because
                         you&#8217;re somewhere in a foreign country or in a foreign city, you just
                         have to do something.<xref ref-type="fn" rid="bibd2e46">1</xref>
