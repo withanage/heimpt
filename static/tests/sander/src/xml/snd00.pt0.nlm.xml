@@ -1,4 +1,5 @@
-<article>
+<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article">
     <front>
         <journal-meta>
             <journal-id journal-id-type="publisher-id">Heidelberg University Publishing</journal-id>
@@ -52,12 +53,14 @@
     <body>
         <sec>
             <title>Introduction </title>
+            
             <sec>
                 <title>
                     <italic>Paul&#8217;s Experience Growing up on the Move: Combining Ethnographic
                         and Transcultural Approaches in Expatriate Youth Research</italic>
                 </title>
-                <p>It is Saturday afternoon and seventeen-year-old Paul is sitting opposite me at a
+              
+                <p> <xref ref-type="fig" rid="fig1">(Bild 1)</xref>It is Saturday afternoon and seventeen-year-old Paul is sitting opposite me at a
                     caf&#233; on Wulumuqi Road in downtown Shanghai. Below our window, buses, taxis,
                     honking electric scooters, and pedestrians carrying umbrellas to shield off the
                     sun pass by until they disappear into the narrow, sycamore-tree-lined streets of
@@ -71,6 +74,7 @@
                     like me, I wonder if we should switch to my native language for the interview.
                     Noticing my general difficulty comprehending the many moves, places, tongues,
                     and people that he references, Paul helps by clarifying his language skills:</p>
+               
                 <p>
                     <speech id="s1">
                         <speaker>Paul</speaker>
@@ -1594,7 +1598,17 @@
                     contradictions between the aspired flexibility of twenty-first century
                     identities and the rigidity of cultural divisions based on nationality,
                     ethnicity, gender, and class that are so apparent in our world.</p>
+                <fig-group>
+                    <fig id="fig1" position="float">
+                        
+                        <label>A.1 Heiratsverbindungen und Nachkommen (in) der iulisch-claudischen Dynastie</label>
+                        
+                        <graphic xlink:href="48-269-1-2-20160127.jpg"/>
+                        
+                    </fig>
+                </fig-group>
             </sec>
+            
         </sec>
     </body>
     <back>
