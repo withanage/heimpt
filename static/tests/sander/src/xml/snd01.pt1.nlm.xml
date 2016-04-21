@@ -1,4 +1,5 @@
-<article xmlns:ns0="http://www.w3.org/1999/xlink">
+<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:ns0="http://www.w3.org/1999/xlink" xmlns:xlink="http://www.w3.org/1999/xlink">
   <front>
     <journal-meta>
       <journal-id journal-id-type="publisher-id">Heidelberg University Publishing</journal-id>
@@ -10,7 +11,7 @@
     <article-meta>
       <article-id pub-id-type="doi">10.1000/123456</article-id>
       <title-group>
-        <article-title>Passing Through Shanghai ;
+        <article-title>Passing Through Shanghai:
           Ethnographic Insights into the Mobile Lives of Expatriate Youths</article-title>
       </title-group>
       <contrib-group>
@@ -34,10 +35,10 @@
       <fpage>1</fpage>
       <lpage>2</lpage>
       <permissions>
-        <copyright-statement>&#169; 2016, Heidelberg University Publishing</copyright-statement>
+        <copyright-statement>&#169; 2016, Marie Sander </copyright-statement>
         <copyright-year>2016</copyright-year>
-        <copyright-holder>Heidelberg University Publishing</copyright-holder>
-        <copyright-holder>Heidelberg University Publishing</copyright-holder>
+        <copyright-holder>Marie Sander</copyright-holder>
+        <copyright-holder>Marie Sander</copyright-holder>
         <license ns0:href="http://creativecommons.org/licenses/by/3.0/">
           <license-p>Dieses Werk ist unter der Creative Commons-Lizenz 4.0 (CC BY-SA 4.0 <ext-link ext-link-type="uri" ns0:href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">)</ext-link>
             ver&#246;ffentlicht. credited.</license-p>
@@ -810,7 +811,7 @@
           losses. The inherent questions of belonging and cultural identity are, to use Stuart
           Hall&#8217;s expression, an ongoing and ever-changing process of
           &#8220;positioning.&#8221;</p>
-        <p>The following mind map (Figure 2) was produced by the students Mia, Kressi, and Bjorn
+        <p>The following mind map <xref ref-type="fig" rid="fig2">(Figure 2)</xref> was produced by the students Mia, Kressi, and Bjorn
           during Ethics class at a German school in December 2010 and allows for a good overview of
           their own complex ideas about identity.<xref ref-type="fn" rid="bibd2e326">14</xref> Their
           discussions, as the map illustrates, revolve around &#8220;Pr&#228;gungen&#8221;
@@ -1844,6 +1845,14 @@
           the small-scale processes of everyday life, the next four parts therefore trace and
           examine the larger themes of leaving (Part II), arriving in Shanghai (Part III), living
           there (Part IV) and, finally, moving on (Part V).</p>
+        <fig-group>
+          <fig id="fig2" position="float">
+            
+            <label>Figure 2. Mind Map on “Identität.” Drawing by three students.</label>
+            
+            <graphic xlink:href="48-544-1-2-20160418.jpg"/>
+          </fig>
+        </fig-group>
       </sec>
 
     </sec>
