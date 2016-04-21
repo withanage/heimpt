@@ -1,4 +1,4 @@
-<article xmlns:ns0="http://www.w3.org/1999/xlink">
+<article xmlns:ns0="http://www.w3.org/1999/xlink" xmlns:xlink="http://www.w3.org/1999/xlink">
   <front>
     <journal-meta>
       <journal-id journal-id-type="publisher-id">Heidelberg University Publishing</journal-id>
@@ -3455,10 +3455,8 @@
             <fig id="fig4" position="float"> 
               <label> Figure 4. Mental Map of Shanghai. Drawing by a 16-year-old student at a Singaporean school.  </label>
               <graphic xlink:href="48-546-1-2-20160418.jpg"/>
-            </fig>
-          
-          </fig-group>
-          
+            </fig>          
+          </fig-group>          
         </sec>
       </sec>
     </sec>
