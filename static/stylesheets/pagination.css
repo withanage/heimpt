@@ -1,0 +1,89 @@
+/* --------------- Page setup ------------------------ */
+@page {
+  marks: crop;
+  size: 155mm 235mm;
+  @footnotes {
+    margin-top: 14pt;
+  }
+}
+
+@page :first {
+  margin-top: 5cm;
+  @top-right {
+    content: "";
+  }
+  @top-left {
+    content: "";
+  }
+}
+
+@page :left {
+  margin-left: 1.2cm;
+  margin-right: 2cm;
+  margin-top margin-bottom: 2.5cm;
+  @top-left {
+    content: "LEFT PAGE";
+    font-size: 10pt;
+    text-transform: capitalize;
+  }
+  @bottom-left {
+    content: counter(page, lower-roman);
+    font-size: 10pt;
+  }
+}
+
+@page :right {
+  margin-right: 2cm;
+  margin-left: 1.2cm;
+  margin-top margin-bottom: 2.5cm;
+  @top-right {
+    content: "RIGHT PAGE";
+    font-size: 10pt;
+    text-transform: capitalize;
+  }
+  @bottom-right {
+    content: counter(page, lower-roman);
+    font-size: 10pt;
+  }
+}
+
+@page chapter :left {
+  margin-left: 2cm;
+  margin-right: 2cm;
+  margin-top margin-bottom: 2.5cm;
+  @top-left {
+    content: "CHAPTER PAGE";
+    font-size: 10pt;
+    text-transform: capitalize;
+  }
+  @bottom-left {
+    content: counter(page);
+    font-size: 10pt;
+  }
+}
+
+@page chapter :right {
+  margin-left: 2cm;
+  margin-right: 2cm;
+  margin-top margin-bottom: 2.5cm;
+  @top-right {
+    content: "CHAPTER PAGE";
+    font-size: 10pt;
+    text-transform: capitalize;
+  }
+  @bottom-right {
+    content: counter(page);
+    font-size: 10pt;
+  }
+}
+
+.body {
+  hyphens: auto;
+  counter-reset: chapter;
+  display: block;
+  text-align: justify;
+}
+
+p.chapter {
+  page: chapter;
+}

@@ -6,7 +6,7 @@ from lxml import etree
 logging.basicConfig(level=logging.INFO)
 
 class Pipeline:
-	def __init__(self, base_dir, test_collection, test_name):
+	def __init__(self, base_dir, test_collection, test_name, cit=False):
 		self.base_dir = base_dir
 		self.test_collection = test_collection
 		self.test_name = test_name
@@ -16,6 +16,10 @@ class Pipeline:
 
 		self.xml_path = os.path.join(self.base_dir, "static", "tests", self.test_collection, "src", "xml", self.test_name)
 		self.xml_fn = self.xml_path+".xml"
+
+		self.cit = cit
+		if cit:
+			self.xml_cit_fn = self.xml_path+".cit.xml"
 
 		self.fo_fn = os.path.join(self.base_dir, "static", "tests", self.test_collection, "src", "fo", self.test_name+".fo")
 		self.html_fn = os.path.join(self.base_dir, "static", "tests", self.test_collection, "src", "html", self.test_name+".html")
@@ -48,6 +52,24 @@ class Pipeline:
 
 		logging.info("... done")
 
+	def xml2cit(self, xsl_fn):
+		logging.info("XML -> XML (format citations)")
+
+                # Load stylesheet
+                xsl = etree.parse(xsl_fn)
+                transformer = etree.XSLT(xsl)
+
+                # Transform XML
+                xml = etree.parse(self.xml_fn)
+                xml_cit = transformer(xml)
+
+                logging.info("... done")
+
+                # Save XML with formatted citations
+                logging.info("Writing to %s"%self.xml_cit_fn)
+                xml_cit.write(self.xml_cit_fn, encoding="utf-8")
+
+
 	def xml2fo(self, xsl_fn):
 		logging.info("XML -> FO")
 
@@ -61,6 +83,8 @@ class Pipeline:
 		
 		# Transform XML
 		xml = etree.parse(self.xml_fn)
+		if self.cit:
+			xml = etree.parse(self.xml_cit_fn)
 		fo = transformer(xml)
 
 		logging.info("... done")
@@ -78,6 +102,8 @@ class Pipeline:
 		
 		# Transform XML
 		xml = etree.parse(self.xml_fn)
+                if self.cit:
+                        xml = etree.parse(self.xml_cit_fn)
 		html = transformer(xml)
 
 		logging.info("... done")
@@ -136,14 +162,18 @@ def main():
 	xslt_html=cfg.get("stylesheets", "xslt_html")
 	xslt_fo=cfg.get("stylesheets", "xslt_fo")
 	css=cfg.get("stylesheets", "css")
+	try:
+		cit=cfg.get("stylesheets", "xslt_cit")
+	except ConfigParser.NoOptionError:
+		cit=None
 	
 	start=cfg.get("pipeline","start")
 	if not start in ["1", "2", "3"]:
 		logging.error("Invalid value %s for start. Allowed values are 1, 2 or 3."%start)
 		exit(1)
-	
+
 	# Run pipeline
-	P = Pipeline(base_dir, test_collection, test_name)
+	P = Pipeline(base_dir, test_collection, test_name, cit)
 	
 	if P.validate_paths() == False:
 		logging.error("Invalid file paths specified in %s"%cfg_fn)
@@ -158,12 +188,14 @@ def main():
 			exit(1)
 
 	if start == "1" or start == "2":
+		if cit:
+			P.xml2cit(cit)
 		if os.path.isfile(P.xml_fn):
 			# Step 2: XML to FO/HTML
 			P.xml2fo(xslt_fo)
 			P.xml2html(xslt_html)
 		else:
-			logging.error("XML file %s not found"%P.doc_fn)
+			logging.error("XML file %s not found"%P.xml_fn)
 			exit(1)
 
 	if os.path.isfile(P.fo_fn):
