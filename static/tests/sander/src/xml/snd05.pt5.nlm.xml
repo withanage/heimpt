@@ -82,9 +82,9 @@
           nowhere.” Peter’s belongings are now in a container that will be shipped to
           Germany, and he and his family have moved into a hotel, where they will stay for the
           remainder of their time in Shanghai. Prior to moving out of his family’s home,
-          Peter’s room probably looked similar to that of Mia (Figure 30) when she prepared
+          Peter’s room probably looked similar to that of Mia <xref ref-type="fig" rid="fig30"> (Figure 30)</xref> when she prepared
           for her move to Germany. Interestingly, she sent this image to me paired with a picture of
-          her room as it looked when she lived in it (see Figure 11, in Part III, Chapter 2.2) as a
+          her room as it looked when she lived in it <xref ref-type="fig" rid="fig11"> (see Figure 11, in Part III, Chapter 2.2)</xref> as a
           response to my question of what “home” (in Shanghai) meant to her. Evidently,
           for Mia, home meant both her room in Shanghai and the routine of packing and leaving it
           behind. This transitory experience is shared by all students featured in this ethnography.
@@ -1573,6 +1573,10 @@
             spaces that encourage self-reflection and the development of the transcultural
             perspectives needed to manage the consequences of global mobility.</p>
           <fig-group>
+            <fig id="fig11" position="float"> 
+              <label> Figure 11. Home in Shanghai: Mia’s room. Photo by Mia.</label>
+              <graphic xlink:href="48-572-1-2-20160418.jpg"/>
+            </fig>
             <fig id="fig30" position="float"> 
               <label> Figure 30. Home in Shanghai: Mia’s Room, Prepared for the Next Move. Photo by Mia. </label>
               <graphic xlink:href="48-572-1-2-20160418.jpg"/>
