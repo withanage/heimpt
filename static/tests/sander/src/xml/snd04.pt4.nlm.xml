@@ -51,7 +51,7 @@
     <body>
         <sec>
 
-            <title>Part IV: Living</title>
+            <title><xref ref-type="fig" rid="fig20"> Part IV: Living</xref> </title>
             <p>
                 <disp-quote>
                     <p>Mia: It’s really like that, if you’re homesick, because
@@ -60,7 +60,6 @@
                     </p>
                 </disp-quote>
             </p>
-
             <p>This part of the book examines expatriate teenagers’ narratives and practices
                 of emplacement in Shanghai. While it continues to address the students as part of
                 the expatriate community with its processes of demarcation and detachment from local
@@ -301,7 +300,7 @@
                         underlies expatriate youth’s experiences in Shanghai. While pondering
                         the loaded question of what lies ahead (for my subjects and myself), I came
                         across an art project by the German student Andrea entitled “My time
-                        is now.” (Figure 21).</p>
+                        is now.” <xref ref-type="fig" rid="fig21"> (Figure 21).</xref> </p>
 
                     <p>The art project consists of several photographs showing children and
                         teenagers holding up or standing in front of a sign that displays, line
@@ -1016,7 +1015,7 @@
                             ladies’ night on Wednesdays and a salsa night every Monday. It is
                             only on Fridays, however, that the two groups of friends, “the
                             girls” and “the boys” (see Part I, Chapter 3), choose
-                            Mural as their standard location (Figure 22).</p>
+                            Mural as their standard location <xref ref-type="fig" rid="fig22"> (Figure 22).</xref> </p>
                         <p>Every Friday night, Mural hosts an open bar. Its website announces this
                             weekly event as “Up Your Funk,” and underlines this with the
                             call “Free ya mind … and ya ass will follow.”
@@ -1107,7 +1106,7 @@
                             matter what his own consumption will be or has been,” the open bar
                             allows the teenagers to provide their friends with drinks and to show
                             they care for their group without having to ask their friends for money
-                            or put a strain on their allowance (Figure 23). </p>
+                            or put a strain on their allowance <xref ref-type="fig" rid="fig23"> (Figure 23).</xref> </p>
                         <p>Thus the attractiveness of the open bar does not necessarily lie in the
                             possibility of binge drinking or getting drunk cheaply, but rather in
                             the way it allows the teenagers to foster ties with their friends. When
@@ -1821,7 +1820,7 @@
                         laundry hanging out to dry, women cleaning vegetables, and smells of fried
                         food present a world entirely different from the school campus that was just
                         left around the corner. The students refer to this lane, along with all its
-                        offerings and atmosphere, simply as “the shop” (Figure 24).</p>
+                        offerings and atmosphere, simply as “the shop” <xref ref-type="fig" rid="fig24"> (Figure 24).</xref> </p>
                     <p>The shop has undoubtedly become part of the students’ everyday life.
                         Seventeen-year-old student Karina, for instance, explains her lunch break
                         routine during the last school year:</p>
@@ -1897,8 +1896,8 @@
                     <title>3.2. “The shop is not expat:” The shop as an in-between
                         space</title>
                     <p>Besides being frequented by expatriate teenagers, the shop also has regular
-                        local Chinese customers who usually eat at one of the restaurants (Figure
-                        25).</p>
+                        local Chinese customers who usually eat at one of the restaurants <xref ref-type="fig" rid="fig25"> (Figure 25).</xref> 
+                    </p>
                     <p>The shop-owners themselves, who live in the buildings, also use the space for
                         their daily chores and leisure. Students thus describe the shop as local,
                         Chinese, or—in Antonia’s words—“not
@@ -1939,13 +1938,11 @@
                         stereo outside where students can plug in their mp3 players to play their
                         favorite songs. Furthermore, European students—as some of the
                         teenagers shared with me—have actively shaped the spaces themselves by
-                        putting graffiti on the walls (Figure 26a).</p>
-                    <p>Figure 26. The Shop. a) Pool Tables, Graffiti, and Laundry, January 2011; b)
-                        Use of Pool Table to Display Wares. Photos by M. Sander.</p>
+                        putting graffiti on the walls <xref ref-type="fig" rid="fig26"> (Figure 26a).</xref> </p>
                     <p>However, the local shopkeepers still use the spaces according to their own
                         needs. They often play pool themselves, use the tables to prepare food or
                         display wares for the local community, or hang their laundry to air-dry
-                        outside (see Figure 26b).</p>
+                        outside <xref ref-type="fig" rid="fig26"> (Figure 26b).</xref> </p>
                     <p>The shop thus offers a venue for experiencing the locale. It is also,
                         according to the students, a place that is more in touch with the local
                         Chinese population than any of the other places they frequent. They share
@@ -2015,7 +2012,7 @@
                     <p>The dualism of “closed” and “open” space is visible
                         in the expatriate teenagers’ spatial practices as well. Bjorn’s
                         mental map, for instance, highlights the students’ movements from one
-                        “closed space” to the next (Figure 27). </p>
+                        “closed space” to the next <xref ref-type="fig" rid="fig27"> (Figure 27).</xref> </p>
                     <p>The locations displayed on this map are almost all closed and restrict entry
                         based on financial means (the nightclub, restaurant) or limit access to
                         those who already have a specific affiliation with the place (housing areas,
@@ -2101,7 +2098,7 @@
                         various seating areas in the shop and provide insight into the
                         students’ ways of hanging out there and using the area as an open
                         space or, more age-specifically, as a liminal space—as a street
-                        (Figures 28 and 29).</p>
+                        <xref ref-type="fig" rid="fig28"> (Figures 28</xref> and <xref ref-type="fig" rid="fig29"> 29). </xref> </p>
                     <p>The students describe the shop as dirty and run-down, but chilled. They can
                         draw graffiti, listen to music, and play pool. It is a place more
                         organically grown than the carefully designed schools, compounds, and
@@ -3491,7 +3488,57 @@
                         and farewell—and the corresponding need to make decisions about the
                         future that it places on all students—in the final part of this
                         ethnography, “Moving On.”</p>
-                </sec>
+                    <fig-group>
+                        <fig id="fig20" position="float"> 
+                            <label> Figure 20. The Shop: Students Walking through the Small Alley, June 2011. Photo by M. Sander. </label>
+                            <graphic xlink:href="48-562-1-2-20160418.jpg"/>
+                        </fig>
+                        <fig id="fig21" position="float"> 
+                            <label> Figure 21. Sign and T-Shirt from Student Art Project “My Time is Now.” Photos by Andrea.
+                            </label>
+                            <graphic xlink:href="48-563-1-2-20160418.jpg"/>
+                        </fig>
+                        <fig id="fig22" position="float"> 
+                            <label> Figure 22. Mural’s Cave-like Atmosphere. Photo by M. Sander.
+                            </label>
+                            <graphic xlink:href="48-564-1-2-20160418.jpg"/>
+                        </fig>
+                        <fig id="fig23" position="float"> 
+                            <label> Figure 23. Friday Night: Gathering with Drinks around the Table. Photo by M. Sander.
+                            </label>
+                            <graphic xlink:href="48-565-1-2-20160418.jpg"/>
+                        </fig>
+                        <fig id="fig24" position="float"> 
+                            <label> Figure 24. The Shop: Students and Locals in the Small Alley, June 2012. Photo by M. Sander.
+                            </label>
+                            <graphic xlink:href="48-566-1-2-20160418.jpg"/>
+                        </fig>
+                        <fig id="fig25" position="float"> 
+                            <label> Figure 25. The Shop: Inside the Small Restaurant, June 2011. Photo by M. Sander. </label>
+                            <graphic xlink:href="48-567-1-2-20160418.jpg"/>
+                        </fig>
+                        <fig id="fig26" position="float"> 
+                            <label> Figure 26. The Shop: a) Pool Tables, Graffiti, and Laundry, January 2011; b) Use of Pool Table to Display Wares. Photos by M. Sander.
+                            </label>
+                            <graphic xlink:href="48-568-1-2-20160418.jpg"/>
+                        </fig>
+                        <fig id="fig27" position="float"> 
+                            <label> Figure 27. Mental Map of Shanghai. Drawing by 16-year-old Bjorn. Names of friends anonymized and place annotations added.
+                            </label>
+                            <graphic xlink:href="48-569-1-2-20160418.jpg"/>
+                        </fig>
+                        <fig id="fig28" position="float"> 
+                            <label> Figure 28. The Shop: Hanging Out in the Alley, September 2011. Photo by M. Sander.
+                            </label>
+                            <graphic xlink:href="48-570-1-2-20160418.jpg"/>
+                        </fig>         
+                        <fig id="fig29" position="float"> 
+                            <label> Figure 29. The Shop: Places to Sit in the Alley, September 2011 and June 2012. Photos by M. Sander.
+                            </label>
+                            <graphic xlink:href="48-571-1-2-20160418.jpg"/>
+                        </fig>
+                    </fig-group>
+                                    </sec>
             </sec>
         </sec>
     </body>
