@@ -50,7 +50,7 @@
   </front>
   <body>
     <sec>
-      <title>Part V: Moving On</title>
+      <title><xref ref-type="fig" rid="fig30"> Part V: Moving On</xref> </title>
       <p>The final part of this ethnography, “Moving On,” returns to the expatriate
         youths’ experience of Shanghai as a transient space. The first chapter centers on the
         students from the German school and analyzes their ways of managing the imminent move away
@@ -82,9 +82,9 @@
           nowhere.” Peter’s belongings are now in a container that will be shipped to
           Germany, and he and his family have moved into a hotel, where they will stay for the
           remainder of their time in Shanghai. Prior to moving out of his family’s home,
-          Peter’s room probably looked similar to that of Mia (Figure 30) when she prepared
+          Peter’s room probably looked similar to that of Mia <xref ref-type="fig" rid="fig30"> (Figure 30)</xref> when she prepared
           for her move to Germany. Interestingly, she sent this image to me paired with a picture of
-          her room as it looked when she lived in it (see Figure 11, in Part III, Chapter 2.2) as a
+          her room as it looked when she lived in it <xref ref-type="fig" rid="fig11"> (see Figure 11, in Part III, Chapter 2.2)</xref> as a
           response to my question of what “home” (in Shanghai) meant to her. Evidently,
           for Mia, home meant both her room in Shanghai and the routine of packing and leaving it
           behind. This transitory experience is shared by all students featured in this ethnography.
@@ -426,7 +426,7 @@
               arrive; we gather upstairs in the rooftop bar for our first drink of the evening.
               Here, the temperature of an early-summer evening in Shanghai feels comfortable and the
               breathtaking view of the Pudong skyline and the passing ships on the Bund leaves
-              everyone in awe (Figure 31).</p>
+              everyone in awe <xref ref-type="fig" rid="fig31"> (Figure 31).</xref></p>
             <p>Everyone, including me, takes pictures of the well-dressed people, the sunset, and
               the view; there is also a professional photographer, whom the students hired for the
               night. The setting clearly distinguishes the event from graduation balls in Germany.
@@ -441,7 +441,7 @@
               dance, and a few pranks and games, including a high-heel-shoe running contest with the
               teachers. The graduates also show a home-made movie that features them talking about
               their classmates and their future plans, as well as saying thank you. I mingle and
-              take photos (Figure 32). </p>
+              take photos <xref ref-type="fig" rid="fig32"> (Figure 32).</xref> </p>
             <p>Around midnight, the students get ready to leave the location and invite everyone to
               move to the after-party location: a lounge bar in the heart of Shanghai’s former
               French concession that the graduates rented for the occasion. The tickets for the
@@ -1572,7 +1572,27 @@
             establishing adequate assistance at schools and community centers and to creating shared
             spaces that encourage self-reflection and the development of the transcultural
             perspectives needed to manage the consequences of global mobility.</p>
-        </sec>
+          <fig-group>
+            <fig id="fig11" position="float"> 
+              <label> Figure 11. Home in Shanghai: Mia’s room. Photo by Mia.</label>
+              <graphic xlink:href="48-75-572-1-2-20160418.jpg"/>
+            </fig>
+            <fig id="fig30" position="float"> 
+              <label> Figure 30. Home in Shanghai: Mia’s Room, Prepared for the Next Move. Photo by Mia. </label>
+              <graphic xlink:href="48-75-572-1-2-20160418.jpg"/>
+            </fig>
+            <fig id="fig31" position="float"> 
+              <label> Figure 31. Impressions from the Graduation Ball: View of the Bund. Photo by M. Sander.
+              </label>
+              <graphic xlink:href="48-75-573-1-2-20160418.jpg"/>
+            </fig>
+            <fig id="fig32" position="float"> 
+              <label> Figure 32. Students Posing at their Graduation Ball. Photo by M. Sander.
+              </label>
+              <graphic xlink:href="48-75-574-1-2-20160418.jpg"/>
+            </fig>
+          </fig-group>
+          </sec>
       </sec>
     </sec>
   </body>
