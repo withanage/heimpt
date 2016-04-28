@@ -605,6 +605,10 @@
                 <fig-group>
                     <fig id="fig3" position="float"> 
                         <label>Figure 3. Up in the Air. Photo by M. Sander.</label>
+                        <caption>
+                            
+                            <p>Figure 3. Up in the Air. Photo by M. Sander.</p>
+                        </caption>
                         <graphic xlink:href="48-75-545-1-2-20160418.jpg"/>
                     </fig>
                 </fig-group>
