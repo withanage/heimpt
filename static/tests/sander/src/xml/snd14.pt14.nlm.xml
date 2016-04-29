@@ -11,8 +11,8 @@
     <article-meta>
       <article-id pub-id-type="doi">10.17885/heiup.48.44</article-id>
       <title-group>
-        <article-title>Passing Through Shanghai:
-                    Ethnographic Insights into the Mobile Lives of Expatriate Youths</article-title>
+        <article-title>Passing Through Shanghai: Ethnographic Insights into the Mobile Lives of
+          Expatriate Youths</article-title>
       </title-group>
       <contrib-group>
         <contrib contrib-type="author">
@@ -23,8 +23,9 @@
           <xref ref-type="aff" rid="bremen"/>
         </contrib>
         <aff id="bremen"><institution content-type="dept">Referat für Forschung und
-                        wissenschaftlichen Nachwuchs, Universität Bremen</institution>,
-                            <addr-line><named-content content-type="city">Bremen</named-content></addr-line>, <country>Deutschland</country></aff>
+            wissenschaftlichen Nachwuchs, Universität Bremen</institution>,
+              <addr-line><named-content content-type="city">Bremen</named-content></addr-line>,
+            <country>Deutschland</country></aff>
       </contrib-group>
       <pub-date pub-type="epub">
         <year>2016</year>
@@ -34,13 +35,12 @@
       <fpage>1</fpage>
       <lpage>2</lpage>
       <permissions>
-        <copyright-statement>© 2016, Marie Sander
-                    </copyright-statement>
+        <copyright-statement>© 2016, Marie Sander </copyright-statement>
         <copyright-year>2016</copyright-year>
         <copyright-holder>Marie Sander</copyright-holder>
         <license xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://creativecommons.org/licenses/by/3.0/">
-          <license-p>Dieses Werk ist unter der Creative Commons-Lizenz 4.0 (CC BY-SA 4.0
-                            <ext-link ext-link-type="uri" xlink:href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">)</ext-link> veröffentlicht. credited.</license-p>
+          <license-p>Dieses Werk ist unter der Creative Commons-Lizenz 4.0 (CC BY-SA 4.0 <ext-link ext-link-type="uri" xlink:href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">)</ext-link>
+            veröffentlicht. credited.</license-p>
         </license>
       </permissions>
       <abstract>
@@ -49,19 +49,23 @@
     </article-meta>
   </front>
   <body><sec>
-      <title>Dedication</title>
-      <p>This book is dedicated to all families on the move.</p>
-    </sec>
-    <sec><title>Motto</title>
-      <p>Die meisten Leute, die hierherkommen, mögen es erstmal überhaupt nicht.</p>
-      <p>Und dann mögen sie es.</p>
-      <p>Und dann wollen sie nicht mehr weg.</p>
-      <p>Und dann müssen sie weg.</p>
-      <p>Most people who come here at first don’t like it at all.</p>
-      <p>And then they like it.</p>
-      <p>And then they don’t want to leave.</p>
-      <p>And then they have to leave.</p>
-      <p>Antonia, sixteen years old</p>
+      <title>Dedication and Motto</title>
+      <sec>
+        <title>Dedication</title>
+        <p>This book is dedicated to all families on the move.</p>
+      </sec>
+      <sec>
+        <title>Motto</title>
+        <p>Die meisten Leute, die hierherkommen, mögen es erstmal überhaupt nicht.</p>
+        <p>Und dann mögen sie es.</p>
+        <p>Und dann wollen sie nicht mehr weg.</p>
+        <p>Und dann müssen sie weg.</p>
+        <p>Most people who come here at first don’t like it at all.</p>
+        <p>And then they like it.</p>
+        <p>And then they don’t want to leave.</p>
+        <p>And then they have to leave.</p>
+        <p>Antonia, sixteen years old</p>
+      </sec>
     </sec>
   <sec>
       <title>Acknowledgements</title>
@@ -348,8 +352,8 @@
                         2005</xref>; <xref rid="IDe9e853fc-c6e2-4257-8114-ddd1eaef25fa" ref-type="bibr" id="IDe59d058d-47a9-4c4b-a90a-f2a289266c9e">Fechter
                         2007b</xref>; <xref rid="ID5682f580-3fb2-4d42-81cb-a1f52833951a" ref-type="bibr" id="IDc1631ec2-b4e3-4d14-8451-5460b9dc6b2b">Coles and
                         Fechter 2008</xref>; <xref rid="ID043c6f53-8e7c-4ace-ab44-b13d64911ac3" ref-type="bibr" id="ID920b5796-c755-40e0-82a7-3b51ad30a71a">Butcher
-                        2009</xref>; <xref rid="ID3a1976f3-d350-4b4a-81fa-a37d276d05cc" ref-type="bibr" id="ID79b81f6e-27a4-4b07-aafd-0d6b68f26494">Hindman
-                        2009a</xref>; <xref rid="ID3a1976f3-d350-4b4a-81fa-a37d276d05cc" ref-type="bibr" id="ID4ff936f7-a858-47d6-9da3-e0afe0e2d96d">Hindman
+                        2009</xref>; <xref rid="ID749119d2-90fb-4abc-95b4-f6674463f370" ref-type="bibr" id="ID79b81f6e-27a4-4b07-aafd-0d6b68f26494">Hindman
+                        2009a</xref>; <xref rid="ID749119d2-90fb-4abc-95b4-f6674463f370" ref-type="bibr" id="ID4ff936f7-a858-47d6-9da3-e0afe0e2d96d">Hindman
                         2009b</xref>; <xref rid="IDb055cc5e-b457-4214-9e33-3ff3be211480" ref-type="bibr" id="IDb48c185e-9c4c-46bf-ba4a-b5c2028c18e2">Dobeneck
                         2010</xref>; <xref rid="ID20471e25-0120-4096-b3cc-4e2c469da353" ref-type="bibr" id="ID63b91984-a51a-4d2d-995b-4fefc685cd6f">Farrer
                         2010</xref>; <xref rid="IDaa1cf9f0-6452-4e2d-af50-825da053aac2" ref-type="bibr" id="ID4b07ad03-1dc9-4f00-9c1a-647d590debb3">Farrer
@@ -491,7 +495,7 @@
                             (appropriate) cultural creativity is emphasized; with regard to the
                             latter (inappropriate) cultural conservatism. Academic approaches
                             thereby largely and mostly implicitly reflect the—usually not so
-                            implicit—qualifying distinctions made in society at large (<xref rid="ID266263cd-8d6f-4fd0-8739-ffb01b7b6f20" ref-type="bibr" id="ID73c5d6b7-eae2-405a-b00f-794b006ee955">Knörr 2005,
+                            implicit—qualifying distinctions made in society at large (<xref rid="ID6191b950-9b5f-4d80-90ca-b48e35f5bd5d" ref-type="bibr" id="ID73c5d6b7-eae2-405a-b00f-794b006ee955">Knörr 2005,
                                 54</xref>). </p>
                     </disp-quote>
                 </p>
@@ -761,7 +765,7 @@
                     negotiation is new for studies of expatriate youth because, until now, most
                     approaches were based on the retrospectives of adult “TCKs.”
                     Similarly, in migration studies in general, children’s perspectives are
-                    quite scarce. Knörr and Nunes (<xref rid="ID266263cd-8d6f-4fd0-8739-ffb01b7b6f20" ref-type="bibr" id="ID0ea35627-da83-4b0d-b9a5-c3e88e06f27b">2005</xref>) acknowledge that
+                    quite scarce. Knörr and Nunes (<xref rid="ID6191b950-9b5f-4d80-90ca-b48e35f5bd5d" ref-type="bibr" id="ID0ea35627-da83-4b0d-b9a5-c3e88e06f27b">2005</xref>) acknowledge that
                     recent approaches to research on childhood in the social and cultural sciences
                     have started to consider children’s own perspectives, thoughts, feelings,
                     and views of their social world, but that this shift has had relatively little
@@ -773,7 +777,7 @@
                             their ways of building identity for themselves. This is true despite the
                             fact that children make up a large proportion of migrants and despite
                             the fact that children take on important roles in mediating between
-                            their world of origin and the host society (<xref rid="ID266263cd-8d6f-4fd0-8739-ffb01b7b6f20" ref-type="bibr" id="ID106f6b47-fc09-4892-9de3-cb63f8f0e56e">2005, 14-15</xref>).</p>
+                            their world of origin and the host society (<xref rid="ID6191b950-9b5f-4d80-90ca-b48e35f5bd5d" ref-type="bibr" id="ID106f6b47-fc09-4892-9de3-cb63f8f0e56e">2005, 14-15</xref>).</p>
                     </disp-quote>
                 </p>
                 <p>Geographer Madeleine Dobson (<xref rid="IDbea8ef8e-44f3-43cd-ae89-b6750eb5d79a" ref-type="bibr" id="IDa2dbda24-df40-450e-b590-2b4242c3c6fc">2009</xref>), in
@@ -2017,11 +2021,11 @@
           the ties between me and the youths I researched, and the influence of those ties on
           matters of access as well as on my perspective.<xref ref-type="fn" rid="bibd2e163">19</xref> While Shanghai as the research site and expatriate teenagers as the main
           actors of my study had been set from the start, the paths I followed to understand their
-          lives were often improvised. Coleman and Collins (<xref id="IDecd1f76d-17a4-47bf-a1a4-d1babbe48f39" ref-type="bibr" rid="IDb91b887f-3456-412e-962b-574a1718b738">2006</xref>) highlight the role the
+          lives were often improvised. Coleman and Collins (<xref id="IDecd1f76d-17a4-47bf-a1a4-d1babbe48f39" ref-type="bibr" rid="IDab5c4e05-c9b2-45c2-8a14-d9f6910f7fe7">2006</xref>) highlight the role the
           researcher’s choice of focus plays, arguing that “fields are as much
           ‘performed’ as ‘discovered,’ framed by boundaries that shift
           according to the analytical and rhetorical preferences of the ethnographer and, more
-          rarely, the informant” (<xref id="ID011051fd-65ad-44af-a1fd-348cbf245e9b" ref-type="bibr" rid="IDb91b887f-3456-412e-962b-574a1718b738">Coleman and Collins 2006,
+          rarely, the informant” (<xref id="ID011051fd-65ad-44af-a1fd-348cbf245e9b" ref-type="bibr" rid="IDab5c4e05-c9b2-45c2-8a14-d9f6910f7fe7">Coleman and Collins 2006,
             17</xref>). Thus my “field,” my point of view on expatriate youths and the
           accounts I gathered, was influenced by my own stance, perspective, and abilities.
           Additionally, different gatekeepers played a crucial role in my navigation in the field,
@@ -2615,7 +2619,7 @@
             superiority” over the local African population to a “TCK” ideology of
             “cultural superiority” over the “ordinary” local German
             population—a transformation, which neither supports a child's (re-)integration nor
-            its further personal development (<xref id="ID693d0c6c-3f41-48ce-b281-f8435993d864" ref-type="bibr" rid="ID266263cd-8d6f-4fd0-8739-ffb01b7b6f20">Knörr 2005,
+            its further personal development (<xref id="ID693d0c6c-3f41-48ce-b281-f8435993d864" ref-type="bibr" rid="ID6191b950-9b5f-4d80-90ca-b48e35f5bd5d">Knörr 2005,
               75</xref>).</p>
           </disp-quote>
       </p>
@@ -15316,15 +15320,15 @@
         <mixed-citation>Bhabha, Homi K. 1994. <italic>The Location of Culture</italic>. London:
           Routledge.</mixed-citation>
       </ref>
-      <ref id="ID2fdf9c53-7dad-40ba-94be-a748b1693e6d">
-        <mixed-citation>Miller, Daniel, ed. 2001. <italic>Home Possessions: Material Culture Behind
-            Closed Doors</italic>. Oxford: Berg.</mixed-citation>
-      </ref>
       <ref id="IDfb989e33-e9c8-4b63-8083-bf99eb7b5a99">
         <mixed-citation>Moore, Fiona. 2008. “The German School in London, UK: Fostering the Next
           Generation of National Cosmopolitans?” In <italic>Gender and Family Among Transnational
             Professionals</italic>, edited by Anne Coles and Anne-Meike Fechter, 85–101. New York:
           Routledge.</mixed-citation>
+      </ref>
+      <ref id="ID2fdf9c53-7dad-40ba-94be-a748b1693e6d">
+        <mixed-citation>Miller, Daniel, ed. 2001. <italic>Home Possessions: Material Culture Behind
+            Closed Doors</italic>. Oxford: Berg.</mixed-citation>
       </ref>
       <ref id="ID4f741152-ae97-41a8-8de1-c2a74cab6717">
         <mixed-citation>Pollock, David C., and Ruth E. Van Reken. 1999. <italic>Third Culture Kids:
@@ -15335,15 +15339,15 @@
             and the Moral Politics of the Good Life</italic>. Routledge Pacific Rim Geographies 7.
           London ; New York: Routledge.</mixed-citation>
       </ref>
+      <ref id="IDf5279545-3394-46dc-b9f1-4b117f937b5c">
+        <mixed-citation>Chen, J. 2005. “City Gears up Development of Metro,” December 27, sec.
+          quoted in: Donald and Gammack (2007, 151).</mixed-citation>
+      </ref>
       <ref id="IDfccf4974-8c50-497b-975b-6b3ce6e68c35">
         <mixed-citation>Coles, Anne. 2008. “Making Multiple Migrations: The Life of British
           Diplomatic Families Overseas.” In <italic>Gender and Family Among Transnational
             Professionals</italic>, edited by Anne Coles and Anne-Meike Fechter, 125–48. New York:
           Routledge.</mixed-citation>
-      </ref>
-      <ref id="IDf5279545-3394-46dc-b9f1-4b117f937b5c">
-        <mixed-citation>Chen, J. 2005. “City Gears up Development of Metro,” December 27, sec.
-          quoted in: Donald and Gammack (2007, 151).</mixed-citation>
       </ref>
       <ref id="ID72b93ba1-92de-4030-97d8-9ce6930802b3">
         <mixed-citation>Low, Setha M. 2003. “The Edge and the Center: Gated Communities and the
@@ -15356,86 +15360,59 @@
           Tradition.” In <italic>Elites: Ethnographic Issues</italic>, edited by George E Marcus,
           7–27. Albuquerque: University of New Mexico Press.</mixed-citation>
       </ref>
-      <ref id="ID450c307e-721c-49c9-822f-cf213ba55ed4">
-        <mixed-citation>Fechter, Anne-Meike. 2007b. <italic>Transnational Lives: Expatriates in
-            Indonesia</italic>. Farnham: Ashgate.</mixed-citation>
-      </ref>
       <ref id="IDe5b2737f-dbc6-459d-b394-809907bddba7">
         <mixed-citation>Fechter, Anne-Meike. 2007a. “Living in a Bubble: Expatriates’ Transnational
           Spaces.” In <italic>Going First Class? New Approaches to Privileged Travel and
             Movement</italic>, edited by Vered Amit, 33–52. New York: Berghahn
           Books.</mixed-citation>
       </ref>
-      <ref id="IDa34b19e5-02ff-44ac-a361-b46b6fe13502">
-        <mixed-citation>Hindman, Heather. 2009b. “Shopping in the Bazaar/Bizarre Shopping: Culture
-          and the Accidental Elitism of Expatriates in Kathmandu, Nepal.”<italic>Journal of Popular
-            Culture</italic> 42 (4): 663–79.</mixed-citation>
+      <ref id="ID450c307e-721c-49c9-822f-cf213ba55ed4">
+        <mixed-citation>Fechter, Anne-Meike. 2007b. <italic>Transnational Lives: Expatriates in
+            Indonesia</italic>. Farnham: Ashgate.</mixed-citation>
       </ref>
       <ref id="IDe8bedea8-b0ad-42fa-b95c-18085f16fe0f">
         <mixed-citation>Howes, David. 2005. “Introduction.” In <italic>Empire of the Senses: The
             Sensual Culture Reader</italic>, edited by David Howes, 1–17. Oxford:
           Berg.</mixed-citation>
       </ref>
+      <ref id="IDa34b19e5-02ff-44ac-a361-b46b6fe13502">
+        <mixed-citation>Hindman, Heather. 2009b. “Shopping in the Bazaar/Bizarre Shopping: Culture
+          and the Accidental Elitism of Expatriates in Kathmandu, Nepal.”<italic>Journal of Popular
+            Culture</italic> 42 (4): 663–79.</mixed-citation>
+      </ref>
       <ref id="ID8a53018c-2ac4-49e6-8a3d-ef446c2e3941">
         <mixed-citation>Hochschild, Arlie Russell. yyy1983zzz2003. <italic>The Managed Heart.
             Commercialization of Human Feeling</italic>. Berkeley: University of California
           Press.</mixed-citation>
       </ref>
-      <ref id="ID80ab7a06-71e9-471d-b7cc-0503396aa6a2">
-        <mixed-citation>Glasze, Georg, Chris Webster, and Klaus Frantz, eds. 2006. <italic>Private
-            Cities: Global and Local Perspectives</italic>. London: Routledge.</mixed-citation>
-      </ref>
       <ref id="ID78b37526-f1fc-4399-8540-0e7da3b3f5e9">
         <mixed-citation>Hannerz, Ulf. 1996b. <italic>Transnational Connections: Culture, People,
             Places</italic>. London: Routledge.</mixed-citation>
       </ref>
-      <ref id="ID4aa92bc8-9ac2-4ab2-901c-046cc2713454">
-        <mixed-citation>Walsh, Katie. 2006a. “British Expatriate Belongings: Mobile Homes and
-          Transnational Homing.”<italic>Home Cultures</italic> 3 (2): 123–44.</mixed-citation>
+      <ref id="ID80ab7a06-71e9-471d-b7cc-0503396aa6a2">
+        <mixed-citation>Glasze, Georg, Chris Webster, and Klaus Frantz, eds. 2006. <italic>Private
+            Cities: Global and Local Perspectives</italic>. London: Routledge.</mixed-citation>
       </ref>
       <ref id="IDda560470-e338-43a2-939e-67f5360df612">
         <mixed-citation>Tuan, Yi-Fu. 1974. <italic>Topophilia: A Study of Environmental Perception,
             Attitudes, and Values</italic>. Englewood Cliffs, NJ: Prentice Hall.</mixed-citation>
       </ref>
+      <ref id="ID4aa92bc8-9ac2-4ab2-901c-046cc2713454">
+        <mixed-citation>Walsh, Katie. 2006a. “British Expatriate Belongings: Mobile Homes and
+          Transnational Homing.”<italic>Home Cultures</italic> 3 (2): 123–44.</mixed-citation>
+      </ref>
       <ref id="ID7f631b50-2d94-493f-aecb-655b3634da95">
         <mixed-citation>Sparling, Georgia. 2010. “Where to Live in Shanghai: Neighbourhoods and
           Housing Options.”<italic>Shanghai Family</italic>, August.</mixed-citation>
       </ref>
-      <ref>
-                <mixed-citation>Sander, Marie. 2008. “Shanghai Expat! ‘Mitausgereiste
-                    Ehefrauen’ und ihr Shanghaier Alltag auf Zeit. Zwischen Ohnmacht und
-                    Kreativität im transnationalen sozialen Raum.” Master thesis, Bremen,
-                    Germany: University of Bremen.</mixed-citation>
-            </ref>
-        <ref id="IDcf8a54f2-f840-428f-ba53-392218f338e1">
-        <mixed-citation>Hindman, Heather. 2009b. “Shopping in the Bazaar/Bizarre Shopping:
-          Culture and the Accidental Elitism of Expatriates in Kathmandu,
-            Nepal.”<italic>Journal of Popular Culture</italic> 42 (4):
-          663–79.</mixed-citation>
+      <ref id="ID1bd2d3ed-27bd-4ca3-a0a3-52b36b8dc141">
+        <mixed-citation>Walsh, Katie. 2006a. “British Expatriate Belongings: Mobile Homes and
+          Transnational Homing.”<italic>Home Cultures</italic> 3 (2):
+          123–44.</mixed-citation>
       </ref>
-      <ref id="IDa0c4c0ab-99dd-4a5e-9a66-4240ea1cb212">
-                <mixed-citation>Greenspan, Anna. 2008b. “China Vs. America? Learning
-                    Strategies in the 21st Century (Part 2).”<italic>The Globalist</italic>.
-                    August 26.
-                    http://www.theglobalist.com/StoryId.aspx?StoryId=5265.</mixed-citation>
-            </ref>
-            <ref id="IDd96188de-372e-4b1c-82cd-5cbbb2aafc03">
-        <mixed-citation>Fechter, Anne-Meike. 2007b. <italic>Transnational Lives: Expatriates in
-            Indonesia</italic>. Farnham: Ashgate.</mixed-citation>
-      </ref>
-      <ref id="ID08f3a090-443b-4d78-a0de-7f90010b9f68">
-                <mixed-citation>“Mural Bar and Restaurant | Shanghai.” 2013. March 18.
-                    http://www.muralbar.com/mural_site.html.</mixed-citation>
-            </ref>
-            <ref id="IDce4491f7-5d11-4747-9973-66228a00b9cc">
+      <ref id="IDce4491f7-5d11-4747-9973-66228a00b9cc">
                 <mixed-citation>Hannerz, Ulf. 1996b. <italic>Transnational Connections: Culture,
                         People, Places</italic>. London: Routledge.</mixed-citation>
-            </ref>
-            <ref id="IDf97e7077-99a6-4752-b49f-e9acb2b7d6ca">
-                <mixed-citation>Greenspan, Anna. 2011b. “Local Experiences: Anna Greenspan
-                    Interviews Emily Meyer on Her Experiences with the Local Education
-                        System.”<italic>That’s Shanghai</italic>, April 21.
-                    http://www.thatsmags.com/shanghai/article/368/local-experiences.</mixed-citation>
             </ref>
             <ref id="IDf82585c1-f9a0-4cdf-a1ae-0e56578b02bb">
         <mixed-citation>Fechter, Anne-Meike. 2007a. “Living in a Bubble: Expatriates’
@@ -15443,27 +15420,52 @@
             Travel and Movement</italic>, edited by Vered Amit, 33–52. New York: Berghahn
           Books.</mixed-citation>
       </ref>
-      <ref id="ID1bd2d3ed-27bd-4ca3-a0a3-52b36b8dc141">
-        <mixed-citation>Walsh, Katie. 2006a. “British Expatriate Belongings: Mobile Homes and
-          Transnational Homing.”<italic>Home Cultures</italic> 3 (2):
-          123–44.</mixed-citation>
-      </ref>
-      <ref id="IDfea73e21-71b8-4252-b7fc-a29b9210498a">
-        <mixed-citation>Hindman, Heather. 2009a. “Cosmopolitan Codifications: Elites,
-          Expatriates, and Difference in Kathmandu, Nepal.”<italic>Identities: Global Studies
-            in Culture and Power</italic> 16 (3): 249–70.
-          doi:10.1080/10702890902861255.</mixed-citation>
-      </ref>
-      <ref id="ID985b5dc7-cc6c-4601-a7b7-29bd40a82cc4">
+      <ref>
+                <mixed-citation>Sander, Marie. 2008. “Shanghai Expat! ‘Mitausgereiste
+                    Ehefrauen’ und ihr Shanghaier Alltag auf Zeit. Zwischen Ohnmacht und
+                    Kreativität im transnationalen sozialen Raum.” Master thesis, Bremen,
+                    Germany: University of Bremen.</mixed-citation>
+            </ref>
+        <ref id="ID985b5dc7-cc6c-4601-a7b7-29bd40a82cc4">
                 <mixed-citation>McDermott, Josephine. 2010. “Another Round: Shanghai Reopens
                     110ft Bar Fabled for Colonial Decadence.”<italic>The Telegraph</italic>,
                     October.
                     http://www.telegraph.co.uk/news/worldnews/asia/china/8036306/Another-round-Shanghai-reopens-110ft-bar-fabled-for-colonial-decadence.html.</mixed-citation>
             </ref>
-            <ref id="IDdd059801-7fdf-4b61-b9f0-149e1e76c545">
+            <ref id="IDf97e7077-99a6-4752-b49f-e9acb2b7d6ca">
+                <mixed-citation>Greenspan, Anna. 2011b. “Local Experiences: Anna Greenspan
+                    Interviews Emily Meyer on Her Experiences with the Local Education
+                        System.”<italic>That’s Shanghai</italic>, April 21.
+                    http://www.thatsmags.com/shanghai/article/368/local-experiences.</mixed-citation>
+            </ref>
+            <ref id="ID904efa23-79c7-487f-b92d-44bd0bb96a2f">
+                <mixed-citation>Knörr, Jacqueline, ed. 2005b. “When German Children Come
+                    ‘Home:’ Experiences of (Re)-Migration to Germany and Some Remarks
+                    About the ‘TCK’ Issue.” In <italic>Childhood and Migration:
+                        From Experience to Agency</italic>, edited by Jacqueline Knörr,
+                    51–76. Bielefeld: transcript.</mixed-citation>
+            </ref>
+            <ref id="IDcbcc34b5-a079-41ed-a6e4-2b7fc8bae7dc">
+        <mixed-citation>Fechter, Anne-Meike, and Katie Walsh. 2010. “Examining
+          ‘Expatriate’ Continuities: Postcolonial Approaches to Mobile
+            Professionals.”<italic>Journal of Ethnic and Migration Studies</italic> 36 (8):
+          1197–1210. doi:10.1080/13691831003687667.</mixed-citation>
+      </ref>
+      <ref id="IDcf8a54f2-f840-428f-ba53-392218f338e1">
+        <mixed-citation>Hindman, Heather. 2009b. “Shopping in the Bazaar/Bizarre Shopping:
+          Culture and the Accidental Elitism of Expatriates in Kathmandu,
+            Nepal.”<italic>Journal of Popular Culture</italic> 42 (4):
+          663–79.</mixed-citation>
+      </ref>
+      <ref id="IDdd059801-7fdf-4b61-b9f0-149e1e76c545">
                 <mixed-citation>Möckel-Rieke, Hannah. 1998. “Introduction: Media and
                     Cultural Memory.”<italic>Amerikastudien</italic> 43 (1):
                     5–17.</mixed-citation>
+            </ref>
+            <ref id="ID6be6da29-35f2-4efc-8ff0-6c52d706c3f6">
+                <mixed-citation>Peterson, Erick. 2011. “Shanghai’s Tormented
+                        Teens.”<italic>Global Times</italic>, October 27.
+                    http://www.globaltimes.cn/NEWS/tabid/99/ID/681167/Shanghais-tormented-teens.aspx.</mixed-citation>
             </ref>
             <ref id="IDed4b8639-d012-4faf-be21-388e373e83af">
                 <mixed-citation>Appadurai, Arjun. 1990. “Disjuncture and Difference in the
@@ -15481,16 +15483,13 @@
                     Drinking,” January 6.
                     http://www.chinadaily.com.cn/english/doc/2006-01/06/content_510002.htm.</mixed-citation>
             </ref>
-            <ref id="ID904efa23-79c7-487f-b92d-44bd0bb96a2f">
-                <mixed-citation>Knörr, Jacqueline, ed. 2005b. “When German Children Come
-                    ‘Home:’ Experiences of (Re)-Migration to Germany and Some Remarks
-                    About the ‘TCK’ Issue.” In <italic>Childhood and Migration:
-                        From Experience to Agency</italic>, edited by Jacqueline Knörr,
-                    51–76. Bielefeld: transcript.</mixed-citation>
-            </ref>
             <ref id="ID0bbd646f-0e84-4833-a4f4-421f9698f34e">
                 <mixed-citation>Fechter, Anne-Meike. 2007b. <italic>Transnational Lives: Expatriates
                         in Indonesia</italic>. Farnham: Ashgate.</mixed-citation>
+            </ref>
+            <ref id="ID08f3a090-443b-4d78-a0de-7f90010b9f68">
+                <mixed-citation>“Mural Bar and Restaurant | Shanghai.” 2013. March 18.
+                    http://www.muralbar.com/mural_site.html.</mixed-citation>
             </ref>
             <ref id="ID427226e9-a67f-464d-ae76-8f2ab7441a1f">
                 <mixed-citation>Fechter, Anne-Meike, and Katie Walsh. 2010. “Examining
@@ -15504,26 +15503,31 @@
                     Strategies in the 21st Century.”<italic>The Globalist</italic>. August 25.
                     http://www.theglobalist.com/storyid.aspx?storyid=5264.</mixed-citation>
             </ref>
-            <ref id="IDcbcc34b5-a079-41ed-a6e4-2b7fc8bae7dc">
-        <mixed-citation>Fechter, Anne-Meike, and Katie Walsh. 2010. “Examining
-          ‘Expatriate’ Continuities: Postcolonial Approaches to Mobile
-            Professionals.”<italic>Journal of Ethnic and Migration Studies</italic> 36 (8):
-          1197–1210. doi:10.1080/13691831003687667.</mixed-citation>
-      </ref>
-      <ref id="ID417380bb-6483-4192-bdf7-5cc45a2cb1d2">
+            <ref id="ID417380bb-6483-4192-bdf7-5cc45a2cb1d2">
                 <mixed-citation>Greenspan, Anna. 2011a. “Tiger Moms: The Benefits of Eating
                         Bitterness.”<italic>Pacific Standard</italic>, February 5.
                     http://www.miller-mccune.com/culture/tiger-moms-the-benefits-of-eating-bitterness-28029/.</mixed-citation>
             </ref>
-            <ref id="ID6be6da29-35f2-4efc-8ff0-6c52d706c3f6">
-                <mixed-citation>Peterson, Erick. 2011. “Shanghai’s Tormented
-                        Teens.”<italic>Global Times</italic>, October 27.
-                    http://www.globaltimes.cn/NEWS/tabid/99/ID/681167/Shanghais-tormented-teens.aspx.</mixed-citation>
+            <ref id="IDd96188de-372e-4b1c-82cd-5cbbb2aafc03">
+        <mixed-citation>Fechter, Anne-Meike. 2007b. <italic>Transnational Lives: Expatriates in
+            Indonesia</italic>. Farnham: Ashgate.</mixed-citation>
+      </ref>
+      <ref id="IDa0c4c0ab-99dd-4a5e-9a66-4240ea1cb212">
+                <mixed-citation>Greenspan, Anna. 2008b. “China Vs. America? Learning
+                    Strategies in the 21st Century (Part 2).”<italic>The Globalist</italic>.
+                    August 26.
+                    http://www.theglobalist.com/StoryId.aspx?StoryId=5265.</mixed-citation>
             </ref>
             <ref id="IDfa1a348d-b01e-4963-a17f-0adfb50e9d47">
         <mixed-citation>Ackers, Louise, and Helen Stalford. 2004a. <italic>A Community for Children?
             Children, Citizenship and Internal Migration in the EU</italic>. Farnham:
           Ashgate.</mixed-citation>
+      </ref>
+      <ref id="IDfea73e21-71b8-4252-b7fc-a29b9210498a">
+        <mixed-citation>Hindman, Heather. 2009a. “Cosmopolitan Codifications: Elites,
+          Expatriates, and Difference in Kathmandu, Nepal.”<italic>Identities: Global Studies
+            in Culture and Power</italic> 16 (3): 249–70.
+          doi:10.1080/10702890902861255.</mixed-citation>
       </ref>
       <ref id="ID8be531fc-e9cd-4e04-b27a-fe85b0e1b663">
                 <element-citation publication-type="bookchapter">
@@ -17918,36 +17922,36 @@
           <lpage>35</lpage>
         </element-citation>
       </ref>
-      <ref id="ID266263cd-8d6f-4fd0-8739-ffb01b7b6f20">
-        <element-citation publication-type="bookchapter">
-          <person-group person-group-type="author">
-            <name>
-              <surname>Knörr</surname>
-              <given-names>Jacqueline</given-names>
-            </name>
-            <name>
-              <surname>Nunes</surname>
-              <given-names>Angela</given-names>
-            </name>
-          </person-group>
-          <article-title>Introduction</article-title>
-          <source>Childhood and Migration: From Experience to Agency</source>
-          <date>
-            <year>2005</year>
-          </date>
-          <person-group person-group-type="editor">
-            <name>
-              <surname>Knörr</surname>
-              <given-names>Jacqueline</given-names>
-            </name>
-          </person-group>
-          <publisher-loc>Bielefeld</publisher-loc>
-          <publisher-name>transcript</publisher-name>
-          <fpage>9</fpage>
-          <lpage>21</lpage>
-        </element-citation>
-      </ref>
-      <ref id="ID4fcea73c-a75e-4f28-9eb9-203e58c0ec29">
+      <ref id="ID6191b950-9b5f-4d80-90ca-b48e35f5bd5d">
+                <element-citation publication-type="bookchapter">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Knörr</surname>
+                            <given-names>Jacqueline</given-names>
+                        </name>
+                        <name>
+                            <surname>Nunes</surname>
+                            <given-names>Angela</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>Introduction</article-title>
+                    <source>Childhood and Migration: From Experience to Agency</source>
+                    <date>
+                        <year>2005</year>
+                    </date>
+                    <person-group person-group-type="editor">
+                        <name>
+                            <surname>Knörr</surname>
+                            <given-names>Jacqueline</given-names>
+                        </name>
+                    </person-group>
+                    <publisher-loc>Bielefeld</publisher-loc>
+                    <publisher-name>transcript</publisher-name>
+                    <fpage>9</fpage>
+                    <lpage>21</lpage>
+                </element-citation>
+            </ref>
+            <ref id="ID4fcea73c-a75e-4f28-9eb9-203e58c0ec29">
         <element-citation publication-type="bookchapter">
           <person-group person-group-type="author">
             <name>
@@ -18156,6 +18160,28 @@
           </date>
           <publisher-loc>Vancouver</publisher-loc>
           <publisher-name>Expatriate Press</publisher-name>
+        </element-citation>
+      </ref>
+      <ref id="IDab5c4e05-c9b2-45c2-8a14-d9f6910f7fe7">
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Coleman</surname>
+              <given-names>Simon</given-names>
+            </name>
+            <name>
+              <surname>Collins</surname>
+              <given-names>Peter</given-names>
+            </name>
+          </person-group>
+          <article-title> Locating the Field: Space, Place and Context in
+            Anthropology</article-title>
+          <date>
+            <year>2006</year>
+          </date>
+          <publisher-loc>Oxford</publisher-loc>
+          <publisher-loc>New Youk</publisher-loc>
+          <publisher-name>Berg</publisher-name>
         </element-citation>
       </ref>
       <ref id="IDd7c6a939-0267-4806-ae28-c14c392035d2">
@@ -18377,27 +18403,6 @@
           <publisher-name>Routledge</publisher-name>
           <fpage>142</fpage>
           <lpage>152</lpage>
-        </element-citation>
-      </ref>
-      <ref id="IDb91b887f-3456-412e-962b-574a1718b738">
-        <element-citation publication-type="journal">
-          <person-group person-group-type="author">
-            <name>
-              <surname>Coleman</surname>
-              <given-names>Simon</given-names>
-            </name>
-            <name>
-              <surname>Collins</surname>
-              <given-names>Peter</given-names>
-            </name>
-          </person-group>
-          <article-title>‘Being...Where?’ Performing Fields on Shifting Grounds.” </article-title>
-          <source> Locating the Field: Space, Place and Context in Anthropology</source>
-          <date>
-            <year>2006</year>
-          </date>
-          <publisher-loc>Oxford</publisher-loc>
-          <publisher-name>Berg</publisher-name>
         </element-citation>
       </ref>
       <ref id="ID8a8cf319-3fa5-4d9e-aa08-ae21cc3f82b1">
@@ -19209,7 +19214,7 @@
                     <lpage>360</lpage>
                 </element-citation>
             </ref>
-            <ref id="ID3a1976f3-d350-4b4a-81fa-a37d276d05cc">
+            <ref id="ID749119d2-90fb-4abc-95b4-f6674463f370">
                 <element-citation>
                     <person-group person-group-type="author">
                         <name>
@@ -19217,20 +19222,16 @@
                             <given-names> Heather</given-names>
                         </name>
                     </person-group>
-                    <article-title>. “Shopping in the Bazaar/Bizarre Shopping: Culture and the
-                        Accidental Elitism of Expatriates in Kathmandu, Nepal.”</article-title>
+                    <article-title>“Cosmopolitan Codifications: Elites, Expatriates, and Difference
+                        in Kathmandu, Nepal.” Identities: Global Studies in Culture and Power </article-title>
+                    <fpage>249</fpage>
+                    <lpage>270</lpage>
                     <date>
                         <year>20096</year>
                     </date>
-                    <fpage>663</fpage>
-                    <lpage>679</lpage>
                 </element-citation>
 
             </ref>
-
-
-
-
             <ref id="ID4c9106cb-6d90-4910-b3d4-8d81eeaa2302">
         <element-citation publication-type="book">
           <person-group person-group-type="author">
