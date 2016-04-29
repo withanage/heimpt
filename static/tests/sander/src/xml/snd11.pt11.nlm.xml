@@ -12,8 +12,8 @@
     <article-meta>
       <article-id pub-id-type="doi">10.17885/heiup.48.44</article-id>
       <title-group>
-        <article-title>Passing Through Shanghai:
-                    Ethnographic Insights into the Mobile Lives of Expatriate Youths</article-title>
+        <article-title>Passing Through Shanghai: Ethnographic Insights into the Mobile Lives of
+          Expatriate Youths</article-title>
       </title-group>
       <contrib-group>
         <contrib contrib-type="author">
@@ -24,8 +24,9 @@
           <xref ref-type="aff" rid="bremen"/>
         </contrib>
         <aff id="bremen"><institution content-type="dept">Referat für Forschung und
-                        wissenschaftlichen Nachwuchs, Universität Bremen</institution>,
-                            <addr-line><named-content content-type="city">Bremen</named-content></addr-line>, <country>Deutschland</country></aff>
+            wissenschaftlichen Nachwuchs, Universität Bremen</institution>,
+              <addr-line><named-content content-type="city">Bremen</named-content></addr-line>,
+            <country>Deutschland</country></aff>
       </contrib-group>
       <pub-date pub-type="epub">
         <year>2016</year>
@@ -35,13 +36,15 @@
       <fpage>1</fpage>
       <lpage>2</lpage>
       <permissions>
-        <copyright-statement>© 2016, Marie Sander
-                    </copyright-statement>
+        <copyright-statement>© 2016, Marie Sander </copyright-statement>
         <copyright-year>2016</copyright-year>
         <copyright-holder>Marie Sander</copyright-holder>
-        <license xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://creativecommons.org/licenses/by/3.0/">
-          <license-p>Dieses Werk ist unter der Creative Commons-Lizenz 4.0 (CC BY-SA 4.0
-                            <ext-link ext-link-type="uri" xlink:href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">)</ext-link> veröffentlicht. credited.</license-p>
+        <license xmlns:xlink="http://www.w3.org/1999/xlink"
+          xlink:href="http://creativecommons.org/licenses/by/3.0/">
+          <license-p>Dieses Werk ist unter der Creative Commons-Lizenz 4.0 (CC BY-SA 4.0 <ext-link
+              ext-link-type="uri"
+              xlink:href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">)</ext-link>
+            veröffentlicht. credited.</license-p>
         </license>
       </permissions>
       <abstract>
@@ -51,19 +54,23 @@
   </front>
   <body>
     <sec>
-      <title>Dedication</title>
-      <p>This book is dedicated to all families on the move.</p>
-    </sec>
-    <sec><title>Motto</title>
-      <p>Die meisten Leute, die hierherkommen, mögen es erstmal überhaupt nicht.</p>
-      <p>Und dann mögen sie es.</p>
-      <p>Und dann wollen sie nicht mehr weg.</p>
-      <p>Und dann müssen sie weg.</p>
-      <p>Most people who come here at first don’t like it at all.</p>
-      <p>And then they like it.</p>
-      <p>And then they don’t want to leave.</p>
-      <p>And then they have to leave.</p>
-      <p>Antonia, sixteen years old</p>
+      <title>Dedication and Motto</title>
+      <sec>
+        <title>Dedication</title>
+        <p>This book is dedicated to all families on the move.</p>
+      </sec>
+      <sec>
+        <title>Motto</title>
+        <p>Die meisten Leute, die hierherkommen, mögen es erstmal überhaupt nicht.</p>
+        <p>Und dann mögen sie es.</p>
+        <p>Und dann wollen sie nicht mehr weg.</p>
+        <p>Und dann müssen sie weg.</p>
+        <p>Most people who come here at first don’t like it at all.</p>
+        <p>And then they like it.</p>
+        <p>And then they don’t want to leave.</p>
+        <p>And then they have to leave.</p>
+        <p>Antonia, sixteen years old</p>
+      </sec>
     </sec>
   </body>
   <back/>
