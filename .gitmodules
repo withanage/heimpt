@@ -7,6 +7,7 @@
 [submodule "static/tools/xml2pdf-php"]
 	path = static/tools/xml2pdf-php
 	url = https://github.com/kadowa/xml2pdf-php
-[submodule "static/tools/mpdf60"]
-	path = static/tools/mpdf60
-	url = https://github.com/icharge/jpos2015-opensource
+
+[submodule "static/tools/mpdf-repo"]
+	path = static/tools/mpdf-repo
+	url = https://github.com/icharge/jpos2015-opensource.git
