@@ -25,6 +25,7 @@
 # THE SOFTWARE.
 
 
+import copy
 import io
 import json
 import logging
@@ -36,6 +37,7 @@ import uuid
 import zipfile
 try:
     from lxml import etree
+    from lxml import objectify
 except ImportError:
     print("Failed to import ElementTree, plase install")
 
@@ -57,9 +59,8 @@ class PostProcess:
             print 'Please define', cf
             sys.exit(1)
 
-        self.JATS_XML_HEADER = '<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd"><article xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="1.1d1">'
+        self.JATS_XML_HEADER = '<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd"><article xmlns:xlink="http://www.w3.org/1999/xlink">'
 
-  
     def apply_transformations(self, tr, context):
         ''' main method to apply transformations'''
         tr = self.remove_not_used_in_back(tr, "ref-list/ref")
@@ -69,8 +70,7 @@ class PostProcess:
         tr = self.set_numbering(tr, ['speech', 'disp-quote'])
         tr = self.get_unreferenced_footnotes(tr)
         tr = self.set_uuids(tr, 'fn')
-
-        #
+        tr = self.merge_repeating_paragprahp_entries(tr, "disp-quote")              
         if "references" in self.config["createFull"][context].keys():
             if "duplicates" in self.config[
                     "createFull"][context]["references"].keys():
@@ -197,7 +197,7 @@ class PostProcess:
                     "Mixed reference found", etree.tostring(
                         back, pretty_print=True))
         return back_refs
-    
+
     def get_unreferenced_footnotes(self, tr):
         ''' returns a list of footnotes, which are not in body '''
         body_fns = self.get_footnotes_body(tr)
@@ -209,10 +209,24 @@ class PostProcess:
                 logging.info("Footnote " + i + " is not used")
 
         return tr
+
+    
+    def merge_repeating_paragprahp_entries(self, tr, etype):
+        root =tr.getroot()
+        for i in root.findall('.//'+etype):
+            if i.tag==etype:
+                if i.getparent().getprevious() is not None:
+                  if i.getparent().getprevious().getchildren():
+                    if  i.getparent().getprevious().getchildren()[0].tag==etype:
+                      i.getparent().getprevious().getchildren()[0].append(copy.deepcopy(i.getchildren()[0]))
+                      i.getparent().getparent().remove(i.getparent())
+        return tr
+    
     def merge_files(self, dir, files, context):
         '''  merge  a set of xml files in a directory'''
         back_fns, body_secs, back_refs = [], [], []
         header = False
+        header_text=''
 
         for f in files:
             logging.info("Parsing file " + f)
@@ -246,7 +260,7 @@ class PostProcess:
             for elem in tree.getroot().findall('.//' + name):
                 elem.getparent().remove(elem)
         return tree
-    
+
     def remove_comments(self, tree):
         ''' removes all the comments  in a element tree '''
         comments = tree.xpath('//comment()')
@@ -290,7 +304,6 @@ class PostProcess:
                 ref.getparent().remove(ref)
         return tr
 
-    
     def remove_name_duplicates_speech(self, tr):
         ''' removes name duplication  in  speech tag '''
         elems = tr.getroot().findall('.//speech/p')
@@ -299,6 +312,7 @@ class PostProcess:
                 if l is not None:
                     elem.text = ""
         return tr
+
     def remove_not_used_in_back(self, tr, tag):
         ''' removes  footnotes, references, which are not linked. '''
         body_refs = self.get_ref_ids_body(tr)
@@ -316,7 +330,6 @@ class PostProcess:
                         logging.info(tag + etr.tostring(e) + " removed")
         return tr
 
-    
     def remove_table_references(self, tree, name, attr, value):
         searchTag = './/' + name + '[@' + attr + '="' + value + '"]'
         try:
@@ -328,6 +341,7 @@ class PostProcess:
         xslt_doc = etree.parse(io.BytesIO(xslt))
         transform = etree.XSLT(xslt_doc)
         return transform(tree)
+
     def set_enumeration(self, tr, name, attr, value):
         ''' set the count id for an attribute in a tag type '''
         searchTag = './/' + name + '[@' + attr + '="' + value + '"]'
@@ -337,7 +351,7 @@ class PostProcess:
             elem.text = str(count)
             count += 1
         return tr
-      
+
     def set_numbering(self, tree, tags):
         ''' automatic numbering of certain tags '''
         for tag in tags:
@@ -348,7 +362,6 @@ class PostProcess:
                 sid += 1
         return tree
 
-    
     def set_uuids(self, tr, str):
         ''' removes name confilcits for references or footnotes'''
         f = {}
@@ -360,10 +373,11 @@ class PostProcess:
             i.set('rid', rid)
         for m in f.keys():
             n = tr.getroot().find(''.join(['.//fn/[@id="', m, '"]']))
-            if len(n) > 0:
-                n.set('id', f[m])
-            else:
-                logging.error('Element not found \t' + m)
+            if n:
+              if len(n) > 0:
+                  n.set('id', f[m])
+              else:
+                  logging.error('Element not found \t' + m)
         return tr
 
     def sort_references(self, tr, parent, tag_list):
