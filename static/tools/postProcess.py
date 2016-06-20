@@ -70,7 +70,7 @@ class PostProcess:
         tr = self.set_numbering(tr, ['speech', 'disp-quote'])
         tr = self.get_unreferenced_footnotes(tr)
         tr = self.set_uuids(tr, 'fn')
-        tr = self.merge_repeating_paragprahp_entries(tr, "disp-quote")              
+        tr = self.merge_repeating_neighbours(tr, "disp-quote")              
         if "references" in self.config["createFull"][context].keys():
             if "duplicates" in self.config[
                     "createFull"][context]["references"].keys():
@@ -88,17 +88,38 @@ class PostProcess:
                     return True
         return False
 
-    def create_full(self, context):
+   
+        
+    def create_files(self, context):
         ''' main method : creates zip, merges and transforms xml files '''
         cfb = self.config['createFull'][context]
         self.create_zip(cfb["dir"], cfb["files"])
 
         fp = os.path.join(cfb["dir"], cfb["fullfile"])
+        
+        header_text, back_fns, body_secs, back_refs  = self.merge_files(cfb["dir"], cfb["files"], context)
+        body_text = ''.join(body_secs)
+        fns = ''.join(back_fns)
+        refs = ''.join(back_refs)
+        out = "%s%s<body>%s</body><back><fn-group>%s</fn-group><ref-list>%s</ref-list></back></article>" % (
+            self.JATS_XML_HEADER, header_text, body_text, fns, refs)
 
         f = open(fp, 'w')
-        f.write(self.merge_files(cfb["dir"], cfb["files"], context))
+        f.write(out)
         f.close()
-
+        if  "footnotes_file" in cfb.keys():
+          fpfn = os.path.join(cfb["dir"], cfb["footnotes_file"])
+          fns_p=[]
+          for i in back_fns:
+            for j in etree.fromstring(i).getchildren():
+              fns_p.append(etree.tostring(j))
+            
+          out_fn =  out = "%s%s<body><sec>%s</sec></body><back></back></article>" % (self.JATS_XML_HEADER, header_text,  ''.join(fns_p))
+          f = open(fpfn, 'w')
+          f.write(out_fn)
+          f.close()
+           
+           
         tr = self.apply_transformations(self.get_etree(fp), context)
         self.create_output(tr, fp)
         logging.info('outout written' + cfb["fullfile"])
@@ -211,7 +232,7 @@ class PostProcess:
         return tr
 
     
-    def merge_repeating_paragprahp_entries(self, tr, etype):
+    def merge_repeating_neighbours(self, tr, etype):
         root =tr.getroot()
         for i in root.findall('.//'+etype):
             if i.tag==etype:
@@ -246,13 +267,7 @@ class PostProcess:
             for ref in root.findall(".//back/ref-list/ref"):
                 back_refs.append(etree.tostring(ref, pretty_print=False))
 
-        body_text = ''.join(body_secs)
-        fns = ''.join(back_fns)
-        refs = ''.join(back_refs)
-        out = "%s%s<body>%s</body><back><fn-group>%s</fn-group><ref-list>%s</ref-list></back></article>" % (
-            self.JATS_XML_HEADER, header_text, body_text, fns, refs)
-
-        return out
+        return  header_text, back_fns, body_secs, back_refs 
 
     def remove_all_elements_of_type(self, tree, names):
         ''' removes all the elements of a certain type in a element tree '''
@@ -373,7 +388,7 @@ class PostProcess:
             i.set('rid', rid)
         for m in f.keys():
             n = tr.getroot().find(''.join(['.//fn/[@id="', m, '"]']))
-            if n:
+            if n is not None:
               if len(n) > 0:
                   n.set('id', f[m])
               else:
@@ -399,7 +414,7 @@ class PostProcess:
 def main():
     p = PostProcess('postProcessConfig.json')
     context = "kemp"
-    p.create_full(context)
+    p.create_files(context)
     with open(LOG_FILE) as f:
         print f.read()
     os.remove(LOG_FILE)
