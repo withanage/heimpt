@@ -110,11 +110,18 @@ class PostProcess:
         if  "footnotes_file" in cfb.keys():
           fpfn = os.path.join(cfb["dir"], cfb["footnotes_file"])
           fns_p=[]
+          fnn = 1
           for i in back_fns:
-            for j in etree.fromstring(i).getchildren():
-              fns_p.append(etree.tostring(j))
             
-          out_fn =  out = "%s%s<body><sec>%s</sec></body><back></back></article>" % (self.JATS_XML_HEADER, header_text,  ''.join(fns_p))
+            for j in etree.fromstring(i).getchildren():
+              if j.text:
+                 
+                k = etree.XML('<p><bold>'+str(fnn)+' </bold>'+j.text+'</p>')
+                fns_p.append(etree.tostring(k))
+                #fns_p.append(etree.tostring(j))
+                fnn = fnn+ 1
+            
+          out_fn =  out = "%s%s<body><sec><title>%s</title>%s</sec></body><back></back></article>" % (self.JATS_XML_HEADER, header_text,'Anmerkungen',  ''.join(fns_p))
           f = open(fpfn, 'w')
           f.write(out_fn)
           f.close()
@@ -262,6 +269,8 @@ class PostProcess:
                     header = True
             for sec in root.findall(".//body/sec"):
                 body_secs.append(etree.tostring(sec, pretty_print=False))
+            for sec_title in root.findall(".//body/sec/title"):
+                print sec_title
             for back in root.findall(".//back/fn-group/fn"):
                 back_fns.append(etree.tostring(back, pretty_print=False))
             for ref in root.findall(".//back/ref-list/ref"):
