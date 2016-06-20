@@ -16,10 +16,10 @@
     },
     "kemp": {
       "dir": "/home/wit/media/serv3/UBHD_OMPPortal/static/monographs/90/submission/proof/",
-      "files": ["90-69-690-1-10-20160610.xml", "90-69-692-1-10-20160610.xml", "90-69-702-1-10-20160620.xml", "90-69-703-1-10-20160620.xml", "90-69-689-1-10-20160610.xml","90-69-704-1-10-20160620.xml"],
+      "files": ["90-69-690-1-10-20160610.xml", "90-69-692-1-10-20160610.xml", "90-69-702-1-10-20160620.xml", "90-69-703-1-10-20160620.xml", "90-69-689-1-10-20160610.xml","90-69-705-1-10-20160620.xml","90-69-704-1-10-20160620.xml"],
       "fullfile": "fullBook.xml",
       "enumeration": 1,
-      "footnotes_file":"kemp-foonotes.xml"
+      "footnotes_file":"kemp-footnotes.xml"
 
 
     },
