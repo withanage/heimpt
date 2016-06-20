@@ -16,17 +16,20 @@
     },
     "kemp": {
       "dir": "/home/wit/media/serv3/UBHD_OMPPortal/static/monographs/90/submission/proof/",
-      "files": ["90-69-690-1-10-20160610.xml", "90-69-692-1-10-20160610.xml", "90-69-689-1-10-20160610.xml"],
+      "files": ["90-69-690-1-10-20160610.xml", "90-69-692-1-10-20160610.xml", "90-69-702-1-10-20160620.xml", "90-69-703-1-10-20160620.xml", "90-69-689-1-10-20160610.xml","90-69-704-1-10-20160620.xml"],
       "fullfile": "fullBook.xml",
-      "enumeration": 1
+      "enumeration": 1,
+      "footnotes_file":"kemp-foonotes.xml"
 
 
     },
-    "kemp-old": {
-      "dir": "/home/wit/Arbeit/OMP/Kemp/xml",
-      "files": ["02_Kemp_Vorwort_HTML.xml", "03_Kemp_1_HTML.xml", "04_Kemp_2_HTML.xml", "05_Kemp_3_HTML.xml", "06_Danksagung_HTML.xml", "07_Bildnachweis_HTML.xml", "08_Bibliographie_HTML.xml"],
-      "fullfile": "fullBook.xml",
+    "kempfull": {
+      "dir": "/home/wit/media/serv3/UBHD_OMPPortal/static/monographs/90/submission/proof/",
+      "files": ["fullBook2.xml"],
+      "fullfile": "fullBook3.xml",
       "enumeration": 1
+
+
     }
   },
   "errors": {
