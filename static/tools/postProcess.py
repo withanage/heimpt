@@ -43,6 +43,12 @@ except ImportError:
 
 
 LOG_FILE = 'jatsPostProcess.log'
+numeral_map = tuple(zip(
+    (1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1),
+    ('M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I')
+))
+
+
 logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG)
 
 
@@ -63,19 +69,20 @@ class PostProcess:
 
     def apply_transformations(self, tr, context):
         ''' main method to apply transformations'''
+        cfg = self.config["createFull"][context]
         tr = self.remove_not_used_in_back(tr, "ref-list/ref")
         tr = self.remove_not_used_in_back(tr, "fn-group/fn")
-        tr = self.set_enumeration(tr, "xref", "ref-type", "fn")
+        if "enumeration" in cfg.keys():
+          if cfg["enumeration"] == 1:
+            tr = self.set_enumeration(tr, "xref", "ref-type", "fn")
         tr = self.remove_name_duplicates_speech(tr)
         tr = self.set_numbering(tr, ['speech', 'disp-quote'])
         tr = self.get_unreferenced_footnotes(tr)
         tr = self.set_uuids(tr, 'fn')
-        tr = self.merge_repeating_neighbours(tr, "disp-quote")              
-        if "references" in self.config["createFull"][context].keys():
-            if "duplicates" in self.config[
-                    "createFull"][context]["references"].keys():
-                for i in self.config["createFull"][
-                        context]["references"]["duplicates"]:
+        tr = self.merge_repeating_neighbours(tr, "disp-quote")
+        if "references" in cfg.keys():
+            if "duplicates" in cfg["references"].keys():
+                for i in cfg["references"]["duplicates"]:
                     tr = self.remove_duplicate_refs(tr, i)
         return tr
 
@@ -88,16 +95,32 @@ class PostProcess:
                     return True
         return False
 
-   
-        
+    def convert_int_to_roman(self, i):
+      result = []
+      for integer, numeral in numeral_map:
+          count = i // integer
+          result.append(numeral * count)
+          i -= integer * count
+      return ''.join(result)
+
+    def convert_roman_to_int(self, n):
+        i = result = 0
+        for integer, numeral in numeral_map:
+            while n[i:i + len(numeral)] == numeral:
+                result += integer
+                i += len(numeral)
+        return result
+    
+    
     def create_files(self, context):
         ''' main method : creates zip, merges and transforms xml files '''
         cfb = self.config['createFull'][context]
         self.create_zip(cfb["dir"], cfb["files"])
 
         fp = os.path.join(cfb["dir"], cfb["fullfile"])
-        
-        header_text, back_fns, body_secs, back_refs  = self.merge_files(cfb["dir"], cfb["files"], context)
+
+        header_text, back_fns, body_secs, back_refs = self.merge_files(cfb["dir"], cfb[
+                                                                       "files"], context)
         body_text = ''.join(body_secs)
         fns = ''.join(back_fns)
         refs = ''.join(back_refs)
@@ -107,26 +130,23 @@ class PostProcess:
         f = open(fp, 'w')
         f.write(out)
         f.close()
-        if  "footnotes_file" in cfb.keys():
-          fpfn = os.path.join(cfb["dir"], cfb["footnotes_file"])
-          fns_p=[]
-          fnn = 1
-          for i in back_fns:
-            
-            for j in etree.fromstring(i).getchildren():
-              if j.text:
-                 
-                k = etree.XML('<p><bold>'+str(fnn)+' </bold>'+j.text+'</p>')
-                fns_p.append(etree.tostring(k))
-                #fns_p.append(etree.tostring(j))
-                fnn = fnn+ 1
-            
-          out_fn =  out = "%s%s<body><sec><title>%s</title>%s</sec></body><back></back></article>" % (self.JATS_XML_HEADER, header_text,'Anmerkungen',  ''.join(fns_p))
-          f = open(fpfn, 'w')
-          f.write(out_fn)
-          f.close()
-           
-           
+        if "footnotes_file" in cfb.keys():
+            fpfn = os.path.join(cfb["dir"], cfb["footnotes_file"])
+            fns_p, fnn = [], 1
+            for i in back_fns:
+
+                for j in etree.fromstring(i).getchildren():
+                    if j.text:
+                        k = etree.XML('<p><bold>' + str(fnn) +
+                                      ' </bold>   ' + j.text + '</p>')
+                        fns_p.append(etree.tostring(k))
+                        fnn = fnn + 1
+            out_fn = out = "%s%s<body><sec><title>%s</title>%s</sec></body><back></back></article>" % (
+                self.JATS_XML_HEADER, header_text, 'Anmerkungen',  ''.join(fns_p))
+            f = open(fpfn, 'w')
+            f.write(out_fn)
+            f.close()
+
         tr = self.apply_transformations(self.get_etree(fp), context)
         self.create_output(tr, fp)
         logging.info('outout written' + cfb["fullfile"])
@@ -238,23 +258,23 @@ class PostProcess:
 
         return tr
 
-    
     def merge_repeating_neighbours(self, tr, etype):
-        root =tr.getroot()
-        for i in root.findall('.//'+etype):
-            if i.tag==etype:
+        root = tr.getroot()
+        for i in root.findall('.//' + etype):
+            if i.tag == etype:
                 if i.getparent().getprevious() is not None:
-                  if i.getparent().getprevious().getchildren():
-                    if  i.getparent().getprevious().getchildren()[0].tag==etype:
-                      i.getparent().getprevious().getchildren()[0].append(copy.deepcopy(i.getchildren()[0]))
-                      i.getparent().getparent().remove(i.getparent())
+                    if i.getparent().getprevious().getchildren():
+                        if i.getparent().getprevious().getchildren()[0].tag == etype:
+                            i.getparent().getprevious().getchildren()[
+                                0].append(copy.deepcopy(i.getchildren()[0]))
+                            i.getparent().getparent().remove(i.getparent())
         return tr
-    
+
     def merge_files(self, dir, files, context):
         '''  merge  a set of xml files in a directory'''
         back_fns, body_secs, back_refs = [], [], []
         header = False
-        header_text=''
+        header_text = ''
 
         for f in files:
             logging.info("Parsing file " + f)
@@ -269,14 +289,12 @@ class PostProcess:
                     header = True
             for sec in root.findall(".//body/sec"):
                 body_secs.append(etree.tostring(sec, pretty_print=False))
-            for sec_title in root.findall(".//body/sec/title"):
-                print sec_title
             for back in root.findall(".//back/fn-group/fn"):
                 back_fns.append(etree.tostring(back, pretty_print=False))
             for ref in root.findall(".//back/ref-list/ref"):
                 back_refs.append(etree.tostring(ref, pretty_print=False))
 
-        return  header_text, back_fns, body_secs, back_refs 
+        return header_text, back_fns, body_secs, back_refs
 
     def remove_all_elements_of_type(self, tree, names):
         ''' removes all the elements of a certain type in a element tree '''
@@ -398,10 +416,10 @@ class PostProcess:
         for m in f.keys():
             n = tr.getroot().find(''.join(['.//fn/[@id="', m, '"]']))
             if n is not None:
-              if len(n) > 0:
-                  n.set('id', f[m])
-              else:
-                  logging.error('Element not found \t' + m)
+                if len(n) > 0:
+                    n.set('id', f[m])
+                else:
+                    logging.error('Element not found \t' + m)
         return tr
 
     def sort_references(self, tr, parent, tag_list):
