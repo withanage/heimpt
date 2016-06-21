@@ -15,18 +15,70 @@
 
     },
     "kemp": {
-      "dir": "/home/wit/media/serv3/UBHD_OMPPortal/static/monographs/90/submission/proof/",
-      "files": ["90-69-690-1-10-20160610.xml", "90-69-692-1-10-20160610.xml", "90-69-702-1-10-20160620.xml", "90-69-703-1-10-20160620.xml", "90-69-689-1-10-20160610.xml","90-69-705-1-10-20160620.xml","90-69-704-1-10-20160620.xml"],
-      "fullfile": "90-68-706-1-10-20160621.xml",
-      "enumeration": 0,
-      "footnotes_file":"90-69-707-1-10-20160621.xml"
+      "dir": "/home/wit/media/serv3/UBHD_OMPPortal/static/files/presses/6/monographs/90/submission/proof/",
+      "files": [
+        {
+          "90-69-690-1-10-20160610.xml": {
+            "order": 1,
+            "numbering": "roman"
+
+          }
+        },
+        {
+          "90-69-692-1-10-20160610.xml": {
+            "order": 2
+          }
+        },
+        {
+          "90-69-702-1-10-20160620.xml": {
+            "order": 3
+          }
+        },
+        {
+          "90-69-703-1-10-20160620.xml": {
+            "order": 4
+          }
+        },
+        {
+          "90-69-689-1-10-20160610.xml": {
+            "order": 5
+          }
+        },
+        {
+          "90-69-705-1-10-20160620.xml": {
+            "order": 6
+          }
+        },
+        {
+          "90-69-704-1-10-20160620.xml": {
+            "order": 7
+          }
+        }
+      ],
+      "fullfile": {
+        "90-68-706-1-10-20160621.xml": {
+          "numbering": "roman",
+          "range": [[1, 12]]
+        }
+      },
+      "enumeration": 1,
+      "footnotes_file": "90-69-707-1-10-20160621.xml"
 
 
     },
     "kempfull": {
-      "dir": "/home/wit/media/serv3/UBHD_OMPPortal/static/monographs/90/submission/proof/",
-      "files": ["fullBook2.xml"],
-      "fullfile": "fullBook3.xml",
+      "dir": "/home/wit/media/serv3/UBHD_OMPPortal/static/files/presses/6/monographs/90/submission/proof/",
+      "files": {
+        "90-68-706-1-10-20160621.xml": {
+          "numbering": "roman"
+        }
+      },
+      "fullfile": {
+        "full-book-only-for-reference.xml": {
+          "numbering": "roman",
+          "range": [[1, 12]]
+        }
+      },
       "enumeration": 1
 
 
