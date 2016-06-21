@@ -67,14 +67,14 @@ class PostProcess:
 
         self.JATS_XML_HEADER = '<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd"><article xmlns:xlink="http://www.w3.org/1999/xlink">'
 
-    def apply_transformations(self, tr, context):
+    def apply_transformations(self, tr, context,f, chapter, order):
         ''' main method to apply transformations'''
         cfg = self.config["createFull"][context]
         tr = self.remove_not_used_in_back(tr, "ref-list/ref")
         tr = self.remove_not_used_in_back(tr, "fn-group/fn")
         if "enumeration" in cfg.keys():
           if cfg["enumeration"] == 1:
-            tr = self.set_enumeration(tr, "xref", "ref-type", "fn")
+            tr = self.set_enumeration(tr, "xref", "ref-type", "fn", context,f, chapter, order)
         tr = self.remove_name_duplicates_speech(tr)
         tr = self.set_numbering(tr, ['speech', 'disp-quote'])
         tr = self.get_unreferenced_footnotes(tr)
@@ -116,9 +116,8 @@ class PostProcess:
         ''' main method : creates zip, merges and transforms xml files '''
         cfb = self.config['createFull'][context]
         self.create_zip(cfb["dir"], cfb["files"])
-
-        fp = os.path.join(cfb["dir"], cfb["fullfile"])
-
+        fullfile = cfb["fullfile"].keys()[0]
+        fp = os.path.join(cfb["dir"], fullfile)
         header_text, back_fns, body_secs, back_refs = self.merge_files(cfb["dir"], cfb[
                                                                        "files"], context)
         body_text = ''.join(body_secs)
@@ -132,7 +131,7 @@ class PostProcess:
         f.close()
         if "footnotes_file" in cfb.keys():
             fpfn = os.path.join(cfb["dir"], cfb["footnotes_file"])
-            fns_p, fnn = [], 1
+            fns_p, fnn = [], 20
             for i in back_fns:
 
                 for j in etree.fromstring(i).getchildren():
@@ -147,9 +146,9 @@ class PostProcess:
             f.write(out_fn)
             f.close()
 
-        tr = self.apply_transformations(self.get_etree(fp), context)
+        tr = self.apply_transformations(self.get_etree(fp), context, fullfile, False, 0)
         self.create_output(tr, fp)
-        logging.info('outout written' + cfb["fullfile"])
+        logging.info('outout written' + fullfile)
 
         return None
 
@@ -275,11 +274,12 @@ class PostProcess:
         back_fns, body_secs, back_refs = [], [], []
         header = False
         header_text = ''
-
+        order = 0
         for f in files:
+            f=  f.keys()[0]
             logging.info("Parsing file " + f)
             tr = etree.parse(os.path.join(dir, f))
-            tr = self.apply_transformations(tr, context)
+            tr = self.apply_transformations(tr, context, f, True, order)
             self.create_output(tr, os.path.join(dir, f))
             root = tr.getroot()
             if not header:
@@ -293,6 +293,7 @@ class PostProcess:
                 back_fns.append(etree.tostring(back, pretty_print=False))
             for ref in root.findall(".//back/ref-list/ref"):
                 back_refs.append(etree.tostring(ref, pretty_print=False))
+            order += 1
 
         return header_text, back_fns, body_secs, back_refs
 
@@ -384,14 +385,32 @@ class PostProcess:
         transform = etree.XSLT(xslt_doc)
         return transform(tree)
 
-    def set_enumeration(self, tr, name, attr, value):
+    def set_enumeration(self, tr, name, attr, value, context,f, chapter, order):
         ''' set the count id for an attribute in a tag type '''
         searchTag = './/' + name + '[@' + attr + '="' + value + '"]'
         elems = tr.getroot().findall(searchTag)
-        count = 1
+        count, range_count=1, 1
+        cfg = self.config["createFull"][context]
+        if chapter:
+          cf = cfg['files'][order][f]
+        else:
+          cf =cfg['fullfile'][f]
         for elem in elems:
-            elem.text = str(count)
-            count += 1
+            val = str(count)
+            if 'numbering' in  cf.keys():
+              if cf['numbering'] =='roman':
+                if 'range' in cf.keys():
+                    j = cf['range'][0]
+                    if count >= int(j[0]) and count <= int(j[1]):
+                      val = self.convert_int_to_roman(range_count).lower()
+                      range_count += 1
+                    else:
+                      val = str(count-range_count+1)  
+                else:
+                  val = self.convert_int_to_roman(count).lower()
+            
+            elem.text = val
+            count += 1 
         return tr
 
     def set_numbering(self, tree, tags):
