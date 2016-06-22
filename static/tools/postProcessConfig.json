@@ -62,8 +62,12 @@
         }
       },
       "enumeration": 1,
-      "footnotes_file": "90-69-707-1-10-20160621.xml"
-
+      "footnotes_file": {
+        "90-69-707-1-10-20160621.xml": {
+          "numbering": "roman",
+          "range": [[1, 12]]
+        }
+      }
 
     },
     "kempfull": {
