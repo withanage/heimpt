@@ -112,46 +112,61 @@ class PostProcess:
         return result
     
     
+  
+    
     def create_files(self, context):
         ''' main method : creates zip, merges and transforms xml files '''
         cfb = self.config['createFull'][context]
+        
         self.create_zip(cfb["dir"], cfb["files"])
+        
         fullfile = cfb["fullfile"].keys()[0]
-        fp = os.path.join(cfb["dir"], fullfile)
-        header_text, back_fns, body_secs, back_refs = self.merge_files(cfb["dir"], cfb[
+        
+        header_text, back_fns, body_secs, back_refs = self.modify_files(cfb["dir"], cfb[
                                                                        "files"], context)
+        self.create_merged_file(fullfile, body_secs,back_fns,back_refs, header_text, cfb, context)
+        
+        self.create_footnote_file(cfb, back_fns, header_text)     
+
+        logging.info('Full file\t' + fullfile)
+
+        return None
+
+    
+    def create_footnote_file(self,cfb, back_fns, header_text):
+        if "footnotes_file" in cfb.keys():
+             if cfb["footnotes_file"].keys():
+                footnotes_file =  cfb["footnotes_file"].keys()[0]
+                fpfn = os.path.join(cfb["dir"],footnotes_file)
+                fns_p, fnn,range_count = [], 1, 1
+                for i in back_fns:
+                  for j in etree.fromstring(i).getchildren():
+                        if j.text:
+                            number, range_count = self.set_roman_numbers(fnn,range_count,cfb["footnotes_file"].values()[0])
+                            k = etree.XML('<p><bold>' + str(number) +' </bold>   ' + j.text + '</p>')
+                            fns_p.append(etree.tostring(k))
+                            fnn = fnn + 1
+                out_fn = out = "%s%s<body><sec><title>%s</title>%s</sec></body><back></back></article>" % (
+                    self.JATS_XML_HEADER, header_text, 'Anmerkungen',  ''.join(fns_p))
+                f = open(fpfn, 'w')
+                f.write(out_fn)
+                f.close()
+                logging.info('footnotes\t'+str(footnotes_file))
+        
+      
+    def create_merged_file(self, fullfile, body_secs,back_fns,back_refs, header_text,cfb, context):
+        fp = os.path.join(cfb["dir"], fullfile)
         body_text = ''.join(body_secs)
         fns = ''.join(back_fns)
         refs = ''.join(back_refs)
         out = "%s%s<body>%s</body><back><fn-group>%s</fn-group><ref-list>%s</ref-list></back></article>" % (
             self.JATS_XML_HEADER, header_text, body_text, fns, refs)
-
         f = open(fp, 'w')
         f.write(out)
         f.close()
-        if "footnotes_file" in cfb.keys():
-            fpfn = os.path.join(cfb["dir"], cfb["footnotes_file"])
-            fns_p, fnn = [], 20
-            for i in back_fns:
-
-                for j in etree.fromstring(i).getchildren():
-                    if j.text:
-                        k = etree.XML('<p><bold>' + str(fnn) +
-                                      ' </bold>   ' + j.text + '</p>')
-                        fns_p.append(etree.tostring(k))
-                        fnn = fnn + 1
-            out_fn = out = "%s%s<body><sec><title>%s</title>%s</sec></body><back></back></article>" % (
-                self.JATS_XML_HEADER, header_text, 'Anmerkungen',  ''.join(fns_p))
-            f = open(fpfn, 'w')
-            f.write(out_fn)
-            f.close()
-
         tr = self.apply_transformations(self.get_etree(fp), context, fullfile, False, 0)
         self.create_output(tr, fp)
-        logging.info('outout written' + fullfile)
-
-        return None
-
+        
     def create_output(self, tree, file):
         ''' write element tree to file '''
         try:
@@ -269,7 +284,7 @@ class PostProcess:
                             i.getparent().getparent().remove(i.getparent())
         return tr
 
-    def merge_files(self, dir, files, context):
+    def modify_files(self, dir, files, context):
         '''  merge  a set of xml files in a directory'''
         back_fns, body_secs, back_refs = [], [], []
         header = False
@@ -277,7 +292,7 @@ class PostProcess:
         order = 0
         for f in files:
             f=  f.keys()[0]
-            logging.info("Parsing file " + f)
+            logging.info("Parsing file\t" + f)
             tr = etree.parse(os.path.join(dir, f))
             tr = self.apply_transformations(tr, context, f, True, order)
             self.create_output(tr, os.path.join(dir, f))
@@ -389,27 +404,15 @@ class PostProcess:
         ''' set the count id for an attribute in a tag type '''
         searchTag = './/' + name + '[@' + attr + '="' + value + '"]'
         elems = tr.getroot().findall(searchTag)
-        count, range_count=1, 1
         cfg = self.config["createFull"][context]
         if chapter:
           cf = cfg['files'][order][f]
         else:
           cf =cfg['fullfile'][f]
+        
+        count, range_count=1, 1
         for elem in elems:
-            val = str(count)
-            if 'numbering' in  cf.keys():
-              if cf['numbering'] =='roman':
-                if 'range' in cf.keys():
-                    j = cf['range'][0]
-                    if count >= int(j[0]) and count <= int(j[1]):
-                      val = self.convert_int_to_roman(range_count).lower()
-                      range_count += 1
-                    else:
-                      val = str(count-range_count+1)  
-                else:
-                  val = self.convert_int_to_roman(count).lower()
-            
-            elem.text = val
+            elem.text ,range_count = self.set_roman_numbers(count, range_count,cf)
             count += 1 
         return tr
 
@@ -423,6 +426,21 @@ class PostProcess:
                 sid += 1
         return tree
 
+    def set_roman_numbers(self, count,range_count,cf ):
+            val = str(count)
+            if 'numbering' in  cf.keys():
+              if cf['numbering'] =='roman':
+                if 'range' in cf.keys():
+                    j = cf['range'][0]
+                    if count >= int(j[0]) and count <= int(j[1]):
+                      val = self.convert_int_to_roman(range_count).lower()
+                      range_count += 1
+                    else:
+                      val = str(count-range_count+1)  
+                else:
+                  val = self.convert_int_to_roman(count).lower()
+            return val, range_count
+    
     def set_uuids(self, tr, str):
         ''' removes name confilcits for references or footnotes'''
         f = {}
