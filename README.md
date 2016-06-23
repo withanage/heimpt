@@ -11,7 +11,16 @@ The platform consists of three modules: (1) meTypeset, (2) a WYSIWYG editor,and 
 
 (3) XML documents are converted to desired output formats that can then be offered to users, including HTML, PDF, and ePub.
 #Documentation
- * [Wiki](http://github.com/withanage/mpt/wiki)
+## doc2pdf Conversion Pipeline
+
+* [Overview](https://github.com/withanage/mpt/wiki/doc2pdf:-Overview)
+
+### Tests
+* [Test suite documentation](https://github.com/withanage/mpt/wiki/doc2pdf:-Test-Suite)
+* [Test reports](https://github.com/withanage/mpt/wiki/doc2pdf:-Tests)
+
+### Post Process Tools
+ * [Merge, clean, set IDs, remove duplicates etc.](https://github.com/withanage/mpt/wiki/xmlToxml:-post-Process)
 
 #Software Development
 * Dulip Withanage,  Heidelberg  University Library
