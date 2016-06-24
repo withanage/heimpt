@@ -24,9 +24,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-
 import copy
 import io
+from itertools import chain
 import json
 import logging
 import os
@@ -122,30 +122,47 @@ class PostProcess:
         
         fullfile = cfb["fullfile"].keys()[0]
         
-        header_text, back_fns, body_secs, back_refs = self.modify_files(cfb["dir"], cfb[
+        header_text, back_fns, body_secs, back_refs, elem_secs, elem_fns = self.modify_files(cfb["dir"], cfb[
                                                                        "files"], context)
         self.create_merged_file(fullfile, body_secs,back_fns,back_refs, header_text, cfb, context)
         
-        self.create_footnote_file(cfb, back_fns, header_text)     
+        self.create_footnote_file(cfb, back_fns, header_text, body_secs, elem_secs, elem_fns)     
 
         logging.info('Full file\t' + fullfile)
 
         return None
 
     
-    def create_footnote_file(self,cfb, back_fns, header_text):
+    def create_footnote_file(self,cfb, back_fns, header_text,body_secs, elem_secs, elem_fns):
+        #print len(elem_secs) , len(elem_fns)
         if "footnotes_file" in cfb.keys():
              if cfb["footnotes_file"].keys():
                 footnotes_file =  cfb["footnotes_file"].keys()[0]
                 fpfn = os.path.join(cfb["dir"],footnotes_file)
                 fns_p, fnn,range_count = [], 1, 1
-                for i in back_fns:
-                  for j in etree.fromstring(i).getchildren():
-                        if j.text:
-                            number, range_count = self.set_roman_numbers(fnn,range_count,cfb["footnotes_file"].values()[0])
-                            k = etree.XML('<p><bold>' + str(number) +' </bold>   ' + j.text + '</p>')
-                            fns_p.append(etree.tostring(k))
-                            fnn = fnn + 1
+                ###
+                if  len(elem_secs) != len(elem_fns):
+                  logging.info("each document must have  a section and a footnote")
+                  #sys.exit(1)
+                
+            
+                for i in range(0,len(elem_secs))  :
+                    if len(elem_fns[i]) > 0:
+                      fns_p.append('<sec>')
+                      fns_p.append(etree.tostring(elem_secs[i].find('title')))
+                      for j in list(elem_fns[i]):
+                          number, range_count = self.set_roman_numbers(fnn,range_count,cfb["footnotes_file"].values()[0])
+                          b = '<bold>' + str(number) +' </bold>'
+                          s = etree.tostring(j.getchildren()[0]).replace('>','>'+b,1)
+                          fns_p.append(s)
+                          fnn = fnn + 1
+                      fns_p.append('</sec>')
+                ###
+                #for i in back_fns:
+                #  number, range_count = self.set_roman_numbers(fnn,range_count,cfb["footnotes_file"].values()[0])
+                #  k = etree.XML('<p><bold>' + str(number) +' </bold>   ' +self.get_stringified_children(etree.fromstring(i).getchildren()[0]) + '</p>') 
+                #  fns_p.append(etree.tostring(k))
+                
                 out_fn = out = "%s%s<body><sec><title>%s</title>%s</sec></body><back></back></article>" % (
                     self.JATS_XML_HEADER, header_text, 'Anmerkungen',  ''.join(fns_p))
                 f = open(fpfn, 'w')
@@ -250,6 +267,13 @@ class PostProcess:
                     body_refs.add(ref.attrib['rid'])
         return body_refs
 
+    def get_stringified_children(self, node):
+    
+      parts = ([node.text] +
+            list(chain(*([c.text, etree.tostring(c), c.tail] for c in node.getchildren()))) +
+            [node.tail])
+      return ''.join(filter(None, parts)).encode('utf-8').strip()
+    
     def get_refs_mixed_back(self, tree):
         '''returns mixed citations in back '''
         back_refs = Set()
@@ -287,6 +311,7 @@ class PostProcess:
     def modify_files(self, dir, files, context):
         '''  merge  a set of xml files in a directory'''
         back_fns, body_secs, back_refs = [], [], []
+        elem_secs, elem_fns = [], []
         header = False
         header_text = ''
         order = 0
@@ -304,13 +329,20 @@ class PostProcess:
                     header = True
             for sec in root.findall(".//body/sec"):
                 body_secs.append(etree.tostring(sec, pretty_print=False))
-            for back in root.findall(".//back/fn-group/fn"):
-                back_fns.append(etree.tostring(back, pretty_print=False))
+            for fn in root.findall(".//back/fn-group/fn"):
+                back_fns.append(etree.tostring(fn, pretty_print=False))
+                
             for ref in root.findall(".//back/ref-list/ref"):
                 back_refs.append(etree.tostring(ref, pretty_print=False))
+            
+            for sec in root.findall(".//body/sec"):
+                elem_secs.append(sec)
+            for fn in root.findall(".//back/fn-group"):
+              elem_fns.append(fn)
+            
             order += 1
 
-        return header_text, back_fns, body_secs, back_refs
+        return header_text, back_fns, body_secs, back_refs, elem_secs, elem_fns
 
     def remove_all_elements_of_type(self, tree, names):
         ''' removes all the elements of a certain type in a element tree '''
