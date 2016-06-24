@@ -15,7 +15,7 @@
 base_dir = /home/wit/projects/mpt
 
 ; Name of the subdirectory, where your test files (docx, xml etc.) are.
-test_collection = misc
+test_collection =  word
 
 ; Name of the particular test that is used in the filenames.
 test_name =  footnote
@@ -65,5 +65,5 @@ fop=fop
 
 [html_tools]
  
-mpdf=../tools/xml2pdf-php/mpdf.php
-prince=prince
+;mpdf=../tools/xml2pdf-php/mpdf.php
+;prince=prince
