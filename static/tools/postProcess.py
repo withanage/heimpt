@@ -67,14 +67,14 @@ class PostProcess:
 
         self.JATS_XML_HEADER = '<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd"><article xmlns:xlink="http://www.w3.org/1999/xlink">'
 
-    def apply_transformations(self, tr, context,f, chapter, order):
+    def apply_transformations(self, tr, context,f, chapter, order, count):
         ''' main method to apply transformations'''
         cfg = self.config["createFull"][context]
         tr = self.remove_not_used_in_back(tr, "ref-list/ref")
         tr = self.remove_not_used_in_back(tr, "fn-group/fn")
         if "enumeration" in cfg.keys():
           if cfg["enumeration"] == 1:
-            tr = self.set_enumeration(tr, "xref", "ref-type", "fn", context,f, chapter, order)
+            tr, count = self.set_enumeration(tr, "xref", "ref-type", "fn", context,f, chapter, order , count)
         tr = self.remove_name_duplicates_speech(tr)
         tr = self.set_numbering(tr, ['speech', 'disp-quote'])
         tr = self.get_unreferenced_footnotes(tr)
@@ -84,7 +84,7 @@ class PostProcess:
             if "duplicates" in cfg["references"].keys():
                 for i in cfg["references"]["duplicates"]:
                     tr = self.remove_duplicate_refs(tr, i)
-        return tr
+        return tr ,count
 
     def contains(self, a, v):
         ''' help method to compare references '''
@@ -172,16 +172,19 @@ class PostProcess:
         
       
     def create_merged_file(self, fullfile, body_secs,back_fns,back_refs, header_text,cfb, context):
+        print fullfile
         fp = os.path.join(cfb["dir"], fullfile)
         body_text = ''.join(body_secs)
         fns = ''.join(back_fns)
         refs = ''.join(back_refs)
         out = "%s%s<body>%s</body><back><fn-group>%s</fn-group><ref-list>%s</ref-list></back></article>" % (
             self.JATS_XML_HEADER, header_text, body_text, fns, refs)
+        print fp
         f = open(fp, 'w')
         f.write(out)
         f.close()
-        tr = self.apply_transformations(self.get_etree(fp), context, fullfile, False, 0)
+        count = 1
+        tr = self.apply_transformations(self.get_etree(fp), context, fullfile, False, 0, count)
         self.create_output(tr, fp)
         
     def create_output(self, tree, file):
@@ -315,11 +318,12 @@ class PostProcess:
         header = False
         header_text = ''
         order = 0
+        count = 1
         for f in files:
             f=  f.keys()[0]
             logging.info("Parsing file\t" + f)
             tr = etree.parse(os.path.join(dir, f))
-            tr = self.apply_transformations(tr, context, f, True, order)
+            tr, count= self.apply_transformations(tr, context, f, True, order, count)
             self.create_output(tr, os.path.join(dir, f))
             root = tr.getroot()
             if not header:
@@ -432,7 +436,7 @@ class PostProcess:
         transform = etree.XSLT(xslt_doc)
         return transform(tree)
 
-    def set_enumeration(self, tr, name, attr, value, context,f, chapter, order):
+    def set_enumeration(self, tr, name, attr, value, context,f, chapter, order ,count):
         ''' set the count id for an attribute in a tag type '''
         searchTag = './/' + name + '[@' + attr + '="' + value + '"]'
         elems = tr.getroot().findall(searchTag)
@@ -442,11 +446,11 @@ class PostProcess:
         else:
           cf =cfg['fullfile'][f]
         
-        count, range_count=1, 1
+        range_count=1
         for elem in elems:
             elem.text ,range_count = self.set_roman_numbers(count, range_count,cf)
             count += 1 
-        return tr
+        return tr, count
 
     def set_numbering(self, tree, tags):
         ''' automatic numbering of certain tags '''
@@ -509,7 +513,7 @@ class PostProcess:
 
 def main():
     p = PostProcess('postProcessConfig.json')
-    context = "kemp"
+    context = "michl"
     p.create_files(context)
     with open(LOG_FILE) as f:
         print f.read()
