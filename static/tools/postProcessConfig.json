@@ -1,5 +1,27 @@
 {
   "createFull": {
+    "michl": {
+      "dir": "/home/wit/media/serv3/UBHD_OMPPortal/static/files/presses/6/monographs/102/submission/proof/",
+      "files": [{
+          "102-69-851-1-10-20160707.xml": {
+            "order": 1
+          }
+        },
+        {
+          "102-69-7103-1-10-20160708.xml": {
+            "order": 2
+          }
+        },
+        {
+          "102-69-851-1-10-20160707.xml": {
+            "order": 3
+          }
+        }],
+      "fullfile": {
+        "102-68-7104-1-10-20160708.xml": {}
+      },
+      "enumeration": 1
+    },
     "sander": {
       "dir": "/home/wit/media/serv3/UBHD_OMPPortal/static/monographs/48/submission/proof/",
       "files": ["48-69-596-1-10-20160428.xml", "48-69-597-1-10-20160428.xml", "48-69-270-1-10-20160127.xml", "48-69-271-1-10-20160129.xml", "48-69-272-1-10-20160129.xml", "48-69-527-1-10-20160329.xml", "48-69-529-1-10-20160329.xml", "48-69-530-1-10-20160401.xml", "48-69-598-1-10-20160428.xml", "48-69-595-1-10-20160428.xml"],
@@ -44,7 +66,6 @@
             "order": 5
           }
         },
-        
         {
           "90-69-707-1-10-20160621.xml": {
             "order": 6
@@ -62,7 +83,7 @@
         }
       ],
       "fullfile": {
-        "90-68-706-1-10-20160621.txt": {
+        "90-68-706-1-10-20160621.xml": {
           "numbering": "roman",
           "range": [[1, 12]]
         }
@@ -76,7 +97,7 @@
       }
 
     },
-     "kempfull": {
+    "kempfull": {
       "dir": "/home/wit/media/serv3/UBHD_OMPPortal/static/files/presses/6/monographs/90/submission/proof/",
       "files": [
         {
@@ -106,12 +127,6 @@
             "order": 5
           }
         },
-        
-        {
-          "90-69-707-1-10-20160621.xml": {
-            "order": 6
-          }
-        },
         {
           "90-69-705-1-10-20160620.xml": {
             "order": 7
@@ -139,7 +154,7 @@
 
     }
 
-    
+
   },
   "errors": {
     "FILE_NOT_FOUND": " File found or non-valid xml",
