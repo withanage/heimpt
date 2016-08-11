@@ -52,7 +52,7 @@
         </article-meta>
     </front>
   <body>
-    <sec>
+    <sec id="D">
       <title>D. Kapitel 3 – Der Limitierungsvertrag</title>
       <p>Nachdem in den vorangegangenen Teilen der Arbeit aus rechtstatsächlicher Sicht einerseits die Bedeutung und praktische Ausformung von limitierten Auflagen bei Werken der zeitgenössischen Fotokunst dargestellt und andererseits die Relevanz der Auflagenlimitierung für den urheberrechtlichen Originalbegriff begründet wurde, soll nun die Frage beantwortet werden, in welcher Form der Auflagenlimitierung eine zivilrechtliche Verbindlichkeit zukommen kann.</p>
       <p>Zwei grundsätzliche Fallkonstellationen lassen sich insoweit unterscheiden: Zum einen ist es möglich, dass bereits im Zeitpunkt des Erwerbs durch den Sammler die Limitierungsangabe nicht hält, was sie verspricht, da über die angegebene Stückzahl hinaus konkurrierende Werkexemplare produziert worden sind. Denkbar sind hierbei wiederum verschiedene Grade von mangelnder Seriosität. Extrem wäre der Fall, dass derjenige, der eine limitierte Auflage anbietet, ohne jegliche Rücksicht auf die Auflagenangabe zusätzliche Exemplare bereits produziert und das „Auflagenversprechen“ somit von Anfang an vollständig ignoriert hätte. Auf dem Kunstmarkt ist ein solches Verhalten jedoch eher nicht zu erwarten. Möglich ist aber auch, dass die Auflagenangabe mit der tatsächlichen Anzahl der existierenden Werkexemplare deshalb nicht übereinstimmt, weil zum Beispiel über die genannte Auflagenhöhe hinaus Artist’s Prints produziert wurden. Dieser – auf dem Kunstmarkt recht häufige Fall – ist differenziert zu betrachten. Insoweit spielt die Auslegung der Limitierungsangabe unter Berücksichtigung des Empfängerhorizonts sowie der Verkehrssitte eine entscheidende Rolle bei der Beantwortung der Frage, ob es sich hierbei tatsächlich um eine „Verletzung“ der Auflagenlimitierung handelt oder ob das Vorgehen noch von der althergebrachten Tradition der Herstellung von Artist’s Prints gedeckt ist.</p>
@@ -90,7 +90,7 @@
         Künstler bedeutsam werden (z. B. als Grundlage einer Kaufentscheidung). Bereits
         hierdurch werden sie zumindest potenziell auch <italic>rechtlich </italic>erheblich. </p>
       <p>Eine zivilrechtliche Bindungswirkung der Limitierungsangabe wäre insbesondere dann zu bejahen, wenn durch die Limitierungsangabe ein schuldrechtliches Rechtsverhältnis begründet würde. Hierfür ist zunächst zu untersuchen, ob in der Limitierungsangabe auf einer Fotografie eine auf Abschluss eines solchen „Limitierungsvertrags“ gerichtete Willenserklärung des Künstlers gesehen werden kann oder ob es sich lediglich um eine Erklärung im außerrechtlichen Bereich handelt, welche unverbindlich wäre. Kann die Limitierungsangabe als Willenserklärung aufgefasst werden, so ist in einem zweiten Schritt zu klären, wie dieses Vertragsangebot durch den Sammler bzw. weitere Käufer auf dem Sekundärmarkt angenommen werden kann. Anschließend wird auch noch zu fragen sein, was mit dem Limitierungsversprechen des Künstlers nach dessen Tod passiert, das heißt insbesondere, ob auch seine Rechtsnachfolger daran gebunden sein können. In einem letzten Schritt ist dann für den Fall einer Auflagenüberschreitung der konkrete Anspruchsinhalt eines solchen Vertrags, welcher als Unterlassungsvertrag eingeordnet werden könnte, zu ermitteln. </p>
-      <sec>
+      <sec id="D_I">
         <title>I. Internationalprivatrechtliche Grundlagen</title>
         <p>Aus Sicht des Internationalen Privatrechts gelten die folgenden Ausführungen
           gemäß Artt. 4 Abs. 2, 20 Rom I-VO jedenfalls für solche Fälle, in
@@ -103,7 +103,7 @@
           Bundesrepublik Deutschland anzuwenden, sofern der gewöhnliche Aufenthalt des
           Künstlers sich dort befindet.</p>
       </sec>
-      <sec>
+      <sec id="D_II">
         <title>II. Die Limitierungsangabe als Angebot des Künstlers auf Abschluss eines
           Unterlassungsvertrags („Limitierungsvertrags“) gegenüber dem Käufer
           der Fotografie</title>
@@ -123,12 +123,12 @@
           nicht um Willenserklärungen handeln, so schieden auch ein darauf beruhender
           Vertragsschluss und aus diesem fließende zivilrechtliche Ansprüche notwendig
           aus.</p>
-        <sec>
+        <sec id="D_II_1">
           <title>1. Vorüberlegungen: Die Willenserklärung in der Rechtsgeschäftslehre
             des BGB als Voraussetzung für einen Vertragsschluss</title>
           <p>Der Begriff der „Willenserklärung“ ist eine der zentralen Abstraktionen des Allgemeinen Teils des BGB.<xref ref-type="fn" rid="bibdfcb88cb291a34160a3ff3918c981e895">765</xref> Idealtypisch ist die sogenannte „finale“<xref ref-type="fn" rid="bibdde884d65d5614c5288f7abc0a731c358">766</xref> Willenserklärung, welche definiert wird als eine „Privatwillenserklärung, gerichtet auf die Hervorbringung eines rechtlichen Erfolgs, der nach der Rechtsordnung deswegen eintritt, weil er gewollt ist“<xref ref-type="fn" rid="bibd1f9b8920a27c43dfa365eb8b4f180bc1">767</xref>. Der Begriff der Willenserklärung ist jedoch weiter, weil er in bestimmten Fällen auch Erklärungen umfasst, die von dem Erklärenden <italic>nicht</italic> mit dem Ziel eines rechtlichen Erfolgs geäußert wurden, allerdings bei Dritten ein schutzwürdiges Vertrauen auf ein solches Ziel der Erklärung hervorgerufen haben. Die rechtliche Qualifikation einer menschlichen Äußerung als Willenserklärung läuft daher letztlich auf eine „normative Kategorisierung“<xref ref-type="fn" rid="bibd1e95b8f693ce443b94ec2899eca06ab2">768</xref> hinaus und trennt insbesondere den Bereich der sogenannten reinen Gefälligkeitshandlungen<xref ref-type="fn" rid="bibd61d070c527e2416bbbc0f8909b5d6d86">769</xref> und anderer Verhältnisse <italic>ohne unmittelbare rechtliche Erheblichkeit</italic> von denjenigen menschlichen Beziehungen, die für die Beteiligten rechtlich erheblich und damit insbesondere verbindlich und daher auch einklagbar sein sollen.<xref ref-type="fn" rid="bibd40ee074bf2f74773a405b1e30f5dac24">770</xref>
                </p>
-          <sec>
+          <sec id="D_II_1_a">
             <title>a) Allgemeine Voraussetzungen an eine Willenserklärung</title>
             <p>Allgemein wird eine Willenserklärung heute meist als „die
               Äußerung eines privaten Willens, der unmittelbar auf die Herbeiführung
@@ -194,7 +194,7 @@
               Verfügung.</p>
             <p>Denklogisch kann ein Geschäftswille nicht ohne Erklärungsbewusstsein existieren.<xref ref-type="fn" rid="bibd10282f1e948045a49f17ebeca8e456d0">786</xref> Die Bejahung eines Geschäftswillens schließt somit auch die Feststellung eines Erklärungsbewusstseins notwendig mit ein.</p>
           </sec>
-          <sec>
+        <sec id="D_II_1_b">
             <title>b) Die Auslegung von Erklärungen</title>
             <p>Die genannten, teilweise idealtypischen juristischen Voraussetzungen an eine Willenserklärung müssen auf den häufig vieldeutigen Bereich menschlicher Kommunikation angewendet werden. Menschliches Handeln im Allgemeinen, jedoch sprachliche Äußerungen im Besonderen, sind häufig Ausgangspunkt für Missverständnisse. Die inneren Beweggründe des Erklärenden stellen für alle anderen Teilnehmer am Rechtsverkehr eine ihrer Erkenntnis unzugängliche „black box“ dar. Es ist daher eine Entscheidung zu der Frage notwendig, auf wessen Eindruck abgestellt werden soll, wenn es darum geht, wie eine bestimmte Erklärung zu verstehen war.<xref ref-type="fn" rid="bibdcf3feaf395e24b589c09aac3e92008d0">787</xref> 
                   </p>
@@ -229,7 +229,7 @@
               müssten allerdings auch die speziellen Voraussetzungen einer Anfechtung
               (§§ 119 ff. BGB) vorliegen.</p>
           </sec>
-          <sec>
+          <sec id="D_II_1_c">
             <title>c) Im Besonderen: Die Unterscheidung zwischen Rechtsverhältnis und
               Gefälligkeitsverhältnis</title>
             <p>Für die aufgeworfene Frage nach der Verbindlichkeit von Auflagenlimitierungen
@@ -267,11 +267,11 @@
             </p>
           </sec>
         </sec>
-        <sec>
+        <sec id="D_II_2">
           <title>2. Die Limitierungsangabe des Künstlers als Willenserklärung</title>
           <p>Die oben<xref ref-type="fn" rid="bibd5e4d0a1e0b314697bf1b5b6d2420aff5">812</xref> beschriebene Praxis der Kennzeichnung von Limitierungen auf den einzelnen Werkstücken in Form eines Bruchs ist anhand der eben dargestellten Kriterien daraufhin zu untersuchen, ob in ihnen eine rechtlich verbindliche Willenserklärung des Fotokünstlers gegenüber dem Käufer der Fotografien gesehen werden kann.<xref ref-type="fn" rid="bibd910dd3bdfe0c494bbed9e41cf28b34cb">813</xref>
                </p>
-          <sec>
+          <sec id="D_II_2_a">
             <title>a) Vorliegen des „äußeren“ (objektiven) Tatbestands einer
               Willenserklärung</title>
             <p>Unproblematisch ist zunächst der „äußere“ oder objektive
@@ -288,10 +288,10 @@
             <p>Durch das vom Willen des Künstlers getragene Anbieten des so beschrifteten Kunstwerks zum Kauf, beispielsweise in den Räumen einer Galerie,<xref ref-type="fn" rid="bibd76f44c58a6fd46b2bbf1eb47cef2f440">816</xref> ist diese Erklärung auch willentlich in den Rechtsverkehr „abgegeben“ im Sinne des § 130 Abs. 1 S. 1 BGB.<xref ref-type="fn" rid="bibd255952b684604ace8116165e67ff6a01">817</xref>
                   </p>
           </sec>
-          <sec>
+          <sec id="D_II_2_b">
             <title>b) Vorliegen der „inneren“ (subjektiven) Tatbestandsmerkmale einer
               Willenserklärung</title>
-            <sec>
+            <sec id="D_II_2_b_1">
               <title>(1) Der Handlungswille</title>
               <p>Die mit dem äußeren Tatbestand zusammenhängende subjektive
                 Voraussetzung des Handlungswillens kann ebenfalls vorausgesetzt werden, solange
@@ -300,7 +300,7 @@
                 bzw. die Limitierung auf seine Veranlassung hin angebracht worden ist und er sie
                 z. B. mit seiner Signatur (zumindest konkludent) bestätigt hat.</p>
             </sec>
-            <sec>
+            <sec id="D_II_2_b_2">
               <title>(2) Das Erklärungsbewusstsein und der Geschäftswille</title>
               <p>Genau zu prüfen ist das Vorliegen der übrigen sogenannten „inneren“ oder subjektiven Tatbestandsvoraussetzungen einer Willenserklärung, also des Erklärungsbewusstseins und Geschäftswillens. Wie bereits oben erwähnt,<xref ref-type="fn" rid="bibde855f9922f7148d9b278e04ddf004ff4">818</xref> greifen insoweit zwei unterschiedliche, jedoch beide im Rahmen der Auslegung zu beantwortende Fragen ineinander: Zum einen stellt sich die Frage, ob es sich bei der Limitierungsangabe tatsächlich um eine Erklärung handelt, welcher rechtliche Verbindlichkeit zukommen soll und die somit eine Willenserklärung im Sinne des BGB darstellt. Unabhängig vom tatsächlichen Willen des Künstlers ist für die Beantwortung dieser Frage letztlich eine Betrachtung nach dem objektiven Empfängerhorizont entscheidend. Ob eine Erklärung rechtlich verbindlich gemeint war oder nicht bzw. als rechtlich verbindlich verstanden werden durfte, ist aber entscheidend von ihrem Inhalt abhängig.<xref ref-type="fn" rid="bibda12b2cc288fa41bca491ba92b5cca64b">819</xref> Zum anderen ist daher mit der Beantwortung der Frage nach der rechtlichen Verbindlichkeit einer Erklärung auch die Frage nach dem konkreten Inhalt der Erklärung denklogisch verbunden, welcher ebenfalls durch Auslegung der Erklärung aus Sicht eines objektiven Dritten zu ermitteln ist.<xref ref-type="fn" rid="bibd1568991b93ab456593d3b7988752d09f">820</xref>
                      </p>
@@ -323,12 +323,12 @@
                 (rechtlich verbindliche) Willenserklärung im Sinne des BGB handelt.</p>
             </sec>
           </sec>
-          <sec>
+          <sec id="D_II_2_c">
             <title>c) Der objektive Inhalt der Limitierungsangabe auf dem Kunstwerk</title>
             <p>Entscheidend für die weiteren Überlegungen dieser Arbeit ist der objektive, durch Auslegung der Erklärung zu ermittelnde Inhalt der vom Künstler kommunizierten Limitierungsangabe.<xref ref-type="fn" rid="bibde858f234a8a742c7aa5e43ffbd84747c">823</xref> Den Ausgangspunkt einer jeden Auslegung bildet der Wortlaut. Im Fall der Auflagenangaben reduziert sich dieser in aller Regel<xref ref-type="fn" rid="bibd0b44724fa3c44f99b8764cfcab024381">824</xref> auf zwei Zahlen und einen sie trennenden Bruchstrich. Auslegungsbedarf kann damit schon im Hinblick darauf bestehen, dass es sich hierbei überhaupt um eine Auflagenbezeichnung handelt, da diese Information aus einem „Bruch“ nicht ohne Weiteres hervorgeht.<xref ref-type="fn" rid="bibd8eeacf3be6b44c18888cfda10d450dc8">825</xref> Auslegungsbedarf besteht darüber hinaus auch, insoweit man klären möchte, welche weiteren Aussagen ein Bruch auf einem Werk der zeitgenössischen Fotografie enthalten kann. </p>
             <p>Im Folgenden soll gezeigt werden, dass die Auflagenangabe insbesondere noch zu drei weiteren Punkten eine Aussage trifft: zur <italic>Absolutheit</italic> der Auflagenlimitierung, zur <italic>Auflagendefinition</italic> und in Bezug auf das <italic>Limitierungsversprechen</italic>. Sie unterscheidet sich dadurch z. B. von der Angabe der Auflagenhöhe bei einem Druckwerk, welche tatsächlich nur die Auflagenhöhe bzw. die Nummer und das Jahr des Drucks mitteilen möchte.<xref ref-type="fn" rid="bibd197eafb098da44b19e7b2a97439cf48e">826</xref>
                   </p>
-            <sec>
+            <sec id="D_II_2_c_1">
               <title>(1) Der objektive Empfängerhorizont im Fall von
                 Limitierungserklärungen auf Werken der zeitgenössischen Fotokunst</title>
               <p>Für eine Auslegung der Limitierungserklärung nach dem objektiven Empfängerhorizont,<xref ref-type="fn" rid="bibdd193c9b68a45486c96fe6caefb04bb32">827</xref> stellt sich zunächst die Frage, wie genau man sich diesen „objektiven Empfänger“ einer Limitierungserklärung vorzustellen hat.</p>
@@ -348,7 +348,8 @@
                 Adressatenkreises entsprechend zu gestalten.<xref ref-type="fn" rid="bibd96d3bd2eca9e4938b7942661bc0da740">832</xref>
               </p>
               <p>Die Limitierungserklärung des Künstlers richtet sich – nach ihrem im rechtstatsächlichen Teil der Arbeit festgestellten Zweck<xref ref-type="fn" rid="bibdbcdca36e376d4960937508ee24d3c829">833</xref> – in erster Linie an Interessenten, d. h. mögliche Käufer der jeweiligen Fotografie. Der Kreis möglicher Käufer von Fotokunst – bzw. auch allgemein von Kunst<xref ref-type="fn" rid="bibdf8ec9c6017d54ad8937c20b680c2e16e">834</xref> – ist weit. Das Spektrum reicht grundsätzlich von „Spezialisten“ wie Kunsthändlern bis zum „Gelegenheitskäufer“, welcher sich beim Besuch einer Galerie oder einer Ausstellung spontan zum Kauf einer Fotografie entschließt. Jedoch wird in der Regel bei allen diesen potenziellen Erklärungsempfängern davon ausgegangen werden können, dass ihnen bewusst ist, dass es sich bei der Angabe eines „Bruchs“ auf einem Kunstwerk um eine Auflagenangabe handelt.<xref ref-type="fn" rid="bibd66d48305362542aeb0c71fa38d7f51ef">835</xref> Was im Rahmen einer objektivierten Betrachtung darüber hinaus Inhalt einer solchen Erklärung ist, soll im Folgenden detailliert herausgearbeitet werden. </p></sec>
-              <sec><title>(2) Die notwendige Absolutheit der Auflagenlimitierung</title>
+            <sec id="D_II_2_c_2">
+                <title>(2) Die notwendige Absolutheit der Auflagenlimitierung</title>
               <p>Wie bereits angedeutet, bringt die Angabe „3/6“ zunächst zum
                 Ausdruck, dass es sich um eine limitierte Auflage – beispielsweise in
                 Abgrenzung zur Open Edition<xref ref-type="fn" rid="bibd69bd24ae0f664e3f9b208b5c21c97ce4">836</xref> – handelt.
@@ -380,7 +381,7 @@
                      </p>
               <p>Verwendet der Künstler eine Auflagenangabe in Form eine Bruchs, so teilt er damit dem Käufer – aus Sicht eines objektiven Empfängers – mit, das Angebot von Exemplaren der konkreten Fotografie zahlenmäßig <italic>absolut</italic> zu begrenzen.</p>
             </sec>
-            <sec>
+            <sec id="D_II_2_c_3">
               <title>(3) Die Auflagendefinition</title>
               <p>Unter dem Begriff der „Auflagendefinition“<xref ref-type="fn" rid="bibd00f2b2d0c1404e8aa7a3a3fa44b3918f">842</xref> soll die Festlegung des Künstlers verstanden werden, welche
                 Arten von Werkstücken von der mitgeteilten Auflagenbegrenzung erfasst sein
@@ -406,7 +407,7 @@
                 Auslegung des Erklärungsinhalts vorgenommen werden. Es stellt sich daher die
                 Frage, welche Auflagendefinition einer Erklärung der Art „3/6“
                 objektiv entnommen werden kann.</p>
-              <sec>
+              <sec id="D_II_2_c_3_aa">
                 <title>(aa) Das konkrete Bezugsobjekt der Auflage (die Auflagendefinition im engeren
                   Sinne)</title>
                 <p>Eine erste Aussage zu ihrem Bezugsobjekt trifft jede auf einem Werkexemplar angebrachte Limitierungsangabe schon dadurch, dass sie <italic>auf </italic>dem Werkexemplar angebracht ist.<xref ref-type="fn" rid="bibdac61913d5c6640a789d9c7379bd0bd6a">847</xref> Hiermit ist klargestellt, dass sich die konkrete Angabe auf das konkrete Werkstück bzw. das in ihm verkörperte urheberrechtliche Werk bezieht, auf dem sie angebracht worden ist und insbesondere keine Angaben zur Auflage beispielsweise von anderen Werken desselben Künstlers enthält.<xref ref-type="fn" rid="bibd903c013c5f2f4145829d142e686beb38">848</xref>
@@ -436,7 +437,7 @@
                   die „klassische“ Limitierungsangabe hinaus keine weiteren Angaben
                   gemacht wurden. </p>
               </sec>
-              <sec>
+              <sec id="D_II_2_c_3_bb">
                 <title>(bb) Die konkludente „Auflagendefinition“</title>
                 <p>Hat der Künstler ausdrücklich oder zumindest schlüssig mitgeteilt, welche Form von Auflagendefinition er zugrunde legt, so besteht für eine weitere Auslegung seiner Erklärung kein Raum. </p>
                 <p>Dies kann einerseits dann der Fall sein, wenn die verschiedenen Formate bzw. die nebeneinander existierenden Auflagen ausdrücklich kommuniziert sind (eine abgekürzte Variante wäre z. B.: „2/10+15“, was bedeuten würde, dass es sich um den Abzug Nr. 2 aus einer 10er Auflage handelt – mit dem zusätzlichen Hinweis, dass auch noch eine 15er Auflage existiert). Der Künstler folgt hier einem „formatbezogenen“ Auflagenverständnis, hat aber gleichzeitig die Gesamtzahl der solcherart nebeneinander bestehenden Auflagen ebenfalls absolut begrenzt.</p>
@@ -518,7 +519,7 @@
                   herzustellen, wenn sich das Kunstwerk später als besonders erfolgreich bei
                   den Sammlern entpuppt.</p>
               </sec>
-              <sec>
+              <sec id="D_II_2_c_3_cc">
                 <title>(cc) „Artist’s Prints“</title>
                 <p>Im Rahmen der Auflagendefinition ist auch die Praxis der Herstellung von
                   Artist’s Prints zu berücksichtigen. Wie bereits oben dargestellt,<xref ref-type="fn" rid="bibd0e51407f8a88454aa6f8780d51e7c64c">861</xref> werden Artist’s Prints häufig
@@ -579,11 +580,11 @@
                   Ausverkauf der eigentlichen Auflage nach Belieben weitere Abzüge zu
                   produzieren und diese dann als Artist’s Prints zu bezeichnen.</p>
               </sec>
-              <sec>
+              <sec id="D_II_2_c_3_dd">
                 <title>(dd) Ersatzabzüge</title>
                 <p>Werden als Reaktion auf Verfallserscheinungen am Originalabzug Ersatzabzüge hergestellt,<xref ref-type="fn" rid="bibd027ec81560314dfcbd9d1251ca810455">867</xref> so hält sich diese Vorgehensweise jedenfalls solange im Rahmen des abgegebenen Limitierungsversprechens, wie der neue Abzug die Nummerierung des ersetzten Abzugs übernimmt und der alte Abzug vom Markt genommen wird.<xref ref-type="fn" rid="bibdf6e3ba1c881e41968814f3cab1f84a4e">868</xref> Idealerweise geschieht dies durch Vernichtung des ursprünglichen Abzugs oder jedenfalls durch Entfernung der Künstlersignatur auf diesem. Das Limitierungsversprechen gegenüber den übrigen Eigentümern von Werken der Auflage umfasst – neben dem Versprechen der Nichterhöhung der Auflage – gerade nicht das Versprechen, dass die Auflage im Laufe der Zeit durch äußere Einflüsse verringert wird. Die Aufrechterhaltung der versprochenen Auflagenhöhe müssen die Eigentümer daher hinnehmen, solange z. B. durch Vernichtung der Altabzüge sichergestellt wird, dass es faktisch nicht doch zu einer Erhöhung der Auflage kommt.</p>
               </sec>
-              <sec>
+              <sec id="D_II_2_c_3_ee">
                 <title>(ee) Grenzen der Auflagendefinition (das „Abstandsgebot“)</title>
                 <p>Unabhängig davon, ob es sich um eine (konkludente) motivbezogene oder eine
                   formatbezogene Auflagendefinition handelt, stellt sich die Frage, ob eine
@@ -612,7 +613,7 @@
                 <p>Jedenfalls nicht ausreichend – weil ohne schöpferischen Mehrwert – ist die bloße Vergrößerung oder Verkleinerung desselben Motivs. Eine „nachgeschobene“ Auflage in einem anderen Format ist daher – insoweit nicht eine „formatbezogene“ Limitierung ausdrücklich vereinbart wurde<xref ref-type="fn" rid="bibd8f4a91d237f84434940b0f5d040e5332">873</xref> – auch wegen Nichteinhaltung des Abstandsgebots grundsätzlich unzulässig.<xref ref-type="fn" rid="bibda509525749994a37832afa19df065e5e">874</xref>
                         </p>
               </sec>
-              <sec>
+              <sec id="D_II_2_c_3_ff">
                 <title>(ff) Werkexemplare außerhalb des Limitierungsversprechens</title>
                 <p>Zu beachten ist, dass bestimmte Wiedergabeformen des Kunstwerks bei objektiver Betrachtung niemals vom Auflagenversprechen des Künstlers erfasst sein sollten, weil sie ohnehin nicht in Konkurrenz zu den Exemplaren der limitierten Auflage treten können. Bei allen diesen Werkexemplaren handelt es sich nach dem hier vertretenen urheberrechtlichen Originalbegriff auch nicht mehr um Originale.<xref ref-type="fn" rid="bibd1b2b5f6ffd61461ea88b496fd13b58d6">875</xref>
                         </p>
@@ -656,7 +657,7 @@
                   außerhalb der Auflage stehen.</p>
               </sec>
             </sec>
-            <sec>
+            <sec id="D_II_2_c_4">
               <title>(4) Das Limitierungsversprechen</title>
               <p>Die Anbringung einer Limitierungsangabe (d. h. die Angaben auf dem Abzug bzw.
                 auf einem Echtheitszertifikat<xref ref-type="fn" rid="bibd097c9c9bbc94460a86c34776f46fa68a">879</xref>) hat über
@@ -705,7 +706,7 @@
                 gerichtet ist (bzw. nicht so verstanden werden darf), sondern allein Informationen
                 weitergibt.</p>
               <p>Gleichzeitig enthält das Versprechen zur maximalen Auflagenhöhe keine Angaben zu einer minimalen Auflagenhöhe; dies zudem, da kein entsprechendes Interesse an einer solchen Definition bei den Sammlern besteht. Das Nichtausschöpfen einer genannten maximalen Auflagenhöhe ist daher auch<xref ref-type="fn" rid="bibdf1228bcd42a940909ebabd48c69c7c24">888</xref> im Rahmen des Limitierungsvertrags unproblematisch.</p></sec>
-              <sec>
+            <sec id="D_II_2_c_5">
                 <title>(5) Der Adressat des Limitierungsversprechens</title>
               <p>Da Empfänger der Limitierungserklärung als solcher grundsätzlich
                 jede Person sein kann, die (z. B. in einer Galerie) mit der Auflagenangabe
@@ -725,7 +726,7 @@
                 Das in der Limitierungserklärung enthaltende Versprechen richtet sich somit nur
                 an Personen, die die jeweilige Fotografie auch zu Eigentum erwerben.</p>
             </sec>
-            <sec>
+            <sec id="D_II_2_c_6">
               <title>(6) Zwischenergebnis: Der objektive Inhalt einer Limitierungserklärung in
                 der zeitgenössischen Fotokunst</title>
               <p>Ein objektiver Empfänger darf Limitierungsangaben im Sinne von
@@ -749,7 +750,7 @@
                 Künstler sie in unmissverständlicher Weise kommuniziert hat.</p>
               <p>Besonderes Augenmerk ist nun der Frage zuzuwenden, ob das in Bezug auf die Auflage zum Ausdruck kommende <italic>Versprechen</italic> unter Zugrundelegung des eben ermittelten Inhalts auch tatsächlich <italic>rechtlich</italic> verbindlich verstanden werden darf (d. h. ob der Erklärung ein entsprechender Rechtsbindungswille beigemessen werden kann) oder ob es sich lediglich um ein rechtlich folgenloses „Gentlemen’s Agreement“ bzw. ein Versprechen im außerrechtlichen Bereich handelt. Würde es sich um ein Versprechen handeln, dem aus Sicht des objektiven Empfängerhorizonts ein Rechtsbindungswille beigelegt werden kann, so wäre in der Limitierungsangabe des Künstlers eine Willenserklärung im Sinne des BGB zu sehen und damit die Grundlage für einen zivilrechtlichen Vertrag über das Limitierungsversprechen geschaffen.</p></sec>
             </sec>
-            <sec>
+          <sec id="D_II_2_d">
               <title>d) Der Rechtsbindungswille in einer Limitierungserklärung</title>
               <p>Damit bei der Limitierungsangabe von einer auf den Abschluss einer
               rechtsgeschäftlichen Verpflichtung – und nicht z. B. auf ein
@@ -759,7 +760,7 @@
               objektiven Empfängers auch ein Geschäfts- und damit Rechtsbindungswille<xref ref-type="fn" rid="bibd50d8b07385744ed594f23c9cf839552f">894</xref> entnommen werden kann. Wäre dies der Fall, so
               müsste auch ein (zumindest potenzielles) Erklärungsbewusstsein aufseiten des
               Künstlers bejaht werden.</p>
-              <sec>
+            <sec id="D_II_2_d_1">
                 <title>(1) Argumente für einen Rechtsbindungswillen</title>
                 <p>Dafür, dass es sich bei der Limitierungsangabe um eine rechtsverbindliche Erklärung handelt, spricht schon, dass das Verhältnis zwischen Künstler und Sammler in der Regel keines ist, in welchem man die sogenannten „Gefälligkeitsverhältnisse“ verortet. Gefälligkeitsverhältnisse liegen in der Regel bei Abreden im Rahmen einer Freundschaft oder auch „Liebesbeziehung“ bzw. im „gesellschaftlichen Verkehr“ vor.<xref ref-type="fn" rid="bibd585abc580f90480896b5df5cc7067f59">895</xref> Zwischen Künstler und Sammler besteht jedoch häufig keinerlei besonderer persönlicher Kontakt. Dies gilt insbesondere, wenn das Werk auf dem Sekundärmarkt<xref ref-type="fn" rid="bibdda0312c54f7d43e394d62e0f61f03805">896</xref> erworben wurde. Die Auflagenlimitierung wird vom Künstler an eine ihm prinzipiell zunächst unbekannte Öffentlichkeit gerichtet. In einem derart „anonymen“ Rahmen muss aber schon aufgrund des Verkehrsschutzes gefordert werden, dass Erklärungen (jedenfalls solange sie keinen ausdrücklichen Hinweis auf ihre Unverbindlichkeit enthalten) grundsätzlich rechtlich verbindlich sind. </p>
                 <p>Für eine rechtserhebliche Absicht des Künstlers bei Anbringung der Limitierung spricht bei Anlegung der oben<xref ref-type="fn" rid="bibdb818bef14d0e4ddb837c03b4c5d7e5e8">897</xref> aufgefächerten Kriterien weiterhin, dass die Limitierungsangabe häufig vom Künstler selbst handschriftlich und in Verbindung mit seiner Signatur angebracht wird, was den rechtsgeschäftlichen Charakter der Limitierungsangabe unterstreicht. Wird stattdessen mit einem sogenannten „Echtheitszertifikat“ gearbeitet, so spricht dessen regelmäßig urkundenähnliche Ausstattung ebenfalls dafür, dass es sich bei der Erklärung nicht um ein rechtliches Nullum handeln soll, es aber insbesondere bei einem objektiven Betrachter auch nicht den Eindruck eines rechtlichen Nullums erweckt. </p>
@@ -792,7 +793,7 @@
                   Auflage),<xref ref-type="fn" rid="bibde12ba085b4c741b8b9f5fd44f4db8f6e">904</xref> was sein Verhalten (zumindest
                 mittelbar) gerade nicht unentgeltlich machen würde.</p>
               </sec>
-              <sec>
+            <sec id="D_II_2_d_2">
                 <title>(2) Mögliche Argumente gegen einen Rechtsbindungswillen aus dem
                 Urheberrecht</title>
                 <p>Bei Diskussionen über die Verbindlichkeit von Auflagenlimitierungen wird teilweise vertreten, dass der Künstler als Inhaber des Urheberrechts geradezu selbstverständlich dazu berechtigt sei, zusätzliche Abzüge seines Werks herzustellen, und dass er sich daher über eine von ihm festgelegte Limitierung hinwegsetzen könne.<xref ref-type="fn" rid="bibdf03633e4e50c469d8d0bd96a4ab80e06">905</xref> Das Gleiche soll für seine Erben gelten.<xref ref-type="fn" rid="bibd9f839f80740e4f48971d7368ed2b8efa">906</xref> Wenn diese Ansicht richtig wäre, würde das gegen eine rechtliche Verbindlichkeit der Auflagenlimitierung sprechen.</p>
@@ -876,7 +877,7 @@
                   „Ausstrahlungswirkung“<xref ref-type="fn" rid="bibd357dc744066d4e7db319020906fc48e5">926</xref> der
                 Grundrechte Berücksichtigung finden.</p>
               </sec>
-              <sec>
+            <sec id="D_II_2_d_3">
                 <title>(3) Mögliche Argumente gegen einen Rechtsbindungswillen aus der
                 Kunstfreiheit des Art. 5 Abs. 3 S. 1 GG</title>
                 <p>In einer Selbstbeschränkung des Künstlers durch die Limitierung, welche
@@ -934,7 +935,7 @@
                 <p>Im Ergebnis steht daher auch eine Berufung auf die Kunstfreiheit des Art. 5 Abs. 3 S. 1 GG bzw. eine grundrechtskonforme Interpretation des Limitierungsvertrags dessen Rechtsverbindlichkeit nicht entgegen.</p></sec>
               
               </sec>
-              <sec>
+          <sec id="D_II_3">
                 <title>3. Zwischenergebnis</title>
                 <p>Die Festlegung einer Auflage und ihre Kommunikation nach außen durch
               Anbringung der Limitierungsangabe auf einem Werk der zeitgenössischen Fotokunst
@@ -975,10 +976,10 @@
               „Spielregeln“ handelt, welche den Sammler einseitig und unbillig
               benachteiligt.</p></sec></sec>
               </sec>
-              <sec>
+              <sec id="D_III">
                 <title>III. Das Rechtsverhältnis aufgrund der Limitierungsangabe</title>
                 <p>Nachdem festgestellt werden konnte, dass es sich bei der Limitierungsangabe auf einer Fotografie um eine Willenserklärung handelt, in welcher der Künstler die Einhaltung der Limitierung rechtsverbindlich verspricht, so stellt sich als nächstes die Frage, wie ein solches Versprechen mit den Mitteln der Rechtsordnung „eingefangen“ werden kann. Ein Limitierungsversprechen bzw. ein Limitierungsvertrag sind in der Rechtsordnung der Bundesrepublik Deutschland nicht explizit vorgesehen. Die den Teilnehmern am Rechtsverkehr gewährleistete Privatautonomie ermöglicht jedoch grundsätzlich den Abschluss jedweder, insbesondere auch neuartiger Verträge. Solche Rechtsverhältnisse sind dann – soweit dies möglich ist – den allgemeineren Formen, welche das Rechtssystem zur Gestaltung rechtlicher Verhältnisse vorhält, zuzuordnen. Dem folgend soll nun das aufgrund der Limitierungsangabe zustande kommende Rechtsverhältnis hinsichtlich seiner Rechtsnatur und seines wesentlichen Inhalts näher untersucht werden.</p>
-                <sec>
+                <sec id="D_III_1">
                   <title>1. Das Limitierungsversprechen als Unterlassungsvertrag</title>
                   <p>Das mit der Limitierungserklärung abgegebene Versprechen hat vornehmlich
             den Inhalt, dass sich der Künstler der Herstellung weiterer, die
@@ -1016,7 +1017,7 @@
           </p>
                   <p>Die Limitierungsangabe auf der einzelnen Fotografie ist daher als Angebot des Künstlers auf Abschluss eines Unterlassungsvertrags zu verstehen, den man treffend als „Limitierungsvertrag“ bezeichnen kann.</p>
                 </sec>
-                <sec>
+                <sec id="D_III_2">
                   <title>2. Zugang des Angebots des Künstlers und Zustandekommen des Vertrags</title>
                   <p>Auf das Zustandekommen des Limitierungsvertrags bzw. Unterlassungsvertrags
             zwischen Künstler und Sammler können die gleichen Grundsätze angewendet
@@ -1058,7 +1059,7 @@
             er müsste mindestens sieben Jahre alt sein und dürfte nicht
             geschäftsunfähig im Sinne von § 104 Nr. 2 BGB sein.</p>
                 </sec>
-                <sec>
+                <sec id="D_III_3">
                   <title>3. Rechtsnachfolge auf Gläubigerseite</title>
                   <p>Nachdem der Unterlassungsvertrag mit dem ersten Käufer der Fotografie
             zustande gekommen ist,<xref ref-type="fn" rid="bibdf5580f5f5889427d87f43e998c371f9d">958</xref> stellt sich die Frage,
@@ -1112,7 +1113,7 @@
             (d. h. einer Auflagenerhöhung) läge dann im Verantwortungsbereich des
             Verkäufers, welchen der Neueigentümer insoweit bei Enttäuschungen in
             Anspruch nehmen müsste.</p>
-                  <sec>
+                  <sec id="D_III_3_a">
                     <title>a) Die Abtretbarkeit des Unterlassungsanspruchs</title>
                     <p>Die Abtretung von Ansprüchen (und damit auch von
               Unterlassungsansprüchen) ist grundsätzlich möglich, soweit nicht
@@ -1159,7 +1160,7 @@
               limitierten Fotografie zusammen und kann daher auch nur an den neuen Eigentümer
               abgetreten werden.</p>
                   </sec>
-                  <sec>
+                  <sec id="D_III_3_b">
                     <title>b) Zwischenergebnis: Rechtsnachfolge auf Gläubigerseite</title>
                     <p>Der Unterlassungsanspruch aus dem Limitierungsvertrag kann somit an den
               Nachfolger in der Eigentümerstellung an dem jeweiligen Kunstwerk (und nur an
@@ -1176,7 +1177,7 @@
               Fotografie auf seine Erben über.<xref ref-type="fn" rid="bibd1f994bee6bfa452496b15955baa83264">969</xref>
             </p></sec>
                   </sec>
-        <sec>
+                <sec id="D_III_4">
           <title>4. Rechtsnachfolge auf Schuldnerseite (insbesondere durch Erbfolge)</title>
           <p>Vertragspartner des Limitierungsvertrags auf Schuldnerseite ist zunächst der
             Künstler. Die Frage, ob er zu Lebzeiten die Unterlassungspflicht im Rahmen einer
@@ -1262,7 +1263,7 @@
           </p>
         </sec>
                 </sec>
-      <sec>
+      <sec id="D_IV">
         <title>IV. Ansprüche des Sammlers gegen den Künstler aufgrund des
           Limitierungsvertrags</title>
         <p>Aufgrund des Limitierungsvertrags stehen dem Sammler gegenüber dem Künstler
@@ -1272,7 +1273,7 @@
           Folgenden näher untersucht werden. Weiter wird im Hinblick auf die Praxis auch auf
           die Besonderheiten der prozessualen Durchsetzung dieser Ansprüche einzugehen
           sein.</p>
-        <sec>
+        <sec id="D_IV_1">
           <title>1. Unterlassungsanspruch (Primäranspruch)</title>
           <p>Der Limitierungsvertrag gibt dem Sammler gegen den Künstler primär einen
             Anspruch auf Unterlassung der Herstellung weiterer Abzüge, welche in Widerspruch
@@ -1292,7 +1293,7 @@
             Unterlassung wird im Falle des Limitierungsvertrags mit Abschluss des Vertrags sofort
             fällig (vgl. § 271 Abs. 1 BGB).<xref ref-type="fn" rid="bibd38e756f92e8c4e198cfeaad0e9a13e15">985</xref>
           </p>
-          <sec>
+          <sec id="D_IV_1_a">
             <title>a) Verstoß gegen die Unterlassungspflicht (Pflichtverletzung)</title>
             <p>Die präzise Feststellung, welche Handlungen des Schuldners einen Verstoß
               gegen die vertragliche Unterlassungspflicht darstellen, ist entscheidend für die
@@ -1308,7 +1309,7 @@
               ohnehin außerhalb des Auflagenversprechens liegen (z. B. Exhibition Prints
                 <xref ref-type="fn" rid="bibdd246814b8de043569ab4c68541637bc6">989</xref>).</p>
           </sec>
-          <sec>
+          <sec id="D_IV_1_b">
             <title>b) Klageweise Durchsetzung des Unterlassungsanspruchs</title>
             <p>Der Gläubiger kann den Schuldner des Unterlassungsanspruchs zunächst auf
               die primär geschuldete Leistung (das Unterlassen) im Rahmen einer Leistungsklage
@@ -1334,7 +1335,7 @@
               unmittelbar oder analog bzw. überhaupt nicht auf Unterlassungsklagen anwendbar
               ist, wird kontrovers beurteilt.<xref ref-type="fn" rid="bibdce0eaea8bfd64df39583a97013737d23">995</xref>
             </p>
-            <sec>
+            <sec id="D_IV_1_b_1">
               <title>(1) Leistungsklage (Unterlassungsklage)</title>
               <p>Unproblematisch kann eine Klage auf Unterlassung erhoben werden, wenn der
                 Künstler z. B. in einer Pressemitteilung ankündigt, dass er in naher
@@ -1372,7 +1373,7 @@
                 staatlichen Gerichtsbarkeit verhindern soll.<xref ref-type="fn" rid="bibd6914af083edd44bba9eca2f7219bf841">1001</xref>
               </p>
             </sec>
-            <sec>
+            <sec id="D_IV_1_b_2">
               <title>(2) Feststellungsklage</title>
               <p>Grundsätzlich ist für beide Seiten auch eine Feststellungsklage
                 (§ 256 Abs. 1 ZPO) möglich, um den Umfang einer
@@ -1405,7 +1406,7 @@
             </sec>
           </sec>
         </sec>
-        <sec>
+        <sec id="D_IV_2">
           <title>2. Beseitigungsanspruch</title>
           <p>Bei der Unterlassungspflicht aus dem Limitierungsvertrag handelt es sich um ein
             sogenanntes „Dauerunterlassen“ im Gegensatz zum
@@ -1442,11 +1443,11 @@
             den Gerichtsvollzieher beschlagnahmen und vernichten lassen.<xref ref-type="fn" rid="bibd5b96031f197d4e4ea7afa2c93fc89b49">1019</xref>
           </p>
         </sec>
-        <sec>
+        <sec id="D_IV_3">
           <title>3. Schadensersatzansprüche</title>
           <p>Teilweise neben, teilweise anstelle des Unterlassungsanspruchs können dem
             Gläubiger auch Schadensersatzansprüche zustehen.</p>
-          <sec>
+          <sec id="D_IV_3_a">
             <title>a) Schadensersatz statt der Leistung (§§ 280 Abs. 1, 3, 281
               BGB)</title>
             <p>Unter den Voraussetzungen der §§ 280 Abs. 1, 3,
@@ -1511,7 +1512,7 @@
                 verfolgen.<xref ref-type="fn" rid="bibde555e784021e40999e1c384b7f149cbb">1028</xref>
             </p>
           </sec>
-          <sec>
+          <sec id="D_IV_3_b">
             <title>b) Schadensersatz wegen Verzögerung der Leistung (§§ 280 Abs. 1,
               2, 286 BGB)</title>
             <p>Geht man davon aus, dass sich der Unterlassungsschuldner nach einem Verstoß
@@ -1540,7 +1541,7 @@
               praktisch kein denkbarer Anwendungsbereich.<xref ref-type="fn" rid="bibde9e624d60da345148d161a2e434b83a3">1034</xref>
             </p>
           </sec>
-          <sec>
+          <sec id="D_IV_3_c">
             <title>c) Schadensersatz statt der Leistung wegen (Teil-)Unmöglichkeit
               (§§ 280 Abs. 1, 3, 283 BGB)</title>
             <p>Zur Unmöglichkeit (§ 275 BGB) der Unterlassungspflicht des
@@ -1571,7 +1572,7 @@
               nicht gegen seine Unterlassungspflicht verstoßen.<xref ref-type="fn" rid="bibd37a912422ad84ab1b5a5715073add8f4">1039</xref>
             </p>
           </sec>
-          <sec>
+          <sec id="D_IV_3_d">
             <title>d) Schadensersatz wegen anfänglicher Unmöglichkeit (§ 311 Abs. 2
               BGB)</title>
             <p>Besteht die Unmöglichkeit bereits bei Vertragsschluss, so ist die Anspruchsgrundlage
@@ -1606,7 +1607,7 @@
               283 BGB.<xref ref-type="fn" rid="bibd4aac7e06392b4554ad9d739fddfdc38e">1044</xref>
             </p>
           </sec>
-          <sec>
+          <sec id="D_IV_3_e">
             <title>e) Schadensersatz neben der Leistung (§ 280 Abs. 1 BGB)</title>
             <p>Unabhängig davon, ob die Folgen des Verstoßes gegen die
               Unterlassungspflicht noch rückgängig zu machen sind oder nicht, können
@@ -1632,7 +1633,7 @@
               bzw. ließ.<xref ref-type="fn" rid="bibd40d023a58e6e48f4a95c3eb3bbf71d83">1046</xref>
             </p>
           </sec>
-          <sec>
+          <sec id="D_IV_3_f">
             <title>f) Prozessuale Anforderungen an die Schadensbegründung</title>
             <p>Die Rechtsfolge der aufgezählten Schadensersatzansprüche richtet sich nach
               § 249 Abs. 1 BGB. Dabei gilt die Einschränkung, dass in
@@ -1677,7 +1678,7 @@
               Schadensersatzforderungen zu werfen, um festzustellen, inwieweit sich dem Sammler hier
               tatsächlich Probleme bei der Verfolgung seiner Ansprüche stellen
               können.</p>
-            <sec>
+            <sec id="D_IV_3_f_1">
               <title>(1) Grundsätzliches zur prozessualen Darlegungslast bei
                 Schadensersatzforderungen (§§ 286, 287 ZPO)</title>
               <p>Grundsätzlich gilt für Schadensersatzforderungen, dass der Gläubiger
@@ -1718,7 +1719,7 @@
                 ist gem. § 287 ZPO zu entscheiden.“<xref ref-type="fn" rid="bibd47ddd0aaf4684a58bfecc346d3a7a48d">1060</xref>
               </p>
             </sec>
-            <sec>
+            <sec id="D_IV_3_f_2">
               <title>(2) Anwendung dieser Grundsätze auf die Fälle der Verletzung von
                 Auflagenlimitierungen</title>
               <p>Hat der Künstler unter Verletzung seiner Unterlassungspflicht die Auflage
@@ -1750,7 +1751,7 @@
             </sec>
           </sec>
         </sec>
-        <sec>
+        <sec id="D_IV_4">
           <title>4. Anspruch auf Gewinnherausgabe (§ 285 Abs. 1 BGB)</title>
           <p>Besonders interessant wäre für den Sammler ein Anspruch auf Herausgabe des
             erzielten Gewinns<xref ref-type="fn" rid="bibd728ec8c8df134e58ab2dc9492cb26a56">1064</xref>, wenn der Künstler
@@ -1760,7 +1761,7 @@
             mit vergleichsweise „mildem Druck“ absehbar am wirkungsvollsten zu
             vertraglichem Wohlverhalten anhalten würde.<xref ref-type="fn" rid="bibd851597ec93a2476a8b24d984f598a4d7">1065</xref>
           </p>
-          <sec>
+          <sec id="D_IV_4_a">
             <title>a) Anspruchsvoraussetzungen von § 285 Abs. 1 BGB</title>
             <p>Sind die Käufer der neu hergestellten Werkexemplare nicht zur Herausgabe zwecks
               Vernichtung bereit, so führt dies zur Teilunmöglichkeit der verletzten
@@ -1790,7 +1791,7 @@
               Vertretenmüssen des Schuldners in Bezug auf die Unmöglichkeit seiner
                 Leistungspflicht.<xref ref-type="fn" rid="bibd63230bc8559548e2862973ef3946a5a7">1074</xref>
             </p>
-            <sec>
+            <sec id="D_IV_4_a_1">
               <title>(1) Anwendbarkeit des § 285 Abs. 1 BGB bei Unterlassungspflichten</title>
               <p>Teilweise wird bereits bestritten, dass unmöglich gewordene
                 Unterlassungsansprüche überhaupt in den Anwendungsbereich von
@@ -1858,7 +1859,7 @@
                 Anwendung findet.<xref ref-type="fn" rid="bibde2f806d5666144e6be8a19d0976af9b5">1087</xref> Er wäre demnach auch im
                 Fall eines (teil-)unmöglich gewordenen Limitierungsvertrags anzuwenden.</p>
             </sec>
-            <sec>
+            <sec id="D_IV_4_a_2">
               <title>(2) Kausalität zwischen Unmöglichkeit und Erlangung des
                   <italic>commodum</italic>
               </title>
@@ -1884,7 +1885,7 @@
                 Ausschluss der Leistungspflicht und der Erlangung des
                 Veräußerungserlöses ist daher zu bejahen.</p>
             </sec>
-            <sec>
+            <sec id="D_IV_4_a_3">
               <title>(3) Identität zwischen erloschener Leistungspflicht und
                   <italic>commodum</italic>
               </title>
@@ -2080,13 +2081,13 @@
                 dem Limitierungsvertrag geschuldete Unterlassungspflicht durch Produktion und
                 Verkauf weiterer Werkexemplare unmöglich geworden ist.</p>
             </sec></sec>
-            <sec>
+          <sec id="D_IV_4_b">
               <title>b) Rechtsfolge von § 285 Abs. 1 BGB</title>
               <p>Als sogenannter „verhaltener“ Anspruch entsteht der Herausgabeanspruch
                 aus § 285 Abs. 1 BGB – insofern seine Voraussetzungen
                 vorliegen – erst, wenn der Gläubiger ihn geltend macht.<xref ref-type="fn" rid="bibdf333c9cc310148819429bf235ff13fc7">1131</xref>
               </p>
-              <sec>
+            <sec id="D_IV_4_b_1">
                 <title>(1) Umfang der Herausgabepflicht des Schuldners</title>
                 <p>Der Anspruch ist auf Herausgabe des „Ersatzes“ gerichtet. Hat der
                   Künstler ein zusätzliches Werkexemplar hergestellt und verkauft, so
@@ -2184,7 +2185,7 @@
                 schadensersatzpflichtig, solange er die Unmöglichkeit zu vertreten hat.<xref ref-type="fn" rid="bibdb71dffabca7e48d29a5a00478a0b02c5">1151</xref>
               </p>
               </sec>
-              <sec>
+            <sec id="D_IV_4_b_2">
                 <title>(2) Mehrheit von Gläubigern</title>
                 <p>Jedem Eigentümer der Fotografie steht aus dem zwischen ihm und dem
                   Künstler bestehenden Limitierungsvertrag primär der
@@ -2276,7 +2277,7 @@
                   verlangen.<xref ref-type="fn" rid="bibd07d7a34e41234083afee6cf3e013e079">1167</xref>
               </p>
               </sec></sec>
-              <sec>
+          <sec id="D_IV_4_c">
                 <title>c) Zwischenergebnis</title>
                 <p>Dem Sammler steht bei Unmöglichkeit des aufgrund des Limitierungsvertrags
                   gegenüber dem Künstler bestehenden Unterlassungsanspruchs auch ein
@@ -2288,7 +2289,7 @@
                   herausgeben.</p>
               </sec>
            </sec>
-        <sec>
+        <sec id="D_IV_5">
           <title>5. Auskunftsanspruch (§ 242 BGB)</title>
           <p>Will der Sammler gegenüber dem Künstler den Unterlassungsanspruch oder auch
             Sekundäransprüche wie z. B. einen Schadensersatzanspruch geltend machen,
@@ -2380,7 +2381,7 @@
             § 254 ZPO verbinden.<xref ref-type="fn" rid="bibd3c81c7dcc37f4e12b5d9683c47cd0279">1189</xref>
           </p>
         </sec>
-        <sec>
+        <sec id="D_IV_6">
           <title>6. Verjährung</title>
           <p>Der Limitierungsvertrag ist als Unterlassungsvertrag ein
               Dauerschuldverhältnis.<xref ref-type="fn" rid="bibdfb58a586be9b4991a71bdd3865347528">1190</xref> Sowohl er als auch
@@ -2418,7 +2419,7 @@
           </p>
         </sec></sec>
 
-      <sec>
+      <sec id="D_V">
         <title>V. Zusammenfassung der wesentlichen Ergebnisse dieses Kapitels</title>
         <p>In den Limitierungserklärungen, welche sich entweder auf den Fotografien selbst oder
           auf beigefügten Echtheitszertifikaten finden, ist ein rechtsverbindliches Angebot des
@@ -2542,7 +2543,7 @@
           S. 1 BGB) wirksam wird. Insofern ist hier jedoch auch
           § 151 S. 1 BGB zu beachten, welcher den Zugang der
           Annahmeerklärung im Ausnahmefall entbehrlich macht. Ausführlich hierzu unten bei
-          <!--TO_LINK-->D.III.2.</p>
+          <xref ref-type="sec" rid="D_III_2">D.III.2.</xref></p>
       </fn>
       <fn id="bibda805935a50bc44f5a4358925f41e8ce1">
         <p> Zum Vertragsschluss vgl. z. B. <italic>Bork</italic>, BGB AT, Rn. 700 ff.</p>
@@ -2591,11 +2592,10 @@
         <p><italic>Armbrüster</italic>, in: MüKo BGB, Vorb §§ 116–144 Rn. 23 ff.</p>
       </fn>
       <fn id="bibd273ad1bf2e754e71b542e34211d9fc0f">
-        <p> Hierzu oben <!--TO_LINK-->D.II.1, S. 179.</p>
+        <p> Hierzu oben <xref ref-type="sec" rid="D_II_1">D.II.1.</xref></p>
       </fn>
       <fn id="bibd9a17077dcff24b1a85b76ea1ac95570a">
-        <p> Zum Rechtsbindungswillen ausführlich unten bei  <!--TO_LINK-->D.II.1.c), S.
-          183.</p>
+        <p> Zum Rechtsbindungswillen ausführlich unten bei <xref ref-type="sec" rid="D_II_1_c">D.II.1.c)</xref></p>
       </fn>
       <fn id="bibdcefa290d76a64692bc0cfb2e672c770f">
         <p> So das klassische Schulbeispiel z. B. bei <italic>Leipold</italic>, BGB, § 10 Rn. 19.</p>
@@ -2664,19 +2664,19 @@
         <p><italic>Medicus</italic>, AT BGB, Rn. 191.</p>
       </fn>
       <fn id="bibdb6e4e3ade6ce403da132d09a22f4481f">
-        <p><!--TO_LINK-->D.II.1.a), S. 179.</p>
+        <p><xref ref-type="sec" rid="D_II_1_a">D.II.1.a)</xref></p>
       </fn>
       <fn id="bibd5cf79bbf7f54463f94ad2caf02608347">
         <p> BGH NJW 1968, 1874; BGH NJW 1971, 1404 (1405); BGH NJW 2009, 1141 (1142); <italic>Grüneberg</italic>, in: Palandt, Einl v § 241 Rn. 7; <italic>Leipold</italic>, BGB, § 10 Rn. 11; <italic>Bork</italic>, BGB AT, Rn. 676; kritisch <italic>Medicus</italic>, AT BGB, Rn. 191; dagegen wiederum <italic>Bork</italic>, BGB AT, Rn. 676.</p>
       </fn>
       <fn id="bibd03c9c62b24b84029a36e73bee9ac694d">
-        <p> Siehe auch schon oben bei <!--TO_LINK-->D.II.1.a), S. 179.</p>
+        <p> Siehe auch schon oben bei <xref ref-type="sec" rid="D_II_1_a">D.II.1.a</xref></p>
       </fn>
       <fn id="bibd95cb92e1a9764d6498008a16dde6bea8">
         <p> Vgl. z. B. BGH, NJW 1996, 2574 (2575). Auch <italic>Armbrüster</italic>, in: MüKo BGB, Vorb § 116 ff. Rn. 23.</p>
       </fn>
       <fn id="bibd30ef4db5a4b44ec682fed16accbc5272">
-        <p> Dazu bereits eben <!--TO_LINK-->D.II.1.b), S. 182. </p>
+        <p> Dazu bereits eben <xref ref-type="sec" rid="D_II_1_b">D.II.1.b.</xref></p>
       </fn>
       <fn id="bibddcd27d13f451455a952c6fef4b99c7bb">
         <p> BGH, NJW 1996, 2574 (2575).</p>
@@ -2714,10 +2714,10 @@
       <fn id="bibd255952b684604ace8116165e67ff6a01">
         <p> Allgemein zur „Abgabe“ von Willenserklärungen vgl. z. B.
             <italic>Ellenberger</italic>, in: Palandt, § 130 Rn. 4. Zum Zugang der
-          Erklärung des Künstlers später unten bei <!--TO_LINK-->D.III.2, S. 215.</p>
+          Erklärung des Künstlers später unten bei <xref ref-type="sec" rid="D_III_2">D.III.2</xref></p>
       </fn>
       <fn id="bibde855f9922f7148d9b278e04ddf004ff4">
-        <p><!--TO_LINK-->D.II.1.b), S. 182.</p>
+        <p><xref ref-type="sec" rid="D_II_1_b">D.II.1.b</xref></p>
       </fn>
       <fn id="bibda12b2cc288fa41bca491ba92b5cca64b">
         <p> Vgl. <italic>Armbrüster</italic>, in: MüKo BGB, Vorb § 116 ff. Rn. 23, 8.</p>
@@ -2745,7 +2745,7 @@
       </fn>
       <fn id="bibdd193c9b68a45486c96fe6caefb04bb32">
         <p> Grundlegend zur Auslegung nach dem objektiven Empfängerhorizont vgl. oben
-          <!--TO_LINK-->D.II.1.b), S. 182. Teilweise wird auch der Begriff „objektivierter
+          <xref ref-type="sec" rid="D_II_1_b">D.II.1.b</xref>. Teilweise wird auch der Begriff „objektivierter
           Empfängerhorizont“ verwendet; vgl. z. B. BAG, NJW 2011, 1531 (1532
           Rn. 21).</p>
       </fn>
@@ -2905,7 +2905,7 @@
         <p> Vgl. zu diesem Kriterium sehr anschaulich <italic>Maaßen</italic>, in: FS Pfennig, 174 ff.</p>
       </fn>
       <fn id="bibd8f4a91d237f84434940b0f5d040e5332">
-        <p> Dazu soeben oben <!--TO_LINK-->D.II.2.c)(3)(bb), S. 193.</p>
+        <p> Dazu soeben oben <xref ref-type="sec" rid="D_II_2_c_3_bb">D.II.2.c)(bb)</xref>.</p>
       </fn>
       <fn id="bibda509525749994a37832afa19df065e5e">
         <p> Für dieselbe Wertung aus Sicht des Verlagsrechts vgl. <italic>Schricker</italic>, VerlagsR, § 2 Rn. 41. Zu Bedenken bleibt eine „krasse“ Änderung des Formats, welche dann doch ihrerseits eine eigenen schöpferischen Mehrwert beinhalten könnte (etwa die wandgroße Präsentation eines Negativs).</p>
@@ -2960,12 +2960,12 @@
           Entsprechend auch im Bereich des Kaufrechts bei <!--TO_LINK-->E.III.1.a)(3), S. 281.</p>
       </fn>
       <fn id="bibda07211ee8ba0410aaf39183e55afffae">
-        <p> Vgl. auch oben bei <!--TO_LINK-->D.II.2.a), S. 185. Zum Zugang der Erklärung des
+        <p> Vgl. auch oben bei <xref ref-type="sec" rid="D_II_2_a">D.II.2.a</xref>. Zum Zugang der Erklärung des
           Künstlers im Sinne von § 130 Abs. 1 S. 1 BGB
-          sogleich unten bei <!--TO_LINK-->D.III.2, S. 215.</p>
+          sogleich unten bei <xref ref-type="sec" rid="D_III_2">D.III.2.</xref></p>
       </fn>
       <fn id="bibdfc0f929052f347b182033d10fe390409">
-        <p> Dazu eben bei <!--TO_LINK-->D.II.2.c)(4), S. 201.</p>
+        <p> Dazu eben bei <xref ref-type="sec" rid="D_II_2_c_4">D.II.2.c)(4)</xref></p>
       </fn>
       <fn id="bibda7a28b4760b04eecaeb3069f98169d87">
         <p> Der Fall ist vergleichbar mit z. B. in Ladengeschäften öffentlich ausgehängten Geschäftsbedingungen. Auch diese sind Erklärungen, die als solche zunächst jeder Person zugehen, welche sie sinnlich wahrnehmen, d. h. empfangen kann (gegebenenfalls sogar Passanten, welche nur einen Blick in das Ladengeschäft werfen). Ihrem offensichtlichen Zweck nach richten sie sich als Angebot auf Abschluss eines Vertrags mit entsprechendem Inhalt jedoch nur an Personen, die auch tatsächlich in dem Ladengeschäft einen Kaufvertrag abschließen.</p>
@@ -2974,11 +2974,11 @@
         <p> Näheres z. B. bei <italic>Busche</italic>, in: MüKo BGB, § 145 Rn. 17, 12.</p>
       </fn>
       <fn id="bibd9c5b94f28eca48969a10fab80e2cea5d">
-        <p> Zur Rechtsnachfolge sogleich bei <!--TO_LINK-->D.III.3, S. 217.</p>
+        <p> Zur Rechtsnachfolge sogleich bei <xref ref-type="sec" rid="D_III_3">D.III.3</xref></p>
       </fn>
       <fn id="bibd50d8b07385744ed594f23c9cf839552f">
         <p> Zu diesen Voraussetzungen einer Willenserklärung ausführlich oben bei
-          <!--TO_LINK-->D.II.1, S. 179.</p>
+          <xref ref-type="sec" rid="D_II_1">D.II.1</xref>.</p>
       </fn>
       <fn id="bibd585abc580f90480896b5df5cc7067f59">
         <p><italic>Ellenberger</italic>, in: Palandt, Einf v § 116 Rn. 4.</p>
@@ -2987,10 +2987,10 @@
         <p> Zu diesem Begriff vgl. unten <!--TO_LINK-->E.I, S. 266.</p>
       </fn>
       <fn id="bibdb818bef14d0e4ddb837c03b4c5d7e5e8">
-        <p><!--TO_LINK-->D.II.1.c), S. 183.</p>
+        <p><xref ref-type="sec" rid="D_II_1_c">D.II.1.c)</xref>.</p>
       </fn>
       <fn id="bibd10dd3300825645508f9b597e4650466b">
-        <p> Dazu aus rechtstatsächlicher Sicht die Beispiele bei B.I.4, S. 57.</p>
+        <p> Dazu aus rechtstatsächlicher Sicht die Beispiele bei <!--TO_LINK-->B.I.4, S. 57.</p>
       </fn>
       <fn id="bibd1b183491f5e445d6bf220ab2cbc87d11">
         <p> Vgl. hierzu die Nachweise in Fn. 360.</p>
@@ -3042,7 +3042,7 @@
           des Grundrechts auf Kunstfreiheit (Art. 5 Abs. 3 S. 1 GG)
           fruchtbar zu machen. In diesem Sinne z. B. <italic>Schack</italic>, Kunst und Recht,
           Rn. 348. Zur Bedeutung der Kunstfreiheit im hier diskutierten Kontext vgl.
-          ausführlich unten <!--TO_LINK-->D.II.2.d)(3), S. 210. Für eine auf
+          ausführlich unten <xref ref-type="sec" rid="D_II_2_d_3">D.II.2.d)(3)</xref>. Für eine auf
           Tatsachenseite dem „Elfenreigen“-Fall vergleichbare, zeitgenössische
           Auseinandersetzung vgl. den Fall <italic>Franklin Mint Corp.</italic> vs. <italic>National
             Wildlife Art Exchange, Inc.</italic>, 575 F.2d 62 (3d Cir. 1978). Der Fall wird
@@ -3081,13 +3081,13 @@
       </fn>
       <fn id="bibd4708171e82d6426ea7b2da35f67639b2">
         <p> Zum Übergang dieser Enthaltungspflicht auf die Erben vgl. unten
-          <!--TO_LINK-->D.III.4, S. 220.</p>
+          <xref ref-type="sec" rid="D_III_4">D.III.4)</xref>.</p>
       </fn>
       <fn id="bibd7243f33c0d0e4f58a595364b655d889f">
         <p> Vgl. <italic>Raue</italic>, in: FS Krämer, 657.</p>
       </fn>
       <fn id="bibd8ad25eae8f854fab84c7795ac813a95b">
-        <p> Zu diesen Ansprüchen sogleich unten bei <!--TO_LINK-->D.IV, S. 223.</p>
+        <p> Zu diesen Ansprüchen sogleich unten bei <xref ref-type="sec" rid="D_IV">D.IV</xref>.</p>
       </fn>
       <fn id="bibd798780fe8f124e4b9f24048f69c95236">
         <p><italic>Bisges</italic>, UFITA 2008-III, 643 (697) (wiederum für den Fall des „Selbstplagiats“). Zum Konflikt von Schaffensfreiheit und Enthaltungspflicht auch <italic>Schulze</italic>, in: Dreier/Schulze, Vorb §§ 31 ff. Rn. 43.</p>
@@ -3132,7 +3132,7 @@
         <p> So auch (allerdings für den Fall des „Selbstplagiats“) <italic>Bisges</italic>, UFITA 2008-III, 643 (692).</p>
       </fn>
       <fn id="bibd6b35025259c44984a5275dabbc212004">
-        <p> Insoweit bereits oben <!--TO_LINK-->D.II.2.c)(3)(ee), S. 199.</p>
+        <p> Insoweit bereits oben <xref ref-type="sec" rid="D_II_2_c_3_ee">D.II.2.c)(2)(ee)</xref>.</p>
       </fn>
       <fn id="bibdd749fef22f874cc4ba3845d59c43ba0f">
         <p> Für eine ausführliche Auseinandersetzung mit der teilweise durchaus problematischen Grenzziehung zwischen Plagiat und Neuschöpfung im Bereich der Fotografie mit vielen (bebilderten) Beispielen aus der Praxis vgl. <italic>Maaßen</italic>, in: FS Pfennig, 135 ff.</p>
@@ -3141,12 +3141,12 @@
         <p> Anders <italic>Reis</italic>, Bulletin Kunst &amp; Recht 1/2011, 48 (49), der zudem den großen Unterschied zwischen einer nicht ausgeschöpften und einer überschrittenen Auflage offenbar übergeht und beide Fälle scheinbar gleichsetzen möchte.</p>
       </fn>
       <fn id="bibd1673241cf98e4b9db0611fc0ecd69185">
-        <p> Näheres sogleich bei <!--TO_LINK-->D.III.2. Zu den Vertragsparteien des
+        <p> Näheres sogleich bei <xref ref-type="sec" rid="D_III_2">D.III.2</xref>. Zu den Vertragsparteien des
           Limitierungsvertrags im Einzelfall, insbesondere beim Weiterverkauf auf dem
           Sekundärmarkt, vgl. unten <!--TO_LINK-->E.I, S. 266.</p>
       </fn>
       <fn id="bibd09fa2fcc0c544555bdaca40eadf456af">
-        <p> Wie im vorhergehenden Abschnitt unter <!--TO_LINK-->D.II.2.c), S. 188, gezeigt werden
+        <p> Wie im vorhergehenden Abschnitt unter <xref ref-type="sec" rid="D_II_2_c">D.II.2.c)</xref>, gezeigt werden
           konnte.</p>
       </fn>
       <fn id="bibdf0fbc59ae64e42068a7173c2845d813c">
@@ -3156,8 +3156,7 @@
         <p><italic>Brüning</italic>, in: Harte-Bavendamm/Henning-Bodewig, § 12 Rn. 120; <italic>Fritzsche</italic>, Unterlassungsanspruch, 44 f.</p>
       </fn>
       <fn id="bibd5df36071c5bb4e8298a671f40975a62f">
-        <p> Ausführlich zu den verschiedenen Ansprüchen sogleich unter <!--TO_LINK-->D.IV,
-          S. 223.</p>
+        <p> Ausführlich zu den verschiedenen Ansprüchen sogleich unter <xref ref-type="sec" rid="D_IV">D.IV</xref>.</p>
       </fn>
       <fn id="bibde8ca3e7969e4481ea3de3d440c928132">
         <p><italic>Köhler</italic>, AcP 190 (1990), 496 (502).</p>
@@ -3179,7 +3178,7 @@
           Schuldners; <italic>Sprau</italic>, in: Palandt, § 780 Rn. 6. Im Endeffekt
           wäre es daher wohl auch bei den Limitierungserklärungen häufig gewahrt
           (vgl. hierzu die Beschreibungen der Limitierungspraxis oben bei <!--TO_LINK-->B.II.3, S.
-          81, sowie bei <!--TO_LINK-->D.II.2.d)(1), S. 205.</p>
+          81, sowie bei <xref ref-type="sec" rid="D_II_2_d_1">D.II.2.d)(1)</xref>.</p>
       </fn>
       <fn id="bibdf431930951484b7e851ddcbc24271a9f">
         <p> BGH, NJW 1981, 275 (276); BGH, NJW 1981, 2248 (2249); <italic>Westermann</italic>, in: MüKo BGB, § 443 Rn. 7; <italic>Oechsler</italic>, Vertragliche SV, Rn. 426.</p>
@@ -3194,7 +3193,7 @@
         <p> Vgl. BGH, NJW 2000, 276 (277); <italic>Eckert</italic>, in: BeckOK BGB, § 151 Rn. 3; <italic>Bork</italic>, BGB AT, Rn. 749.</p>
       </fn>
       <fn id="bibd54782bb3add74bfe8b3baf7947fce21f">
-        <p> Dazu weitergehend auch gleich unten bei <!--TO_LINK-->D.III.3, S. 217.</p>
+        <p> Dazu weitergehend auch gleich unten bei <xref ref-type="sec" rid="D_III_3">D.III.3</xref>.</p>
       </fn>
       <fn id="bibd43434ccbcf574d08adeaadb29db4a431">
         <p> Im Unterschied zur Limitierung als Voraussetzung für den urheberrechtlichen
@@ -3202,7 +3201,7 @@
           <!--TO_LINK-->C.II.9.b), S. 144.</p>
       </fn>
       <fn id="bibdf5580f5f5889427d87f43e998c371f9d">
-        <p> Siehe soeben bei <!--TO_LINK-->D.II.2.c)(5), S. 203.</p>
+        <p> Siehe soeben bei <xref ref-type="sec" rid="D_II_2_c_5">D.II.2.c)(5)</xref>.</p>
       </fn>
       <fn id="bibd3bee3d9e42e0406abb7b3edecd4784b4">
         <p> Denkbar wären aber z. B. auch die Herstellung und der Verkauf eines weiteren Werkexemplars zugunsten eines wohltätigen Zwecks.</p>
@@ -3219,7 +3218,7 @@
         <p><italic>Fritzsche</italic>, Unterlassungsanspruch, 452; <italic>Köhler</italic>, AcP 190 (1990), 496 (525).</p>
       </fn>
       <fn id="bibdf65df6972812480880b802f045b3799d">
-        <p><!--TO_LINK-->D.III.3, S. 217.</p>
+        <p><xref ref-type="sec" rid="D_III_3">D.III.3</xref>.</p>
       </fn>
       <fn id="bibdcf5d5f12a4434a7686a324b2fde9821a">
         <p> Hierzu ausführlich <italic>Roth/Kieninger</italic>, in: MüKo BGB, § 399 Rn. 7 f. Für den Fall der Unterlassungsansprüche insbesondere auch <italic>Köhler</italic>, AcP 190 1990, 496 (526 f.). Weiterhin umfassend <italic>Weller</italic>, Leistungen, 187 ff.</p>
@@ -3261,7 +3260,7 @@
         <p> Wohl anders <italic>Raue</italic>, in: FS Krämer, 657 und <italic>Reis</italic>, Bulletin Kunst &amp; Recht 1/2011, 48 (50).</p>
       </fn>
       <fn id="bibd16247f23cf1b40ab95126b56cf08569d">
-        <p> Dazu auch oben bei <!--TO_LINK-->D.II.2.c)(3)(ff), S. 200.</p>
+        <p> Dazu auch oben bei <xref ref-type="sec" rid="D_II_2_c_3_ff">D.II.2.c)(3)(ff)</xref>.</p>
       </fn>
       <fn id="bibd01c13175a22f4ff895c33142f170847c">
         <p><italic>Jacobs</italic>, in: FS Samwer, 147.</p>
@@ -3276,10 +3275,10 @@
         <p> Vgl. auch <italic>Pfennig</italic>, in: Posthume Güsse, 19, der davon ausgeht, die Erben könnten nur durch die Einsetzung eines Testamentsvollstreckers (und wohl eine entsprechende letztwillige Verfügung des Künstlers) effektvoll an der Herstellung weiterer Werkexemplare gehindert werden.</p>
       </fn>
       <fn id="bibda869cf1fe199440a940b52df6366c4da">
-        <p> Zu dessen Inhalt oben <!--TO_LINK-->D.II.2.c)(3), S. 191.</p>
+        <p> Zu dessen Inhalt oben <xref ref-type="sec" rid="D_II_2_c_3">D.II.2.c)(3)</xref>.</p>
       </fn>
       <fn id="bibd63ba12d6b93d4e6ba43cc9726ef34b75">
-        <p> Ausführlich oben bei <!--TO_LINK-->D.II.2.c), S. 188.</p>
+        <p> Ausführlich oben bei <xref ref-type="sec" rid="D_II_2_c">D.II.2.c)</xref>.</p>
       </fn>
       <fn id="bibd1081ac738dd54564aba9bc8aa2e8c2d8">
         <p><italic>Köhler</italic>, JZ 2005, 489 (491) will insoweit von einem „Leistungsunterlassungsanspruch“ sprechen.</p>
@@ -3291,16 +3290,16 @@
         <p> Vgl. auch <italic>Fritzsche</italic>, Unterlassungsanspruch, 357.</p>
       </fn>
       <fn id="bibd28e9dd823faa4f50bdd64b1efd589642">
-        <p> Ausführlich zu diesen sogleich bei <!--TO_LINK-->D.IV.1.b), S. 224.</p>
+        <p> Ausführlich zu diesen sogleich bei <xref ref-type="sec" rid="D_IV_1_b">D.IV.1.b)</xref>.</p>
       </fn>
       <fn id="bibdf66fda0a1ce94906b838aaa4a3a1ebcc">
-        <p> Hierzu ausführlich oben bei <!--TO_LINK-->D.II.2.c)(3), S. 191.</p>
+        <p> Hierzu ausführlich oben bei <xref ref-type="sec" rid="D_II_2_c_3">D.II.2.c)(3)</xref>.</p>
       </fn>
       <fn id="bibdae12adc752a241a0b2f7b80c7456b177">
-        <p><!--TO_LINK-->D.II.2.c)(3)(ee), S. 199.</p>
+        <p><xref ref-type="sec" rid="D_II_2_c_3_ee">D.II.2.c)(3)(ee)</xref></p>
       </fn>
       <fn id="bibdd246814b8de043569ab4c68541637bc6">
-        <p><!--TO_LINK-->D.II.2.c)(3)(ff), S. 200.</p>
+        <p><xref ref-type="sec" rid="D_II_2_c_3_ff">D.II.2.c)(3)(ff)</xref></p>
       </fn>
       <fn id="bibd1fca3c7b73bb43fc96a8295e15f530cb">
         <p><italic>Stürner</italic>, in: BeckOK ZPO, § 890 Rn. 29; <italic>Gruber</italic>, in: MüKo ZPO, § 890 Rn. 25; <italic>Köhler</italic>, AcP 190 1990, 496 (512).</p>
@@ -3405,7 +3404,7 @@
           Commodum, 101 ff. Weitere Kritik an der Anwendung von
           § 285 Abs. 1 BGB auf Unterlassungspflichten wird später unter dem
           Kriterium der „Identität“ abzuhandeln sein. Siehe unten
-          <!--TO_LINK-->D.IV.4.a)(3), S. 242.</p>
+          <xref ref-type="sec" rid="D_IV_4_a_3">D.IV.4.a)(3)</xref>.</p>
       </fn>
       <fn id="bibd62797cd881aa44c3a85175ad67c7ea2d">
         <p> Vgl. z. B. <italic>Schulz</italic>, AcP 105 (1909), 1 (7 ff.)</p>
@@ -3441,12 +3440,11 @@
         <p><italic>Grüneberg</italic>, in: Palandt, § 285 Rn. 7; <italic>Wiedemann</italic>, in: Soergel12, § 281 Rn. 30. Ob der Ursachenzusammenhang <italic>adäquat</italic> kausal sein muss, wird unterschiedlich beurteilt; insoweit ablehnend und m. w. N. <italic>Unberath</italic>, in: BeckOK BGB, § 285 Rn. 8. Ausführlich auch bei <italic>Hartmann</italic>, Commodum, 202 ff.</p>
       </fn>
       <fn id="bibdab2c48eb76ad4ea4b45b9468ee70ad10">
-        <p><!--TO_LINK-->D.IV.2, S. 228.</p>
+        <p><xref ref-type="sec" rid="D_IV_2">D.IV.2</xref>.</p>
       </fn>
       <fn id="bibdb6197f226d2b4d0b8722f6e347d40b33">
         <p> Dazu, dass dieser Fall nach der überwiegenden Ansicht einen Anwendungsbereich des
-          § 285 Abs. 1 BGB darstellt, oben bei <!--TO_LINK-->D.IV.4.a), S.
-          238.</p>
+          § 285 Abs. 1 BGB darstellt, oben bei <xref ref-type="sec" rid="D_IV_4_a">D.IV.4.a)</xref>.</p>
       </fn>
       <fn id="bibdd89672bbf3924a468b8f44a91c843f57">
         <p><italic>Unberath</italic>, in: BeckOK BGB, § 285 Rn. 11 f.; <italic>Emmerich</italic>, in: MüKo BGB, § 285 Rn. 24 ff.; <italic>Grüneberg</italic>, in: Palandt, § 285 Rn. 8; <italic>Schwarze</italic>, Leistungsstörungen, § 26 Rn. 8. </p>
@@ -3463,7 +3461,7 @@
           99 f. Das Wortlautargument gegen die Anwendung des
           § 285 Abs. 1 BGB auf Unterlassungsansprüche wurde bereits im
           Rahmen der „Anwendbarkeit“ der Norm behandelt; siehe oben
-          <!--TO_LINK-->D.IV.4.a)(1), S. 239.</p>
+          <xref ref-type="sec" rid="D_IV_4_a_1">D.IV.4.a)(1)</xref>.</p>
       </fn>
       <fn id="bibd74aa2f81ffc7478285d321a801e71914">
         <p> Vgl. die Ausführungen bei <italic>Helms</italic>, Gewinnherausgabe, 317 f., 326.</p>
@@ -3533,7 +3531,7 @@
         <p> So <italic>Stoll</italic>, in: FS Schlechtriem, 688. Von einer „Prävention durch Sanktion“ spricht <italic>Weller</italic>, Vertragstreue, 443. Ausführliche – und letztlich kritische – Auseinandersetzungen mit dieser Auffassung finden sich bei <italic>Helms</italic>, Gewinnherausgabe, 346 ff. sowie <italic>Hartmann</italic>, Commodum, 70 ff. Vgl. auch <italic>Lehmann/Zschache</italic>, JuS 2006, 502.</p>
       </fn>
       <fn id="bibd942ddee0cd4f481e85cacbdf677b8d92">
-        <p> Vgl. oben <!--TO_LINK-->D.IV.3.c), S. 232.</p>
+        <p> Vgl. oben <xref ref-type="sec" rid="D_IV_3_c">D.IV.3.c)</xref>.</p>
       </fn>
       <fn id="bibda9c5d7f7e98a4756a94d456728264c55">
         <p><italic>Helms</italic>, Gewinnherausgabe, 326.</p>
@@ -3551,7 +3549,7 @@
         <p> Wie z. B. typischerweise bei vertraglichen Wettbewerbsverboten; vgl.
             <italic>Köndgen</italic>, RabelsZ 56 (1992), 696 (723 f.). Aber eben
           gegebenenfalls auch im Fall der Verletzung von Limitierungsverträgen; vgl. oben
-          <!--TO_LINK-->D.IV.3.f), S. 235. <italic>Köndgen</italic>, RabelsZ 56 (1992), 696
+          <xref ref-type="sec" rid="D_IV_3_f">D.IV.3.f)</xref>. <italic>Köndgen</italic>, RabelsZ 56 (1992), 696
           (747) spricht insoweit an anderer Stelle auch von einer „beweisnotbedingte[n]
           schadensrechtliche[n] Unterkompensation“.</p>
       </fn>
@@ -3613,7 +3611,7 @@
         <p> Anders z. B. <italic>Stoll</italic>, in: FS Schlechtriem, 694.</p>
       </fn>
       <fn id="bibd59d47859c0f84e9ca39d20f851ac3db6">
-        <p> Dazu bereits oben mit Nachweisen bei <!--TO_LINK-->D.IV.4.a)(3), S. 242.</p>
+        <p> Dazu bereits oben mit Nachweisen bei <xref ref-type="sec" rid="D_IV_4_a_3">D.IV.4.a)(3)</xref>.</p>
       </fn>
       <fn id="bibdfc6a0de70fd8431d8cd9e283acf010bd">
         <p> Bis 01.01.2014: Geschmacksmustergesetz (GeschmMG).</p>
@@ -3644,7 +3642,7 @@
       </fn>
       <fn id="bibd15de08eec2b94b79a10321bef420ce87">
         <p> Wie er in dieser Arbeit vertreten wird. Vgl. dazu ausführlich oben
-          <!--TO_LINK-->D.IV.4.a)(3), S. 242.</p>
+          <xref ref-type="sec" rid="D_IV_4_a_3">D.IV.4.a)(3)</xref>.</p>
       </fn>
       <fn id="bibd8cfde34f18ea447cb0bc402bbd11ce71">
         <p> Zu den Ausnahmen vgl. <italic>Looschelders (2012)</italic>, in: Staudinger, § 420 Rn. 16. Solche liegen aber im Fall des Limitierungsvertrags nicht vor.</p>
@@ -3693,12 +3691,11 @@
       </fn>
       <fn id="bibd7a7cbebeb3a14328893e9bf5f6fb4c5c">
         <p> Im Sinne des allgemeinen „Leistungsunterlassungsanspruchs“; vgl. dazu unten
-          <!--TO_LINK-->D.IV.6, S. 260.</p>
+          <xref ref-type="sec" rid="D_IV_6">D.IV.6</xref>.</p>
       </fn>
       <fn id="bibd1ec7f703c2a3422580e3de13a5aca31e">
         <p> Dies gilt auch dann, wenn der Verstoß zu einer Teilunmöglichkeit des
-          Unterlassungsanspruchs geführt hat; vgl. dazu unten <!--TO_LINK-->D.IV.3.c), S.
-          232.</p>
+          Unterlassungsanspruchs geführt hat; vgl. dazu unten <xref ref-type="sec" rid="D_IV_3_c">D.IV.3.c)(3)</xref>.</p>
       </fn>
       <fn id="bibd86e0c2865d554e3d9ad89eb26c13c82e">
         <p> Vgl. insoweit den Fall bei <italic>Caspers (2014)</italic> , in: Staudinger, § 275 Rn. 26.</p>
@@ -3719,8 +3716,7 @@
         <p><italic>Ernst</italic>, in: MüKo BGB, § 275 Rn. 50 weist darauf hin, dass im Fall der Lösung über § 280 Abs. 1 BGB auch ein (jedoch gem. § 280 Abs. 1 S. 2 BGB widerlegbar vermutetes) Vertretenmüssen des Schuldners geprüft werden müsse. Letztlich macht dies für die hier diskutierten Fälle keinen Unterschied, da bei einer Produktion von Nachauflagen durch den Künstler dessen Vertretenmüssen eindeutig zu bejahen ist.</p>
       </fn>
       <fn id="bibd1365669f93a4498391415521f24666f7">
-        <p> Zu den Fällen der Unmöglichkeit sogleich bei <!--TO_LINK-->D.IV.3.c), S.
-          232.</p>
+        <p> Zu den Fällen der Unmöglichkeit sogleich bei <xref ref-type="sec" rid="D_IV_3_c">D.IV.4.c)</xref>.</p>
       </fn>
       <fn id="bibd428d649e722b481baecb41d10dd91d82">
         <p> Vgl. <italic>Fritzsche</italic>, Unterlassungsanspruch, 641; <italic>Teplitzky</italic>, Wettbewerbsrecht, Kapitel 58 Rn. 6 ff.</p>
@@ -3729,37 +3725,36 @@
         <p> Vgl. zur Vollstreckung von Vernichtungsansprüchen BGH, GRUR 2003, 228 (229) sowie insbesondere OLG Frankfurt a.M., NJW-RR 2007, 485 f.</p>
       </fn>
       <fn id="bibd5413f0f11f03443fa89d3db7914ace6c">
-        <p> Hierzu bereits oben <!--TO_LINK-->D.IV, S. 223.</p>
+        <p> Hierzu bereits oben <xref ref-type="sec" rid="D_IV">D.IV</xref>.</p>
       </fn>
       <fn id="bibd3d56888685904c139100496939c4210f">
-        <p> Zu dieser Frage bereits oben <!--TO_LINK-->D.IV.2, S. 228.</p>
+        <p> Zu dieser Frage bereits oben <xref ref-type="sec" rid="D_IV_2">D.IV.2</xref>.</p>
       </fn>
       <fn id="bibd329182a9518c4e19ad2899e143289876">
         <p> Vgl. auch <italic>Dauner-Lieb</italic>, in: Dauner-Lieb/Langen, § 281
-          Rn. 46. Im Übrigen hierzu sogleich unten bei <!--TO_LINK-->D.IV.3.c), S.
-          232.</p>
+          Rn. 46. Im Übrigen hierzu sogleich unten bei <xref ref-type="sec" rid="D_IV_3_c">D.IV.3.c)</xref>.</p>
       </fn>
       <fn id="bibdc4bf2e1139964965875f79b3788cb348">
         <p> Zu Recht kritisch zu dieser Regelung <italic>Faust</italic>, in: Huber/Faust, 3. Kapitel Rn. 146 f.</p>
       </fn>
       <fn id="bibdfed8cd2dce754674ba2fc9f2d089accf">
-        <p> Vgl. hierzu auch die Ausführungen oben bei <!--TO_LINK-->D.IV.2, S. 228.</p>
+        <p> Vgl. hierzu auch die Ausführungen oben bei <xref ref-type="sec" rid="D_IV_2">D.IV.2</xref>.</p>
       </fn>
       <fn id="bibdba5bdad8901148dd91df8de603d14b31">
         <p> Letztlich hat die in § 281 Abs. 3 BGB vorgesehene Abmahnung jedenfalls im Fall des Limitierungsvertrags keine Bedeutung. Durch den Verstoß gegen die Unterlassungspflicht tritt entweder Unmöglichkeit ein oder es besteht ein Beseitigungsanspruch, in welchem Fall eine Fristsetzung, aber keine Abmahnung notwendig wäre; vgl. insbesondere <italic>Lorenz/Riehm</italic>, Neues Schuldrecht, Rn. 204. Vgl. aber auch <italic>Dauner-Lieb</italic>, in: Dauner-Lieb/Langen, § 281 Rn. 46; <italic>Faust</italic>, in: Huber/Faust, 3. Kapitel Rn. 146 f.</p>
       </fn>
       <fn id="bibd440c82db58de4005bb7dbde506b9399c">
-        <p> Oben <!--TO_LINK-->D.IV.2, S. 228.</p>
+        <p> Oben <xref ref-type="sec" rid="D_IV_2">D.IV.2</xref>.</p>
       </fn>
       <fn id="bibd73af3bdd1a794004a48d9363240dd8b0">
-        <p> Beispiele für Unmöglichkeit unten bei <!--TO_LINK-->D.IV.3.c), S. 232.</p>
+        <p> Beispiele für Unmöglichkeit unten bei <xref ref-type="sec" rid="D_IV_3_c">D.IV.3.c)</xref>.</p>
       </fn>
       <fn id="bibde555e784021e40999e1c384b7f149cbb">
         <p> Zu möglichen Beweisproblemen bei der Begründung des Schadensersatzanspruchs
-          ausführlich unten bei <!--TO_LINK-->D.IV.3.f), S. 235.</p>
+          ausführlich unten bei <xref ref-type="sec" rid="D_IV_3_f">D.IV.3.f)</xref></p>
       </fn>
       <fn id="bibd3d8e36e9f02a48848758da8268c138f1">
-        <p> Hierzu bereits oben <!--TO_LINK-->D.IV.2, S. 228.</p>
+        <p> Hierzu bereits oben <xref ref-type="sec" rid="D_IV_2">D.IV.2</xref>.</p>
       </fn>
       <fn id="bibdbce63253096648939c414e191f3f2f31">
         <p> Vgl. <italic>Ernst</italic>, in: MüKo BGB, § 286 Rn. 42.</p>
@@ -3776,12 +3771,11 @@
       <fn id="bibde9e624d60da345148d161a2e434b83a3">
         <p> Da allerdings insoweit umstritten ist, welche Schadensposten dem Verzugsschaden und
           welche dem einfachen Schadensersatz nach § 280 Abs. 1 BGB
-          zuzuordnen sind, wird sogleich noch ausführlicher bei <!--TO_LINK-->D.IV.3.e), S.
-          234, auf die Problematik einzugehen sein.</p>
+          zuzuordnen sind, wird sogleich noch ausführlicher bei <xref ref-type="sec" rid="D_IV_3_e">D.IV.3.e)</xref>, auf die Problematik einzugehen sein.</p>
       </fn>
       <fn id="bibda7ff084809ff4c4188e6e827d3395312">
         <p> Zu den Voraussetzungen der Unmöglichkeit bei Unterlassungsansprüchen vgl. oben
-          bei <!--TO_LINK-->D.IV.2, S. 228.</p>
+          bei <xref ref-type="sec" rid="D_IV_2">D.IV.2</xref>.</p>
       </fn>
       <fn id="bibdf14eb2ea3e844836b95523b076b921cb">
         <p> So bereits <italic>Köhler</italic>, AcP 190 (1990), 496 (517 f.). Inzwischen ist die Auffassung wohl herrschend. Vgl. etwa <italic>Ernst</italic>, in: MüKo BGB, § 283 Rn. 14; <italic>Unberath</italic>, in: BeckOK BGB, § 275 Rn. 38. Kritisch <italic>Huber</italic>, Leistungsstörungen II, 716.</p>
@@ -3796,7 +3790,7 @@
         <p> Vgl. <italic>Dauner-Lieb</italic>, in: Dauner-Lieb/Langen, § 283 Rn. 13.</p>
       </fn>
       <fn id="bibd83a420264dfe4d73acc27a9668dcdc4d">
-        <p> Dazu eben bei <!--TO_LINK-->D.IV.3.c), S. 232.</p>
+        <p> Dazu eben bei <xref ref-type="sec" rid="D_IV_3_c">D.IV.3.c)</xref>.</p>
       </fn>
       <fn id="bibdf9fa4ddbf5504d24a3cef628af756e78">
         <p><italic>Ernst</italic>, in: MüKo BGB, § 311a Rn. 72.</p>
@@ -3807,10 +3801,10 @@
       <fn id="bibd3a4a297234bc480192e37c1e708117f7">
         <p> Letzteres unter der hier vertretenen Auffassung, dass eine Limitierung ohne weitere
           Angaben nach dem objektiven Empfängerhorizont als „motivbezogen“ zu
-          verstehen ist. Dazu ausführlich oben <!--TO_LINK-->D.II.2.c)(3)(bb), S. 193.</p>
+          verstehen ist. Dazu ausführlich oben <xref ref-type="sec" rid="D_II_2_c_3_bb">D.II.2.c)(3)(bb)</xref>.</p>
       </fn>
       <fn id="bibd4aac7e06392b4554ad9d739fddfdc38e">
-        <p> Dazu eben bei <!--TO_LINK-->D.IV.3.c), S. 232.</p>
+        <p> Dazu eben bei <xref ref-type="sec" rid="D_IV_3_c">D.IV.3.c)</xref>.</p>
       </fn>
       <fn id="bibdeb56621c59c140efb8907756ede2163c">
         <p> Wie hier wohl auch BGH, NJW 2009, 2674 (2675 f.); <italic>Grunewald</italic>, in:
@@ -3825,7 +3819,7 @@
           freilich kein Unterschied: Nach der h. M. befindet sich der Schuldner einer
           Dauerunterlassung im Schuldnerverzug, wenn er gegen die Unterlassungspflicht
           verstoßen hat und die Folgen des Verstoßes noch rückgängig zu machen
-          sind; vgl. oben <!--TO_LINK-->D.IV.2, S. 228. Somit liegen auch die Voraussetzungen
+          sind; vgl. oben <xref ref-type="sec" rid="D_IV_2">D.IV.2)</xref>. Somit liegen auch die Voraussetzungen
           für den Schadensersatz wegen Verzögerung der Leistung
           (§§ 280 Abs. 1, 2, 286 BGB) vor. Für eine
           ausführliche Darstellung der Problematik der Abgrenzung von
@@ -3851,7 +3845,7 @@
         <p> Vgl. oben Fn. 960.</p>
       </fn>
       <fn id="bibd994df596dc42448d936a0e6d90da26e3">
-        <p><!--TO_LINK-->D.IV.3.c), S. 232. Speziell zur Unmöglichkeit von
+        <p><xref ref-type="sec" rid="D_IV_3_c">D.IV.3.c)</xref>. Speziell zur Unmöglichkeit von
           Unterlassungspflichten als (letztlich unergiebigem) Problem bei § 285 BGB:
             <italic>Hartmann</italic>, Commodum, 113 f.</p>
       </fn>
@@ -3878,14 +3872,14 @@
       </fn>
       <fn id="bibd63230bc8559548e2862973ef3946a5a7">
         <p> Zu Auffassung die unter bestimmten Voraussetzungen ein Vertretenmüssen des
-          Schuldners voraussetzen wollen unten bei <!--TO_LINK-->D.IV.4.a)(3), S. 242.</p>
+          Schuldners voraussetzen wollen unten bei <xref ref-type="sec" rid="D_IV_4_a_3">D.IV.4.a)(3)</xref>.</p>
       </fn>
       <fn id="bibdf333c9cc310148819429bf235ff13fc7">
         <p> Für die wohl herrschende Ansicht <italic>Unberath</italic>, in: BeckOK BGB, § 285 Rn. 13; <italic>Grüneberg</italic>, in: Palandt, § 285 Rn. 9. Berechtigte Kritik bei <italic>Hartmann</italic>, Commodum, 305 ff.</p>
       </fn>
       <fn id="bibd728ec8c8df134e58ab2dc9492cb26a56">
         <p> Der genaue Umfang des Anspruchs wird später bei den Rechtsfolgen erläutert
-          werden. Unten <!--TO_LINK-->D.IV.4.b), S. 250.</p>
+          werden. Unten <xref ref-type="sec" rid="D_IV_4_b">D.IV.4.b)</xref>.</p>
       </fn>
       <fn id="bibd851597ec93a2476a8b24d984f598a4d7">
         <p><italic>Weller</italic>, Vertragstreue, 443 spricht von der „präventive[n] Anreiz- und Nötigungswirkung“ des § 285 Abs. 1 BGB. Vgl. zu dieser Bedeutung eines Anspruchs auf Gewinnabschöpfung auch <italic>Köndgen</italic>, RabelsZ 56 (1992), 696 (728 f.).</p>
