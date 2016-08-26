@@ -4,9 +4,6 @@
 [submodule "static/tools/xml2pdf-py"]
 	path = static/tools/xml2pdf-py
 	url = https://github.com/kadowa/xml2pdf-py
-[submodule "static/tools/xml2pdf-php"]
-	path = static/tools/xml2pdf-php
-	url = https://github.com/kadowa/xml2pdf-php
 
 [submodule "static/tools/mpdf-repo"]
 	path = static/tools/mpdf-repo
