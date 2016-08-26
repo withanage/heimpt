@@ -2,10 +2,10 @@
 <article>
   <front>
     <journal-meta>
-      <journal-id journal-id-type="publisher-id">The Journal Title</journal-id>
+      <journal-id journal-id-type="publisher-id">Heidelberg University Publishing</journal-id>
       <issn pub-type="epub">0000-000X</issn>
       <publisher>
-        <publisher-name>The Publisher Name</publisher-name>
+        <publisher-name>Heidelberg University Publishing</publisher-name>
       </publisher>
     </journal-meta>
     <article-meta>
@@ -21,14 +21,15 @@
       <contrib-group>
         <contrib contrib-type="author">
           <name>
-            <surname>Eve</surname>
-            <given-names>Martin Paul</given-names>
+            <surname>Sander</surname>
+            <given-names>Marie</given-names>
           </name>
-          <xref ref-type="aff" rid="lincoln"/>
+          <xref ref-type="aff" rid="bremen"/>
         </contrib>
-        <aff id="lincoln">
-          <institution>University of Lincoln</institution>
-        </aff>
+        <aff id="bremen"><institution content-type="dept">Referat f&#252;r Forschung und wissenschaftlichen Nachwuchs</institution>,
+                <institution>Universit&#228;t Bremen</institution>,
+                <addr-line><named-content content-type="city">Bremen</named-content></addr-line>,
+                <country>Deutschland</country></aff>
       </contrib-group>
       <pub-date pub-type="epub">
         <year>2013</year>
@@ -38,14 +39,16 @@
       <fpage>1</fpage>
       <lpage>2</lpage>
       <permissions>
-        <copyright-statement>Copyright &#169; 2014, Martin Paul Eve</copyright-statement>
-        <license xmlns:xlink="http://www.w3.org/1999/xlink" license-type="open-access" xlink:href="http://creativecommons.org/licenses/by/2.0/">
-          <license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited. The citation of this article must include: the name(s) of the authors, the name of the journal, the full URL of the article (in a hyperlinked format if distributed online) and the DOI number of the article.</license-p>
+        <copyright-statement>&#169; 2015, Heidelberg University Publishing</copyright-statement>
+        <copyright-year>2015</copyright-year>
+        <copyright-holder>Heidelberg University Publishing</copyright-holder>
+        <license xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://creativecommons.org/licenses/by/3.0/">
+          <license-p>Dieses Werk ist unter der Creative Commons-Lizenz 4.0 (CC BY-SA 4.0 <ext-link ext-link-type="uri" xlink:href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">)</ext-link> ver&#246;ffentlicht.
+            credited.</license-p>
         </license>
       </permissions>
-      <self-uri>https://www.martineve.com/</self-uri>
       <abstract>
-        <p>This is a sample abstract that forms part of the metadataSample.xml file in meTypeset.</p>
+        <p/>
       </abstract>
     </article-meta>
   </front>

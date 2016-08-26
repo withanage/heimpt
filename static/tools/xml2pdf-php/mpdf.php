@@ -28,7 +28,7 @@
  * Convert XML to PDF with mpdf.
  */
 
-include('../mpdf-repo/mpdf.php');
+include('../tools/mpdf-repo/mpdf60/mpdf.php');
 
 $longopts  = array(
 		"output:",
