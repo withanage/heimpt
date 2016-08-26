@@ -123,10 +123,10 @@ class Pipeline:
 
         # Load stylesheet
         try:
-          xsl = etree.parse(xsl_fn)
+            xsl = etree.parse(xsl_fn)
         except:
-          logging.error("xsl_fn %s does not exist" %xsl_fn )
-        
+            logging.error("xsl_fn %s does not exist" % xsl_fn)
+
         transformer = etree.XSLT(xsl)
 
         # |  - extensions: a dict mapping ``(namespace, name)`` pairs to
@@ -199,48 +199,9 @@ def usage():
     sys.stderr.write("./test.py -c config\n")
 
 
-def main():
-    # Process config and command line options
-    options, rest = getopt.getopt(sys.argv[1:], "c:", ["config="])
-
-    cfg_fn = ""
-    for opt, arg in options:
-        if opt in ("-c", "--config"):
-            cfg_fn = arg
-        else:
-            sys.stderr.write("Unknown option %s" % opt)
-            exit(1)
-
-    if not cfg_fn:
-        usage()
-        exit(1)
-
-    if not(os.path.isfile(cfg_fn)):
-        sys.stderr.write("Config file %s not found" % cfg_fn)
-        exit(1)
-
-    cfg = ConfigParser.ConfigParser()
-    cfg.read(cfg_fn)
-
-    base_dir = cfg.get("general", "base_dir")
-    test_collection = cfg.get("general", "test_collection")
-    test_name = cfg.get("general", "test_name")
-    xslt_html = cfg.get("stylesheets", "xslt_html")
-    xslt_fo = cfg.get("stylesheets", "xslt_fo")
-    css = cfg.get("stylesheets", "css")
-    try:
-        cit = cfg.get("stylesheets", "xslt_cit")
-    except ConfigParser.NoOptionError:
-        cit = None
-
-    start = cfg.get("pipeline", "start")
-    if not start in ["1", "2", "3"]:
-        logging.error(
-            "Invalid value %s for start. Allowed values are 1, 2 or 3." %
-            start)
-        exit(1)
-
-    # Run pipeline
+def runTest(base_dir, test_collection, test_name, cit,
+            cfg, cfg_fn, css, start, xslt_fo, xslt_html):
+  # Run pipeline
     P = Pipeline(base_dir, test_collection, test_name, cit)
 
     if P.validate_paths() == False:
@@ -279,6 +240,60 @@ def main():
             P.pdf(tool, path, css)
     else:
         logging.error("HTML file %s not found" % (P.html_fn))
+
+
+def main():
+    # Process config and command line options
+    options, rest = getopt.getopt(sys.argv[1:], "c:", ["config="])
+
+    cfg_fn = ""
+    for opt, arg in options:
+        if opt in ("-c", "--config"):
+            cfg_fn = arg
+        else:
+            sys.stderr.write("Unknown option %s" % opt)
+            exit(1)
+
+    if not cfg_fn:
+        usage()
+        exit(1)
+
+    if not(os.path.isfile(cfg_fn)):
+        sys.stderr.write("Config file %s not found" % cfg_fn)
+        exit(1)
+
+    cfg = ConfigParser.ConfigParser()
+    cfg.read(cfg_fn)
+
+    base_dir = cfg.get("general", "base_dir")
+    test_collection = cfg.get("general", "test_collection")
+    xslt_html = cfg.get("stylesheets", "xslt_html")
+    xslt_fo = cfg.get("stylesheets", "xslt_fo")
+    css = cfg.get("stylesheets", "css")
+    try:
+        cit = cfg.get("stylesheets", "xslt_cit")
+    except ConfigParser.NoOptionError:
+        cit = None
+
+    test_name = cfg.get("general", "test_name")
+    start = cfg.get("pipeline", "start")
+    if not start in ["1", "2", "3"]:
+        logging.error(
+            "Invalid value %s for start. Allowed values are 1, 2 or 3." %
+            start)
+        exit(1)
+    test_name = cfg.get("general", "test_name")
+    runTest(
+        base_dir,
+        test_collection,
+        test_name,
+        cit,
+        cfg,
+        cfg_fn,
+        css,
+        start,
+        xslt_fo,
+        xslt_html)
 
 if __name__ == "__main__":
     main()
