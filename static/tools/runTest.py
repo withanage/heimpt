@@ -276,6 +276,7 @@ def main():
         cit = None
 
     test_name = cfg.get("general", "test_name")
+    print test_name
     start = cfg.get("pipeline", "start")
     if not start in ["1", "2", "3"]:
         logging.error(
@@ -283,17 +284,19 @@ def main():
             start)
         exit(1)
     test_name = cfg.get("general", "test_name")
-    runTest(
-        base_dir,
-        test_collection,
-        test_name,
-        cit,
-        cfg,
-        cfg_fn,
-        css,
-        start,
-        xslt_fo,
-        xslt_html)
+    for i in test_name.split(','):
+      runTest(
+          base_dir,
+          test_collection,
+          i,
+          cit,
+          cfg,
+          cfg_fn,
+          css,
+          start,
+          xslt_fo,
+          xslt_html)
+
 
 if __name__ == "__main__":
     main()
