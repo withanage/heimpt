@@ -1,5 +1,43 @@
 {
   "createFull": {
+  "moehren": {
+      "dir": "/home/wit/media/serv3/UBHD_OMPPortal/static/files/presses/6/monographs/123/submission/proof/",
+      "files": [
+        {
+          "123-69-7668-1-10-20160829.xml": {
+            "order": 1
+
+          }
+        },
+        {
+          "123-69-7669-1-10-20160829.xml": {
+            "order": 2
+          }
+        },
+        {
+          "123-69-7670-1-10-20160829.xml": {
+            "order": 3
+          }
+        },
+        {
+          "123-69-7671-1-10-20160829.xml": {
+            "order": 4
+          }
+        }
+      ],
+      "fullfile": {
+        "123-68-7672-1-10-20160829.xml": {
+        
+        }
+      },
+      "enumeration": 1,
+      "footnotes_file": {
+        "ref.xml": {
+        
+        }
+      }
+
+    },
     "michl": {
       "dir": "/home/www-data/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/102/submission/proof/",
       "files": [
