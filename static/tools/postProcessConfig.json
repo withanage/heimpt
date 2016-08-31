@@ -30,12 +30,7 @@
         
         }
       },
-      "enumeration": 1,
-      "footnotes_file": {
-        "ref.xml": {
-        
-        }
-      }
+      "enumeration": 1
 
     },
     "michl": {
@@ -174,13 +169,8 @@
           "range": [[1, 12]]
         }
       },
-      "enumeration": 1,
-      "footnotes_file": {
-        "ref.xml": {
-          "numbering": "roman",
-          "range": [[1, 12]]
-        }
-      }
+      "enumeration": 1
+     
 
     },
     "kempfull": {
