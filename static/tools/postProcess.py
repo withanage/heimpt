@@ -74,6 +74,9 @@ class PostProcess:
         tr = self.remove_not_used_in_back(tr, "fn-group/fn")
         if "enumeration" in cfg.keys():
           if cfg["enumeration"] == 1:
+            if "chapter-begin-reset" in cfg.keys():
+              if cfg["chapter-begin-reset"]==1:
+                count  = 1
             tr, count = self.set_enumeration(tr, "xref", "ref-type", "fn", context,f, chapter, order , count)
         tr = self.remove_name_duplicates_speech(tr)
         tr = self.set_numbering(tr, ['speech', 'disp-quote'])
@@ -282,7 +285,7 @@ class PostProcess:
         back_refs = Set()
         for back in tree.getroot().findall(".//back/ref-list/ref"):
             for ref in back.findall(".//mixed-citation"):
-                loggin.info(
+                logging.info(
                     "Mixed reference found", etree.tostring(
                         back, pretty_print=True))
         return back_refs
@@ -378,7 +381,7 @@ class PostProcess:
         data.sort()
         ref_list[:] = [item[-1] for item in data]
         prev = ('', '', '', '')
-        lat_id = 0
+        last_id = 0
 
         for i, v in enumerate(data):
             if v[0] is not None and v[1] is not None and v[2] is not None:
@@ -421,7 +424,7 @@ class PostProcess:
                 for e in elems:
                     if e.getparent() is not None:
                         e.getparent().remove(e)
-                        logging.info(tag + etr.tostring(e) + " removed")
+                        logging.info(tag + e.tostring(e) + " removed")
         return tr
 
     def remove_table_references(self, tree, name, attr, value):
