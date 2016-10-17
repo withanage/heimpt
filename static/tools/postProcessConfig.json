@@ -1,5 +1,30 @@
 {
   "createFull": {
+     "test": {
+      "dir": "/home/wit/projects/mpt/static/tests/misc/src/xml/",
+      "files": [
+        {
+          "example.xml": {
+            "order": 1
+
+          }
+        },
+        {
+          "example.xml": {
+            "order": 2
+
+          }
+        }
+      ],
+      "fullfile": {
+        "full-test.xml": {
+        
+        }
+      },
+      "enumeration": 1,
+      "chapter-begin-reset":1
+
+    },
   "moehren": {
       "dir": "/home/wit/media/serv3/UBHD_OMPPortal/static/files/presses/6/monographs/123/submission/proof/",
       "files": [
@@ -30,7 +55,8 @@
         
         }
       },
-      "enumeration": 1
+      "enumeration": 1,
+      "chapter-begin-reset":1
 
     },
     "michl": {
@@ -189,8 +215,8 @@
           }
         },
         {
-          "90-69-702-1-10-20160620.xml": {
-            "order": 3
+	          "90-69-702-1-10-20160620.xml": {
+	            "order": 3
           }
         },
         {
