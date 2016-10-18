@@ -1,0 +1,45 @@
+{
+  "typesetter": {
+    "metadata": "meTypeset/metadata/metadataSample.xml",
+    "debug": true,
+    "identifiers": true,
+    "interactive": true,
+    "noimageprocessing": true,
+    "nolink": true,
+   
+    "settings": "settings-file-path",
+    "zotero": true
+  },
+  "projects": [
+    {
+      "name": "möhren",
+      "type": "docx",
+      "files": [
+        {
+          "123-69-7668-1-10-20160829.docx": {
+            "order": 1
+          }
+        },
+        {
+          "123-69-7669-1-10-20160829.docx": {
+            "order": 2
+          }
+        },
+        {
+          "123-69-7670-1-10-20160829.docx": {
+            "order": 3
+          }
+        },
+        {
+          "123-69-7671-1-10-20160829.docx": {
+            "order": 4
+          }
+        }
+      ]
+    }
+  ],
+  "tests": {
+   "nometa": true,
+    "proprietary": true
+  }
+}
