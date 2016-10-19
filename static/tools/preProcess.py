@@ -9,6 +9,7 @@ from debug import Debuggable, Debug
 from docopt import docopt
 from subprocess import Popen, PIPE
 from attrdict import AttrDict
+from numpy.ctypeslib import ct
 
 class PreProcess(Debuggable):
     """ converts  source files into xml using the typesetter module"""
@@ -55,21 +56,36 @@ class PreProcess(Debuggable):
 
     def tpyeset_project(self, project):
         ''' runs typesetter for  a project '''
-        project = AttrDict(project)
         if project.get('active'):
-            mt = ["meTypeset/bin/meTypeset.py"]
-            print project.get('path')
-            if self.config.get('typesetter'):
-                for e in self.config.typesetter:
-                    if e == 'metadata':
-                        print mt.append('--' + e + "=" + self.config.typesetter.metadata)
+            ts = project.get('typesetter')
+            if ts:   
+                mt = [""]
+                tss = self.config.get('typesetters')
+                if tss:
+                    ct = tss.get(ts)
+                    if ct:
+                        print ct
+                        mt=[ct.get('path')] if ct.get('path') else self.debug.print_debug(self, u'typesetter path is not specified')
+                        mt.append(project.get("type")) if project.get("type") else  self.debug.print_debug(self, u'typesetter type is not specified')
+                        fs  = project.get('files')
+                        for f in fs:
+                            print f
+                            #process = Popen(["python", ' '.join(mt)], stdout=PIPE)
+                            #output, err = process.communicate()
+                            #exit_code = process.wait()
+                            #return output, err, exit_code
+                        
+                             
+                        
                     else:
-                        mt.append('--' + e)
-            
-            process = Popen(["python", ' '.join(mt)], stdout=PIPE)
-            output, err = process.communicate()
-            exit_code = process.wait()
-        return output, err, exit_code
+                        self.debug.print_debug(self, u'typesetter is not available')
+                 
+                else:
+                    self.debug.print_debug(self, u'typesetter varaible is not specified')
+            else:
+                self.debug.print_debug(self, u'No typesetter is specified')
+        else:
+            self.debug.print_debug(self, u'project is not active')
 
     def typeset(self):
         projects = self.config.get('projects')
