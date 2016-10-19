@@ -1,6 +1,6 @@
 {
-  "typesetters": [
-    {
+  "typesetters": {
+    "meTypeset": {
       "metadata": "meTypeset/metadata/metadataSample.xml",
       "debug": true,
       "identifiers": true,
@@ -11,10 +11,9 @@
       "settings": "settings_file_path",
       "zotero": true,
       "proprietary": true,
-      "path": "meTypeset/bin/meTypeset.py",
-      "name": "meTypeset"
+      "path": "meTypeset/bin/meTypeset.py"
     }
-  ],
+  },
   "projects": [
     {
       "active": true,
@@ -22,23 +21,19 @@
       "name": "möhren",
       "type": "docx",
       "output": "proof",
+      "typesetter": "meTypeset",
       "files": [
-        {
-          "48-69-240-1-2-20151208.docx": {
-            "order": 1
-          }
-        },
-        {
-          "48-69-241-1-2-20151208.docx": {
-            "order": 2
-          }
-        }
+          {1:"48-69-240-1-2-20151208.docx",
+          2: "48-69-241-1-2-20151208.docx"
+           } 
+            
+        
       ]
     }
   ],
-  "documentation": {
-    "typesetters": [
-      {
+  "documentatin": {
+    "typesetters": {
+      "meTypeset": {
         "metadata": "meTypeset/metadata/metadataSample.xml",
         "debug": true,
         "identifiers": true,
@@ -49,10 +44,9 @@
         "settings": "settings_file_path",
         "zotero": true,
         "proprietary": true,
-        "path": "relative_path_to_typesetter",
-        "name": "meTypeset"
+        "path": "relative_path_to_typesetter"
       }
-    ],
+    },
     "projects": [
       {
         "active": true,
@@ -60,6 +54,7 @@
         "path": "full_path_to_input_folder",
         "name": "test_project",
         "type": "docx/doc/odt",
+         "typesetters":     "name_of_the_typesetter",
         "files": [
           {
             "example1.docx": {
