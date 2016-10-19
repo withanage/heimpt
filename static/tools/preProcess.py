@@ -50,7 +50,7 @@ class PreProcess(Debuggable):
 
     def is_json(self, j):
         try:
-            return json.load(j)
+            return json.loads(j)
         except ValueError, e:
             return False
         return True
@@ -58,11 +58,7 @@ class PreProcess(Debuggable):
     def read_json(self, f):
         if os.path.isfile(f):
             with open(f) as j:
-                #if  self.is_json(j):
-                    return json.load(j)
-                #else:
-                #    self.debug.print_debug(self, u'Configuration file is not valid')
-                #    sys.exit(1)
+                return json.load(j)
         else:
             self.debug.print_debug(self, u'Metadata file wasn\'t specified')
             sys.exit(1)
