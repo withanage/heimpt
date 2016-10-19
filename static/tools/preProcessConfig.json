@@ -1,7 +1,20 @@
 {
-  "typesetter": {
-    "path": "meTypeset/bin/meTypeset.py"
-  },
+  "typesetters": [
+    {
+      "metadata": "meTypeset/metadata/metadataSample.xml",
+      "debug": true,
+      "identifiers": true,
+      "interactive": true,
+      "noimageprocessing": true,
+      "nolink": true,
+      "nometa": true,
+      "settings": "settings_file_path",
+      "zotero": true,
+      "proprietary": true,
+      "path": "meTypeset/bin/meTypeset.py",
+      "name": "meTypeset"
+    }
+  ],
   "projects": [
     {
       "active": true,
@@ -23,20 +36,23 @@
       ]
     }
   ],
-  "documentatoin": {
-    "typesetter": {
-      "metadata": "meTypeset/metadata/metadataSample.xml",
-      "debug": true,
-      "identifiers": true,
-      "interactive": true,
-      "noimageprocessing": true,
-      "nolink": true,
-      "nometa": true,
-      "settings": "settings_file_path",
-      "zotero": true,
-      "proprietary": true,
-      "path": "full_path_to_typesetter"
-    },
+  "documentation": {
+    "typesetters": [
+      {
+        "metadata": "meTypeset/metadata/metadataSample.xml",
+        "debug": true,
+        "identifiers": true,
+        "interactive": true,
+        "noimageprocessing": true,
+        "nolink": true,
+        "nometa": true,
+        "settings": "settings_file_path",
+        "zotero": true,
+        "proprietary": true,
+        "path": "relative_path_to_typesetter",
+        "name": "meTypeset"
+      }
+    ],
     "projects": [
       {
         "active": true,
