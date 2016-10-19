@@ -11,7 +11,8 @@
       "settings": "settings_file_path",
       "zotero": true,
       "proprietary": true,
-      "path": "meTypeset/bin/meTypeset.py"
+      "path": "/home/wit/projects/meTypeset/bin/meTypeset.py",
+      "language":"python"
     }
   },
   "projects": [
@@ -20,15 +21,12 @@
       "path": "/home/www-data/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/48/submission",
       "name": "möhren",
       "type": "docx",
-      "output": "proof",
+      "output": "/home/www-data/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/48/submission/proofs",
       "typesetter": "meTypeset",
-      "files": [
-          {1:"48-69-240-1-2-20151208.docx",
-          2: "48-69-241-1-2-20151208.docx"
-           } 
-            
-        
-      ]
+      "files": {
+        "1": "48-69-240-1-2-20151208.docx",
+        "2": "48-69-241-1-2-20151208.docx"
+      }
     }
   ],
   "documentatin": {
@@ -44,7 +42,8 @@
         "settings": "settings_file_path",
         "zotero": true,
         "proprietary": true,
-        "path": "relative_path_to_typesetter"
+        "path": "relative_path_to_typesetter",
+      	"language": "programming_language"
       }
     },
     "projects": [
@@ -54,19 +53,11 @@
         "path": "full_path_to_input_folder",
         "name": "test_project",
         "type": "docx/doc/odt",
-         "typesetters":     "name_of_the_typesetter",
-        "files": [
-          {
-            "example1.docx": {
-              "order": 1
-            }
-          },
-          {
-            "example2.docx": {
-              "order": 2
-            }
-          }
-        ]
+        "typesetters": "name_of_the_typesetter",
+        "files": {
+          "1": "48-69-240-1-2-20151208.docx",
+          "2": "48-69-241-1-2-20151208.docx"
+        }
       }
     ]
   }
