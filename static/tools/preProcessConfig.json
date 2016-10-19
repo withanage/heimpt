@@ -12,7 +12,7 @@
       "zotero": true,
       "proprietary": true,
       "path": "/home/wit/projects/meTypeset/bin/meTypeset.py",
-      "language":"python"
+      "language": "python"
     }
   },
   "projects": [
@@ -43,7 +43,7 @@
         "zotero": true,
         "proprietary": true,
         "path": "relative_path_to_typesetter",
-      	"language": "programming_language"
+        "language": "programming_language"
       }
     },
     "projects": [
