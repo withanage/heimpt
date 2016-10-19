@@ -42,7 +42,7 @@
         "settings": "settings_file_path",
         "zotero": true,
         "proprietary": true,
-        "path": "relative_path_to_typesetter",
+        "path": "relative_path_to_typesetter",2:234
         "language": "programming_language"
       }
     },
