@@ -1,45 +1,62 @@
 {
   "typesetter": {
-    "metadata": "meTypeset/metadata/metadataSample.xml",
-    "debug": true,
-    "identifiers": true,
-    "interactive": true,
-    "noimageprocessing": true,
-    "nolink": true,
-   
-    "settings": "settings-file-path",
-    "zotero": true
+    "path": "meTypeset/bin/meTypeset.py"
   },
   "projects": [
     {
+      "active": true,
+      "path": "/home/www-data/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/48/submission",
       "name": "möhren",
       "type": "docx",
+      "output": "proof",
       "files": [
         {
-          "123-69-7668-1-10-20160829.docx": {
+          "48-69-240-1-2-20151208.docx": {
             "order": 1
           }
         },
         {
-          "123-69-7669-1-10-20160829.docx": {
+          "48-69-241-1-2-20151208.docx": {
             "order": 2
-          }
-        },
-        {
-          "123-69-7670-1-10-20160829.docx": {
-            "order": 3
-          }
-        },
-        {
-          "123-69-7671-1-10-20160829.docx": {
-            "order": 4
           }
         }
       ]
     }
   ],
-  "tests": {
-   "nometa": true,
-    "proprietary": true
+  "documentatoin": {
+    "typesetter": {
+      "metadata": "meTypeset/metadata/metadataSample.xml",
+      "debug": true,
+      "identifiers": true,
+      "interactive": true,
+      "noimageprocessing": true,
+      "nolink": true,
+      "nometa": true,
+      "settings": "settings_file_path",
+      "zotero": true,
+      "proprietary": true,
+      "path": "full_path_to_typesetter"
+    },
+    "projects": [
+      {
+        "active": true,
+        "output": "output_path_relative_to_path_variable",
+        "path": "full_path_to_input_folder",
+        "name": "test_project",
+        "type": "docx/doc/odt",
+        "files": [
+          {
+            "example1.docx": {
+              "order": 1
+            }
+          },
+          {
+            "example2.docx": {
+              "order": 2
+            }
+          }
+        ]
+      }
+    ]
   }
 }

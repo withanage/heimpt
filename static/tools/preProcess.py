@@ -52,19 +52,35 @@ class PreProcess(Debuggable):
             self.debug.print_debug(self, u'Metadata file wasn\'t specified')
             sys.exit(1)    
 
+
+    def tpyeset_project(self, project):
+        ''' runs typesetter for  a project '''
+        project = AttrDict(project)
+        if project.get('active'):
+            mt = ["meTypeset/bin/meTypeset.py"]
+            print project.get('path')
+            if self.config.get('typesetter'):
+                for e in self.config.typesetter:
+                    if e == 'metadata':
+                        print mt.append('--' + e + "=" + self.config.typesetter.metadata)
+                    else:
+                        mt.append('--' + e)
+            
+            process = Popen(["python", ' '.join(mt)], stdout=PIPE)
+            output, err = process.communicate()
+            exit_code = process.wait()
+        return output, err, exit_code
+
     def typeset(self):
-        print self.config
-        mt = ["meTypeset/bin/meTypeset.py","docx", "sdsd", "aadsa"]
-        if  self.config.get('typesetter'):
-            for  e in self.config.typesetter:
-                if e == 'metadata':
-                    print  mt.append('--'+e+"="+self.config.typesetter.metadata)
-                else:
-                    mt.append('--'+e) 
-        process = Popen(["python", ' '.join(mt)], stdout=PIPE)
-        (output, err) = process.communicate()
-        exit_code = process.wait()
-        return (output, err) , exit_code
+        projects = self.config.get('projects')
+        if projects:
+            for p in projects :
+                output, err, exit_code = self.tpyeset_project(p)
+                   
+        else:
+            self.debug.print_debug(self, u'No projects were specified')        
+        
+        
         
 def main():
     print 10*'-'
