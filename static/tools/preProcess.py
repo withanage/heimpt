@@ -4,7 +4,7 @@
 # Author    : Dulip Withanage , University of Heidelberg
 
 
-import os, json, sys
+import os, collections, json, sys, uuid
 from debug import Debuggable, Debug
 from docopt import docopt
 from subprocess import Popen, PIPE
@@ -16,6 +16,7 @@ class PreProcess(Debuggable):
     
     def __init__(self):
         self.args = self.read_command_line()
+        print self.args
         self.debug = Debug()
         Debuggable.__init__(self, 'Main')
         
@@ -24,18 +25,18 @@ class PreProcess(Debuggable):
             
     def run(self):
         self.config = self.read_json(self.args['<config_file>'])
-        self.typeset()
+        self.typeset_projects()
         return        
     
     @staticmethod
     def read_command_line():
         doc="""
+        preProcess: 
         Usage: 
-            preProcess.py  <config_file> [options] 
-            preProcess.py (-h | --help | --version)
+             preProcess.py  <config_file> [--debug]
+           
         Options:
-            -h, --help  Show this screen and exit.
-            -d, --debug Enable debug
+          --debug   enable debug.
             """ 
         return docopt(doc, version='mpt 0.1')
     
@@ -54,27 +55,53 @@ class PreProcess(Debuggable):
             sys.exit(1)    
 
 
+
+
+
+    def typeset_run(self, mt):
+        m =  ' '.join(mt).strip().split(' ')
+        print m
+        process = Popen(m, stdout=PIPE)
+        output, err = process.communicate()
+        exit_code = process.wait()
+        print output
+        print err
+        print exit_code
+        return output, err, exit_code
+
+    def typeset_file(self, project, mt, od_fs, f):
+        if project.get('path'):
+            output, err, exit_code = self.typeset_run(mt)
+        else:
+            self.debug.print_debug(self, u'project folder not specified')
+
+    def typeset_files(self, project, ct):
+       
+        fs = project.get('files')
+        od_fs = collections.OrderedDict(sorted(fs.items()))
+        for f in od_fs:
+            mt = [ct.get('language')] if ct.get('language') else self.debug.print_debug(self, u'typesetter language is not specified')
+            if os.path.isfile(ct.get('path')):
+                mt.append(ct.get('path')) if ct.get('path') else self.debug.print_debug(self, u'typesetter path is not specified')
+                mt.append(project.get("type")) if project.get("type") else self.debug.print_debug(self, u'typesetter type is not specified')
+                #mt.append(project.get("output")) if project.get("output") else self.debug.print_debug(self, u'typesetter type is not specified')
+                mt.append(os.path.join(project.get('path'),od_fs[f]))
+                mt.append(os.path.join(project.get('path'), str(uuid.uuid4())))
+                self.typeset_file(project, mt, od_fs, f)
+            else:
+                self.debug.print_debug(self, u'typesetter binary is not innstalled')
+                  
+
     def tpyeset_project(self, project):
         ''' runs typesetter for  a project '''
         if project.get('active'):
             ts = project.get('typesetter')
             if ts:   
-                mt = [""]
                 tss = self.config.get('typesetters')
                 if tss:
                     ct = tss.get(ts)
                     if ct:
-                        print ct
-                        mt=[ct.get('path')] if ct.get('path') else self.debug.print_debug(self, u'typesetter path is not specified')
-                        mt.append(project.get("type")) if project.get("type") else  self.debug.print_debug(self, u'typesetter type is not specified')
-                        fs  = project.get('files')
-                        for f in fs:
-                            print f
-                            #process = Popen(["python", ' '.join(mt)], stdout=PIPE)
-                            #output, err = process.communicate()
-                            #exit_code = process.wait()
-                            #return output, err, exit_code
-                        
+                        self.typeset_files(project, ct)
                              
                         
                     else:
@@ -87,11 +114,11 @@ class PreProcess(Debuggable):
         else:
             self.debug.print_debug(self, u'project is not active')
 
-    def typeset(self):
+    def typeset_projects(self):
         projects = self.config.get('projects')
         if projects:
             for p in projects :
-                output, err, exit_code = self.tpyeset_project(p)
+                self.tpyeset_project(p)
                    
         else:
             self.debug.print_debug(self, u'No projects were specified')        
