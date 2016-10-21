@@ -11,8 +11,8 @@
       "settings": "settings_file_path",
       "zotero": true,
       "proprietary": true,
-      "path": "/home/wit/projects/meTypeset/bin/meTypeset.py",
-      "language": "python"
+      "executable": "/home/wit/projects/meTypeset/bin/meTypeset.py"
+    
     }
   },
   "projects": [

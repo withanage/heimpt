@@ -84,22 +84,20 @@ class PreProcess(Debuggable):
         fs = project.get('files')
         od_fs = collections.OrderedDict(sorted(fs.items()))
         for f in od_fs:
-            mt = [ct.get('language')] if ct.get('language') else self.debug.print_debug(
+            mt = [ct.get('executable')] if ct.get('executable') else self.debug.print_debug(
                 self,self.gv.TYPESETTER_IS_NOT_SPECIFIED)
-            if os.path.isfile(ct.get('path')):
-                mt.append(
-                    ct.get('path')) if ct.get('path') else self.debug.print_debug(
-                    self,self.gv.TYPESETTER_PATH_IS_NOT_SPECIFIED )
+            if  self.check_program(ct.get('executable')):
+                mt.append(ct.get('executable'))
                 mt.append(
                     project.get("type")) if project.get("type") else self.debug.print_debug(
-                    self, self.gv.INPUT_FILE_TYPE_IS_NOT_SPECIFIED )
+                    self, self.gv.PROJECT_INPUT_FILE_TYPE_IS_NOT_SPECIFIED )
                 fl = os.path.join(project.get('path'), od_fs[f])
                 if  os.path.isfile(fl):
                     mt.append(fl)
                     mt.append(os.path.join(project.get('path'), str(uuid.uuid4())))
                     self.typeset_file(project, mt, od_fs, f)
                 else:
-                    self.debug.print_debug(self, self.gv.INPUT_FILE_DOES_NOT_EXIST+od_fs[f].encode('utf-8'))
+                    self.debug.print_debug(self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST+od_fs[f].encode('utf-8'))
             else:
                 self.debug.print_debug(
                     self,self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
@@ -134,7 +132,22 @@ class PreProcess(Debuggable):
         else:
             self.debug.print_debug(self, u'No projects were specified')
 
+    def check_program(self, program):
+        def is_exe(fpath):
+            return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
+    
+        fpath, fname = os.path.split(program)
+        if fpath:
+            if is_exe(program):
+                return program
+        else:
+            for path in os.environ["PATH"].split(os.pathsep):
+                path = path.strip('"')
+                exe_file = os.path.join(path, program)
+                if is_exe(exe_file):
+                    return exe_file
 
+        return None
 def main():
     pre_process_instance = PreProcess()
     pre_process_instance.run()
