@@ -11,7 +11,10 @@
       "settings": "settings_file_path",
       "zotero": true,
       "proprietary": true,
-      "executable": "/home/wit/projects/meTypeset/bin/meTypeset.py"
+      "executable": "/home/wit/projects/meTypeset/bin/meTypeset.py",
+      "arguments": {
+        "1": "docx"
+      }
     }
   },
   "projects": [
@@ -19,13 +22,11 @@
       "active": true,
       "path": "/home/www-data/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/48/submission",
       "name": "möhren",
-      
       "typesetters": {
         "1": {
-          "metypeset": {
-            "input_type": "docx",
-            "output_path" :"metypeset"
-          }
+          "name": "metypeset",
+          "input_type": "docx",
+          "output_path": "metypeset"
         }
       },
       "files": {
