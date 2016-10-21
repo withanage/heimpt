@@ -88,9 +88,6 @@ class PreProcess(Debuggable):
                 self,self.gv.TYPESETTER_IS_NOT_SPECIFIED)
             if  self.check_program(ct.get('executable')):
                 mt.append(ct.get('executable'))
-                mt.append(
-                    project.get("type")) if project.get("type") else self.debug.print_debug(
-                    self, self.gv.PROJECT_INPUT_FILE_TYPE_IS_NOT_SPECIFIED )
                 fl = os.path.join(project.get('path'), od_fs[f])
                 if  os.path.isfile(fl):
                     mt.append(fl)
@@ -102,24 +99,36 @@ class PreProcess(Debuggable):
                 self.debug.print_debug(
                     self,self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
 
+    """
+    mt.append(project.get("type")) 
+                if project.get("type") else self.debug.print_debug( self, self.gv.PROJECT_INPUT_FILE_TYPE_IS_NOT_SPECIFIED )
+    """
     def tpyeset_project(self, project):
         ''' runs typesetter for  a project '''
         if project.get('active'):
-            ts = project.get('typesetter')
-            if ts:
-                tss = self.config.get('typesetters')
-                if tss:
-                    ct = tss.get(ts)
-                    if ct:
-                        self.typeset_files(project, ct)
+            pts = project.get('typesetters')
+            if pts:
+                pts = collections.OrderedDict(sorted(pts.items()))
+                
+                for i in pts:
+                    print pts[i]
+                    if pts[i]:
+                        tss = self.config.get('typesetters')
+                        if tss:
+                            ct = tss.get(i)
+                            if ct:
+                                self.typeset_files(project, ct)
+                            else:
+                                print self.gv
+                                self.debug.print_debug(
+                                    self, self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
+                        else:
+                            self.debug.print_debug(
+                                self, self.gv.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED)
                     else:
-                        self.debug.print_debug(
-                            self, self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
-                else:
-                    self.debug.print_debug(
-                        self, self.gv.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED)
+                        self.debug.print_debug(self, self.gv.PROJECT_TYPESETTER_IS_NOT_SPECIFIED)
             else:
-                self.debug.print_debug(self, self.gv.PROJECT_TYPESETTER_IS_NOT_SPECIFIED)
+                self.debug.print_debug(self, self.gv.PROJECT_TYPESETTERS_ARE_NOT_SPECIFIED)
         else:
             self.debug.print_debug(self,self.gv.PROJECT_IS_NOT_ACTIVE)
 

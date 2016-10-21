@@ -19,10 +19,14 @@
       "active": true,
       "path": "/home/www-data/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/48/submission",
       "name": "möhren",
-      "type": "docx",
-      "output": "/home/www-data/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/48/submission/proofs",
+      
       "typesetters": {
-        "1": "metypeset"
+        "1": {
+          "metypeset": {
+            "input_type": "docx",
+            "output_path" :"metypeset"
+          }
+        }
       },
       "files": {
         "1": "48-69-240-1-2-20151208.docx",
