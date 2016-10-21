@@ -87,10 +87,15 @@ class PreProcess(Debuggable):
         for f in od_fs:
             mt = self.arguments_parse(ct)
             if self.check_program(ct.get('executable')):
-                fl = os.path.join(project.get('path'), od_fs[f])
+                ppath = project.get('path')
+                fl = os.path.join(ppath, od_fs[f])
                 if os.path.isfile(fl):
                     mt.append(fl)
-                    mt.append(os.path.join(project.get('path'), str(uuid.uuid4())))
+                    print project
+                    print 100*':'
+                    print ct
+                    
+                    mt.append(os.path.join(ppath, str(uuid.uuid4())))
                     self.typeset_file(project, mt, od_fs, f)
                 else:
                     self.debug.print_debug(self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + od_fs[f].encode('utf-8'))

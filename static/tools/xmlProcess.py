@@ -29,11 +29,10 @@ class xmlProcess(Debuggable):
     def __init__(self):
         self.args = self.read_command_line()
         self.gv = GV()
-        
-    
     @staticmethod
     def read_command_line():
         return docopt(__doc__, version='xml 0.1')
+    
     
         
 if __name__ == '__main__':
