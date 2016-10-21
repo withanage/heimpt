@@ -114,14 +114,14 @@ class PreProcess(Debuggable):
                         self.typeset_files(project, ct)
                     else:
                         self.debug.print_debug(
-                            self, u'typesetter is not available')
+                            self, self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
                 else:
                     self.debug.print_debug(
-                        self, u'typesetter varaible is not specified')
+                        self, self.gv.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED)
             else:
-                self.debug.print_debug(self, u'No typesetter is specified')
+                self.debug.print_debug(self, self.gv.PROJECT_TYPESETTER_IS_NOT_SPECIFIED)
         else:
-            self.debug.print_debug(self, u'project is not active')
+            self.debug.print_debug(self,self.gv.PROJECT_IS_NOT_ACTIVE)
 
     def typeset_projects(self):
         projects = self.config.get('projects')
@@ -130,7 +130,7 @@ class PreProcess(Debuggable):
                 self.tpyeset_project(p)
 
         else:
-            self.debug.print_debug(self, u'No projects were specified')
+            self.debug.print_debug(self, self.gv.PROJECTS_VAR_IS_NOT_SPECIFIED)
 
     def check_program(self, program):
         def is_exe(fpath):
