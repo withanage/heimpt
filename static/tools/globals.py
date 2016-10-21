@@ -2,12 +2,15 @@
 
 __author__ = "Dulip Withnage"
 
+import json, os
+from debug import Debuggable, Debug
+
 class GV(object):
     '''
     Global variables
     '''
     def __init__(self):
-        # json
+        # GLOBAL VARIABLES
         
         # projects
         self.PROJECT_INPUT_FILE_TYPE_IS_NOT_SPECIFIED   = u'input file type is not specified'
@@ -27,5 +30,33 @@ class GV(object):
         self.TYPESETTER_IS_NOT_SPECIFIED                = u'typesetter is not specified '
         self.TYPESETTER_PATH_IS_NOT_SPECIFIED           = u'typesetter path is not specified '
         self.TYPESETTER_BINARY_IS_UNAVAILABLE           = u'typesetter binary is unavailable '
+        self.TYPESETTER_RUNS_WITH_NO_ARGUMENTS          = u'typesetter runs with no arguments'
+        
+    # xml process
+    @staticmethod
+    def fatal_error(module, message):
+        print(u'[FATAL ERROR] [{0}] {1}'.format(
+            module.get_module_name(), message))
+        sys.exit(1)
+
+    def is_json(self, j):
+        try:
+            return json.loads(j)
+        except ValueError as e:
+            return False
+        return True
+
+    def read_json(self, f):
+        if os.path.isfile(f):
+            with open(f) as j:
+                return json.load(j)
+        else:
+            self.debug.print_debug(self,)
+            sys.exit(1)
+    
+    
+        
+        
+        
         
         
