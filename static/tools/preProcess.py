@@ -8,6 +8,7 @@ Options:
 """
 
 __author__ = "Dulip Withnage"
+
 import os
 import collections
 import json
@@ -17,7 +18,6 @@ from globals import GV
 from debug import Debuggable, Debug
 from docopt import docopt
 from subprocess import Popen, PIPE
-from attrdict import AttrDict
 from numpy.ctypeslib import ct
 
 
@@ -33,7 +33,7 @@ class PreProcess(Debuggable):
             self.debug.enable_debug()
 
     def run(self):
-        self.config = self.read_json(self.args['<config_file>'])
+        self.config = self.gv.read_json(self.args['<config_file>'])
         self.typeset_projects()
         return
 
@@ -44,26 +44,7 @@ class PreProcess(Debuggable):
     def get_module_name(self):
         return 'Pre Processing'
 
-    @staticmethod
-    def fatal_error(module, message):
-        print(u'[FATAL ERROR] [{0}] {1}'.format(
-            module.get_module_name(), message))
-        sys.exit(1)
-
-    def is_json(self, j):
-        try:
-            return json.loads(j)
-        except ValueError as e:
-            return False
-        return True
-
-    def read_json(self, f):
-        if os.path.isfile(f):
-            with open(f) as j:
-                return json.load(j)
-        else:
-            self.debug.print_debug(self,)
-            sys.exit(1)
+   
 
     def typeset_run(self, mt):
         m = ' '.join(mt).strip().split(' ')
@@ -90,6 +71,7 @@ class PreProcess(Debuggable):
             self.debug.print_debug(self, self.gv.TYPESETTER_IS_NOT_SPECIFIED)
             sys.exit(1)
         argmts = ct.get("arguments")
+        print ct
         if argmts:
             argmts = collections.OrderedDict(sorted(argmts.items()))
             for a in argmts:
