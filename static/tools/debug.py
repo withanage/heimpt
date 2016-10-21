@@ -4,6 +4,7 @@
 # Author    : Dulip Withanage , University of Heidelberg
 import sys
 
+
 class Debuggable(object):
 
     def __init__(self, module_name):
@@ -31,7 +32,7 @@ class Debug(object):
 
     def get_module_name(self):
         return 'Debugger'
-    
+
     @staticmethod
     def fatal_error(module, message):
         print(u'[FATAL ERROR] [{0}] {1}'.format(module.get_module_name(), message))
