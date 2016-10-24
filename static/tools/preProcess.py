@@ -109,7 +109,7 @@ class PreProcess(Debuggable):
                         if ct:
                             self.typeset_files(project, ct)
                         else:
-                            self.debug.print_debug(self, self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
+                            self.debug.print_debug(self, typesetter,self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
                     else:
                         self.debug.print_debug(self, self.gv.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED)
                 else:
