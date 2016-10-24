@@ -44,8 +44,6 @@ class PreProcess(Debuggable):
     def get_module_name(self):
         return 'Pre Processing'
 
-   
-
     def typeset_run(self, mt):
         m = ' '.join(mt).strip().split(' ')
         print ' '.join(mt)
@@ -71,7 +69,6 @@ class PreProcess(Debuggable):
             self.debug.print_debug(self, self.gv.TYPESETTER_IS_NOT_SPECIFIED)
             sys.exit(1)
         argmts = ct.get("arguments")
-        print ct
         if argmts:
             argmts = collections.OrderedDict(sorted(argmts.items()))
             for a in argmts:
@@ -91,10 +88,6 @@ class PreProcess(Debuggable):
                 fl = os.path.join(ppath, od_fs[f])
                 if os.path.isfile(fl):
                     mt.append(fl)
-                    print project
-                    print 100*':'
-                    print ct
-                    
                     mt.append(os.path.join(ppath, str(uuid.uuid4())))
                     self.typeset_file(project, mt, od_fs, f)
                 else:
@@ -105,6 +98,7 @@ class PreProcess(Debuggable):
 
    
     def typesets_run(self, project, pts):
+        print pts
         for i in pts:
             if pts[i]:
                 if pts[i].get("name"):
