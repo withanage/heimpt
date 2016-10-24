@@ -104,13 +104,11 @@ class PreProcess(Debuggable):
         for i in pts:
              
             if pts[i]:
-                print pts[i]
                 if pts[i].get("name"):
                     typesetter = pts[i].get("name")
                     tss = self.config.get('typesetters')
                     if tss:
                         ct = tss.get(typesetter)
-                        print "ct", ct
                         if ct:
                             self.typeset_files(project, ct)
                         else:
