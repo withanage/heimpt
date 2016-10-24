@@ -54,7 +54,11 @@ class GV(object):
             self.debug.print_debug(self,)
             sys.exit(1)
     
-    
+    def create_output_path(self, project):
+        print project
+        
+    #def  reorganize_metypeset_output(self, path, project):
+        
         
         
         

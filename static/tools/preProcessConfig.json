@@ -6,12 +6,14 @@
         "1": "docx",
         "2": "--debug",
         "3": "--nogit"
-      },
-      "pandoc": {
-        "excecutable": "pandoc",
-        "arguments": {}
-      },
-      "xmlProcess": "xmlprocess",
+      }
+    },
+    "pandoc": {
+      "excecutable": "pandoc",
+      "arguments": {}
+    },
+    "xmlProcess": {
+      "excecutable": "xmlprocess",
       "arguments": {}
     }
   },
@@ -22,11 +24,17 @@
       "name": "möhren",
       "typesetters": {
         "1": {
-          "name": "metypeset"
+          "name": "metypeset",
+          "in_type": "docx",
+          "out_type": "xml",
+          "out_dir": "MT",
+          "temp_dir": true
         },
         "2": {
-          "name": "xmlprocess"
-          "merge":true
+          "name": "xmlprocess",
+          "in_type": "xml",
+          "out_type": "xml",
+          "merge": true
         }
       },
       "files": {
