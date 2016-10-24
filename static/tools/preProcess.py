@@ -19,6 +19,7 @@ from debug import Debuggable, Debug
 from docopt import docopt
 from subprocess import Popen, PIPE
 from numpy.ctypeslib import ct
+from termcolor import colored
 
 
 class PreProcess(Debuggable):
@@ -83,13 +84,15 @@ class PreProcess(Debuggable):
         
         for f in od_fs:
             mt = self.arguments_parse(ct)
+            print od_fs[f]
             if self.check_program(ct.get('executable')):
                 ppath = project.get('path')
                 fl = os.path.join(ppath, od_fs[f])
                 if os.path.isfile(fl):
                     mt.append(fl)
                     mt.append(os.path.join(ppath, str(uuid.uuid4())))
-                    self.typeset_file(project, mt, od_fs, f)
+                    self.gv.create_output_path(project)
+                    #self.typeset_file(project, mt, od_fs, f)
                 else:
                     self.debug.print_debug(self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + od_fs[f].encode('utf-8'))
             else:
@@ -98,18 +101,20 @@ class PreProcess(Debuggable):
 
    
     def typesets_run(self, project, pts):
-        print pts
         for i in pts:
+             
             if pts[i]:
+                print pts[i]
                 if pts[i].get("name"):
                     typesetter = pts[i].get("name")
                     tss = self.config.get('typesetters')
                     if tss:
                         ct = tss.get(typesetter)
+                        print "ct", ct
                         if ct:
                             self.typeset_files(project, ct)
                         else:
-                            self.debug.print_debug(self, typesetter,self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
+                            self.debug.print_debug(self, colored(typesetter, 'red')+" "+self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
                     else:
                         self.debug.print_debug(self, self.gv.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED)
                 else:
