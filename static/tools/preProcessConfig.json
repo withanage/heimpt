@@ -10,7 +10,9 @@
       "pandoc": {
         "excecutable": "pandoc",
         "arguments": {}
-      }
+      },
+      "xmlProcess": "xmlprocess",
+      "arguments": {}
     }
   },
   "projects": [
@@ -20,10 +22,11 @@
       "name": "möhren",
       "typesetters": {
         "1": {
-          "name": "pandoc"
+          "name": "metypeset"
         },
         "2": {
-          "name": "metypeset"
+          "name": "xmlprocess"
+          "merge":true
         }
       },
       "files": {
