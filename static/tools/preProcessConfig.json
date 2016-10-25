@@ -1,0 +1,81 @@
+{
+  "typesetters": {
+    "metypeset": {
+      "executable": "/home/wit/projects/meTypeset/bin/meTypeset.py",
+      "arguments": {
+        "1": "docx",
+        "2": "--debug",
+        "3": "--nogit"
+      }
+    },
+    "pandoc": {
+      "excecutable": "pandoc",
+      "arguments": {}
+    },
+    "xmlProcess": {
+      "excecutable": "xmlprocess",
+      "arguments": {}
+    }
+  },
+  "projects": [
+    {
+      "active": true,
+      "path": "/home/www-data/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/48/submission",
+      "name": "moehren",
+      "typesetters": {
+        "1": {
+          "name": "metypeset",
+          "in_type": "docx",
+          "out_type": "xml",
+          "out_dir": "MT",
+          "temp_dir": true
+        },
+        "2": {
+          "name": "xmlprocess",
+          "in_type": "xml",
+          "out_type": "xml",
+          "merge": true
+        }
+      },
+      "files": {
+        "1": "48-69-240-1-2-20151208.docx",
+        "2": "48-69-241-1-2-20151208.docx"
+      }
+    }
+  ],
+  "documentatin": {
+    "typesetters": {
+      "meTypeset": {
+        "metadata": "meTypeset/metadata/metadataSample.xml",
+        "debug": true,
+        "identifiers": true,
+        "interactive": true,
+        "noimageprocessing": true,
+        "nolink": true,
+        "nometa": true,
+        "settings": "settings_file_path",
+        "zotero": true,
+        "proprietary": true,
+        "path": "relative_path_to_typesetter",
+        "language": "programming_language"
+      }
+    },
+    "projects": [
+      {
+        "active": true,
+        "output": "output_path_relative_to_path_variable",
+        "path": "full_path_to_input_folder",
+        "name": "test_project",
+        "type": "docx/doc/odt",
+        "typesetters": {
+          "1": "id_of_typesetter",
+          "2": "id_of_typestter"
+        },
+        "files": {
+          "1": "48-69-240-1-2-20151208.docx",
+          "2": "48-69-241-1-2-20151208.docx"
+        }
+      }
+    ]
+  }
+}

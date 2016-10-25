@@ -4265,13 +4265,11 @@
             <caption>
               <p/>
             </caption>
-            <table>
-              <tr>
-                <td colspan="1" rowspan="1">PLACE ON STUDENT MAP</td>
-                <td colspan="1" rowspan="1">GERMAN SCHOOL (13)</td>
-                <td colspan="1" rowspan="1">BRITISH SCHOOL (3)</td>
-                <td colspan="1" rowspan="1">SINGAPOREAN SCHOOL (17)</td>
-                <td colspan="1" rowspan="1">ALL<break/>STUDENTS (33)</td>
+           	   <table style="border:1px solid lightgrey">
+                         <th colspan="1" rowspan="1">PLACE ON STUDENT MAP</th>
+                             <th colspan="1" rowspan="1">GERMAN SCHOOL (13)</th>
+                             <th colspan="1" rowspan="1">BRITISH SCHOOL (3)</th>
+                            <th colspan="1" rowspan="1">SINGAPOREAN SCHOOL (17)</th>
               </tr>
               <tr>
                 <td colspan="1" rowspan="1">Home </td>
