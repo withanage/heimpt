@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Usage:
-    xmlProcess.py  <config_file> [options]
+    xmlProcess.py  <config_file>   <input_file> <path> [options] 
 Options:
     -d, --debug                                     Enable debug output
 """
@@ -36,9 +36,20 @@ class XMLProcess(Debuggable):
     def read_command_line():
         return docopt(__doc__, version='xml 0.1')
     
+    def process_xml_files(self):
+        
+        return
     
+    def run(self):
+        self.config = self.gv.read_json(self.args['<config_file>'])
+        self.process_xml_files()
+        return
+
 def main():
-    ppo = XMLProcess()
+    xp = XMLProcess()
+    xp.run()
+    
+    
    
 if __name__ == '__main__':
     main()

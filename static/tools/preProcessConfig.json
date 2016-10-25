@@ -1,7 +1,7 @@
 {
   "typesetters": {
     "metypeset": {
-      "executable": "/home/wit/projects/meTypeset/bin/meTypeset.py",
+      "executable": "/home/wit/projects/mpt/static/tools/meTypeset/bin/meTypeset.py",
       "arguments": {
         "1": "docx",
         "2": "--debug",
@@ -12,16 +12,19 @@
       "excecutable": "pandoc",
       "arguments": {}
     },
-    "xmlProcess": {
-      "excecutable": "xmlprocess",
-      "arguments": {}
+    "xmlprocess": {
+      "executable": "/home/wit/projects/mpt/static/tools/xmlProcess.py",
+      "arguments": {
+      	"1":"--debug",
+      	"2":"xmlProcessConfig.json"
+      }
     }
   },
   "projects": [
     {
       "active": true,
       "path": "/home/wit/projects/mpt/static/tests/word/src",
-      "name": "moehren",
+      "name": "möhren",
       "typesetters": {
         "1": {
           "name": "metypeset",

@@ -24,7 +24,8 @@ class Debug(object):
         ''' Print debug message '''
         if self.debug:
             if not isinstance(message, unicode):
-                self.fatal_error(self, u'A non unicode string was passed to the debugger')
+                self.fatal_error(
+                    self, u'A non unicode string was passed to the debugger')
             self.print_(module, message)
 
     def print_(self, module, message):
@@ -35,5 +36,6 @@ class Debug(object):
 
     @staticmethod
     def fatal_error(module, message):
-        print(u'[FATAL ERROR] [{0}] {1}'.format(module.get_module_name(), message))
+        print(u'[FATAL ERROR] [{0}] {1}'.format(
+            module.get_module_name(), message))
         sys.exit(1)
