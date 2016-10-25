@@ -54,10 +54,29 @@ class GV(object):
             self.debug.print_debug(self,)
             sys.exit(1)
     
- 
+    def reorganize_output(self, ppath, project, typesetter, i, time_now, file_prefix, od_fs, f, uid):
+        temp_path = [ppath, uid]
+        if typesetter=='metypeset':
+            temp_path = temp_path + ['nlm'] 
+            print temp_path
+        out_type = project['typesetters'][i]['out_type']
+        out_file = file_prefix+'.'+out_type
+        temp_path.append(out_file)
+        temp_path = '/'.join(temp_path)
+        if os.path.isfile(temp_path):
+            project_path = [ppath, project['name'], time_now,  i+'_'+typesetter,out_type]
+            if os.path.isdir(project_path) == False:
+                os.makedirs(project_path, '0o777')
+            project_path = '/'.join([project_path, out_file])
+            print project_path
+          #os.rename(temp_path, project_path
+        else:
+              
+          
+          
+    
         
-    #def  reorganize_metypeset_output(self, path, project):
-        
+                   
         
         
         

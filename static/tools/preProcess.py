@@ -14,6 +14,7 @@ import collections
 import json
 import sys
 import uuid
+import datetime
 from globals import GV
 from debug import Debuggable, Debug
 from docopt import docopt
@@ -78,7 +79,9 @@ class PreProcess(Debuggable):
             self.debug.print_debug(self, self.gv.TYPESETTER_RUNS_WITH_NO_ARGUMENTS)
         return mt
 
-    def typeset_files(self, project, tss, typesetter, i):
+
+    
+    def typeset_files(self, project, tss, typesetter, i, time_now):
         file_prefix = ''
         fs = project.get('files')
         od_fs = collections.OrderedDict(sorted(fs.items()))
@@ -92,7 +95,7 @@ class PreProcess(Debuggable):
                     fl = os.path.join(ppath, od_fs[f])
                     if os.path.isfile(fl):
                         mt.append(fl)
-                        temp_path = str(uuid.uuid4())[:8]
+                        uid = str(uuid.uuid4())[:8]
                         file_name = od_fs[f].split('.')
                         if file_name:
                             if len(file_name)==2:
@@ -101,12 +104,12 @@ class PreProcess(Debuggable):
                                 self.debug.print_debug(self, self.gv.PROJECT_INPUT_FILE_HAS_MORE_THAN_TWO_DOTS)
                         else:
                             self.debug.print_debug(self, colored(od_fs[f], 'red')+" "+self.gv.PROJECT_INPUT_FILE_TYPE_IS_NOT_SPECIFIED)
-                            
-                        print temp_path,  '/', od_fs[f],'/', 'nlm',  '/', file_prefix,'.', project['typesetters'][i]['out_type']
-                        mt.append(os.path.join(ppath, temp_path))
-                        print project['name'],'_',i ,'/',typesetter,'/', project['typesetters'][i]['out_type'], '/', od_fs[f]
-                        #TODO: reactivate 
-                        #self.typeset_file(project, mt, od_fs, f)
+                        #TODO: reactivate
+                        mt.append(os.path.join(ppath, uid))
+                        self.typeset_file(project, mt, od_fs, f)
+                        self.gv.reorganize_output(ppath, project, typesetter, i, time_now, file_prefix, od_fs, f, uid)
+                        
+                        
                     else:
                         self.debug.print_debug(self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + od_fs[f].encode('utf-8'))
                 else:
@@ -117,13 +120,15 @@ class PreProcess(Debuggable):
         return
                
     def typesets_run(self, project, project_typestters):
+        time_now = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+        
         for i in project_typestters:
             if project_typestters[i]:
                 if project_typestters[i].get("name"):
                     typesetter = project_typestters[i].get("name")
                     tss = self.config.get('typesetters')
                     if tss:
-                        self.typeset_files(project, tss, typesetter, i)
+                        self.typeset_files(project, tss, typesetter, i, time_now)
                     else:
                         self.debug.print_debug(self, self.gv.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED)
                 else:
