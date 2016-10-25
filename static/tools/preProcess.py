@@ -79,6 +79,7 @@ class PreProcess(Debuggable):
         return mt
 
     def typeset_files(self, project, tss, typesetter, i):
+        file_prefix = ''
         fs = project.get('files')
         od_fs = collections.OrderedDict(sorted(fs.items()))
         
@@ -92,11 +93,18 @@ class PreProcess(Debuggable):
                     if os.path.isfile(fl):
                         mt.append(fl)
                         temp_path = str(uuid.uuid4())[:8]
-                        print temp_path
+                        file_name = od_fs[f].split('.')
+                        if file_name:
+                            if len(file_name)==2:
+                                file_prefix =file_name[0]
+                            else:
+                                self.debug.print_debug(self, self.gv.PROJECT_INPUT_FILE_HAS_MORE_THAN_TWO_DOTS)
+                        else:
+                            self.debug.print_debug(self, colored(od_fs[f], 'red')+" "+self.gv.PROJECT_INPUT_FILE_TYPE_IS_NOT_SPECIFIED)
+                            
+                        print temp_path,  '/', od_fs[f],'/', 'nlm',  '/', file_prefix,'.', project['typesetters'][i]['out_type']
                         mt.append(os.path.join(ppath, temp_path))
-                        self.gv.create_output_path(project)
-                        print  i, '\n', project,'\n', tss, '\n',typesetter,'\n', od_fs[f],'\n', '-'*100
-                        print project['name'],'_',i ,'/', 
+                        print project['name'],'_',i ,'/',typesetter,'/', project['typesetters'][i]['out_type'], '/', od_fs[f]
                         #TODO: reactivate 
                         #self.typeset_file(project, mt, od_fs, f)
                     else:

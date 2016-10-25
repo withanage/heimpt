@@ -13,8 +13,9 @@ class GV(object):
         # GLOBAL VARIABLES
         
         # projects
-        self.PROJECT_INPUT_FILE_TYPE_IS_NOT_SPECIFIED   = u'input file type is not specified'
-        self.PROJECT_INPUT_FILE_DOES_NOT_EXIST          = u'input_file does not exist'
+        self.PROJECT_INPUT_FILE_TYPE_IS_NOT_SPECIFIED   = u'project input file type is not specified'
+        self.PROJECT_INPUT_FILE_HAS_MORE_THAN_TWO_DOTS  = u'project input file has more than two dots'
+        self.PROJECT_INPUT_FILE_DOES_NOT_EXIST          = u'project input_file does not exist'
         self.PROJECT_IS_NOT_ACTIVE                      = u'project is not active'
         self.PROJECT_TYPESETTER_IS_NOT_AVAILABLE        = u'project typesetter is not available'
         self.PROJECT_TYPESETTER_IS_NOT_SPECIFIED        = u'project typesetter is not specified'
@@ -53,8 +54,7 @@ class GV(object):
             self.debug.print_debug(self,)
             sys.exit(1)
     
-    def create_output_path(self, project):
-        print ''
+ 
         
     #def  reorganize_metypeset_output(self, path, project):
         
