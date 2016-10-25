@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!-- $Id: fop.xconf 1616312 2014-08-06 19:19:31Z gadams $ -->
+
+<!--
+
+This is an example configuration file for FOP.
+This file contains the same settings as the default values
+and will have no effect if used unchanged.
+
+Relative config url's will be resolved relative to
+the location of this file.
+
+-->
+
+<!-- NOTE: This is the version of the configuration -->
+<fop version="1.0">
+
+  <renderers>
+
+    <renderer mime="application/pdf">
+
+      <fonts>
+    
+        <font kerning="yes" embed-url="/Volumes/DATENSTICK/14 XSL-FO/static/fonts-ttf/LinLibertine_Rah.ttf">
+            <font-triplet name="Linux Libertine O" style="normal" weight="normal"/>
+        </font>
+        <font kerning="yes" embed-url="/Volumes/DATENSTICK/14 XSL-FO/static/fonts-ttf/LinLibertine_RIah.ttf">
+          <font-triplet name="Linux Libertine O" style="italic" weight="normal"/>
+        </font>
+        <font kerning="yes" embed-url="/Volumes/DATENSTICK/14 XSL-FO/static/fonts-ttf/LinLibertine_RZah.ttf">
+          <font-triplet name="Linux Libertine O" style="italic" weight="bold"/>
+        </font>
+        <font kerning="yes" embed-url="/Volumes/DATENSTICK/14 XSL-FO/static/fonts-ttf/LinLibertine_RZIah.ttf">
+          <font-triplet name="Linux Libertine O" style="italic" weight="bold"/>
+        </font>
+       
+      </fonts>
+
+    </renderer>
+
+  </renderers>
+
+</fop>

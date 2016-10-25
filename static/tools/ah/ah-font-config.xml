@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- DOCTYPE font-config SYSTEM "font-config.dtd" -->
+<font-config otf-metrics-mode="typographic">
+  <!-- add your font folder here -->
+  
+  <!-- OSX system folders -->
+  
+  <font-folder path="/System/Library/Fonts"/>
+  <font-folder path="/Library/Fonts"/>
+
+  <!-- Font folder of formatter -->
+  
+  <font-folder path="/Volumes/DATENSTICK/14 XSL-FO/static/fonts/"/>
+  
+  <!-- Antenna House font folder -->
+
+  <font-folder path="/usr/local/AHFormatterV63/fonts">
+    <font-entry file="ZapfDingbats.afm"
+          glyph-list="ZapfDingbats-glyphname.txt"/>
+  </font-folder>
+</font-config>
