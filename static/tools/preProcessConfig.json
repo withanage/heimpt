@@ -20,7 +20,7 @@
   "projects": [
     {
       "active": true,
-      "path": "/home/www-data/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/48/submission",
+      "path": "/home/wit/projects/mpt/static/tests/word/src",
       "name": "moehren",
       "typesetters": {
         "1": {
@@ -29,6 +29,29 @@
           "out_type": "xml",
           "out_dir": "MT",
           "temp_dir": true
+        },
+        "2": {
+          "name": "xmlprocess",
+          "in_type": "xml",
+          "out_type": "xml",
+          "merge": true
+        }
+      },
+      "files": {
+        "1": "Superscript_Subscript_Strike.docx",
+        "2": "Endnotes_DE.docx"
+      }
+    },
+    {
+      "active": false,
+      "path": "/home/www-data/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/48/submission",
+      "name": "möhren old",
+      "typesetters": {
+        "1": {
+          "name": "metypeset",
+          "in_type": "docx",
+          "out_type": "xml",
+          "out_dir": "MT"
         },
         "2": {
           "name": "xmlprocess",
