@@ -47,7 +47,7 @@ class PreProcess(Debuggable):
 
     def typeset_run(self, mt):
         m = ' '.join(mt).strip().split(' ')
-        print ' '.join(mt)
+        print 'Final path',' '.join(mt)
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
         exit_code = process.wait()
@@ -78,41 +78,44 @@ class PreProcess(Debuggable):
             self.debug.print_debug(self, self.gv.TYPESETTER_RUNS_WITH_NO_ARGUMENTS)
         return mt
 
-    def typeset_files(self, project, ct):
+    def typeset_files(self, project, tss, typesetter, i):
         fs = project.get('files')
         od_fs = collections.OrderedDict(sorted(fs.items()))
         
         for f in od_fs:
-            mt = self.arguments_parse(ct)
-            print od_fs[f]
-            if self.check_program(ct.get('executable')):
-                ppath = project.get('path')
-                fl = os.path.join(ppath, od_fs[f])
-                if os.path.isfile(fl):
-                    mt.append(fl)
-                    mt.append(os.path.join(ppath, str(uuid.uuid4())))
-                    self.gv.create_output_path(project)
-                    #self.typeset_file(project, mt, od_fs, f)
+            ct = tss.get(typesetter)
+            if ct:
+                mt = self.arguments_parse(ct)
+                if self.check_program(ct.get('executable')):
+                    ppath = project.get('path')
+                    fl = os.path.join(ppath, od_fs[f])
+                    if os.path.isfile(fl):
+                        mt.append(fl)
+                        temp_path = str(uuid.uuid4())[:8]
+                        print temp_path
+                        mt.append(os.path.join(ppath, temp_path))
+                        self.gv.create_output_path(project)
+                        print  i, '\n', project,'\n', tss, '\n',typesetter,'\n', od_fs[f],'\n', '-'*100
+                        print project['name'],'_',i ,'/', 
+                        #TODO: reactivate 
+                        #self.typeset_file(project, mt, od_fs, f)
+                    else:
+                        self.debug.print_debug(self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + od_fs[f].encode('utf-8'))
                 else:
-                    self.debug.print_debug(self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + od_fs[f].encode('utf-8'))
+                    self.debug.print_debug(
+                        self, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
             else:
-                self.debug.print_debug(
-                    self, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
-
-   
-    def typesets_run(self, project, pts):
-        for i in pts:
-             
-            if pts[i]:
-                if pts[i].get("name"):
-                    typesetter = pts[i].get("name")
+                self.debug.print_debug(self, colored(typesetter, 'red')+" "+self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
+        return
+               
+    def typesets_run(self, project, project_typestters):
+        for i in project_typestters:
+            if project_typestters[i]:
+                if project_typestters[i].get("name"):
+                    typesetter = project_typestters[i].get("name")
                     tss = self.config.get('typesetters')
                     if tss:
-                        ct = tss.get(typesetter)
-                        if ct:
-                            self.typeset_files(project, ct)
-                        else:
-                            self.debug.print_debug(self, colored(typesetter, 'red')+" "+self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
+                        self.typeset_files(project, tss, typesetter, i)
                     else:
                         self.debug.print_debug(self, self.gv.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED)
                 else:

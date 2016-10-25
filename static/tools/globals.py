@@ -32,7 +32,6 @@ class GV(object):
         self.TYPESETTER_BINARY_IS_UNAVAILABLE           = u'typesetter binary is unavailable '
         self.TYPESETTER_RUNS_WITH_NO_ARGUMENTS          = u'typesetter runs with no arguments'
         
-    # xml process
     @staticmethod
     def fatal_error(module, message):
         print(u'[FATAL ERROR] [{0}] {1}'.format(
@@ -55,7 +54,7 @@ class GV(object):
             sys.exit(1)
     
     def create_output_path(self, project):
-        print project
+        print ''
         
     #def  reorganize_metypeset_output(self, path, project):
         
