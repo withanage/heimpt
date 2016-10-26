@@ -56,12 +56,6 @@ class PreProcess(Debuggable):
             print output
         return output, err, exit_code
 
-    def typeset_file(self, project, mt, od_fs, f):
-        if project.get('path'):
-            self.typeset_run(mt)
-        else:
-            self.debug.print_debug(
-                self, self.gv.TYPESETTER_METADATA_FILE_WAS_NOT_SPECIFIED)
 
     def arguments_parse(self, ct):
         mt = []
@@ -81,42 +75,44 @@ class PreProcess(Debuggable):
         return mt
 
 
-    def create_input_files(self, project, typesetter_id):
-        ppath = project.get('path')
-        print 'typesetter_id=',typesetter_id
-        print json.dumps(project, indent=4, sort_keys=True)
-        if typesetter_id == min (i for i in project['typesetters']): 
-            fs = project.get('files')
-            od_fs = collections.OrderedDict(sorted(fs.items()))
-        
-        else:
-            pass
-       
-        return ppath, od_fs
-
+        #print json.dumps(project, indent=4, sort_keys=True)
+        #if typestter_id == min (i for i in project['typesetters']): 
+   
     def typeset_files(self, project, tss, typesetter, typesetter_id, time_now):
+        uid = str(uuid.uuid4())[:8]
         file_prefix = ''
-        ppath, od_fs = self.create_input_files(project,typesetter_id )
         
-        for f in od_fs:
+        fs = project.get('files')
+        project_files = collections.OrderedDict(sorted(fs.items()))
+        for file_ in project_files:
             ct = tss.get(typesetter)
             if ct:
                 mt = self.arguments_parse(ct)
                 if self.check_program(ct.get('executable')):
-                    #TODO
+                    project_path = project.get('path')
                     
-                    fl = os.path.join(ppath, od_fs[f])
+                    fl = os.path.join(project_path, project_files[file_])
                     if os.path.isfile(fl):
                         mt.append(fl)
-                        uid = str(uuid.uuid4())[:8]
-                        mt.append(os.path.join(ppath, uid))
-                        #typeset file
-                        self.typeset_file(project, mt, od_fs, file_prefix+out_type)
+                        file_name = project_files[file_].split('.')
+                        file_prefix = file_name[0]
+                        mt.append(os.path.join(project_path, uid))
+                        self.typeset_run(mt)
+                        '''
+                        print 100*'-'
+                        print project_path
+                        print json.dumps(project, indent=4, sort_keys=True)
+                        print 'typesetter', typesetter
+                        print time_now
+                        print file_prefix
+                        print 'file_=file_id',file_
+                        print uid
+                        '''
                         self.gv.reorganize_output(
-                            ppath, project, typesetter, typesetter_id, time_now, file_prefix,  f, uid)
+                            project_path, project, typesetter, typesetter_id, time_now, file_prefix,  file_, uid)
                     else:
                         self.debug.print_debug(
-                            self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + od_fs[f].encode('utf-8'))
+                            self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + project_files[file_].encode('utf-8'))
                 else:
                     self.debug.print_debug(
                         self, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)

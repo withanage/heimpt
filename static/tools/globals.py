@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__author__ = "Dulip Withnage"
+__author__ = "Dulip Withanage"
 
 import json
 import os
