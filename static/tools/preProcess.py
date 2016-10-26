@@ -84,35 +84,32 @@ class PreProcess(Debuggable):
         
         fs = project.get('files')
         project_files = collections.OrderedDict(sorted(fs.items()))
-        for file_ in project_files:
+        for file_id in project_files:
             ct = tss.get(typesetter)
             if ct:
                 mt = self.arguments_parse(ct)
                 if self.check_program(ct.get('executable')):
                     project_path = project.get('path')
                     
-                    fl = os.path.join(project_path, project_files[file_])
-                    if os.path.isfile(fl):
-                        mt.append(fl)
-                        file_name = project_files[file_].split('.')
+                    file_path = os.path.join(project_path, project_files[file_id])
+                    if os.path.isfile(file_path):
+                        mt.append(file_path)
+                        file_name = project_files[file_id].split('.')
                         file_prefix = file_name[0]
                         mt.append(os.path.join(project_path, uid))
                         self.typeset_run(mt)
-                        '''
                         print 100*'-'
                         print project_path
                         print json.dumps(project, indent=4, sort_keys=True)
                         print 'typesetter', typesetter
                         print time_now
                         print file_prefix
-                        print 'file_=file_id',file_
+                        print 'file_id=file_id',file_id
                         print uid
-                        '''
-                        self.gv.reorganize_output(
-                            project_path, project, typesetter, typesetter_id, time_now, file_prefix,  file_, uid)
+                        self.gv.reorganize_output(project_path, project, typesetter, typesetter_id, time_now, file_prefix,  file_id, uid)
                     else:
                         self.debug.print_debug(
-                            self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + project_files[file_].encode('utf-8'))
+                            self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + project_files[file_id].encode('utf-8'))
                 else:
                     self.debug.print_debug(
                         self, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)

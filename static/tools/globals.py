@@ -72,7 +72,7 @@ class GV(object):
                 os.makedirs(p)
         return p
 
-    def reorganize_output(self, ppath, project, typesetter, i, time_now, file_prefix, f, uid):
+    def reorganize_output(self, ppath, project, typesetter, i, time_now, file_prefix, file_id, uid):
         temp_path = [ppath, uid]
         
         if typesetter == 'metypeset':
