@@ -122,7 +122,7 @@ class PreProcess(Debuggable):
         return
 
     def typesets_run(self, project, project_typestters):
-        time_now = datetime.datetime.now().strftime("%Y_%m_%d-%H-%M-%S")
+        time_now = datetime.datetime.now().strftime("%Y_%m_%d-%H-%M-")+str(uuid.uuid4())[:8]
 
         for i in project_typestters:
             if project_typestters[i]:
