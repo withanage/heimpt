@@ -70,23 +70,23 @@ class GV(object):
             p = p + os.path.sep + path.strip('/').strip('/')
             if not os.path.exists(p):
                 os.makedirs(p)
-
         return p
 
-    def reorganize_output(self, ppath, project, typesetter, i, time_now, file_prefix, od_fs, f, uid):
+    def reorganize_output(self, ppath, project, typesetter, i, time_now, file_prefix, f, uid):
         temp_path = [ppath, uid]
+        
         if typesetter == 'metypeset':
             temp_path = temp_path + ['nlm']
         out_type = project['typesetters'][i]['out_type']
-        out_file = file_prefix + '.' + out_type
-        temp_path.append(out_file)
+        temp_path.append(file_prefix + '.' + out_type)
         temp_file = os.path.sep.join(temp_path)
         if os.path.isfile(temp_file):
             project_path = [ppath, project['name'],time_now,  i + '_' + typesetter, out_type]
             p = self.create_dirs_recursive(project_path)
-            file_path = p + os.path.sep + out_file
+            file_path = p + os.path.sep + file_prefix + '.' + out_type
             os.rename(temp_file, file_path)
             shutil.rmtree(os.path.join(ppath, uid))
         else:
             self.debug.print_debug(
                 self, self.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
+            

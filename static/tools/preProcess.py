@@ -80,36 +80,40 @@ class PreProcess(Debuggable):
                 self, self.gv.TYPESETTER_RUNS_WITH_NO_ARGUMENTS)
         return mt
 
-    def typeset_files(self, project, tss, typesetter, i, time_now):
-        file_prefix = ''
-        fs = project.get('files')
-        od_fs = collections.OrderedDict(sorted(fs.items()))
 
+    def create_input_files(self, project, typesetter_id):
+        ppath = project.get('path')
+        print 'typesetter_id=',typesetter_id
+        print json.dumps(project, indent=4, sort_keys=True)
+        if typesetter_id == min (i for i in project['typesetters']): 
+            fs = project.get('files')
+            od_fs = collections.OrderedDict(sorted(fs.items()))
+        
+        else:
+            pass
+       
+        return ppath, od_fs
+
+    def typeset_files(self, project, tss, typesetter, typesetter_id, time_now):
+        file_prefix = ''
+        ppath, od_fs = self.create_input_files(project,typesetter_id )
+        
         for f in od_fs:
             ct = tss.get(typesetter)
             if ct:
                 mt = self.arguments_parse(ct)
                 if self.check_program(ct.get('executable')):
-                    ppath = project.get('path')
+                    #TODO
+                    
                     fl = os.path.join(ppath, od_fs[f])
                     if os.path.isfile(fl):
                         mt.append(fl)
                         uid = str(uuid.uuid4())[:8]
-                        file_name = od_fs[f].split('.')
-                        if file_name:
-                            if len(file_name) == 2:
-                                file_prefix = file_name[0]
-                            else:
-                                self.debug.print_debug(
-                                    self, self.gv.PROJECT_INPUT_FILE_HAS_MORE_THAN_TWO_DOTS)
-                        else:
-                            self.debug.print_debug(self, colored(
-                                od_fs[f], 'red') + " " + self.gv.PROJECT_INPUT_FILE_TYPE_IS_NOT_SPECIFIED)
                         mt.append(os.path.join(ppath, uid))
-                        self.typeset_file(project, mt, od_fs, f)
-                        print ppath, project, typesetter, i, time_now, file_prefix, od_fs, f, uid
+                        #typeset file
+                        self.typeset_file(project, mt, od_fs, file_prefix+out_type)
                         self.gv.reorganize_output(
-                            ppath, project, typesetter, i, time_now, file_prefix, od_fs, f, uid)
+                            ppath, project, typesetter, typesetter_id, time_now, file_prefix,  f, uid)
                     else:
                         self.debug.print_debug(
                             self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + od_fs[f].encode('utf-8'))
