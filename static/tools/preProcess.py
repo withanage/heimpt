@@ -106,8 +106,8 @@ class PreProcess(Debuggable):
                             self.debug.print_debug(self, colored(
                                 od_fs[f], 'red') + " " + self.gv.PROJECT_INPUT_FILE_TYPE_IS_NOT_SPECIFIED)
                         mt.append(os.path.join(ppath, uid))
-                        print "mt", mt
                         self.typeset_file(project, mt, od_fs, f)
+                        print ppath, project, typesetter, i, time_now, file_prefix, od_fs, f, uid
                         self.gv.reorganize_output(
                             ppath, project, typesetter, i, time_now, file_prefix, od_fs, f, uid)
                     else:
