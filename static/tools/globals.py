@@ -76,7 +76,7 @@ class GV(object):
 
     def reorganize_output(self, ppath, project, typesetter, i, time_now, file_prefix, file_id, uid):
         temp_path = [ppath, uid]
-        
+        project_path=''
         if typesetter == 'metypeset':
             temp_path = temp_path + ['nlm']
         out_type = project['typesetters'][i]['out_type']
@@ -91,4 +91,4 @@ class GV(object):
         else:
             self.debug.print_debug(
                 self, self.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
-            
+        return os.path.sep.join(project_path)   

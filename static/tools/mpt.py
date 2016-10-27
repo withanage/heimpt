@@ -52,8 +52,6 @@ class PreProcess(Debuggable):
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
         exit_code = process.wait()
-        if exit_code != 0:
-            print output
         return output, err, exit_code
 
     def arguments_parse(self, ct):
@@ -78,49 +76,7 @@ class PreProcess(Debuggable):
         # if typestter_id == min (i for i in project['typesetters']):
 
     def typeset_files(self, project, project_typesetter_name,project_typesetter_out_type,project_typesetter_arguments, project_typesetter_id, time_now):
-        all_typesetters = self.config.get('typesetters')
-        if all_typesetters is None:
-            self.debug.print_debug(
-                self, self.gv.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED)
-            sys.exit(1)
-        fs = project.get('files')
-        project_files = collections.OrderedDict(sorted(fs.items()))
-        for file_id in project_files:
-            typesetter_properties = all_typesetters.get(project_typesetter_name)
-            if typesetter_properties:
-                mt = self.arguments_parse(typesetter_properties)
-                if self.check_program(typesetter_properties.get('executable')):
-                    project_path = project.get('path')
-                    file_prefix = project_files[file_id].split('.')[0]
-                    if project_typesetter_id == min (i for i in project['typesetters']):
-                        file_path = os.path.join(project_path,  project_files[file_id])
-                    else:
-                        file_path = os.path.join(project_path, file_prefix+'.'+project_typesetter_out_type )
-                    print file_path
-                    if os.path.isfile(file_path):
-                        mt.append(file_path)
-                        
-                        uid = str(uuid.uuid4())[:8]
-                        if project_typesetter_arguments:
-                            for arg in project_typesetter_arguments:
-                                if project_typesetter_arguments[arg]== True:
-                                    if arg=='out_dir':
-                                        mt.append(os.path.join(project_path, uid))
-                                    else:
-                                        mt.append(arg) 
-                                    
-                        self.typeset_run(mt)
-                        #self.gv.reorganize_output( project_path, project,project_typesetter_name,project_typesetter_id, time_now, file_prefix,file_id, uid)
-                    else:
-                        self.debug.print_debug(
-                            self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + project_files[file_id].encode('utf-8'))
-                else:
-                    self.debug.print_debug(
-                        self, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
-            else:
-                self.debug.print_debug(self, colored(
-                    project_typesetter_name, 'red') + " " + self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
-        return
+                return
 
     def typesets_run(self, project):
         project_typesetters = project.get('typesetters')
@@ -132,6 +88,16 @@ class PreProcess(Debuggable):
                 self, self.gv.PROJECT_TYPESETTERS_ARE_NOT_SPECIFIED)
         time_now = datetime.datetime.now().strftime(
             "%Y_%m_%d-%H-%M-") + str(uuid.uuid4())[:8]
+        
+        fs = project.get('files')
+        all_typesetters = self.config.get('typesetters')
+        project_path = project.get('path')
+        previous_project_path=''
+                                         
+        if all_typesetters is None:
+            self.debug.print_debug(self, self.gv.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED)
+            sys.exit(1)            
+                    
         for project_typesetter_id in project_typesetters_ordered:
             if project_typesetters_ordered[project_typesetter_id]:
                 project_typesetter_arguments = project_typesetters[project_typesetter_id].get("arguments")
@@ -141,7 +107,44 @@ class PreProcess(Debuggable):
                     self.debug.print_debug(self, self.gv.TYPESETTER_FILE_OUTPUT_TYPE_IS_UNDEFINED)
                     sys.exit(1)
                 if project_typesetter_name:
-                    self.typeset_files(project, project_typesetter_name,project_typesetter_out_type,project_typesetter_arguments, project_typesetter_id, time_now)
+                    project_files = collections.OrderedDict(sorted(fs.items()))
+                    for file_id in project_files:
+                        typesetter_properties = all_typesetters.get(project_typesetter_name)
+                        if typesetter_properties:
+                            mt = self.arguments_parse(typesetter_properties)
+                            if self.check_program(typesetter_properties.get('executable')):
+                                file_prefix = project_files[file_id].split('.')[0]
+                                if project_typesetter_id == min (i for i in project['typesetters']):
+                                    file_path = os.path.join(project_path,  project_files[file_id])
+                                else:
+                                    if project.get("chain") == True:
+                                        project_path = previous_project_path
+                                    else:
+                                        project_typesetter_out_type =  project_files[file_id].split('.')[1]
+                                    file_path = os.path.join(project_path, file_prefix+'.'+project_typesetter_out_type )
+                                if os.path.isfile(file_path):
+                                    mt.append(file_path)
+                                    uid = str(uuid.uuid4())[:8]
+                                    if project_typesetter_arguments:
+                                        for arg in project_typesetter_arguments:
+                                            if project_typesetter_arguments[arg]== True:
+                                                if arg=='out_dir':
+                                                    mt.append(os.path.join(project_path, uid))
+                                                else:
+                                                    mt.append(arg) 
+                                    output, err, exit_code = self.typeset_run(mt)
+                                    self.debug.print_debug(self,output.decode('utf-8'))
+                                    previous_project_path =  self.gv.reorganize_output( project_path, project,project_typesetter_name,project_typesetter_id, time_now, file_prefix,file_id, uid)
+                                else:
+                                    self.debug.print_debug(
+                                        self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + os.path.join(file_path,project_files[file_id].encode('utf-8')))
+                            else:
+                                self.debug.print_debug(
+                                    self, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
+                        else:
+                            self.debug.print_debug(self, colored(
+                                project_typesetter_name, 'red') + " " + self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
+   
 
                 else:
                     self.debug.print_debug(

@@ -2,6 +2,7 @@
     "projects": [
         {
             "active": true,
+            "chain": true,
             "files": {
                 "1": "Superscript_Subscript_Strike.docx",
                 "2": "Endnotes_DE.docx"
@@ -18,6 +19,7 @@
                     "out_type": "xml"
                 },
                 "2": {
+                    "arguments": {},
                     "name": "pandoc",
                     "out_type": "xml"
                 }
