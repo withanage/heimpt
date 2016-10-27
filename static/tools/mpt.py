@@ -48,7 +48,7 @@ class PreProcess(Debuggable):
 
     def typeset_run(self, mt):
         m = ' '.join(mt).strip().split(' ')
-        print 'Final arguments', mt
+        #print 'Final arguments', mt
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
         exit_code = process.wait()
@@ -109,6 +109,7 @@ class PreProcess(Debuggable):
                 if project_typesetter_name:
                     project_files = collections.OrderedDict(sorted(fs.items()))
                     for file_id in project_files:
+                        uid = str(uuid.uuid4())[:8]
                         typesetter_properties = all_typesetters.get(project_typesetter_name)
                         if typesetter_properties:
                             mt = self.arguments_parse(typesetter_properties)
@@ -119,12 +120,10 @@ class PreProcess(Debuggable):
                                 else:
                                     if project.get("chain") == True:
                                         project_path = previous_project_path
-                                    else:
-                                        project_typesetter_out_type =  project_files[file_id].split('.')[1]
                                     file_path = os.path.join(project_path, file_prefix+'.'+project_typesetter_out_type )
+                                  
                                 if os.path.isfile(file_path):
                                     mt.append(file_path)
-                                    uid = str(uuid.uuid4())[:8]
                                     if project_typesetter_arguments:
                                         for arg in project_typesetter_arguments:
                                             if project_typesetter_arguments[arg]== True:
@@ -132,6 +131,9 @@ class PreProcess(Debuggable):
                                                     mt.append(os.path.join(project_path, uid))
                                                 else:
                                                     mt.append(arg) 
+                                    #print mt
+                                    print mt
+                                    #self.gv.create_dirs_recursive(project_path.split(os.path.sep))
                                     output, err, exit_code = self.typeset_run(mt)
                                     self.debug.print_debug(self,output.decode('utf-8'))
                                     previous_project_path =  self.gv.reorganize_output( project_path, project,project_typesetter_name,project_typesetter_id, time_now, file_prefix,file_id, uid)

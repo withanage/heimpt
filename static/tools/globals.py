@@ -87,6 +87,7 @@ class GV(object):
             p = self.create_dirs_recursive(project_path)
             file_path = p + os.path.sep + file_prefix + '.' + out_type
             os.rename(temp_file, file_path)
+            #shutil.copyfile(temp_file, file_path)
             shutil.rmtree(os.path.join(ppath, uid))
         else:
             self.debug.print_debug(
