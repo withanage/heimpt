@@ -10,7 +10,10 @@
     },
     "pandoc": {
       "excecutable": "pandoc",
-      "arguments": {}
+      "arguments": {
+      "1": "-f xml",
+      "2": "-t html"
+      }
     },
     "xmlprocess": {
       "executable": "/home/wit/projects/mpt/static/tools/xmlProcess.py",
@@ -33,10 +36,9 @@
           "temp_dir": true
         },
         "2": {
-          "name": "xmlprocess",
-          "out_type": "xml",
-          "merge": true
-        }
+          "name": "pandoc",
+          "out_type": "xml"
+         }
       },
       "files": {
         "1": "Superscript_Subscript_Strike.docx",

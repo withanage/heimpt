@@ -28,7 +28,7 @@ class GV(object):
         self.PROJECT_TYPESETTER_IS_NOT_SPECIFIED = u'project typesetter is not specified'
         self.PROJECT_TYPESETTER_NAME_IS_NOT_SPECIFIED = u'project typesetter name is not specified'
         self.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED = u'project typesetter varaible is not specified'
-        self.PROJECT_TYPESETTERS_ARE_NOT_SPECIFIED = u'project typesetters are not :specified'
+        self.PROJECT_TYPESETTERS_ARE_NOT_SPECIFIED = u'project typesetters are not specified'
         self.PROJECTS_VAR_IS_NOT_SPECIFIED = u'project variable is not  specified'
         self.PROJECTS_TYPESETTER_RUNS_WITH_NO_ARGUMENTS = u'projects typesetter runs with no arguments'
 

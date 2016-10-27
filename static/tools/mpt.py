@@ -78,27 +78,37 @@ class PreProcess(Debuggable):
         #print json.dumps(project, indent=4, sort_keys=True)
         #if typestter_id == min (i for i in project['typesetters']): 
    
-    def typeset_files(self, project, tss, typesetter, typesetter_id, time_now):
+    def typeset_files(self, project, typesetter, typesetter_id, time_now):
+        print typesetter
+                    
         uid = str(uuid.uuid4())[:8]
         file_prefix = ''
-        
+        tss = self.config.get('typesetters')
+        if tss is None:
+            self.debug.print_debug(self, self.gv.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED)
+            sys.exit(1)
         fs = project.get('files')
         project_files = collections.OrderedDict(sorted(fs.items()))
         for file_id in project_files:
             ct = tss.get(typesetter)
             if ct:
+                print typesetter, 2
+                print self.check_program(ct.get('executable'))
                 mt = self.arguments_parse(ct)
+                print self.check_program(ct.get('executable'))
                 if self.check_program(ct.get('executable')):
+                    print typesetter, 3
                     project_path = project.get('path')
-                    
                     file_path = os.path.join(project_path, project_files[file_id])
                     if os.path.isfile(file_path):
+                        print typesetter, 4
                         mt.append(file_path)
                         file_name = project_files[file_id].split('.')
                         file_prefix = file_name[0]
                         mt.append(os.path.join(project_path, uid))
                         self.typeset_run(mt)
                         print 100*'-'
+                        '''
                         print project_path
                         print json.dumps(project, indent=4, sort_keys=True)
                         print 'typesetter', typesetter
@@ -106,6 +116,7 @@ class PreProcess(Debuggable):
                         print file_prefix
                         print 'file_id=file_id',file_id
                         print uid
+                        '''
                         self.gv.reorganize_output(project_path, project, typesetter, typesetter_id, time_now, file_prefix,  file_id, uid)
                     else:
                         self.debug.print_debug(
@@ -118,20 +129,20 @@ class PreProcess(Debuggable):
                     typesetter, 'red') + " " + self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
         return
 
-    def typesets_run(self, project, project_typestters):
+    def typesets_run(self, project):
+        project_typesetters = project.get('typesetters')
+        if project_typesetters:
+                project_typesetters_ordered = collections.OrderedDict(sorted(project_typesetters.items()))
+        else:
+            self.debug.print_debug( self, self.gv.PROJECT_TYPESETTERS_ARE_NOT_SPECIFIED)    
         time_now = datetime.datetime.now().strftime("%Y_%m_%d-%H-%M-")+str(uuid.uuid4())[:8]
-
-        for i in project_typestters:
-            if project_typestters[i]:
-                if project_typestters[i].get("name"):
-                    typesetter = project_typestters[i].get("name")
-                    tss = self.config.get('typesetters')
-                    if tss:
-                        self.typeset_files(
-                            project, tss, typesetter, i, time_now)
-                    else:
-                        self.debug.print_debug(
-                            self, self.gv.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED)
+        for i in project_typesetters_ordered:
+            
+            if project_typesetters_ordered[i]:
+                if project_typesetters[i].get("name"):
+                    typesetter = project_typesetters[i].get("name")
+                    self.typeset_files(project, typesetter, i, time_now)
+                    
                 else:
                     self.debug.print_debug(
                         self, self.gv.PROJECT_TYPESETTER_NAME_IS_NOT_SPECIFIED)
@@ -142,13 +153,7 @@ class PreProcess(Debuggable):
     def tpyeset_project(self, project):
         ''' runs typesetter for  a project '''
         if project.get('active'):
-            pts = project.get('typesetters')
-            if pts:
-                pts = collections.OrderedDict(sorted(pts.items()))
-                self.typesets_run(project, pts)
-            else:
-                self.debug.print_debug(
-                    self, self.gv.PROJECT_TYPESETTERS_ARE_NOT_SPECIFIED)
+            self.typesets_run(project)
         else:
             self.debug.print_debug(self, self.gv.PROJECT_IS_NOT_ACTIVE)
 
