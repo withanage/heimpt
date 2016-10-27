@@ -33,6 +33,7 @@ class GV(object):
         self.PROJECTS_TYPESETTER_RUNS_WITH_NO_ARGUMENTS = u'projects typesetter runs with no arguments'
 
         # typesetter errors
+        self.TYPESETTER_EXECUTABLE_VARIABLE_IS_UNDEFINED = u'typesetter executable variable is undefined'
         self.TYPESETTER_METADATA_FILE_WAS_NOT_SPECIFIED = u'Metadata file wasn\'t specified '
         self.TYPESETTER_IS_NOT_SPECIFIED = u'typesetter is not specified '
         self.TYPESETTER_PATH_IS_NOT_SPECIFIED = u'typesetter path is not specified '

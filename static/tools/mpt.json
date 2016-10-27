@@ -9,7 +9,7 @@
       }
     },
     "pandoc": {
-      "excecutable": "pandoc",
+      "executable": "pandoc",
       "arguments": {
       "1": "-f xml",
       "2": "-t html"

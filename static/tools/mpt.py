@@ -62,7 +62,7 @@ class PreProcess(Debuggable):
         if ct.get('executable'):
             mt = [ct.get('executable')]
         else:
-            self.debug.print_debug(self, self.gv.TYPESETTER_IS_NOT_SPECIFIED)
+            self.debug.print_debug(self, self.gv.TYPESETTER_EXECUTABLE_VARIABLE_IS_UNDEFINED)
             sys.exit(1)
         argmts = ct.get("arguments")
         if argmts:
@@ -92,10 +92,7 @@ class PreProcess(Debuggable):
         for file_id in project_files:
             ct = tss.get(typesetter)
             if ct:
-                print typesetter, 2
-                print self.check_program(ct.get('executable'))
                 mt = self.arguments_parse(ct)
-                print self.check_program(ct.get('executable'))
                 if self.check_program(ct.get('executable')):
                     print typesetter, 3
                     project_path = project.get('path')
@@ -169,7 +166,6 @@ class PreProcess(Debuggable):
     def check_program(self, program):
         def is_exe(fpath):
             return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
-
         fpath, fname = os.path.split(program)
         if fpath:
             if is_exe(program):
