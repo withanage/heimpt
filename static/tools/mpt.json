@@ -1,90 +1,50 @@
 {
-  "typesetters": {
-    "metypeset": {
-      "executable": "/home/wit/projects/mpt/static/tools/meTypeset/bin/meTypeset.py",
-      "arguments": {
-        "1": "docx",
-        "2": "--debug",
-        "3": "--nogit"
-      }
-    },
-    "pandoc": {
-      "executable": "pandoc",
-      "arguments": {
-      "1": "-f xml",
-      "2": "-t html"
-      }
-    },
-    "xmlprocess": {
-      "executable": "/home/wit/projects/mpt/static/tools/xmlProcess.py",
-      "arguments": {
-      	"1":"--debug",
-      	"2":"xmlProcessConfig.json"
-      }
-    }
-  },
-  "projects": [
-    {
-      "active": true,
-      "path": "/home/wit/projects/mpt/static/tests/word/src",
-      "name": "möhren",
-      "typesetters": {
-        "1": {
-          "name": "metypeset",
-          "out_type": "xml",
-          "out_dir": "MT",
-          "temp_dir": true
-        },
-        "2": {
-          "name": "pandoc",
-          "out_type": "xml"
-         }
-      },
-      "files": {
-        "1": "Superscript_Subscript_Strike.docx",
-        "2": "Endnotes_DE.docx"
-      }
-    },
-    {
-      "active": false,
-      "path": "/home/www-data/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/48/submission",
-      "name": "möhren old",
-      "typesetters": {
-        "1": {
-          "name": "metypeset",
-          "in_type": "docx",
-          "out_type": "xml",
-          "out_dir": "MT"
-        },
-        "2": {
-          "name": "xmlprocess",
-          "in_type": "xml",
-          "out_type": "xml",
-          "merge": true
+    "projects": [
+        {
+            "active": true,
+            "files": {
+                "1": "Superscript_Subscript_Strike.docx",
+                "2": "Endnotes_DE.docx"
+            },
+            "name": "m\u00f6hren",
+            "path": "/home/wit/projects/mpt/static/tests/word/src",
+            "typesetters": {
+                "1": {
+                    "arguments": {
+                        "--interactive": false,
+                        "out_dir": true
+                    },
+                    "name": "metypeset",
+                    "out_type": "xml"
+                },
+                "2": {
+                    "name": "pandoc",
+                    "out_type": "xml"
+                }
+            }
         }
-      },
-      "files": {
-        "1": "48-69-240-1-2-20151208.docx",
-        "2": "48-69-241-1-2-20151208.docx"
-      }
-    }
-  ],
-  "documentatin": {
+    ],
     "typesetters": {
-      "meTypeset": {
-        "metadata": "meTypeset/metadata/metadataSample.xml",
-        "debug": true,
-        "identifiers": true,
-        "interactive": true,
-        "noimageprocessing": true,
-        "nolink": true,
-        "nometa": true,
-        "settings": "settings_file_path",
-        "zotero": true,
-        "proprietary": true,
-        "path": "relative_path_to_typesetter",
-        "language": "programming_language"
-      }
+        "metypeset": {
+            "arguments": {
+                "1": "docx",
+                "2": "--debug",
+                "3": "--nogit"
+            },
+            "executable": "/home/wit/projects/mpt/static/tools/meTypeset/bin/meTypeset.py"
+        },
+        "pandoc": {
+            "arguments": {
+                "1": "-t html"
+            },
+            "executable": "pandoc"
+        },
+        "xmlprocess": {
+            "arguments": {
+                "1": "--debug",
+                "2": "xmlProcessConfig.json"
+            },
+            "executable": "/home/wit/projects/mpt/static/tools/xmlProcess.py"
+        }
     }
-  }
 }

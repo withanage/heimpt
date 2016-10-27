@@ -48,7 +48,7 @@ class PreProcess(Debuggable):
 
     def typeset_run(self, mt):
         m = ' '.join(mt).strip().split(' ')
-        print 'Final path', ' '.join(mt)
+        print 'Final arguments', mt
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
         exit_code = process.wait()
@@ -56,13 +56,13 @@ class PreProcess(Debuggable):
             print output
         return output, err, exit_code
 
-
     def arguments_parse(self, ct):
         mt = []
         if ct.get('executable'):
             mt = [ct.get('executable')]
         else:
-            self.debug.print_debug(self, self.gv.TYPESETTER_EXECUTABLE_VARIABLE_IS_UNDEFINED)
+            self.debug.print_debug(
+                self, self.gv.TYPESETTER_EXECUTABLE_VARIABLE_IS_UNDEFINED)
             sys.exit(1)
         argmts = ct.get("arguments")
         if argmts:
@@ -74,47 +74,43 @@ class PreProcess(Debuggable):
                 self, self.gv.TYPESETTER_RUNS_WITH_NO_ARGUMENTS)
         return mt
 
+        # print json.dumps(project, indent=4, sort_keys=True)
+        # if typestter_id == min (i for i in project['typesetters']):
 
-        #print json.dumps(project, indent=4, sort_keys=True)
-        #if typestter_id == min (i for i in project['typesetters']): 
-   
-    def typeset_files(self, project, typesetter, typesetter_id, time_now):
-        print typesetter
-                    
-        uid = str(uuid.uuid4())[:8]
-        file_prefix = ''
-        tss = self.config.get('typesetters')
-        if tss is None:
-            self.debug.print_debug(self, self.gv.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED)
+    def typeset_files(self, project, project_typesetter_name,project_typesetter_out_type,project_typesetter_arguments, project_typesetter_id, time_now):
+        all_typesetters = self.config.get('typesetters')
+        if all_typesetters is None:
+            self.debug.print_debug(
+                self, self.gv.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED)
             sys.exit(1)
         fs = project.get('files')
         project_files = collections.OrderedDict(sorted(fs.items()))
         for file_id in project_files:
-            ct = tss.get(typesetter)
-            if ct:
-                mt = self.arguments_parse(ct)
-                if self.check_program(ct.get('executable')):
-                    print typesetter, 3
+            typesetter_properties = all_typesetters.get(project_typesetter_name)
+            if typesetter_properties:
+                mt = self.arguments_parse(typesetter_properties)
+                if self.check_program(typesetter_properties.get('executable')):
                     project_path = project.get('path')
-                    file_path = os.path.join(project_path, project_files[file_id])
+                    file_prefix = project_files[file_id].split('.')[0]
+                    if project_typesetter_id == min (i for i in project['typesetters']):
+                        file_path = os.path.join(project_path,  project_files[file_id])
+                    else:
+                        file_path = os.path.join(project_path, file_prefix+'.'+project_typesetter_out_type )
+                    print file_path
                     if os.path.isfile(file_path):
-                        print typesetter, 4
                         mt.append(file_path)
-                        file_name = project_files[file_id].split('.')
-                        file_prefix = file_name[0]
-                        mt.append(os.path.join(project_path, uid))
+                        
+                        uid = str(uuid.uuid4())[:8]
+                        if project_typesetter_arguments:
+                            for arg in project_typesetter_arguments:
+                                if project_typesetter_arguments[arg]== True:
+                                    if arg=='out_dir':
+                                        mt.append(os.path.join(project_path, uid))
+                                    else:
+                                        mt.append(arg) 
+                                    
                         self.typeset_run(mt)
-                        print 100*'-'
-                        '''
-                        print project_path
-                        print json.dumps(project, indent=4, sort_keys=True)
-                        print 'typesetter', typesetter
-                        print time_now
-                        print file_prefix
-                        print 'file_id=file_id',file_id
-                        print uid
-                        '''
-                        self.gv.reorganize_output(project_path, project, typesetter, typesetter_id, time_now, file_prefix,  file_id, uid)
+                        #self.gv.reorganize_output( project_path, project,project_typesetter_name,project_typesetter_id, time_now, file_prefix,file_id, uid)
                     else:
                         self.debug.print_debug(
                             self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + project_files[file_id].encode('utf-8'))
@@ -123,23 +119,30 @@ class PreProcess(Debuggable):
                         self, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
             else:
                 self.debug.print_debug(self, colored(
-                    typesetter, 'red') + " " + self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
+                    project_typesetter_name, 'red') + " " + self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
         return
 
     def typesets_run(self, project):
         project_typesetters = project.get('typesetters')
         if project_typesetters:
-                project_typesetters_ordered = collections.OrderedDict(sorted(project_typesetters.items()))
+            project_typesetters_ordered = collections.OrderedDict(
+                sorted(project_typesetters.items()))
         else:
-            self.debug.print_debug( self, self.gv.PROJECT_TYPESETTERS_ARE_NOT_SPECIFIED)    
-        time_now = datetime.datetime.now().strftime("%Y_%m_%d-%H-%M-")+str(uuid.uuid4())[:8]
-        for i in project_typesetters_ordered:
-            
-            if project_typesetters_ordered[i]:
-                if project_typesetters[i].get("name"):
-                    typesetter = project_typesetters[i].get("name")
-                    self.typeset_files(project, typesetter, i, time_now)
-                    
+            self.debug.print_debug(
+                self, self.gv.PROJECT_TYPESETTERS_ARE_NOT_SPECIFIED)
+        time_now = datetime.datetime.now().strftime(
+            "%Y_%m_%d-%H-%M-") + str(uuid.uuid4())[:8]
+        for project_typesetter_id in project_typesetters_ordered:
+            if project_typesetters_ordered[project_typesetter_id]:
+                project_typesetter_arguments = project_typesetters[project_typesetter_id].get("arguments")
+                project_typesetter_name = project_typesetters[project_typesetter_id].get("name")
+                project_typesetter_out_type = project_typesetters[project_typesetter_id].get("out_type")
+                if project_typesetter_out_type == None:
+                    self.debug.print_debug(self, self.gv.TYPESETTER_FILE_OUTPUT_TYPE_IS_UNDEFINED)
+                    sys.exit(1)
+                if project_typesetter_name:
+                    self.typeset_files(project, project_typesetter_name,project_typesetter_out_type,project_typesetter_arguments, project_typesetter_id, time_now)
+
                 else:
                     self.debug.print_debug(
                         self, self.gv.PROJECT_TYPESETTER_NAME_IS_NOT_SPECIFIED)
