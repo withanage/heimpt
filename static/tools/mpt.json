@@ -19,7 +19,7 @@
                     "out_type": "xml"
                 },
                 "2": {
-                    "arguments": {  "out_dir": true},
+                    "arguments": {   "out_file_create":true},
                     "name": "pandoc",
                     "out_type": "xml"
                 }
