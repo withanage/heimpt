@@ -5,7 +5,7 @@ __author__ = "Dulip Withanage"
 import json
 import os
 import sys
-import shutil
+
 from debug import Debuggable, Debug
 
 
@@ -41,7 +41,10 @@ class GV(object):
         self.TYPESETTER_BINARY_IS_UNAVAILABLE = u'typesetter binary is unavailable '
         self.TYPESETTER_RUNS_WITH_NO_ARGUMENTS = u'typesetter runs with no arguments'
 
-        #
+        #xml
+        self.XML_FILE_NOT_CREATED=u'xml file not created' 
+        
+        
         self.debug = Debug()
 
     @staticmethod
@@ -66,30 +69,16 @@ class GV(object):
                 self, self.PROJECT_INPUT_FILE_JSON_IS_NOT_VALID)
             sys.exit(1)
 
-    def create_dirs_recursive(self, project_path):
-        p = ''
-        for path in project_path:
-            p = p + os.path.sep + path.strip('/').strip('/')
-            if not os.path.exists(p):
-                os.makedirs(p)
-        return p
+   
+    def create_xml_file(self, tree, f):
+        ''' write element tree to f '''
+        try:
+            tree.write(
+                f,
+                pretty_print=True,
+                xml_declaration=True,
+                encoding='UTF-8')
 
-    def reorganize_output(self, ppath, project, typesetter, i, time_now, file_prefix, file_id, uid):
-        temp_path = [ppath, uid]
-        project_path=''
-        if typesetter == 'metypeset':
-            temp_path = temp_path + ['nlm']
-        out_type = project['typesetters'][i]['out_type']
-        temp_path.append(file_prefix + '.' + out_type)
-        temp_file = os.path.sep.join(temp_path)
-        if os.path.isfile(temp_file):
-            project_path = [ppath, project['name'],time_now,  i + '_' + typesetter, out_type]
-            p = self.create_dirs_recursive(project_path)
-            file_path = p + os.path.sep + file_prefix + '.' + out_type
-            os.rename(temp_file, file_path)
-            #shutil.copyfile(temp_file, file_path)
-            shutil.rmtree(os.path.join(ppath, uid))
-        else:
-            self.debug.print_debug(
-                self, self.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
-        return os.path.sep.join(project_path)   
+        except:
+            self.debug.print_debug(self, self.XML_FILE_NOT_CREATED)
+    
