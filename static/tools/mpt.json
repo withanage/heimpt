@@ -7,19 +7,21 @@
                 "1": "Superscript_Subscript_Strike.docx",
                 "2": "Endnotes_DE.docx"
             },
-            "name": "m\u00f6hren",
+            "name": "moehren",
             "path": "/home/wit/projects/mpt/static/tests/word/src",
             "typesetters": {
                 "1": {
                     "arguments": {
-                        "--interactive": false,
-                        "out_dir": true
+                        "1": "append_out_dir()"
                     },
                     "name": "metypeset",
                     "out_type": "xml"
                 },
                 "2": {
-                    "arguments": {   "out_file_create":true},
+                    "arguments": {
+                        "1": "-o",
+                        "2": "create_out_file()"
+                    },
                     "name": "pandoc",
                     "out_type": "xml"
                 }

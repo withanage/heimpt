@@ -101,7 +101,7 @@ class PreProcess(Debuggable):
 
         for project_typesetter_id in project_typesetters_ordered:
             if project_typesetters_ordered[project_typesetter_id]:
-                project_typesetter_arguments = project_typesetters[project_typesetter_id].get("arguments")
+                project_typesetter_arguments = collections.OrderedDict(sorted(project_typesetters[project_typesetter_id].get("arguments").items()))
                 project_typesetter_name = project_typesetters[project_typesetter_id].get("name")
                 project_typesetter_out_type = project_typesetters[project_typesetter_id].get("out_type")
                 uid = str(uuid.uuid4())[:8]
@@ -127,16 +127,17 @@ class PreProcess(Debuggable):
                                 if os.path.isfile(file_path):
                                     mt.append(file_path)
                                     if project_typesetter_arguments:
-                                        for arg in project_typesetter_arguments:
-                                            if project_typesetter_arguments[arg] == True:
-                                                if arg == 'out_dir':
-                                                    mt.append(project_typesetter_out_path)
-                                                elif arg == 'out_file_create':
-                                                    if not os.path.exists(project_typesetter_out_path):
-                                                        os.makedirs(project_typesetter_out_path)
-                                                        mt.append(os.path.join(project_typesetter_out_path, file_prefix + '.' + project_typesetter_out_type))
-                                                else:
-                                                    mt.append(arg)
+                                        for i in project_typesetter_arguments:
+                                            arg = project_typesetter_arguments[i]
+                                            print arg
+                                            if arg == 'append_out_dir()':
+                                                mt.append(project_typesetter_out_path)
+                                            elif arg == 'create_out_file()':
+                                                if not os.path.exists(project_typesetter_out_path):
+                                                    os.makedirs(project_typesetter_out_path)
+                                                    mt.append(os.path.join(project_typesetter_out_path, file_prefix + '.' + project_typesetter_out_type))
+                                            else: 
+                                                mt.append(arg)
                                     print mt
                                     output, err, exit_code = self.typeset_run(mt)
                                     self.debug.print_debug(self, output.decode('utf-8'))
