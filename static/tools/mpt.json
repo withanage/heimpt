@@ -23,7 +23,7 @@
                         "2": "create_out_file()"
                     },
                     "name": "pandoc",
-                    "out_type": "xml"
+                    "out_type": "html"
                 }
             }
         }
