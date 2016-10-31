@@ -2,11 +2,14 @@
 # -*- coding: utf-8 -*-
 """
 Usage:
-    xmlProcess.py  <input_file>  <path> [options] 
+    xmlProcess.py  <input_file>  <path> [options]
+    xmlProcess.py -h --help 
 Options:
-    -d, --debug                                     Enable debug output
-    --set-numbering=<elemennt types as comma seperated lists>
-    --set-uuids=<element types as comma seperated list>
+    -d, --debug   Enable debug output
+    -s --sort-references
+    -n --set-numbering=<elemennt types as comma seperated lists>
+    -u --set-uuids=<element types as comma seperated list>
+    -t --set-numbering-types=<numbering types e.g. roman , roman[1,2] >
 """
 
 
@@ -35,6 +38,7 @@ class XMLProcess(Debuggable):
 
     def __init__(self):
         self.args = self.read_command_line()
+        print self.args
         self.debug = Debug()
         self.gv = GV()
         Debuggable.__init__(self, 'Main')
@@ -54,7 +58,7 @@ class XMLProcess(Debuggable):
             print
         return elem_array
 
-    def set_numbering(self, tree, tags):
+    def set_tag_numbering(self, tree, tags):
         ''' automatic numbering of certain tags '''
         for tag in tags:
             sh = tree.findall('.//' + tag)
@@ -63,9 +67,8 @@ class XMLProcess(Debuggable):
                 i.set('id', tag.replace('-', '') + str(sid))
                 sid += 1
         return tree
-    
-    def set_uuids(self, tr, tags):
-        ''' removes name confilcits for references or footnotes'''
+
+    def set_uuids_for_back_matter(self, tr, tags):
         for s in tags:
             f = {}
             fns = tr.getroot().findall(
@@ -75,14 +78,38 @@ class XMLProcess(Debuggable):
                 f[i.attrib['rid']] = rid
                 i.set('rid', rid)
             for m in f.keys():
-                n = tr.getroot().find(''.join(['.//'+s+'/[@id="', m, '"]']))
+                n = tr.getroot().find(''.join(['.//' + s + '/[@id="', m, '"]']))
                 if n is not None:
                     if len(n) > 0:
                         n.set('id', f[m])
                     else:
-                        self.debug.print_debug(self, self.gv.XML_ELEMENT_NOT_FOUND )
+                        self.debug.print_debug(self, self.gv.XML_ELEMENT_NOT_FOUND)
             return tr
-    
+
+    def transfrom(self, tr):
+        set_numbering_tags = self.args.get('--set-numbering')
+        set_uuids = self.args.get('--set-uuids')
+
+        tr = self.set_tag_numbering(tr, set_numbering_tags.split(',')) if set_numbering_tags else tr
+        tr = self.set_uuids_for_back_matter(tr, set_uuids.split(',')) if set_uuids else tr
+
+        return tr
+
+    def sort_references(self, tr, parent, tag_list):
+        ''' sort all the references  '''
+        elem = tr.find('./back/ref-list')
+        data = []
+        for e in elem:
+            vl = []
+            for tag in tag_list:
+                vl.append(e.findtext(".//" + tag))
+            vl.append(e)
+            data.append(tuple(vl))
+        data.sort()
+        elem[:] = [item[-1] for item in data]
+
+        return tr
+
     def process_xml_file(self):
         dr = self.args.get('<path>')
         f = self.args.get('<input_file>')
@@ -94,12 +121,8 @@ class XMLProcess(Debuggable):
         back_fns = self.xml_elements_to_array(".//back/fn-group/fn",  root)
         back_refs = self.xml_elements_to_array(".//back/ref-list/ref", root)
         back_fn_group = self.xml_elements_to_array(".//back/fn-group",  root)
-        set_numbering_tags = self.args.get('--set-numbering')
-        set_uuids = self.args.get('--set-uuids')
-        
-        #tr = self.set_numbering(tr, set_numbering_tags.split(',')) if set_numbering_tags else tr
-        tr = self.set_uuids(tr, set_uuids.split(',')) if set_uuids else tr
-        print etree.tostring(tr)
+        tr = self.transfrom(tr)
+        # print etree.tostring(tr)
         self.gv.create_xml_file(tr, os.path.join(dr, os.path.basename(f)))
 
     def run(self):
