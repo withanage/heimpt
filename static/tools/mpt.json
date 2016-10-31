@@ -1,74 +1,79 @@
 {
-  "projects": [
-    {
-      "active": false,
-      "chain": true,
-      "files": {
-        "1": "Superscript_Subscript_Strike.docx",
-        "2": "Endnotes_DE.docx"
-      },
-      "name": "moehren",
-      "path": "/home/wit/projects/mpt/static/tests/word/src",
-      "typesetters": {
-        "1": {
-          "arguments": {
-            "1": "fn:append_out_dir"
-          },
-          "name": "metypeset",
-          "out_type": "xml"
+    "projects": [
+        {
+            "active": false,
+            "chain": true,
+            "files": {
+                "1": "Superscript_Subscript_Strike.docx",
+                "2": "Endnotes_DE.docx"
+            },
+            "name": "moehren",
+            "path": "/home/wit/projects/mpt/static/tests/word/src",
+            "typesetters": {
+                "1": {
+                    "arguments": {
+                        "1": "fn:append_out_dir"
+                    },
+                    "name": "metypeset",
+                    "out_type": "xml"
+                },
+                "2": {
+                    "arguments": {
+                        "1": "-o",
+                        "2": "fn:create_out_file"
+                    },
+                    "name": "pandoc",
+                    "out_type": "html"
+                }
+            }
         },
-        "2": {
-          "arguments": {
-            "1": "-o",
-            "2": "fn:create_out_file"
-          },
-          "name": "pandoc",
-          "out_type": "html"
+        {
+            "active": true,
+            "chain": true,
+            "files": {
+                "1": "Superscript_Subscript_Strike.xml",
+                "2": "Endnotes_DE.xml"
+            },
+            "name": "xml_process",
+            "path": "/home/wit/projects/mpt/static/tests/word/src/moehren/2016_10_28-13-04-e74aebf1/1_mtypestet/xml",
+            "typesetters": {
+                "1": {
+                    "arguments": {
+                        "1": "fn:append_out_dir"
+                    },
+                    "name": "xmlprocess",
+                    "out_type": "xml"
+                }
+            }
         }
-      }
-    },
-    {
-      "active": true,
-      "chain": true,
-      "files": {
-        "1": "Superscript_Subscript_Strike.xml",
-        "2": "Endnotes_DE.xml"
-      },
-      "name": "xml_process",
-      "path": "/home/wit/projects/mpt/static/tests/word/src/moehren/2016_10_28-13-04-e74aebf1/1_mtypestet/xml",
-      "typesetters": {
-        "1": {
-          "arguments": {
-            "1": "fn:append_out_dir"
-          },
-          "name": "xmlprocess",
-          "out_type": "xml"
+    ],
+    "typesetters": {
+        "metypeset": {
+            "arguments": {
+                "1": "docx",
+                "2": "--debug",
+                "3": "--nogit"
+            },
+            "executable": "/home/wit/projects/mpt/static/tools/meTypeset/bin/meTypeset.py"
+        },
+        "pandoc": {
+            "arguments": {
+                "1": "-t html"
+            },
+            "executable": "pandoc"
+        },
+        "pandoc_md": {
+            "arguments": {
+                "1": "-t html"
+            },
+            "executable": "pandoc"
+        },
+        "xmlprocess": {
+            "arguments": {
+                "1": "--set-numbering=fn",
+                "2": "--set-uuids=fn,ref"
+            },
+            "executable": "/home/wit/projects/mpt/static/tools/xmlProcess.py"
         }
-      }
     }
-  ],
-  "typesetters": {
-    "metypeset": {
-      "arguments": {
-        "1": "docx",
-        "2": "--debug",
-        "3": "--nogit"
-      },
-      "executable": "/home/wit/projects/mpt/static/tools/meTypeset/bin/meTypeset.py"
-    },
-    "pandoc": {
-      "arguments": {
-        "1": "-t html"
-      },
-      "executable": "pandoc"
-    },
-    "xmlprocess": {
-      "arguments": {
-        "2": "--set-uuids=fn,ref",
-        "1": "--set-numbering=fn"
-      },
-      "executable": "/home/wit/projects/mpt/static/tools/xmlProcess.py"
- 
-    }
-  }
 }
