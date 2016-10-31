@@ -6,10 +6,12 @@ Usage:
     xmlProcess.py -h --help 
 Options:
     -d, --debug   Enable debug output
-    -s --sort-references
+    -f  --remove-footnotes-unused
     -n --set-numbering=<elemennt types as comma seperated lists>
-    -u --set-uuids=<element types as comma seperated list>
+    -r  --remove-references-unused
+    -s --sort-references
     -t --set-numbering-types=<numbering types e.g. roman , roman[1,2] >
+    -u --set-uuids=<element types as comma seperated list>
 """
 
 
@@ -23,7 +25,7 @@ import uuid
 from debug import Debuggable, Debug
 from docopt import docopt
 from globals import GV
-
+from sets import Set
 
 try:
     from lxml import etree
@@ -48,6 +50,31 @@ class XMLProcess(Debuggable):
     @staticmethod
     def read_command_line():
         return docopt(__doc__, version='xml 0.1')
+
+    def get_referenced_ids(self, tree):
+        refs = Set()
+        for body in tree.getroot().findall(".//body"):
+            for ref in body.findall(".//xref[@ref-type='bibr']"):
+                if ref.keys():
+                    refs.add(ref.attrib['rid'])
+        return refs
+    
+    
+    def remove_not_used_in_back(self, tr, tag):
+        ''' removes  footnotes, references, which are not linked. '''
+        body_refs = self.get_ref_ids_body(tr)
+        back_refs = self.get_ref_ids_back(tr)
+
+        for i in back_refs:
+            if i in body_refs:
+                pass
+            else:
+                elems = tr.getroot().findall(
+                    ''.join(['.//back/', tag, '/[@id="', str(i), '"]']))
+                for e in elems:
+                    if e.getparent() is not None:
+                        e.getparent().remove(e)
+        return tr
 
     def xml_elements_to_array(self, xpath_expression, root):
         elem_array = []
@@ -89,6 +116,9 @@ class XMLProcess(Debuggable):
     def transfrom(self, tr):
         set_numbering_tags = self.args.get('--set-numbering')
         set_uuids = self.args.get('--set-uuids')
+
+        tr = self.remove_not_used_in_back(tr, "ref-list/ref")
+        tr = self.remove_not_used_in_back(tr, "fn-group/fn")
 
         tr = self.set_tag_numbering(tr, set_numbering_tags.split(',')) if set_numbering_tags else tr
         tr = self.set_uuids_for_back_matter(tr, set_uuids.split(',')) if set_uuids else tr
