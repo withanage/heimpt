@@ -77,9 +77,9 @@ class PreProcess(Debuggable):
     def parse_project_typestter_arguments(self, project_typesetter_arguments, project_typesetter_out_type, project_typesetter_out_path, mt, file_prefix):
         for i in project_typesetter_arguments:
             arg = project_typesetter_arguments[i]
-            if arg == 'append_out_dir()':
+            if arg == 'fn:append_out_dir':
                 mt.append(project_typesetter_out_path)
-            elif arg == 'create_out_file()':
+            elif arg == 'fn:create_out_file':
                 if not os.path.exists(project_typesetter_out_path):
                     os.makedirs(project_typesetter_out_path)
                 mt.append(os.path.join(project_typesetter_out_path, file_prefix + '.' + project_typesetter_out_type))
@@ -88,7 +88,7 @@ class PreProcess(Debuggable):
 
     def run_typesetter(self, project, time_now, project_path, previous_project_path, previous_project_typesetter_out_type, project_typesetter_id, project_typesetter_arguments, project_typesetter_name, project_typesetter_out_type, uid, project_typesetter_out_path, project_files, file_id, mt):
         previous_project_path_temp = ''
-        previous_project_typesetter_out_type_temp = ''
+        temp = ''
         file_prefix = project_files[file_id].split('.')[0]
         if project_typesetter_id == min(i for i in project['typesetters']):
             file_path = os.path.join(project_path, project_files[file_id])
@@ -101,10 +101,10 @@ class PreProcess(Debuggable):
             output, err, exit_code = self.call_typesetter(mt)
             self.debug.print_debug(self, output.decode('utf-8'))
             previous_project_path_temp = self.reorganize_output(project_path, project, project_typesetter_name, project_typesetter_id, time_now, file_prefix, file_id, uid)
-            previous_project_typesetter_out_type_temp = project_typesetter_out_type
+            temp = project_typesetter_out_type
         else:
             self.debug.print_debug(self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + os.path.join(file_path))
-        return previous_project_path_temp, previous_project_typesetter_out_type_temp
+        return previous_project_path_temp, temp
 
 
     def typeset_file(self, project, time_now, all_typesetters, project_path, previous_project_path, previous_project_typesetter_out_type, project_typesetter_id, project_typesetter_arguments, project_typesetter_name, project_typesetter_out_type, uid, project_typesetter_out_path, project_files, file_id):

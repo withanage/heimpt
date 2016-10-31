@@ -12,7 +12,7 @@
       "typesetters": {
         "1": {
           "arguments": {
-            "1": "append_out_dir()"
+            "1": "fn:append_out_dir"
           },
           "name": "metypeset",
           "out_type": "xml"
@@ -20,7 +20,7 @@
         "2": {
           "arguments": {
             "1": "-o",
-            "2": "create_out_file()"
+            "2": "fn:create_out_file"
           },
           "name": "pandoc",
           "out_type": "html"
@@ -39,7 +39,7 @@
       "typesetters": {
         "1": {
           "arguments": {
-            "1": "append_out_dir()"
+            "1": "fn:append_out_dir"
           },
           "name": "xmlprocess",
           "out_type": "xml"
@@ -64,10 +64,11 @@
     },
     "xmlprocess": {
       "arguments": {
-        "2": "--debug",
-        "1": "prepare"
+        "2": "--set-uuids=fn,ref",
+        "1": "--set-numbering=fn"
       },
       "executable": "/home/wit/projects/mpt/static/tools/xmlProcess.py"
+ 
     }
   }
 }
