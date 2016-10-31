@@ -87,6 +87,8 @@ class PreProcess(Debuggable):
                 mt.append(arg)
 
     def run_typesetter(self, project, time_now, project_path, previous_project_path, previous_project_typesetter_out_type, project_typesetter_id, project_typesetter_arguments, project_typesetter_name, project_typesetter_out_type, uid, project_typesetter_out_path, project_files, file_id, mt):
+        previous_project_path_temp = ''
+        previous_project_typesetter_out_type_temp = ''
         file_prefix = project_files[file_id].split('.')[0]
         if project_typesetter_id == min(i for i in project['typesetters']):
             file_path = os.path.join(project_path, project_files[file_id])
