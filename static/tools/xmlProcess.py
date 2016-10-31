@@ -88,10 +88,35 @@ class XMLProcess(Debuggable):
                         self.debug.print_debug(self, self.gv.XML_ELEMENT_NOT_FOUND)
             return tr
 
+    def add_numbering_to_values(self, tr, name, attr, value, count, range_array):
+        searchTag = './/' + name + '[@' + attr + '="' + value + '"]'
+        elems = tr.getroot().findall(searchTag)
+        range_count = 1
+        for elem in elems:
+            elem.text, range_count = self.set_roman_numbers(count, range_count, range_array)
+            count += 1
+        return tr, count
+
+    def convert_int_to_roman(self, i):
+        result = []
+        for integer, numeral in self.gv.numeral_map:
+            count = i // integer
+            result.append(numeral * count)
+            i -= integer * count
+        return ''.join(result)
+
+    def set_roman_numbers(self, count, r_count, range_array):
+        val = str(count)
+        if count >= int(range_array[0]) and count <= int(range_array[1]):
+            val = self.convert_int_to_roman(r_count).lower()
+            r_count += 1
+        else:
+            val = str(count - r_count + 1)
+        return val, r_count
+
     def transfrom(self, tr):
         set_numbering_tags = self.args.get('--set-numbering')
         set_uuids = self.args.get('--set-uuids')
-
         tr = self.set_tag_numbering(tr, set_numbering_tags.split(',')) if set_numbering_tags else tr
         tr = self.set_uuids_for_back_matter(tr, set_uuids.split(',')) if set_uuids else tr
 
@@ -124,8 +149,12 @@ class XMLProcess(Debuggable):
         back_refs = self.xml_elements_to_array(".//back/ref-list/ref", root)
         back_fn_group = self.xml_elements_to_array(".//back/fn-group",  root)
         tr = self.transfrom(tr)
-        # print etree.tostring(tr)
+
         self.gv.create_xml_file(tr, os.path.join(dr, os.path.basename(f)))
+        count = 1
+        range_count = [1, 2]
+        tr, count = self.add_numbering_to_values(tr, "xref", "ref-type", "fn", count, range_count)
+        print etree.tostring(tr)
 
     def run(self):
         self.process_xml_file()

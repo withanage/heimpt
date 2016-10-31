@@ -51,6 +51,7 @@ class GV(object):
         self.XML_ELEMENT_NOT_FOUND =u'xml element not found'
         
         self.debug = Debug()
+        self.numeral_map = numeral_map
         
 
     @staticmethod
