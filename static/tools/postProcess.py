@@ -58,8 +58,7 @@ class PostProcess:
                 if "chapter-begin-reset" in cfg.keys():
                     if cfg["chapter-begin-reset"] == 1:
                         count = 1
-                tr, count = self.set_enumeration(
-                    tr, "xref", "ref-type", "fn", context, f, chapter, order, count)
+                tr, count = self.set_enumeration(tr, "xref", "ref-type", "fn", context, f, chapter, order, count)
         tr = self.remove_name_duplicates_speech(tr)
         tr = self.set_numbering(tr, ['speech', 'disp-quote'])
         tr = self.get_unreferenced_footnotes(tr)
@@ -439,8 +438,7 @@ class PostProcess:
         transform = etree.XSLT(xslt_doc)
         return transform(tree)
 
-    def set_enumeration(self, tr, name, attr, value,
-                        context, f, chapter, order, count):
+    def set_enumeration(self, tr, name, attr, value, context, f, chapter, order, count):
         ''' set the count id for an attribute in a tag type '''
         searchTag = './/' + name + '[@' + attr + '="' + value + '"]'
         elems = tr.getroot().findall(searchTag)
@@ -482,11 +480,11 @@ class PostProcess:
                     val = self.convert_int_to_roman(count).lower()
         return val, range_count
 
-    def set_uuids(self, tr, str):
-        ''' removes name confilcits for references or footnotes'''
+    def set_uuids(self, tr, s):
+        ''' removes name confilcts for references or footnotes'''
         f = {}
         fns = tr.getroot().findall(
-            ''.join(['.//xref/[@ref-type="', str, '"]']))
+            ''.join(['.//xref/[@ref-type="', s, '"]']))
         for i in fns:
             rid = ''.join(['bibd', uuid.uuid4().get_hex()])
             f[i.attrib['rid']] = rid
