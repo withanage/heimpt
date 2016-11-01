@@ -95,6 +95,7 @@ class XMLProcess(Debuggable):
         for elem in elems:
             elem.text, range_count = self.set_roman_numbers(count, range_count, range_array)
             count += 1
+
         return tr, count
 
     def convert_int_to_roman(self, i):
@@ -106,6 +107,7 @@ class XMLProcess(Debuggable):
         return ''.join(result)
 
     def set_roman_numbers(self, count, r_count, range_array):
+
         val = str(count)
         if count >= int(range_array[0]) and count <= int(range_array[1]):
             val = self.convert_int_to_roman(r_count).lower()
@@ -154,7 +156,7 @@ class XMLProcess(Debuggable):
         count = 1
         range_count = [1, 2]
         tr, count = self.add_numbering_to_values(tr, "xref", "ref-type", "fn", count, range_count)
-        print etree.tostring(tr)
+        # print etree.tostring(tr)
 
     def run(self):
         self.process_xml_file()
