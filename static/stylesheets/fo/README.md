@@ -368,39 +368,3 @@
 <li id="fn4"><p>FOP 2.1: Not working if OTF fonts are used; @line-height-shift-adjustment=&quot;disregard-shifts&quot; ignored if paragraph contains a basic-link element.<a href="#fnref4">↩</a></p></li>
 </ol>
 </div>
-
-1 r Schmutztitel
-
-2 v Reihentitel
-
-3 r Haupttitel
-
-4 v Impressum
-
-5 r Widmung
-
-6 v vakat
-
-7 r Motto
-
-8 v vakat
-
-9 r Inhaltsverzeichnis
-
-\[n v vakat\]
-
-n r Geleitwort
-
-\[n v vakat\]
-
-m r Vorwort
-
-\[n v vakat\]
-
-[1] Bold entries designate the default version if a not supported value for this particular formatter is used. For FOP the pdf standard can only be configured via the configuration file or command line parameter.
-
-[2] FOP 2.1: No support for advanced OTF features.
-
-[3] FOP 2.1: Only with dedicated small caps font.
-
-[4] FOP 2.1: Not working if OTF fonts are used; @line-height-shift-adjustment="disregard-shifts" ignored if paragraph contains a basic-link element.
