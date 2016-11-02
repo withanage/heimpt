@@ -9,7 +9,7 @@ Options:
     -f  --remove-footnotes-unused
     -n --set-numbering=<elemennt types as comma seperated lists>
     -r  --remove-references-unused
-    -s --sort-references
+    -s --sort-references=<tag list as comma seperated lists>
     -t --set-numbering-types=<numbering types e.g. roman , roman[1,2] >
     -u --set-uuids=<element types as comma seperated list>
 """
@@ -122,7 +122,7 @@ class XMLProcess(Debuggable):
         sort_references = self.args.get('--sort-references')
         tr = self.set_tag_numbering(tr, set_numbering_tags.split(',')) if set_numbering_tags else tr
         tr = self.set_uuids_for_back_matter(tr, set_uuids.split(',')) if set_uuids else tr
-        tr = self.sort_references(tr,["article-title","source"]) if sort_references else tr
+        tr = self.sort_references(tr,sort_references.split(',')) if sort_references else tr
         return tr
 
     def sort_references(self, tr,tag_list):
