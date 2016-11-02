@@ -7,7 +7,7 @@ Options:
     -d, --debug                                     Enable debug output
 """
 
-__author__ = "Dulip Withnage"
+__author__ = "Dulip Withanage"
 
 import os
 import collections
