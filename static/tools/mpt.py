@@ -213,7 +213,7 @@ class PreProcess(Debuggable):
             shutil.rmtree(os.path.join(ppath, uid))
         else:
             self.debug.print_debug(
-                self, self.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
+                self, self.gv.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
         return os.path.sep.join(project_path)   
     
     def create_dirs_recursive(self, project_path):

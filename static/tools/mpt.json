@@ -31,11 +31,11 @@
             "active": true,
             "chain": true,
             "files": {
-                "1": "Superscript_Subscript_Strike.xml",
-                "2": "Endnotes_DE.xml"
+                "1": "48-69-270-1-10-20160127.xml"
+                
             },
             "name": "xml_process",
-            "path": "/home/wit/projects/mpt/static/tests/word/src/moehren/2016_10_28-13-04-e74aebf1/1_mtypestet/xml",
+            "path": "/home/wit/Arbeit/OMP/Sander/sanderfiles/xml/",
             "typesetters": {
                 "1": {
                     "arguments": {
@@ -70,7 +70,7 @@
         },
         "xmlprocess": {
             "arguments": {
-                "1": "--set-numbering=fn",
+                "1": "--set-numbering=p",
                 "2": "--set-uuids=fn,ref"
             },
             "executable": "/home/wit/projects/mpt/static/tools/xmlProcess.py"
