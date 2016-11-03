@@ -168,12 +168,10 @@ class XMLProcess(Debuggable):
         back_refs = self.xml_elements_to_array(".//back/ref-list/ref", root)
         back_fn_group = self.xml_elements_to_array(".//back/fn-group",  root)
         tr = self.transfrom(tr)
-
         count = 1
         range_count = [1, 2]
         tr, count = self.add_numbering_to_values(tr, "xref", "ref-type", "fn", count, range_count)
-        # print etree.tostring(tr)
-        print dr, f
+        self.gv.create_dirs_recursive(dr.split('/'))
         self.gv.create_xml_file(tr, os.path.join(dr, os.path.basename(f)))
 
     def run(self):

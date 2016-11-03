@@ -105,3 +105,15 @@ class GV(object):
         except:
             self.debug.print_debug(self, self.XML_FILE_NOT_CREATED)
     
+    def create_dirs_recursive(self, project_path):
+        p = ''
+        for path in project_path:
+            p = p + os.path.sep + path.strip('/').strip('/')
+            if not os.path.exists(p):
+                try: 
+                    os.makedirs(p)
+                except OSError as o:
+                    print o
+        return p
+
+    

@@ -100,6 +100,7 @@ class PreProcess(Debuggable):
                 self.parse_project_typestter_arguments(project_typesetter_arguments, project_typesetter_out_type, project_typesetter_out_path, mt, file_prefix)
             output, err, exit_code = self.call_typesetter(mt)
             self.debug.print_debug(self, output.decode('utf-8'))
+            print project_path, uid
             previous_project_path_temp = self.reorganize_output(project_path, project, project_typesetter_name, project_typesetter_id, time_now, file_prefix, file_id, uid)
             temp = project_typesetter_out_type
         else:
@@ -206,7 +207,7 @@ class PreProcess(Debuggable):
         temp_file = os.path.sep.join(temp_path)
         if os.path.isfile(temp_file):
             project_path = [ppath, project['name'],time_now,  i + '_' + typesetter, out_type]
-            p = self.create_dirs_recursive(project_path)
+            p = self.gv.create_dirs_recursive(project_path)
             file_path = p + os.path.sep + file_prefix + '.' + out_type
             os.rename(temp_file, file_path)
             #shutil.copyfile(temp_file, file_path)
@@ -216,14 +217,7 @@ class PreProcess(Debuggable):
                 self, self.gv.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
         return os.path.sep.join(project_path)   
     
-    def create_dirs_recursive(self, project_path):
-        p = ''
-        for path in project_path:
-            p = p + os.path.sep + path.strip('/').strip('/')
-            if not os.path.exists(p):
-                os.makedirs(p)
-        return p
-
+    
 def main():
     pre_process_instance = PreProcess()
     pre_process_instance.run()
