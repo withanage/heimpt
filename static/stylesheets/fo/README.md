@@ -324,7 +324,25 @@
 </tr>
 <tr class="odd">
 <td><blockquote>
-<p>Crossreferenced (epdf)</p>
+<p>cross ref'd (epdf)</p>
+</blockquote></td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr class="even">
+<td><blockquote>
+<p>book backmatter</p>
+</blockquote></td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr class="odd">
+<td><blockquote>
+<p>cross ref'd (epdf)</p>
 </blockquote></td>
 <td>yes</td>
 <td>yes</td>
