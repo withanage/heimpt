@@ -121,14 +121,13 @@ class XMLProcess(Debuggable):
         set_uuids = self.args.get('--set-uuids')
         sort_footnotes = self.args.get('--sort-footnotes')
         sort_references = self.args.get('--sort-references')
-        
+
         tr = self.set_tag_numbering(tr, set_numbering_tags.split(',')) if set_numbering_tags else tr
         tr = self.set_uuids_for_back_matter(tr, set_uuids.split(',')) if set_uuids else tr
-        tr = self.sort_footnotes(tr,sort_footnotes.split(',')) if sort_footnotes else tr
-        tr = self.sort_references(tr,sort_references.split(',')) if sort_references else tr
-        
-        return tr
+        tr = self.sort_footnotes(tr, sort_footnotes.split(',')) if sort_footnotes else tr
+        tr = self.sort_references(tr, sort_references.split(',')) if sort_references else tr
 
+        return tr
 
     def sort_by_tags(self, tag_list, elem):
         data = []
@@ -136,21 +135,21 @@ class XMLProcess(Debuggable):
             vl = []
             for tag in tag_list:
                 vl.append(e.findtext(".//" + tag))
-            
+
             vl.append(e)
             data.append(tuple(vl))
-        
+
         data.sort()
         elem[:] = [item[-1] for item in data]
 
-    def sort_references(self, tr,tag_list):
+    def sort_references(self, tr, tag_list):
         ''' sort all  references  '''
         elem = tr.find('./back/ref-list')
         self.sort_by_tags(tag_list, elem)
 
         return tr
-    
-    def sort_footnotes(self, tr,tag_list):
+
+    def sort_footnotes(self, tr, tag_list):
         ''' sort all the footnotes  '''
         elem = tr.find('./back/fn-group')
         self.sort_by_tags(tag_list, elem)
@@ -170,11 +169,11 @@ class XMLProcess(Debuggable):
         back_fn_group = self.xml_elements_to_array(".//back/fn-group",  root)
         tr = self.transfrom(tr)
 
-        
         count = 1
         range_count = [1, 2]
         tr, count = self.add_numbering_to_values(tr, "xref", "ref-type", "fn", count, range_count)
-        #print etree.tostring(tr)
+        # print etree.tostring(tr)
+        print dr, f
         self.gv.create_xml_file(tr, os.path.join(dr, os.path.basename(f)))
 
     def run(self):
