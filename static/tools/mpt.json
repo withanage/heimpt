@@ -1,5 +1,31 @@
 {
     "projects": [
+     {
+            "active": true,
+            "chain": true,
+            "files": {
+                "1": "SP1.docx",
+                "2": "SP2.docx"
+            },
+            "name": "moehren",
+            "path": "/home/wit/Arbeit/OMP/Sander/sanderfiles/",
+            "typesetters": {
+                "1": {
+                    "arguments": {
+                        "1": "fn:append_out_dir"
+                    },
+                    "name": "metypeset",
+                    "out_type": "xml"
+                },
+                "2": {
+                   "arguments": {
+                        "1": "fn:append_out_dir"
+                    },
+                    "name": "xmlprocess",
+                    "out_type": "xml"
+                }
+            }
+        },
         {
             "active": false,
             "chain": true,
@@ -18,17 +44,16 @@
                     "out_type": "xml"
                 },
                 "2": {
-                    "arguments": {
-                        "1": "-o",
-                        "2": "fn:create_out_file"
+                   "arguments": {
+                        "1": "fn:append_out_dir"
                     },
-                    "name": "pandoc",
-                    "out_type": "html"
+                    "name": "xmlprocess",
+                    "out_type": "xml"
                 }
             }
         },
         {
-            "active": true,
+            "active": false,
             "chain": true,
             "files": {
                 "1": "48-69-270-1-10-20160127.xml"
@@ -43,6 +68,14 @@
                     },
                     "name": "xmlprocess",
                     "out_type": "xml"
+                },
+                "2": {
+                    "arguments": {
+                        "1": "-o",
+                        "2": "fn:create_out_file"
+                    },
+                    "name": "pandoc",
+                    "out_type": "html"
                 }
             }
         }
@@ -70,7 +103,6 @@
         },
         "xmlprocess": {
             "arguments": {
-                "1": "--set-numbering=p",
                 "2": "--set-uuids=fn,ref"
             },
             "executable": "/home/wit/projects/mpt/static/tools/xmlProcess.py"
