@@ -57,7 +57,7 @@ class XMLProcess(Debuggable):
             for i in root.findall(xpath_expression):
                 elem_array.append(etree.tostring(i, pretty_print=False))
         except SyntaxError as se:
-            print
+            print se
         return elem_array
 
     def set_tag_numbering(self, tree, tags):
@@ -173,7 +173,7 @@ class XMLProcess(Debuggable):
         tr, count = self.add_numbering_to_values(tr, "xref", "ref-type", "fn", count, range_count)
         self.gv.create_dirs_recursive(dr.split('/'))
         self.gv.create_xml_file(tr, os.path.join(dr, os.path.basename(f)))
-
+    
     def run(self):
         self.process_xml_file()
 
