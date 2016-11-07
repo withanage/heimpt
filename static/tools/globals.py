@@ -47,8 +47,9 @@ class GV(object):
         self.TYPESETTER_RUNS_WITH_NO_ARGUMENTS = u'typesetter runs with no arguments'
 
         #xml
-        self.XML_FILE_NOT_CREATED=u'xml file not created' 
         self.XML_ELEMENT_NOT_FOUND =u'xml element not found'
+        self.XML_FILE_NOT_CREATED=u'xml file not created' 
+        self.XML_INPUT_FILE_IS_NOT_VALID=u'xml input file is not valid'
         
         self.debug = Debug()
         self.numeral_map = numeral_map
