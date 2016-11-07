@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Usage:
-    xmlMerge.py  <input_file>  <path>  <scheme> <full_file>  [options]
+    xmlMerge.py  <input_file>  <path>  <scheme> <output_file>  [options]
     xmlMerge.py -h --help
 Options:
     -d, --debug   Enable debug output
@@ -41,6 +41,7 @@ class XMLProcess(Debuggable):
         self.gv = GV()
         self.uid = '4e4dd8cf-26bf-4893-b037-1fd3bf08f112'
         self.dr = self.args.get('<path>')
+        self.schema = self.args.get('<scheme>')
         Debuggable.__init__(self, 'Main')
         if self.args.get('--debug'):
             self.debug.enable_debug()
@@ -64,7 +65,7 @@ class XMLProcess(Debuggable):
 
         hf = self.args.get('--header-file')
         if hf:
-            f = open(self.uid + 'body.xml')
+            f = open(self.uid + 'front.xml')
             s = f.read()
             f.close()
             return s
@@ -72,8 +73,8 @@ class XMLProcess(Debuggable):
             return fl
 
     def write_array_to_file(self, f, name):
-
-        t = open(os.path.join(self.dr, self.uid + '.' + name + '.xml'), 'w')
+        p = [self.uid, '.', self.schema, '.', name, '.xml']
+        t = open(os.path.join(self.dr, ''.join(p)), 'w')
         for i in f:
             t.write(i)
         t.close()
@@ -103,12 +104,14 @@ class XMLProcess(Debuggable):
     def process_xml_file(self):
 
         f = self.args.get('<input_file>')
+        o = self.args.get('<output_file>')
         tr = etree.parse(os.path.join(self.dr, f))
         count = 1
         range_count = [1, 2]
         self.gv.create_dirs_recursive(self.dr.split('/'))
         tr = self.create_output(tr)
-        self.gv.create_xml_file(tr, os.path.join(self.dr, os.path.basename(f)))
+        print o
+        self.gv.create_xml_file(tr, os.path.join(self.dr, os.path.basename(o)))
 
     def run(self):
         self.process_xml_file()
