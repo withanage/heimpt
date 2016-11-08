@@ -106,7 +106,7 @@ class XMLProcess(Debuggable):
             inp = os.path.join(self.dr, ''.join(p))
             rl = self.do_file_io(f , 'r',inp)
 
-            l = ''.join(['<body>', rl, ''.join(bd), '</body>'])
+            l = ''.join([''.join(f),'<body>', rl, ''.join(bd), '</body>',''.join(bk)])
 
             pt = os.path.join(self.dr, os.path.basename(self.o))
             self.do_file_io(l, 'w',pt)

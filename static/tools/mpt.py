@@ -198,6 +198,7 @@ class PreProcess(Debuggable):
                     return exe_file
 
         return None
+
     def reorganize_output(self, ppath, project, typesetter, i, time_now, file_prefix, file_id, uid):
         temp_path = [ppath, uid]
         project_path=''
@@ -205,13 +206,13 @@ class PreProcess(Debuggable):
             temp_path = temp_path + ['nlm']
         out_type = project['typesetters'][i]['out_type']
         project_path = [ppath, project['name'], time_now, i + '_' + typesetter, out_type]
-        p = self.gv.create_dirs_recursive(project_path)
-
         if project['typesetters'][i].get('merge'):
-            temp_path.append('full.xml')
+            ff = project['typesetters'][i].get('arguments')["3"]
+            temp_path.append(ff)
             temp_file = os.path.sep.join(temp_path)
-            file_path = p + os.path.sep + 'full.xml'
+            p = self.gv.create_dirs_recursive(project_path)
             if os.path.isfile(temp_file):
+                file_path = p + os.path.sep +ff
                 os.rename(temp_file, file_path)
                 shutil.rmtree(os.path.join(ppath, uid))
             else:
@@ -220,6 +221,8 @@ class PreProcess(Debuggable):
         else:
             temp_path.append(file_prefix + '.' + out_type)
             temp_file = os.path.sep.join(temp_path)
+            #project_path = [ppath, project['name'], time_now, i + '_' + typesetter, out_type]
+            p = self.gv.create_dirs_recursive(project_path)
 
             if os.path.isfile(temp_file):
                     file_path = p + os.path.sep + file_prefix + '.' + out_type
@@ -228,9 +231,9 @@ class PreProcess(Debuggable):
             else:
                     self.debug.print_debug(
                         self, self.gv.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
-        return os.path.sep.join(project_path)   
-    
-    
+        return os.path.sep.join(project_path)
+
+
 def main():
     pre_process_instance = PreProcess()
     pre_process_instance.run()

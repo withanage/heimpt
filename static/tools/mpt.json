@@ -30,10 +30,12 @@
                         "1": "fn:append_out_dir",
                         "2":"jats",
                         "3":"full.xml"
+
                     },
                     "name": "xmlmerge",
                     "out_type": "xml",
                     "merge":true
+
                 }
 
             }

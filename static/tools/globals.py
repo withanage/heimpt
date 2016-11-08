@@ -27,6 +27,7 @@ class GV(object):
         self.PROJECT_INPUT_FILE_HAS_MORE_THAN_TWO_DOTS = u'project input file has more than two dots'
         self.PROJECT_INPUT_FILE_DOES_NOT_EXIST = u'project input_file does not exist'
         self.PROJECT_IS_NOT_ACTIVE = u'project is not active'
+        self.PROJECT_OUTPUT_FILE_IS_NOT_DEFINED=u'project output file is not defined'
         self.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED = u'project output file was not created'
         self.PROJECT_TYPESETTER_IS_NOT_AVAILABLE = u'project typesetter is not available'
         self.PROJECT_TYPESETTER_IS_NOT_SPECIFIED = u'project typesetter is not specified'
