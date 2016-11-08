@@ -36,12 +36,12 @@ class XMLProcess(Debuggable):
 
     def __init__(self):
         self.args = self.read_command_line()
-        print self.args
         self.debug = Debug()
         self.gv = GV()
         self.uid = '4e4dd8cf-26bf-4893-b037-1fd3bf08f112'
         self.dr = self.args.get('<path>')
         self.schema = self.args.get('<scheme>')
+        self.o = self.args.get('<output_file>')
         Debuggable.__init__(self, 'Main')
         if self.args.get('--debug'):
             self.debug.enable_debug()
@@ -72,12 +72,12 @@ class XMLProcess(Debuggable):
         else:
             return fl
 
-    def write_array_to_file(self, f, name):
+    def write_array_to_file(self, b, name):
         p = self.get_tmp_file_name(name)
-        t = open(os.path.join(self.dr, ''.join(p)), 'w')
-        for i in f:
-            t.write(i)
-        t.close()
+        f = open(os.path.join(self.dr, ''.join(p)), 'w')
+        for i in b:
+            f.write(i)
+        f.close()
 
     def get_tmp_file_name(self, name):
         ''' get temporary file name '''
@@ -91,23 +91,26 @@ class XMLProcess(Debuggable):
         self.write_array_to_file(back, 'back')
 
     def create_output(self, tr):
-        ''' create ouput file'''
-        root = tr.getroot()
-        front = self.xml_elements_to_array(".//front", root)
-        body = self.xml_elements_to_array(".//body", root)
-        back = self.xml_elements_to_array(".//back", root)
-
-        if front and body and back:
-            front = self.get_front(front)
-            p = self.get_tmp_file_name('bodys')
+        ''' create output file '''
+        r = tr.getroot()
+        print tr
+        f = self.xml_elements_to_array(".//front", r)
+        bd = self.xml_elements_to_array(".//body/sec", r)
+        bk = self.xml_elements_to_array(".//back", r)
+        self.create_temp_files(f, bd, bk)
+        if f and bd and bk:
+            f = self.get_front(f)
+            p = self.get_tmp_file_name('body')
             try:
-                f = os.path.join(self.dr, ''.join(p))
-                open(f, 'r')
+                l = ''.join(['<body>',f.read(), ''.join(bd), '</body>'])
+
+                return etree.fromstring(l)
+
             except IOError as i:
-                self.debug.print_debug(self, self.gv.XML_INPUT_FILE_IS_NOT_FOUND)
+                self.debug.print_debug(self, i)
+                print(i)
                 sys.exit(1)
 
-            self.create_temp_files(front, body, back)
         else:
             self.debug.print_debug(self, self.gv.XML_INPUT_FILE_IS_NOT_VALID)
             sys.exit(1)
@@ -117,14 +120,13 @@ class XMLProcess(Debuggable):
     def process_xml_file(self):
 
         f = self.args.get('<input_file>')
-        o = self.args.get('<output_file>')
         tr = etree.parse(os.path.join(self.dr, f))
         count = 1
         range_count = [1, 2]
         self.gv.create_dirs_recursive(self.dr.split('/'))
         tr = self.create_output(tr)
-        print o
-        self.gv.create_xml_file(tr, os.path.join(self.dr, os.path.basename(o)))
+
+        self.gv.create_xml_file(tr, os.path.join(self.dr, os.path.basename(self.o)))
 
     def run(self):
         self.process_xml_file()
@@ -134,8 +136,6 @@ def main():
 
     xp = XMLProcess()
     xp.run()
-    
-
 
 if __name__ == '__main__':
     main()

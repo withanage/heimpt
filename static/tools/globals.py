@@ -5,6 +5,7 @@ __author__ = "Dulip Withanage"
 import json
 import os
 import sys
+from lxml import etree
 
 from debug import Debuggable, Debug
 
@@ -15,9 +16,7 @@ numeral_map = tuple(zip(
 
 
 class GV(object):
-    '''
-    Global variables
-    '''
+    '''    Global variables    '''
 
     def __init__(self):
         # GLOBAL VARIABLES
@@ -46,7 +45,7 @@ class GV(object):
         self.TYPESETTER_BINARY_IS_UNAVAILABLE = u'typesetter binary is unavailable '
         self.TYPESETTER_RUNS_WITH_NO_ARGUMENTS = u'typesetter runs with no arguments'
 
-        #xml
+        # xml
         self.XML_ELEMENT_NOT_FOUND =u'xml element not found'
         self.XML_FILE_NOT_CREATED=u'xml file not created'
         self.XML_INPUT_FILE_IS_NOT_FOUND =u'xml input file is not found'
@@ -55,7 +54,6 @@ class GV(object):
         self.debug = Debug()
         self.numeral_map = numeral_map
         
-
     @staticmethod
     def fatal_error(module, message):
         print(u'[FATAL ERROR] [{0}] {1}'.format(
@@ -100,7 +98,7 @@ class GV(object):
         try:
             tree.write(
                 f,
-                pretty_print=True,
+                pretty_print=False,
                 xml_declaration=True,
                 encoding='UTF-8')
 
