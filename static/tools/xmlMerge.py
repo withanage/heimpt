@@ -94,6 +94,7 @@ class XMLProcess(Debuggable):
 
         if front and body and back:
             front = self.get_front(front)
+            
             self.create_temp_files(front, body, back)
         else:
             self.debug.print_debug(self, self.gv.XML_INPUT_FILE_IS_NOT_VALID)
@@ -121,6 +122,7 @@ def main():
 
     xp = XMLProcess()
     xp.run()
+    
 
 
 if __name__ == '__main__':
