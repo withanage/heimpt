@@ -73,20 +73,25 @@ class XMLProcess(Debuggable):
             return fl
 
     def write_array_to_file(self, f, name):
-        p = [self.uid, '.', self.schema, '.', name, '.xml']
+        p = self.get_tmp_file_name(name)
         t = open(os.path.join(self.dr, ''.join(p)), 'w')
         for i in f:
             t.write(i)
         t.close()
 
-    def create_temp_files(self, front, body, back):
+    def get_tmp_file_name(self, name):
+        ''' get temporary file name '''
+        p = [self.uid, '.', self.schema, '.', name, '.xml']
+        return p
 
+    def create_temp_files(self, front, body, back):
+        ''' create   temp files for jats format '''
         self.write_array_to_file(front, 'front')
         self.write_array_to_file(body, 'body')
         self.write_array_to_file(back, 'back')
 
     def create_output(self, tr):
-
+        ''' create ouput file'''
         root = tr.getroot()
         front = self.xml_elements_to_array(".//front", root)
         body = self.xml_elements_to_array(".//body", root)
@@ -94,7 +99,14 @@ class XMLProcess(Debuggable):
 
         if front and body and back:
             front = self.get_front(front)
-            
+            p = self.get_tmp_file_name('bodys')
+            try:
+                f = os.path.join(self.dr, ''.join(p))
+                open(f, 'r')
+            except IOError as i:
+                self.debug.print_debug(self, self.gv.XML_INPUT_FILE_IS_NOT_FOUND)
+                sys.exit(1)
+
             self.create_temp_files(front, body, back)
         else:
             self.debug.print_debug(self, self.gv.XML_INPUT_FILE_IS_NOT_VALID)

@@ -48,7 +48,8 @@ class GV(object):
 
         #xml
         self.XML_ELEMENT_NOT_FOUND =u'xml element not found'
-        self.XML_FILE_NOT_CREATED=u'xml file not created' 
+        self.XML_FILE_NOT_CREATED=u'xml file not created'
+        self.XML_INPUT_FILE_IS_NOT_FOUND =u'xml input file is not found'
         self.XML_INPUT_FILE_IS_NOT_VALID=u'xml input file is not valid'
         
         self.debug = Debug()
