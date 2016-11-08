@@ -5,7 +5,8 @@
             "chain": true,
             "files": {
                 "2": "SP1.docx",
-                "1": "SP2.docx"
+                "1": "SP2.docx",
+                "3": "Refs.docx"
             },
             "name": "moehren",
             "path": "/home/wit/Arbeit/OMP/Sander/sanderfiles/",
@@ -23,7 +24,18 @@
                     },
                     "name": "xmlprocess",
                     "out_type": "xml"
+                },
+                "3": {
+                   "arguments": {
+                        "1": "fn:append_out_dir",
+                        "2":"jats",
+                        "3":"full.xml"
+                    },
+                    "name": "xmlmerge",
+                    "out_type": "xml",
+                    "merge":true
                 }
+
             }
         },
         {
@@ -48,7 +60,8 @@
                         "1": "fn:append_out_dir"
                     },
                     "name": "xmlprocess",
-                    "out_type": "xml"
+                    "out_type": "xml",
+                    "merge":true
                 }
             }
         },
@@ -106,6 +119,13 @@
                 "2": "--set-uuids=fn,ref"
             },
             "executable": "/home/wit/projects/mpt/static/tools/xmlProcess.py"
+        } ,
+        "xmlmerge": {
+            "arguments": {
+
+            },
+            "executable": "/home/wit/projects/mpt/static/tools/xmlMerge.py"
         }
+
     }
 }

@@ -102,6 +102,7 @@ class PreProcess(Debuggable):
             self.debug.print_debug(self, output.decode('utf-8'))
             print project_path, uid
             previous_project_path_temp = self.reorganize_output(project_path, project, project_typesetter_name, project_typesetter_id, time_now, file_prefix, file_id, uid)
+
             temp = project_typesetter_out_type
         else:
             self.debug.print_debug(self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + os.path.join(file_path))
@@ -203,19 +204,30 @@ class PreProcess(Debuggable):
         if typesetter == 'metypeset':
             temp_path = temp_path + ['nlm']
         out_type = project['typesetters'][i]['out_type']
-        temp_path.append(file_prefix + '.' + out_type)
-        temp_file = os.path.sep.join(temp_path)
-        if os.path.isfile(temp_file):
-            project_path = [ppath, project['name'],time_now,  i + '_' + typesetter, out_type]
-            p = self.gv.create_dirs_recursive(project_path)
-            file_path = p + os.path.sep + file_prefix + '.' + out_type
-            os.rename(temp_file, file_path)
-            print file_path
-            #shutil.copyfile(temp_file, file_path)
-            shutil.rmtree(os.path.join(ppath, uid))
+        project_path = [ppath, project['name'], time_now, i + '_' + typesetter, out_type]
+        p = self.gv.create_dirs_recursive(project_path)
+
+        if project['typesetters'][i].get('merge'):
+            temp_path.append('full.xml')
+            temp_file = os.path.sep.join(temp_path)
+            file_path = p + os.path.sep + 'full.xml'
+            if os.path.isfile(temp_file):
+                os.rename(temp_file, file_path)
+                shutil.rmtree(os.path.join(ppath, uid))
+            else:
+                    self.debug.print_debug(
+                        self, self.gv.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
         else:
-            self.debug.print_debug(
-                self, self.gv.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
+            temp_path.append(file_prefix + '.' + out_type)
+            temp_file = os.path.sep.join(temp_path)
+
+            if os.path.isfile(temp_file):
+                    file_path = p + os.path.sep + file_prefix + '.' + out_type
+                    os.rename(temp_file, file_path)
+                    shutil.rmtree(os.path.join(ppath, uid))
+            else:
+                    self.debug.print_debug(
+                        self, self.gv.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
         return os.path.sep.join(project_path)   
     
     

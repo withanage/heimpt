@@ -96,13 +96,15 @@ class GV(object):
     def create_xml_file(self, tree, f):
         ''' write element tree to f '''
         try:
+
             tree.write(
                 f,
                 pretty_print=False,
                 xml_declaration=True,
                 encoding='UTF-8')
-
-        except:
+            print
+        except IOError as e:
+            print e
             self.debug.print_debug(self, self.XML_FILE_NOT_CREATED)
     
     def create_dirs_recursive(self, project_path):

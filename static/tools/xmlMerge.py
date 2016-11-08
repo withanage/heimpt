@@ -36,6 +36,7 @@ class XMLProcess(Debuggable):
 
     def __init__(self):
         self.args = self.read_command_line()
+        print self.args
         self.debug = Debug()
         self.gv = GV()
         self.uid = '4e4dd8cf-26bf-4893-b037-1fd3bf08f112'
@@ -99,23 +100,41 @@ class XMLProcess(Debuggable):
         bk = self.xml_elements_to_array(".//back", r)
         self.create_temp_files(f, bd, bk)
         if f and bd and bk:
-            f = self.get_front(f)
+            fr = self.get_front(f)
+
             p = self.get_tmp_file_name('body')
-            try:
-                l = ''.join(['<body>',f.read(), ''.join(bd), '</body>'])
+            inp = os.path.join(self.dr, ''.join(p))
+            rl = self.do_file_io(f , 'r',inp)
 
-                return etree.fromstring(l)
+            l = ''.join(['<body>', rl, ''.join(bd), '</body>'])
 
-            except IOError as i:
-                self.debug.print_debug(self, i)
-                print(i)
-                sys.exit(1)
+            pt = os.path.join(self.dr, os.path.basename(self.o))
+            self.do_file_io(l, 'w',pt)
+
+
+
 
         else:
             self.debug.print_debug(self, self.gv.XML_INPUT_FILE_IS_NOT_VALID)
             sys.exit(1)
 
         return tr
+
+    def do_file_io(self, l ,mode,p):
+        try:
+            w = open(p, mode)
+            if mode=='w':
+                w.write(l)
+                w.close()
+                return -1
+            if mode=='r':
+                o = w.read()
+                w.close()
+                return o
+        except IOError as i:
+            self.debug.print_debug(self, i)
+            print(i)
+            sys.exit(1)
 
     def process_xml_file(self):
 
@@ -125,8 +144,6 @@ class XMLProcess(Debuggable):
         range_count = [1, 2]
         self.gv.create_dirs_recursive(self.dr.split('/'))
         tr = self.create_output(tr)
-
-        self.gv.create_xml_file(tr, os.path.join(self.dr, os.path.basename(self.o)))
 
     def run(self):
         self.process_xml_file()
