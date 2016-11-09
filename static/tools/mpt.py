@@ -308,6 +308,7 @@ class PreProcess(Debuggable):
             self.debug.print_debug(self, self.gv.PROJECTS_VAR_IS_NOT_SPECIFIED)
 
     def check_program(self, program):
+        self.debug.print_debug(self, program)
         def is_exe(fpath):
             return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
         fpath, fname = os.path.split(program)
