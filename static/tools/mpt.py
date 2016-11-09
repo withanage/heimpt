@@ -49,7 +49,7 @@ class PreProcess(Debuggable):
 
     def call_typesetter(self, mt):
         m = ' '.join(mt).strip().split(' ')
-        print  ' '.join(m)
+        self.debug.print_debug(self,  ' '.join(m))
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
         exit_code = process.wait()
@@ -63,11 +63,12 @@ class PreProcess(Debuggable):
             self.debug.print_debug(
                 self, self.gv.TYPESETTER_EXECUTABLE_VARIABLE_IS_UNDEFINED)
             sys.exit(1)
-        argmts = ct.get("arguments")
-        if argmts:
-            argmts = collections.OrderedDict(sorted(argmts.items()))
-            for a in argmts:
-                mt.append(argmts[a])
+        arguments = ct.get("arguments")
+        print  arguments
+        if arguments:
+            arguments = collections.OrderedDict(sorted(arguments.items()))
+            for a in arguments:
+                mt.append(arguments[a])
         else:
             self.debug.print_debug(
                 self, self.gv.TYPESETTER_RUNS_WITH_NO_ARGUMENTS)
