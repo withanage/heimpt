@@ -172,6 +172,7 @@ class PreProcess(Debuggable):
             project_files,
             file_id):
         typesetter_properties = all_typesetters.get(project_typesetter_name)
+        previous_project_path_temp, previous_project_typesetter_out_type_temp= '',''
         if typesetter_properties:
             mt = self.arguments_parse(typesetter_properties)
             if self.check_program(typesetter_properties.get('executable')):
@@ -214,6 +215,7 @@ class PreProcess(Debuggable):
             previous_project_path,
             previous_project_typesetter_out_type,
             project_typesetter_id):
+        previous_project_path_temp, previous_project_typesetter_out_type_temp='',''
         project_typesetter_arguments = collections.OrderedDict(
             sorted(project_typesetters[project_typesetter_id].get("arguments").items()))
         project_typesetter_name = project_typesetters[
@@ -252,6 +254,7 @@ class PreProcess(Debuggable):
         return previous_project_path_temp, previous_project_typesetter_out_type_temp
 
     def run_all_typesetters_for_project(self, project):
+        project_typesetters_ordered, pp_path_temp,pp_typesetter_out_type_temp='','',''
         if project.get('active'):
             project_typesetters = project.get('typesetters')
             if project_typesetters:
@@ -356,7 +359,6 @@ class PreProcess(Debuggable):
         else:
             temp_path.append(file_prefix + '.' + out_type)
             temp_file = os.path.sep.join(temp_path)
-            #project_path = [ppath, project['name'], time_now, i + '_' + typesetter, out_type]
             p = self.gv.create_dirs_recursive(project_path)
 
             if os.path.isfile(temp_file):
