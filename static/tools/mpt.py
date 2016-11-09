@@ -130,7 +130,6 @@ class PreProcess(Debuggable):
                     mt,
                     file_prefix)
             output, err, exit_code = self.call_typesetter(mt)
-            self.debug.print_debug(self, output.decode('utf-8'))
             previous_project_path_temp = self.reorganize_output(
                 project_path,
                 project,
@@ -304,7 +303,6 @@ class PreProcess(Debuggable):
             self.debug.print_debug(self, self.gv.PROJECTS_VAR_IS_NOT_SPECIFIED)
 
     def check_program(self, program):
-        self.debug.print_debug(self, program)
         def is_exe(fpath):
             return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
         fpath, fname = os.path.split(program)
@@ -333,7 +331,7 @@ class PreProcess(Debuggable):
             uid):
 
         temp_path = [ppath, uid]
-        project_path = ''
+        project_path,p = '',''
         if typesetter == 'metypeset':
             temp_path = temp_path + ['nlm']
         out_type = project['typesetters'][i]['out_type']
@@ -352,7 +350,7 @@ class PreProcess(Debuggable):
 
             file_path = p + os.path.sep + ff
             shutil.copy2(temp_file, file_path)
-            if len(project_files) ==file_id:
+            if len(project_files) == file_id:
                 shutil.rmtree(os.path.join(ppath, uid))
 
         else:
@@ -367,6 +365,9 @@ class PreProcess(Debuggable):
             else:
                 self.debug.print_debug(
                     self, self.gv.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
+        if len(project_files) == int(file_id):
+            print p
+
         return os.path.sep.join(project_path)
 
 
