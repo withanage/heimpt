@@ -75,8 +75,13 @@ class PreProcess(Debuggable):
                 self, self.gv.TYPESETTER_RUNS_WITH_NO_ARGUMENTS)
         return mt
 
-        
-    def parse_project_typestter_arguments(self, project_typesetter_arguments, project_typesetter_out_type, project_typesetter_out_path, mt, file_prefix):
+    def parse_project_typestter_arguments(
+            self,
+            project_typesetter_arguments,
+            project_typesetter_out_type,
+            project_typesetter_out_path,
+            mt,
+            file_prefix):
         for i in project_typesetter_arguments:
             arg = project_typesetter_arguments[i]
             if arg == 'fn:append_out_dir':
@@ -84,62 +89,166 @@ class PreProcess(Debuggable):
             elif arg == 'fn:create_out_file':
                 if not os.path.exists(project_typesetter_out_path):
                     os.makedirs(project_typesetter_out_path)
-                mt.append(os.path.join(project_typesetter_out_path, file_prefix + '.' + project_typesetter_out_type))
+                mt.append(
+                    os.path.join(
+                        project_typesetter_out_path,
+                        file_prefix +
+                        '.' +
+                        project_typesetter_out_type))
             else:
                 mt.append(arg)
 
-    def run_typesetter(self, project, time_now, project_path, previous_project_path, previous_project_typesetter_out_type, project_typesetter_id, project_typesetter_arguments, project_typesetter_name, project_typesetter_out_type, uid, project_typesetter_out_path, project_files, file_id, mt):
+    def run_typesetter(
+            self,
+            project,
+            time_now,
+            project_path,
+            previous_project_path,
+            previous_project_typesetter_out_type,
+            project_typesetter_id,
+            project_typesetter_arguments,
+            project_typesetter_name,
+            project_typesetter_out_type,
+            uid,
+            project_typesetter_out_path,
+            project_files,
+            file_id,
+            mt):
         previous_project_path_temp = ''
         temp = ''
         file_prefix = project_files[file_id].split('.')[0]
         if project_typesetter_id == min(i for i in project['typesetters']):
             file_path = os.path.join(project_path, project_files[file_id])
         elif project.get("chain") == True:
-            file_path = os.path.join(previous_project_path, file_prefix + '.' + previous_project_typesetter_out_type)
+            file_path = os.path.join(
+                previous_project_path,
+                file_prefix +
+                '.' +
+                previous_project_typesetter_out_type)
         if os.path.isfile(file_path):
             mt.append(file_path)
             if project_typesetter_arguments:
-                self.parse_project_typestter_arguments(project_typesetter_arguments, project_typesetter_out_type, project_typesetter_out_path, mt, file_prefix)
+                self.parse_project_typestter_arguments(
+                    project_typesetter_arguments,
+                    project_typesetter_out_type,
+                    project_typesetter_out_path,
+                    mt,
+                    file_prefix)
             output, err, exit_code = self.call_typesetter(mt)
             self.debug.print_debug(self, output.decode('utf-8'))
             print project_path, uid
-            previous_project_path_temp = self.reorganize_output(project_path, project, project_typesetter_name, project_typesetter_id, time_now, file_prefix, file_id, uid)
+            previous_project_path_temp = self.reorganize_output(
+                project_path,
+                project,
+                project_typesetter_name,
+                project_typesetter_id,
+                time_now,
+                file_prefix,
+                file_id,
+                uid)
 
             temp = project_typesetter_out_type
         else:
-            self.debug.print_debug(self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + os.path.join(file_path))
+            self.debug.print_debug(
+                self,
+                self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST +
+                os.path.join(file_path))
         return previous_project_path_temp, temp
 
-
-    def typeset_file(self, project, time_now, all_typesetters, project_path, previous_project_path, previous_project_typesetter_out_type, project_typesetter_id, project_typesetter_arguments, project_typesetter_name, project_typesetter_out_type, uid, project_typesetter_out_path, project_files, file_id):
+    def typeset_file(
+            self,
+            project,
+            time_now,
+            all_typesetters,
+            project_path,
+            previous_project_path,
+            previous_project_typesetter_out_type,
+            project_typesetter_id,
+            project_typesetter_arguments,
+            project_typesetter_name,
+            project_typesetter_out_type,
+            uid,
+            project_typesetter_out_path,
+            project_files,
+            file_id):
         typesetter_properties = all_typesetters.get(project_typesetter_name)
         if typesetter_properties:
             mt = self.arguments_parse(typesetter_properties)
             if self.check_program(typesetter_properties.get('executable')):
-                previous_project_path_temp, previous_project_typesetter_out_type_temp = self.run_typesetter(project, time_now, project_path, previous_project_path, previous_project_typesetter_out_type, project_typesetter_id, project_typesetter_arguments, project_typesetter_name, project_typesetter_out_type, uid, project_typesetter_out_path, project_files, file_id, mt)
+                previous_project_path_temp, previous_project_typesetter_out_type_temp = self.run_typesetter(
+                    project,
+                    time_now,
+                    project_path,
+                    previous_project_path,
+                    previous_project_typesetter_out_type,
+                    project_typesetter_id,
+                    project_typesetter_arguments,
+                    project_typesetter_name,
+                    project_typesetter_out_type,
+                    uid,
+                    project_typesetter_out_path,
+                    project_files,
+                    file_id,
+                    mt)
             else:
-                self.debug.print_debug(self, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
+                self.debug.print_debug(
+                    self, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
         else:
-            self.debug.print_debug(self, colored(project_typesetter_name, 'red') + " " + self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
+            self.debug.print_debug(
+                self,
+                colored(
+                    project_typesetter_name,
+                    'red') +
+                " " +
+                self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
         return previous_project_path_temp, previous_project_typesetter_out_type_temp
 
-
-    def run_typestter_for_all_files_in_project(self, project, project_typesetters, time_now, fs, all_typesetters, project_path, previous_project_path, previous_project_typesetter_out_type, project_typesetter_id):
-        project_typesetter_arguments = collections.OrderedDict(sorted(project_typesetters[project_typesetter_id].get("arguments").items()))
-        project_typesetter_name = project_typesetters[project_typesetter_id].get("name")
-        project_typesetter_out_type = project_typesetters[project_typesetter_id].get("out_type")
+    def run_typestter_for_all_files_in_project(
+            self,
+            project,
+            project_typesetters,
+            time_now,
+            fs,
+            all_typesetters,
+            project_path,
+            previous_project_path,
+            previous_project_typesetter_out_type,
+            project_typesetter_id):
+        project_typesetter_arguments = collections.OrderedDict(
+            sorted(project_typesetters[project_typesetter_id].get("arguments").items()))
+        project_typesetter_name = project_typesetters[
+            project_typesetter_id].get("name")
+        project_typesetter_out_type = project_typesetters[
+            project_typesetter_id].get("out_type")
         uid = str(uuid.uuid4())[:8]
         project_typesetter_out_path = os.path.join(project_path, uid)
         if project_typesetter_out_type is None:
-            self.debug.print_debug(self, self.gv.TYPESETTER_FILE_OUTPUT_TYPE_IS_UNDEFINED)
+            self.debug.print_debug(
+                self, self.gv.TYPESETTER_FILE_OUTPUT_TYPE_IS_UNDEFINED)
             sys.exit(1)
         if project_typesetter_name:
             project_files = collections.OrderedDict(sorted(fs.items()))
             for file_id in project_files:
-                previous_project_path_temp, previous_project_typesetter_out_type_temp = self.typeset_file(project, time_now, all_typesetters, project_path, previous_project_path, previous_project_typesetter_out_type, project_typesetter_id, project_typesetter_arguments, project_typesetter_name, project_typesetter_out_type, uid, project_typesetter_out_path, project_files, file_id)
+                previous_project_path_temp, previous_project_typesetter_out_type_temp = self.typeset_file(
+                    project,
+                    time_now,
+                    all_typesetters,
+                    project_path,
+                    previous_project_path,
+                    previous_project_typesetter_out_type,
+                    project_typesetter_id,
+                    project_typesetter_arguments,
+                    project_typesetter_name,
+                    project_typesetter_out_type,
+                    uid,
+                    project_typesetter_out_path,
+                    project_files,
+                    file_id
+                )
 
         else:
-            self.debug.print_debug(self, self.gv.PROJECT_TYPESETTER_NAME_IS_NOT_SPECIFIED)
+            self.debug.print_debug(
+                self, self.gv.PROJECT_TYPESETTER_NAME_IS_NOT_SPECIFIED)
         return previous_project_path_temp, previous_project_typesetter_out_type_temp
 
     def run_all_typesetters_for_project(self, project):
@@ -161,20 +270,30 @@ class PreProcess(Debuggable):
             previous_project_typesetter_out_type = ''
 
             if all_typesetters is None:
-                self.debug.print_debug(self, self.gv.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED)
+                self.debug.print_debug(
+                    self, self.gv.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED)
                 sys.exit(1)
 
             for project_typesetter_id in project_typesetters_ordered:
                 if project_typesetters_ordered[project_typesetter_id]:
-                    previous_project_path_temp, previous_project_typesetter_out_type_temp = self.run_typestter_for_all_files_in_project(project, project_typesetters, time_now, fs, all_typesetters, project_path, previous_project_path, previous_project_typesetter_out_type, project_typesetter_id)
+                    pp_path_temp, pp_typesetter_out_type_temp = self.run_typestter_for_all_files_in_project(
+                        project,
+                        project_typesetters,
+                        time_now,
+                        fs,
+                        all_typesetters,
+                        project_path,
+                        previous_project_path,
+                        previous_project_typesetter_out_type,
+                        project_typesetter_id
+                    )
                 else:
                     self.debug.print_debug(
                         self, self.gv.PROJECT_TYPESETTER_IS_NOT_SPECIFIED)
-                previous_project_path = previous_project_path_temp
-                previous_project_typesetter_out_type = previous_project_typesetter_out_type_temp
+                previous_project_path = pp_path_temp
+                previous_project_typesetter_out_type = pp_typesetter_out_type_temp
         else:
             self.debug.print_debug(self, self.gv.PROJECT_IS_NOT_ACTIVE)
-
 
     def typeset_all_projects(self):
         projects = self.config.get('projects')
@@ -201,13 +320,27 @@ class PreProcess(Debuggable):
 
         return None
 
-    def reorganize_output(self, ppath, project, typesetter, i, time_now, file_prefix, file_id, uid):
+    def reorganize_output(
+            self,
+            ppath,
+            project,
+            typesetter,
+            i,
+            time_now,
+            file_prefix,
+            file_id,
+            uid):
         temp_path = [ppath, uid]
-        project_path=''
+        project_path = ''
         if typesetter == 'metypeset':
             temp_path = temp_path + ['nlm']
         out_type = project['typesetters'][i]['out_type']
-        project_path = [ppath, project['name'], time_now, i + '_' + typesetter, out_type]
+        project_path = [
+            ppath,
+            project['name'],
+            time_now,
+            i + '_' + typesetter,
+            out_type]
         if project['typesetters'][i].get('merge'):
             ff = project['typesetters'][i].get('arguments')["3"]
             temp_path.append(ff)
@@ -215,9 +348,8 @@ class PreProcess(Debuggable):
 
             p = self.gv.create_dirs_recursive(project_path)
 
-            file_path = p + os.path.sep +ff
-            print 'rename',temp_file, file_path
-            #os.rename(temp_file, file_path)
+            file_path = p + os.path.sep + ff
+            print 'rename', temp_file, file_path
             shutil.copy2(temp_file, file_path)
             #shutil.rmtree(os.path.join(ppath, uid))
 
@@ -228,12 +360,12 @@ class PreProcess(Debuggable):
             p = self.gv.create_dirs_recursive(project_path)
 
             if os.path.isfile(temp_file):
-                    file_path = p + os.path.sep + file_prefix + '.' + out_type
-                    os.rename(temp_file, file_path)
-                    shutil.rmtree(os.path.join(ppath, uid))
+                file_path = p + os.path.sep + file_prefix + '.' + out_type
+                os.rename(temp_file, file_path)
+                shutil.rmtree(os.path.join(ppath, uid))
             else:
-                    self.debug.print_debug(
-                        self, self.gv.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
+                self.debug.print_debug(
+                    self, self.gv.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
         return os.path.sep.join(project_path)
 
 

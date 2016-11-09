@@ -96,15 +96,15 @@ class XMLProcess(Debuggable):
         bd, bk, f = self.get_jats_parts(tr)
 
         if f and bd and bk:
-            fr = self.get_front(f)
-
             fuf = os.path.join(self.dr, self.o)
             if os.path.isfile(fuf):
                 trf = etree.parse(fuf)
                 bdf, bkf, ff = self.get_jats_parts(trf)
-                l = ''.join(['<article>',''.join(ff), '<body>', ''.join(bdf), ''.join(bd), '</body>', ''.join(bkf),'</article>'])
+                l = ''.join(['<article>', ''.join(ff), '<body>', ''.join(bdf), ''.join(
+                    bd), '</body>', ''.join(bkf), ''.join(bk), '</article>'])
             else:
-                l = ''.join(['<article>',''.join(f), '<body>', ''.join(bd), '</body>', ''.join(bk),'</article>'])
+                l = ''.join(['<article>', ''.join(f), '<body>', ''.join(
+                    bd), '</body>', ''.join(bk), '</article>'])
             pt = os.path.join(self.dr, os.path.basename(self.o))
             self.do_file_io(l, 'w', pt)
             print os.stat(pt)
