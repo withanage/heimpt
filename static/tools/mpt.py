@@ -49,7 +49,7 @@ class PreProcess(Debuggable):
 
     def call_typesetter(self, mt):
         m = ' '.join(mt).strip().split(' ')
-        print m
+        print  ' '.join(m)
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
         exit_code = process.wait()
