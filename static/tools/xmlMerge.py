@@ -94,40 +94,40 @@ class XMLProcess(Debuggable):
     def create_output(self, tr):
         ''' create output file '''
         r = tr.getroot()
-        print tr
         f = self.xml_elements_to_array(".//front", r)
         bd = self.xml_elements_to_array(".//body/sec", r)
         bk = self.xml_elements_to_array(".//back", r)
-        self.create_temp_files(f, bd, bk)
+
         if f and bd and bk:
             fr = self.get_front(f)
 
-            p = self.get_tmp_file_name('body')
+            #p = self.get_tmp_file_name('body')
+            p = [self.o]
+
+            print 'file name', p
+
             inp = os.path.join(self.dr, ''.join(p))
-            rl = self.do_file_io(f , 'r',inp)
-
-            l = ''.join([''.join(f),'<body>', rl, ''.join(bd), '</body>',''.join(bk)])
-
+            if os.path.isfile(inp):
+                rl = self.do_file_io(f, 'r', inp)
+                l = ''.join([''.join(f), '<body>', rl, ''.join(bd), '</body>', ''.join(bk)])
+            else:
+                l = ''.join([''.join(f), '<body>', ''.join(bd), '</body>', ''.join(bk)])
             pt = os.path.join(self.dr, os.path.basename(self.o))
-            self.do_file_io(l, 'w',pt)
-
-
-
-
+            self.do_file_io(l, 'w', pt)
         else:
             self.debug.print_debug(self, self.gv.XML_INPUT_FILE_IS_NOT_VALID)
             sys.exit(1)
 
         return tr
 
-    def do_file_io(self, l ,mode,p):
+    def do_file_io(self, l, mode, p):
         try:
             w = open(p, mode)
-            if mode=='w':
+            if mode == 'w':
                 w.write(l)
                 w.close()
                 return -1
-            if mode=='r':
+            if mode == 'r':
                 o = w.read()
                 w.close()
                 return o

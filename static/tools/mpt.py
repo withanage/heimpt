@@ -49,7 +49,9 @@ class PreProcess(Debuggable):
 
     def call_typesetter(self, mt):
         m = ' '.join(mt).strip().split(' ')
-        # print 'Final arguments', mt
+
+        print 'Final\t', ' '.join(m)
+
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
         exit_code = process.wait()
@@ -210,14 +212,14 @@ class PreProcess(Debuggable):
             ff = project['typesetters'][i].get('arguments')["3"]
             temp_path.append(ff)
             temp_file = os.path.sep.join(temp_path)
+
             p = self.gv.create_dirs_recursive(project_path)
-            if os.path.isfile(temp_file):
-                file_path = p + os.path.sep +ff
-                os.rename(temp_file, file_path)
-                shutil.rmtree(os.path.join(ppath, uid))
-            else:
-                    self.debug.print_debug(
-                        self, self.gv.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
+
+            file_path = p + os.path.sep +ff
+            print temp_file, file_path
+            os.rename(temp_file, file_path)
+            #shutil.rmtree(os.path.join(ppath, uid))
+
         else:
             temp_path.append(file_prefix + '.' + out_type)
             temp_file = os.path.sep.join(temp_path)
