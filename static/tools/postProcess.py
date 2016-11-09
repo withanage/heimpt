@@ -516,7 +516,7 @@ class PostProcess:
 
 def main():
     p = PostProcess('postProcessConfig.json')
-    context = "michl"
+    context = "moehren"
     p.create_files(context)
     with open(LOG_FILE) as f:
         print f.read()
