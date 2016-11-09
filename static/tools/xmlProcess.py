@@ -40,7 +40,7 @@ class XMLProcess(Debuggable):
 
     def __init__(self):
         self.args = self.read_command_line()
-        print self.args
+        self.debug.print_debug((self, self.args)
         self.debug = Debug()
         self.gv = GV()
         Debuggable.__init__(self, 'Main')
