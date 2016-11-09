@@ -64,14 +64,10 @@ class PreProcess(Debuggable):
                 self, self.gv.TYPESETTER_EXECUTABLE_VARIABLE_IS_UNDEFINED)
             sys.exit(1)
         arguments = ct.get("arguments")
-        print  arguments
         if arguments:
             arguments = collections.OrderedDict(sorted(arguments.items()))
             for a in arguments:
                 mt.append(arguments[a])
-        else:
-            self.debug.print_debug(
-                self, self.gv.TYPESETTER_RUNS_WITH_NO_ARGUMENTS)
         return mt
 
     def parse_project_typestter_arguments(
