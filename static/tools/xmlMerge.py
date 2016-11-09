@@ -36,7 +36,6 @@ class XMLProcess(Debuggable):
 
     def __init__(self):
         self.args = self.read_command_line()
-        print self.args
         self.debug = Debug()
         self.gv = GV()
         self.uid = '4e4dd8cf-26bf-4893-b037-1fd3bf08f112'
@@ -107,7 +106,7 @@ class XMLProcess(Debuggable):
                     bd), '</body>', ''.join(bk), '</article>'])
             pt = os.path.join(self.dr, os.path.basename(self.o))
             self.do_file_io(l, 'w', pt)
-            print os.stat(pt)
+            self.debug.print_debug(self,  os.stat(pt))
         else:
             self.debug.print_debug(self, self.gv.XML_INPUT_FILE_IS_NOT_VALID)
             sys.exit(1)

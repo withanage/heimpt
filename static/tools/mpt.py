@@ -45,7 +45,7 @@ class PreProcess(Debuggable):
         return docopt(__doc__, version='mpt 0.1')
 
     def get_module_name(self):
-        return 'Pre Processing'
+        return 'Monograph Publishing Tool'
 
     def call_typesetter(self, mt):
         m = ' '.join(mt).strip().split(' ')
@@ -133,7 +133,6 @@ class PreProcess(Debuggable):
                     file_prefix)
             output, err, exit_code = self.call_typesetter(mt)
             self.debug.print_debug(self, output.decode('utf-8'))
-            print project_path, uid
             previous_project_path_temp = self.reorganize_output(
                 project_path,
                 project,
@@ -141,6 +140,7 @@ class PreProcess(Debuggable):
                 project_typesetter_id,
                 time_now,
                 file_prefix,
+                project_files,
                 file_id,
                 uid)
 
@@ -227,6 +227,7 @@ class PreProcess(Debuggable):
             sys.exit(1)
         if project_typesetter_name:
             project_files = collections.OrderedDict(sorted(fs.items()))
+
             for file_id in project_files:
                 previous_project_path_temp, previous_project_typesetter_out_type_temp = self.typeset_file(
                     project,
@@ -329,8 +330,10 @@ class PreProcess(Debuggable):
             i,
             time_now,
             file_prefix,
+            project_files,
             file_id,
             uid):
+
         temp_path = [ppath, uid]
         project_path = ''
         if typesetter == 'metypeset':
@@ -350,9 +353,9 @@ class PreProcess(Debuggable):
             p = self.gv.create_dirs_recursive(project_path)
 
             file_path = p + os.path.sep + ff
-            print 'rename', temp_file, file_path
             shutil.copy2(temp_file, file_path)
-            #shutil.rmtree(os.path.join(ppath, uid))
+            if len(project_files) ==file_id:
+                shutil.rmtree(os.path.join(ppath, uid))
 
         else:
             temp_path.append(file_prefix + '.' + out_type)
