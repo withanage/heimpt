@@ -1,7 +1,7 @@
 {
     "projects": [
        {
-            "active": true,
+            "active": false,
             "chain": true,
             "files": {
                 "1": "1.xml",
@@ -29,7 +29,7 @@
             }
         },
      {
-            "active": false,
+            "active": true,
             "chain": true,
             "files": {
                 "2": "SP1.docx",

@@ -216,8 +216,9 @@ class PreProcess(Debuggable):
             p = self.gv.create_dirs_recursive(project_path)
 
             file_path = p + os.path.sep +ff
-            print temp_file, file_path
-            os.rename(temp_file, file_path)
+            print 'rename',temp_file, file_path
+            #os.rename(temp_file, file_path)
+            shutil.copy2(temp_file, file_path)
             #shutil.rmtree(os.path.join(ppath, uid))
 
         else:

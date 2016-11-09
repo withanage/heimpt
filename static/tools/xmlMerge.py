@@ -93,32 +93,33 @@ class XMLProcess(Debuggable):
 
     def create_output(self, tr):
         ''' create output file '''
-        r = tr.getroot()
-        f = self.xml_elements_to_array(".//front", r)
-        bd = self.xml_elements_to_array(".//body/sec", r)
-        bk = self.xml_elements_to_array(".//back", r)
+        bd, bk, f = self.get_jats_parts(tr)
 
         if f and bd and bk:
             fr = self.get_front(f)
 
-            #p = self.get_tmp_file_name('body')
-            p = [self.o]
-
-            print 'file name', p
-
-            inp = os.path.join(self.dr, ''.join(p))
-            if os.path.isfile(inp):
-                rl = self.do_file_io(f, 'r', inp)
-                l = ''.join([''.join(f), '<body>', rl, ''.join(bd), '</body>', ''.join(bk)])
+            fuf = os.path.join(self.dr, self.o)
+            if os.path.isfile(fuf):
+                trf = etree.parse(fuf)
+                bdf, bkf, ff = self.get_jats_parts(trf)
+                l = ''.join(['<article>',''.join(ff), '<body>', ''.join(bdf), ''.join(bd), '</body>', ''.join(bkf),'</article>'])
             else:
-                l = ''.join([''.join(f), '<body>', ''.join(bd), '</body>', ''.join(bk)])
+                l = ''.join(['<article>',''.join(f), '<body>', ''.join(bd), '</body>', ''.join(bk),'</article>'])
             pt = os.path.join(self.dr, os.path.basename(self.o))
             self.do_file_io(l, 'w', pt)
+            print os.stat(pt)
         else:
             self.debug.print_debug(self, self.gv.XML_INPUT_FILE_IS_NOT_VALID)
             sys.exit(1)
 
         return tr
+
+    def get_jats_parts(self, tr):
+        r = tr.getroot()
+        f = self.xml_elements_to_array(".//front", r)
+        bd = self.xml_elements_to_array(".//body/sec", r)
+        bk = self.xml_elements_to_array(".//back", r)
+        return bd, bk, f
 
     def do_file_io(self, l, mode, p):
         try:
