@@ -64,14 +64,14 @@ class XMLProcess(Debuggable):
         :return:
         """
 
-        elem_array = []
+        e = []
         try:
             for i in root.findall(xpath_expression):
                 for child in i.getchildren():
-                    elem_array.append(etree.tostring(child, pretty_print=False))
+                    e.append(etree.tostring(child, pretty_print=False))
         except SyntaxError as se:
             print se
-        return elem_array
+        return e
 
     def get_front(self, fl):
 
@@ -85,22 +85,33 @@ class XMLProcess(Debuggable):
             return fl
 
     def create_output(self, tr):
-        ''' create output file '''
-        f, bd, bkfn, bkref = self.get_jats_parts(tr)
+        """
+        create output file
+        :param tr:
+        :return:
+        """
+        f, bd, bkfn, bkref = self.get_jats_xml_parts(tr)
         print f
         if f and bd:
             fuf = os.path.join(self.dr, self.o)
             pt = os.path.join(self.dr, os.path.basename(self.o))
             if os.path.isfile(fuf):
                 trf = etree.parse(fuf)
-                ff, bdf, bkffn,bkfref= self.get_jats_parts(trf)
+                ff, bdf, bkffn, bkfref = self.get_jats_xml_parts(trf)
                 print ff
-                l = ''.join(['<article>','<front>', ''.join(ff),'</front>', '<body>', ''.join(bdf), '<sec>',''.join(bd), '</sec>','</body>', '<back>','<fn-group>',''.join(bkffn),''.join(bkfn),'</fn-group>', '<ref-list>',''.join(bkfref),''.join(bkref),'</ref-list>','</back>', '</article>'])
+                l = ''.join(
+                    ['<article>', '<front>', ''.join(ff),
+                     '</front>', '<body>', ''.join(bdf),
+                     '<sec>', ''.join(bd),
+                     '</sec>', '</body>', '<back>', '<fn-group>',
+                     ''.join(bkffn),
+                     ''.join(bkfn),
+                     '</fn-group>', '<ref-list>', ''.join(bkfref),
+                     ''.join(bkref),
+                     '</ref-list>', '</back>', '</article>'])
                 self.do_file_io(l, 'w', pt)
             else:
-                self.gv.create_xml_file(tr,pt)
-
-
+                self.gv.create_xml_file(tr, pt)
 
         else:
             self.debug.print_debug(self, self.gv.XML_INPUT_FILE_IS_NOT_VALID)
@@ -108,13 +119,13 @@ class XMLProcess(Debuggable):
 
         return tr
 
-    def get_jats_parts(self, tr):
+    def get_jats_xml_parts(self, tr):
         r = tr.getroot()
         f = self.get_children(".//front", r)
         bd = self.get_children(".//body", r)
         bkfn = self.get_children(".//back/fn-group", r)
         bkref = self.get_children(".//back/ref-list", r)
-        return f , bd, bkfn, bkref
+        return f, bd, bkfn, bkref
 
     def do_file_io(self, l, mode, p):
         try:
