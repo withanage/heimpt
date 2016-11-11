@@ -32,7 +32,9 @@ except ImportError:
 
 
 class XMLProcess(Debuggable):
-    '''     command line tool to clean, modify, delete, merge jats files    '''
+    """
+      command line tool to clean, modify, delete, merge jats files
+    """
 
     def __init__(self):
         self.args = self.read_command_line()
@@ -48,10 +50,19 @@ class XMLProcess(Debuggable):
 
     @staticmethod
     def read_command_line():
-
+        """
+        Reads and evaluates command line
+        :return:
+        """
         return docopt(__doc__, version='xml 0.1')
 
-    def xml_elements_to_array(self, xpath_expression, root):
+    def get_children(self, xpath_expression, root):
+        """
+        get element children  as array
+        :param xpath_expression:
+        :param root:
+        :return:
+        """
 
         elem_array = []
         try:
@@ -72,13 +83,6 @@ class XMLProcess(Debuggable):
             return s
         else:
             return fl
-
-    def write_array_to_file(self, b, name):
-        p = self.get_tmp_file_name(name)
-        f = open(os.path.join(self.dr, ''.join(p)), 'w')
-        for i in b:
-            f.write(i)
-        f.close()
 
     def get_tmp_file_name(self, name):
         ''' get temporary file name '''
@@ -111,10 +115,10 @@ class XMLProcess(Debuggable):
 
     def get_jats_parts(self, tr):
         r = tr.getroot()
-        f = self.xml_elements_to_array(".//front", r)
-        bd = self.xml_elements_to_array(".//body", r)
-        bkfn = self.xml_elements_to_array(".//back/fn-group", r)
-        bkref = self.xml_elements_to_array(".//back/ref-list", r)
+        f = self.get_children(".//front", r)
+        bd = self.get_children(".//body", r)
+        bkfn = self.get_children(".//back/fn-group", r)
+        bkref = self.get_children(".//back/ref-list", r)
         return f , bd, bkfn, bkref
 
     def do_file_io(self, l, mode, p):
