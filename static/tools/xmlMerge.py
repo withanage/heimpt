@@ -56,7 +56,8 @@ class XMLProcess(Debuggable):
         elem_array = []
         try:
             for i in root.findall(xpath_expression):
-                elem_array.append(etree.tostring(i, pretty_print=False))
+                for child in i.getchildren():
+                    elem_array.append(etree.tostring(child, pretty_print=False))
         except SyntaxError as se:
             print se
         return elem_array
@@ -84,29 +85,24 @@ class XMLProcess(Debuggable):
         p = [self.uid, '.', self.schema, '.', name, '.xml']
         return p
 
-    def create_temp_files(self, front, body, back):
-        ''' create   temp files for jats format '''
-        self.write_array_to_file(front, 'front')
-        self.write_array_to_file(body, 'body')
-        self.write_array_to_file(back, 'back')
-
     def create_output(self, tr):
         ''' create output file '''
-        bd, bk, f = self.get_jats_parts(tr)
-
-        if f and bd and bk:
+        f, bd, bkfn, bkref = self.get_jats_parts(tr)
+        print f
+        if f and bd:
             fuf = os.path.join(self.dr, self.o)
+            pt = os.path.join(self.dr, os.path.basename(self.o))
             if os.path.isfile(fuf):
                 trf = etree.parse(fuf)
-                bdf, bkf, ff = self.get_jats_parts(trf)
-                l = ''.join(['<article>', ''.join(ff), '<body>', ''.join(bdf), ''.join(
-                    bd), '</body>', ''.join(bkf), ''.join(bk), '</article>'])
+                ff, bdf, bkffn,bkfref= self.get_jats_parts(trf)
+                print ff
+                l = ''.join(['<article>','<front>', ''.join(ff),'</front>', '<body>', ''.join(bdf), ''.join(bd), '</body>', '<back>','<fn-group>',''.join(bkffn),''.join(bkfn),'</fn-group>', '<ref-list>',''.join(bkfref),''.join(bkref),'</ref-list>','</back>', '</article>'])
+                self.do_file_io(l, 'w', pt)
             else:
-                l = ''.join(['<article>', ''.join(f), '<body>', ''.join(
-                    bd), '</body>', ''.join(bk), '</article>'])
-            pt = os.path.join(self.dr, os.path.basename(self.o))
-            self.do_file_io(l, 'w', pt)
-            self.debug.print_debug(self,  os.stat(pt))
+                self.gv.create_xml_file(tr,pt)
+
+
+
         else:
             self.debug.print_debug(self, self.gv.XML_INPUT_FILE_IS_NOT_VALID)
             sys.exit(1)
@@ -116,9 +112,10 @@ class XMLProcess(Debuggable):
     def get_jats_parts(self, tr):
         r = tr.getroot()
         f = self.xml_elements_to_array(".//front", r)
-        bd = self.xml_elements_to_array(".//body/sec", r)
-        bk = self.xml_elements_to_array(".//back", r)
-        return bd, bk, f
+        bd = self.xml_elements_to_array(".//body", r)
+        bkfn = self.xml_elements_to_array(".//back/fn-group", r)
+        bkref = self.xml_elements_to_array(".//back/ref-list", r)
+        return f , bd, bkfn, bkref
 
     def do_file_io(self, l, mode, p):
         try:

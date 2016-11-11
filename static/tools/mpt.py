@@ -34,6 +34,7 @@ class PreProcess(Debuggable):
         Debuggable.__init__(self, 'Main')
         if self.args.get('--debug'):
             self.debug.enable_debug()
+        self.time_now = datetime.datetime.now().strftime("%Y_%m_%d-%H-%M-") + str(uuid.uuid4())[:8]
 
     def run(self):
         self.config = self.gv.read_json(self.args['<config_file>'])
@@ -96,7 +97,6 @@ class PreProcess(Debuggable):
     def run_typesetter(
             self,
             project,
-            time_now,
             project_path,
             previous_project_path,
             previous_project_typesetter_out_type,
@@ -135,7 +135,6 @@ class PreProcess(Debuggable):
                 project,
                 project_typesetter_name,
                 project_typesetter_id,
-                time_now,
                 file_prefix,
                 project_files,
                 file_id,
@@ -152,7 +151,6 @@ class PreProcess(Debuggable):
     def typeset_file(
             self,
             project,
-            time_now,
             all_typesetters,
             project_path,
             previous_project_path,
@@ -172,7 +170,6 @@ class PreProcess(Debuggable):
             if self.check_program(typesetter_properties.get('executable')):
                 previous_project_path_temp, previous_project_typesetter_out_type_temp = self.run_typesetter(
                     project,
-                    time_now,
                     project_path,
                     previous_project_path,
                     previous_project_typesetter_out_type,
@@ -202,7 +199,6 @@ class PreProcess(Debuggable):
             self,
             project,
             project_typesetters,
-            time_now,
             fs,
             all_typesetters,
             project_path,
@@ -228,7 +224,6 @@ class PreProcess(Debuggable):
             for file_id in project_files:
                 previous_project_path_temp, previous_project_typesetter_out_type_temp = self.typeset_file(
                     project,
-                    time_now,
                     all_typesetters,
                     project_path,
                     previous_project_path,
@@ -258,8 +253,6 @@ class PreProcess(Debuggable):
             else:
                 self.debug.print_debug(
                     self, self.gv.PROJECT_TYPESETTERS_ARE_NOT_SPECIFIED)
-            time_now = datetime.datetime.now().strftime(
-                "%Y_%m_%d-%H-%M-") + str(uuid.uuid4())[:8]
 
             fs = project.get('files')
             all_typesetters = self.config.get('typesetters')
@@ -277,7 +270,6 @@ class PreProcess(Debuggable):
                     pp_path_temp, pp_typesetter_out_type_temp = self.run_typestter_for_all_files_in_project(
                         project,
                         project_typesetters,
-                        time_now,
                         fs,
                         all_typesetters,
                         project_path,
@@ -324,7 +316,6 @@ class PreProcess(Debuggable):
             project,
             typesetter,
             i,
-            time_now,
             file_prefix,
             project_files,
             file_id,
@@ -338,7 +329,7 @@ class PreProcess(Debuggable):
         project_path = [
             ppath,
             project['name'],
-            time_now,
+            self.time_now,
             i + '_' + typesetter,
             out_type]
         if project['typesetters'][i].get('merge'):
