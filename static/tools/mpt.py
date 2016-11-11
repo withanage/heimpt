@@ -203,7 +203,10 @@ class PreProcess(Debuggable):
             previous_project_path,
             previous_project_typesetter_out_type,
             project_typesetter_id):
-        previous_project_path_temp, previous_project_typesetter_out_type_temp='',''
+
+
+
+        temp_pre_path, tem_out_type='',''
         project_typesetters = project.get('typesetters')
         project_path = project.get('path')
 
@@ -211,8 +214,7 @@ class PreProcess(Debuggable):
             sorted(project_typesetters[project_typesetter_id].get("arguments").items()))
         project_typesetter_name = project_typesetters[
             project_typesetter_id].get("name")
-        project_typesetter_out_type = project_typesetters[
-            project_typesetter_id].get("out_type")
+        project_typesetter_out_type = project_typesetters[project_typesetter_id].get("out_type")
         uid = str(uuid.uuid4())[:8]
         project_typesetter_out_path = os.path.join(project_path, uid)
         if project_typesetter_out_type is None:
@@ -223,7 +225,7 @@ class PreProcess(Debuggable):
             project_files = collections.OrderedDict(sorted(fs.items()))
 
             for file_id in project_files:
-                previous_project_path_temp, previous_project_typesetter_out_type_temp = self.typeset_file(
+                temp_pre_path, tem_out_type = self.typeset_file(
                     project,
                     project_path,
                     previous_project_path,
@@ -241,7 +243,7 @@ class PreProcess(Debuggable):
         else:
             self.debug.print_debug(
                 self, self.gv.PROJECT_TYPESETTER_NAME_IS_NOT_SPECIFIED)
-        return previous_project_path_temp, previous_project_typesetter_out_type_temp
+        return temp_pre_path, tem_out_type
 
     def run_all_typesetters_for_project(self, project):
         project_typesetters_ordered, pp_path_temp,pp_typesetter_out_type_temp='','',''
