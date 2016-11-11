@@ -99,7 +99,6 @@ class PreProcess(Debuggable):
     def run_typesetter(
             self,
             project,
-            project_path,
             previous_project_path,
             previous_project_typesetter_out_type,
             project_typesetter_id,
@@ -107,15 +106,15 @@ class PreProcess(Debuggable):
             project_typesetter_name,
             project_typesetter_out_type,
             uid,
-            project_typesetter_out_path,
             project_files,
             file_id,
             mt):
         previous_project_path_temp = ''
         temp = ''
+        project_typesetter_out_path = os.path.join(project.get('path'), uid)
         file_prefix = project_files[file_id].split('.')[0]
         if project_typesetter_id == min(i for i in project['typesetters']):
-            file_path = os.path.join(project_path, project_files[file_id])
+            file_path = os.path.join(project.get('path'), project_files[file_id])
         elif project.get("chain") == True:
             file_path = os.path.join(
                 previous_project_path,
@@ -133,7 +132,6 @@ class PreProcess(Debuggable):
                     file_prefix)
             output, err, exit_code = self.call_typesetter(mt)
             previous_project_path_temp = self.reorganize_output(
-                project_path,
                 project,
                 project_typesetter_name,
                 project_typesetter_id,
@@ -153,7 +151,6 @@ class PreProcess(Debuggable):
     def typeset_file(
             self,
             project,
-            project_path,
             previous_project_path,
             previous_project_typesetter_out_type,
             project_typesetter_id,
@@ -161,7 +158,6 @@ class PreProcess(Debuggable):
             project_typesetter_name,
             project_typesetter_out_type,
             uid,
-            project_typesetter_out_path,
             project_files,
             file_id):
         typesetter_properties = self.all_typesetters.get(project_typesetter_name)
@@ -171,7 +167,6 @@ class PreProcess(Debuggable):
             if self.check_program(typesetter_properties.get('executable')):
                 previous_project_path_temp, previous_project_typesetter_out_type_temp = self.run_typesetter(
                     project,
-                    project_path,
                     previous_project_path,
                     previous_project_typesetter_out_type,
                     project_typesetter_id,
@@ -179,7 +174,6 @@ class PreProcess(Debuggable):
                     project_typesetter_name,
                     project_typesetter_out_type,
                     uid,
-                    project_typesetter_out_path,
                     project_files,
                     file_id,
                     mt)
@@ -199,7 +193,6 @@ class PreProcess(Debuggable):
     def run_typestter_for_all_files_in_project(
             self,
             project,
-            fs,
             previous_project_path,
             previous_project_typesetter_out_type,
             project_typesetter_id):
@@ -208,15 +201,15 @@ class PreProcess(Debuggable):
 
         temp_pre_path, tem_out_type='',''
         project_typesetters = project.get('typesetters')
-        project_path = project.get('path')
+        fs = project.get('files')
+        uid = str(uuid.uuid4())[:8]
 
         project_typesetter_arguments = collections.OrderedDict(
             sorted(project_typesetters[project_typesetter_id].get("arguments").items()))
         project_typesetter_name = project_typesetters[
             project_typesetter_id].get("name")
         project_typesetter_out_type = project_typesetters[project_typesetter_id].get("out_type")
-        uid = str(uuid.uuid4())[:8]
-        project_typesetter_out_path = os.path.join(project_path, uid)
+
         if project_typesetter_out_type is None:
             self.debug.print_debug(
                 self, self.gv.TYPESETTER_FILE_OUTPUT_TYPE_IS_UNDEFINED)
@@ -227,7 +220,6 @@ class PreProcess(Debuggable):
             for file_id in project_files:
                 temp_pre_path, tem_out_type = self.typeset_file(
                     project,
-                    project_path,
                     previous_project_path,
                     previous_project_typesetter_out_type,
                     project_typesetter_id,
@@ -235,7 +227,6 @@ class PreProcess(Debuggable):
                     project_typesetter_name,
                     project_typesetter_out_type,
                     uid,
-                    project_typesetter_out_path,
                     project_files,
                     file_id
                 )
@@ -256,7 +247,6 @@ class PreProcess(Debuggable):
                 self.debug.print_debug(
                     self, self.gv.PROJECT_TYPESETTERS_ARE_NOT_SPECIFIED)
 
-            fs = project.get('files')
 
             previous_project_path = ''
             previous_project_typesetter_out_type = ''
@@ -270,7 +260,6 @@ class PreProcess(Debuggable):
                 if project_typesetters_ordered[project_typesetter_id]:
                     pp_path_temp, pp_typesetter_out_type_temp = self.run_typestter_for_all_files_in_project(
                         project,
-                        fs,
                         previous_project_path,
                         previous_project_typesetter_out_type,
                         project_typesetter_id
@@ -310,7 +299,6 @@ class PreProcess(Debuggable):
 
     def reorganize_output(
             self,
-            ppath,
             project,
             typesetter,
             i,
@@ -319,13 +307,13 @@ class PreProcess(Debuggable):
             file_id,
             uid):
 
-        temp_path = [ppath, uid]
+        temp_path = [project.get('path'), uid]
         project_path,p = '',''
         if typesetter == 'metypeset':
             temp_path = temp_path + ['nlm']
         out_type = project['typesetters'][i]['out_type']
         project_path = [
-            ppath,
+            project.get('path'),
             project['name'],
             self.time_now,
             i + '_' + typesetter,
@@ -340,7 +328,7 @@ class PreProcess(Debuggable):
             file_path = p + os.path.sep + ff
             shutil.copy2(temp_file, file_path)
             if len(project_files) == file_id:
-                shutil.rmtree(os.path.join(ppath, uid))
+                shutil.rmtree(os.path.join(project.get('path'), uid))
 
         else:
             temp_path.append(file_prefix + '.' + out_type)
@@ -350,7 +338,7 @@ class PreProcess(Debuggable):
             if os.path.isfile(temp_file):
                 file_path = p + os.path.sep + file_prefix + '.' + out_type
                 os.rename(temp_file, file_path)
-                shutil.rmtree(os.path.join(ppath, uid))
+                shutil.rmtree(os.path.join(project.get('path'), uid))
             else:
                 self.debug.print_debug(
                     self, self.gv.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
