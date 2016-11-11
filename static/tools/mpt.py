@@ -96,56 +96,56 @@ class PreProcess(Debuggable):
 
     def create_execution_path(
             self,
-            project,
-            project_typesetter_id,
+            p,
+            p_id,
             mt,
             file_prefix,
             uid):
         """
         creates the full execution path for a file
-        :param project:
-        :param project_typesetter_id:
+        :param p:
+        :param p_id:
         :param mt:
         :param file_prefix:
         :param uid:
         :return:
         """
-        project_typesetter_arguments = collections.OrderedDict(
-            sorted(project.get('typesetters')[project_typesetter_id].get("arguments").items()))
-        project_typesetter_out_type = project.get('typesetters')[project_typesetter_id].get("out_type")
-        project_typesetter_out_path = os.path.join(project.get('path'), uid)
+        ts_args = collections.OrderedDict(
+            sorted(p.get('typesetters')[p_id].get("arguments").items()))
+        out_type = p.get('typesetters')[p_id].get("out_type")
+        out_path = os.path.join(p.get('path'), uid)
 
-        for i in project_typesetter_arguments:
-            arg = project_typesetter_arguments[i]
+        for i in ts_args:
+            arg = ts_args[i]
             if arg == 'fn:append_out_dir':
-                mt.append(project_typesetter_out_path)
+                mt.append(out_path)
             elif arg == 'fn:create_out_file':
-                if not os.path.exists(project_typesetter_out_path):
-                    os.makedirs(project_typesetter_out_path)
+                if not os.path.exists(out_path):
+                    os.makedirs(out_path)
                 mt.append(
                     os.path.join(
-                        project_typesetter_out_path,
+                        out_path,
                         file_prefix +
                         '.' +
-                        project_typesetter_out_type))
+                        out_type))
             else:
                 mt.append(arg)
 
     def run_typesetter(
             self,
-            project,
-            previous_project_path,
-            previous_project_typesetter_out_type,
-            project_typesetter_id,
+            p,
+            pre_path,
+            pre_out_type,
+            p_id,
             uid,
             file_id,
             args):
         """
         Runs  the typesetter
-        :param project:
-        :param previous_project_path:
-        :param previous_project_typesetter_out_type:
-        :param project_typesetter_id:
+        :param p:
+        :param pre_path:
+        :param pre_out_type:
+        :param p_id:
         :param uid:
         :param file_id:
         :param args:
@@ -154,32 +154,32 @@ class PreProcess(Debuggable):
         previous_project_path_temp = ''
         temp = ''
 
-        project_files = collections.OrderedDict(sorted(project.get('files').items()))
-        file_prefix = project_files[file_id].split('.')[0]
-        if project_typesetter_id == min(i for i in project['typesetters']):
-            file_path = os.path.join(project.get('path'), project_files[file_id])
-        elif project.get("chain"):
+        files = collections.OrderedDict(sorted(p.get('files').items()))
+        prefix = files[file_id].split('.')[0]
+        if p_id == min(i for i in p['typesetters']):
+            file_path = os.path.join(p.get('path'), files[file_id])
+        elif p.get("chain"):
             file_path = os.path.join(
-                previous_project_path,
-                file_prefix +
+                pre_path,
+                prefix +
                 '.' +
-                previous_project_typesetter_out_type)
+                pre_out_type)
         if os.path.isfile(file_path):
             args.append(file_path)
             self.create_execution_path(
-                project,
-                project_typesetter_id,
+                p,
+                p_id,
                 args,
-                file_prefix, uid)
+                prefix, uid)
             output, err, exit_code = self.call_typesetter(args)
             previous_project_path_temp = self.organize_output(
-                project,
-                project_typesetter_id,
-                file_prefix,
+                p,
+                p_id,
+                prefix,
                 file_id,
                 uid)
 
-            temp = project.get('typesetters')[project_typesetter_id].get("out_type")
+            temp = p.get('typesetters')[p_id].get("out_type")
 
         else:
             self.debug.print_debug(
@@ -191,31 +191,31 @@ class PreProcess(Debuggable):
     def typeset_file(
             self,
             project,
-            previous_project_path,
-            previous_project_typesetter_out_type,
-            project_typesetter_id,
+            pre_path,
+            pre_out_type,
+            p_id,
             uid,
             file_id):
         """
         Typesets a certain file
         :param project:
-        :param previous_project_path:
-        :param previous_project_typesetter_out_type:
-        :param project_typesetter_id:
+        :param pre_path:
+        :param pre_out_type:
+        :param p_id:
         :param uid:
         :param file_id:
         :return:
         """
-        typesetter_properties = self.all_typesetters.get(project.get('typesetters')[project_typesetter_id].get("name"))
-        previous_project_path_temp, previous_project_typesetter_out_type_temp = '', ''
-        if typesetter_properties:
-            mt = self.arguments_parse(typesetter_properties)
-            if self.check_program(typesetter_properties.get('executable')):
-                previous_project_path_temp, previous_project_typesetter_out_type_temp = self.run_typesetter(
+        t_props = self.all_typesetters.get(project.get('typesetters')[p_id].get("name"))
+        temp_pre_path, temp_pre_out_type = '', ''
+        if t_props:
+            mt = self.arguments_parse(t_props)
+            if self.check_program(t_props.get('executable')):
+                temp_pre_path, temp_pre_out_type = self.run_typesetter(
                     project,
-                    previous_project_path,
-                    previous_project_typesetter_out_type,
-                    project_typesetter_id,
+                    pre_path,
+                    pre_out_type,
+                    p_id,
                     uid,
                     file_id,
                     mt)
@@ -225,20 +225,20 @@ class PreProcess(Debuggable):
         else:
             self.debug.print_debug(
                 self, self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
-        return previous_project_path_temp, previous_project_typesetter_out_type_temp
+        return temp_pre_path, temp_pre_out_type
 
     def typeset_files(
             self,
             project,
-            previous_project_path,
-            previous_project_typesetter_out_type,
-            project_typesetter_id):
+            pre_path,
+            pre_out_type,
+            pre_id):
         """
         Typeset all files of a  certain project
         :param project:
-        :param previous_project_path:
-        :param previous_project_typesetter_out_type:
-        :param project_typesetter_id:
+        :param pre_path:
+        :param pre_out_type:
+        :param pre_id:
         :return:
         """
         temp_pre_path, tem_out_type = '', ''
@@ -250,30 +250,30 @@ class PreProcess(Debuggable):
         for file_id in project_files:
             temp_pre_path, tem_out_type = self.typeset_file(
                 project,
-                previous_project_path,
-                previous_project_typesetter_out_type,
-                project_typesetter_id,
+                pre_path,
+                pre_out_type,
+                pre_id,
                 uid,
                 file_id
             )
 
         return temp_pre_path, tem_out_type
 
-    def typeset_project(self, project):
+    def typeset_project(self, p):
         """
         typesets a certain project
-        :param project:
+        :param p:
         :return:
         """
-        project_typesetters_ordered, pp_path_temp, pp_typesetter_out_type_temp = '', '', ''
+        typesetters_ordered, temp_path, temp_pre_out_type = '', '', ''
         pre_path = ''
         prev_out_type = ''
 
-        if project.get('active'):
-            project_typesetters = project.get('typesetters')
-            if project_typesetters:
-                project_typesetters_ordered = collections.OrderedDict(
-                    sorted(project_typesetters.items()))
+        if p.get('active'):
+            ts = p.get('typesetters')
+            if ts:
+                typesetters_ordered = collections.OrderedDict(
+                    sorted(ts.items()))
             else:
                 self.debug.print_debug(
                     self, self.gv.PROJECT_TYPESETTERS_ARE_NOT_SPECIFIED)
@@ -283,16 +283,16 @@ class PreProcess(Debuggable):
                     self, self.gv.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED)
                 sys.exit(1)
 
-            for project_typesetter_id in project_typesetters_ordered:
-                pp_path_temp, pp_typesetter_out_type_temp = self.typeset_files(
-                    project,
+            for p_id in typesetters_ordered:
+                temp_path, temp_pre_out_type = self.typeset_files(
+                    p,
                     pre_path,
                     prev_out_type,
-                    project_typesetter_id
+                    p_id
                 )
 
-                pre_path = pp_path_temp
-                prev_out_type = pp_typesetter_out_type_temp
+                pre_path = temp_path
+                prev_out_type = temp_pre_out_type
         else:
             self.debug.print_debug(self, self.gv.PROJECT_IS_NOT_ACTIVE)
 
@@ -332,60 +332,62 @@ class PreProcess(Debuggable):
 
     def organize_output(
             self,
-            project,
-            typesetter_id,
-            file_prefix,
-            file_id,
+            p,
+            t_id,
+            prefix,
+            f_id,
             uid):
         """
         Copy the temporary results into the  correct project path
-        :param project:
-        :param typesetter_id:
-        :param file_prefix:
-        :param file_id:
+        :param p:
+        :param t_id:
+        :param prefix:
+        :param f_id:
         :param uid:
         :return:
         """
-        temp_path = [project.get('path'), uid]
-        project_path, p = '', ''
-        typesetter_name = project.get('typesetters')[typesetter_id].get("name")
-        project_files = collections.OrderedDict(sorted(project.get('files').items()))
+        t_path = [p.get('path'), uid]
+        p_path = ''
+        t_name = p.get('typesetters')[t_id].get("name")
+        files = collections.OrderedDict(sorted(p.get('files').items()))
+        out_type = p['typesetters'][t_id]['out_type']
+        step_ts = t_id + '_' + t_name
 
-        if typesetter_name == 'metypeset':
-            temp_path = temp_path + ['nlm']
-        out_type = project['typesetters'][typesetter_id]['out_type']
+        if t_name == 'metypeset':
+            t_path = t_path + ['nlm']
+
         project_path = [
-            project.get('path'),
-            project['name'],
+            p.get('path'),
+            p['name'],
             self.current_result,
-            typesetter_id + '_' + typesetter_name,
+            step_ts,
             out_type]
-        if project['typesetters'][typesetter_id].get('merge'):
-            ff = project['typesetters'][typesetter_id].get('arguments')["3"]
-            temp_path.append(ff)
-            temp_file = os.path.sep.join(temp_path)
+        if p['typesetters'][t_id].get('merge'):
 
-            p = self.gv.create_dirs_recursive(project_path)
-
-            file_path = p + os.path.sep + ff
-            shutil.copy2(temp_file, file_path)
-            if len(project_files) == file_id:
-                shutil.rmtree(os.path.join(project.get('path'), uid))
+            ff = p['typesetters'][t_id].get('arguments')["3"]
+            t_path.append(ff)
+            t_file = os.path.sep.join(t_path)
+            p_path = self.gv.create_dirs_recursive(project_path)
+            f_path = p_path + os.path.sep + ff
+            shutil.copy2(t_file, f_path)
+            if len(files) == f_id:
+                shutil.rmtree(os.path.join(p.get('path'), uid))
 
         else:
-            temp_path.append(file_prefix + '.' + out_type)
-            temp_file = os.path.sep.join(temp_path)
-            p = self.gv.create_dirs_recursive(project_path)
+            t_path.append(prefix + '.' + out_type)
+            t_file = os.path.sep.join(t_path)
+            p_path = self.gv.create_dirs_recursive(project_path)
 
-            if os.path.isfile(temp_file):
-                file_path = p + os.path.sep + file_prefix + '.' + out_type
-                os.rename(temp_file, file_path)
-                shutil.rmtree(os.path.join(project.get('path'), uid))
+            if os.path.isfile(t_file):
+                f_path = p_path + os.path.sep + prefix + '.' + out_type
+                os.rename(t_file, f_path)
+                shutil.rmtree(os.path.join(p.get('path'), uid))
             else:
                 self.debug.print_debug(
                     self, self.gv.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
-        if len(project_files) == int(file_id):
-            print p
+
+        if len(files) == int(f_id):
+            print p_path
 
         return os.path.sep.join(project_path)
 
@@ -401,3 +403,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
