@@ -35,9 +35,11 @@ class PreProcess(Debuggable):
         if self.args.get('--debug'):
             self.debug.enable_debug()
         self.time_now = datetime.datetime.now().strftime("%Y_%m_%d-%H-%M-") + str(uuid.uuid4())[:8]
+        self.config = self.gv.read_json(self.args['<config_file>'])
+        self.all_typesetters = self.config.get('typesetters')
+
 
     def run(self):
-        self.config = self.gv.read_json(self.args['<config_file>'])
         self.typeset_all_projects()
         return
 
@@ -151,7 +153,6 @@ class PreProcess(Debuggable):
     def typeset_file(
             self,
             project,
-            all_typesetters,
             project_path,
             previous_project_path,
             previous_project_typesetter_out_type,
@@ -163,7 +164,7 @@ class PreProcess(Debuggable):
             project_typesetter_out_path,
             project_files,
             file_id):
-        typesetter_properties = all_typesetters.get(project_typesetter_name)
+        typesetter_properties = self.all_typesetters.get(project_typesetter_name)
         previous_project_path_temp, previous_project_typesetter_out_type_temp= '',''
         if typesetter_properties:
             mt = self.arguments_parse(typesetter_properties)
@@ -198,14 +199,14 @@ class PreProcess(Debuggable):
     def run_typestter_for_all_files_in_project(
             self,
             project,
-            project_typesetters,
             fs,
-            all_typesetters,
-            project_path,
             previous_project_path,
             previous_project_typesetter_out_type,
             project_typesetter_id):
         previous_project_path_temp, previous_project_typesetter_out_type_temp='',''
+        project_typesetters = project.get('typesetters')
+        project_path = project.get('path')
+
         project_typesetter_arguments = collections.OrderedDict(
             sorted(project_typesetters[project_typesetter_id].get("arguments").items()))
         project_typesetter_name = project_typesetters[
@@ -224,7 +225,6 @@ class PreProcess(Debuggable):
             for file_id in project_files:
                 previous_project_path_temp, previous_project_typesetter_out_type_temp = self.typeset_file(
                     project,
-                    all_typesetters,
                     project_path,
                     previous_project_path,
                     previous_project_typesetter_out_type,
@@ -255,12 +255,11 @@ class PreProcess(Debuggable):
                     self, self.gv.PROJECT_TYPESETTERS_ARE_NOT_SPECIFIED)
 
             fs = project.get('files')
-            all_typesetters = self.config.get('typesetters')
-            project_path = project.get('path')
+
             previous_project_path = ''
             previous_project_typesetter_out_type = ''
 
-            if all_typesetters is None:
+            if self.all_typesetters is None:
                 self.debug.print_debug(
                     self, self.gv.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED)
                 sys.exit(1)
@@ -269,10 +268,7 @@ class PreProcess(Debuggable):
                 if project_typesetters_ordered[project_typesetter_id]:
                     pp_path_temp, pp_typesetter_out_type_temp = self.run_typestter_for_all_files_in_project(
                         project,
-                        project_typesetters,
                         fs,
-                        all_typesetters,
-                        project_path,
                         previous_project_path,
                         previous_project_typesetter_out_type,
                         project_typesetter_id

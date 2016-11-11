@@ -96,7 +96,7 @@ class XMLProcess(Debuggable):
                 trf = etree.parse(fuf)
                 ff, bdf, bkffn,bkfref= self.get_jats_parts(trf)
                 print ff
-                l = ''.join(['<article>','<front>', ''.join(ff),'</front>', '<body>', ''.join(bdf), ''.join(bd), '</body>', '<back>','<fn-group>',''.join(bkffn),''.join(bkfn),'</fn-group>', '<ref-list>',''.join(bkfref),''.join(bkref),'</ref-list>','</back>', '</article>'])
+                l = ''.join(['<article>','<front>', ''.join(ff),'</front>', '<body>', ''.join(bdf), '<sec>',''.join(bd), '</sec>','</body>', '<back>','<fn-group>',''.join(bkffn),''.join(bkfn),'</fn-group>', '<ref-list>',''.join(bkfref),''.join(bkref),'</ref-list>','</back>', '</article>'])
                 self.do_file_io(l, 'w', pt)
             else:
                 self.gv.create_xml_file(tr,pt)
