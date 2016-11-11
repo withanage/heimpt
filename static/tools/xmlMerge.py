@@ -84,11 +84,6 @@ class XMLProcess(Debuggable):
         else:
             return fl
 
-    def get_tmp_file_name(self, name):
-        ''' get temporary file name '''
-        p = [self.uid, '.', self.schema, '.', name, '.xml']
-        return p
-
     def create_output(self, tr):
         ''' create output file '''
         f, bd, bkfn, bkref = self.get_jats_parts(tr)
