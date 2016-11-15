@@ -1,33 +1,6 @@
 {
     "projects": [
-       {
-            "active": false,
-            "chain": true,
-            "files": {
-                "1": "1.xml",
-                "2": "full1.xml",
-                "3": "full2.xml"
 
-            },
-            "name": "moehren",
-            "path": "/tmp/",
-            "typesetters": {
-
-                "1": {
-                   "arguments": {
-                        "1": "fn:append_out_dir",
-                        "2":"jats",
-                        "3":"full3.xml"
-
-                    },
-                    "name": "xmlmerge",
-                    "out_type": "xml",
-                    "merge":true
-
-                }
-
-            }
-        },
      {
             "active": true,
             "chain": true,

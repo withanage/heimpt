@@ -11,7 +11,6 @@ __author__ = "Dulip Withanage"
 
 import os
 import collections
-import json
 import sys
 import shutil
 import uuid
@@ -20,7 +19,6 @@ from globals import GV
 from debug import Debuggable, Debug
 from docopt import docopt
 from subprocess import Popen, PIPE
-from numpy.ctypeslib import ct
 from termcolor import colored
 
 
@@ -128,6 +126,7 @@ class PreProcess(Debuggable):
                         file_prefix +
                         '.' +
                         out_type))
+
             else:
                 mt.append(arg)
 
