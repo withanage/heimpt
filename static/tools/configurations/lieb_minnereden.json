@@ -1,0 +1,91 @@
+{
+    "projects": [
+     {
+            "active": true,
+            "chain": true,
+            "files": {
+                "1": "Lieb_Minnereden_01_Einleitung.docx",
+                "2": "Lieb_Minnereden_02_Zusammenfassung.docx",
+                "3": "Lieb_Minnereden_03_Achnitz.docx",
+                "4": "Lieb_Minnereden_04_Glauch.docx",
+                "5": "Lieb_Minnereden_05_Philipowski.docx",
+                "6": "Lieb_Minnereden_06_Oosterman.docx",
+                "7": "Lieb_Minnereden_07_Schatzmann.docx",
+                "8": "Lieb_Minnereden_08_Mohr.docx",
+                "9": "Lieb_Minnereden_09_Glueck.docx",
+                "10": "Lieb_Minnereden_10_Stridde.docx",
+                "11": "Lieb_Minnereden_11_Rehbach.docx",
+                "12": "Lieb_Minnereden_12_Fasbender.docx",
+                "13": "Lieb_Minnereden_13_Bulang.docx",
+                "14": "Lieb_Minnereden_14_Ott.docx",
+                "15": "Lieb_Minnereden_15_Autoren.docx"
+            },
+            "name": "Lieb_Minnereden",
+            "path": "/home/fk/mpt/test/lieb_minnereden",
+            "typesetters": {
+                "1": {
+                    "arguments": {
+                        "1": "fn:append_out_dir"
+                    },
+                    "name": "metypeset",
+                    "out_type": "xml"
+                },
+                "2": {
+                   "arguments": {
+                        "1": "fn:append_out_dir"
+                    },
+                    "name": "xmlprocess",
+                    "out_type": "xml"
+                },
+                "3": {
+                   "arguments": {
+                        "1": "fn:append_out_dir",
+                        "2":"jats",
+                        "3":"full.xml"
+
+                    },
+                    "name": "xmlmerge",
+                    "out_type": "xml",
+                    "merge":true
+
+                }
+
+            }
+        }
+    ],
+    "typesetters": {
+        "metypeset": {
+            "arguments": {
+                "1": "docx",
+                "2": "--debug",
+                "3": "--nogit"
+            },
+            "executable": "/usr/local/mpt/static/tools/meTypeset/bin/meTypeset.py"
+        },
+        "pandoc": {
+            "arguments": {
+                "1": "-t html"
+            },
+            "executable": "pandoc"
+        },
+        "pandoc_md": {
+            "arguments": {
+                "1": "-t html"
+            },
+            "executable": "pandoc"
+        },
+        "xmlprocess": {
+            "arguments": {
+                "2": "--set-uuids=fn,ref"
+            },
+            "executable": "/usr/local/mpt/static/tools/xmlProcess.py"
+        } ,
+        "xmlmerge": {
+            "arguments": {
+
+            },
+            "executable": "/usr/local/mpt/static/tools/xmlMerge.py"
+        }
+
+    }
+}

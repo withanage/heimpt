@@ -1,4 +1,4 @@
-# Monograph Publishing Tool
+# Monograph Publication  Tool (MPT)
 
 Monograph Publication Tool (MPT) is a stand-alone platform, as well as a plug-in application for OMP. Developed by University of Heidelberg staff in cooperation with external partners, it enables a high degree of automation in the digital publication process. Dulip Withanage of the University of Heidelberg Library supervises MPTs technical development.
 
