@@ -86,53 +86,45 @@ class XMLProcess(Debuggable):
 
 
 
+
+
+
     def create_output_bits(self, tr):
         """
-        create output file
+        create bits output file
         :param tr:
         :return:
         """
-        f, bd, bkfn, bkref = self.get_jats_xml_parts(tr)
-        print f
-        if f and bd:
-            fuf = os.path.join(self.dr, self.o)
-            pt = os.path.join(self.dr, os.path.basename(self.o))
-            if os.path.isfile(fuf):
-                trf = etree.parse(fuf)
-                #ff, bdf, bkffn, bkfref = self.get_jats_xml_parts(trf)
-                l = ''.join(
-                    ['<book>',
-                     '<book-meta>',
-                     '</book-meta>',
-
-                     '<book-body>',
-                     '<book-part>',
-                     '<book-part-meta>',
-                     ''.join(bkfn),
-                     '</book-part-meta>',
-
-                     '<body>',''.join(bd),'</body>'
-                     '<back>', '<ref-list>',
-                     ''.join(bkref),
-                     '</ref-list>',
-                     '</back>',
-                     '</book-part>',
-
-
-                     '</book-body>',
-
-                     '</book>'
-                     ])
-                self.do_file_io(l, 'w', pt)
-            else:
-                self.gv.create_xml_file(tr, pt)
-
+        l = self.create_book_part(tr)
+        fuf = os.path.join(self.dr, self.o)
+        pt = os.path.join(self.dr, os.path.basename(self.o))
+        print pt
+        if os.path.isfile(fuf):
+            trf = etree.parse(fuf)
+            print trf
         else:
-            self.debug.print_debug(self, self.gv.XML_INPUT_FILE_IS_NOT_VALID)
-            sys.exit(1)
+            k = ['<book>','<book-metadata>','</book-metadata>']
+            m = ['</book>']
+            self.do_file_io(''.join(k)+l+''.join(m), 'w', pt)
+            self.gv.create_xml_file(tr, pt)
+
 
         return tr
 
+    def create_book_part(self, tr):
+        r = tr.getroot()
+        f = self.get_children(".//front", r)
+        bd = self.get_children(".//body", r)
+        bk = self.get_children(".//back", r)
+        l = ''.join(
+            [
+                '<book-part>',
+                '<book-part-meta>', ''.join(f), '</book-part-meta>',
+                '<body>', ''.join(bd), '</body>'
+                '<back>', ''.join(bk), '</back>',
+                '</book-part>'
+            ])
+        return l
 
     def create_output_jats(self, tr):
         """
@@ -200,9 +192,11 @@ class XMLProcess(Debuggable):
         count = 1
         range_count = [1, 2]
         self.gv.create_dirs_recursive(self.dr.split('/'))
+        print self.schema
         if self.schema=='jats':
             tr = self.create_output_jats(tr)
         elif self.schema=='bits':
+
             tr = self.create_output_bits(tr)
 
     def run(self):
