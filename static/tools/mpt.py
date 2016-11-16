@@ -58,7 +58,7 @@ class PreProcess(Debuggable):
         Reads the name of the module for debugging and logging
         :return:
         """
-        return 'Monograph Publishing Tool'
+        return 'Monograph Publication Tool'
 
     def call_typesetter(self, tool_args):
         """
@@ -128,16 +128,12 @@ class PreProcess(Debuggable):
                         '.' +
                         out_type))
             elif arg == 'fn:metypeset-meta':
-                pth = os.path.join(
-                    p.get('path'),
-                    file_prefix +
-                    '.book-part-meta.bits.xml')
-                if os.path.exists(pth):
-                    args.append('--metadata')
-                    args.append(pth)
-                else:
-                    self.debug.print_debug(
-                        self, self.gv.TYPESETTER_METYPESET_RUNS_WITH_DEFAULT_METADATA_FILE)
+                pth = os.path.join(p.get('path'),file_prefix +'.book-part-meta.bits.xml')
+                #if os.path.exists(pth):
+                #    args.append('--metadata'),args.append(pth)
+                #else:
+                #    self.debug.print_debug(
+                #        self, self.gv.TYPESETTER_METYPESET_RUNS_WITH_DEFAULT_METADATA_FILE)
 
             else:
                 args.append(arg)

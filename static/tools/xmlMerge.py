@@ -84,7 +84,57 @@ class XMLProcess(Debuggable):
         else:
             return fl
 
-    def create_output(self, tr):
+
+
+    def create_output_bits(self, tr):
+        """
+        create output file
+        :param tr:
+        :return:
+        """
+        f, bd, bkfn, bkref = self.get_jats_xml_parts(tr)
+        print f
+        if f and bd:
+            fuf = os.path.join(self.dr, self.o)
+            pt = os.path.join(self.dr, os.path.basename(self.o))
+            if os.path.isfile(fuf):
+                trf = etree.parse(fuf)
+                #ff, bdf, bkffn, bkfref = self.get_jats_xml_parts(trf)
+                l = ''.join(
+                    ['<book>',
+                     '<book-meta>',
+                     '</book-meta>',
+
+                     '<book-body>',
+                     '<book-part>',
+                     '<book-part-meta>',
+                     ''.join(bkfn),
+                     '</book-part-meta>',
+
+                     '<body>',''.join(bd),'</body>'
+                     '<back>', '<ref-list>',
+                     ''.join(bkref),
+                     '</ref-list>',
+                     '</back>',
+                     '</book-part>',
+
+
+                     '</book-body>',
+
+                     '</book>'
+                     ])
+                self.do_file_io(l, 'w', pt)
+            else:
+                self.gv.create_xml_file(tr, pt)
+
+        else:
+            self.debug.print_debug(self, self.gv.XML_INPUT_FILE_IS_NOT_VALID)
+            sys.exit(1)
+
+        return tr
+
+
+    def create_output_jats(self, tr):
         """
         create output file
         :param tr:
@@ -150,7 +200,10 @@ class XMLProcess(Debuggable):
         count = 1
         range_count = [1, 2]
         self.gv.create_dirs_recursive(self.dr.split('/'))
-        tr = self.create_output(tr)
+        if self.schema=='jats':
+            tr = self.create_output_jats(tr)
+        elif self.schema=='bits':
+            tr = self.create_output_bits(tr)
 
     def run(self):
         self.process_xml_file()
