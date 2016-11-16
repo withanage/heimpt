@@ -41,6 +41,7 @@ class GV(object):
         self.TYPESETTER_EXECUTABLE_VARIABLE_IS_UNDEFINED = u'typesetter executable variable is undefined'
         self.TYPESETTER_FILE_OUTPUT_TYPE_IS_UNDEFINED = u'typesetter file output type is undefined'
         self.TYPESETTER_METADATA_FILE_WAS_NOT_SPECIFIED = u'Metadata file wasn\'t specified '
+        self.TYPESETTER_METYPESET_RUNS_WITH_DEFAULT_METADATA_FILE=u'typesetter metypeset runs with default metadata file'
         self.TYPESETTER_IS_NOT_SPECIFIED = u'typesetter is not specified '
         self.TYPESETTER_PATH_IS_NOT_SPECIFIED = u'typesetter path is not specified '
         self.TYPESETTER_BINARY_IS_UNAVAILABLE = u'typesetter binary is unavailable '

@@ -14,7 +14,8 @@
             "typesetters": {
                 "1": {
                     "arguments": {
-                        "1": "fn:append_out_dir"
+                        "1": "fn:append_out_dir",
+                        "2":"fn:metypeset-meta"
                     },
                     "name": "metypeset",
                     "out_type": "xml"

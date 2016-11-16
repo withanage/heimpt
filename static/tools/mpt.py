@@ -96,14 +96,14 @@ class PreProcess(Debuggable):
             self,
             p,
             p_id,
-            mt,
+            args,
             file_prefix,
             uid):
         """
         creates the full execution path for a file
         :param p:
         :param p_id:
-        :param mt:
+        :param args:
         :param file_prefix:
         :param uid:
         :return:
@@ -116,19 +116,27 @@ class PreProcess(Debuggable):
         for i in ts_args:
             arg = ts_args[i]
             if arg == 'fn:append_out_dir':
-                mt.append(out_path)
+                args.append(out_path)
             elif arg == 'fn:create_out_file':
                 if not os.path.exists(out_path):
                     os.makedirs(out_path)
-                mt.append(
+                args.append(
                     os.path.join(
                         out_path,
                         file_prefix +
                         '.' +
                         out_type))
+            elif arg == 'fn:metypeset-meta':
+                pth = os.path.join(p.get('path'), file_prefix + '.book-part-meta.jats.xml')
+                if os.path.exists(pth):
+                    args.append('--metadata')
+                    args.append(pth)
+                else:
+                    self.debug.print_debug(
+                        self, self.gv.TYPESETTER_METYPESET_RUNS_WITH_DEFAULT_METADATA_FILE)
 
             else:
-                mt.append(arg)
+                args.append(arg)
 
     def run_typesetter(
             self,
