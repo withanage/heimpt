@@ -36,7 +36,8 @@ class PreProcess(Debuggable):
         if self.args.get('--debug'):
             self.debug.enable_debug()
 
-        self.current_result = datetime.datetime.now().strftime("%Y_%m_%d-%H-%M-") + str(uuid.uuid4())[:8]
+        self.current_result = datetime.datetime.now().strftime(
+            "%Y_%m_%d-%H-%M-") + str(uuid.uuid4())[:8]
         self.config = self.gv.read_json(self.args['<config_file>'])
         self.all_typesetters = self.config.get('typesetters')
 
@@ -127,7 +128,10 @@ class PreProcess(Debuggable):
                         '.' +
                         out_type))
             elif arg == 'fn:metypeset-meta':
-                pth = os.path.join(p.get('path'), file_prefix + '.book-part-meta.jats.xml')
+                pth = os.path.join(
+                    p.get('path'),
+                    file_prefix +
+                    '.book-part-meta.bits.xml')
                 if os.path.exists(pth):
                     args.append('--metadata')
                     args.append(pth)
@@ -213,7 +217,8 @@ class PreProcess(Debuggable):
         :param file_id:
         :return:
         """
-        t_props = self.all_typesetters.get(project.get('typesetters')[p_id].get("name"))
+        t_props = self.all_typesetters.get(
+            project.get('typesetters')[p_id].get("name"))
         temp_pre_path, temp_pre_out_type = '', ''
         if t_props:
             mt = self.arguments_parse(t_props)
@@ -252,7 +257,8 @@ class PreProcess(Debuggable):
 
         uid = str(uuid.uuid4())[:8]
 
-        project_files = collections.OrderedDict(sorted(project.get('files').items()))
+        project_files = collections.OrderedDict(
+            sorted(project.get('files').items()))
 
         for file_id in project_files:
             temp_pre_path, tem_out_type = self.typeset_file(
@@ -410,4 +416,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

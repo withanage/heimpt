@@ -95,15 +95,15 @@ class GV(object):
             sys.exit(1)
 
    
-    def create_xml_file(self, tree, f):
-        ''' write element tree to f '''
+    def create_xml_file(self, tr, f):
+        ''' write element tr to f '''
         try:
 
-            tree.write(
+            tr.write(
                 f,
                 pretty_print=False,
-                xml_declaration=True,
-                encoding='UTF-8')
+                xml_declaration=True
+                )
             print
         except IOError as e:
             print e
