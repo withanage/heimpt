@@ -42,7 +42,7 @@ class XMLProcess(Debuggable):
         self.gv = GV()
         self.uid = '4e4dd8cf-26bf-4893-b037-1fd3bf08f112'
         self.dr = self.args.get('<path>')
-        self.schema = self.args.get('<scheme>')
+        self.scheme = self.args.get('<scheme>')
         self.o = self.args.get('<output_file>')
         Debuggable.__init__(self, 'Main')
         if self.args.get('--debug'):
@@ -84,11 +84,6 @@ class XMLProcess(Debuggable):
         else:
             return fl
 
-
-
-
-
-
     def create_output_bits(self, tr):
         """
         create bits output file
@@ -103,11 +98,10 @@ class XMLProcess(Debuggable):
             trf = etree.parse(fuf)
             print trf
         else:
-            k = ['<book>','<book-metadata>','</book-metadata>']
+            k = ['<book>', '<book-metadata>', '</book-metadata>']
             m = ['</book>']
-            self.do_file_io(''.join(k)+l+''.join(m), 'w', pt)
+            self.do_file_io(''.join(k) + l + ''.join(m), 'w', pt)
             self.gv.create_xml_file(tr, pt)
-
 
         return tr
 
@@ -192,10 +186,10 @@ class XMLProcess(Debuggable):
         count = 1
         range_count = [1, 2]
         self.gv.create_dirs_recursive(self.dr.split('/'))
-        print self.schema
-        if self.schema=='jats':
+        print self.args
+        if self.scheme == 'jats':
             tr = self.create_output_jats(tr)
-        elif self.schema=='bits':
+        elif self.scheme == 'bits':
 
             tr = self.create_output_bits(tr)
 
