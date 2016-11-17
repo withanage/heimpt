@@ -68,7 +68,7 @@ class XMLProcess(Debuggable):
         try:
             for i in root.findall(xpath_expression):
                 for child in i.getchildren():
-                    e.append(etree.tostring(child, pretty_print=False))
+                    e.append(etree.tostring(child, pretty_print=True))
         except SyntaxError as se:
             print se
         return e
@@ -90,35 +90,54 @@ class XMLProcess(Debuggable):
         :param tr:
         :return:
         """
-        l = self.create_book_part(tr)
         fuf = os.path.join(self.dr, self.o)
         pt = os.path.join(self.dr, os.path.basename(self.o))
-        print pt
+
         if os.path.isfile(fuf):
             trf = etree.parse(fuf)
-            print trf
+            bp = trf.find("book-body")
+
+
+            f, bd, bk = self.get_jats_xml_parts(tr)
+
+            #bp.append(book)
+
+
+            print etree.tostring(trf.getroot())
+
+
         else:
-            k = ['<book>', '<book-metadata>', '</book-metadata>']
-            m = ['</book>']
-            self.do_file_io(''.join(k) + l + ''.join(m), 'w', pt)
-            self.gv.create_xml_file(tr, pt)
+
+            book = self.create_book_part_bits(tr)
+            print etree.tostring(book)
+
+            #self.do_file_io('\n'.join(k) + l + '\n'.join(m), 'w', pt)
+            #self.gv.create_xml_file(tr, pt)
 
         return tr
 
-    def create_book_part(self, tr):
-        r = tr.getroot()
-        f = self.get_children(".//front", r)
-        bd = self.get_children(".//body", r)
-        bk = self.get_children(".//back", r)
-        l = ''.join(
-            [
-                '<book-part>',
-                '<book-part-meta>', ''.join(f), '</book-part-meta>',
-                '<body>', ''.join(bd), '</body>'
-                '<back>', ''.join(bk), '</back>',
-                '</book-part>'
-            ])
-        return l
+    def create_book_part_bits(self, tr):
+        """
+        creates a  bits book part element
+        :param tr:
+        :return:
+        """
+        book = etree.Element("book")
+        book.append(etree.Element("book-metadata"))
+        book.append(etree.Element("book-body"))
+
+        f, bd, bk = self.get_jats_xml_parts(tr)
+
+        book_part = etree.Element("book-part")
+        book_part_meta = etree.Element("book-part-meta")
+
+        book_part.append(f)
+        book_part.append(bd)
+        book_part.append(bk)
+
+        book.append(book_part)
+
+        return book
 
     def create_output_jats(self, tr):
         """
@@ -126,7 +145,7 @@ class XMLProcess(Debuggable):
         :param tr:
         :return:
         """
-        f, bd, bkfn, bkref = self.get_jats_xml_parts(tr)
+        f, bd, bk = self.get_jats_xml_parts(tr)
         print f
         if f and bd:
             fuf = os.path.join(self.dr, self.o)
@@ -157,11 +176,10 @@ class XMLProcess(Debuggable):
 
     def get_jats_xml_parts(self, tr):
         r = tr.getroot()
-        f = self.get_children(".//front", r)
-        bd = self.get_children(".//body", r)
-        bkfn = self.get_children(".//back/fn-group", r)
-        bkref = self.get_children(".//back/ref-list", r)
-        return f, bd, bkfn, bkref
+        f = r.find(".//front")
+        bd = r.find(".//body")
+        bk = r.find(".//back")
+        return f, bd, bk
 
     def do_file_io(self, l, mode, p):
         try:
@@ -169,11 +187,9 @@ class XMLProcess(Debuggable):
             if mode == 'w':
                 w.write(l)
                 w.close()
-                return -1
             if mode == 'r':
                 o = w.read()
                 w.close()
-                return o
         except IOError as i:
             self.debug.print_debug(self, i)
             print(i)
@@ -186,7 +202,6 @@ class XMLProcess(Debuggable):
         count = 1
         range_count = [1, 2]
         self.gv.create_dirs_recursive(self.dr.split('/'))
-        print self.args
         if self.scheme == 'jats':
             tr = self.create_output_jats(tr)
         elif self.scheme == 'bits':
@@ -198,7 +213,6 @@ class XMLProcess(Debuggable):
 
 
 def main():
-
     xp = XMLProcess()
     xp.run()
 
