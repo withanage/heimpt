@@ -24,9 +24,9 @@ The platform consists of three modules: (1) meTypeset, (2) a WYSIWYG editor,and 
 
 # Credits
 
-* The lead developer is Dulip Withanage,  Heidelberg  University Library
+### The lead developer is Dulip Withanage,  Heidelberg  University Library
 
-Additional contributions were made, in alphabetical order) by:
+  Additional contributions were made, in alphabetical order) by:
 
 * ELizabeth Corrao, Cluster of Excellence University Heidelberg
 * Frank Krabbes , Heidelberg  University Library 
