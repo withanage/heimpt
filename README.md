@@ -22,7 +22,14 @@ The platform consists of three modules: (1) meTypeset, (2) a WYSIWYG editor,and 
 ### Post Process Tools
  * [Merge, clean, set IDs, remove duplicates etc.](https://github.com/withanage/mpt/wiki/xmlToxml:-post-Process)
 
-#Software Development
-* Dulip Withanage,  Heidelberg  University Library
-* Katharina Wäschle, Heidelberg  University Library 
+# Credits
+
+### The lead developer is Dulip Withanage,  Heidelberg  University Library
+
+  Additional contributions were made, in alphabetical order) by:
+
+* ELizabeth Corrao, Cluster of Excellence University Heidelberg
 * Frank Krabbes , Heidelberg  University Library 
+* Mayumi Ohta, Cluster of Excellence,  University Heidelberg
+* Katharina Wäschle, Heidelberg  University Library 
+
