@@ -112,11 +112,10 @@ class XMLProcess(Debuggable):
         """
         book = etree.Element("book")
         book.append(etree.Element("book-metadata"))
-        book.append(etree.Element("book-body"))
-
-        book_part = self.create_book_part_bits(tr)
-
-        book.append(book_part)
+        book_body = etree.Element("book-body")
+        book_body_parts = self.create_book_part_bits(tr)
+        book_body.append(book_body_parts)
+        book.append(book_body)
 
         return book
 
