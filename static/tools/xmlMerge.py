@@ -120,18 +120,20 @@ class XMLProcess(Debuggable):
         return book
 
     def create_book_part_bits(self, tr):
-        f, bd, bk = self.get_jats_xml_parts(tr)
+        f, bd, bk = self.get_xml_parts(tr)
         bp = etree.Element("book-part")
-        book_part_meta = etree.Element("book-part-meta")
-        book_part_meta.append(f)
-        bp.append(book_part_meta)
+        if f is not None:
+            if len(f):
+                bp.append(f)
         bp.append(bd)
         bp.append(bk)
         return bp
 
-    def get_jats_xml_parts(self, tr):
+    def get_xml_parts(self, tr):
         r = tr.getroot()
         f = r.find(".//front")
+        if f is None:
+             f = r.find(".//book-part-meta")
         bd = r.find(".//body")
         bk = r.find(".//back")
         return f, bd, bk

@@ -120,6 +120,7 @@
         },
         "xmlprocess": {
             "arguments": {
+                "1":"--metadata book-part-meta.bits2",
                 "2": "--set-uuids=fn,ref"
             },
             "executable": "/home/wit/projects/mpt/static/tools/xmlProcess.py"

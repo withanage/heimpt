@@ -142,7 +142,7 @@ class XMLProcess(Debuggable):
         return tr
 
     def merge_metadata(self, tr, metadata):
-
+        r = tr.getroot()
         p = os.path.dirname(self.f).split(os.sep)
         del p[-4:]
 
@@ -153,12 +153,11 @@ class XMLProcess(Debuggable):
 
         pth = os.sep.join(p)
         if os.path.isfile(pth):
-            fr = tr.getroot().find('.//front')
-            fr.clear()
+            fr = r.find('.//front')
+            fr.getparent().remove(fr)
             bpm = etree.parse(pth).find('.//book-part-meta')
-            fr.append(bpm)
-            #print etree.tostring(tr)
-            #print etree.tostring(etree.parse(pth).getroot())
+            bg = r.find('.//body').getparent()
+            bg.insert(0 , bpm)
 
         else:
            self.debug.print_debug(self, pth+self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST)
