@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Usage:
-    xmlMerge.py  <input_file>  <path>  <scheme> <output_file>  [options]
+    xmlMerge.py  <input_file>  <path>  <convert-to> <output_file>  [options]
     xmlMerge.py -h --help
 Options:
     -d, --debug   Enable debug output
@@ -42,7 +42,7 @@ class XMLProcess(Debuggable):
         self.gv = GV()
         self.uid = '4e4dd8cf-26bf-4893-b037-1fd3bf08f112'
         self.dr = self.args.get('<path>')
-        self.scheme = self.args.get('<scheme>')
+        self.scheme = self.args.get('<convert-to>')
         self.o = self.args.get('<output_file>')
         Debuggable.__init__(self, 'Main')
         if self.args.get('--debug'):
@@ -96,27 +96,15 @@ class XMLProcess(Debuggable):
         if os.path.isfile(fuf):
             trf = etree.parse(fuf)
             bp = trf.find("book-body")
-
-
-            f, bd, bk = self.get_jats_xml_parts(tr)
-
-            #bp.append(book)
-
-
-            print etree.tostring(trf.getroot())
-
+            book_part = self.create_book_part_bits(tr)
+            bp.append(book_part)
+            self.do_file_io(etree.tostring(trf, pretty_print=True), 'w', pt)
 
         else:
+            book = self.create_book_bits(tr)
+            self.do_file_io(etree.tostring(book, pretty_print=True), 'w', pt)
 
-            book = self.create_book_part_bits(tr)
-            print etree.tostring(book)
-
-            #self.do_file_io('\n'.join(k) + l + '\n'.join(m), 'w', pt)
-            #self.gv.create_xml_file(tr, pt)
-
-        return tr
-
-    def create_book_part_bits(self, tr):
+    def create_book_bits(self, tr):
         """
         creates a  bits book part element
         :param tr:
@@ -126,53 +114,21 @@ class XMLProcess(Debuggable):
         book.append(etree.Element("book-metadata"))
         book.append(etree.Element("book-body"))
 
-        f, bd, bk = self.get_jats_xml_parts(tr)
-
-        book_part = etree.Element("book-part")
-        book_part_meta = etree.Element("book-part-meta")
-
-        book_part.append(f)
-        book_part.append(bd)
-        book_part.append(bk)
+        book_part = self.create_book_part_bits(tr)
 
         book.append(book_part)
 
         return book
 
-    def create_output_jats(self, tr):
-        """
-        create output file
-        :param tr:
-        :return:
-        """
+    def create_book_part_bits(self, tr):
         f, bd, bk = self.get_jats_xml_parts(tr)
-        print f
-        if f and bd:
-            fuf = os.path.join(self.dr, self.o)
-            pt = os.path.join(self.dr, os.path.basename(self.o))
-            if os.path.isfile(fuf):
-                trf = etree.parse(fuf)
-                ff, bdf, bkffn, bkfref = self.get_jats_xml_parts(trf)
-                print ff
-                l = ''.join(
-                    ['<article>', '<front>', ''.join(ff),
-                     '</front>', '<body>', ''.join(bdf),
-                     '<sec>', ''.join(bd),
-                     '</sec>', '</body>', '<back>', '<fn-group>',
-                     ''.join(bkffn),
-                     ''.join(bkfn),
-                     '</fn-group>', '<ref-list>', ''.join(bkfref),
-                     ''.join(bkref),
-                     '</ref-list>', '</back>', '</article>'])
-                self.do_file_io(l, 'w', pt)
-            else:
-                self.gv.create_xml_file(tr, pt)
-
-        else:
-            self.debug.print_debug(self, self.gv.XML_INPUT_FILE_IS_NOT_VALID)
-            sys.exit(1)
-
-        return tr
+        book_part = etree.Element("book-part")
+        book_part_meta = etree.Element("book-part-meta")
+        book_part_meta.append(f)
+        book_part.append(book_part_meta)
+        book_part.append(bd)
+        book_part.append(bk)
+        return book_part
 
     def get_jats_xml_parts(self, tr):
         r = tr.getroot()

@@ -128,12 +128,16 @@ class PreProcess(Debuggable):
                         '.' +
                         out_type))
             elif arg == 'fn:metypeset-meta':
-                pth = os.path.join(p.get('path'),file_prefix +'.book-part-meta.bits.xml')
-                #if os.path.exists(pth):
+                pth = os.path.join(
+                    p.get('path'),
+                    file_prefix +
+                    '.book-part-meta.bits.xml')
+                # if os.path.exists(pth):
                 #    args.append('--metadata'),args.append(pth)
-                #else:
+                # else:
                 #    self.debug.print_debug(
-                #        self, self.gv.TYPESETTER_METYPESET_RUNS_WITH_DEFAULT_METADATA_FILE)
+                # self,
+                # self.gv.TYPESETTER_METYPESET_RUNS_WITH_DEFAULT_METADATA_FILE)
 
             else:
                 args.append(arg)
