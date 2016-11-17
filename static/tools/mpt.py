@@ -127,11 +127,11 @@ class PreProcess(Debuggable):
                         file_prefix +
                         '.' +
                         out_type))
-            elif arg == 'fn:metypeset-meta':
+            elif arg == '--metadata':
                 pth = os.path.join(
                     p.get('path'),
                     file_prefix +
-                    '.book-part-meta.bits.xml')
+                    '.book-part-meta.bits2.xml')
                 # if os.path.exists(pth):
                 #    args.append('--metadata'),args.append(pth)
                 # else:
@@ -141,6 +141,7 @@ class PreProcess(Debuggable):
 
             else:
                 args.append(arg)
+
 
     def run_typesetter(
             self,

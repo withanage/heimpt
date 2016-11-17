@@ -7,7 +7,7 @@ Usage:
 Options:
     -d, --debug   Enable debug output
     -f --sort-footnotes=<tag list as comma seperated lists>
-    -m --metadata-=<file__name_schema.xml>
+    -m --metadata=<file__name_schema.xml>
     -n --set-numbering=<elemennt types as comma seperated lists>
     -r  --remove-references-unused
     -s --sort-references=<tag list as comma seperated lists>
@@ -48,7 +48,8 @@ class XMLProcess(Debuggable):
         Debuggable.__init__(self, 'Main')
         if self.args.get('--debug'):
             self.debug.enable_debug()
-        self.debug.print_debug(self, self.args)
+        self.dr = self.args.get('<path>')
+        self.f = self.args.get('<input_file>')
 
     @staticmethod
     def read_command_line():
@@ -122,14 +123,12 @@ class XMLProcess(Debuggable):
             val = str(count - r_count + 1)
         return val, r_count
 
-    def transfrom(self, tr):
-        print 'transform'
+    def transform(self, tr):
         set_numbering_tags = self.args.get('--set-numbering')
         set_uuids = self.args.get('--set-uuids')
         sort_footnotes = self.args.get('--sort-footnotes')
         sort_references = self.args.get('--sort-references')
         metadata = self.args.get('--metadata')
-
         tr = self.set_tag_numbering(tr, set_numbering_tags.split(
             ',')) if set_numbering_tags else tr
         tr = self.set_uuids_for_back_matter(
@@ -138,12 +137,32 @@ class XMLProcess(Debuggable):
             tr, sort_footnotes.split(',')) if sort_footnotes else tr
         tr = self.sort_references(
             tr, sort_references.split(',')) if sort_references else tr
-        tr = self.merge_metadata(tr) if metadata else tr
+        tr = self.merge_metadata(tr ,metadata) if metadata else tr
 
         return tr
 
-    def merge_metadata(self, tr):
-        print self.args
+    def merge_metadata(self, tr, metadata):
+
+        p = os.path.dirname(self.f).split(os.sep)
+        del p[-4:]
+
+        f = os.path.basename(self.f)
+        name, ext = os.path.splitext(f)
+        file_name=  [name,'.',metadata,ext]
+        p.append(''.join(file_name))
+
+        pth = os.sep.join(p)
+        if os.path.isfile(pth):
+            fr = tr.getroot().find('.//front')
+            fr.clear()
+            bpm = etree.parse(pth).find('.//book-part-meta')
+            fr.append(bpm)
+            #print etree.tostring(tr)
+            #print etree.tostring(etree.parse(pth).getroot())
+
+        else:
+           self.debug.print_debug(self, pth+self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST)
+
         return tr
 
     def sort_by_tags(self, tag_list, elem):
@@ -174,29 +193,24 @@ class XMLProcess(Debuggable):
         return tr
 
     def process_xml_file(self):
-        dr = self.args.get('<path>')
-        f = self.args.get('<input_file>')
 
-        tr = etree.parse(os.path.join(dr, f))
-        root = tr.getroot()
-        front = self.xml_elements_to_array(".//front",  root)
-        body_secs = self.xml_elements_to_array(".//body/sec",  root)
-        back_fns = self.xml_elements_to_array(".//back/fn-group/fn",  root)
-        back_refs = self.xml_elements_to_array(".//back/ref-list/ref", root)
-        back_fn_group = self.xml_elements_to_array(".//back/fn-group",  root)
-        tr = self.transfrom(tr)
+        tr = etree.parse(os.path.join(self.dr, self.f))
+        r = tr.getroot()
+
+        tr = self.transform(tr)
         count = 1
         range_count = [1, 2]
         tr, count = self.add_numbering_to_values(
             tr, "xref", "ref-type", "fn", count, range_count)
-        self.gv.create_dirs_recursive(dr.split('/'))
-        self.gv.create_xml_file(tr, os.path.join(dr, os.path.basename(f)))
+        self.gv.create_dirs_recursive(self.dr.split('/'))
+        self.gv.create_xml_file(tr, os.path.join(self.dr, os.path.basename(self.f)))
 
     def run(self):
         self.process_xml_file()
 
 
 def main():
+
     xp = XMLProcess()
     xp.run()
 
