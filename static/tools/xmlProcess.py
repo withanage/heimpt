@@ -15,7 +15,7 @@ Options:
 """
 
 
-__author__ = "Dulip Withnage"
+__author__ = "Dulip Withanage"
 
 PYTHON_IMPORT_FAILED_LXML_MODULE = u'Failed to import python lxml module'
 

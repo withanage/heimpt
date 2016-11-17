@@ -11,7 +11,7 @@ Options:
 """
 
 
-__author__ = "Dulip Withnage"
+__author__ = "Dulip Withanage"
 
 PYTHON_IMPORT_FAILED_LXML_MODULE = u'Failed to import python lxml module'
 
@@ -112,22 +112,22 @@ class XMLProcess(Debuggable):
         """
         book = etree.Element("book")
         book.append(etree.Element("book-metadata"))
-        book_body = etree.Element("book-body")
+        bd = etree.Element("book-body")
         book_body_parts = self.create_book_part_bits(tr)
-        book_body.append(book_body_parts)
-        book.append(book_body)
+        bd.append(book_body_parts)
+        book.append(bd)
 
         return book
 
     def create_book_part_bits(self, tr):
         f, bd, bk = self.get_jats_xml_parts(tr)
-        book_part = etree.Element("book-part")
+        bp = etree.Element("book-part")
         book_part_meta = etree.Element("book-part-meta")
         book_part_meta.append(f)
-        book_part.append(book_part_meta)
-        book_part.append(bd)
-        book_part.append(bk)
-        return book_part
+        bp.append(book_part_meta)
+        bp.append(bd)
+        bp.append(bk)
+        return bp
 
     def get_jats_xml_parts(self, tr):
         r = tr.getroot()
