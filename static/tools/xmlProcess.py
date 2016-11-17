@@ -7,11 +7,13 @@ Usage:
 Options:
     -d, --debug   Enable debug output
     -f --sort-footnotes=<tag list as comma seperated lists>
+    -m --metadata-=<file__name_schema.xml>
     -n --set-numbering=<elemennt types as comma seperated lists>
     -r  --remove-references-unused
     -s --sort-references=<tag list as comma seperated lists>
     -t --set-numbering-types=<numbering types e.g. roman , roman[1,2] >
     -u --set-uuids=<element types as comma seperated list>
+
 """
 
 
@@ -39,10 +41,9 @@ class XMLProcess(Debuggable):
     '''     command line tool to clean, modify, delete, merge jats files    '''
 
     def __init__(self):
+
         self.args = self.read_command_line()
-
         self.debug = Debug()
-
         self.gv = GV()
         Debuggable.__init__(self, 'Main')
         if self.args.get('--debug'):
@@ -122,10 +123,12 @@ class XMLProcess(Debuggable):
         return val, r_count
 
     def transfrom(self, tr):
+        print 'transform'
         set_numbering_tags = self.args.get('--set-numbering')
         set_uuids = self.args.get('--set-uuids')
         sort_footnotes = self.args.get('--sort-footnotes')
         sort_references = self.args.get('--sort-references')
+        metadata = self.args.get('--metadata')
 
         tr = self.set_tag_numbering(tr, set_numbering_tags.split(
             ',')) if set_numbering_tags else tr
@@ -135,7 +138,12 @@ class XMLProcess(Debuggable):
             tr, sort_footnotes.split(',')) if sort_footnotes else tr
         tr = self.sort_references(
             tr, sort_references.split(',')) if sort_references else tr
+        tr = self.merge_metadata(tr) if metadata else tr
 
+        return tr
+
+    def merge_metadata(self, tr):
+        print self.args
         return tr
 
     def sort_by_tags(self, tag_list, elem):
