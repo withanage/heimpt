@@ -74,7 +74,6 @@ class XMLProcess(Debuggable):
             print se
         return e
 
-
     def create_output_bits(self, tr):
         """
         create bits output file
@@ -85,7 +84,7 @@ class XMLProcess(Debuggable):
         pt = os.path.join(self.dr, os.path.basename(self.o))
         if os.path.isfile(fuf):
             trf = etree.parse(fuf)
-            bp = trf.find("book-body")
+            bp = trf.find(".//book-body")
             book_part = self.create_book_part_bits(tr)
             bp.append(book_part)
             self.do_file_io(etree.tostring(trf, pretty_print=True), 'w', pt)
@@ -110,31 +109,25 @@ class XMLProcess(Debuggable):
         :param tr:
         :return:
         """
-        r = tr.getroot()
         book = etree.Element("book")
-        #book_metadata = etree.Element("book-meta")
 
         metadata = self.args.get('--metadata')
         if metadata:
             pth = self.create_metadata_path(metadata)
             if os.path.isfile(pth):
-                bpm = r.find('.//book-part-meta')
                 bp = etree.parse(pth).find('.//book-meta')
-                print bp
-                bg = bpm.getparent()
-                print bg
-                bg.insert(0, bp)
-
+                book.insert(0, bp)
 
         bd = etree.Element("book-body")
-        book_body_parts = self.create_book_part_bits(tr)
-        bd.append(book_body_parts)
+        bpbd = self.create_book_part_bits(tr)
+        bd.append(bpbd)
         book.append(bd)
 
         return book
 
     def create_book_part_bits(self, tr):
         f, bd, bk = self.get_xml_parts(tr)
+        print f, bd, bk
         bp = etree.Element("book-part")
         if f is not None:
             if len(f):
@@ -147,7 +140,7 @@ class XMLProcess(Debuggable):
         r = tr.getroot()
         f = r.find(".//front")
         if f is None:
-             f = r.find(".//book-part-meta")
+            f = r.find(".//book-part-meta")
         bd = r.find(".//body")
         bk = r.find(".//back")
         return f, bd, bk
