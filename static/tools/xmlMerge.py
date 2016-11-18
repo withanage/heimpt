@@ -110,17 +110,22 @@ class XMLProcess(Debuggable):
         :param tr:
         :return:
         """
-
+        r = tr.getroot()
         book = etree.Element("book")
-        book_metadata = etree.Element("book-metadata")
+        #book_metadata = etree.Element("book-meta")
+
         metadata = self.args.get('--metadata')
         if metadata:
             pth = self.create_metadata_path(metadata)
-            print pth
+            if os.path.isfile(pth):
+                bpm = r.find('.//book-part-meta')
+                bp = etree.parse(pth).find('.//book-meta')
+                print bp
+                bg = bpm.getparent()
+                print bg
+                bg.insert(0, bp)
 
 
-
-        book.append(book_metadata)
         bd = etree.Element("book-body")
         book_body_parts = self.create_book_part_bits(tr)
         bd.append(book_body_parts)
