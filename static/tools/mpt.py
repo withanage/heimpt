@@ -127,18 +127,6 @@ class PreProcess(Debuggable):
                         file_prefix +
                         '.' +
                         out_type))
-            elif arg == '--metadata':
-                pth = os.path.join(
-                    p.get('path'),
-                    file_prefix +
-                    '.book-part-meta.bits2.xml')
-                # if os.path.exists(pth):
-                #    args.append('--metadata'),args.append(pth)
-                # else:
-                #    self.debug.print_debug(
-                # self,
-                # self.gv.TYPESETTER_METYPESET_RUNS_WITH_DEFAULT_METADATA_FILE)
-
             else:
                 args.append(arg)
 

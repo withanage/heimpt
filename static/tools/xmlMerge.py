@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 """
 Usage:
-    xmlMerge.py  <input_file>  <path>  <convert-to> <output_file>  [options]
+    xmlMerge.py  <input_file>  <path>  <scheme> <output_file>  [options]
     xmlMerge.py -h --help
 Options:
     -d, --debug   Enable debug output
-    --header-file
+    -m --metadata=<file__name_schema.xml>
 
 """
 
@@ -42,7 +42,8 @@ class XMLProcess(Debuggable):
         self.gv = GV()
         self.uid = '4e4dd8cf-26bf-4893-b037-1fd3bf08f112'
         self.dr = self.args.get('<path>')
-        self.scheme = self.args.get('<convert-to>')
+        self.f = self.args.get('<input_file>')
+        self.scheme = self.args.get('<scheme>')
         self.o = self.args.get('<output_file>')
         Debuggable.__init__(self, 'Main')
         if self.args.get('--debug'):
@@ -73,16 +74,6 @@ class XMLProcess(Debuggable):
             print se
         return e
 
-    def get_front(self, fl):
-
-        hf = self.args.get('--header-file')
-        if hf:
-            f = open(self.uid + 'front.xml')
-            s = f.read()
-            f.close()
-            return s
-        else:
-            return fl
 
     def create_output_bits(self, tr):
         """
@@ -92,7 +83,6 @@ class XMLProcess(Debuggable):
         """
         fuf = os.path.join(self.dr, self.o)
         pt = os.path.join(self.dr, os.path.basename(self.o))
-
         if os.path.isfile(fuf):
             trf = etree.parse(fuf)
             bp = trf.find("book-body")
@@ -104,14 +94,33 @@ class XMLProcess(Debuggable):
             book = self.create_book_bits(tr)
             self.do_file_io(etree.tostring(book, pretty_print=True), 'w', pt)
 
+    def create_metadata_path(self, metadata):
+        p = os.path.dirname(self.f).split(os.sep)
+        del p[-4:]
+        name, ext = os.path.splitext(os.path.basename(self.o))
+        file_name = [name, '.', metadata, ext]
+        p.append('metadata')
+        p.append(''.join(file_name))
+        pth = os.sep.join(p)
+        return pth
+
     def create_book_bits(self, tr):
         """
         creates a  bits book part element
         :param tr:
         :return:
         """
+
         book = etree.Element("book")
-        book.append(etree.Element("book-metadata"))
+        book_metadata = etree.Element("book-metadata")
+        metadata = self.args.get('--metadata')
+        if metadata:
+            pth = self.create_metadata_path(metadata)
+            print pth
+
+
+
+        book.append(book_metadata)
         bd = etree.Element("book-body")
         book_body_parts = self.create_book_part_bits(tr)
         bd.append(book_body_parts)
@@ -154,15 +163,14 @@ class XMLProcess(Debuggable):
 
     def process_xml_file(self):
 
-        f = self.args.get('<input_file>')
-        tr = etree.parse(os.path.join(self.dr, f))
+        tr = etree.parse(os.path.join(self.dr, self.f))
+
         count = 1
         range_count = [1, 2]
         self.gv.create_dirs_recursive(self.dr.split('/'))
         if self.scheme == 'jats':
             tr = self.create_output_jats(tr)
         elif self.scheme == 'bits':
-
             tr = self.create_output_bits(tr)
 
     def run(self):

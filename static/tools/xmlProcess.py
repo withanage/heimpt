@@ -3,7 +3,7 @@
 """
 Usage:
     xmlProcess.py  <input_file>  <path> [options]
-    xmlProcess.py -h --help 
+    xmlProcess.py -h --help
 Options:
     -d, --debug   Enable debug output
     -f --sort-footnotes=<tag list as comma seperated lists>
@@ -55,17 +55,13 @@ class XMLProcess(Debuggable):
     def read_command_line():
         return docopt(__doc__, version='xml 0.1')
 
-    def xml_elements_to_array(self, xpath_expression, root):
-        elem_array = []
-        try:
-            for i in root.findall(xpath_expression):
-                elem_array.append(etree.tostring(i, pretty_print=False))
-        except SyntaxError as se:
-            print se
-        return elem_array
-
     def set_tag_numbering(self, tree, tags):
-        ''' automatic numbering of certain tags '''
+        """
+        automatic numbering of certain tags
+        :param tree:
+        :param tags:
+        :return:
+        """
         for tag in tags:
             sh = tree.findall('.//' + tag)
             sid = 1
@@ -94,7 +90,14 @@ class XMLProcess(Debuggable):
                             self, self.gv.XML_ELEMENT_NOT_FOUND)
             return tr
 
-    def add_numbering_to_values(self, tr, name, attr, value, count, range_array):
+    def add_numbering_to_values(
+            self,
+            tr,
+            name,
+            attr,
+            value,
+            count,
+            range_array):
         searchTag = './/' + name + '[@' + attr + '="' + value + '"]'
         elems = tr.getroot().findall(searchTag)
         range_count = 1
@@ -116,7 +119,7 @@ class XMLProcess(Debuggable):
     def set_roman_numbers(self, count, r_count, range_array):
 
         val = str(count)
-        if count >= int(range_array[0]) and count <= int(range_array[1]):
+        if int(range_array[0]) <= count <= int(range_array[1]):
             val = self.convert_int_to_roman(r_count).lower()
             r_count += 1
         else:
@@ -128,7 +131,10 @@ class XMLProcess(Debuggable):
         set_uuids = self.args.get('--set-uuids')
         sort_footnotes = self.args.get('--sort-footnotes')
         sort_references = self.args.get('--sort-references')
+
         metadata = self.args.get('--metadata')
+        tr = self.merge_metadata(tr, metadata) if metadata else tr
+
         tr = self.set_tag_numbering(tr, set_numbering_tags.split(
             ',')) if set_numbering_tags else tr
         tr = self.set_uuids_for_back_matter(
@@ -137,32 +143,38 @@ class XMLProcess(Debuggable):
             tr, sort_footnotes.split(',')) if sort_footnotes else tr
         tr = self.sort_references(
             tr, sort_references.split(',')) if sort_references else tr
-        tr = self.merge_metadata(tr ,metadata) if metadata else tr
+
 
         return tr
 
     def merge_metadata(self, tr, metadata):
         r = tr.getroot()
-        p = os.path.dirname(self.f).split(os.sep)
-        del p[-4:]
 
-        f = os.path.basename(self.f)
-        name, ext = os.path.splitext(f)
-        file_name=  [name,'.',metadata,ext]
-        p.append(''.join(file_name))
+        pth = self.create_metadata_path(metadata)
 
-        pth = os.sep.join(p)
         if os.path.isfile(pth):
             fr = r.find('.//front')
             fr.getparent().remove(fr)
             bpm = etree.parse(pth).find('.//book-part-meta')
             bg = r.find('.//body').getparent()
-            bg.insert(0 , bpm)
+            bg.insert(0, bpm)
 
         else:
-           self.debug.print_debug(self, pth+self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST)
+            self.debug.print_debug(self, pth +
+                                   self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST)
 
         return tr
+
+    def create_metadata_path(self, metadata):
+        p = os.path.dirname(self.f).split(os.sep)
+        del p[-4:]
+        f = os.path.basename(self.f)
+        name, ext = os.path.splitext(f)
+        file_name = [name, '.', metadata, ext]
+        p.append('metadata')
+        p.append(''.join(file_name))
+        pth = os.sep.join(p)
+        return pth
 
     def sort_by_tags(self, tag_list, elem):
         data = []
@@ -178,14 +190,24 @@ class XMLProcess(Debuggable):
         elem[:] = [item[-1] for item in data]
 
     def sort_references(self, tr, tag_list):
-        ''' sort all  references  '''
+        """
+        sort all  references
+        :param tr:
+        :param tag_list:
+        :return:
+        """
         elem = tr.find('./back/ref-list')
         self.sort_by_tags(tag_list, elem)
 
         return tr
 
     def sort_footnotes(self, tr, tag_list):
-        ''' sort all the footnotes  '''
+        """
+        sort all the footnotes
+        :param tr:
+        :param tag_list:
+        :return:
+        """
         elem = tr.find('./back/fn-group')
         self.sort_by_tags(tag_list, elem)
 
@@ -202,7 +224,10 @@ class XMLProcess(Debuggable):
         tr, count = self.add_numbering_to_values(
             tr, "xref", "ref-type", "fn", count, range_count)
         self.gv.create_dirs_recursive(self.dr.split('/'))
-        self.gv.create_xml_file(tr, os.path.join(self.dr, os.path.basename(self.f)))
+        self.gv.create_xml_file(
+            tr, os.path.join(
+                self.dr, os.path.basename(
+                    self.f)))
 
     def run(self):
         self.process_xml_file()
