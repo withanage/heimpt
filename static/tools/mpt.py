@@ -196,7 +196,9 @@ class PreProcess(Debuggable):
             pre_out_type,
             p_id,
             uid,
-            file_id):
+            file_id,
+            file_name
+    ):
         """
         Typesets a certain file
         :param project:
@@ -205,6 +207,7 @@ class PreProcess(Debuggable):
         :param p_id:
         :param uid:
         :param file_id:
+        :param file_name:
         :return:
         """
         t_props = self.all_typesetters.get(
@@ -220,6 +223,7 @@ class PreProcess(Debuggable):
                     p_id,
                     uid,
                     file_id,
+                    file_name,
                     mt)
             else:
                 self.debug.print_debug(
