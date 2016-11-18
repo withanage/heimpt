@@ -139,6 +139,7 @@ class PreProcess(Debuggable):
             p_id,
             uid,
             file_id,
+            file_name,
             args):
         """
         Runs  the typesetter
@@ -148,16 +149,16 @@ class PreProcess(Debuggable):
         :param p_id:
         :param uid:
         :param file_id:
+        :param file_name:
         :param args:
         :return:
         """
         previous_project_path_temp = ''
         temp = ''
 
-        files = collections.OrderedDict(sorted(p.get('files').items()))
-        prefix = files[file_id].split('.')[0]
+        prefix = file_name.split('.')[0]
         if p_id == min(i for i in p['typesetters']):
-            file_path = os.path.join(p.get('path'), files[file_id])
+            file_path = os.path.join(p.get('path'), file_name)
         elif p.get("chain"):
             file_path = os.path.join(
                 pre_path,
@@ -246,17 +247,18 @@ class PreProcess(Debuggable):
 
         uid = str(uuid.uuid4())[:8]
 
-        project_files = collections.OrderedDict(
-            sorted(project.get('files').items()))
+        project_files = collections.OrderedDict(sorted((int(key), value) for key, value in project.get('files').items()))
 
         for file_id in project_files:
+            file_name = project_files[file_id]
             temp_pre_path, tem_out_type = self.typeset_file(
                 project,
                 pre_path,
                 pre_out_type,
                 pre_id,
                 uid,
-                file_id
+                file_id,
+                file_name
             )
 
         return temp_pre_path, tem_out_type
