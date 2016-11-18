@@ -58,7 +58,8 @@ class PostProcess:
                 if "chapter-begin-reset" in cfg.keys():
                     if cfg["chapter-begin-reset"] == 1:
                         count = 1
-                tr, count = self.set_enumeration(tr, "xref", "ref-type", "fn", context, f, chapter, order, count)
+                tr, count = self.set_enumeration(
+                    tr, "xref", "ref-type", "fn", context, f, chapter, order, count)
         tr = self.remove_name_duplicates_speech(tr)
         tr = self.set_numbering(tr, ['speech', 'disp-quote'])
         tr = self.get_unreferenced_footnotes(tr)
@@ -103,8 +104,8 @@ class PostProcess:
 
         fullfile = cfb["fullfile"].keys()[0]
 
-        header_text, back_fns, body_secs, back_refs, elem_secs, elem_fns = self.modify_files(cfb["dir"], cfb[
-            "files"], context)
+        header_text, back_fns, body_secs, back_refs, elem_secs, elem_fns = self.modify_files(
+            cfb["dir"], cfb["files"], context)
         self.create_merged_file(
             fullfile,
             body_secs,
@@ -272,9 +273,8 @@ class PostProcess:
 
     def get_stringified_children(self, node):
 
-        parts = ([node.text] +
-                 list(chain(*([c.text, etree.tostring(c), c.tail] for c in node.getchildren()))) +
-                 [node.tail])
+        parts = ([node.text] + list(chain(*([c.text, etree.tostring(c), c.tail]
+                                            for c in node.getchildren()))) + [node.tail])
         return ''.join(filter(None, parts)).encode('utf-8').strip()
 
     def get_refs_mixed_back(self, tree):
@@ -438,7 +438,17 @@ class PostProcess:
         transform = etree.XSLT(xslt_doc)
         return transform(tree)
 
-    def set_enumeration(self, tr, name, attr, value, context, f, chapter, order, count):
+    def set_enumeration(
+            self,
+            tr,
+            name,
+            attr,
+            value,
+            context,
+            f,
+            chapter,
+            order,
+            count):
         ''' set the count id for an attribute in a tag type '''
         searchTag = './/' + name + '[@' + attr + '="' + value + '"]'
         elems = tr.getroot().findall(searchTag)

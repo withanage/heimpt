@@ -144,7 +144,6 @@ class XMLProcess(Debuggable):
         tr = self.sort_references(
             tr, sort_references.split(',')) if sort_references else tr
 
-
         return tr
 
     def merge_metadata(self, tr, metadata):

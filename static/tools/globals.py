@@ -27,7 +27,7 @@ class GV(object):
         self.PROJECT_INPUT_FILE_HAS_MORE_THAN_TWO_DOTS = u'project input file has more than two dots'
         self.PROJECT_INPUT_FILE_DOES_NOT_EXIST = u'project input_file does not exist'
         self.PROJECT_IS_NOT_ACTIVE = u'project is not active'
-        self.PROJECT_OUTPUT_FILE_IS_NOT_DEFINED=u'project output file is not defined'
+        self.PROJECT_OUTPUT_FILE_IS_NOT_DEFINED = u'project output file is not defined'
         self.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED = u'project output file was not created'
         self.PROJECT_TYPESETTER_IS_NOT_AVAILABLE = u'project typesetter is not available'
         self.PROJECT_TYPESETTER_IS_NOT_SPECIFIED = u'project typesetter is not specified'
@@ -41,21 +41,21 @@ class GV(object):
         self.TYPESETTER_EXECUTABLE_VARIABLE_IS_UNDEFINED = u'typesetter executable variable is undefined'
         self.TYPESETTER_FILE_OUTPUT_TYPE_IS_UNDEFINED = u'typesetter file output type is undefined'
         self.TYPESETTER_METADATA_FILE_WAS_NOT_SPECIFIED = u'Metadata file wasn\'t specified '
-        self.TYPESETTER_METYPESET_RUNS_WITH_DEFAULT_METADATA_FILE=u'typesetter metypeset runs with default metadata file'
+        self.TYPESETTER_METYPESET_RUNS_WITH_DEFAULT_METADATA_FILE = u'typesetter metypeset runs with default metadata file'
         self.TYPESETTER_IS_NOT_SPECIFIED = u'typesetter is not specified '
         self.TYPESETTER_PATH_IS_NOT_SPECIFIED = u'typesetter path is not specified '
         self.TYPESETTER_BINARY_IS_UNAVAILABLE = u'typesetter binary is unavailable '
         self.TYPESETTER_RUNS_WITH_NO_ARGUMENTS = u'typesetter runs with no arguments'
 
         # xml
-        self.XML_ELEMENT_NOT_FOUND =u'xml element not found'
-        self.XML_FILE_NOT_CREATED=u'xml file not created'
-        self.XML_INPUT_FILE_IS_NOT_FOUND =u'xml input file is not found'
-        self.XML_INPUT_FILE_IS_NOT_VALID=u'xml input file is not valid'
-        
+        self.XML_ELEMENT_NOT_FOUND = u'xml element not found'
+        self.XML_FILE_NOT_CREATED = u'xml file not created'
+        self.XML_INPUT_FILE_IS_NOT_FOUND = u'xml input file is not found'
+        self.XML_INPUT_FILE_IS_NOT_VALID = u'xml input file is not valid'
+
         self.debug = Debug()
         self.numeral_map = numeral_map
-        
+
     @staticmethod
     def fatal_error(module, message):
         print(u'[FATAL ERROR] [{0}] {1}'.format(
@@ -69,7 +69,6 @@ class GV(object):
             return False
         return True
 
-    
     def convert_int_to_roman(self, i):
         result = []
         for integer, numeral in numeral_map:
@@ -85,6 +84,7 @@ class GV(object):
                 result += integer
                 i += len(numeral)
         return result
+
     def read_json(self, f):
         if os.path.isfile(f):
             with open(f) as j:
@@ -94,7 +94,6 @@ class GV(object):
                 self, self.PROJECT_INPUT_FILE_JSON_IS_NOT_VALID)
             sys.exit(1)
 
-   
     def create_xml_file(self, tr, f):
         ''' write element tr to f '''
         try:
@@ -103,22 +102,19 @@ class GV(object):
                 f,
                 pretty_print=False,
                 xml_declaration=True
-                )
+            )
             print
         except IOError as e:
             print e
             self.debug.print_debug(self, self.XML_FILE_NOT_CREATED)
-    
+
     def create_dirs_recursive(self, project_path):
         p = ''
         for path in project_path:
             p = p + os.path.sep + path.strip('/').strip('/')
             if not os.path.exists(p):
-                try: 
+                try:
                     os.makedirs(p)
                 except OSError as o:
                     print o
         return p
-
-
-    

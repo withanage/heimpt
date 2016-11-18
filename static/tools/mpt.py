@@ -130,7 +130,6 @@ class PreProcess(Debuggable):
             else:
                 args.append(arg)
 
-
     def run_typesetter(
             self,
             p,
@@ -251,7 +250,8 @@ class PreProcess(Debuggable):
 
         uid = str(uuid.uuid4())[:8]
 
-        project_files = collections.OrderedDict(sorted((int(key), value) for key, value in project.get('files').items()))
+        project_files = collections.OrderedDict(
+            sorted((int(key), value) for key, value in project.get('files').items()))
 
         for file_id in project_files:
             file_name = project_files[file_id]
