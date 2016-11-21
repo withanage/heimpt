@@ -71,6 +71,12 @@ class XMLProcess(Debuggable):
         return tree
 
     def set_uuids_for_back_matter(self, tr, tags):
+        """
+        add unique id tags to  any of the sub-elements of the back matter
+        :param tr:
+        :param tags:
+        :return:
+        """
         for s in tags:
             f = {}
             fns = tr.getroot().findall(
@@ -90,7 +96,7 @@ class XMLProcess(Debuggable):
                             self, self.gv.XML_ELEMENT_NOT_FOUND)
             return tr
 
-    def add_numbering_to_values(
+    def set_numbering(
             self,
             tr,
             name,
@@ -98,6 +104,16 @@ class XMLProcess(Debuggable):
             value,
             count,
             range_array):
+        """
+        Adds numerical values to  a  tag  in arguments list
+        :param tr:
+        :param name:
+        :param attr:
+        :param value:
+        :param count:
+        :param range_array:
+        :return:
+        """
         searchTag = './/' + name + '[@' + attr + '="' + value + '"]'
         elems = tr.getroot().findall(searchTag)
         range_count = 1
@@ -109,6 +125,11 @@ class XMLProcess(Debuggable):
         return tr, count
 
     def convert_int_to_roman(self, i):
+        """
+        Converts an integer number into a roman number
+        :param i:
+        :return:
+        """
         result = []
         for integer, numeral in self.gv.numeral_map:
             count = i // integer
@@ -117,6 +138,13 @@ class XMLProcess(Debuggable):
         return ''.join(result)
 
     def set_roman_numbers(self, count, r_count, range_array):
+        """
+        Converts a given set of elements defined by range_array into roman numbers
+        :param count:
+        :param r_count:
+        :param range_array:
+        :return:
+        """
 
         val = str(count)
         if int(range_array[0]) <= count <= int(range_array[1]):
@@ -127,6 +155,11 @@ class XMLProcess(Debuggable):
         return val, r_count
 
     def transform(self, tr):
+        """
+        global function to apply the transformation in to the element tree
+        :param tr:
+        :return:
+        """
         set_numbering_tags = self.args.get('--set-numbering')
         set_uuids = self.args.get('--set-uuids')
         sort_footnotes = self.args.get('--sort-footnotes')
@@ -147,6 +180,12 @@ class XMLProcess(Debuggable):
         return tr
 
     def merge_metadata(self, tr, metadata):
+        """
+        Reads a metadata file path and  merge its content into the metadata section
+        :param tr:
+        :param metadata:
+        :return:
+        """
         r = tr.getroot()
 
         pth = self.create_metadata_path(metadata)
@@ -165,6 +204,11 @@ class XMLProcess(Debuggable):
         return tr
 
     def create_metadata_path(self, metadata):
+        """
+        creates the correct folder path for the metadata file. Metadata files should be in a folder : metadata
+        :param metadata:
+        :return:
+        """
         p = os.path.dirname(self.f).split(os.sep)
         del p[-4:]
         f = os.path.basename(self.f)
@@ -176,6 +220,12 @@ class XMLProcess(Debuggable):
         return pth
 
     def sort_by_tags(self, tag_list, elem):
+        """
+        Sorts  a   list  of elements alphabetically
+        :param tag_list:
+        :param elem:
+        :return:
+        """
         data = []
         for e in elem:
             vl = []
@@ -190,7 +240,7 @@ class XMLProcess(Debuggable):
 
     def sort_references(self, tr, tag_list):
         """
-        sort all  references
+        sort references
         :param tr:
         :param tag_list:
         :return:
@@ -202,7 +252,7 @@ class XMLProcess(Debuggable):
 
     def sort_footnotes(self, tr, tag_list):
         """
-        sort all the footnotes
+        sort footnotes
         :param tr:
         :param tag_list:
         :return:
@@ -213,6 +263,10 @@ class XMLProcess(Debuggable):
         return tr
 
     def process_xml_file(self):
+        """
+        process  xml  file and do all transformations
+        :return:
+        """
 
         tr = etree.parse(os.path.join(self.dr, self.f))
         r = tr.getroot()
@@ -229,11 +283,18 @@ class XMLProcess(Debuggable):
                     self.f)))
 
     def run(self):
+        """
+        main function  which call xml processing
+        :return:
+        """
         self.process_xml_file()
 
 
 def main():
-
+    """
+    main method
+    :return:
+    """
     xp = XMLProcess()
     xp.run()
 
