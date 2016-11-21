@@ -29,7 +29,7 @@ The platform consists of three modules: (1) typesetting (meTypeset), (2) xml-pro
 
   Additional contributions were made, in alphabetical order) by:
 
-* ELizabeth Corrao, Cluster of Excellence University Heidelberg
+
 * Frank Krabbes , Heidelberg  University Library 
 * Mayumi Ohta, Cluster of Excellence,  University Heidelberg
 * Katharina Wäschle, Heidelberg  University Library 
