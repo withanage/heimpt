@@ -3,10 +3,11 @@
 """
 Usage:
     xmlProcess.py  <input_file>  <path> [options]
-    xmlProcess.py -h --help
+
 Options:
     -d, --debug   Enable debug output
     -f --sort-footnotes=<tag list as comma seperated lists>
+    -h --help
     -m --metadata=<file__name_schema.xml>
     -n --set-numbering=<elemennt types as comma seperated lists>
     -r  --remove-references-unused
@@ -274,7 +275,7 @@ class XMLProcess(Debuggable):
         tr = self.transform(tr)
         count = 1
         range_count = [1, 2]
-        tr, count = self.add_numbering_to_values(
+        tr, count = self.set_numbering(
             tr, "xref", "ref-type", "fn", count, range_count)
         self.gv.create_dirs_recursive(self.dr.split('/'))
         self.gv.create_xml_file(
