@@ -22,9 +22,10 @@ from subprocess import Popen, PIPE
 from termcolor import colored
 
 
-class PreProcess(Debuggable):
+class MPT(Debuggable):
     """
-    converts  source files into xml using the typesetter module
+    Main class ,
+
     """
 
     def __init__(self):
@@ -63,8 +64,8 @@ class PreProcess(Debuggable):
     def call_typesetter(self, tool_args):
         """
         Call a tool with given arguments
-        :param tool_args:
-        :return:
+        :param tool_args: test
+        :return: output  desc
         """
         m = ' '.join(tool_args).strip().split(' ')
         self.debug.print_debug(self, ' '.join(m))
@@ -402,10 +403,9 @@ class PreProcess(Debuggable):
 
 def main():
     """
-    main method, initializes the Pre Proecess and  runs the configuration
-    :return:
+    main method, initializes the  Monograph  Publication Tool and  runs the configuration
     """
-    pre_process_instance = PreProcess()
+    pre_process_instance = MPT()
     pre_process_instance.run()
 
 
