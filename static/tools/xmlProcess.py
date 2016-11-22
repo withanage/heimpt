@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
+This  program is a utility file to exceute  di
+
 Usage:
     xmlProcess.py  <input_file>  <path> [options]
 

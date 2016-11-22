@@ -1,10 +1,28 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
+Main  program which  initializes the  Monograph  Publication Tool , read the configuration from the json file.
+Configuration json file is organized into projects and typesetters. Each project may contain a set of files ordered and
+a ordered subset of typesetters.  Typesetter and file arguments can be specifically configured in a pre-defined order.
+A specific project can be configured to run in a chain modus, which  takes the output of the previous typesetter as the input for
+the current typesetter. If chaining is not set, all the typesetters take the set of files and execute the typesetter and
+generate the output.
+
+Notes
+-------
+This program may be used to consolidate output files , generated from a certain tool.  But a consolidation tool should
+be set as the last tool in a process chain.
+
 Usage:
     preProcess.py  <config_file> [options]
 Options:
     -d, --debug  Enable debug output
+
+Examples
+--------
+python /usr/local/mpt/static/tools/mpt.py /home/wit/mpt.json  --debug
+
+
 
 """
 
@@ -306,7 +324,7 @@ class MPT(Debuggable):
               sequence number of the current file
         f_name:  str
               name of the current file
-        args : list
+        args: list
             application arguments in the correct oder.
 
         Returns
@@ -322,10 +340,9 @@ class MPT(Debuggable):
         p_path, pf_type = '', ''
         if t_props:
             mt = self.arguments_parse(t_props)
-
             if self.check_program(t_props.get('executable')):
                 p_path, pf_type = self.run_typesetter(
-                    project,
+                    p,
                     pre_path,
                     pre_out_type,
                     p_id,
@@ -334,7 +351,6 @@ class MPT(Debuggable):
                     f_name,
                     mt)
             else:
-                print mt
                 self.debug.print_debug(
                     self, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
         else:
@@ -377,16 +393,16 @@ class MPT(Debuggable):
         project_files = collections.OrderedDict(
             sorted((int(key), value) for key, value in p.get('files').items()))
 
-        for file_id in project_files:
-            file_name = project_files[file_id]
+        for f_id in project_files:
+            f_name = project_files[f_id]
             p_path, pf_type = self.typeset_file(
                 p,
                 pre_path,
                 pre_out_type,
                 pre_id,
                 uid,
-                file_id,
-                file_name
+                f_id,
+                f_name
             )
 
         return p_path, pf_type
@@ -422,6 +438,7 @@ class MPT(Debuggable):
                 sys.exit(1)
 
             for p_id in typesetters_ordered:
+
                 temp_path, temp_pre_out_type = self.typeset_files(
                     p,
                     pre_path,
@@ -431,6 +448,7 @@ class MPT(Debuggable):
 
                 pre_path = temp_path
                 prev_out_type = temp_pre_out_type
+
         else:
             self.debug.print_debug(self, self.gv.PROJECT_IS_NOT_ACTIVE)
         return True
@@ -454,19 +472,21 @@ class MPT(Debuggable):
             self.debug.print_debug(self, self.gv.PROJECTS_VAR_IS_NOT_SPECIFIED)
         return True
 
-    def check_program(self, p_path):
+
+    def check_program(self, p):
         """
-        Checks  whether a  the p_path is installed and executable
+        Checks  whether a  the program or typesetter is installed and executable
 
         Parameters
         ---------
-        p_path: str
+        p: str
             Program path
 
         Returns
         --------
-        boolean: bool
-            True or False
+        None: bool
+            Returns None , if  program exists
+
         """
 
         def is_exe(f_path):
@@ -483,19 +503,22 @@ class MPT(Debuggable):
                 True or False
 
             """
-            return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
-        fpath, fname = os.path.split(p_path)
+            return os.path.isfile(f_path) and os.access(f_path, os.X_OK)
+
+        fpath, fname = os.path.split(p)
         if fpath:
-            if is_exe(p_path):
-                return True
+            if is_exe(p):
+                return p
         else:
             for path in os.environ["PATH"].split(os.pathsep):
                 path = path.strip('"')
-                exe_file = os.path.join(path, p_path)
+                exe_file = os.path.join(path, p)
                 if is_exe(exe_file):
-                    return True
+                    return exe_file
 
-        return False
+        return None
+
+
 
     def organize_output(
             self,
