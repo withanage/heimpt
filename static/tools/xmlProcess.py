@@ -1,7 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-This  program is a utility file to exceute  di
+This  program is a utility file  which executes a set of specified functions on a element tree  of a xml file.
+
+The current functions are limited to JATS and BITS XML Scheme of the Library of Congress. However the methods defined in
+this program can be used to modify any element tree. Some of the  current avaliable functions are sorting footnotes,
+numbering elements of a certain type  or setting uniqued its to a certain element type.
+
+
+
 
 Usage:
     xmlProcess.py  <input_file>  <path> [options]
@@ -41,9 +48,15 @@ except ImportError:
 
 
 class XMLProcess(Debuggable):
-    '''     command line tool to clean, modify, delete, merge jats files    '''
+    """
+
+    """
 
     def __init__(self):
+        """
+        Initializes
+
+        """
 
         self.args = self.read_command_line()
         self.debug = Debug()

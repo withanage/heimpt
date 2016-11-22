@@ -18,7 +18,7 @@ Usage:
 Options:
     -d, --debug  Enable debug output
 
-Examples
+Example
 --------
 python /usr/local/mpt/static/tools/mpt.py /home/wit/mpt.json  --debug
 

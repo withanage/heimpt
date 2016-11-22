@@ -21,7 +21,7 @@
                 "15": "Lieb_Minnereden_15_Autoren.docx"
             },
             "name": "Lieb_Minnereden",
-            "path": "/home/fk/mpt/test/lieb_minnereden",
+            "path": "/home/wit/Arbeit/OMP/Lieb/lieb_minnereden",
             "typesetters": {
                 "1": {
                     "arguments": {
@@ -40,8 +40,9 @@
                 "3": {
                    "arguments": {
                         "1": "fn:append_out_dir",
-                        "2":"jats",
-                        "3":"full.xml"
+                        "2":"bits",
+                        "3":"Lieb_Minnereden.xml",
+                        "4":"--metadata book-meta.bits2"
 
                     },
                     "name": "xmlmerge",
@@ -76,12 +77,15 @@
         },
         "xmlprocess": {
             "arguments": {
+                "1":"--metadata book-part-meta.bits2",
                 "2": "--set-uuids=fn,ref"
             },
             "executable": "/usr/local/mpt/static/tools/xmlProcess.py"
         } ,
         "xmlmerge": {
             "arguments": {
+
+
 
             },
             "executable": "/usr/local/mpt/static/tools/xmlMerge.py"
