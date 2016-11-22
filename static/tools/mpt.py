@@ -48,6 +48,7 @@ class MPT(Debuggable):
 
     @staticmethod
     def read_command_line():
+
         """
         Reads and evaluates command line
         :return:
@@ -61,25 +62,55 @@ class MPT(Debuggable):
         """
         return 'Monograph Publication Tool'
 
-    def call_typesetter(self, tool_args):
+    def call_typesetter(self, t_args):
+
+        """Runs  typesetter with given arguments
+
+        Creates the execution path for a typesetter or an application and runs it  as a system process. Output,
+        exit-code and  system error codes are captured and returned.
+
+
+        Parameters
+        ----------
+        t_args : list
+            application arguments in the correct oder.
+
+
+        Returns
+        -------
+        output :str
+            system standard output.
+        err :str
+            system standard error.
+        exit_code: str
+            system exit_code.
         """
-        Call a tool with given arguments
-        :param tool_args: test
-        :return: output  desc
-        """
-        m = ' '.join(tool_args).strip().split(' ')
+        m = ' '.join(t_args).strip().split(' ')
         self.debug.print_debug(self, ' '.join(m))
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
         exit_code = process.wait()
         return output, err, exit_code
 
+
     def arguments_parse(self, t_props):
-        """
-        reads typesetter properties and create the arguments
-        :param t_props:
-        :return: args
-        """
+
+        """Reads typesetter properties from json  configuration and create  arguments.
+
+
+          Parameters
+          ----------
+          t_props : dictionary
+            typesetter properties
+
+
+          Returns
+          -------
+          args : list
+            application execution path and arguments in the correct oder.
+
+          """
+
         args = []
         if t_props.get('executable'):
             args = [t_props.get('executable')]
@@ -101,6 +132,7 @@ class MPT(Debuggable):
             args,
             file_prefix,
             uid):
+
         """
         creates the full execution path for a file
         :param p:
@@ -318,26 +350,35 @@ class MPT(Debuggable):
         else:
             self.debug.print_debug(self, self.gv.PROJECTS_VAR_IS_NOT_SPECIFIED)
 
-    def check_program(self, program):
+    def check_program(self, p_path):
         """
-        Checks if a  the program is installed and executable
-        :param program:
-        :return:
+        Checks  whether a  the p_path is installed and executable
+
+        Parameters
+        ---------
+        p_path: str
+            Program path
+
+        Returns
+        --------
+        boolean: bool
+            True or False
         """
+
         def is_exe(fpath):
             return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
-        fpath, fname = os.path.split(program)
+        fpath, fname = os.path.split(p_path)
         if fpath:
-            if is_exe(program):
-                return program
+            if is_exe(p_path):
+                return True
         else:
             for path in os.environ["PATH"].split(os.pathsep):
                 path = path.strip('"')
-                exe_file = os.path.join(path, program)
+                exe_file = os.path.join(path, p_path)
                 if is_exe(exe_file):
-                    return exe_file
+                    return True
 
-        return None
+        return False
 
     def organize_output(
             self,
@@ -347,13 +388,32 @@ class MPT(Debuggable):
             f_id,
             uid):
         """
-        Copy the temporary results into the  correct project path
-        :param p:
-        :param t_id:
-        :param prefix:
-        :param f_id:
-        :param uid:
-        :return:
+        Copy the temporary results into the  final project path
+
+        This method reads the temporary results of the current typesetter step and copies them in to the correct output
+        folder. Output folder is  constructed using project_name, current_time,  sequence number of the current typesetter
+        and the sequence number of the current file.
+
+
+        Parameters
+        ------------
+        p: dict
+            json program properties
+        t_id:  int
+            typesetter id
+        prefix: str
+            file name prefix  of  the current file
+        f_id:  int
+              sequence number of the current file
+        uid: str
+            unique id of the current current typesetter
+
+        Returns
+        --------
+        project_path: str
+            Final path for the current file
+        -------
+
         """
         t_path = [p.get('path'), uid]
         p_path = ''
