@@ -4,7 +4,8 @@
 Usage:
     preProcess.py  <config_file> [options]
 Options:
-    -d, --debug                                     Enable debug output
+    -d, --debug  Enable debug output
+
 """
 
 __author__ = "Dulip Withanage"
@@ -43,8 +44,17 @@ class MPT(Debuggable):
         self.all_typesetters = self.config.get('typesetters')
 
     def run(self):
+        """
+        Runs the MPT  Module, which typesets all the projects defined in the json input file
+
+        Returns
+        --------
+        True: boolean
+            Returns True if all the projects are typeset
+
+        """
         self.typeset_all_projects()
-        return
+        return True
 
     @staticmethod
     def read_command_line():
@@ -63,9 +73,14 @@ class MPT(Debuggable):
     def get_module_name(self):
         """
         Reads the name of the module for debugging and logging
-        :return:
+
+        Returns
+        -------
+        name string
+         Name of the Module
         """
-        return 'Monograph Publication Tool'
+        name = 'Monograph Publication Tool'
+        return name
 
     def call_typesetter(self, args):
 
@@ -144,6 +159,7 @@ class MPT(Debuggable):
 
         Output folder is  constructed using project_name, current_time,  sequence number of the current typesetter
         and the sequence number of the current file.
+
         Parameters
         ---------
         p: dictionary
@@ -156,6 +172,10 @@ class MPT(Debuggable):
             file name prefix  of  the current file
         uid: str
             unique id of the current current typesetter
+        Returns
+        --------
+        True: boolean
+            Returns True if the output file is created
         """
         ts_args = collections.OrderedDict(
             sorted(p.get('typesetters')[p_id].get("arguments").items()))
@@ -177,6 +197,7 @@ class MPT(Debuggable):
                         out_type))
             else:
                 args.append(arg)
+        return True
 
     def run_typesetter(
             self,
@@ -268,7 +289,9 @@ class MPT(Debuggable):
     ):
         """
         Typesets the current file
+
         Parameters
+        ---------
         p: dictionary
             json program properties
         pre_path: str
@@ -299,6 +322,7 @@ class MPT(Debuggable):
         p_path, pf_type = '', ''
         if t_props:
             mt = self.arguments_parse(t_props)
+
             if self.check_program(t_props.get('executable')):
                 p_path, pf_type = self.run_typesetter(
                     project,
@@ -310,6 +334,7 @@ class MPT(Debuggable):
                     f_name,
                     mt)
             else:
+                print mt
                 self.debug.print_debug(
                     self, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
         else:
@@ -336,11 +361,16 @@ class MPT(Debuggable):
             project file type of the previously executed typesetter
         pre_id :int
             sequence number of the previously executed file
+        
         Returns
         --------
+        p_path : str
+            project output path of the current typesetter
+        pf_type : str
+            project file type of the current typesetter
 
         """
-        temp_pre_path, tem_out_type = '', ''
+        p_path, pf_type = '', ''
 
         uid = str(uuid.uuid4())[:8]
 
@@ -349,7 +379,7 @@ class MPT(Debuggable):
 
         for file_id in project_files:
             file_name = project_files[file_id]
-            temp_pre_path, tem_out_type = self.typeset_file(
+            p_path, pf_type = self.typeset_file(
                 p,
                 pre_path,
                 pre_out_type,
@@ -359,13 +389,19 @@ class MPT(Debuggable):
                 file_name
             )
 
-        return temp_pre_path, tem_out_type
+        return p_path, pf_type
 
     def typeset_project(self, p):
         """
-        typesets a certain project
-        :param p:
-        :return:
+        Typesets a certain project
+        Parameters
+        ---------
+        p: dictionary
+            json program properties
+        Returns
+        --------
+        True: boolean
+            Returns True, if the  all the typesetters in project run
         """
         typesetters_ordered, temp_path, temp_pre_out_type = '', '', ''
         pre_path = ''
@@ -397,11 +433,17 @@ class MPT(Debuggable):
                 prev_out_type = temp_pre_out_type
         else:
             self.debug.print_debug(self, self.gv.PROJECT_IS_NOT_ACTIVE)
+        return True
 
     def typeset_all_projects(self):
         """
-        Typeset all projects
-        :return:
+        Typeset all projects defined in the json file
+
+        Returns
+        --------
+        True: boolean
+            Returns True, if the  all the typesetters in project run
+
         """
         projects = self.config.get('projects')
         if projects:
@@ -410,6 +452,7 @@ class MPT(Debuggable):
 
         else:
             self.debug.print_debug(self, self.gv.PROJECTS_VAR_IS_NOT_SPECIFIED)
+        return True
 
     def check_program(self, p_path):
         """
@@ -426,7 +469,20 @@ class MPT(Debuggable):
             True or False
         """
 
-        def is_exe(fpath):
+        def is_exe(f_path):
+            """
+            Checks whether path is available and executable
+            Parameters
+            ---------
+            f_path: str
+                File path
+
+            Returns
+            --------
+            boolean: bool
+                True or False
+
+            """
             return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
         fpath, fname = os.path.split(p_path)
         if fpath:
@@ -453,7 +509,8 @@ class MPT(Debuggable):
 
         This method reads the temporary results of the current typesetter step and copies them in to the correct output
         folder. Output folder is  constructed using project_name, current_time,  sequence number of the current typesetter
-        and the sequence number of the current file.
+        and the sequence number of the current file.  Customized tool specific actions are also defined and handled here.
+
 
 
         Parameters
@@ -524,6 +581,7 @@ class MPT(Debuggable):
 def main():
     """
     main method, initializes the  Monograph  Publication Tool and  runs the configuration
+
     """
     pre_process_instance = MPT()
     pre_process_instance.run()
