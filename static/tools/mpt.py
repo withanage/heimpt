@@ -50,8 +50,13 @@ class MPT(Debuggable):
     def read_command_line():
 
         """
-        Reads and evaluates command line
-        :return:
+        Reads and  genrates a docopt dictionary from the command line parameters.
+
+        Returns
+        -------
+        docopt : dictionary
+          A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
+          elements.
         """
         return docopt(__doc__, version='mpt 0.1')
 
@@ -62,7 +67,7 @@ class MPT(Debuggable):
         """
         return 'Monograph Publication Tool'
 
-    def call_typesetter(self, t_args):
+    def call_typesetter(self, args):
 
         """Runs  typesetter with given arguments
 
@@ -72,7 +77,7 @@ class MPT(Debuggable):
 
         Parameters
         ----------
-        t_args : list
+        args : list
             application arguments in the correct oder.
 
 
@@ -85,7 +90,7 @@ class MPT(Debuggable):
         exit_code: str
             system exit_code.
         """
-        m = ' '.join(t_args).strip().split(' ')
+        m = ' '.join(args).strip().split(' ')
         self.debug.print_debug(self, ' '.join(m))
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
@@ -95,21 +100,22 @@ class MPT(Debuggable):
 
     def arguments_parse(self, t_props):
 
-        """Reads typesetter properties from json  configuration and create  arguments.
+        """
+        Reads typesetter properties from json  configuration and create  arguments.
 
 
-          Parameters
-          ----------
-          t_props : dictionary
+        Parameters
+        ----------
+        t_props : dictionary
             typesetter properties
 
 
-          Returns
-          -------
-          args : list
+        Returns
+        -------
+        args : list
             application execution path and arguments in the correct oder.
 
-          """
+        """
 
         args = []
         if t_props.get('executable'):
@@ -125,22 +131,31 @@ class MPT(Debuggable):
                 args.append(arguments[a])
         return args
 
-    def create_execution_path(
+    def create_output_path(
             self,
             p,
             p_id,
             args,
-            file_prefix,
+            prefix,
             uid):
 
         """
-        creates the full execution path for a file
-        :param p:
-        :param p_id:
-        :param args:
-        :param file_prefix:
-        :param uid:
-        :return:
+        Creates the output path for  the current file
+
+        Output folder is  constructed using project_name, current_time,  sequence number of the current typesetter
+        and the sequence number of the current file.
+        Parameters
+        ---------
+        p: dictionary
+            json program properties
+        p_id:  int
+            typesetter id
+        args : list
+            application arguments in the correct oder.
+        prefix: str
+            file name prefix  of  the current file
+        uid: str
+            unique id of the current current typesetter
         """
         ts_args = collections.OrderedDict(
             sorted(p.get('typesetters')[p_id].get("arguments").items()))
@@ -157,7 +172,7 @@ class MPT(Debuggable):
                 args.append(
                     os.path.join(
                         out_path,
-                        file_prefix +
+                        prefix +
                         '.' +
                         out_type))
             else:
@@ -170,92 +185,129 @@ class MPT(Debuggable):
             pre_out_type,
             p_id,
             uid,
-            file_id,
-            file_name,
+            f_id,
+            f_name,
             args):
         """
-        Runs  the typesetter
-        :param p:
-        :param pre_path:
-        :param pre_out_type:
-        :param p_id:
-        :param uid:
-        :param file_id:
-        :param file_name:
-        :param args:
-        :return:
-        """
-        previous_project_path_temp = ''
-        temp = ''
+        Creates the temporary output path, calls the typesetter and writes the outtput to the correct path for a
+        certain file
 
-        prefix = file_name.split('.')[0]
+        Parameters
+        ---------
+        p: dictionary
+            json program properties
+        pre_path: str
+            project path of the previous iteration
+        pre_out_type : str
+            output type of the previous iteration
+        p_id:  int
+            typesetter id
+        uid: str
+            unique id of the current current typesetter
+        f_id:  int
+              sequence number of the current file
+        f_name:  str
+              name of the current file
+        args : list
+            application arguments in the correct oder.
+
+        Returns
+        --------
+        p_path : str
+            project output path of the current typesetter
+        pf_type : str
+            project file type of the current typesetter
+        """
+
+
+        p_path = ''
+        pf_type = ''
+
+        prefix = f_name.split('.')[0]
         if p_id == min(i for i in p['typesetters']):
-            file_path = os.path.join(p.get('path'), file_name)
+            f_path = os.path.join(p.get('path'), f_name)
         elif p.get("chain"):
-            file_path = os.path.join(
+            f_path = os.path.join(
                 pre_path,
                 prefix +
                 '.' +
                 pre_out_type)
-        if os.path.isfile(file_path):
-            args.append(file_path)
-            self.create_execution_path(
+        if os.path.isfile(f_path):
+            args.append(f_path)
+            self.create_output_path(
                 p,
                 p_id,
                 args,
                 prefix, uid)
-            output, err, exit_code = self.call_typesetter(args)
-            previous_project_path_temp = self.organize_output(
+            self.call_typesetter(args)
+            p_path = self.organize_output(
                 p,
                 p_id,
                 prefix,
-                file_id,
+                f_id,
                 uid)
 
-            temp = p.get('typesetters')[p_id].get("out_type")
+            pf_type = p.get('typesetters')[p_id].get("out_type")
 
         else:
             self.debug.print_debug(
                 self,
                 self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST +
-                os.path.join(file_path))
-        return previous_project_path_temp, temp
+                os.path.join(f_path))
+        return p_path, pf_type
 
     def typeset_file(
             self,
-            project,
+            p,
             pre_path,
             pre_out_type,
             p_id,
             uid,
-            file_id,
-            file_name
+            f_id,
+            f_name
     ):
         """
-        Typesets a certain file
-        :param project:
-        :param pre_path:
-        :param pre_out_type:
-        :param p_id:
-        :param uid:
-        :param file_id:
-        :param file_name:
-        :return:
+        Typesets the current file
+        Parameters
+        p: dictionary
+            json program properties
+        pre_path: str
+            project path of the previous iteration
+        pre_out_type : str
+            output type of the previous iteration
+        p_id:  int
+            typesetter id
+        uid: str
+            unique id of the current current typesetter
+        f_id:  int
+              sequence number of the current file
+        f_name:  str
+              name of the current file
+        args : list
+            application arguments in the correct oder.
+
+        Returns
+        --------
+        p_path : str
+            project output path of the current typesetter
+        pf_type : str
+            project file type of the current typesetter
+
         """
         t_props = self.all_typesetters.get(
-            project.get('typesetters')[p_id].get("name"))
-        temp_pre_path, temp_pre_out_type = '', ''
+            p.get('typesetters')[p_id].get("name"))
+        p_path, pf_type = '', ''
         if t_props:
             mt = self.arguments_parse(t_props)
             if self.check_program(t_props.get('executable')):
-                temp_pre_path, temp_pre_out_type = self.run_typesetter(
+                p_path, pf_type = self.run_typesetter(
                     project,
                     pre_path,
                     pre_out_type,
                     p_id,
                     uid,
-                    file_id,
-                    file_name,
+                    f_id,
+                    f_name,
                     mt)
             else:
                 self.debug.print_debug(
@@ -263,33 +315,42 @@ class MPT(Debuggable):
         else:
             self.debug.print_debug(
                 self, self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
-        return temp_pre_path, temp_pre_out_type
+        return p_path, pf_type
 
     def typeset_files(
             self,
-            project,
+            p,
             pre_path,
             pre_out_type,
             pre_id):
         """
         Typeset all files of a  certain project
-        :param project:
-        :param pre_path:
-        :param pre_out_type:
-        :param pre_id:
-        :return:
+
+        Parameters
+        ---------
+        p: dictionary
+            json program properties
+        pre_path: str
+            project path of the previously executed typesetter
+        pre_out_type: str
+            project file type of the previously executed typesetter
+        pre_id :int
+            sequence number of the previously executed file
+        Returns
+        --------
+
         """
         temp_pre_path, tem_out_type = '', ''
 
         uid = str(uuid.uuid4())[:8]
 
         project_files = collections.OrderedDict(
-            sorted((int(key), value) for key, value in project.get('files').items()))
+            sorted((int(key), value) for key, value in p.get('files').items()))
 
         for file_id in project_files:
             file_name = project_files[file_id]
             temp_pre_path, tem_out_type = self.typeset_file(
-                project,
+                p,
                 pre_path,
                 pre_out_type,
                 pre_id,
@@ -383,7 +444,7 @@ class MPT(Debuggable):
     def organize_output(
             self,
             p,
-            t_id,
+            p_id,
             prefix,
             f_id,
             uid):
@@ -399,7 +460,7 @@ class MPT(Debuggable):
         ------------
         p: dict
             json program properties
-        t_id:  int
+        p_id:  int
             typesetter id
         prefix: str
             file name prefix  of  the current file
@@ -416,10 +477,10 @@ class MPT(Debuggable):
         """
         t_path = [p.get('path'), uid]
         p_path = ''
-        t_name = p.get('typesetters')[t_id].get("name")
+        t_name = p.get('typesetters')[p_id].get("name")
         files = collections.OrderedDict(sorted(p.get('files').items()))
-        out_type = p['typesetters'][t_id]['out_type']
-        step_ts = t_id + '_' + t_name
+        out_type = p['typesetters'][p_id]['out_type']
+        step_ts = p_id + '_' + t_name
 
         if t_name == 'metypeset':
             t_path = t_path + ['nlm']
@@ -430,9 +491,9 @@ class MPT(Debuggable):
             self.current_result,
             step_ts,
             out_type]
-        if p['typesetters'][t_id].get('merge'):
+        if p['typesetters'][p_id].get('merge'):
 
-            ff = p['typesetters'][t_id].get('arguments')["3"]
+            ff = p['typesetters'][p_id].get('arguments')["3"]
             t_path.append(ff)
             t_file = os.path.sep.join(t_path)
             p_path = self.gv.create_dirs_recursive(project_path)
