@@ -285,17 +285,17 @@ def main():
         exit(1)
     test_name = cfg.get("general", "test_name")
     for i in test_name.split(','):
-        runTest(
-            base_dir,
-            test_collection,
-            i,
-            cit,
-            cfg,
-            cfg_fn,
-            css,
-            start,
-            xslt_fo,
-            xslt_html)
+      runTest(
+          base_dir,
+          test_collection,
+          i,
+          cit,
+          cfg,
+          cfg_fn,
+          css,
+          start,
+          xslt_fo,
+          xslt_html)
 
 
 if __name__ == "__main__":
