@@ -5,7 +5,7 @@ This  program is a utility file  which executes a set of specified functions on 
 
 The current functions are limited to JATS and BITS XML Scheme of the Library of Congress. However the methods defined in
 this program can be used to modify any element tree. Some of the  current avaliable functions are sorting footnotes,
-numbering elements of a certain type  or setting uniqued its to a certain element type.
+numbering elements of a certain type  or setting unique ids to a certain element type.
 
 
 
