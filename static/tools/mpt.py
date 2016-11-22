@@ -412,8 +412,7 @@ class MPT(Debuggable):
         --------
         project_path: str
             Final path for the current file
-        -------
-
+        
         """
         t_path = [p.get('path'), uid]
         p_path = ''
