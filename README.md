@@ -18,8 +18,10 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
 # Installation
 ## Assumptions
  * Python is avaliable in your system: check with 
- `python --version`
- * INSTALL_FOLDER = /usr/local/mptT
+ `python --version` 
+ * Installation folder  `/usr/local/mpt`
+ 
+ 
  
  
 
@@ -37,7 +39,7 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
 
 # Credits
 
-### The lead developer is Dulip Withanage,  Heidelberg  University Library
+The lead developer is Dulip Withanage,  Heidelberg  University Library
 
   Additional contributions were made, in alphabetical order) by:
 
