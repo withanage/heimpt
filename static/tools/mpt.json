@@ -1,0 +1,136 @@
+{
+    "projects": [
+
+     {
+            "active": true,
+            "chain": true,
+            "files": {
+                "2": "SP1.docx",
+                "3": "SP2.docx",
+                "1": "Refs.docx"
+            },
+            "name": "moehren",
+            "path": "/home/wit/Arbeit/OMP/Sander/sanderfiles/",
+            "typesetters": {
+                "1": {
+                    "arguments": {
+                        "1": "fn:append_out_dir",
+                        "2":"fn:metypeset-meta"
+                    },
+                    "name": "metypeset",
+                    "out_type": "xml"
+                },
+                "2": {
+                   "arguments": {
+                        "1": "fn:append_out_dir"
+                    },
+                    "name": "xmlprocess",
+                    "out_type": "xml"
+                },
+                "3": {
+                   "arguments": {
+                        "1": "fn:append_out_dir",
+                        "2":"bits",
+                        "3":"full.xml"
+
+                    },
+                    "name": "xmlmerge",
+                    "out_type": "xml",
+                    "merge":true
+
+                }
+
+            }
+        },
+        {
+            "active": false,
+            "chain": true,
+            "files": {
+                "1": "Superscript_Subscript_Strike.docx",
+                "2": "Endnotes_DE.docx"
+            },
+            "name": "moehren",
+            "path": "/home/wit/projects/mpt/static/tests/word/src",
+            "typesetters": {
+                "1": {
+                    "arguments": {
+                        "1": "fn:append_out_dir"
+                    },
+                    "name": "metypeset",
+                    "out_type": "xml"
+                },
+                "2": {
+                   "arguments": {
+                        "1": "fn:append_out_dir"
+                    },
+                    "name": "xmlprocess",
+                    "out_type": "xml",
+                    "merge":true
+                }
+            }
+        },
+        {
+            "active": false,
+            "chain": true,
+            "files": {
+                "1": "48-69-270-1-10-20160127.xml"
+                
+            },
+            "name": "xml_process",
+            "path": "/home/wit/Arbeit/OMP/Sander/sanderfiles/xml/",
+            "typesetters": {
+                "1": {
+                    "arguments": {
+                        "1": "fn:append_out_dir"
+                    },
+                    "name": "xmlprocess",
+                    "out_type": "xml"
+                },
+                "2": {
+                    "arguments": {
+                        "1": "-o",
+                        "2": "fn:create_out_file"
+                    },
+                    "name": "pandoc",
+                    "out_type": "html"
+                }
+            }
+        }
+    ],
+    "typesetters": {
+        "metypeset": {
+            "arguments": {
+                "1": "docx",
+                "2": "--debug",
+                "3": "--nogit"
+            },
+            "executable": "/home/wit/projects/mpt/static/tools/meTypeset/bin/meTypeset.py"
+        },
+        "pandoc": {
+            "arguments": {
+                "1": "-t html"
+            },
+            "executable": "pandoc"
+        },
+        "pandoc_md": {
+            "arguments": {
+                "1": "-t html"
+            },
+            "executable": "pandoc"
+        },
+        "xmlprocess": {
+            "arguments": {
+                "1":"--metadata book-part-meta.bits2",
+                "2": "--set-uuids=fn,ref"
+            },
+            "executable": "/home/wit/projects/mpt/static/tools/xmlProcess.py"
+        } ,
+        "xmlmerge": {
+            "arguments": {
+
+            },
+            "executable": "/home/wit/projects/mpt/static/tools/xmlMerge.py"
+        }
+
+    }
+}
