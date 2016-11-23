@@ -1,7 +1,0 @@
-docopt module
-=============
-
-.. automodule:: docopt
-    :members:
-    :undoc-members:
-    :show-inheritance:
