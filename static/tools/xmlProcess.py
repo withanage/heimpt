@@ -54,9 +54,9 @@ class XMLProcess(Debuggable):
     Features:
         Add Id numbering for any tag type
         Clean comments
-        Remove references
+        Remove unused references
         Set numbering
-        Set unique ids to ceratain tag types
+        Add unique ids to certain tag types
         Sort references
 
     """
