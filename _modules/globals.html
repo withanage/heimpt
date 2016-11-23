@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>globals &#8212; MPT 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="MPT 0.0.1 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPT 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for globals</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Dulip Withanage&quot;</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">etree</span>
+
+<span class="kn">from</span> <span class="nn">debug</span> <span class="k">import</span> <span class="n">Debuggable</span><span class="p">,</span> <span class="n">Debug</span>
+
+<span class="n">numeral_map</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span>
+    <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">900</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;CD&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;XC&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">,</span> <span class="s1">&#39;XL&#39;</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;IX&#39;</span><span class="p">,</span> <span class="s1">&#39;V&#39;</span><span class="p">,</span> <span class="s1">&#39;IV&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span>
+<span class="p">))</span>
+
+
+<div class="viewcode-block" id="GV"><a class="viewcode-back" href="../globals.html#globals.GV">[docs]</a><span class="k">class</span> <span class="nc">GV</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;    Global variables    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># GLOBAL VARIABLES</span>
+
+        <span class="c1"># projects</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_INPUT_FILE_JSON_IS_NOT_VALID</span> <span class="o">=</span> <span class="s1">u&#39;project input file json is not valid&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_INPUT_FILE_TYPE_IS_NOT_SPECIFIED</span> <span class="o">=</span> <span class="s1">u&#39;project input file type is not specified&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_INPUT_FILE_HAS_MORE_THAN_TWO_DOTS</span> <span class="o">=</span> <span class="s1">u&#39;project input file has more than two dots&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_INPUT_FILE_DOES_NOT_EXIST</span> <span class="o">=</span> <span class="s1">u&#39;project input_file does not exist&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_IS_NOT_ACTIVE</span> <span class="o">=</span> <span class="s1">u&#39;project is not active&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_OUTPUT_FILE_IS_NOT_DEFINED</span> <span class="o">=</span> <span class="s1">u&#39;project output file is not defined&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_OUTPUT_FILE_WAS_NOT_CREATED</span> <span class="o">=</span> <span class="s1">u&#39;project output file was not created&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_TYPESETTER_IS_NOT_AVAILABLE</span> <span class="o">=</span> <span class="s1">u&#39;project typesetter is not available&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_TYPESETTER_IS_NOT_SPECIFIED</span> <span class="o">=</span> <span class="s1">u&#39;project typesetter is not specified&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_TYPESETTER_NAME_IS_NOT_SPECIFIED</span> <span class="o">=</span> <span class="s1">u&#39;project typesetter name is not specified&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED</span> <span class="o">=</span> <span class="s1">u&#39;project typesetter varaible is not specified&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_TYPESETTERS_ARE_NOT_SPECIFIED</span> <span class="o">=</span> <span class="s1">u&#39;project typesetters are not specified&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PROJECTS_VAR_IS_NOT_SPECIFIED</span> <span class="o">=</span> <span class="s1">u&#39;project variable is not  specified&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PROJECTS_TYPESETTER_RUNS_WITH_NO_ARGUMENTS</span> <span class="o">=</span> <span class="s1">u&#39;projects typesetter runs with no arguments&#39;</span>
+
+        <span class="c1"># typesetter errors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TYPESETTER_EXECUTABLE_VARIABLE_IS_UNDEFINED</span> <span class="o">=</span> <span class="s1">u&#39;typesetter executable variable is undefined&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TYPESETTER_FILE_OUTPUT_TYPE_IS_UNDEFINED</span> <span class="o">=</span> <span class="s1">u&#39;typesetter file output type is undefined&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TYPESETTER_METADATA_FILE_WAS_NOT_SPECIFIED</span> <span class="o">=</span> <span class="s1">u&#39;Metadata file wasn</span><span class="se">\&#39;</span><span class="s1">t specified &#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TYPESETTER_METYPESET_RUNS_WITH_DEFAULT_METADATA_FILE</span> <span class="o">=</span> <span class="s1">u&#39;typesetter metypeset runs with default metadata file&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TYPESETTER_IS_NOT_SPECIFIED</span> <span class="o">=</span> <span class="s1">u&#39;typesetter is not specified &#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TYPESETTER_PATH_IS_NOT_SPECIFIED</span> <span class="o">=</span> <span class="s1">u&#39;typesetter path is not specified &#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TYPESETTER_BINARY_IS_UNAVAILABLE</span> <span class="o">=</span> <span class="s1">u&#39;typesetter binary is unavailable &#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TYPESETTER_RUNS_WITH_NO_ARGUMENTS</span> <span class="o">=</span> <span class="s1">u&#39;typesetter runs with no arguments&#39;</span>
+
+        <span class="c1"># xml</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">XML_ELEMENT_NOT_FOUND</span> <span class="o">=</span> <span class="s1">u&#39;xml element not found&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">XML_FILE_NOT_CREATED</span> <span class="o">=</span> <span class="s1">u&#39;xml file not created&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">XML_INPUT_FILE_IS_NOT_FOUND</span> <span class="o">=</span> <span class="s1">u&#39;xml input file is not found&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">XML_INPUT_FILE_IS_NOT_VALID</span> <span class="o">=</span> <span class="s1">u&#39;xml input file is not valid&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">Debug</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numeral_map</span> <span class="o">=</span> <span class="n">numeral_map</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="GV.fatal_error"><a class="viewcode-back" href="../globals.html#globals.GV.fatal_error">[docs]</a>    <span class="k">def</span> <span class="nf">fatal_error</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">u&#39;[FATAL ERROR] [</span><span class="si">{0}</span><span class="s1">] </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">module</span><span class="o">.</span><span class="n">get_module_name</span><span class="p">(),</span> <span class="n">message</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GV.is_json"><a class="viewcode-back" href="../globals.html#globals.GV.is_json">[docs]</a>    <span class="k">def</span> <span class="nf">is_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="GV.convert_int_to_roman"><a class="viewcode-back" href="../globals.html#globals.GV.convert_int_to_roman">[docs]</a>    <span class="k">def</span> <span class="nf">convert_int_to_roman</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">integer</span><span class="p">,</span> <span class="n">numeral</span> <span class="ow">in</span> <span class="n">numeral_map</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="n">i</span> <span class="o">//</span> <span class="n">integer</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">numeral</span> <span class="o">*</span> <span class="n">count</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">-=</span> <span class="n">integer</span> <span class="o">*</span> <span class="n">count</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GV.convert_roman_to_int"><a class="viewcode-back" href="../globals.html#globals.GV.convert_roman_to_int">[docs]</a>    <span class="k">def</span> <span class="nf">convert_roman_to_int</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">integer</span><span class="p">,</span> <span class="n">numeral</span> <span class="ow">in</span> <span class="n">numeral_map</span><span class="p">:</span>
+            <span class="k">while</span> <span class="n">n</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">numeral</span><span class="p">)]</span> <span class="o">==</span> <span class="n">numeral</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="n">integer</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">numeral</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="GV.read_json"><a class="viewcode-back" href="../globals.html#globals.GV.read_json">[docs]</a>    <span class="k">def</span> <span class="nf">read_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">as</span> <span class="n">j</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_INPUT_FILE_JSON_IS_NOT_VALID</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GV.create_xml_file"><a class="viewcode-back" href="../globals.html#globals.GV.create_xml_file">[docs]</a>    <span class="k">def</span> <span class="nf">create_xml_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; write element tr to f &#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+
+            <span class="n">tr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="n">f</span><span class="p">,</span>
+                <span class="n">pretty_print</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">xml_declaration</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="nb">print</span>
+        <span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="n">e</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">XML_FILE_NOT_CREATED</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GV.create_dirs_recursive"><a class="viewcode-back" href="../globals.html#globals.GV.create_dirs_recursive">[docs]</a>    <span class="k">def</span> <span class="nf">create_dirs_recursive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_path</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">project_path</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">path</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">o</span><span class="p">:</span>
+                    <span class="nb">print</span> <span class="n">o</span>
+        <span class="k">return</span> <span class="n">p</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPT 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    </div>
+  </body>
+</html>
