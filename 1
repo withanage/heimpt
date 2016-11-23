@@ -1,0 +1,45 @@
+cd /usr/local/mpt/
+echo "Adding tools to git"
+git add static/tools
+git commit -m "Treee maipulation"
+echo "git push mpt"
+git push
+
+
+
+echo "Branch to the gh-pages"
+
+git checkout gh-pages
+git checkout .
+
+
+echo "Get the mpt update"
+cd /home/wit/projects/mpt_api_doc/html
+
+git checkout master
+git checkout .
+git fetch
+git pull
+
+
+echo "HTML generation"
+
+cd /home/wit/projects/mpt_api_doc/
+
+make html
+
+
+cd /usr/local/mpt/
+echo "git gh-pages"
+git checkout gh-pages
+
+git add  --all
+git commit -m "Rebuild doc"
+git push
+
+
+echo "git master"
+
+git checkout master
+
+rm -rf *html   _* searchindex.js objects.inv .buildinfo
