@@ -52,7 +52,7 @@ class XMLProcess(Debuggable):
     Standalone module to combine, clean and modify a JATS XML file and optionally inject BITS Metadata headers.
 
     Features:
-        Add Id numbering for any tag type
+        Add ID numbering for any tag type
         Clean comments
         Remove unused references
         Set numbering
