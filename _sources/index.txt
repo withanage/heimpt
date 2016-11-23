@@ -3,20 +3,37 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Monograph Publication Tool's documentation!
-======================================================
 
-Contents:
+Main Program (mpt)
+==================================================
 
 .. toctree::
    :maxdepth: 2
 
+   mpt
 
+Utilities
+==================================================
+.. toctree::
+   :maxdepth: 2
+
+   xmlProcess
+   xmlMerge
+
+
+
+List of Modules
+==================================================
+
+* :ref:`modindex`
 
 Indices and tables
-==================
+==================================================
 
 * :ref:`genindex`
-* :ref:`modindex`
+
+Fulltext Search
+==================================================
+
 * :ref:`search`
 
