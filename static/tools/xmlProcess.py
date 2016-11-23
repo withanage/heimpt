@@ -143,15 +143,15 @@ class XMLProcess(Debuggable):
         Parameters
         ---------
         tag: str
-         xml tag name
+            xml tag name
         attr: str
-         attribute name
+            attribute name
         value :str
-         value name
+            value name
         count : int
-         current sequence number
+            current sequence number
         range_list : list
-            lower and upper level for the  numbering
+           lower and upper level for the  numbering
 
         """
         searchTag = './/' + tag + '[@' + attr + '="' + value + '"]'
@@ -171,7 +171,7 @@ class XMLProcess(Debuggable):
         Parameters
         ---------
         i : int
-         integer number
+            integer number
 
         """
         result = []
@@ -187,6 +187,15 @@ class XMLProcess(Debuggable):
 
         Parameters
         ---------
+        count :int
+        r_count : int
+        range_list : list
+            lower and upper level for the  numbering
+
+        Returns
+        -------
+        val : str
+        r_count: int
 
 
         """
@@ -201,9 +210,14 @@ class XMLProcess(Debuggable):
 
     def transform(self):
         """
-        global function to apply the transformation in to the element tree
-        :param tr:
-        :return:
+        Function applies transformation into the elementtree
+
+        Returns
+        -------
+        tr : elementTree
+            Element tree of the  current file
+
+
         """
         set_numbering_tags = self.args.get('--set-numbering')
         set_uuids = self.args.get('--set-uuids')
@@ -227,9 +241,18 @@ class XMLProcess(Debuggable):
     def merge_metadata(self, metadata):
         """
         Reads a metadata file path and  merge its content into the metadata section
-        :param tr:
-        :param metadata:
-        :return:
+
+        Parameters
+        ----------
+        metadata : str
+             suffix  of the metadata files
+
+        Returns
+        -------
+        tr : elementTree
+            Element tree of the  current file
+
+
         """
         r = self.tr.getroot()
 
