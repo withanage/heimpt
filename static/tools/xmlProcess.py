@@ -71,22 +71,34 @@ class XMLProcess(Debuggable):
 
     @staticmethod
     def read_command_line():
+        """
+        Reads and  generates a docopt dictionary from the command line parameters.
+
+        Returns
+        -------
+        docopt : dictionary
+          A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
+          elements.
+        """
         return docopt(__doc__, version='xml 0.1')
 
     def set_tag_numbering(self, tags):
-        """
-        automatic numbering of certain tags
-        :param tree:
-        :param tags:
-        :return:
-        """
-        for tag in tags:
+         """
+         Automatic numbering of the list of elements
+         Parameters
+         ----------
+         tags: list
+         list of elements
+
+        
+         """
+         for tag in tags:
             sh = self.tr.findall('.//' + tag)
             sid = 1
             for i in sh:
                 i.set('id', tag.replace('-', '') + str(sid))
                 sid += 1
-        return self.tr
+
 
     def set_uuids_for_back_matter(self, tags):
         """

@@ -77,7 +77,7 @@ class MPT(Debuggable):
     @staticmethod
     def read_command_line():
         """
-        Reads and  genrates a docopt dictionary from the command line parameters.
+        Reads and  generates a docopt dictionary from the command line parameters.
 
         Returns
         -------
