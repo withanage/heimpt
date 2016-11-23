@@ -8,8 +8,6 @@ this program can be used to modify any element tree. Some of the  current avalia
 numbering elements of a certain type  or setting unique ids to a certain element type.
 
 
-
-
 Usage:
     xmlProcess.py  <input_file>  <path> [options]
 
