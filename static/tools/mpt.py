@@ -271,7 +271,6 @@ class MPT(Debuggable):
                 prefix +
                 '.' +
                 pre_out_type)
-            print f_id, f_name
 
         if os.path.isfile(f_path):
             args.append(f_path)
@@ -295,7 +294,7 @@ class MPT(Debuggable):
                 self,
                 self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST +' '+
                 os.path.join(f_path))
-        print p_path, pf_type
+
         return p_path, pf_type
 
     def typeset_file(
@@ -343,7 +342,6 @@ class MPT(Debuggable):
         p_path, pf_type = '', ''
         if t_props:
             mt = self.arguments_parse(t_props)
-            print mt,t_props.get('executable')
             if self.check_program(t_props.get('executable')):
                 p_path, pf_type = self.run_typesetter(
                     p,

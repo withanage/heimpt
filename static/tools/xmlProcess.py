@@ -66,6 +66,7 @@ class XMLProcess(Debuggable):
             self.debug.enable_debug()
         self.dr = self.args.get('<path>')
         self.f = self.args.get('<input_file>')
+        self.tr = etree.parse(os.path.join(self.dr, self.f))
 
     @staticmethod
     def read_command_line():
@@ -284,10 +285,9 @@ class XMLProcess(Debuggable):
         :return:
         """
 
-        tr = etree.parse(os.path.join(self.dr, self.f))
-        r = tr.getroot()
+        #tr = etree.parse(os.path.join(self.dr, self.f))
 
-        tr = self.transform(tr)
+        tr = self.transform(self.tr)
         count = 1
         range_count = [1, 2]
         tr, count = self.set_numbering(
