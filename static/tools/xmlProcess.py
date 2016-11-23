@@ -72,7 +72,7 @@ class XMLProcess(Debuggable):
     def read_command_line():
         return docopt(__doc__, version='xml 0.1')
 
-    def set_tag_numbering(self, tree, tags):
+    def set_tag_numbering(self,  tags):
         """
         automatic numbering of certain tags
         :param tree:
@@ -80,30 +80,30 @@ class XMLProcess(Debuggable):
         :return:
         """
         for tag in tags:
-            sh = tree.findall('.//' + tag)
+            sh = self.tr.findall('.//' + tag)
             sid = 1
             for i in sh:
                 i.set('id', tag.replace('-', '') + str(sid))
                 sid += 1
-        return tree
+        return self.tr
 
-    def set_uuids_for_back_matter(self, tr, tags):
+    def set_uuids_for_back_matter(self, tags):
         """
         add unique id tags to  any of the sub-elements of the back matter
-        :param tr:
+        :param self.tr:
         :param tags:
         :return:
         """
         for s in tags:
             f = {}
-            fns = tr.getroot().findall(
+            fns = self.tr.getroot().findall(
                 ''.join(['.//xref/[@ref-type="', s, '"]']))
             for i in fns:
                 rid = ''.join(['bibd', uuid.uuid4().get_hex()])
                 f[i.attrib['rid']] = rid
                 i.set('rid', rid)
             for m in f.keys():
-                n = tr.getroot().find(
+                n = self.tr.getroot().find(
                     ''.join(['.//' + s + '/[@id="', m, '"]']))
                 if n is not None:
                     if len(n) > 0:
@@ -111,11 +111,10 @@ class XMLProcess(Debuggable):
                     else:
                         self.debug.print_debug(
                             self, self.gv.XML_ELEMENT_NOT_FOUND)
-            return tr
+            return self.tr
 
     def set_numbering(
             self,
-            tr,
             name,
             attr,
             value,
@@ -132,14 +131,14 @@ class XMLProcess(Debuggable):
         :return:
         """
         searchTag = './/' + name + '[@' + attr + '="' + value + '"]'
-        elems = tr.getroot().findall(searchTag)
+        elems = self.tr.getroot().findall(searchTag)
         range_count = 1
         for elem in elems:
             elem.text, range_count = self.set_roman_numbers(
                 count, range_count, range_array)
             count += 1
 
-        return tr, count
+        return self.tr, count
 
     def convert_int_to_roman(self, i):
         """
@@ -171,7 +170,7 @@ class XMLProcess(Debuggable):
             val = str(count - r_count + 1)
         return val, r_count
 
-    def transform(self, tr):
+    def transform(self):
         """
         global function to apply the transformation in to the element tree
         :param tr:
@@ -182,28 +181,30 @@ class XMLProcess(Debuggable):
         sort_footnotes = self.args.get('--sort-footnotes')
         sort_references = self.args.get('--sort-references')
 
+
+
         metadata = self.args.get('--metadata')
-        tr = self.merge_metadata(tr, metadata) if metadata else tr
+        self.tr = self.merge_metadata(metadata) if metadata else self.tr
 
-        tr = self.set_tag_numbering(tr, set_numbering_tags.split(
-            ',')) if set_numbering_tags else tr
-        tr = self.set_uuids_for_back_matter(
-            tr, set_uuids.split(',')) if set_uuids else tr
-        tr = self.sort_footnotes(
-            tr, sort_footnotes.split(',')) if sort_footnotes else tr
-        tr = self.sort_references(
-            tr, sort_references.split(',')) if sort_references else tr
+        self.tr = self.set_tag_numbering(set_numbering_tags.split(
+            ',')) if set_numbering_tags else self.tr
+        self.tr = self.set_uuids_for_back_matter(
+            set_uuids.split(',')) if set_uuids else self.tr
+        self.tr = self.sort_footnotes(
+             sort_footnotes.split(',')) if sort_footnotes else self.tr
+        self.tr = self.sort_references(
+           sort_references.split(',')) if sort_references else self.tr
 
-        return tr
+        return self.tr
 
-    def merge_metadata(self, tr, metadata):
+    def merge_metadata(self, metadata):
         """
         Reads a metadata file path and  merge its content into the metadata section
         :param tr:
         :param metadata:
         :return:
         """
-        r = tr.getroot()
+        r = self.tr.getroot()
 
         pth = self.create_metadata_path(metadata)
 
@@ -218,7 +219,7 @@ class XMLProcess(Debuggable):
             self.debug.print_debug(self, pth +
                                    self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST)
 
-        return tr
+        return self.tr
 
     def create_metadata_path(self, metadata):
         """
@@ -255,29 +256,29 @@ class XMLProcess(Debuggable):
         data.sort()
         elem[:] = [item[-1] for item in data]
 
-    def sort_references(self, tr, tag_list):
+    def sort_references(self,  tag_list):
         """
         sort references
-        :param tr:
+        :param self.tr:
         :param tag_list:
         :return:
         """
-        elem = tr.find('./back/ref-list')
+        elem = self.tr.find('./back/ref-list')
         self.sort_by_tags(tag_list, elem)
 
-        return tr
+        return self.tr
 
-    def sort_footnotes(self, tr, tag_list):
+    def sort_footnotes(self,tag_list):
         """
         sort footnotes
         :param tr:
         :param tag_list:
         :return:
         """
-        elem = tr.find('./back/fn-group')
+        elem = self.tr.find('./back/fn-group')
         self.sort_by_tags(tag_list, elem)
 
-        return tr
+        return self.tr
 
     def process_xml_file(self):
         """
@@ -287,14 +288,13 @@ class XMLProcess(Debuggable):
 
         #tr = etree.parse(os.path.join(self.dr, self.f))
 
-        tr = self.transform(self.tr)
+        self.tr = self.transform()
         count = 1
         range_count = [1, 2]
-        tr, count = self.set_numbering(
-            tr, "xref", "ref-type", "fn", count, range_count)
+        self.tr, count = self.set_numbering("xref", "ref-type", "fn", count, range_count)
         self.gv.create_dirs_recursive(self.dr.split('/'))
         self.gv.create_xml_file(
-            tr, os.path.join(
+            self.tr, os.path.join(
                 self.dr, os.path.basename(
                     self.f)))
 
