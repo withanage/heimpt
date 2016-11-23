@@ -100,9 +100,15 @@ Sort references</dd>
 <dl class="method">
 <dt id="xmlProcess.XMLProcess.convert_int_to_roman">
 <code class="descname">convert_int_to_roman</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.convert_int_to_roman"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.convert_int_to_roman" title="Permalink to this definition">¶</a></dt>
-<dd><p>Converts an integer number into a roman number
-:param i:
-:return:</p>
+<dd><p>Converts an integer number into a roman number</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>i</strong> (<em>int</em>) &#8211; integer number</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -155,25 +161,29 @@ elements.</td>
 
 <dl class="method">
 <dt id="xmlProcess.XMLProcess.set_numbering">
-<code class="descname">set_numbering</code><span class="sig-paren">(</span><em>name</em>, <em>attr</em>, <em>value</em>, <em>count</em>, <em>range_array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.set_numbering"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.set_numbering" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds numerical values to  a  tag  in arguments list
-:param tr:
-:param name:
-:param attr:
-:param value:
-:param count:
-:param range_array:
-:return:</p>
+<code class="descname">set_numbering</code><span class="sig-paren">(</span><em>tag</em>, <em>attr</em>, <em>value</em>, <em>count</em>, <em>range_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.set_numbering"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.set_numbering" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds numerical values to  a  tag  in arguments list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tag</strong> (<em>str</em>) &#8211; xml tag name</li>
+<li><strong>attr</strong> (<em>str</em>) &#8211; attribute name</li>
+<li><strong>value</strong> (<em>str</em>) &#8211; value name</li>
+<li><strong>count</strong> (<em>int</em>) &#8211; current sequence number</li>
+<li><strong>range_list</strong> (<em>list</em>) &#8211; lower and upper level for the  numbering</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="xmlProcess.XMLProcess.set_roman_numbers">
-<code class="descname">set_roman_numbers</code><span class="sig-paren">(</span><em>count</em>, <em>r_count</em>, <em>range_array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.set_roman_numbers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.set_roman_numbers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Converts a given set of elements defined by range_array into roman numbers
-:param count:
-:param r_count:
-:param range_array:
-:return:</p>
+<code class="descname">set_roman_numbers</code><span class="sig-paren">(</span><em>count</em>, <em>r_count</em>, <em>range_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.set_roman_numbers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.set_roman_numbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a given set of elements defined by range_array into roman numbers</p>
 </dd></dl>
 
 <dl class="method">
@@ -184,11 +194,7 @@ elements.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>tags</strong> (<em>list</em>) &#8211; </li>
-<li><strong>of elements</strong> (<em>list</em>) &#8211; </li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tags</strong> (<em>list</em>) &#8211; list of elements</td>
 </tr>
 </tbody>
 </table>
@@ -198,11 +204,14 @@ elements.</td>
 <dt id="xmlProcess.XMLProcess.set_uuids_for_back_matter">
 <code class="descname">set_uuids_for_back_matter</code><span class="sig-paren">(</span><em>tags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.set_uuids_for_back_matter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.set_uuids_for_back_matter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add unique id tags to  any of the sub-elements of the back matter</p>
-<dl class="docutils">
-<dt>Parameters</dt>
-<dd>tags: list
-list of elements</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tags</strong> (<em>list</em>) &#8211; list of elements</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
