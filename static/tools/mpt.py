@@ -261,16 +261,18 @@ class MPT(Debuggable):
 
         p_path = ''
         pf_type = ''
-
         prefix = f_name.split('.')[0]
         if p_id == min(i for i in p['typesetters']):
             f_path = os.path.join(p.get('path'), f_name)
+
         elif p.get("chain"):
             f_path = os.path.join(
                 pre_path,
                 prefix +
                 '.' +
                 pre_out_type)
+            print f_id, f_name
+
         if os.path.isfile(f_path):
             args.append(f_path)
             self.create_output_path(
@@ -291,8 +293,9 @@ class MPT(Debuggable):
         else:
             self.debug.print_debug(
                 self,
-                self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST +
+                self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST +' '+
                 os.path.join(f_path))
+        print p_path, pf_type
         return p_path, pf_type
 
     def typeset_file(
@@ -340,6 +343,7 @@ class MPT(Debuggable):
         p_path, pf_type = '', ''
         if t_props:
             mt = self.arguments_parse(t_props)
+            print mt,t_props.get('executable')
             if self.check_program(t_props.get('executable')):
                 p_path, pf_type = self.run_typesetter(
                     p,
@@ -350,6 +354,7 @@ class MPT(Debuggable):
                     f_id,
                     f_name,
                     mt)
+
             else:
                 self.debug.print_debug(
                     self, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
