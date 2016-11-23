@@ -1,0 +1,446 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mpt module &#8212; MPT 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="MPT 0.0.1 documentation" href="index.html" />
+    <link rel="next" title="xmlProcess module" href="xmlProcess.html" />
+    <link rel="prev" title="Main Program (mpt)" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="xmlProcess.html" title="xmlProcess module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Main Program (mpt)"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPT 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-mpt">
+<span id="mpt-module"></span><h1>mpt module<a class="headerlink" href="#module-mpt" title="Permalink to this headline">¶</a></h1>
+<p>Main  program which  initializes the  Monograph  Publication Tool , read the configuration from the json file.
+Configuration json file is organized into projects and typesetters. Each project may contain a set of files ordered and
+a ordered subset of typesetters.  Typesetter and file arguments can be specifically configured in a pre-defined order.
+A specific project can be configured to run in a chain modus, which  takes the output of the previous typesetter as the input for
+the current typesetter. If chaining is not set, all the typesetters take the set of files and execute the typesetter and
+generate the output.</p>
+<p class="rubric">Notes</p>
+<p>This program may be used to consolidate output files , generated from a certain tool.  But a consolidation tool should
+be set as the last tool in a process chain.</p>
+<dl class="docutils">
+<dt>Usage:</dt>
+<dd>preProcess.py  &lt;config_file&gt; [options]</dd>
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-d</span>, <span class="option">--debug</span></kbd></td>
+<td>Enable debug output</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>python /usr/local/mpt/static/tools/mpt.py /home/wit/mpt.json  &#8211;debug</p>
+<dl class="class">
+<dt id="mpt.MPT">
+<em class="property">class </em><code class="descclassname">mpt.</code><code class="descname">MPT</code><a class="reference internal" href="_modules/mpt.html#MPT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="debug.html#debug.Debuggable" title="debug.Debuggable"><code class="xref py py-class docutils literal"><span class="pre">debug.Debuggable</span></code></a></p>
+<p>Main class ,</p>
+<dl class="method">
+<dt id="mpt.MPT.arguments_parse">
+<code class="descname">arguments_parse</code><span class="sig-paren">(</span><em>t_props</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.arguments_parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.arguments_parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads typesetter properties from json  configuration and create  arguments.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>t_props</strong> (<em>dictionary</em>) &#8211; typesetter properties</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>args</strong> &#8211; application execution path and arguments in the correct oder.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpt.MPT.call_typesetter">
+<code class="descname">call_typesetter</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.call_typesetter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.call_typesetter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs  typesetter with given arguments</p>
+<p>Creates the execution path for a typesetter or an application and runs it  as a system process. Output,
+exit-code and  system error codes are captured and returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> (<em>list</em>) &#8211; application arguments in the correct oder.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>output</strong> (<em>str</em>) &#8211; system standard output.</li>
+<li><strong>err</strong> (<em>str</em>) &#8211; system standard error.</li>
+<li><strong>exit_code</strong> (<em>str</em>) &#8211; system exit_code.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpt.MPT.check_program">
+<code class="descname">check_program</code><span class="sig-paren">(</span><em>p</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.check_program"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.check_program" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks  whether a  the program or typesetter is installed and executable</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>p</strong> (<em>str</em>) &#8211; Program path</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>None</strong> &#8211; Returns None , if  program exists</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpt.MPT.create_output_path">
+<code class="descname">create_output_path</code><span class="sig-paren">(</span><em>p</em>, <em>p_id</em>, <em>args</em>, <em>prefix</em>, <em>uid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.create_output_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.create_output_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the output path for  the current file</p>
+<p>Output folder is  constructed using project_name, current_time,  sequence number of the current typesetter
+and the sequence number of the current file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>p</strong> (<em>dictionary</em>) &#8211; json program properties</li>
+<li><strong>p_id</strong> (<em>int</em>) &#8211; typesetter id</li>
+<li><strong>args</strong> (<em>list</em>) &#8211; application arguments in the correct oder.</li>
+<li><strong>prefix</strong> (<em>str</em>) &#8211; file name prefix  of  the current file</li>
+<li><strong>uid</strong> (<em>str</em>) &#8211; unique id of the current current typesetter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>True</strong> &#8211; Returns True if the output file is created</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">boolean</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpt.MPT.get_module_name">
+<code class="descname">get_module_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.get_module_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.get_module_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the name of the module for debugging and logging</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Name of the Module</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">name string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpt.MPT.organize_output">
+<code class="descname">organize_output</code><span class="sig-paren">(</span><em>p</em>, <em>p_id</em>, <em>prefix</em>, <em>f_id</em>, <em>uid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.organize_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.organize_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy the temporary results into the  final project path</p>
+<p>This method reads the temporary results of the current typesetter step and copies them in to the correct output
+folder. Output folder is  constructed using project_name, current_time,  sequence number of the current typesetter
+and the sequence number of the current file.  Customized tool specific actions are also defined and handled here.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>p</strong> (<em>dict</em>) &#8211; json program properties</li>
+<li><strong>p_id</strong> (<em>int</em>) &#8211; typesetter id</li>
+<li><strong>prefix</strong> (<em>str</em>) &#8211; file name prefix  of  the current file</li>
+<li><strong>f_id</strong> (<em>int</em>) &#8211; sequence number of the current file</li>
+<li><strong>uid</strong> (<em>str</em>) &#8211; unique id of the current current typesetter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>project_path</strong> &#8211; Final path for the current file</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="mpt.MPT.read_command_line">
+<em class="property">static </em><code class="descname">read_command_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.read_command_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.read_command_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads and  genrates a docopt dictionary from the command line parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>docopt</strong> &#8211; A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
+elements.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dictionary</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpt.MPT.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the MPT  Module, which typesets all the projects defined in the json input file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>True</strong> &#8211; Returns True if all the projects are typeset</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpt.MPT.run_typesetter">
+<code class="descname">run_typesetter</code><span class="sig-paren">(</span><em>p</em>, <em>pre_path</em>, <em>pre_out_type</em>, <em>p_id</em>, <em>uid</em>, <em>f_id</em>, <em>f_name</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.run_typesetter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.run_typesetter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the temporary output path, calls the typesetter and writes the outtput to the correct path for a
+certain file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>p</strong> (<em>dictionary</em>) &#8211; json program properties</li>
+<li><strong>pre_path</strong> (<em>str</em>) &#8211; project path of the previous iteration</li>
+<li><strong>pre_out_type</strong> (<em>str</em>) &#8211; output type of the previous iteration</li>
+<li><strong>p_id</strong> (<em>int</em>) &#8211; typesetter id</li>
+<li><strong>uid</strong> (<em>str</em>) &#8211; unique id of the current current typesetter</li>
+<li><strong>f_id</strong> (<em>int</em>) &#8211; sequence number of the current file</li>
+<li><strong>f_name</strong> (<em>str</em>) &#8211; name of the current file</li>
+<li><strong>args</strong> (<em>list</em>) &#8211; application arguments in the correct oder.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>p_path</strong> (<em>str</em>) &#8211; project output path of the current typesetter</li>
+<li><strong>pf_type</strong> (<em>str</em>) &#8211; project file type of the current typesetter</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpt.MPT.typeset_all_projects">
+<code class="descname">typeset_all_projects</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.typeset_all_projects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.typeset_all_projects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Typeset all projects defined in the json file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>True</strong> &#8211; Returns True, if the  all the typesetters in project run</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpt.MPT.typeset_file">
+<code class="descname">typeset_file</code><span class="sig-paren">(</span><em>p</em>, <em>pre_path</em>, <em>pre_out_type</em>, <em>p_id</em>, <em>uid</em>, <em>f_id</em>, <em>f_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.typeset_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.typeset_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Typesets the current file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>p</strong> (<em>dictionary</em>) &#8211; json program properties</li>
+<li><strong>pre_path</strong> (<em>str</em>) &#8211; project path of the previous iteration</li>
+<li><strong>pre_out_type</strong> (<em>str</em>) &#8211; output type of the previous iteration</li>
+<li><strong>p_id</strong> (<em>int</em>) &#8211; typesetter id</li>
+<li><strong>uid</strong> (<em>str</em>) &#8211; unique id of the current current typesetter</li>
+<li><strong>f_id</strong> (<em>int</em>) &#8211; sequence number of the current file</li>
+<li><strong>f_name</strong> (<em>str</em>) &#8211; name of the current file</li>
+<li><strong>args</strong> (<em>list</em>) &#8211; application arguments in the correct oder.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>p_path</strong> (<em>str</em>) &#8211; project output path of the current typesetter</li>
+<li><strong>pf_type</strong> (<em>str</em>) &#8211; project file type of the current typesetter</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpt.MPT.typeset_files">
+<code class="descname">typeset_files</code><span class="sig-paren">(</span><em>p</em>, <em>pre_path</em>, <em>pre_out_type</em>, <em>pre_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.typeset_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.typeset_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Typeset all files of a  certain project</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>p</strong> (<em>dictionary</em>) &#8211; json program properties</li>
+<li><strong>pre_path</strong> (<em>str</em>) &#8211; project path of the previously executed typesetter</li>
+<li><strong>pre_out_type</strong> (<em>str</em>) &#8211; project file type of the previously executed typesetter</li>
+<li><strong>pre_id</strong> (<em>int</em>) &#8211; sequence number of the previously executed file</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>p_path</strong> (<em>str</em>) &#8211; project output path of the current typesetter</li>
+<li><strong>pf_type</strong> (<em>str</em>) &#8211; project file type of the current typesetter</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpt.MPT.typeset_project">
+<code class="descname">typeset_project</code><span class="sig-paren">(</span><em>p</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.typeset_project"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.typeset_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Typesets a certain project
+:param p: json program properties
+:type p: dictionary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>True</strong> &#8211; Returns True, if the  all the typesetters in project run</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="mpt.main">
+<code class="descclassname">mpt.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>main method, initializes the  Monograph  Publication Tool and  runs the configuration</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Main Program (mpt)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="xmlProcess.html"
+                        title="next chapter">xmlProcess module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mpt.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="xmlProcess.html" title="xmlProcess module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Main Program (mpt)"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPT 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    </div>
+  </body>
+</html>

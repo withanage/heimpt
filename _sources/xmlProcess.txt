@@ -1,0 +1,7 @@
+xmlProcess module
+=================
+
+.. automodule:: xmlProcess
+    :members:
+    :undoc-members:
+    :show-inheritance:
