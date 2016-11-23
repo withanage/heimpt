@@ -141,7 +141,7 @@
 <span class="sd">         Parameters</span>
 <span class="sd">         ----------</span>
 <span class="sd">         tags: list</span>
-<span class="sd">         list of elements</span>
+<span class="sd">          list of elements</span>
 
 <span class="sd">         &quot;&quot;&quot;</span>
          <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
@@ -149,7 +149,8 @@
             <span class="n">sid</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sh</span><span class="p">:</span>
                 <span class="n">i</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sid</span><span class="p">))</span>
-                <span class="n">sid</span> <span class="o">+=</span> <span class="mi">1</span></div>
+                <span class="n">sid</span> <span class="o">+=</span> <span class="mi">1</span>
+         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span></div>
 
 
 <div class="viewcode-block" id="XMLProcess.set_uuids_for_back_matter"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.set_uuids_for_back_matter">[docs]</a>    <span class="k">def</span> <span class="nf">set_uuids_for_back_matter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tags</span><span class="p">):</span>
@@ -157,8 +158,8 @@
 <span class="sd">        Add unique id tags to  any of the sub-elements of the back matter</span>
 
 <span class="sd">        Parameters</span>
-<span class="sd">         ----------</span>
-<span class="sd">         tags: list</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tags: list</span>
 <span class="sd">         list of elements</span>
 
 
@@ -179,31 +180,38 @@
                         <span class="n">n</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">f</span><span class="p">[</span><span class="n">m</span><span class="p">])</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span>
-                            <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">XML_ELEMENT_NOT_FOUND</span><span class="p">)</span></div>
-            
+                            <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">XML_ELEMENT_NOT_FOUND</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span></div>
 <div class="viewcode-block" id="XMLProcess.set_numbering"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.set_numbering">[docs]</a>    <span class="k">def</span> <span class="nf">set_numbering</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
-            <span class="n">name</span><span class="p">,</span>
+            <span class="n">tag</span><span class="p">,</span>
             <span class="n">attr</span><span class="p">,</span>
             <span class="n">value</span><span class="p">,</span>
             <span class="n">count</span><span class="p">,</span>
-            <span class="n">range_array</span><span class="p">):</span>
+            <span class="n">range_list</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds numerical values to  a  tag  in arguments list</span>
-<span class="sd">        :param tr:</span>
-<span class="sd">        :param name:</span>
-<span class="sd">        :param attr:</span>
-<span class="sd">        :param value:</span>
-<span class="sd">        :param count:</span>
-<span class="sd">        :param range_array:</span>
-<span class="sd">        :return:</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        tag: str</span>
+<span class="sd">         xml tag name</span>
+<span class="sd">        attr: str</span>
+<span class="sd">         attribute name</span>
+<span class="sd">        value :str</span>
+<span class="sd">         value name</span>
+<span class="sd">        count : int</span>
+<span class="sd">         current sequence number</span>
+<span class="sd">        range_list : list</span>
+<span class="sd">            lower and upper level for the  numbering</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">searchTag</span> <span class="o">=</span> <span class="s1">&#39;.//&#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;[@&#39;</span> <span class="o">+</span> <span class="n">attr</span> <span class="o">+</span> <span class="s1">&#39;=&quot;&#39;</span> <span class="o">+</span> <span class="n">value</span> <span class="o">+</span> <span class="s1">&#39;&quot;]&#39;</span>
+        <span class="n">searchTag</span> <span class="o">=</span> <span class="s1">&#39;.//&#39;</span> <span class="o">+</span> <span class="n">tag</span> <span class="o">+</span> <span class="s1">&#39;[@&#39;</span> <span class="o">+</span> <span class="n">attr</span> <span class="o">+</span> <span class="s1">&#39;=&quot;&#39;</span> <span class="o">+</span> <span class="n">value</span> <span class="o">+</span> <span class="s1">&#39;&quot;]&#39;</span>
         <span class="n">elems</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">searchTag</span><span class="p">)</span>
         <span class="n">range_count</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">elems</span><span class="p">:</span>
             <span class="n">elem</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">range_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_roman_numbers</span><span class="p">(</span>
-                <span class="n">count</span><span class="p">,</span> <span class="n">range_count</span><span class="p">,</span> <span class="n">range_array</span><span class="p">)</span>
+                <span class="n">count</span><span class="p">,</span> <span class="n">range_count</span><span class="p">,</span> <span class="n">range_list</span><span class="p">)</span>
             <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">,</span> <span class="n">count</span></div>
@@ -211,8 +219,12 @@
 <div class="viewcode-block" id="XMLProcess.convert_int_to_roman"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.convert_int_to_roman">[docs]</a>    <span class="k">def</span> <span class="nf">convert_int_to_roman</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts an integer number into a roman number</span>
-<span class="sd">        :param i:</span>
-<span class="sd">        :return:</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        i : int</span>
+<span class="sd">         integer number</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">integer</span><span class="p">,</span> <span class="n">numeral</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">numeral_map</span><span class="p">:</span>
@@ -221,17 +233,18 @@
             <span class="n">i</span> <span class="o">-=</span> <span class="n">integer</span> <span class="o">*</span> <span class="n">count</span>
         <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="XMLProcess.set_roman_numbers"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.set_roman_numbers">[docs]</a>    <span class="k">def</span> <span class="nf">set_roman_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">r_count</span><span class="p">,</span> <span class="n">range_array</span><span class="p">):</span>
+<div class="viewcode-block" id="XMLProcess.set_roman_numbers"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.set_roman_numbers">[docs]</a>    <span class="k">def</span> <span class="nf">set_roman_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">r_count</span><span class="p">,</span> <span class="n">range_list</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts a given set of elements defined by range_array into roman numbers</span>
-<span class="sd">        :param count:</span>
-<span class="sd">        :param r_count:</span>
-<span class="sd">        :param range_array:</span>
-<span class="sd">        :return:</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">val</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">range_array</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="n">count</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">range_array</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">range_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="n">count</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">range_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
             <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_int_to_roman</span><span class="p">(</span><span class="n">r_count</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
             <span class="n">r_count</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
