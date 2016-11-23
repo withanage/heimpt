@@ -2,7 +2,65 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fab97355-afb8-49bc-80ee-ecae6ed0b0f7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_modules/debug.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_modules/docopt.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_modules/globals.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_modules/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_modules/mpt.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_modules/xmlMerge.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_modules/xmlProcess.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_sources/debug.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_sources/docopt.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_sources/globals.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_sources/index.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_sources/modules.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_sources/mpt.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_sources/xmlMerge.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_sources/xmlProcess.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/ajax-loader.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/basic.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/classic.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/comment-bright.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/comment-close.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/comment.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/doctools.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/down-pressed.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/down.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/file.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/jquery-1.11.1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/jquery.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/minus.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/plus.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/pygments.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/searchtools.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/sidebar.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/underscore-1.3.1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/underscore.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/up-pressed.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/up.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/_static/websupport.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/debug.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docopt.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/doctrees/debug.doctree" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/doctrees/docopt.doctree" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/doctrees/environment.pickle" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/doctrees/globals.doctree" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/doctrees/index.doctree" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/doctrees/modules.doctree" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/doctrees/mpt.doctree" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/doctrees/xmlMerge.doctree" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/doctrees/xmlProcess.doctree" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/genindex.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/globals.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modules.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/mpt.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/objects.inv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/py-modindex.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/search.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/searchindex.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/xmlMerge.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/xmlProcess.html" afterPath="" />
     </list>
     <ignored path="mpt.iws" />
     <ignored path=".idea/workspace.xml" />
