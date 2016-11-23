@@ -128,8 +128,7 @@ class XMLProcess(Debuggable):
                     else:
                         self.debug.print_debug(
                             self, self.gv.XML_ELEMENT_NOT_FOUND)
-            return self.tr
-
+            
     def set_numbering(
             self,
             name,
