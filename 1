@@ -1,0 +1,40 @@
+cd /usr/local/mpt/
+git add static/tools
+git commit -m "Treee maipulation"
+git push
+
+echo "Document generation"
+
+git checkout .
+git checkout gh-pages
+git checkout .
+
+echo "git gh-pages"
+
+cd /home/wit/projects/mpt_api_doc
+
+cd html
+git fetch
+git checkout .
+git pull
+
+
+echo "HTML generation"
+cd ..
+
+make html
+
+
+cd /usr/local/mpt/
+
+echo "git gh-pages"
+git checkout gh-pages
+
+git add .
+git commit -m "Rebuild doc"
+git push
+
+
+echo "git master"
+
+git checkout master
