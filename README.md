@@ -18,7 +18,7 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
 # Installation
 
 ## Perquisites
- * Python is avaliable in your system: check with  `python --version`
+ * Python is available in your system: check with  `python --version`
  * Git is installed : check `git --version`
  * Not compulsory , but helpful to install missing modules: `pip --version` .
  * Install  any missing python module with `pip install mymodule`
