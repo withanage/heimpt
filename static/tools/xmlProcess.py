@@ -85,12 +85,12 @@ class XMLProcess(Debuggable):
     def set_tag_numbering(self, tags):
          """
          Automatic numbering of the list of elements
+
          Parameters
          ----------
          tags: list
          list of elements
 
-        
          """
          for tag in tags:
             sh = self.tr.findall('.//' + tag)
@@ -102,10 +102,14 @@ class XMLProcess(Debuggable):
 
     def set_uuids_for_back_matter(self, tags):
         """
-        add unique id tags to  any of the sub-elements of the back matter
-        :param self.tr:
-        :param tags:
-        :return:
+        Add unique id tags to  any of the sub-elements of the back matter
+
+        Parameters
+         ----------
+         tags: list
+         list of elements
+
+
         """
         for s in tags:
             f = {}
