@@ -1,0 +1,698 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mpt &#8212; MPT 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="MPT 0.0.1 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPT 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for mpt</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Main  program which  initializes the  Monograph  Publication Tool , read the configuration from the json file.</span>
+<span class="sd">Configuration json file is organized into projects and typesetters. Each project may contain a set of files ordered and</span>
+<span class="sd">a ordered subset of typesetters.  Typesetter and file arguments can be specifically configured in a pre-defined order.</span>
+<span class="sd">A specific project can be configured to run in a chain modus, which  takes the output of the previous typesetter as the input for</span>
+<span class="sd">the current typesetter. If chaining is not set, all the typesetters take the set of files and execute the typesetter and</span>
+<span class="sd">generate the output.</span>
+
+<span class="sd">Notes</span>
+<span class="sd">-------</span>
+<span class="sd">This program may be used to consolidate output files , generated from a certain tool.  But a consolidation tool should</span>
+<span class="sd">be set as the last tool in a process chain.</span>
+
+<span class="sd">Usage:</span>
+<span class="sd">    preProcess.py  &lt;config_file&gt; [options]</span>
+<span class="sd">Options:</span>
+<span class="sd">    -d, --debug  Enable debug output</span>
+
+<span class="sd">Example</span>
+<span class="sd">--------</span>
+<span class="sd">python /usr/local/mpt/static/tools/mpt.py /home/wit/mpt.json  --debug</span>
+
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Dulip Withanage&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">globals</span> <span class="k">import</span> <span class="n">GV</span>
+<span class="kn">from</span> <span class="nn">debug</span> <span class="k">import</span> <span class="n">Debuggable</span><span class="p">,</span> <span class="n">Debug</span>
+<span class="kn">from</span> <span class="nn">docopt</span> <span class="k">import</span> <span class="n">docopt</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span>
+<span class="kn">from</span> <span class="nn">termcolor</span> <span class="k">import</span> <span class="n">colored</span>
+
+
+<div class="viewcode-block" id="MPT"><a class="viewcode-back" href="../mpt.html#mpt.MPT">[docs]</a><span class="k">class</span> <span class="nc">MPT</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main class ,</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_command_line</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">Debug</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">GV</span><span class="p">()</span>
+        <span class="n">Debuggable</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Main&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;--debug&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">enable_debug</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_result</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+            <span class="s2">&quot;%Y_%m_</span><span class="si">%d</span><span class="s2">-%H-%M-&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())[:</span><span class="mi">8</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;&lt;config_file&gt;&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_typesetters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typesetters&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MPT.run"><a class="viewcode-back" href="../mpt.html#mpt.MPT.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs the MPT  Module, which typesets all the projects defined in the json input file</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        True: boolean</span>
+<span class="sd">            Returns True if all the projects are typeset</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">typeset_all_projects</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MPT.read_command_line"><a class="viewcode-back" href="../mpt.html#mpt.MPT.read_command_line">[docs]</a>    <span class="k">def</span> <span class="nf">read_command_line</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads and  genrates a docopt dictionary from the command line parameters.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        docopt : dictionary</span>
+<span class="sd">          A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those</span>
+<span class="sd">          elements.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">docopt</span><span class="p">(</span><span class="n">__doc__</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;mpt 0.1&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MPT.get_module_name"><a class="viewcode-back" href="../mpt.html#mpt.MPT.get_module_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_module_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads the name of the module for debugging and logging</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        name string</span>
+<span class="sd">         Name of the Module</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Monograph Publication Tool&#39;</span>
+        <span class="k">return</span> <span class="n">name</span></div>
+
+<div class="viewcode-block" id="MPT.call_typesetter"><a class="viewcode-back" href="../mpt.html#mpt.MPT.call_typesetter">[docs]</a>    <span class="k">def</span> <span class="nf">call_typesetter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs  typesetter with given arguments</span>
+
+<span class="sd">        Creates the execution path for a typesetter or an application and runs it  as a system process. Output,</span>
+<span class="sd">        exit-code and  system error codes are captured and returned.</span>
+
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        args : list</span>
+<span class="sd">            application arguments in the correct oder.</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        output :str</span>
+<span class="sd">            system standard output.</span>
+<span class="sd">        err :str</span>
+<span class="sd">            system standard error.</span>
+<span class="sd">        exit_code: str</span>
+<span class="sd">            system exit_code.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+        <span class="n">process</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+        <span class="n">output</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+        <span class="n">exit_code</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="n">exit_code</span></div>
+
+<div class="viewcode-block" id="MPT.arguments_parse"><a class="viewcode-back" href="../mpt.html#mpt.MPT.arguments_parse">[docs]</a>    <span class="k">def</span> <span class="nf">arguments_parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_props</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads typesetter properties from json  configuration and create  arguments.</span>
+
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        t_props : dictionary</span>
+<span class="sd">            typesetter properties</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        args : list</span>
+<span class="sd">            application execution path and arguments in the correct oder.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">t_props</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;executable&#39;</span><span class="p">):</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">t_props</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;executable&#39;</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">TYPESETTER_EXECUTABLE_VARIABLE_IS_UNDEFINED</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">arguments</span> <span class="o">=</span> <span class="n">t_props</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;arguments&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">arguments</span><span class="p">:</span>
+            <span class="n">arguments</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">arguments</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">arguments</span><span class="p">:</span>
+                <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arguments</span><span class="p">[</span><span class="n">a</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">args</span></div>
+
+<div class="viewcode-block" id="MPT.create_output_path"><a class="viewcode-back" href="../mpt.html#mpt.MPT.create_output_path">[docs]</a>    <span class="k">def</span> <span class="nf">create_output_path</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">p</span><span class="p">,</span>
+            <span class="n">p_id</span><span class="p">,</span>
+            <span class="n">args</span><span class="p">,</span>
+            <span class="n">prefix</span><span class="p">,</span>
+            <span class="n">uid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates the output path for  the current file</span>
+
+<span class="sd">        Output folder is  constructed using project_name, current_time,  sequence number of the current typesetter</span>
+<span class="sd">        and the sequence number of the current file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        p: dictionary</span>
+<span class="sd">            json program properties</span>
+<span class="sd">        p_id:  int</span>
+<span class="sd">            typesetter id</span>
+<span class="sd">        args : list</span>
+<span class="sd">            application arguments in the correct oder.</span>
+<span class="sd">        prefix: str</span>
+<span class="sd">            file name prefix  of  the current file</span>
+<span class="sd">        uid: str</span>
+<span class="sd">            unique id of the current current typesetter</span>
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        True: boolean</span>
+<span class="sd">            Returns True if the output file is created</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ts_args</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span>
+            <span class="nb">sorted</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typesetters&#39;</span><span class="p">)[</span><span class="n">p_id</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;arguments&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+        <span class="n">out_type</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typesetters&#39;</span><span class="p">)[</span><span class="n">p_id</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;out_type&quot;</span><span class="p">)</span>
+        <span class="n">out_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">),</span> <span class="n">uid</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ts_args</span><span class="p">:</span>
+            <span class="n">arg</span> <span class="o">=</span> <span class="n">ts_args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">arg</span> <span class="o">==</span> <span class="s1">&#39;fn:append_out_dir&#39;</span><span class="p">:</span>
+                <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_path</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">arg</span> <span class="o">==</span> <span class="s1">&#39;fn:create_out_file&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_path</span><span class="p">):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">out_path</span><span class="p">)</span>
+                <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                        <span class="n">out_path</span><span class="p">,</span>
+                        <span class="n">prefix</span> <span class="o">+</span>
+                        <span class="s1">&#39;.&#39;</span> <span class="o">+</span>
+                        <span class="n">out_type</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="MPT.run_typesetter"><a class="viewcode-back" href="../mpt.html#mpt.MPT.run_typesetter">[docs]</a>    <span class="k">def</span> <span class="nf">run_typesetter</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">p</span><span class="p">,</span>
+            <span class="n">pre_path</span><span class="p">,</span>
+            <span class="n">pre_out_type</span><span class="p">,</span>
+            <span class="n">p_id</span><span class="p">,</span>
+            <span class="n">uid</span><span class="p">,</span>
+            <span class="n">f_id</span><span class="p">,</span>
+            <span class="n">f_name</span><span class="p">,</span>
+            <span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates the temporary output path, calls the typesetter and writes the outtput to the correct path for a</span>
+<span class="sd">        certain file</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        p: dictionary</span>
+<span class="sd">            json program properties</span>
+<span class="sd">        pre_path: str</span>
+<span class="sd">            project path of the previous iteration</span>
+<span class="sd">        pre_out_type : str</span>
+<span class="sd">            output type of the previous iteration</span>
+<span class="sd">        p_id:  int</span>
+<span class="sd">            typesetter id</span>
+<span class="sd">        uid: str</span>
+<span class="sd">            unique id of the current current typesetter</span>
+<span class="sd">        f_id:  int</span>
+<span class="sd">              sequence number of the current file</span>
+<span class="sd">        f_name:  str</span>
+<span class="sd">              name of the current file</span>
+<span class="sd">        args : list</span>
+<span class="sd">            application arguments in the correct oder.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        p_path : str</span>
+<span class="sd">            project output path of the current typesetter</span>
+<span class="sd">        pf_type : str</span>
+<span class="sd">            project file type of the current typesetter</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">p_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">pf_type</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="n">f_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">p_id</span> <span class="o">==</span> <span class="nb">min</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">p</span><span class="p">[</span><span class="s1">&#39;typesetters&#39;</span><span class="p">]):</span>
+            <span class="n">f_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">),</span> <span class="n">f_name</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;chain&quot;</span><span class="p">):</span>
+            <span class="n">f_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">pre_path</span><span class="p">,</span>
+                <span class="n">prefix</span> <span class="o">+</span>
+                <span class="s1">&#39;.&#39;</span> <span class="o">+</span>
+                <span class="n">pre_out_type</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">f_path</span><span class="p">):</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f_path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">create_output_path</span><span class="p">(</span>
+                <span class="n">p</span><span class="p">,</span>
+                <span class="n">p_id</span><span class="p">,</span>
+                <span class="n">args</span><span class="p">,</span>
+                <span class="n">prefix</span><span class="p">,</span> <span class="n">uid</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">call_typesetter</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+            <span class="n">p_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">organize_output</span><span class="p">(</span>
+                <span class="n">p</span><span class="p">,</span>
+                <span class="n">p_id</span><span class="p">,</span>
+                <span class="n">prefix</span><span class="p">,</span>
+                <span class="n">f_id</span><span class="p">,</span>
+                <span class="n">uid</span><span class="p">)</span>
+
+            <span class="n">pf_type</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typesetters&#39;</span><span class="p">)[</span><span class="n">p_id</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;out_type&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">PROJECT_INPUT_FILE_DOES_NOT_EXIST</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">f_path</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">p_path</span><span class="p">,</span> <span class="n">pf_type</span></div>
+
+<div class="viewcode-block" id="MPT.typeset_file"><a class="viewcode-back" href="../mpt.html#mpt.MPT.typeset_file">[docs]</a>    <span class="k">def</span> <span class="nf">typeset_file</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">p</span><span class="p">,</span>
+            <span class="n">pre_path</span><span class="p">,</span>
+            <span class="n">pre_out_type</span><span class="p">,</span>
+            <span class="n">p_id</span><span class="p">,</span>
+            <span class="n">uid</span><span class="p">,</span>
+            <span class="n">f_id</span><span class="p">,</span>
+            <span class="n">f_name</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Typesets the current file</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        p: dictionary</span>
+<span class="sd">            json program properties</span>
+<span class="sd">        pre_path: str</span>
+<span class="sd">            project path of the previous iteration</span>
+<span class="sd">        pre_out_type : str</span>
+<span class="sd">            output type of the previous iteration</span>
+<span class="sd">        p_id:  int</span>
+<span class="sd">            typesetter id</span>
+<span class="sd">        uid: str</span>
+<span class="sd">            unique id of the current current typesetter</span>
+<span class="sd">        f_id:  int</span>
+<span class="sd">              sequence number of the current file</span>
+<span class="sd">        f_name:  str</span>
+<span class="sd">              name of the current file</span>
+<span class="sd">        args: list</span>
+<span class="sd">            application arguments in the correct oder.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        p_path : str</span>
+<span class="sd">            project output path of the current typesetter</span>
+<span class="sd">        pf_type : str</span>
+<span class="sd">            project file type of the current typesetter</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">t_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_typesetters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typesetters&#39;</span><span class="p">)[</span><span class="n">p_id</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">))</span>
+        <span class="n">p_path</span><span class="p">,</span> <span class="n">pf_type</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">t_props</span><span class="p">:</span>
+            <span class="n">mt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arguments_parse</span><span class="p">(</span><span class="n">t_props</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_program</span><span class="p">(</span><span class="n">t_props</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;executable&#39;</span><span class="p">)):</span>
+                <span class="n">p_path</span><span class="p">,</span> <span class="n">pf_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_typesetter</span><span class="p">(</span>
+                    <span class="n">p</span><span class="p">,</span>
+                    <span class="n">pre_path</span><span class="p">,</span>
+                    <span class="n">pre_out_type</span><span class="p">,</span>
+                    <span class="n">p_id</span><span class="p">,</span>
+                    <span class="n">uid</span><span class="p">,</span>
+                    <span class="n">f_id</span><span class="p">,</span>
+                    <span class="n">f_name</span><span class="p">,</span>
+                    <span class="n">mt</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">TYPESETTER_BINARY_IS_UNAVAILABLE</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">PROJECT_TYPESETTER_IS_NOT_AVAILABLE</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">p_path</span><span class="p">,</span> <span class="n">pf_type</span></div>
+
+<div class="viewcode-block" id="MPT.typeset_files"><a class="viewcode-back" href="../mpt.html#mpt.MPT.typeset_files">[docs]</a>    <span class="k">def</span> <span class="nf">typeset_files</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">p</span><span class="p">,</span>
+            <span class="n">pre_path</span><span class="p">,</span>
+            <span class="n">pre_out_type</span><span class="p">,</span>
+            <span class="n">pre_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Typeset all files of a  certain project</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        p: dictionary</span>
+<span class="sd">            json program properties</span>
+<span class="sd">        pre_path: str</span>
+<span class="sd">            project path of the previously executed typesetter</span>
+<span class="sd">        pre_out_type: str</span>
+<span class="sd">            project file type of the previously executed typesetter</span>
+<span class="sd">        pre_id :int</span>
+<span class="sd">            sequence number of the previously executed file</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        p_path : str</span>
+<span class="sd">            project output path of the current typesetter</span>
+<span class="sd">        pf_type : str</span>
+<span class="sd">            project file type of the current typesetter</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p_path</span><span class="p">,</span> <span class="n">pf_type</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="n">uid</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())[:</span><span class="mi">8</span><span class="p">]</span>
+
+        <span class="n">project_files</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span>
+            <span class="nb">sorted</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;files&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+
+        <span class="k">for</span> <span class="n">f_id</span> <span class="ow">in</span> <span class="n">project_files</span><span class="p">:</span>
+            <span class="n">f_name</span> <span class="o">=</span> <span class="n">project_files</span><span class="p">[</span><span class="n">f_id</span><span class="p">]</span>
+            <span class="n">p_path</span><span class="p">,</span> <span class="n">pf_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">typeset_file</span><span class="p">(</span>
+                <span class="n">p</span><span class="p">,</span>
+                <span class="n">pre_path</span><span class="p">,</span>
+                <span class="n">pre_out_type</span><span class="p">,</span>
+                <span class="n">pre_id</span><span class="p">,</span>
+                <span class="n">uid</span><span class="p">,</span>
+                <span class="n">f_id</span><span class="p">,</span>
+                <span class="n">f_name</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">p_path</span><span class="p">,</span> <span class="n">pf_type</span></div>
+
+<div class="viewcode-block" id="MPT.typeset_project"><a class="viewcode-back" href="../mpt.html#mpt.MPT.typeset_project">[docs]</a>    <span class="k">def</span> <span class="nf">typeset_project</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Typesets a certain project</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        p: dictionary</span>
+<span class="sd">            json program properties</span>
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        True: boolean</span>
+<span class="sd">            Returns True, if the  all the typesetters in project run</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">typesetters_ordered</span><span class="p">,</span> <span class="n">temp_path</span><span class="p">,</span> <span class="n">temp_pre_out_type</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">pre_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">prev_out_type</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">):</span>
+            <span class="n">ts</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typesetters&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ts</span><span class="p">:</span>
+                <span class="n">typesetters_ordered</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span>
+                    <span class="nb">sorted</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">PROJECT_TYPESETTERS_ARE_NOT_SPECIFIED</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_typesetters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED</span><span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">p_id</span> <span class="ow">in</span> <span class="n">typesetters_ordered</span><span class="p">:</span>
+
+                <span class="n">temp_path</span><span class="p">,</span> <span class="n">temp_pre_out_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">typeset_files</span><span class="p">(</span>
+                    <span class="n">p</span><span class="p">,</span>
+                    <span class="n">pre_path</span><span class="p">,</span>
+                    <span class="n">prev_out_type</span><span class="p">,</span>
+                    <span class="n">p_id</span>
+                <span class="p">)</span>
+
+                <span class="n">pre_path</span> <span class="o">=</span> <span class="n">temp_path</span>
+                <span class="n">prev_out_type</span> <span class="o">=</span> <span class="n">temp_pre_out_type</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">PROJECT_IS_NOT_ACTIVE</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="MPT.typeset_all_projects"><a class="viewcode-back" href="../mpt.html#mpt.MPT.typeset_all_projects">[docs]</a>    <span class="k">def</span> <span class="nf">typeset_all_projects</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Typeset all projects defined in the json file</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        True: boolean</span>
+<span class="sd">            Returns True, if the  all the typesetters in project run</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">projects</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;projects&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">projects</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">projects</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">typeset_project</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">PROJECTS_VAR_IS_NOT_SPECIFIED</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="MPT.check_program"><a class="viewcode-back" href="../mpt.html#mpt.MPT.check_program">[docs]</a>    <span class="k">def</span> <span class="nf">check_program</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks  whether a  the program or typesetter is installed and executable</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        p: str</span>
+<span class="sd">            Program path</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        None: bool</span>
+<span class="sd">            Returns None , if  program exists</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">is_exe</span><span class="p">(</span><span class="n">f_path</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Checks whether path is available and executable</span>
+<span class="sd">            Parameters</span>
+<span class="sd">            ---------</span>
+<span class="sd">            f_path: str</span>
+<span class="sd">                File path</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            --------</span>
+<span class="sd">            boolean: bool</span>
+<span class="sd">                True or False</span>
+
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">f_path</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">f_path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">X_OK</span><span class="p">)</span>
+
+        <span class="n">fpath</span><span class="p">,</span> <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fpath</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">is_exe</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">p</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PATH&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="p">):</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+                <span class="n">exe_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">is_exe</span><span class="p">(</span><span class="n">exe_file</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">exe_file</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="MPT.organize_output"><a class="viewcode-back" href="../mpt.html#mpt.MPT.organize_output">[docs]</a>    <span class="k">def</span> <span class="nf">organize_output</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">p</span><span class="p">,</span>
+            <span class="n">p_id</span><span class="p">,</span>
+            <span class="n">prefix</span><span class="p">,</span>
+            <span class="n">f_id</span><span class="p">,</span>
+            <span class="n">uid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Copy the temporary results into the  final project path</span>
+
+<span class="sd">        This method reads the temporary results of the current typesetter step and copies them in to the correct output</span>
+<span class="sd">        folder. Output folder is  constructed using project_name, current_time,  sequence number of the current typesetter</span>
+<span class="sd">        and the sequence number of the current file.  Customized tool specific actions are also defined and handled here.</span>
+
+
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ------------</span>
+<span class="sd">        p: dict</span>
+<span class="sd">            json program properties</span>
+<span class="sd">        p_id:  int</span>
+<span class="sd">            typesetter id</span>
+<span class="sd">        prefix: str</span>
+<span class="sd">            file name prefix  of  the current file</span>
+<span class="sd">        f_id:  int</span>
+<span class="sd">              sequence number of the current file</span>
+<span class="sd">        uid: str</span>
+<span class="sd">            unique id of the current current typesetter</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        project_path: str</span>
+<span class="sd">            Final path for the current file</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">t_path</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">),</span> <span class="n">uid</span><span class="p">]</span>
+        <span class="n">p_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">t_name</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typesetters&#39;</span><span class="p">)[</span><span class="n">p_id</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;files&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+        <span class="n">out_type</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s1">&#39;typesetters&#39;</span><span class="p">][</span><span class="n">p_id</span><span class="p">][</span><span class="s1">&#39;out_type&#39;</span><span class="p">]</span>
+        <span class="n">step_ts</span> <span class="o">=</span> <span class="n">p_id</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">t_name</span>
+
+        <span class="k">if</span> <span class="n">t_name</span> <span class="o">==</span> <span class="s1">&#39;metypeset&#39;</span><span class="p">:</span>
+            <span class="n">t_path</span> <span class="o">=</span> <span class="n">t_path</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;nlm&#39;</span><span class="p">]</span>
+
+        <span class="n">project_path</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">),</span>
+            <span class="n">p</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_result</span><span class="p">,</span>
+            <span class="n">step_ts</span><span class="p">,</span>
+            <span class="n">out_type</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="s1">&#39;typesetters&#39;</span><span class="p">][</span><span class="n">p_id</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;merge&#39;</span><span class="p">):</span>
+
+            <span class="n">ff</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s1">&#39;typesetters&#39;</span><span class="p">][</span><span class="n">p_id</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;arguments&#39;</span><span class="p">)[</span><span class="s2">&quot;3&quot;</span><span class="p">]</span>
+            <span class="n">t_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ff</span><span class="p">)</span>
+            <span class="n">t_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">t_path</span><span class="p">)</span>
+            <span class="n">p_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">create_dirs_recursive</span><span class="p">(</span><span class="n">project_path</span><span class="p">)</span>
+            <span class="n">f_path</span> <span class="o">=</span> <span class="n">p_path</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">ff</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">t_file</span><span class="p">,</span> <span class="n">f_path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">==</span> <span class="n">f_id</span><span class="p">:</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">),</span> <span class="n">uid</span><span class="p">))</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">t_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">out_type</span><span class="p">)</span>
+            <span class="n">t_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">t_path</span><span class="p">)</span>
+            <span class="n">p_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">create_dirs_recursive</span><span class="p">(</span><span class="n">project_path</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">t_file</span><span class="p">):</span>
+                <span class="n">f_path</span> <span class="o">=</span> <span class="n">p_path</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">out_type</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">t_file</span><span class="p">,</span> <span class="n">f_path</span><span class="p">)</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">),</span> <span class="n">uid</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">PROJECT_OUTPUT_FILE_WAS_NOT_CREATED</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">f_id</span><span class="p">):</span>
+            <span class="nb">print</span> <span class="n">p_path</span>
+
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_path</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../mpt.html#mpt.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    main method, initializes the  Monograph  Publication Tool and  runs the configuration</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pre_process_instance</span> <span class="o">=</span> <span class="n">MPT</span><span class="p">()</span>
+    <span class="n">pre_process_instance</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MPT 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    </div>
+  </body>
+</html>
