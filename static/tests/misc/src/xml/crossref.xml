@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <front>
+        <journal-meta>
+            <journal-id journal-id-type="publisher-id">Heidelberg University Publishing</journal-id>
+            <issn pub-type="epub">0000-000X</issn>
+            <publisher>
+                <publisher-name>Heidelberg University Publishing</publisher-name>
+            </publisher>
+        </journal-meta>
+        <article-meta>
+            <article-id pub-id-type="publisher-id">00778</article-id>
+            <article-id pub-id-type="doi">10.77777.123456</article-id>
+            <article-categories>
+                <subj-group subj-group-type="display-channel">
+                    <subject>Research article</subject>
+                </subj-group>
+                <subj-group subj-group-type="heading">
+                    <subject>Biophysics and structural biology</subject>
+                </subj-group>
+            </article-categories>
+            <title-group>
+                <article-title>Title</article-title>
+            </title-group>
+            <contrib-group>
+
+
+
+
+                <contrib contrib-type="author" corresp="yes" id="author-4713">
+                    <name>
+                        <surname>Groves</surname>
+                        <given-names>Jay T</given-names>
+                    </name>
+                    <xref ref-type="aff" rid="aff1"/>
+                    <xref ref-type="corresp" rid="cor1">*</xref>
+                    <xref ref-type="other" rid="par-1"/>
+                    <xref ref-type="fn" rid="con5"/>
+                    <xref ref-type="fn" rid="conf1"/>
+                </contrib>
+                <aff id="aff1">
+                    <institution content-type="dept">Department of Chemistry</institution>,
+                        <institution>Howard Hughes Medical Institute, University of California,
+                        Berkeley</institution>, <addr-line><named-content content-type="city"
+                            >Berkeley</named-content></addr-line>, <country>United
+                    States</country></aff>
+
+            </contrib-group>
+            <contrib-group content-type="section">
+                <contrib contrib-type="editor">
+                    <name>
+                        <surname>Brunger</surname>
+                        <given-names>Axel T</given-names>
+                    </name>
+                    <role>Reviewing editor</role>
+                    <aff>
+                        <institution>Howard Hughes Medical Institute, Stanford
+                            University</institution>, <country>United States</country></aff>
+                </contrib>
+            </contrib-group>
+            <author-notes>
+                <corresp id="cor1">
+                    <label>*</label>For correspondence: <email>JTGroves@lbl.gov</email></corresp>
+                <fn fn-type="con" id="equal-contrib">
+                    <label>†</label>
+                    <p>These authors contributed equally to this work</p>
+                </fn>
+            </author-notes>
+
+            <pub-date pub-type="collection">
+                <year>2013</year>
+            </pub-date>
+            <volume>2</volume>
+            <elocation-id>e00778</elocation-id>
+            <history>
+                <date date-type="received">
+                    <day>26</day>
+                    <month>03</month>
+                    <year>2013</year>
+                </date>
+                <date date-type="accepted">
+                    <day>17</day>
+                    <month>05</month>
+                    <year>2013</year>
+                </date>
+            </history>
+            <permissions>
+                <copyright-statement>© 2013, O'Donoghue et al</copyright-statement>
+                <copyright-year>2013</copyright-year>
+                <copyright-holder>O'Donoghue et al</copyright-holder>
+                <license xlink:href="http://creativecommons.org/licenses/by/3.0/">
+                    <license-p>This article is distributed under the terms of the <ext-link
+                            ext-link-type="uri"
+                            xlink:href="http://creativecommons.org/licenses/by/3.0/">Creative
+                            Commons Attribution License</ext-link>, which permits unrestricted use
+                        and redistribution provided that the original author and source are
+                        credited.</license-p>
+                </license>
+            </permissions>
+            <self-uri content-type="pdf" xlink:href="elife00778.pdf"/>
+            <abstract>
+                <p>Abstract text</p>
+                <p>
+                    <bold>DOI:</bold>
+                    <ext-link ext-link-type="doi" xlink:href="10.77777.123456.001"
+                        >http://dx.doi.org/10.77777.123456.001</ext-link>
+                </p>
+            </abstract>
+            <kwd-group kwd-group-type="author-keywords">
+                <title>Author keywords</title>
+                <kwd>TCR triggering</kwd>
+                <kwd>single molecule kinetics</kwd>
+                <kwd>T cells</kwd>
+            </kwd-group>
+            <kwd-group kwd-group-type="research-organism">
+                <title>Research organism</title>
+                <kwd>Mouse</kwd>
+            </kwd-group>
+            <funding-group>
+                <award-group id="par-1">
+                    <funding-source> Funding source </funding-source>
+                    <award-id>PO1 AI091580</award-id>
+                    <principal-award-recipient>
+                        <name>
+                            <surname>O'Donoghue</surname>
+                            <given-names>Geoff P</given-names>
+                        </name>
+                        <name>
+                            <surname>Pielak</surname>
+                            <given-names>Rafal M</given-names>
+                        </name>
+                        <name>
+                            <surname>Smoligovets</surname>
+                            <given-names>Alexander A</given-names>
+                        </name>
+                        <name>
+                            <surname>Lin</surname>
+                            <given-names>Jenny J</given-names>
+                        </name>
+                        <name>
+                            <surname>Groves</surname>
+                            <given-names>Jay T</given-names>
+                        </name>
+                    </principal-award-recipient>
+                </award-group>
+                <funding-statement>The funders had no role in study design, data collection and
+                    interpretation, or the decision to submit the work for
+                    publication.</funding-statement>
+            </funding-group>
+            <custom-meta-group>
+                <custom-meta>
+                    <meta-name>elife-xml-version</meta-name>
+                    <meta-value>2</meta-value>
+                </custom-meta>
+                <custom-meta specific-use="meta-only">
+                    <meta-name>Author impact statement</meta-name>
+                    <meta-value>Quantitative observations of single-molecule binding between antigen
+                        and T cell receptor (TCR) in living primary T cells reveals unbinding
+                        kinetics, stoichiometry and signaling molecule recruitment, providing
+                        insights into the mechanisms of antigen recognition by the immune
+                        system.</meta-value>
+                </custom-meta>
+            </custom-meta-group>
+        </article-meta>
+    </front>
+    <body>
+
+
+        <sec  id="sec1">
+            <title> Struktur </title>
+
+            <p>
+                <speech id="s200">
+                    <speaker> Speaker you</speaker>
+                    <p> I have a link &lt;L&gt;.<xref ref-type="fn"
+                                                      rid="bibd2e50">Footnote</xref>
+                    </p>
+                </speech>
+            </p>
+            <p>
+                <speech id="s202">
+                    <speaker> Speaker Me</speaker>
+                    <p> I have a link &lt;L&gt;.<xref ref-type="bibr"
+                                                      rid="bib1a">Ref2 </xref> <xref ref-type="fn"
+                                                                                  rid="bibd2e50">Footnote</xref>
+                    </p>
+                </speech>
+            </p>
+
+            <sec>
+                <title> Struktur </title>
+                <p> <xref ref-type="sec" rid="sec3"> Title 5</xref>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                <sec>
+                    <title> title 1 </title>
+                    <p> <xref ref-type="sec" rid="sec2">Title 6</xref>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                    <sec>
+                        <title> title 2 </title>
+                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                        <sec>
+                            <title> title 3</title>
+                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                            <sec>
+                                <title> title 4</title>
+                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                                <sec id="sec3">
+                                    <title> title 5 </title>
+
+                                        <p> <xref ref-type="sec" rid="sec1">Struktur</xref>    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                                    </p>
+                                    <sec id="sec2">
+                                        <title> title 6 </title>
+                                        <p>  <xref ref-type="sec" rid="sec1">Struktur</xref> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                                        <sec >
+                                            <title> title 7</title>
+                                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                                            <sec>
+                                                <title> title 8</title>
+                                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                                                <p>
+                                                    <speech id="s1">
+                                                        <speaker>Paul</speaker>
+                                                        <p> I sam text<italic>I am italic</italic></p>
+                                                    </speech>
+                                                </p>
+                                                <p>
+                                                    <speech id="s20">
+                                                        <speaker> Speaker</speaker>
+                                                        <p> I have a link &lt;L&gt;.<xref ref-type="fn"
+                                                                                          rid="bibd2e50">1</xref>
+                                                        </p>
+                                                    </speech>
+                                                </p>
+                                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                                                <p> <xref ref-type="sec" rid="sec1">Struktur</xref>
+
+                                                </p>
+                                            </sec>
+                                        </sec>
+                                    </sec>
+                                </sec>
+                            </sec>
+                        </sec>
+                    </sec>
+                </sec>
+            </sec>
+
+        </sec>
+
+    </body>
+    <back>
+        <ack id="ack">
+            <title>Acknowledgement</title>
+            <p> Ackonkowlegement test</p>
+        </ack>
+        <sec sec-type="additional-information">
+            <title>Additional information</title>
+
+        </sec>
+        <fn-group ref-type="fn">
+            <fn id="bibd2e50">
+                <p> For an explanation of the interview transcript abbreviations used throughout
+                    this work, see Appendix A.</p>
+            </fn>
+        </fn-group>
+        <ref-list >
+            <title>References</title>
+            <ref id="bib1">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Adams</surname>
+                            <given-names>JJ</given-names>
+                        </name>
+                        <name>
+                            <surname>Narayanan</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <name>
+                            <surname>Liu</surname>
+                            <given-names>B</given-names>
+                        </name>
+                        <name>
+                            <surname>Birnbaum</surname>
+                            <given-names>ME</given-names>
+                        </name>
+                        <name>
+                            <surname>Kruse</surname>
+                            <given-names>AC</given-names>
+                        </name>
+                        <name>
+                            <surname>Bowerman</surname>
+                            <given-names>NA</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2011</year>
+                    <article-title>T cell receptor signaling is limited by docking geometry to
+                        peptide-major histocompatibility complex</article-title>
+                    <source>Immunity</source>
+                    <volume>35</volume>
+                    <fpage>681</fpage>
+                    <lpage>93</lpage>
+                    <pub-id pub-id-type="doi">10.1016/j.immuni.2011.09.013</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib1a">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Altan-Bonnet</surname>
+                            <given-names>G</given-names>
+                        </name>
+                        <name>
+                            <surname>Germain</surname>
+                            <given-names>RN</given-names>
+                        </name>
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>Modeling T Cell antigen discrimination based on feedback control
+                        of digital ERK responses</article-title>
+                    <source>PLoS Biol</source>
+                    <volume>3</volume>
+                    <fpage>e356</fpage>
+                    <pub-id pub-id-type="doi">10.1371/journal.pbio.0030356</pub-id>
+                </element-citation>
+            </ref>
+
+        </ref-list>
+    </back>
+</article>

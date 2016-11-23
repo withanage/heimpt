@@ -1,0 +1,932 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article>
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="nlm-ta">Heidelberg University Publishing</journal-id>
+      <journal-id journal-id-type="hwp">Heidelberg University Publishing</journal-id>
+      <journal-id journal-id-type="publisher-id">Heidelberg University Publishing</journal-id>
+      <journal-title-group>
+        <journal-title>Heidelberg University Publishing</journal-title>
+      </journal-title-group>
+      <issn publication-format="electronic">2050-084X</issn>
+      <publisher>
+        <publisher-name>eLife Sciences Publications, Ltd</publisher-name>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="publisher-id">00778</article-id>
+      <article-id pub-id-type="doi">10.17885/heiup.43.32</article-id>
+      <article-categories>
+        <subj-group subj-group-type="display-channel">
+          <subject>Fachbuch</subject>
+        </subj-group>
+        <subj-group subj-group-type="heading">
+          <subject>R&#246;mische Geschichte</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>Abwesenheit von Rom: Aristokratische Interaktion in der sp&#228;ten r&#246;mischen Republik und in der fr&#252;hen Kaiserzeit.</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author" equal-contrib="yes" id="author-4813">
+          <name>
+            <surname>Habenstein</surname>
+            <given-names>Astrid</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1"/>
+          <xref ref-type="aff" rid="aff2"/>
+          <xref ref-type="fn" rid="equal-contrib">&#8224;</xref>
+          <xref ref-type="other" rid="par-1"/>
+          <xref ref-type="fn" rid="con1"/>
+          <xref ref-type="fn" rid="conf1"/>
+        </contrib>
+        <aff id="aff1"><institution content-type="dept">Historisches Institut, Abteilung f&#252;r Alte Geschichte &amp; Rezeptionsgeschichte der Antike</institution>, <institution>Universit&#228;t Bern</institution>, <addr-line><named-content content-type="city">Bern</named-content></addr-line>,
+                <country>Schweiz</country></aff>
+      </contrib-group>
+      <author-notes>
+        <corresp id="cor1"><label>*</label>For correspondence:
+                <email>heiup@ub.uni-heidelberg.de&gt;</email></corresp>
+      </author-notes>
+      <pub-date date-type="pub" publication-format="electronic">
+        <day>31</day>
+        <month>07</month>
+        <year>2015</year>
+      </pub-date>
+      <pub-date pub-type="collection">
+        <year>xxx</year>
+      </pub-date>
+      <volume>2</volume>
+      <elocation-id>e00778</elocation-id>
+      <history>
+        <date date-type="received">
+          <day>26</day>
+          <month>01</month>
+          <year>2015</year>
+        </date>
+        <date date-type="accepted">
+          <day>01</day>
+          <month>04</month>
+          <year>2015</year>
+        </date>
+      </history>
+      <permissions>
+        <copyright-statement>&#169; 2015, Heidelberg University Publishing</copyright-statement>
+        <copyright-year>2015</copyright-year>
+        <copyright-holder>Heidelberg University Publishing</copyright-holder>
+        <license xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://creativecommons.org/licenses/by/3.0/">
+         <license-p>Dieses Werk ist unter der Creative Commons-Lizenz 4.0 (CC BY-SA 4.0 <ext-link ext-link-type="uri" xlink:href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">)</ext-link> veröffentlicht.
+                    credited.</license-p>
+</license>
+      </permissions>
+      <abstract>
+        <object-id pub-id-type="doi">10.17885/heiup.43.32</object-id>
+      </abstract>
+      <custom-meta-group>
+        <custom-meta>
+          <meta-name>heiUP-xml-version</meta-name>
+          <meta-value>2</meta-value>
+        </custom-meta>
+        <custom-meta specific-use="meta-only">
+          <meta-name>Author impact statement</meta-name>
+          <meta-value>Der immensen ideellen Bedeutung, die der Stadt Rom seit der sp&#228;ten Republik zugemessen wurde, entsprach bis in das 2. Jhd. n.&#8239;Chr. die reale Vorrangstellung der urbs im Imperium Romanum: In Rom trafen die gesellschaftlich und politisch ma&#223;gebenden Akteure und Gruppen aufeinander, hier versuchten sie in Form komplexer Interaktionen gegenseitiges Verst&#228;ndnis und Einvernehmen herzustellen. Bis in die Kaiserzeit betrachtete die Senatsaristokratie die interagierende Pr&#228;senz in Rom als wesentliche Gr&#246;&#223;e ihrer Lebensf&#252;hrung. Zumindest im 1. Jhd. n. Chr. konnten sich auch die Kaiser nicht vom Referenzrahmen der Stadt l&#246;sen. Umso interessanter sind Formen und Anl&#228;sse aristokratischer oder kaiserlicher Absenz. Welche Funktionen die Abwesenheit von Rom im System der aristokratischen Interaktion hatte und welche Implikationen dies f&#252;r Politik und Gesellschaft der sp&#228;ten Republik und fr&#252;hen Kaiserzeit mit sich brachte, ist Gegenstand der vorliegenden Studie.</meta-value>
+        </custom-meta>
+      </custom-meta-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec>
+      <title>1 Einleitung</title>
+      <sec>
+        <title>1.1 Einf&#252;hrung, Fragestellung, Gliederung</title>
+        <p>Der gewaltige und pr&#228;chtig ausgestattete Tempel der kapitolinischen Trias Iuppiter, Iuno und Minerva auf dem <italic>Capitolium</italic>, der s&#252;dlichen Kuppe des <italic>mons Capitolinus</italic>, war in der Antike eines der bekanntesten, in politisch-sakraler Hinsicht auch eines der bedeutsamsten Wahrzeichen der Stadt Rom.<xref ref-type="bibr" rid="bibd2e49">[1]</xref> Geweiht wurde das Heiligtum der r&#246;mischen &#220;berlieferung zufolge 509&#160;v.&#160;Chr., im angeblichen Gr&#252;ndungsjahr der Republik.<xref ref-type="bibr" rid="bibd2e58">[2]</xref> Die Erbauung der Anlage verbanden antike Autoren, wie etwa der kaiserzeitliche Historiker Titus Livius, jedoch mit den etruskischen K&#246;nigen, insbesondere mit dem letzten K&#246;nig Roms, Tarquinius Superbus.<xref ref-type="bibr" rid="bibd2e64">[3]</xref> Jener habe mit dem Ziel, seiner Herrschaft und seinem Namen ein dauerhaftes Denkmal zu setzen, den Bau eines monumentalen Iuppiter-Tempels betrieben. Livius sieht das Vorhaben des K&#246;nigs durchaus kritisch, doch berichtet er auch von Vorzeichen, welche dem k&#252;nftigen <italic>Imperium Romanum</italic> Gr&#246;&#223;e, Macht und ewige Best&#228;ndigkeit verhei&#223;en h&#228;tten. Sp&#228;tere Generationen, die diese Legenden rezipierten, scheint besonders die Auffindung eines unversehrten menschlichen Kopfes beeindruckt zu haben, auf den die Arbeiter gesto&#223;en sein sollen, als die Tempelfundamente ausgehoben wurden; antiken Etymologien zufolge soll die Episode gar namengebend f&#252;r den H&#252;gel wie auch f&#252;r das Kapitol selbst gewesen sein.<xref ref-type="bibr" rid="bibd2e74">[4]</xref> Der Kopf, so schlussfolgert jedenfalls Livius, sei ein direkter Hinweis darauf gewesen, dass an diesem Ort das Bollwerk der Herrschaft <italic>(arx imperii)</italic> und das Haupt aller Dinge  <italic>(caput rerum) </italic> sein w&#252;rden.<xref ref-type="bibr" rid="bibd2e83">[5]</xref>
+            </p>
+        <p>Diese Geschichte ist letztlich nur eine von vielen literarischen Manifestationen der sog. Romidee, in deren Zentrum der Gedanke steht, dass die G&#246;tter Rom zur Weltherrschaft berufen h&#228;tten und sich f&#252;r Sicherheit und dauerhafte Existenz der Stadt verb&#252;rgten.<xref ref-type="bibr" rid="bibd2e118">[6]</xref> &#8222;Den Bestand des Reiches als solchen von einer bestimmten &#214;rtlichkeit, von dem Boden der <italic>urbs Roma</italic> und seinem G&#246;ttersegen abh&#228;ngig sein zu lassen&#8220;, ist dabei nach Ansicht Carl Kochs &#8222;eine alte Vorstellung.&#8220;<xref ref-type="bibr" rid="bibd2e130">[7]</xref> Mindestens scheinen ihre Wurzeln jedoch bis in die sp&#228;te r&#246;mische Republik zu reichen.<xref ref-type="bibr" rid="bibd2e136">[8]</xref> In augusteischer Zeit erfuhr die Rezeption der Romidee ihren ersten H&#246;hepunkt und weitere Ausgestaltung: Erst jetzt wurde der Gedanke der <italic>aeternitas</italic> hinzugef&#252;gt;<xref ref-type="bibr" rid="bibd2e149">[9]</xref> ferner r&#252;ckte die Stadt Rom ideell noch st&#228;rker in das Zentrum eines durch &#220;berlegenheit der Waffen errungenen Imperiums, was nun auch mit Hinweisen auf die Vorteile, die den Besiegten aus ihrer Unterwerfung erwachsen seien &#8211; namentlich Frieden, Sicherheit und Wohlfahrt sowie die Gerechtigkeit der r&#246;mischen Gesetze &#8211;, gerechtfertigt wurde. Im Mittelpunkt standen weiterhin die <italic>urbs Roma</italic> und der Prozess, in dessen Verlauf diese zur Herrin des <italic>orbis terrarum </italic>geworden war. Hinzu trat zunehmend der <italic>princeps</italic>, der sich zum Repr&#228;sentanten von Stadt und Reich stilisierte und in dieser Funktion nach und nach Senat und <italic>populus Romanus</italic> verdr&#228;ngte.<xref ref-type="bibr" rid="bibd2e168">[10]</xref> Charakteristisch blieb jedoch die Vorstellung, dass Rom den Inbegriff des gesamten <italic>Imperium Romanum</italic> darstelle und dass die Stadt nur folgerichtig politisches und soziales Zentrum des Reiches sei.</p>
+        <p>Die Romidee als solche lebte bis weit in die Sp&#228;tantike und dar&#252;ber hinaus fort, jedoch nicht ohne Ver&#228;nderungen, die insbesondere das Verh&#228;ltnis der Stadt Rom zum Reich betrafen. So wurde die Romidee einerseits mit der zunehmenden Verbreitung des Christentum weiter erg&#228;nzt: Christliche Autoren, die sich sukzessive um eine positivere Bewertung des <italic>Imperium Romanum</italic> und seines Ursprungs, der Stadt Rom, bem&#252;hten, integrierten beide in den christlichen Heilsplan; zudem wurden verst&#228;rkt Reich und Kirche miteinander verkn&#252;pft. Andererseits ging jedoch ein zentrales Element der Romidee allm&#228;hlich verloren, n&#228;mlich die enge Verkn&#252;pfung von Stadt und Reich, ein Prozess, dessen Anf&#228;nge sp&#228;testens seit Mitte des 2.&#160;Jahrhunderts n.&#160;Chr. greifbar sind.<xref ref-type="bibr" rid="bibd2e182">[11]</xref> Zwar bewunderten noch im 4. und 5. Jahrhundert Christen wie &#8218;Heiden&#8216; die Pracht der Stadt Rom, &#8222;zumal ihre[r] Kultst&#228;tten, die in das mystische Licht einer glorreichen Vergangenheit getaucht sind&#8220;, wie Manfred Fuhrmann in seinem grundlegenden Beitrag zur Romidee der Sp&#228;tantike erl&#228;utert. Doch &#8222;die konkrete Stadt beginnt sich von ihrer Funktion als Inbegriff des Reiches zu l&#246;sen.&#8220;<xref ref-type="bibr" rid="bibd2e524">[12]</xref> Diese Trennung des symbolischen Roms von der konkreten Stadt ist charakteristisch f&#252;r die Sp&#228;tantike. So ist der Debatte, die Symmachus mit dem Bischof Ambrosius von Mailand anl&#228;sslich des Streites um den Altar der Viktoria f&#252;hrte, und den &#196;u&#223;erungen des christlichen Dichters Prudentius, der paganen Dichter Claudian und Rutilius Namatianus sowie des Historikers Ammianus Marcellinus eines gemeinsam: F&#252;r sie alle ist Rom schon lange nicht mehr der unangefochtene Mittelpunkt des Reiches und Sitz der Macht, sondern allenfalls noch sakrales Zentrum und mehr oder weniger musealer &#8218;Erinnerungsort&#8216;.<xref ref-type="bibr" rid="bibd2e530">[13]</xref> In dieser Funktion war die Stadt auch weiterhin wichtig, stellte sie doch den Ursprung des Reiches dar; in den Mittelpunkt der Romidee r&#252;ckten jedoch zunehmend das Reich selbst und seine zivilisatorischen Errungenschaften.</p>
+        <p>Doch zumindest bis in die Mitte des 2.&#160;Jahrhunderts war die Romidee nicht nur eine &#8218;Ideologie&#8216;: Die Stadt Rom und Italien nahmen eine &#252;berragende Vorrang- und Vormachtstellung im <italic>Imperium Romanum</italic> ein. Rom <italic>war</italic> der soziale und politische Mittelpunkt des Reiches und zunehmend auch ein kulturelles Zentrum.<xref ref-type="bibr" rid="bibd2e592">[14]</xref> Erst seit trajanischer Zeit scheint dies allm&#228;hlich zur Disposition gestellt worden zu sein &#8211; offenbar parallel zur eingangs beschriebenen Entwicklung der Romidee. Doch warum ist diese Stadt ideell so wichtig? Die gro&#223;e Bedeutung Roms, die sich lange Zeit auch in herrschaftspraktischer und administrativer Hinsicht niederschlug, erkl&#228;rt sich dadurch, dass Rom das geographische Zentrum der politisch-sozialen Interaktion war, dass also Rom der Ort war, an dem die f&#252;r die r&#246;mische Politik und Gesellschaft besonders relevanten Interaktionen stattfanden. In diesem Zusammenhang ist zun&#228;chst auszuf&#252;hren, was unter &#8218;Interaktion&#8216; zu verstehen ist. Dabei kann und soll an dieser Stelle kein vollst&#228;ndiger &#220;berblick &#252;ber die zahlreichen Modelle von Interaktion verschiedenster disziplin&#228;rer Provenienz bzw. die &#8211; zum Teil sehr umfangreichen &#8211; Diskussionen jener Modelle in den verschiedenen Sozial- und Geisteswissenschaften geboten werden. Vielmehr ist es das Ziel der folgenden Ausf&#252;hrungen, aus den unterschiedlichen Theorieangeboten, in deren Mittelpunkt h&#228;ufig neuzeitliche, moderne oder gar &#8218;postmoderne&#8216; Verh&#228;ltnissen stehen, jene Elemente herauszuarbeiten, die auch f&#252;r die Analyse und Beschreibung der vormodernen Gesellschaft im antiken Rom als gewinnbringend erscheinen.</p>
+        <p>Der hier verwendete Begriff von &#8218;Interaktion&#8216; geht vor allem auf soziologische Konzepte zur&#252;ck, die nach den Bedingungen und Funktionsweisen von zwischenmenschlichem Handeln fragen.<xref ref-type="bibr" rid="bibd2e679">[15]</xref> Ganz allgemein formuliert, bezeichnet &#8218;Interaktion&#8216; die wechselseitige Beeinflussung der Einstellungen, Erwartungen und Handlungen von Individuen. &#8218;Interaktion&#8216; findet statt zwischen mindestens zwei Individuen, die im gleichen sozialen Kontext anwesend sind, einander wahrnehmen, f&#252;r einander ansprechbar sind und sich in ihrem Handeln aufeinander beziehen. Die Grundlagen f&#252;r eine Soziologie der Interaktion haben Georg Simmel und Max Weber gelegt, indem sie Interaktion zu dem Element erhoben, das Gesellschaft konstituiert. So betrachtet Simmel als den genuinen Gegenstandsbereich einer sich als eigene Wissenschaft verstehenden Soziologie &#8222;die Untersuchung der Kr&#228;fte, Formen und Entwicklungen der Vergesellschaftung, des Mit-, F&#252;r- und Nebeneinanderseins der Individuen&#8220;.<xref ref-type="bibr" rid="bibd2e759">[16]</xref> Vergesellschaftung nennt er den Prozess, in dessen Verlauf Individuen zueinander in Beziehung treten und wechselseitig aufeinander einwirken. Folglich ist f&#252;r Simmel &#8222;Gesellschaft im weitesten Sinne offenbar da vorhanden, wo mehrere Individuen in Wechselwirkung treten&#8220;.<xref ref-type="bibr" rid="bibd2e793">[17]</xref> 
+            </p>
+        <p>Max Weber wiederum erkl&#228;rt im ersten Paragraphen seiner &#8218;Soziologischen Grundbegriffe&#8216; in <italic>Wirtschaft und Gesellschaft</italic> 
+            </p>
+        <list><list-item><p style="display-quote">
+          Soziologie soll hei&#223;en: eine Wissenschaft, welche soziales Handeln deutend verstehen und dadurch in seinem Ablauf und seinen Wirkungen urs&#228;chlich erkl&#228;ren will. &#8218;Handeln&#8216; soll dabei ein menschliches Verhalten (einerlei ob ein &#228;u&#223;eres oder innerliches Tun, Unterlassen oder Dulden) hei&#223;en, wenn und insofern als der oder die Handelnden mit ihm einen subjektiven Sinn verbinden. &#8218;Soziales&#8216; Handeln aber soll ein solches Handeln hei&#223;en, welches seinem von dem oder den Handelnden gemeinten Sinn nach auf das Verhalten anderer bezogen wird und daran in seinem Ablauf orientiert ist.<xref ref-type="bibr" rid="bibd2e819">[18]</xref>
+               
+        </p>
+		</list-item></list>
+        <p>Der Schl&#252;sselbegriff des Weber&#8217;schen Theoriegeb&#228;udes, n&#228;mlich der Terminus des &#8218;sozialen Handelns&#8216;, den er zum Gegenstandsbereich seiner Wissenschaft erkl&#228;rt, wird bei Weber folglich durch Interaktion bestimmt. Besonders deutlich wird dies in seiner anschlie&#223;enden Definition seines gleichfalls zentralen Begriffs der &#8218;sozialen Beziehung&#8216; als einem </p>
+        
+		<list><list-item><p style="display-quote">
+          seinem Sinngehalt nach aufeinander gegenseitig eingestellte[n] und dadurch orientierte[n] Sichverhalten mehrerer [&#8230;]. Die soziale Beziehung besteht also durchaus und ganz ausschlie&#223;lich in der Chance, dass in einer (sinnhaft) angebbaren Art sozial gehandelt wird, einerlei zun&#228;chst, worauf diese Chance beruht.<xref ref-type="bibr" rid="bibd2e875">[19]</xref>
+               
+        </p></list-item></list>
+        <p>Insbesondere Max Weber legte die Fundamente, von denen ausgehend in der weiteren wissenschaftlichen Diskussion die unterschiedlichen Facetten von Interaktion herausgearbeitet wurden, die f&#252;r Verst&#228;ndnis und Analyse dieses Ph&#228;nomens zentral sind. &#220;blicherweise werden hierbei in der soziologischen Theoriebildung zwei Grundpositionen unterschieden, das <italic>normative</italic> und das <italic>interpretative</italic> Paradigma, die letztlich die alte, in allen Geistes- und Sozialwissenschaften immer wieder gef&#252;hrte Debatte um das Verh&#228;ltnis von Individuum und Gesellschaft, Akteur und Struktur, Struktur und Ereignis wieder aufgreift.<xref ref-type="bibr" rid="bibd2e922">[20]</xref> Theorien, die dem <italic>normativen</italic> Paradigma zugeordnet werden, stellen mit Talcott Parsons die sozialen Strukturen, vor allem normative Vorgaben, in den Vordergrund, um zu erkl&#228;ren, wie Menschen sich gegen&#252;ber anderen Menschen verhalten. Demnach folgen die an einer Interaktion Beteiligten Rollen, die das soziokulturelle Wertsystem vorschreibt; konkretes Handeln wird als &#196;u&#223;erung vorgegebener Handlungsmuster betrachtet. Der Akteur erscheint in diesen Theorien als mit bestimmten erworbenen Dispositionen (z.&#160;B. Einstellungen, Haltungen, Bed&#252;rfnisse) ausgestattet, andererseits aber als bestimmten Erwartungen, den Rollenerwartungen, ausgesetzt, die von Sanktionen gest&#252;tzt werden. Interaktion beruht in diesem Modell auf dem Zusammenspiel der jeweils gegebenen Rollenerwartungen und Dispositionen, aus deren Strukturen die zentralen Elemente einer konkreten Situation folglich abgeleitet werden k&#246;nnten.</p>
+        <p>Ans&#228;tze, die sich am <italic>interpretativen</italic> Paradigma orientieren, stellen hingegen die Individuen in den Mittelpunkt, die auf Basis der wechselseitigen Interpretation der Erwartungen, &#196;u&#223;erungen und Handlungen ihrer Gegen&#252;ber miteinander interagieren. Die strukturellen Faktoren (biologische, historische, kulturelle) werden auch in diesen Konzepten nicht ausgeblendet; sie stellen vielmehr Voraussetzungen oder Bedingungen dar, welche die Akteure bewusst oder unbewusst einkalkulieren, jedoch ohne dass ihr Handeln dadurch notwendigerweise determiniert w&#252;rde. Ausgangspunkt des Models ist die Pr&#228;misse, dass das Objekt der soziologischen Analyse, n&#228;mlich der Mensch und sein Handeln, ohne sein Interaktions-Netz, den jeweiligen Interaktions-Kontext und die im Rahmen der Interaktion geleistete interpretative Arbeit nicht v&#246;llig verstanden werden kann. Interaktion wird dabei als ein Handeln auf der Grundlage von Bedeutungen verstanden, die es einerseits auszudr&#252;cken, andererseits zu entschl&#252;sseln gilt. Die Akteure haben hierzu gelernt, auf Basis von Symbolsystemen, die sie im Zuge ihrer Sozialisation und mittels Kommunikation erworben haben, die Erwartungen und m&#246;glichen Reaktionen des anderen zu antizipieren und f&#252;r das eigene Handeln zu ber&#252;cksichtigen. Situationsdefinitionen und Handlungen sind jedoch nicht ein f&#252;r alle Mal bestimmt, sondern stellen ebenfalls Interpretationen dar, die revidiert oder neuformuliert werden k&#246;nnen.<xref ref-type="bibr" rid="bibd2e1136">[21]</xref> 
+            </p>
+        <p>Als &#8218;Ahnherr&#8216; dieser Modelle gilt der amerikanische Soziologe George Herbert Mead, obschon er selbst den Begriff &#8218;Interaktion&#8216; nur sehr selten verwendet hat.<xref ref-type="bibr" rid="bibd2e1160">[22]</xref> Mead betrachtete Interaktion als Kommunikation, in der sich die Akteure auf der Basis von Zeichen, Gesten und Symbolen wechselseitig wahrnehmen und beeinflussen. Unter &#8218;Zeichen&#8216; fasst Mead in seiner Kommunikationstheorie die Sinnesreize, die unwillk&#252;rliche und instinktive Reaktionen ausl&#246;sen. &#8218;Gesten&#8216; hingegen betrachtet Mead als Zeichen in Form von Verhalten, das einen bestimmten &#8218;Sinn&#8216; zum Ausdruck bringt und bestimmte, n&#228;mlich die passenden Reaktionen ausl&#246;st. Diese Funktion erf&#252;llen Gesten im Prinzip gleicherma&#223;en bei Menschen wie auch im Tierreich. Doch anders als Tiere sei der Mensch f&#228;hig, eine Geste zu interpretieren, indem er von ihr abstrahiert und &#252;ber den in ihr ausgedr&#252;ckten Sinn reflektiert. Dies erm&#246;glicht dem Menschen, verschiedene denkbare Reaktionen zu erw&#228;gen und zwischen ihnen zu w&#228;hlen. Wird der Sinn eines Handlungszusammenhanges auf einen bestimmten (sprachlichen) Begriff gebracht oder kommt er in einem &#228;u&#223;eren (materiellen) Zeichen zum Ausdruck, dann spricht Mead von einem &#8218;Symbol&#8216;. Symbole b&#252;ndeln konkrete Erfahrungen unter einem Abstraktum, das auf den gr&#246;&#223;eren, &#252;bergeordneten Sinnzusammenhang einer Handlung oder eines sozialen Ph&#228;nomens verweist. In der Kommunikation bzw. Interaktion zwischen Menschen stehen Symbole f&#252;r bestimmte Interpretationen von Handlungen und Handlungsabsichten und somit f&#252;r ein bestimmtes Set an denkbaren Reaktionen. Haben Symbole f&#252;r die Akteure die gleiche Bedeutung &#8211; man spricht in diesem Fall von &#8218;signifikanten Symbolen&#8216; &#8211;, so dienen sie den Interagierenden als Richtschnur zur Orientierung: Das Verhalten des Gegen&#252;bers kann antizipiert und f&#252;r die eigenen Handlungen ber&#252;cksichtigt werden, was diesem wiederum bewusst ist. Diese wechselseitige Rollen&#252;bernahme f&#252;hrt zu einer permanenten kommunikativen Verst&#228;ndigung.</p>
+        <p>Diese Thesen George Herbert Meads stellen die Grundz&#252;ge einer Theorie der &#8218;symbolischen Interaktion&#8216; dar, die jedoch erst sein Sch&#252;ler und Nachfolger Herbert Blumer unter dieser Bezeichnung systematisieren sollte.<xref ref-type="bibr" rid="bibd2e1235">[23]</xref> Blumer entwickelt Meads Ideen jedoch auch weiter, indem er den Gedanken von der &#8218;gemeinsamen Definition der Situation&#8216; einf&#252;hrt: Die interagierenden Akteure, so die Idee, zeigen einander in der Interaktion fortlaufend an, wie sie die Situation begreifen bzw. wie der Gegen&#252;ber sie verstehen soll. Die Handelnden produzieren miteinander gemeinsame Symbole, die sie durch ihr Handeln best&#228;tigen, &#252;berarbeiten oder neu definieren. Der Sinn der Interaktion wird so kontinuierlich ausgehandelt. Dies m&#252;ndet in die gemeinsame Definition der Situation, die wiederum die Bedingungen des Handelns und die weiteren Interaktionen strukturiert.</p>
+        <p>Einen weiteren wichtigen Aspekt von Interaktion beleuchtet J&#252;rgen Habermas in seinem Modell des &#8218;kommunikativen Handelns&#8216;, in dem er eine grundlegende Voraussetzung f&#252;r Interaktion als gemeinsames Handeln herausstellt. In seiner <italic>Theorie des kommunikativen Handelns</italic> definiert er diesen Schl&#252;sselbegriff als </p>
+        <list><list-item><p style="display-quote">
+          Interaktion von mindestens zwei sprach- und handlungsf&#228;higen Subjekten, die (mit verbalen oder extraverbalen Mitteln) eine interpersonale Beziehung eingehen. Die Aktoren suchen eine Verst&#228;ndigung &#252;ber die Handlungssituation, um ihre Handlungspl&#228;ne und damit ihr Handeln einvernehmlich zu koordinieren. Der zentrale Begriff der Interpretation bezieht sich in erster Linie auf das Aushandeln konsensf&#228;higer Situationsdefinitionen.<xref ref-type="bibr" rid="bibd2e1272">[24]</xref> 
+               
+       </p></list-item></list>
+        <p>Wie in der Theorie des symbolischen Interaktionismus steht auch bei Habermas der Begriff der Interpretation im Mittelpunkt, insofern er sie als Mittel betrachtet, um den Mitmenschen, seine Absichten und Ziele nachvollziehend zu verstehen. Medium der Verst&#228;ndigung ist f&#252;r Habermas jedoch vor allem Sprache, die ihm deshalb auch Medium der Handlungskoordinierung und Medium von Vergesellschaftung ist.<xref ref-type="bibr" rid="bibd2e1313">[25]</xref> Allerdings betont Habermas dar&#252;ber hinaus, dass die Akteure, wenn sie in eine Interaktion eintreten, grunds&#228;tzlich an einer einvernehmlichen Verst&#228;ndigung interessiert sind. Das ist vor allem vor dem Hintergrund zu verstehen, dass es Habermas in seinem Beitrag wesentlich um die kritische Theorie einer modernen Gesellschaft geht, in der er alle Lebensbereiche vom Prinzip der Zweckrationalit&#228;t durchdrungen sieht. Mit seiner Handlungstheorie will er sich daher auch von Konzepten absetzen, nach denen Individuen einander vorwiegend zweckrational und kalkulierend begegnen, welche die ihrer sozialen Rolle entsprechenden Normen befolgen oder um dramaturgisch stilisierte Selbstrepr&#228;sentation bem&#252;ht sind.<xref ref-type="bibr" rid="bibd2e1335">[26]</xref> Das Ziel von kommunikativem Handeln bzw. Interaktion ist nach Ansicht Habermas&#8217; jedenfalls nicht in erster Linie die &#220;berw&#228;ltigung oder resignative Unterwerfung des Gegen&#252;bers, sondern zun&#228;chst einmal Konsens. Dagegen wurde der begr&#252;ndete Einwand vorgebracht, dass im Alltag das Interesse an Konsens rasch an Grenzen st&#246;&#223;t:</p>
+        <p>&#8222;Wo eine Verst&#228;ndigung einen zu schweren Kompromiss nach sich ziehen w&#252;rde&#8220;, so erl&#228;utert Heinz Abels, &#8222;sind wir nicht an einer Verst&#228;ndigung interessiert, und wo eine Verst&#228;ndigung unseren Wunsch nach Bed&#252;rfnisbefriedigung vollst&#228;ndig zunichte zu machen droht, lassen wir es durchaus auf einen Bruch der Interaktion ankommen.&#8220;<xref ref-type="bibr" rid="bibd2e1376">[27]</xref> 
+            </p>
+        <p>Auch hat Habermas offensichtlich eine demokratische Gesellschaft vor Augen, n&#228;mlich die Bundesrepublik Deutschland der Nachkriegszeit, f&#252;r die er normativ konsensuale Entscheidungsmechanismen in einem demokratisch legitimierten Prozess einfordert; auf das antike Rom und andere vormoderne Gesellschaften ist seine Gesamtkonzeption daher in weiten Teilen nicht &#252;bertragbar. Doch hebt der Philosoph zwei Aspekte hervor, die auch f&#252;r die Betrachtung einer vormodernen Gesellschaft von Bedeutung sind, obschon sich die praktische Umsetzung selbstverst&#228;ndlich ganz anders gestaltet haben d&#252;rfte als in den westlichen Demokratien des 20.&#160;Jahrhunderts: Zum einen stellt er noch einmal explizit fest, was bereits mehrfach angeklungen ist, dass n&#228;mlich Kommunikation bzw. kommunikatives Handeln Interaktion ist &#8211; und umgekehrt. Zum anderen betont er, dass die Intention von Interaktion bzw. kommunikativem Handeln zumindest zu Beginn &#8222;Verst&#228;ndigung im Sinne eines kooperativen Deutungsprozesses&#8220;<xref ref-type="bibr" rid="bibd2e1438">[28]</xref> ist &#8211; unabh&#228;ngig davon, ob diese im weiteren Verlauf erreicht wird oder nicht.</p>
+        <p>Einen interessanten Beitrag liefert schlie&#223;lich Niklas Luhmann und die mit seinem Namen verbundene Systemtheorie. Sie geht die Frage nach Interaktion noch einmal aus der Perspektive der sozialen Strukturen an, wobei hinsichtlich der soziologischen und theoretischen Pr&#228;missen jedoch nicht nur die interpretativen Konzepte infrage gestellt werden, sondern auch eine deutliche Abgrenzung zu Talcott Parsons&#8217; Rollenmodell (und damit normativen Erkl&#228;rungsans&#228;tzen) gesucht wird.<xref ref-type="bibr" rid="bibd2e1529">[29]</xref> Anders als Theoretiker in der Tradition Georg Simmels und Max Webers oder moderne Interaktions- und Kommunikationstheorien stellt Luhmann n&#228;mlich nicht &#8211; mal mehr aus Sicht des Individuums, mal mehr aus Sicht der Gesellschaft &#8211; die Gesellschaft und Interaktion, die Grundform sozialen Handelns, als ihr Konstituens in den Mittelpunkt. Vielmehr fragt der Soziologe nach Systemen, insbesondere &#8218;sozialen Systemen&#8216; und den sie begr&#252;ndenden &#8218;Kommunikationen&#8216;. </p>
+        <p>Der allgemeine Zweck von Systemen besteht nach Luhmann darin, die Wirklichkeit einer den Menschen andernfalls &#252;berfordernden Welt zu ordnen und zu strukturieren. Dies geschehe durch Sinngebung, die es erlaube, die &#8218;Komplexit&#228;t&#8216; der Welt zu reduzieren. Dies gelte auch f&#252;r &#8218;soziale&#8216; Systeme, die immer dann ins Spiel k&#228;men, &#8222;wenn Handlungen mehrerer Personen sinnhaft aufeinander bezogen werden und dadurch in ihrem Zusammenhang abgrenzbar sind von einer nicht dazugeh&#246;rigen Umwelt.&#8220;<xref ref-type="bibr" rid="bibd2e1680">[30]</xref> Diese Begriffsbestimmung erinnert zun&#228;chst ganz erheblich an klassische Definitionen von Interaktion im Verh&#228;ltnis zur Gesellschaft. Doch f&#252;r Luhmann ist an dieser Stelle Kommunikation das eigentlich Zentrale: Soziale Systeme entstehen, sobald &#8222;Kommunikation unter Menschen stattfindet.&#8220;<xref ref-type="bibr" rid="bibd2e1748">[31]</xref> Kommunikation sei die Basis von Verst&#228;ndigung und somit die Grundlage der Grenzziehung zwischen System und Umwelt. Gesellschaft und Interaktion sind in diesem Modell nicht mehr &#8218;das Soziale&#8216; schlechthin, sondern lediglich zwei Auspr&#228;gungen sozialer Systeme. Deren Eigenart beruht auf jeweils unterschiedlichen Formen zwischenmenschlicher Kommunikation bzw. deren Rahmenbedingungen. Denn &#8222;je nachdem, unter welchen Voraussetzungen der Prozess der Selbstselektion und der Grenzziehung abl&#228;uft&#8220;, bilden sich soziale Systeme auf verschiedene Weise: als Interaktions-, Gesellschafts- und Organisationssysteme, die unterschiedliche Formen von Kommunikation verk&#246;rpern.<xref ref-type="bibr" rid="bibd2e1858">[32]</xref> Hier wird bereits ein Kritikpunkt deutlich, den man sp&#228;ter berechtigterweise gegen das Modell eingewandt hat, dass es n&#228;mlich das Handeln konkreter Akteure vernachl&#228;ssige und stattdessen Kommunikation absolut setze.<xref ref-type="bibr" rid="bibd2e1907">[33]</xref> So erkl&#228;rt Luhmann etwa, dass soziale Systeme nicht &#8222;aus psychischen Systemen, geschweige denn aus leibhaftigen Menschen&#8220; best&#252;nden, sondern sich autonom mittels Kommunikation bildeten, welche den &#8222;basale[n] Prozess sozialer Systeme&#8220; darstelle, &#8222;der die Elemente produziert, aus denen diese Systeme bestehen.&#8220;<xref ref-type="bibr" rid="bibd2e1954">[34]</xref> 
+            </p>
+        <p>Die hier besonders interessierenden Interaktionssysteme kommen nach Luhmann nun dadurch zustande, dass &#8222;Anwesende sich wechselseitig wahrnehmen&#8220;, was &#8222;die Wahrnehmung des Sich-Wahrnehmens&#8220; mit einschlie&#223;e.<xref ref-type="bibr" rid="bibd2e1989">[35]</xref> Anwesenheit sei das Selektions- und Grenzbildungsprinzip, der Anlass und zugleich die Grenze der Systembildung.<xref ref-type="bibr" rid="bibd2e2011">[36]</xref> Diese &#8222;Anwesenheit im reziproken Wahrnehmungsfeld&#8220; ist f&#252;r Luhmann dabei &#8222;immer schon Kommunikation, n&#228;mlich Austausch von Information &#252;ber selektive Ereignisse&#8220;, was die Bildung sozialer Systeme unausweichlich mache.<xref ref-type="bibr" rid="bibd2e2041">[37]</xref> Dieser Informationsaustausch kann sowohl in Form nonverbaler wechselseitiger Wahrnehmungskontakte als auch in Form verbaler Kommunikation stattfinden. Interaktionssysteme stellen hierbei f&#252;r Luhmann vergleichsweise &#8218;einfache&#8216; Systeme dar, &#8222;im Sinne einer unmittelbaren &#220;berschaubarkeit f&#252;r alle Beteiligten.&#8220;<xref ref-type="bibr" rid="bibd2e2069">[38]</xref> Die Leistungsf&#228;higkeit von Interaktionssystemen sei jedoch begrenzt und f&#252;r komplexe Kommunikationen wenig geeignet. So k&#246;nne stets nur einer der Anwesenden reden, nur ein Thema im Mittelpunkt stehen, und die Beteiligten m&#252;ssten sich entweder auf das jeweils aktuelle Thema beschr&#228;nken oder versuchen, ein anderes durchzusetzen. Auf der Ebene der Interaktion lie&#223;en sich diese Beschr&#228;nkungen nicht &#252;berwinden. Dazu bed&#252;rfe es sozialer Systeme anderen Typs: zun&#228;chst der Gesellschaftssysteme und in komplexen Gesellschaftsordnungen schlie&#223;lich des dritten Typs sozialer Systeme, der sich gleichsam zwischen Gesellschafts- und Interaktionssysteme schiebe: die Organisationssysteme.</p>
+        <p>F&#252;r Interaktionssysteme sind in diesem Modell folglich &#8218;Anwesenheit&#8216; und wechselseitige Wahrnehmbarkeit notwendige Strukturmerkmale: Kann in einem sozialen Kontext das Erfordernis der Anwesenheit ganz oder teilweise aufgegeben werden, so wird damit nach Ansicht Luhmanns eine andere Ebene der Systembildung erreicht, sprich: Es handelt sich dann nicht mehr um Interaktion. Diese Annahme, dass Anwesende &#8211; ob sie wollen oder nicht &#8211; eine besondere Form von sozialer Beziehung bzw. Kommunikation unterhalten, die Abwesende nicht auf dieselbe Weise mit einschlie&#223;en kann, erscheint bestechend und hat vieles f&#252;r sich. Zum einen, und das erscheint mir besonders wichtig, ber&#252;cksichtigt dieser Gedanke die Eigenlogik, die Interaktion, verstanden als Kommunikation unter Anwesenden, annehmen kann und welche die Akteure nicht immer beeinflussen k&#246;nnen.<xref ref-type="bibr" rid="bibd2e2276">[39]</xref> Zum anderen erscheint weniger beliebig, wann soziales Handeln &#8218;Interaktion&#8216; ist &#8211; und wann nicht. Wirklich konkreter wird jedoch auch Luhmann hier nur bedingt; so bleibt relativ offen, wann ein Thema zu komplex oder die Anzahl der beteiligten Anwesenden so gro&#223; wird, dass die Kommunikation des Interaktionssystems gesprengt wird.</p>
+        <p>Das Kriterium der Anwesenheit ist auch sonst nicht unproblematisch und bietet Anlass zur Kritik. So hat Andr&#233; Kieserling in seiner an Luhmann anschlie&#223;enden Studie zur <italic>Kommunikation unter Anwesenden</italic> zugegeben, dass Anwesenheit als Kriterium f&#252;r Interaktion nicht immer verf&#228;ngt: Es gebe sowohl den Fall, dass Anwesende nicht als solche angesehen w&#252;rden, als auch den Fall, dass Abwesende wie Anwesende behandelt w&#252;rden.<xref ref-type="bibr" rid="bibd2e2334">[40]</xref> Diese Schwierigkeit ist zumindest teilweise auf das vielleicht &#252;bergro&#223;e Bem&#252;hen zur&#252;ckzuf&#252;hren, Interaktion keinesfalls in &#8218;alteurop&#228;ischer&#8216; Tradition als Wechselwirkung, Sozialit&#228;t schlechthin oder <italic>den</italic> Gegenstandsbereich von Soziologie begreifen zu wollen. Kieserling etwa betont aus diesem Grund, dass es bei der Betrachtung von Interaktion aus systemtheoretischer Perspektive &#8222;nicht um die mehr oder minder dauerhafte Beziehung, die unter Beteiligten bestehen mag oder auch nicht&#8220; geht, &#8222;sondern um die konkrete Struktur dieser zeitlich begrenzten Zusammenkunft selbst.&#8220; Ihr Ende markiert f&#252;r ihn auch das Ende der Interaktion. Eine weitere Zusammenkunft w&#228;re &#8222;eine weitere Interaktion, auch wenn [sie] unter denselben Personen sich abspielt.&#8220;<xref ref-type="bibr" rid="bibd2e2413">[41]</xref> 
+            </p>
+        <p>Das wird jedoch komplexeren Zusammenh&#228;ngen, die aus mehreren Interaktionen bestehen, welche folglich sowohl Geschichte als auch Zukunft haben, nur bedingt gerecht. Das konzeptuelle Problem l&#228;sst sich im Modell wahrscheinlich aufheben: etwa indem man diese Art von Kommunikation als Teil des Gesellschaftssystems betrachtet; oder indem man versucht, das Moment der gesellschaftlichen Entwicklung zu ber&#252;cksichtigen (s.&#160;u.); oder indem man auf die Dynamik und Selbstreferentialit&#228;t sozialer Systeme verweist, die &#8211; bei gleichzeitig bestehenden Kontakten zur Umwelt und zu anderen Systemen &#8211; sich selbst zu reproduzieren und anzupassen verm&#246;gen. Doch ist dies in der praktischen Anwendung auf konkrete Interaktionen immer hilfreich? Jedenfalls erscheint es gerade im Hinblick auf vormoderne Gesellschaften durchaus fraglich, ob Kommunikation, die Abwesende zu integrieren vermag, stets sinnvoll einem Organisations- oder Gesellschaftssystem zuzurechnen ist, oder ob in manchen F&#228;llen die strukturellen Gemeinsamkeiten mit der Kommunikation unter Anwesenden eines Interaktionssystems nicht doch gr&#246;&#223;er sind.</p>
+        <p>Von einem etwas anderen Blickwinkel ausgehend, hat &#8211; wie bereits angedeutet &#8211; auch Luhmann dieses Problem gesehen. Dies wird darin deutlich, dass er offenbar Schwierigkeiten hat, das Verh&#228;ltnis zwischen den drei grundlegenden sozialen Systemen zu bestimmen. So will er einerseits Interaktion, Organisation und Gesellschaft als eigenst&#228;ndige Typen sozialer Systeme verstanden wissen,<xref ref-type="bibr" rid="bibd2e2620">[42]</xref> andererseits kann er sie jedoch nicht voneinander losgel&#246;st betrachten: Luhmann kommt nicht umhin zu erkl&#228;ren, dass &#8222;eine vollst&#228;ndige Trennung der Ebenen nat&#252;rlich nicht m&#246;glich [ist], da alles soziale Handeln in der Gesellschaft stattfindet und letztlich nur in der Form von Interaktion m&#246;glich ist&#8220; oder dass &#8222;soziale Systeme [&#8230;] nicht notwendig wechselseitig exklusiv sind&#8220; und &#8222;jedes Interaktionssystem und jedes Organisationssystem auch zu einem Gesellschaftssystem geh&#246;rt&#8220;.<xref ref-type="bibr" rid="bibd2e2658">[43]</xref> Besonders deutlich wird dies bei vormodernen Gesellschaften, die Luhmann jedoch auch erkl&#228;ren k&#246;nnen muss, will er seinem Anspruch von einer &#8222;auf alle sozialen Tatbest&#228;nde&#8220; anwendbaren Systemtheorie gerecht werden.<xref ref-type="bibr" rid="bibd2e2714">[44]</xref> 
+            </p>
+        <p>Mit dem Begriff der &#8218;Evolution der Typendifferenz&#8216; versucht er daher, sein Modell zu flexibilisieren: Der Prozess der &#8222;soziokulturellen Evolution&#8220; (das hei&#223;t wohl: Geschichte) k&#246;nne als zunehmende Differenzierung der Interaktions-, Organisations- und Gesellschaftssysteme betrachtet werden. Den Anfang dieser Entwicklung bildeten einfachste archaische Gesellschaftsformen, die aus den f&#252;r den Einzelnen &#252;berschaubaren Interaktionen best&#252;nden und in denen Interaktion, Organisation und Gesellschaft strukturell ineinander verschr&#228;nkt, ja nahezu identisch seien; den Endpunkt der Entwicklung stelle die &#8222;einheitliche Weltgesellschaft&#8220; dar, in der es zwangsl&#228;ufig zur Trennung der drei Systemtypen komme. Zwischen diesen Endpunkten sieht Luhmann die &#196;ra der &#8222;regional limitierten Hochkulturen&#8220;. Diese kennzeichne, dass das Gesellschaftssystem eine Gr&#246;&#223;e und Komplexit&#228;t erreicht habe, die das Ma&#223; an Interaktionen sprenge, an denen der Einzelne tats&#228;chlich teilhaben kann &#8211; jedoch ohne dass die Differenzierung der Systemtypen bereits vollst&#228;ndig erfolgt w&#228;re. Diese Entwicklung von der Stammes- hin zur Weltgesellschaft zeige, wie unter wechselnden Bedingungen und bei zunehmender Komplexit&#228;t der Gesellschaftssysteme &#8222;diese Systemtypen auseinandertreten, sich spezifizieren und wechselseitig funktional entlasten.&#8220;<xref ref-type="bibr" rid="bibd2e2890">[45]</xref>
+        </p>
+        <p>Den konkreten antiken, mittelalterlichen und fr&#252;hneuzeitlichen Gesellschaften, die Luhmann anscheinend alle gemeinsam unter die &#8218;regional limitierten Hochkulturen&#8216; fassen will, wird diese stark &#252;berzeichnende Beschreibung sicher nur bedingt gerecht. Auch die (zuk&#252;nftige?) Existenz einer &#8218;einheitlichen Weltgesellschaft&#8216; erscheint durchaus zweifelhaft. Und dass diese sehr allgemeine Geschichts- oder Evolutionstheorie die historische Dimension gesellschaftlicher Entwicklung keinesfalls ersch&#246;pfend zu beschreiben oder gar zu erkl&#228;ren vermag, hat Luhmann selbst zugegeben.<xref ref-type="bibr" rid="bibd2e2976">[46]</xref> Interessant ist jedoch der Gedanke, dass die Perspektive auf die Ausdifferenzierung der Systemtypen &#8211; und damit auf das Verh&#228;ltnis der Systeme zueinander &#8211; einen wichtigen Aspekt beleuchtet, anhand dessen letztlich Eigenarten beobachtet werden k&#246;nnen, die jede soziale Formation auf jeweils spezifische Weise ausf&#252;llt. Dies ist f&#252;r die Analyse gegenw&#228;rtig existierender wie auch nur noch historisch fassbarer Gesellschaften bedenkenswert &#8211; auch dann, wenn man wie im Folgenden die Begriffe Interaktion, Gesellschaft und Organisation nicht im streng Luhmann&#8217;schen Sinne verstehen und verwenden will.</p>
+        <p>Zusammenfassend k&#246;nnen folgende Aspekte von Interaktion herausgestellt werden, die f&#252;r die Untersuchung und Deutung dieses Ph&#228;nomens im antiken Rom zentral erscheinen:</p>
+		
+        <list><list-item><p style="display-quote">
+          1. Interaktion als gemeinsames Handeln von Menschen, in dessen Verlauf die Akteure wechselseitig aufeinander Bezug nehmen und sich aneinander orientieren, ist die Grundlage von Gemeinschaften sowie Gesellschaft im Allgemeinen. Dabei besteht eine enge Verbindung zwischen Interaktion und Kommunikation, was kaum voneinander zu trennen ist:Interaktion ist ohne Kommunikation, Kommunikation ohne Interaktion nur schwer denkbar. Hierbei ist es wohl m&#252;&#223;ig, allzu scharf unterscheiden oder den einen Begriff dem anderen &#252;ber- bzw. unterordnen zu wollen. Vielmehr scheint es sich um unterschiedliche Perspektiven auf das Miteinander von Menschen zu handeln, wobei Interaktion das Element des gemeinsamen Handelns etwas st&#228;rker herausstellt als der Blickwinkel der Kommunikation, der mehr Gewicht auf den Aspekt des Informationsaustauschs legt. Dass im Folgenden der Begriff Interaktion betont wird, ist entsprechend vor allem dem spezifischen Erkenntnisinteresse der vorliegenden Studie geschuldet &#8211; nicht der methodisch-theoretisch begr&#252;ndbaren &#220;berzeugung, dass Interaktion unabh&#228;ngig von Kommunikation betrachtet werden k&#246;nnte oder Kommunikation ein &#8218;Unterfall&#8216; von Interaktion ist. Die physische Anwesenheit der Interagierenden im selben sozialen Raum  und zur selben Zeit begr&#252;ndet  hierbei  eine besondere Situation sozialen Handelns, die in spezifischen Formen der  Kommunikation  ihren Ausdruck findet und jeweils  Eigenlogiken annehmen kann, welche die Akteure nicht immer  kontrollieren  k&#246;nnen. Allerdings erscheint es gerade f&#252;r die Betrachtung der r&#246;mischen Gesellschaft nicht sinnvoll, Anwesenheit streng zu einem notwendigen Kriterium f&#252;r Interaktion zu erkl&#228;ren; vielmehr soll &#8211; etwas flexibler &#8211; Interaktion nicht nur unmittelbare, sondern auch  m ittelbare Pr&#228;senz  umfassen. Ein Beispiel: M.&#160;Tullius Cicero schreibt seinem vertrauten Freund T.&#160;Pomponius Atticus, jedoch in dem Wissen, dass dieser den Brief anderen zeigen wird; gleichzeitig wei&#223; in Rom jeder, dass Atticus mit Cicero in Kontakt steht. In konkreten Interaktionssituationen ist folglich davon auszugehen, dass Cicero als &#8218;vermittelt&#8216; anwesend betrachtet wird, selbst wenn er nicht k&#246;rperlich in Rom pr&#228;sent ist. Streng nach Luhmann w&#228;re die Verbindung zu Cicero wohl nicht der Interaktion mit dem tats&#228;chlich anwesenden Atticus zuzurechnen, sondern dem Gesellschaftssystem, das auch den abwesenden Cicero zu integrieren vermag.
+		</p></list-item>				 
+		<list-item><p style="display-quote">
+		  2. Die physische Anwesenheit der Interagierenden im selben sozialen Raum und zur selben Zeit begr&#252;ndet hierbei eine besondere Situation sozialen Handelns, die in spezifischen Formen der Kommunikation ihren Ausdruck findet und jeweils Eigenlogiken annehmen kann, welche die Akteure nicht immer kontrollieren k&#246;nnen. Allerdings erscheint es gerade f&#252;r die Betrachtung der r&#246;mischen Gesellschaft nicht sinnvoll, Anwesenheit streng zu einem notwendigen Kriterium f&#252;r Interaktion zu erkl&#228;ren; vielmehr soll &#8211; etwas flexibler &#8211; Interaktion nicht nur unmittelbare, sondern auch mittelbare Pr&#228;senz umfassen.<xref ref-type="bibr" rid="bibd2e3295">[47]</xref> 	 
+        </p></list-item>
+        <p style="display-quote">
+          3. Das Verh&#228;ltnis von Interaktion und Gesellschaft ist komplex: Interaktionen sind eingebunden in die Gesellschaft und umgekehrt. Strukturelle Faktoren, wie etwa gesellschaftliche Werte und Normen, die sich in Rollen(modellen) &#228;u&#223;ern, beeinflussen die Akteure hierbei immens. Jedoch sind die Interagierenden weder lediglich Marionetten der in sie gesetzten Erwartungen, deren sie sich bis zu einem gewissen Grad bewusst sind und deren Ausf&#252;hrung durchaus zu ihrer Disposition stehen kann, noch sind Menschen der Eigenlogik von Interaktion v&#246;llig ausgeliefert.
+        </p>
+        <list-item><p style="display-quote">
+          4. Individuen interagieren miteinander auf Grundlage wechselseitiger Interpretationen, die sie einander kommunizieren. Besonders wichtig sind hierf&#252;r gemeinsame Symbole und die Zeichenhaftigkeit ihrer Handlungen: Verf&#252;gen die Interagierenden &#252;ber ein gemeinsames Zeichen- und Symbolsystem, so sind sie in der Lage, m&#246;gliche Reaktionen des Gegen&#252;bers abzusch&#228;tzen und f&#252;r ihre eigenen Reaktionen mit einzukalkulieren. Interaktion ist daher zum einen immer auch permanente kommunikative Verst&#228;ndigung (s.&#8239;o.). Zum anderen ist Interaktion stets ein dynamischer Prozess, in dessen Verlauf die Akteure die ihrer Verst&#228;ndigung dienenden Symbole und Zeichen, aber auch Situations- und Handlungsdefinitionen, die ebenfalls Gegenstand der Interpretation sind, immer wieder aufs Neue gemeinsam aushandeln.
+        </p></list-item>
+        <list-item><p style="display-quote">
+          5. Die Intention von Interaktionen ist dabei zun&#228;chst einmal der Wunsch nach Verst&#228;ndigung. Dennoch beinhalten sie stets auch Konfliktpotenzial und die M&#246;glichkeit, dass eine Interaktion unverrichteter Dinge abgebrochen wird: zum einen, weil aufgrund ihres interpretativen Charakters immer auch die Gefahr von Missverst&#228;ndnissen gegeben ist; zum anderen, weil der Wunsch nach Konsens allein nicht notwendigerweise ausreicht, um zu einer gemeinsamen Definition der Interaktions-Situation und der damit verbundenen Handlungen zu gelangen.
+        </p></list-item></list>
+        <p>Der Grund f&#252;r die Bedeutung der Stadt Rom als geographisches Zentrum der politisch-sozialen Interaktion ist in den Urspr&#252;ngen des <italic>Imperium Romanum</italic> zu suchen: dem Stadtstaat Rom, unter den Bedingungen einer aristokratisch dominierten Gesellschaft und Herrschaft. Wie in anderen antiken Stadtstaaten des Mittelmeerraumes, etwa den griechischen &#960;&#972;&#955;&#949;&#953;&#962;, war auch Rom als st&#228;dtisches Zentrum des Gemeinwesens der Raum, in dem die politisch-soziale Interaktion der herrschenden Aristokratie untereinander wie auch gegen&#252;ber anderen relevanten sozialen Gruppen stattfand.<xref ref-type="bibr" rid="bibd2e3426">[48]</xref> In Rom entstanden die politischen Institutionen der <italic>res publica</italic>, insbesondere der Senat, der zum institutionellen Zentrum f&#252;r das aristokratische Selbstverst&#228;ndnis der Senatoren werden sollte. In diesen Institutionen bet&#228;tigte sich die r&#246;mische Senatorenschaft, um ihren adeligen Status zu konstituierten; in Rom fanden die Volksversammlungen statt, vor denen sich Senatoren bew&#228;hren mussten, wollten sie in ein Amt gew&#228;hlt werden, was wiederum die Zugeh&#246;rigkeit zum Senat begr&#252;ndete.<xref ref-type="bibr" rid="bibd2e3477">[49]</xref> Die &#196;mter selbst stellten ihrer Funktion nach urspr&#252;nglich zun&#228;chst <italic>st&#228;dtische</italic> &#196;mter dar, die auf die Stadt und ihre Bewohner ausgerichtet waren. Die Stadt war aus diesem Grund die B&#252;hne adeliger Selbstbehauptung, senatorischer Selbstdarstellung und der inneraristokratischen Konkurrenz.<xref ref-type="bibr" rid="bibd2e3497">[50]</xref> 
+            </p>
+        <p>Aufgrund der Entwicklung, die Rom vom italischen Stadtstaat hin zum Hegemon des Mittelmeerraums und zur Herrscherin &#252;ber ein Weltreich genommen hat, und den durch diese Entwicklung entstehenden Dynamiken im inneraristokratischen Beziehungsgeflecht wurde die Bedeutung der Stadt Rom als ideeller Mittelpunkt des Reiches immer wieder reproduziert und best&#228;tigt. Von allen Amtstr&#228;gern wurde erwartet, nach Beendigung ihrer Amtszeit als einfache Senatsmitglieder &#8218;zur&#252;ck ins Glied&#8216; der r&#246;mischen Aristokratie zu treten, um eine Formulierung Karl-Joachim H&#246;lkeskamps aufzugreifen.<xref ref-type="bibr" rid="bibd2e3536">[51]</xref> Jene Magistrate, deren T&#228;tigkeitsfelder au&#223;erhalb der Stadt lagen, kehrten zu diesem Zweck nach Rom zur&#252;ck, wo sie sich auch f&#252;r ihre Amtsf&#252;hrung rechtfertigen mussten. Gerade im Fall dieser Amtstr&#228;ger, die immer l&#228;nger und immer selbst&#228;ndiger fern der Stadt und der Kontrolle durch die Standesgenossen in ausw&#228;rtigen Kriegen und Provinzen ihren Gesch&#228;ften nachgingen, verlief dies nicht immer konfliktfrei; befolgt wurde die Regel dennoch. Die betreffenden Feldherren und Statthalter, bezeichnenderweise ganz besonders auch jene m&#228;chtigen Einzelpers&#246;nlichkeiten, die im 1.&#160;Jahrhundert v.&#160;Chr. das System endg&#252;ltig sprengten, suchten ihrerseits wiederum den Rahmen der Stadt Rom, um ihre Erfolge und damit ihren Zugewinn an Status und Ehre auf vielf&#228;ltige Weise zum Ausdruck zu bringen.<xref ref-type="bibr" rid="bibd2e3565">[52]</xref>
+            </p>
+        <p>In der Kaiserzeit kam zur Interaktion innerhalb der Senatsaristokratie und mit den &#252;brigen sozialen Gruppen der r&#246;mischen Gesellschaft in der Person des <italic>princeps</italic> eine weitere, &#228;u&#223;erst komplexe Dimension zum Tragen: Charakteristisch f&#252;r die Konstruktion des Prinzipats war, dass die Republik ein wichtiger Referenzpunkt blieb. Besonders in der fr&#252;hen Kaiserzeit gaben die <italic>principes</italic> vor allem in Hinblick auf die r&#246;mische Senatsaristokratie notgedrungen vor, lediglich <italic>primus inter pares</italic> in der nominell wiederhergestellten Adelsrepublik zu sein.<xref ref-type="bibr" rid="bibd2e3581">[53]</xref> Die Bedeutung der republikanischen Institutionen, Rituale und Verhaltensweisen wurden so immer wieder best&#228;tigt &#8211; und damit auch die traditionelle Bedeutung der Stadt, die nun auch zum Zentrum <italic>kaiserlicher</italic> Herrschaftsrepr&#228;sentation und -konstitution wurde, was in der Folgezeit wiederum eine ganz eigene Dynamik entfaltete.</p>
+        <p>Rom wurde damit zu dem Raum, in dem die Kaiser mit den unterschiedlichen Bev&#246;lkerungsgruppen, deren Akzeptanz die <italic>principes</italic> zur Sicherung ihrer Herrschaft bedurften, interagieren mussten. Die Stadt stellte dabei nicht nur die B&#252;hne f&#252;r Formen des monarchischen Euergetismus sowie f&#252;r jene Rituale und symbolischen Handlungen dar, die zum Teil ebenfalls auf republikanisch-aristokratischen Traditionen beruhten und mit denen die Kaiser die Akzeptanz ihrer Herrschaft seitens des <italic>populus Romanus</italic> zu erwecken sowie sinnlich fassbar zu demonstrieren suchten.<xref ref-type="bibr" rid="bibd2e3604">[54]</xref> Es galt auch, das vor diesem Hintergrund sehr komplizierte Verh&#228;ltnis zwischen Kaiser und Senat bzw. der Senatsaristokratie in Rom zu begr&#252;nden, zu pflegen und demonstrativ in Szene zu setzen; in Rom musste der Kaiser seiner &#252;berragenden Stellung entsprechend in die weiterhin bestehenden aristokratischen Beziehungsnetze und Verhaltensnormen eingebunden werden, ohne seine Bedeutung zu sehr oder zu wenig hervorzuheben.<xref ref-type="bibr" rid="bibd2e3629">[55]</xref> Jedenfalls war es insbesondere in der fr&#252;hen Kaiserzeit aus Gr&#252;nden der Herrschaftssicherung sowohl in politisch-sozialer, als auch in &#8218;ideologischer&#8216; und daher auch in geographischer Hinsicht nur schwer m&#246;glich, sich von Italien und der Stadt Rom zu emanzipieren.<xref ref-type="bibr" rid="bibd2e3635">[56]</xref>
+            </p>
+        <p>Der besondere Stellenwert Roms als Zentrum der Interaktion manifestierte sich auch darin, dass r&#246;mische Senatoren dem Aufenthalt in der Stadt sowohl in der Republik als auch in der Kaiserzeit gro&#223;e Bedeutung zuma&#223;en und sie die Stadt nicht verlie&#223;en, sofern dies nicht im Rahmen einer Magistratur als Feldherr oder Provinzstatthalter erforderlich war. Es entwickelte sich ein aristokratisches Ideal der Anwesenheit in Rom, das auch die Kaiser veranlasste, Rom zu ihrem Aufenthaltsort zu w&#228;hlen.<xref ref-type="bibr" rid="bibd2e3645">[57]</xref> Doch bei aller Bedeutung Roms als konkretes, r&#228;umlich fassbares Zentrum politisch-sozialer Interaktionen, die in einer vormodernen <italic>face-to-face society</italic>, in der es direkter Kontakte bedarf, auch nur konsequent erscheint &#8211; schon weil man nicht &#252;ber moderne Kommunikationstechniken und Massenmedien verf&#252;gte: R&#246;mische Aristokraten waren auch in Republik und fr&#252;her Kaiserzeit h&#228;ufig au&#223;erhalb Roms anzutreffen, und das nicht nur in ihrer Eigenschaft als Magistrate, Feldherren und Statthalter; ferner kehrten nachweislich einzelne Senatoren der <italic>urbs</italic> &#8211; und damit den Institutionen, welche die Arena darstellten, in der es Status und Ehre zu erwerben und zu verteidigen galt &#8211; demonstrativ und (mehr oder minder) dauerhaft den R&#252;cken. &#196;hnliches kann f&#252;r die Kaiser und ihre Vorl&#228;ufer, die &#8218;gro&#223;en M&#228;nner&#8216; und m&#228;chtigen Einzelpers&#246;nlichkeiten der ausgehenden Republik, festgestellt werden. Doch was bedeutet das? </p>
+        <p>Diese Frage stellt sich vor allem auch vor dem Hintergrund der Beobachtung, dass zumindest im r&#246;mischen Fall Pr&#228;senz im Verh&#228;ltnis zu Interaktion zwei eng miteinander verkn&#252;pfte Funktionen wahrnimmt. Zum einen ist Pr&#228;senz/Anwesenheit/&#8218;In-Rom-Sein&#8216; eine zentrale Ausgangs- und Vorbedingung f&#252;r politisch-sozial relevante Interaktionen: Ohne zumindest &#8218;mittelbar&#8216; anwesend zu sein, scheint es auf den ersten Blick kaum m&#246;glich, an der Interaktion teilzunehmen, sei es innerhalb der Aristokratie, sei es im Verh&#228;ltnis zum Kaiser, sei es gegen&#252;ber der st&#228;dtischen Bev&#246;lkerung. Das macht Pr&#228;senz andererseits aber auch zu einem Zeichen von gro&#223;er Symbolkraft: Pr&#228;senz wird &#8211; etwas &#252;berspitzt formuliert &#8211; zum Sinnbild f&#252;r die M&#246;glichkeit zur Interaktion. Dieser Gesichtspunkt ist f&#252;r die Analyse der r&#246;mischen Senatsaristokratie von zentraler Bedeutung. Denn f&#252;r sie war politisch-soziale Interaktion in der Stadt aufs engste mit dem Erwerb von aristokratischem Status verbunden &#8211; ein Faktor, der dadurch noch verst&#228;rkt wurde, dass r&#246;mische Senatoren, ebenso wie sp&#228;ter die Kaiser, stets der Beobachtung ausgesetzt waren, seitens der <italic>peer group</italic>, also der &#8218;Mitaristokraten&#8216;, wie auch des <italic>populus Romanus</italic>.<xref ref-type="bibr" rid="bibd2e3665">[58]</xref> Vor diesem Hintergrund kann jedoch auch die Abwesenheit von Pr&#228;senz, also Absenz, nicht bedeutungslos gewesen sein. Daher soll in der vorliegenden Arbeit folgender Frage nachgegangen werden: Welche Funktionen konnten in der sp&#228;ten Republik und im fr&#252;hen Prinzipat Absenz von und R&#252;ckzug aus Rom f&#252;r r&#246;mische Aristokraten erf&#252;llen, f&#252;r die institutionalisierte Formen politischer Partizipation und &#8211; damit verbunden &#8211;  interagierende Pr&#228;senz in der Stadt so wichtig waren?</p>
+        <p>Zur Beantwortung dieser Frage ist zun&#228;chst einf&#252;hrend zu er&#246;rtern (Kapitel 1.2), inwiefern die Teilhabe an und Pr&#228;senz in der <italic>res publica</italic> in Republik und Kaiserzeit einem Ideal folgte, das f&#252;r die Angeh&#246;rigen der r&#246;mischen Senatsaristokratie &#8211; von der zeitlich begrenzten Absenz im Rahmen eines Amtes einmal abgesehen &#8211; lediglich Behinderung, Krankheit und Alter als legitimen Grund f&#252;r eine dauernde Abwesenheit von Rom vorsah. Dieses Ideal wurde sp&#228;ter auch an die <italic>principes</italic> herangetragen, was sich in dem an den Kaiser gerichteten Anspruch ausdr&#252;ckte, in Rom greifbar zu sein sowie den Kontakt zur Aristokratie zu suchen und nicht etwa zu verweigern oder auf Sklaven, Freigelassene und den <italic>populus Romanus</italic> zu beschr&#228;nken. Anschlie&#223;end wird der Frage nach der Funktion von Absenz und R&#252;ckzug aus drei Perspektiven nachgegangen.</p>
+        <p>Der erste Teil der Arbeit (Kapitel 2) ist der r&#246;mischen Villa gewidmet. Seit der sp&#228;ten r&#246;mischen Republik war es f&#252;r Senatoren &#252;blich, mindestens eine luxuri&#246;se Villa zu besitzen. Jene Landg&#252;ter waren nicht nur Einheiten landwirtschaftlicher Produktion, die einen wichtigen Beitrag bei der Generierung senatorischen Wohlstandes leisteten; sie boten r&#246;mischen Aristokraten auch Raum, ihrer &#8218;Mu&#223;e&#8216;, dem <italic>otium</italic>, nachzugehen. Vom 2.&#160;Jahrhundert&#160;v.&#160;Chr. an fanden Villenwirtschaft und die Villeggiatur r&#246;mischer Senatoren starke Verbreitung in Italien, und die Anzahl dieser Landsitze nahm seit dem ersten vorchristlichen Jahrhundert stark zu. R&#246;mische Senatoren verbrachten viel Zeit auf diesen aufw&#228;ndig ausgestatteten Landsitzen, also fern der Stadt, der Kurie und des Forums, wo in den politischen Institutionen der <italic>res publica</italic> die Geschicke Roms bestimmt wurden. Die sog. &#8218;Senatsferien&#8216; etwa stellten einen Zeitraum dar, in dem sich regelm&#228;&#223;ig jeden Sommer weite Teile des Senates an den Golf von Neapel begaben. Die Villa bot damit den Rahmen f&#252;r eine Form von Absenz, die offenbar akzeptiert wurde &#8211; allerdings mit der Ma&#223;gabe, dass es sich um eine zeitlich begrenzte Absenz handelte: Die R&#252;ckkehr in das politische Rom war stets intendiert. Wie ist das zu interpretieren? </p>
+        <p>Die Villa kann jedenfalls nicht, so die These, als der vermeintlich &#8218;private&#8216;, unpolitische R&#252;ckzugsort eines scheinbar allein auf individuelle Interessen und Bed&#252;rfnisse ausgerichteten <italic>otium</italic> verstanden werden, wie die altertumswissenschaftliche Forschung h&#228;ufig suggeriert.<xref ref-type="bibr" rid="bibd2e3707">[59]</xref> Die Villa war vielmehr Teil einer demonstrativ aufw&#228;ndigen und nicht nur in dieser Form greifbaren aristokratischen Lebensf&#252;hrung, deren Zweck in der Repr&#228;sentation bzw. Konstitution von Ehre und Status bestand. In diesen Zusammenhang geh&#246;rt auch, dass die Villa ein Ort von Politik sein konnte (inneraristokratische Kommunikation, Kommunikation mit anderen sozialen Gruppen), wenn auch anderer Politikformen als auf dem Forum oder im Senat: Zumindest potentiell war ,das Politische&#8216; stets dort, wo sich r&#246;mische Aristokraten befanden und zusammentrafen; auch die Villa stellt keine Ausnahme von dieser Regel und kann dementsprechend nicht als (auch nur intentional) &#8218;politikfreier&#8216; Raum betrachtet werden. Zu diskutieren bleibt vor diesem Hintergrund, warum die Villenkultur chronologisch parallel zur Krise der Republik sowie der Entstehung und Etablierung des Prinzipats so starke Verbreitung fand. Hierzu wird die Entwicklung der Villenkultur in Beziehung zur inneraristokratischen Konkurrenz gesetzt, eine Konstellation, die in der Kaiserzeit zus&#228;tzlich an Komplexit&#228;t gewann, da nun die <italic>principes</italic> ihrer Stellung angemessen in den inneraristokratischen Wettstreit integriert werden mussten.</p>
+        <p>Bezogen auf die Frage nach der gesellschaftliche Funktion, die Absenz von der Stadt Rom in der republikanischen und kaiserzeitlichen Gesellschaft erf&#252;llte, nimmt Kapitel 2 die Perspektive ein, dass die Absenz r&#246;mischer Aristokraten bzw. des Kaisers vom politisch-sozialen Interaktionszentrum mit ihrer Anwesenheit in einem <italic>anderen</italic> Interaktionszentrum, n&#228;mlich der r&#246;mischen Villa, einherging. Absenz von Rom war in diesem Fall also die Vorbedingung f&#252;r Pr&#228;senz und Interaktion andernorts. Das funktionierte, weil alle betroffenen aristokratischen Akteure (oder doch zumindest ziemlich viele von ihnen) zwar von Rom abwesend, aber dennoch an denselben Orten pr&#228;sent waren bzw. ein Set von Orten etabliert hatten, in dem gemeinsame aristokratische Pr&#228;senz erwartet werden konnte. Die nun folgenden Abschnitte der Arbeit betrachten demgegen&#252;ber eine strukturell ganz andere Form von Absenz: n&#228;mlich die demonstrative Absenz von Rom einzelner Aristokraten oder des Herrschers bzw. des potenziellen Nachfolgers, w&#228;hrend die &#252;brigen Aristokraten weiter im Interaktionszentrum Rom verblieben. Absenz von der Stadt erf&#252;llte in diesem Zusammenhang eine symbolische Funktion, die &#8211; paradoxerweise &#8211; in der politisch-sozialen Interaktion in Rom zur Geltung kam.</p>
+        <p>Der zweite Abschnitt der Arbeit (Kapitel 3) handelt vom aristokratischen R&#252;ckzug aus der Politik als Strategie der (De-)Legitimierung. Obwohl von r&#246;mischen Senatoren erwartet wurde, im politischen Rom pr&#228;sent zu sein und sich an den f&#252;r die <italic>res publica</italic> relevanten Entscheidungsprozessen zu beteiligen, berichten die Quellen immer wieder, dass ein v&#246;llig gesunder und keineswegs alter Senator sich permanent und manchmal auch demonstrativ von der politischen B&#252;hne in Rom zur&#252;ckgezogen hat. Auff&#228;llig ist, dass in der Regel eine Konfliktsituation Hintergrund dieser Ereignisse ist, die dann im Kontext des Diskurses um Verbannung und Exil thematisiert wurden. Dies f&#252;hrt zu der Frage, wie in Rom politische Konflikte gef&#252;hrt und zum Ausdruck gebracht wurden. Dieses Problem wiederum ist eng verkn&#252;pft mit den Auspr&#228;gungen der politischen Kultur im sp&#228;trepublikanischen und kaiserzeitlichen Rom, ihren komplexen Mechanismen, Symbolen, Zeichen und Ritualen. Was war in diesem Fall der Zweck des aristokratischen R&#252;ckzugs? Dazu gilt es in einem ersten Schritt zu er&#246;rtern, wie r&#246;mische Senatoren, die weder alt noch krank waren, ihren vorgeblich dauerhaften R&#252;ckzug rechtfertigten. Anschlie&#223;end wird die Absenz oder Pr&#228;senz von Senatoren oder auch des ganzen Senates betrachtet und als Strategien zur (De-)Legitimierung politischer F&#252;hrer, Regimes oder einzelner politischer Positionen interpretiert. </p>
+        <p>Der dritte Teil der Arbeit (Kapitel 4) widmet sich dem abwesenden Herrscher. In einem ersten Abschnitt wird der Herrscher, der sich zur&#252;ckzieht oder seinen R&#252;ckzug anbietet, um seine &#252;berragende Position zu legitimieren und Akzeptanz ihrer Herrschaft zu demonstrieren, er&#246;rtert. Hierbei ist zun&#228;chst das Beispiel zu diskutieren, das L. Cornelius Sulla mit seinem R&#252;ckzug nach Kampanien 80/79&#160;v.&#160;Chr. gesetzt hat: Die These ist, dass Sulla f&#252;r den r&#246;mischen Kontext die Figur des m&#228;chtigen Aristokraten erfunden hat, der alle nur erdenklichen Ehren erlangt hat, seiner herausragenden Stellung nun m&#252;de ist und sich aus diesem Grunde aus dem politischen Geschehen in Rom zur&#252;ckzieht. Damit legte er die Grundlage f&#252;r ein Muster, dessen sich insbesondere in der fr&#252;hen Kaiserzeit einige <italic>principes</italic> bedienten, um ihre Herrschaft zu legitimieren bzw. die Akzeptanz ihrer Herrschaft zu demonstrieren: das &#8218;Angebot&#8216;, von ihrer herausragenden Machtstellung zur&#252;ckzutreten &#8211; allerdings immer mit der Intention, dass der Senat und das Volk von Rom dieses Angebot mehr oder weniger vehement ablehnen w&#252;rden. </p>
+        <p>Dann soll der R&#252;ckzug (aus dynastischer Perspektive) potentieller oder ehemaliger &#8218;Kronprinzen&#8216; thematisiert werden, deren Anwesenheit in Rom &#8211; sei es willentlich, sei es unabsichtlich &#8211; den Herrschaftsanspruch oder die Legitimit&#228;t des oder der eigentlichen vorgesehenen Nachfolger h&#228;tte infrage stellen k&#246;nnen. Das betrifft etwa Tiberius&#8217; R&#252;ckzug nach Rhodos zugunsten seiner S&#246;hne, der Enkel des Augustus, aber auch Domitian, der sich ostentativ aus Rom entfernte, um seinem Bruder Titus, der als Nachfolger des Vaters vorgesehen war, nicht im Wege zu stehen. Es soll gezeigt werden, dass die Pr&#228;senz eines m&#228;nnlichen Angeh&#246;rigen der kaiserlichen Familie im politischen und sozialen Leben der Stadt Rom als Zeichen verstanden werden konnte, dass es sich um ein potenziell f&#252;r F&#252;hrungs- und Herrschaftsaufgaben verf&#252;gbares Familienmitglied handelte &#8211; seine Absenz hingegen als Verzicht auf derartige Anspr&#252;che. Abschlie&#223;end werden Gelegenheiten er&#246;rtert, bei denen Kaiser Rom tats&#228;chlich verlassen haben &#8211; mit manchmal unvorhergesehenen und unerw&#252;nschten Auswirkungen. </p>
+        <p>Dies verdeutlicht insbesondere ein Spezialfall: der R&#252;ckzug des Kaisers Tiberius auf die Insel Capri 26&#160;n.&#160;Chr., ein Vorgehen, das Tiberius&#8217; Zeitgenossen und der modernen altertumswissenschaftlichen Forschung gleicherma&#223;en viel Stoff zu Diskussionen geboten hat. Was auch immer Tiberius mit diesem Vorgehen intendiert haben mag &#8211; eine Frage, die letztlich wohl nicht endg&#252;ltig beantwortet werden kann: Gut beraten war er damit nicht. Des Kaisers Daueraufenthalt auf Capri hatte eine zus&#228;tzliche Destabilisierung der ohnehin schwierigen Situation in der Stadt Rom zur Folge. Es ist daher wahrscheinlich kein Zufall, dass Tiberius&#8217; Nachfolger seinem Beispiel nicht gefolgt sind. Die <italic>principes</italic> waren eben nicht mehr lediglich besonders m&#228;chtige Mitglieder der Senatsaristokratie, auch wenn sie dies vorzugeben gezwungen waren: Ein r&#246;mischer Kaiser konnte sich nicht zur&#252;ckziehen.</p>
+      </sec>
+      <sec>
+        <title>1.2 Politische Teilhabe und aristokratische Pr&#228;senz</title>
+        <p>Kennzeichnend f&#252;r das republikanische wie kaiserzeitliche Rom ist die enge Verkn&#252;pfung und gegenseitige Bedingtheit von politischer und sozialer Ordnung.<xref ref-type="bibr" rid="bibd2e4044">[60]</xref> Die soziale Ordnung des republikanischen Roms stellte eine nach &#8218;Ehre&#8216; stratifizierte Gesellschaft dar, in der alle zentralen gesellschaftlichen Belange im Rahmen der pers&#246;nlichen Kontakte innerhalb der &#252;ber die gr&#246;&#223;te Ehre verf&#252;genden adeligen Oberschicht geregelt wurden. Nun waren in Rom Ehre und gesellschaftlicher Rang zumindest theoretisch nicht erblich, sondern mussten individuell erarbeitet werden. Dabei war der Erwerb von Ehre und Status auf das engste an die politische Ordnung der <italic>res publica</italic> gekoppelt: Zur Aristokratie geh&#246;rte, wer Mitglied des Senates war, Mitglied des Senates wurde, wer &#196;mter bekleidet hatte. Das im <italic>cursus honorum</italic> erreichte Amt hingegen bestimmte die Position eines Senators in der aristokratischen Rangordnung. Dies hatte zur Folge, dass insbesondere das Erreichen m&#246;glichst hoher &#196;mter zum Gegenstand von Konkurrenz wurde.<xref ref-type="bibr" rid="bibd2e4059">[61]</xref> In erster Linie begr&#252;ndete also der Dienst an der <italic>res publica</italic>, als Magistrate und Mitglieder des Senates sowie auch als Feldherren und Statthalter in den Provinzen, Ehre und soziale Stellung eines Senators, sowohl innerhalb dieser sozialen Gruppe, als auch in der Gesellschaft als Ganzes gesehen. Christian Meier hat diese Eigenart der r&#246;mischen Gesellschaft auf folgende pr&#228;gnante und viel zitierte Formel gebracht: &#8222;Wer Politik trieb, geh&#246;rte zum Adel, und wer adelig war, trieb Politik.&#8220;<xref ref-type="bibr" rid="bibd2e4086">[62]</xref> 
+            </p>
+        <p>Dass seinerseits wiederum das Ma&#223; an erworbener Ehre und damit zusammenh&#228;ngend die gesellschaftliche Stellung eines Senators f&#252;r das Gewicht seiner Meinung im politischen Entscheidungsprozess von entscheidender Bedeutung war,<xref ref-type="bibr" rid="bibd2e4107">[63]</xref> verweist darauf, dass gleichzeitig eine zentrale Voraussetzung f&#252;r Funktionsweise und Funktionieren der politischen Ordnung die auf Ungleichheit basierende soziale Ordnung der nach Ehre stratifizierten Gesellschaft sowie ihre Akzeptanz durch die Gesellschaft war.<xref ref-type="bibr" rid="bibd2e4123">[64]</xref> Diese Verquickung von Politik und Gesellschaft hat Aloys Winterling als &#8222;politische Integration der Gesellschaft&#8220;, die mit &#8222;sozialer Integration der Politik&#8220; einhergegangen sei, beschrieben.<xref ref-type="bibr" rid="bibd2e4150">[65]</xref>
+            </p>
+        <p>Vor diesem Hintergrund erkl&#228;rt sich auch die Schwierigkeit, das Konzept &#8218;&#246;ffentlich/privat&#8216; auf die r&#246;mische Senatsaristokratie anzuwenden, das modernen Menschen doch so sehr als selbstverst&#228;ndliche und sch&#252;tzenswerte Gr&#246;&#223;e des Zusammenlebens verstehen, deren Existenz man zun&#228;chst in jeder Form menschlicher Gesellschaft vermuten m&#246;chte, als Ausdruck eines zutiefst menschlichen Bed&#252;rfnisses. Doch haben diese Vorstellungen Geschichte; sie orientieren sich an Ideen und Begriffen, die erst mit der Formierung der modernen Gesellschaft und des modernen Staates im Laufe des 18. Jahrhunderts sowie dem damit verkn&#252;pften Gedanken, dass Staat und Gesellschaft zwei voneinander unterscheidbare Gebilde sind, entstanden.<xref ref-type="bibr" rid="bibd2e4170">[66]</xref> Damit verbunden war das Verst&#228;ndnis von Politik als einem von der Gesellschaft differenzierbaren Bereich, der die &#252;ber die h&#228;usliche Sph&#228;re hinausgehenden Belange aller B&#252;rger zum Gegenstand hat und mit Handeln auf staatlicher Ebene in Beziehung gesetzt wurde. Die Unterscheidung &#8218;privat/&#246;ffentlich&#8216; erm&#246;glichte, die Scheidung des Staates und der Politik von der Gesellschaft zum Ausdruck zu bringen. </p>
+        <p>Doch trotz des R&#252;ckbezuges auf die antike Quellensprache und hier insbesondere auf die lateinische <italic>privatus/publicus</italic>-Unterscheidung, ist die Idee, dass Staat und Gesellschaft voneinander differenzierte Gebilde sind, eine moderne Vorstellung, die sich nicht einfach auf die r&#246;mischen Verh&#228;ltnisse &#252;bertragen l&#228;sst, wie die Rede von der &#8218;politischen Integration der Gesellschaft&#8216; und der ,sozialen Integration der Politik&#8216; andeutet. Gerade in Bezug auf das Verh&#228;ltnis von aristokratischer <italic>domus</italic> und <italic>res publica</italic> kann gezeigt werden, dass die Differenz <italic>privatus/publicus</italic> nicht mit der modernen Unterscheidung &#8218;privat/&#246;ffentlich&#8216; sowie deren Verkn&#252;pfung mit &#8218;politisch/unpolitisch&#8216; gleichgesetzt werden kann. Angelegenheiten der <italic>res publica</italic> konnten in der <italic>domus</italic> eines Senators verhandelt werden und in politischen Auseinandersetzungen, die in den Institutionen des Gemeinwesens gef&#252;hrt wurden, waren dem &#8218;Haus&#8216; &#8211; also der <italic>res privata</italic> &#8211; zuzuordnende Aspekte von Bedeutung. Umgekehrt waren die politischen Funktionen eines B&#252;rgers nicht nur eine &#8218;&#246;ffentliche&#8216; Angelegenheit. Die antike <italic>publicus</italic>/<italic>privatus</italic>-Unterscheidung hat also mit der modernen Unterscheidung nicht viel gemein.<xref ref-type="bibr" rid="bibd2e4280">[67]</xref> 
+            </p>
+        <p>In vieler Hinsicht &#228;ndert sich dies auch mit dem Ende der Republik und der Etablierung des Prinzipats nicht. Auf Grund der Einbettung der Politik in die Gesellschaft und der Strukturierung der gesellschaftlichen Rangordnung durch die politischen Institutionen konnten die Kaiser die politische Ordnung nicht au&#223;er Kraft setzen, ohne R&#228;nge und &#8218;Ehren&#8216; und so die gesellschaftlichen Strukturen selbst zu beseitigen. Da den Angeh&#246;rigen jener Gesellschaft, die die Kaiser zu beherrschen w&#252;nschten, die republikanische Ordnung zudem als die einzig akzeptierbare galt, h&#228;tte jeder Versuch, grunds&#228;tzlich an ihr zu r&#252;tteln, unweigerlich zu einem Verlust der Akzeptanz der kaiserlichen Herrschaft und so wohl zu deren Ende gef&#252;hrt.<xref ref-type="bibr" rid="bibd2e4304">[68]</xref> Folglich verkn&#252;pfte und legitimierte Augustus als erster <italic>princeps</italic> seine Alleinherrschaft auch nicht mit dem Anspruch, etwas Neues geschaffen zu haben, sondern damit, nach den B&#252;rgerkriegen die traditionelle Ordnung der <italic>res publica</italic> wiederhergestellt zu haben.<xref ref-type="bibr" rid="bibd2e4327">[69]</xref> Das hatte langfristig die &#8222;paradoxe Situation&#8220; zur Folge, &#8222;in der sich die Kaiser als Alleinherrscher in einer Republik&#8220; wiederfanden.<xref ref-type="bibr" rid="bibd2e4343">[70]</xref> 
+            </p>
+        <p>Im Verh&#228;ltnis zwischen Kaiser und Aristokratie entwickelte sich im weiteren Verlauf das, was Aloys Winterling als &#8222;Doppelb&#246;digkeit der aristokratischen Kommunikation&#8220; bezeichnet: Zwar orientierten sich alle Beteiligten an den neuen Machtverh&#228;ltnissen, diese kamen jedoch nicht offen zur Sprache.<xref ref-type="bibr" rid="bibd2e4365">[71]</xref> Entsprechend waren Augustus und viele seiner Nachfolger bem&#252;ht, ihre Sonderstellung nicht hervortreten zu lassen, sondern sich als &#8211; wenn auch herausragende &#8211; Senatoren unter Senatoren zu betragen.<xref ref-type="bibr" rid="bibd2e4372">[72]</xref> So entstanden mit der Institutionalisierung des kaiserlichen Hofes und der kaiserlichen Verwaltung zwar Entscheidungszentren, deren Macht aus der &#252;berragenden Bedeutung des Kaisers resultierte und die die Bedeutung der republikanischen Institutionen zunehmend marginalisierten.<xref ref-type="bibr" rid="bibd2e4380">[73]</xref> Doch die meisten republikanischen Institutionen, insbesondere Senat und Magistratur, bestanden weiter, in denen nach wie vor das Gemeinwesen betreffende Angelegenheiten verhandelt wurden, wenn auch unter dem Vorbehalt, dass zwar nach au&#223;en hin so agiert wurde, als ob es die Sonderstellung des Kaisers nicht g&#228;be, aber gleichzeitig stets dessen Willen entsprochen wurde.<xref ref-type="bibr" rid="bibd2e4387">[74]</xref> 
+            </p>
+        <p>Diese eigenartige Kontinuit&#228;t zwischen Republik und Kaiserzeit, in der trotz der ver&#228;nderten politischen Realit&#228;ten die republikanische Ordnung das Ma&#223; aller Dinge blieb, zeigt sich auch darin, dass weiterhin vor allem die Zugeh&#246;rigkeit zum Senat und das Durchlaufen der Magistratur die &#8218;Ehre&#8216; vermittelten, die bestimmend f&#252;r gesellschaftlichen Status war. Und das hatte weitreichende Konsequenzen: Denn gesellschaftlicher Rang war weiterhin die Voraussetzung f&#252;r die Aus&#252;bung privilegierter politischer Funktionen, deren Autorit&#228;t nur dann akzeptiert wurde, wenn sie durch den Stelleninhaber mit gesellschaftlicher &#8218;Ehre&#8216; verkn&#252;pft waren. Dem bei der Besetzung politisch bedeutsamer Positionen sowie bei der Auswahl ihrer Vertrauten zumindest bis zu einem gewissen Grad Rechnung zu tragen, waren auch die Kaiser gezwungen.<xref ref-type="bibr" rid="bibd2e4399">[75]</xref> Aloys Winterling kommt daher zu dem Schluss, dass &#8222;die politische Integration der stratifizierten Gesellschaft wie diese selbst [...] in der Kaiserzeit bestehen [blieb].&#8220;<xref ref-type="bibr" rid="bibd2e4423">[76]</xref> So kann nachgewiesen werden, dass auch noch im Prinzipat das Engagement in den traditionellen politischen Institutionen Roms in der Regel selbstverst&#228;ndlich war. &#8222;Das <italic>curriculum vitae</italic> und &#252;berhaupt die individuelle Identit&#228;t eines Aristokraten waren und blieben&#8220;, so formuliert es Karl-Joachim H&#246;lkeskamp, &#8222;allein durch seinen <italic>cursus honorum</italic> bestimmt &#8211; das galt zumindest prinzipiell auch, als die Republik l&#228;ngst untergegangen und die &#8218;Aristokratie&#8216; zwar noch die Reichselite, aber l&#228;ngst nicht mehr eine regierende politische Klasse war.&#8220;<xref ref-type="bibr" rid="bibd2e4453">[77]</xref> Noch der sp&#228;tantike Autor und Senator Sidonius Apollinaris, so David Amherdt, habe Politik als die Besch&#228;ftigung betrachtet, die einem r&#246;mischen Aristokraten angemessen sei, und sei daher zu einer Ablehnung des Landlebens gelangt.<xref ref-type="bibr" rid="bibd2e4472">[78]</xref>
+            </p>
+        <p>Dabei kann und soll auch nicht bestritten werden, dass f&#252;r die Senatsaristokratie &#8211; und besonders f&#252;r die alten senatorischen Geschlechter, die seit Jahrhunderten das Prestige ihrer Familien mit dem Dienst an der <italic>res publica</italic> verkn&#252;pft hatten &#8211; die Alleinherrschaft des Kaisers im Prinzipat gegen&#252;ber einer Zeit einen tiefen Einschnitt darstellte, in der die Senatorenschaft &#8211; zumindest idealiter &#8211; gemeinsam im Senat die Geschicke Roms geleitetet hatten und so jeder Senator, wenn auch in unterschiedlich gro&#223;em Ma&#223;e, an der Macht beteiligt gewesen war: Im Prinzipat wurden bei Zusammensetzung und Gr&#246;&#223;e des Senates wie auch bei der Besetzung der &#196;mter die W&#252;nsche des Kaisers ausschlaggebend.<xref ref-type="bibr" rid="bibd2e4484">[79]</xref> &#220;ber Macht verf&#252;gten, abgesehen vom Kaiser selbst, zunehmend die Inhaber der Stellen am kaiserlichen Hof und in der kaiserlichen Verwaltung sowie die Personen in der n&#228;chsten Umgebung des Kaisers; dabei entschied letztlich der Kaiser allein, wem er wie viel Macht zugestand &#8211; und besonders bedeutende Stellungen besetzte er nicht zwangsl&#228;ufig mit Angeh&#246;rigen jener traditionsreichen senatorischen <italic>gentes</italic>, die in republikanischer Zeit f&#252;r solche Positionen geradezu pr&#228;destiniert gewesen waren, ganz im Gegenteil. Auch die Rekrutierungsbedingungen wandelten sich im Laufe des 1.&#160;Jahrhunderts n.&#160;Chr. stark, sodass sich diese soziale Gruppe hinsichtlich der geographisch-sozialen Herkunft der Familien, die ihr zugerechnet wurden, am Ende des Jahrhunderts bereits stark ver&#228;ndert hatte. Diese Umw&#228;lzungen m&#252;ssen langfristig auch das Selbstverst&#228;ndnis der Senatorenschaft beeinflusst haben, doch handelte es sich dabei um einen langsam verlaufenden Prozess, der zudem nie infrage stellte, dass der r&#246;mischen Senatsaristokratie auch unter den Bedingungen der Monarchie eine besondere Bedeutung zukomme.<xref ref-type="bibr" rid="bibd2e4516">[80]</xref> 
+            </p>
+        <p>Entsprechend best&#228;ndig erwies sich die Vorstellung, dass ein dauerhafter R&#252;ckzug aus Rom und dem politischen Geschehen allenfalls im Alter oder bei einer schweren Erkrankung akzeptabel sei.<xref ref-type="bibr" rid="bibd2e4529">[81]</xref> Wollte man den Mitmenschen nicht Grund zu Gerede geben, dann durften Phasen der Abwesenheit von den <italic>negotia</italic> der <italic>urbs</italic> nicht zu lange oder gar st&#228;ndig andauern und auch nicht zum falschen Zeitpunkt erfolgen.<xref ref-type="bibr" rid="bibd2e4550">[82]</xref> So erkl&#228;rt Marcus Tullius Cicero in einem Brief aus dem Jahr 46&#160;v.&#160;Chr. an Marcus Terentius Varro, der zu diesem Zeitpunkt im Begriff war, nach Baiae zu reisen und offenbar hoffte, Cicero dort anzutreffen, in Anbetracht einer sich zuspitzenden politischen Krise Folgendes:</p>
+        <list><list-item><p style="display-quote">
+          
+            <italic>Quid ergo potissimum scribam? Quod velle te puto, cito me ad te esse venturum; etsi vide, quaeso, satisne rectum sit nos hoc tanto incendio civitatis in istis locis esse; dabimus sermonem iis, qui nesciunt nobis, quocumque in loco simus, eundem cultum, eundem victum esse. [...] Valde id, credo, laborandum est, ne, cum omnes in omni genere et scelerum et flagitiorum volutentur, nostra nobiscum aut inter nos cessatio vituperentur.</italic>
+            <xref ref-type="bibr" rid="bibd2e4571">[83]</xref>
+          
+        </p></list-item></list>
+        <p>Historischer Hintergrund des Briefes sind die Auseinandersetzungen zwischen Caesar und Pompeius sowie den sie unterst&#252;tzenden Gruppen im Senat. Diese Situation war 49&#160;v.&#160;Chr. schlie&#223;lich in den B&#252;rgerkrieg gem&#252;ndet. Zum Zeitpunkt der Abfassung des Briefes stand in Afrika unmittelbar die Entscheidung zwischen den Truppen Caesars und den nach der Ermordung Pompeius&#8217; 48&#160;v.&#160;Chr. verbliebenen Heeren von Caesars Gegner im Senat bevor oder war bereits zugunsten Caesars gefallen.<xref ref-type="bibr" rid="bibd2e4601">[84]</xref> In dieser Situation formuliert Cicero durchaus sarkastisch die Sorge, seine Umgebung k&#246;nnte ihn wegen seiner Unt&#228;tigkeit tadeln, sollte er sich nach Kampanien begeben.<xref ref-type="bibr" rid="bibd2e4614">[85]</xref>
+            </p>
+        <p>Dass die v&#246;llige Abkehr eines Senators von Rom und den dort verorteten politischen Aufgaben und Gesch&#228;ften missbilligt wurde und Anlass zum Tadel bot, galt auch noch im Prinzipat. Dies belegen etwa die Briefe des j&#252;ngeren Plinius, die zur Zeit der Regierung der Kaiser Nerva und Trajan entstanden sind. So erkl&#228;rt Plinius &#8211; der selbst daf&#252;r bekannt ist, seine hingebungsvollen literarischen Bem&#252;hungen st&#228;ndig betont zu haben &#8211;<xref ref-type="bibr" rid="bibd2e4631">[86]</xref> dem Senator und zweimaligem Konsul Gaius Bruttius Praesens, dass sein Aufenthalt in seinen lukanischen und kampanischen Villen nun lange genug angedauert habe. Der Autor bittet den Freund ferner, sich doch einmal wieder in Rom blicken zu lassen:</p>
+        <list><list-item><p style="display-quote">
+          
+            <italic>tantane perseverantia tu modo in Lucania, modo in Campania? ,ipse enim&#8216; inquis, ,Lucanus, uxor Campana&#8216;. iusta causa longioris absentiae, non perpetuae tamen. quin ergo aliquando in urbem redis, ubi dignitas, honor, amicitiae tam superiores quam minores? quousque regnabis? quousque vigilabis, cum voles, dormies, quam diu voles? quousque calcei nusquam, toga feriata, liber totus dies? tempus est te revisere molestias nostras vel ob hoc solum, ne voluptates istae satietate languescant. saluta paulisper, quo sit tibi iucundius salutari, terere in hac turba, ut te solitudo delectet.</italic>
+            <xref ref-type="bibr" rid="bibd2e4643">[87]</xref>
+          
+        </p></list-item></list>
+        <p>Diese Zeilen veranschaulichen zun&#228;chst Folgendes: Tats&#228;chlich gab es im Prinzipat zumindest einen Senator &#8211; n&#228;mlich Bruttius Praesens &#8211;, der so viel Zeit auf seinen Villen verbrachte, dass er wenigstens nach Meinung des Plinius in Rom kaum noch pr&#228;sent zu sein schien; dabei bleibt unklar, wie verbreitet das von Plinius beschriebene Verhalten des Bruttius Praesens war, denn dieser Aspekt wird in dem Brief nicht weitergehend thematisiert. Dass der ,R&#252;ckzug aufs Land&#8216; des Bruttius Praesens auf ein allgemeines und weit verbreitetes politisches Desinteresse der vermeintlich wegen ihrer Macht- und Bedeutungslosigkeit im Prinzipat frustrierten Senatorenschaft zur&#252;ckzuf&#252;hren ist, wie in der althistorischen Forschung manchmal vermutet wurde,<xref ref-type="bibr" rid="bibd2e4663">[88]</xref> legt der Brief jedoch nicht nahe. </p>
+        <p>So finden konkrete politische Verh&#228;ltnisse und Ereignisse oder gar Unmut und Frustration dar&#252;ber, die Bruttius Praesens &#8211; ganz zu schweigen von anderen Senatoren &#8211; dazu motiviert haben k&#246;nnten, Rom dauerhaft den R&#252;cken zu kehren, in dem Brief keinerlei Erw&#228;hnung. Nach Auskunft von Plinius erkl&#228;rte Bruttius Praesens selbst sein Verhalten vielmehr damit, dass er und seine Ehefrau in Lucanien bzw. Kampanien beheimatet seien, was als Hinweis auf die Gesch&#228;fte eines Senators auf den heimatlichen G&#252;tern und Verpflichtungen gegen&#252;ber der Heimatgemeinde interpretiert werden k&#246;nnte.<xref ref-type="bibr" rid="bibd2e4681">[89]</xref> Es ist Plinius, der spekuliert, dass es Bruttius Praesens bei seinen langen Landaufenthalten vor allem darum gehe, ein Leben frei von sozialen Zw&#228;ngen und Verpflichtungen zu genie&#223;en. Dabei dient diese Behauptung Plinius allerdings dazu, das Verhalten des Freundes scherzhaft als unpassend zu charakterisieren und ihn so zur R&#252;ckkehr nach Rom zu bewegen. Insofern verdeutlicht der Brief ferner vor allem, dass auch im Prinzipat die dauerhafte Abstinenz vom politischen Geschehen nicht gutgehei&#223;en wurde:<xref ref-type="bibr" rid="bibd2e4693">[90]</xref> Auch in der Kaiserzeit sollten r&#246;mische Senatoren nach <italic>dignitas</italic> und <italic>honor</italic> streben, was die Teilnahme am traditionellen <italic>cursus honorum</italic> sowie das Bem&#252;hen um und die Pflege von &#8218;Freundschaften&#8216;, von <italic>amicitiae</italic>, die im r&#246;mischen Verst&#228;ndnis traditionell stark politisch konnotiert waren,<xref ref-type="bibr" rid="bibd2e4721">[91]</xref> erforderte. Und dies erwartet Plinius auch von Bruttius Praesens, den er scherzhaft tadelt, weil jener den Verhaltensanforderungen, die an einen r&#246;mischen Senator gerichtet wurden, scheinbar nicht mehr Folge leisten will.</p>
+        <p>Noch Ende des ersten und zu Beginn des zweiten nachchristlichen Jahrhunderts, so verdeutlichen nicht nur die Briefe des j&#252;ngeren Plinius, war ein dauerhafter R&#252;ckzug ins <italic>otium</italic> also allenfalls im Alter und nach einer angemessenen politischen Laufbahn sowie bei schwerer Krankheit gesellschaftlich akzeptiert.<xref ref-type="bibr" rid="bibd2e4751">[92]</xref> Dann allerdings konnte er sogar als einem Mann von Verdiensten und gro&#223;er &#8218;Ehre&#8216; geb&#252;hrendes Verhalten gelten. So &#228;u&#223;ert sich Plinius folgenderma&#223;en in einem seiner Briefe zum Verh&#228;ltnis von politischer Bet&#228;tigung, Alter und <italic>otium</italic>, nachdem er das <italic>otium</italic> des ehemaligen Konsuln Vestricius Spurinna geschildert hat, der zum Zeitpunkt der Abfassung des Briefes 78 Jahre alt war:</p>
+        <list><list-item><p style="display-quote">
+          
+            <italic>hanc ego vitam voto et cogitatione praesumo, ingressurus avidissime, ut primum ratio aetatis receptui canere permiserit. interim mille laboribus conteror, quorum mihi et solacium et exemplum est idem Spurinna; nam ille quoque, quoad honestum fuit, obiit officia, gessit magistratus, provincias rexit multoque labore hoc otium meruit. igitur eundem mihi cursum, eundem terminum statuo idque iam nunc apud te subsigno, ut, si me longius evehi videris, in ius voces ad hanc epistulam meam et quiescere iubeas, cum inertiae crimen effugero.</italic>
+            <xref ref-type="bibr" rid="bibd2e4782">[93]</xref>
+          
+        </p></list-item></list>
+        <p>Doch auch von den Kaisern wurde Anwesenheit in der Stadt und Kontaktpflege mit der Senatsaristokratie sowie Interesse an den traditionellen Formen des Politisierens in den republikanischen Institutionen erwartet. An den &#8218;guten&#8216; Kaisern wird dieses Engagement gelobt wie auch unkomplizierte Geselligkeit und Ehrerbietung im Umgang mit den Senatoren, Eigenschaften, die einen <italic>civilis princeps</italic> auszeichneten.<xref ref-type="bibr" rid="bibd2e4804">[94]</xref> 
+            </p>
+        <p>Hingegen konnte das Gegenteil von angemessener Pr&#228;senz &#8211; etwa l&#228;ngere Phasen der Absenz oder der Wunsch nach Einsamkeit, die Verweigerung des Kontaktes mit der Senatsaristokratie &#8211; im Rahmen der Tyrannentopik kritisiert werden. So war die permanente Abwesenheit des Kaisers Tiberius, der sich 26&#160;n.&#160;Chr. in die Villa Iovis auf Capri zur&#252;ckgezogen hatte, bezeichnenderweise ein Skandal: Man warf ihm vor, den Angelegenheiten der <italic>res publica</italic> gleichg&#252;ltig gegen&#252;berzustehen; seine selbstgew&#228;hlte Isolation wurde zum Ausdruck seiner angeblichen Grausamkeit und Unberechenbarkeit stilisiert, die er abseits der Stadt Rom ungehindert habe ausleben wollen.<xref ref-type="bibr" rid="bibd2e4843">[95]</xref> Im Fall der Kaiser Caligula und Nero f&#252;hren die antiken Autoren deren angebliche Pl&#228;ne, die Hauptstadt bzw. den Sitz der Regierung zu verlegen, als Belege ihres angeblichen Wahnsinns oder ihrer Torheit an.<xref ref-type="bibr" rid="bibd2e4850">[96]</xref> Dem Caligula unterstellt der Kaiserbiograph Sueton schlie&#223;lich sogar einen angeblich v&#246;llig unmotivierten Wutausbruch, infolgedessen er nach Rom gekommen sei, eine zornige Rede im Senat gehalten und im Anschluss daran den Senatoren den Umgang mit ihm untersagt habe: F&#252;r den Senat, so soll Gaius ausgerufen haben, wolle er in Zukunft weder Kaiser noch B&#252;rger sein, nur f&#252;r die Ritter und das Volk kehre er nach Rom zur&#252;ck.<xref ref-type="bibr" rid="bibd2e4870">[97]</xref> Von Domitian wird berichtet, er habe sich insbesondere in der Anfangszeit seiner Herrschaft t&#228;glich mehrere Stunden Zeit zum Alleinsein genommen, dabei jedoch nichts anderes getan als Fliegen zu fangen; ferner habe er h&#228;ufig und aufw&#228;ndig Gelage veranstaltet, die jedoch stets mit dem Sonnenuntergang geendet h&#228;tten, da er bis zur Schlafenszeit immer allein spazieren gehen wollte.<xref ref-type="bibr" rid="bibd2e4881">[98]</xref> Auch der j&#252;ngere Plinius &#252;bt harsche Kritik an Domitians angeblichem Bed&#252;rfnis nach Einsamkeit und will dahinter die Grausamkeit und Unberechenbarkeit des &#8218;Monsters&#8216; sehen.<xref ref-type="bibr" rid="bibd2e4897">[99]</xref>
+            </p>
+      </sec>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="bibd2e49">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[1] 	Zum Folgenden s. den Artikel <italic>Capitolium</italic> im LTUR 1, 226&#8211;234, auch zum arch&#228;ologischen Material und mit weiterf&#252;hrender Literatur; zu den literarischen Quellen auch H&#252;lsen 1899. Siehe&#8239;auch Carandini 2002, passim; dagegen vehement Kolb 2002, 91&#8211;102; 678f.; 752&#8211;754 (kritischer Literaturnachtrag der 2.&#160;Aufl.); in der Mitte Cornell 1995, passim. S. ferner F.&#160;H&#246;lscher 2006.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e58">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[2] 	Liv. 2,8,6; 7,8; Tac.&#160;hist.&#160;3,72 (allerdings f&#252;r das Jahr 507&#160;v.&#160;Chr.); Pol.&#160;3,22,1; Plut. Poplicola&#160;14; Dion. Hal.&#160;ant.&#160;4,61,3 (jedoch ohne die Synchronisierung der Tempelweihung mit der Gr&#252;ndung der Republik); 5,25 (ebenfalls f&#252;r das Jahr 507&#160;v.&#160;Chr.).</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e64">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[3] 	Liv.&#160;1,38;&#160;55f.; Dion.&#160;Hal.&#160;ant.&#160;3,69; 4,59&#8211;61; Plut.&#160;Poplicola&#160;14; Tac.&#160;hist.&#160;3,72.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e74">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[4] 	Varro ling. 41; Dion. Hal. ant. 4,61,2f.; Isid. 15,2,31. Ferner schon Fabius Pictor&#160;FRH 1,16 (F&#160;12&#160;Peter = F 11 Jacoby); Valerius&#160;Antias&#160;FRH&#160;15,14 (F&#160;13&#160;Peter). </div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e83">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[5] 	Liv.&#160;1,55,3&#8211;6, mit dem Zitat 5f.: <italic>hoc perpetuitatis auspicio accepto secutum aliud magnitudinem imperii portendens prodigium est: caput humanum integra facie aperientibus fundamenta templi dicitur apparuisse, quae visa species haud per ambages arcem eam imperii caputque rerum fore portendebat [&#8230;].</italic> Auf diese Geschichte l&#228;sst Livius sp&#228;ter den ber&#252;hmten M.&#160;Furius Camillus mit &#228;hnlichen Worten Bezug nehmen, als jener die R&#246;mer zu &#252;berzeugen suchte, die Stadt Rom nach dem Galliersturm nicht zugunsten Veiis aufzugeben: Liv.&#160;5,54,7 <italic>(eo loco caput rerum summamque imperii fore</italic>). Siehe auch Plut.&#160;Camillus 31,4. &#8211; Andere Stellen mit &#228;hnlichen Wendungen, die den besonderen Rang der Stadt Rom im (zuk&#252;nftigen) <italic>Imperium Romanum</italic> ausdr&#252;cken: Cic.&#160;rep.&#160;2,10&#8211;11 <italic>(hanc urbem sedem aliquando et domum summo esse imperio praebituram);</italic> Hor.&#160;od. 4,12; 13,43 <italic>(domina Roma);</italic> Liv.&#160;1,16,7 u. 21,30,10 (<italic>caput orbis terrarum</italic>); 38,51,4 <italic>(domina orbis);</italic> Ov.&#160;fast. 4,851 <italic>(domina terrae);</italic> Ov.&#160;met. 15,447 <italic>(domina rerum</italic>).</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e118">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[6] 	Zur &#8218;Romidee&#8216;, ihrer Entwicklung und ihren literarischen wie materiellen Ausdrucksformen s. Fuhrmann 1993 (1968); Hommel 1993 (1942); Klingner 1993 (1927); Kluge 1941; Koch 1952; Paschoud 1967; Purcell 2000; Rochette 1997; Zanker 1995a. Siehe auch Cancik u.&#8239;a. 2004a; Cancik u.&#8239;a. 2004b; Cancik 2006; Fuchs 1943; die Beitr&#228;ge in Kytzler (Hg.) 1993; Pietsch 2001. </div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e130">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[7] 	Koch 1952, 131.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e136">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[8] 	So ist etwa seit dem 2.&#160;Jhd.&#160;v.&#160;Chr. die Verehrung der <italic>Dea Roma</italic> belegt (Hommel 1993 [1942]). &#8211; M&#246;glicherweise ist die Entstehung der Romidee in jener Zeit vor dem Hintergrund zu erkl&#228;ren, dass zur selben Zeit die zunehmende Desintegration der Senatorenschaft sukzessive deutlich wurde: Die Romidee k&#246;nnte der Ausdruck von Bem&#252;hungen sein, die r&#246;mische Aristokratie auf ein gemeinsames Ideal zu verpflichten und so die Kontrollm&#246;glichkeiten durch die Standesgenossen aufrechtzuerhalten, wie weiter unten noch auszuf&#252;hren sein wird.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e149">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[9] 	Koch 1952.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e168">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[10] 	Fuhrmann 1993 (1969), 88f.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e182">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[11] 	So etwa in dem Panegyricus &#917;&#7984;&#962; &#8216;&#929;&#974;&#956;&#951;&#957; des griechischen Rhetors Aelius Aristides, der weniger die Stadt hervorhebt, in deren Beschreibung er kaum einmal konkret wird, als vielmehr die Errungenschaften des Reiches, n&#228;mlich das B&#252;rgerrecht, die Rechtssicherheit und Rechtsgleichheit sowie einen effektiven Verwaltungsapparat. M.&#160;Fuhrmann betrachtet dies gar als &#8222;Konzept einer &#252;bernationalen Weltdemokratie, die auf den Prinzipien der sozialen Sicherheit und der Gleichheit vor dem Gesetz beruht&#8220; (S. Fuhrmann 1993 [1969], 103&#8211;107, hier bes. 105 mit dem Zitat). Allerdings ist zu betonen, dass Aelius zum einen mit dieser Konzeption im 2.&#160;Jhd. noch ziemlich allein dasteht; zum anderen ist sein Gedanke vor dem Hintergrund zu bewerten, dass die griechischen Autoren jener Zeit bem&#252;ht waren, einen den Griechen und ihrer langen politischen Tradition angemessenen Platz im <italic>Imperium Romanum</italic> zu finden: Aus dieser Perspektive erscheint es konsequent, dass der Stadt Rom geringere Bedeutung beigemessen wird als dem Reich. Doch auch Aelius schreibt der Stadt Rom besondere Bedeutung zu, indem er die Vorstellung von der &#960;&#972;&#955;&#953;&#962; und ihrem Herrschaftsgebiet auf Rom &#252;bertr&#228;gt, die Beherrscherin des Erdkreises (Aristeid.&#160;61): &#8005;&#960;&#949;&#961; &#948;&#8050; &#960;&#972;&#955;&#953;&#962; &#964;&#959;&#8150;&#962; &#945;&#8017;&#964;&#8134;&#962; &#8001;&#961;&#943;&#959;&#953;&#962; &#954;&#945;&#8054; &#967;&#974;&#961;&#945;&#953;&#962; &#7952;&#963;&#964;&#8054;, &#964;&#959;&#8166;&#952;&#8217; &#7973;&#948;&#949; &#7969; &#960;&#972;&#955;&#953;&#962; &#964;&#8134;&#962; &#7937;&#960;&#940;&#963;&#951;&#962; &#959;&#7984;&#954;&#959;&#965;&#956;&#941;&#957;&#951;&#962;, &#8037;&#963;&#960;&#949;&#961; &#945;&#8022; &#964;&#8134;&#962; &#967;&#974;&#961;&#945;&#962; &#7940;&#963;&#964;&#965; &#954;&#959;&#953;&#957;&#8056;&#957; &#7936;&#960;&#959;&#948;&#949;&#948;&#949;&#953;&#947;&#956;&#941;&#957;&#951;. &#966;&#945;&#943;&#951;&#962; &#7938;&#957; &#960;&#949;&#961;&#953;&#959;&#943;&#954;&#959;&#965;&#962; &#7941;&#960;&#945;&#957;&#964;&#945;&#962; &#7970; &#954;&#945;&#964;&#8048; &#948;&#8134;&#956;&#959;&#957; &#959;&#7984;&#954;&#959;&#8166;&#957;&#964;&#945;&#962; &#7940;&#955;&#955;&#959;&#957; &#967;&#8182;&#961;&#959;&#957; &#949;&#7984;&#962; &#956;&#943;&#945;&#957; &#964;&#945;&#973;&#964;&#951;&#957; &#7936;&#954;&#961;&#972;&#960;&#959;&#955;&#953;&#957; &#963;&#965;&#957;&#941;&#961;&#967;&#949;&#963;&#952;&#945;&#953; (&#8222;Was eine Stadt f&#252;r ihre eigenen Grenzen und ihr Gebiet bedeutet, das bedeutet diese Stadt f&#252;r den gesamten Erdkreis, da sie gleichsam zu seiner gemeinsamen Hauptstadt geworden ist. Man k&#246;nnte sagen, dass alle &#8218;Peri&#246;ken&#8216; oder die, welche in einer anderen Gegend im Verband einer &#8218;Demengemeinde&#8216; wohnen, in diese einzige Burg zusammenstr&#246;men&#8220;). Siehe&#8239;auch Aristeid. 9&#8211;13; 80f. Zu Aufbau und historischem Hintergrund der Rom-Rede s. Klein 1981; vgl. auch Classen 1980, zum St&#228;dtelob als literarische Gattung. &#8211; Siehe&#8239;auch Richardson 2008, der anhand des Gebrauchs der Begriffe <italic>imperium</italic> und <italic>provincia</italic> in der sp&#228;ten Republik und Kaiserzeit analysiert, wie die R&#246;mer selbst den Prozess verstanden, in dessen Verlauf Rom vom Stadtstaat zur Weltmacht wurde.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e524">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[12] 	Fuhrmann 1993 (1969), 90.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e530">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[13] 	So etwa Amm. 16,10. M.&#160;Fuhrmann erkl&#228;rt, dass man dieses Kapitel, das den Rom-Besuch des Kaisers Constantius im Jahr 357 schildert, &#8222;wohl f&#252;r das &#228;lteste Dokument der sich den Baudenkm&#228;lern zuwendenden Rombegeisterung halten darf; Ammian bringt dort einen von Unsagbarkeits-Topoi erf&#252;llten Memorabilienkatalog, in dem sich die Mystik des Musealen eigent&#252;mlich mit der Mystik der religi&#246;sen Weihe vermischt&#8220; (Fuhrmann 1993 [1969], 111). Siehe auch Hartmann 2010, passim; Muth 2006; F.&#160;A.&#160;Bauer 2001; Christie 2000. S. ferner Diefenbach 2007 (zur fr&#252;hchristlichen und sp&#228;tantiken Heiligenmemoria in Rom, aber auch mit einer Diskussion der Methodik und der einschl&#228;gigen Forschungsans&#228;tze und -theorien), der allerdings den Begriff &#8218;Erinnerungsraum&#8216; bevorzugt. Zu den r&#246;mischen &#8218;Erinnerungsorten&#8216; (mit einem sehr breiten Begriffsverst&#228;ndnis!) s. H&#246;lkeskamp u. Stein-H&#246;lkeskamp (Hgg.) 2006.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e592">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[14] 	S. Kolb 2002, passim. Zur (zunehmenden) kulturellen Bedeutung Roms s. u.&#8239;a. Rawson 1995; Mratschek 1993; S&#224;nchez Vendramini 2010. &#8211; Die Bedeutung dezentraler und regionaler Elemente der (r&#246;mischen) Herrschaft war jedoch unbestreitbar gro&#223;. S. in diesem Zusammenhang zur Provinzialverwaltung u.&#8239;a. Schulz 1997; Haensch 1997 sowie die Beitr&#228;ge in Haensch u. Heinrichs (Hgg.) 2007; Wesch-Klein 2008.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e679">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[15] 	Zum Folgenden s. Abels 2004a, 201&#8211;262; Abels 2004b; Peukert u. Scherr 2006. S. ferner Helle 1977; Steinert (Hg.) 1973.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e759">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[16] 	Simmel 1992a (1894), 57, mit *. Siehe auch Simmel 1992b (1908), 13ff.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e793">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[17] 	Simmel 1992a (1894), 54. Siehe auch Simmel 1992b (1908), 13ff.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e819">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[18] 	Weber 2002 (1921/1922), 1 (&#167;&#160;1).</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e875">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[19] 	Ebd., 13 (&#167;&#160;3).</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e922">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[20] 	Wilson 1973; s.&#160;a. Abels&#160;2004a, 201&#8211;262. &#8211; Hinter diesen Etiketten verbergen sich allerdings jeweils Theorieangebote, die sowohl terminologisch, als auch hinsichtlich ihrer psychologischen und soziologischen Grundannahmen zum Teil stark differieren; gleichzeitig weisen einzelne normative und interpretative Konzepte viele Gemeinsamkeiten auf.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e1136">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[21] 	Siehe auch Plummer 1991, mit einer Zusammenstellung wichtiger Texte zur symbolischen Interaktion.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e1160">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[22] 	Mead 1973 (1934) sowie die Beitr&#228;ge in Mead 1969. Siehe auch Abels 2004a, 94f.; 214f.; Abels 2004b, 13&#8211;14.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e1235">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[23] 	Blumer 1973. Zum Folgenden s.&#8239;a. Abels 2004a; Abels 2004b, 41&#8211;56.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e1272">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[24] 	Habermas 1981, Bd.1, 128.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e1313">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[25] 	Zur Bedeutung von Sprache s.&#160;a. ebd., Bd. 2, 41.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e1335">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[26] 	S. ebd., Bd.1, 126&#8211;128, zu Habermas&#8217; vier Handlungsbegriffen: teleologisches, normenorientiertes, dramaturgisches und kommunikatives Handeln.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e1376">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[27] 	Abels 2004, 261.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e1438">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[28] 	Habermas 1981, Bd. 1, 151.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e1529">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[29] 	&#8222;Eine Soziologie der Interaktion&#8220;, so betont Luhmann (letztlich sowohl die interpretativen wie auch die normativen Interaktionsmodelle ablehnend, ohne sie an dieser Stelle explizit beim Namen zu nennen) &#8222;m&#252;sste Konzepte suchen, die das Soziale weder auf eine konditionierende Au&#223;enwelt des Individuums, noch auf blo&#223;e Intersubjektivit&#228;t beschr&#228;nken, sondern es zun&#228;chst eigenst&#228;ndig zum Thema machen&#8220; (Luhmann 1975b, 21; s.&#160;a. 1984b, 79f.). Ziel des Bielefelder Soziologen war die Entwicklung einer allgemeinen Theorie sozialer Systeme, welche L&#246;sungen f&#252;r recht unterschiedliche Problemfelder bieten sollte, in die Luhmann die moderne Soziologie verstrickt sah. Die Systemtheorie beansprucht, &#8222;auf alle sozialen Tatbest&#228;nde anwendbar zu sein&#8220; (Luhmann 1975b, 21). Damit sollte zun&#228;chst erreicht werden, die drei Themenschwerpunkte der traditionellen soziologischen Theoriebildung &#8218;alteurop&#228;ischer&#8216; Pr&#228;gung (namentlich Interaktions-, Organisations- und Gesellschaftstheorie) zu integrieren. Luhmann begriff diese als defizit&#228;r, da sie letztlich lediglich unterschiedliche Blickwinkel auf das umfassende Ganze spiegelten und, jeweils f&#252;r sich genommen, nicht als Basis f&#252;r dessen vollst&#228;ndige Erforschung geeignet seien. Diese zun&#228;chst erkenntnistheoretisch begr&#252;ndete Integration der verschiedenen soziologischen Teildisziplinen durch die Systemtheorie sollte wissenschaftspolitisch ferner der Krise der sich diversifizierenden und zunehmend in Spezialfragen verlierenden Soziologie als Wissenschaft begegnen. Schlie&#223;lich sollte die Systemtheorie f&#252;r die Forschungspraxis eine &#8222;generalisierte Theoriebasis&#8220; bieten, von der ausgehend &#8222;mit relativ einfachen Mitteln hochkomplexe Forschungsans&#228;tze produziert werden k&#246;nnen, die zur Komplexit&#228;t der sozialen Wirklichkeit in einem ad&#228;quaten Verh&#228;ltnis stehen&#8220; (Luhmann 1975a, 20). &#8211; Im &#220;brigen hat Luhmann selbst den Stellenwert und die Funktionsweisen von Interaktionssystemen im Rahmen seiner allgemeinen Theorie sozialer Systeme lediglich skizziert (Luhmann 1975a; 1975b und 1984b; mit weiteren Nachweisen: Kieserling 1999, 22 mit Anm. 15). Sein Sch&#252;ler A. Kieserling hat in seiner Studie &#252;ber <italic>Kommunikation unter Anwesenden</italic> schlie&#223;lich den Versuch unternommen, das Ph&#228;nomen der Interaktion systemtheoretisch zu erfassen und darzustellen (Kieserling 1999; s.&#160;a 1996).</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e1680">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[30] 	Luhmann 1975a, 9f.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e1748">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[31] 	Ebd.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e1858">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[32] 	Ebd.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e1907">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[33] 	Zur Kritik am mangelnden Akteursbezug s. etwa Schimank 1985.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e1954">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[34] 	Luhmann 1984a, 192; 346. An anderer Stelle erkl&#228;rt er, in &#228;hnlicher Weise die Bedeutung von Akteuren verneinend: &#8222;Der Mensch kann nicht kommunizieren; nur die Kommunikation kann kommunizieren&#8220; (Luhmann 1990, 31).</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e1989">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[35] 	Luhmann 1975a,&#160;10. Kieserling spricht daher von Interaktion als &#8218;Kommunikation unter Anwesenden&#8216; (Kieserling 1999).</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e2011">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[36] 	&#8222;Wer nicht anwesend ist&#8220;, so Luhmann, &#8222;geh&#246;rt nicht zum System&#8220;. Das zeige sich auch darin, &#8222;dass man nur mit Anwesenden, aber nicht &#252;ber Anwesende sprechen kann; und umgekehrt nur &#252;ber Abwesende, aber nicht mit ihnen&#8220; (Luhmann 1975a,&#160;10).</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e2041">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[37] 	Luhmann 1975b, 23.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e2069">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[38] 	Dazu s. Luhmann 1975b; 21 mit dem Zitat. &#8211; Entsprechend verwendet Luhmann synonym zu &#8218;Interaktionssysteme&#8216; auch den Begriff &#8218;einfache soziale Systeme&#8216;. </div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e2276">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[39] 	Das hat insbesondere A. Kieserling in Anschluss an Luhmann noch einmal explizit formuliert (Kieserling 1999, 8ff.).</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e2334">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[40] 	&#8222;Es gibt also Ausgrenzung und Exklusion trotz kontinuierlicher Pr&#228;senz. Aber auch der umgekehrte Fall ist weit verbreitet. [&#8230;] Man verzichtet dann darauf, Themen zu behandeln, die bei gesicherter Abwesenheit der Person eigentlich nahel&#228;gen: zum Beispiel sie selbst oder ihr merkw&#252;rdiges Betragen wenige Minuten zuvor&#8220; (Kieserling 1999, 65).</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e2413">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[41] 	Kieserling 1999, 15</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e2620">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[42] 	Gesellschaft sei eben nicht &#8222;einfach die Summe aller Interaktionen, sondern ein System h&#246;herer Ordnung, ein System anderen Typs&#8220;, n&#228;mlich &#8222;das umfassende Sozialsystem aller kommunikativ f&#252;reinander erreichbaren Handlungen&#8220;: &#8222;Die Gesellschaft muss in der Lage sein, auch die m&#246;glichen Kommunikationen unter jeweils Abwesenden oder mit jeweils Abwesenden mit zu systematisieren. Ihr Regulativ &#252;bergreift die Grenzen der Interaktionssysteme und macht sie unabh&#228;ngig von deren Grenzbildungs- und Selbstselektionsprinzip. Ihre eigenen Grenzen sind die Grenzen m&#246;glicher und sinnvoller Kommunikation&#8220; (Luhmann 1975a, 11). Ebenso stellen Organisationssysteme eine &#8222;voll eigenst&#228;ndige Entwicklung&#8220; dar, die &#8222;sich weder auf den Typus Interaktion noch auf den Typus Gesellschaft zur&#252;ckf&#252;hren l&#228;sst&#8220;. Sozialsysteme seien organisiert, wenn sie &#8222;die Mitgliedschaft an Bedingungen kn&#252;pfen, also Eintritt und Austritt von Bedingungen abh&#228;ngig machen&#8220;. Dies erlaube z.&#8239;B. differenzierte &#196;mterstrukturen, Verantwortlichkeiten, Weisungsketten und Kontrollmechanismen einzurichten, die anzuerkennen der Beitretende verpflichtet werde. Auf diese Weise erm&#246;glichten Organisationssysteme &#8222;nicht nur h&#246;chst verschiedenartiges Handeln zugleich, sondern auch hohe Flexibilit&#228;t und Anpassungsf&#228;higkeit an ver&#228;nderte Umst&#228;nde&#8220;, dessen insbesondere moderne Gesellschaften in wichtigen Funktionsbereichen bed&#252;rften (Luhmann 1975a, 12f.).</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e2658">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[43] 	Luhmann 1975a, 14. Oder aus der Perspektive der Gesellschaftssysteme: &#8222;Die Gesamtgesellschaft bleibt mit Organisationssystemen und mit Interaktionssystemen kompatibel, weil sie f&#252;r diese eine geordnete Umwelt ist und zugleich Bedingung der M&#246;glichkeit von Strukturbildung garantiert&#8220; (Luhmann 1974a, 19). </div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e2714">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[44] 	Luhmann 1975b, 21.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e2890">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[45] 	Luhmann 1975a, 13&#8211;18, mit den Zitaten. Den Gedanken von der (Aus-)Differenzierung der Systeme als evolution&#228;rem Prozess will Luhmann dabei nicht lediglich als Verlegenheitsl&#246;sung (&#8222;nicht nur eine rein begriffliche Unterscheidung&#8220;) verstanden wissen, um Widerspr&#252;chlichkeiten zu vermeiden, sondern als inh&#228;renten Bestandteil des Modells.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+            <ref id="bibd2e2976">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[46] 	Ebd., 14.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e3295">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[47] 	Ein Beispiel: M.&#160;Tullius Cicero schreibt seinem vertrauten Freund T.&#160;Pomponius Atticus, jedoch in dem Wissen, dass dieser den Brief anderen zeigen wird; gleichzeitig wei&#223; in Rom jeder, dass Atticus mit Cicero in Kontakt steht. In konkreten Interaktionssituationen ist folglich davon auszugehen, dass Cicero als &#8218;vermittelt&#8216; anwesend betrachtet wird, selbst wenn er nicht k&#246;rperlich in Rom pr&#228;sent ist. Streng nach Luhmann w&#228;re die Verbindung zu Cicero wohl nicht der Interaktion mit dem tats&#228;chlich anwesenden Atticus zuzurechnen, sondern dem Gesellschaftssystem, das auch den abwesenden Cicero zu integrieren vermag.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e3426">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[48] 	Als grundlegend f&#252;r jede Betrachtung der Stadt gilt bis heute, trotz der problematischen &#220;berlieferungslage des Werkes, M.&#160;Webers <italic>Die Stadt</italic> (Weber 1999 [1921/1922]); s. dazu Nippel 1991. Allgemein zum Thema Stadt in der Antike: Raaflaub 1991 sowie die &#252;brigen Beitr&#228;ge in Molho u.&#8239;a. (Hgg.) 1991; Rich u. Wallace-Hadrill (Hgg.) 1991; Kolb 1984; Vittinghoff 1978. Zur griechischen &#960;&#972;&#955;&#953;&#962; s. u.&#160;a. Hansen 2006; Welwei 1998 und die Beitr&#228;ge in Hansen (Hg.) 1997. Zur r&#246;mischen bzw. italischen Stadt s. die Beitr&#228;ge in Parkins (Hg.) 1997; Cornell u. Lomas (Hgg.) 1995 (beide in kritischer Auseinandersetzung mit Weber). Zur Geschichte der Stadt Rom s. Kolb 2002; die Beitr&#228;ge in Carandini (Hg.) 2000 u. in Coulston u. Dodge (Hgg.) 2000; Purcell 2000; Patterson 1992 u. 2010. Zum Folgenden s.&#160;a. Hinard 1991.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e3477">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[49] 	Zum Zusammenhang von Amt, Zugeh&#246;rigkeit zum Senat und aristokratischem Status s. u.&#8239;a. Beck 2005; H&#246;lkeskamp 2004a, mit weiterf&#252;hrender Literatur; H&#246;lkeskamp 1987; Rilinger 1985. &#8211; Auf diese Thematik wird noch ausf&#252;hrlicher einzugehen sein.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e3497">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[50] 	Hinsichtlich der Auswirkungen auf das Stadtbild Roms s. u.&#8239;a. Chaisemartin 2003, bes. 27&#8211;49; Kolb 2002, bes. 172&#8211;185; 189&#8211;227; 243&#8211;249 u. passim; Patterson 1992, bes. 190&#8211;204; Patterson 2010. Das betrifft jedoch nicht nur die konkrete Ausschm&#252;ckung der Stadt mit pr&#228;chtigen Bauten, sondern auch bestimmte Interaktionsformen und Rituale, zu denen die Stadt Rom den Hintergrund darstellte oder in die sie auch direkt mit eingebunden wurde. Das bekannteste Beispiel dieser Formen ist sicherlich der r&#246;mische Triumph, der in der althistorischen Forschung der letzten Jahre h&#228;ufig thematisiert wurde (s. etwa &#214;stenberg 2009; die Beitr&#228;ge in Krasser u.&#8239;a. [Hgg.] 2008; Bastien 2007; Beard 2007; Itgenshorst 2005; s.&#8239;a. Pollitt 1978, der nach der Bedeutung der griechischen Statuen und Bilder fragt, die r&#246;mische Feldherren erbeuteten, um sie dann im Triumph nach Rom zu bringen, und hierbei auch den &#8211; nicht unproblematischen &#8211; Zusammenhang von erbeuteter Kunst und Ansehen bzw. politischen Ambitionen diskutiert). Ferner w&#228;re auf die Bedeutung der Spiele hinzuweisen (s. u.&#8239;a. Bernstein 1998) oder aber auf andere Formen von aristokratischem Euergetismus in der Stadt Rom. Grundlegend zum Thema ist Veyne 1988.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e3536">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[51] 	&#8222;Alle (h&#246;heren) Magistrate waren auch und sogar in erster Linie Senatoren, sie wechselten lediglich f&#252;r eine jeweils begrenzte Zeit die Rolle, traten sich dabei aber gewisserma&#223;en immer nur selbst gegen&#252;ber. [&#8230;] [Z]umindest die Aedile und erst recht alle Inhaber eines Amtes mit <italic>imperium</italic> waren also vor ihrer Amtszeit schon Senatoren gewesen und kehrten danach in den Senat zur&#252;ck &#8211; man k&#246;nnte auch sagen: Sie traten ins Glied zur&#252;ck, wenn man dabei mit bedenkt, dass das &#8218;Glied&#8216; in diesem besonderen Fall nicht dieselbe, sondern die n&#228;chsth&#246;here Rangstufe bezeichnete&#8220; (H&#246;lkeskamp 2004a, 35). &#8211; Zur Thematik s. jetzt auch Resch 2010, die nach den Handlungsspielr&#228;umen, aber auch nach den Mitteln zur Beschr&#228;nkung, Kontrolle und Disziplinierung r&#246;mischer Feldherren in der mittleren Republik fragt.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e3565">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[52] 	Dazu s. u.&#160;a. in Hinblick auf das Stadtbild und das st&#228;dtische Leben in Rom Chaisemartin 2003, bes. 50&#8211;78 (zu Sulla, Marius und den &#252;brigen m&#228;chtigen Einzelpers&#246;nlichkeiten der sp&#228;ten Republik); 79&#8211;95 (zu Caesar und Pompeius); Kolb 2002, 250&#8211;308; Patterson 1992, bes. 190&#8211;204; Patterson 2010.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e3581">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[53] 	S. Winterling 2001 u. 2004. Schon Augustus hat als erster <italic>princeps</italic> seine Alleinherrschaft nicht mit dem Anspruch verkn&#252;pft oder legitimiert, etwas Neues geschaffen zu haben, sondern damit, nach den B&#252;rgerkriegen die traditionelle Ordnung der <italic>res publica</italic> wiederhergestellt zu haben (s. u.&#8239;a. Chr.&#160;Meier 1980; Bringmann 2002, hier bes. 119&#8211;123). </div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e3604">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[54] 	S. u.&#8239;a. Benoist 2005 (zu <italic>adventus, funus, consecratio</italic> und Triumph des Kaisers); Lehnen 1997 (zum <italic>adventus</italic> des Kaisers). S. ferner bes. Flaig 1992, 11&#8211;13; 174&#8211;207, der davon ausgeht, dass die dauerhafte Sicherung der Herrschaft eines Kaiser in hohem Ma&#223; davon abhing, die Akzeptanz der drei ma&#223;geblichen Gruppen der politischen Gemeinschaft des <italic>Imperium Romanum</italic> zu erlangen, n&#228;mlich der <italic>plebs urbana</italic>, des Senates und der Truppen mit r&#246;mischen B&#252;rgerrecht; E.&#160;Flaig betont daher die besondere Bedeutung der Kommunikation der Kaiser mit diesen Gruppen, deren Akzeptanz zu erlangen es mittels der Konsensrituale gegolten habe. Zum Thema s.&#160;a Ziemssen 2008.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e3629">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[55] 	Das erforderte Anpassungen und f&#252;hrte dazu, dass bestimmte Formen ehemals aristokratischer Status- und Herrschaftsrepr&#228;sentation entweder vom Kaiser monopolisiert oder ins Monumentale &#252;bersteigert wurden. Darauf wird an verschiedener Stelle der Arbeit noch ausf&#252;hrlicher einzugehen seien.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e3635">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[56] 	Die Kaiser verwandten vielmehr viel M&#252;he und Geld auf die pr&#228;chtige bauliche Ausgestaltung der Stadt; dieses T&#228;tigkeitsfeld angemessen zu bedienen, wurde im Laufe der Zeit ein Topos jenes Tugendkanons, dessen Erf&#252;llung &#8218;gute&#8216; Kaiser charakterisierte (s. Scheithauer 2000). Die Standards daf&#252;r hatte bereits Augustus mit seinem ambitionierten Bauprogramm gesetzt; der Kaiserbiograph Sueton erkl&#228;rt diesbez&#252;glich, Augustus habe sich zu Recht r&#252;hmen k&#246;nnen, eine Ziegelstadt vorgefunden und eine Stadt aus Marmor hinterlassen zu haben (Suet. Aug. 28,3). Ferner hat &#8211; nicht von ungef&#228;hr &#8211; die literarische Ausgestaltung der Romidee insbesondere in augusteischer Zeit und auf Initiative des ersten <italic>princeps</italic> ihre erste Bl&#252;te entfaltet, etwa in der augusteischen Dichtung (Fuhrmann 1993 [1969], 88f.), aber auch bei dem fr&#252;hkaiserzeitlichen Historiker Livius, wie die eingangs geschilderte Episode um das Kapitol zeigt. Zu Augustus&#8217; Bauprogramm in der Stadt Rom s. bes. Haselberger 2007; s. ferner Rehak 2006; Chaisemartin 2003, 96&#8211;136; Kolb 2002, 330&#8211;369. Zu den dichterischen Ausformungen der Romidee in Augusteischer Zeit, etwa im Zeitaltermythos, s. u.&#8239;a. Evans 2008; Giesecke 2007, passim. Zur spezifisch augusteischen Verkn&#252;pfung von &#8218;Ideologie&#8216; und Bild- bzw. Bauprogramm s. grundlegend Zanker 1990.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e3645">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[57] 	Dazu s. Kap. 1.2.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e3665">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[58] 	Dazu s. Schnurbusch 2011, der diesen Aspekt am Beispiel des <italic>conviviums</italic> er&#246;rtert; s. ferner Cooper 2007, bezogen auf die <italic>domus</italic> am Beispiel der <italic>Passio Perpetuae et Felicitatis</italic>. &#8211; Vergleichbare Ph&#228;nomene wurden in der Geschichtswissenschaft in den letzten Jahren oft unter den Stichworten &#8218;Performanz&#8216;, &#8218;Inszenierung&#8216; und &#8218;symbolische Politik&#8216; oder auch &#8218;Ritual&#8216; diskutiert. S. Burke 2005, mit einem guten Forschungs&#252;berblick zum sog. <italic>performative turn</italic> in der Geschichtswissenschaft. S. ferner Neu u.&#8239;a. 2009, bezogen auf das Verhandeln und Zelebrieren in st&#228;ndischen Institutionen der Fr&#252;hen Neuzeit, aber mit guten allgemeinen &#220;berlegungen und einer durchaus kritischen Diskussion des Ansatzes, die auch f&#252;r die Analyse anderer vormoderner Gesellschaften n&#252;tzlich sind.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e3707">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[59] 	Zur Forschungsdiskussion s. Kap. 2.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4044">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[60] 	Zum Folgenden s. bes. Winterling 2001, hier v.&#8239;a. 108&#8211;112; Winterling 2004, hier v.&#8239;a. 202&#8211;210.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4059">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[61] 	Das betraf vor allem &#8222;die &#196;mter an der Spitze des <italic>cursus honorum</italic> in einem sich nach oben radikal verengenden Stellenkegel&#8220;. S. dazu H&#246;lkeskamp 2004, 82f., mit weiterf&#252;hrender Literatur; hier auch das Zitat.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4086">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[62] 	Vgl. Chr.&#160;Meier 1997, 47.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4107">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[63] 	Dem entspricht die interne Organisation der Senatoren nach Amtsklassen. Ehemalige Konsuln und Zensoren verf&#252;gten &#252;ber die h&#246;chste <italic>dignitas</italic> und <italic>auctoritas</italic> und waren als <italic>principes civitatis</italic> die Meinungsf&#252;hrer im Senat. Dann folgten die Pr&#228;toren und &#196;dilen, schlie&#223;lich die Volkstribune und Qu&#228;storen. Innerhalb der Amtsklassen bestimmte vor allem Anciennit&#228;t die Position des Einzelnen. Alle Senatoren nahmen damit einen genau festgelegten Platz innerhalb einer klaren Hierarchie ein. Dies ist auch f&#252;r den Verlauf der Senatssitzungen von Bedeutung. Denn bei der Meinungsumfrage &#228;u&#223;erten zuerst die Rangh&#246;chsten ihre Ansichten. Zeichnete sich Konsens ab, wurde die Aussprache abgebrochen, die niedrigen Amtsklassen nicht mehr befragt. Dazu s.&#8239;a. H&#246;lkeskamp 2004, 80f.; Rilinger 1985, bes. 299-325, 315f. Zum Thema s.&#8239;a. Ryan 1998.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4123">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[64] 	Als Hinweis auf die gesellschaftliche Integration der Politik wertet A.&#8239;Winterling, dass faktisch durchaus doch von einer erblichen Aristokratie gesprochen werden kann. Die Volksversammlung besetzte die &#196;mter fast ausschlie&#223;lich mit Mitglieder eines kleinen Kreises immer derselben senatorischen Familien. Aus Sicht der W&#228;hlenden scheinen diese Kandidaten also schon von ihrer Geburt her &#252;ber hohe gesellschaftliche Ehre verf&#252;gt zu haben. Hingegen hatten es die <italic>homines novi</italic>, die sich als erste ihrer Familien um den Konsulat bewarben, gerade bei den einfachen Leuten in der B&#252;rgerschaft schwer, gew&#228;hlt zu werden (Winterling 2004, 201f.). Zur Frage der Akzeptanz der Senatsherrschaft durch das Volk und wie diese Akzeptanz hergestellt wurde, s. bes. Flaig 2004.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4150">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[65] 	Vgl. Winterling 2001, bes. 108&#8211;112; Winterling 2004, 201&#8211;210.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4170">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[66] 	Dazu und zum Folgenden s. Winterling 2004b, 178f. S. ferner Riedel 1975; Sellin 1978; Conze u.&#8239;a. 1990. &#8211; Allgemein zum Konzept der Begriffe ,&#246;ffentlich&#8216; und ,privat&#8216; und seiner Bedeutung im Verlauf der Geschichte s. L. H&#246;lscher 1978; Hofmann 1984; Hohendahl u.&#8239;a. 2000; Moos 1998; Rieks 1984.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4280">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[67] 	Das best&#228;tigen im &#220;brigen auch die Klientelbeziehungen eines Senators, die im Wahlkampf wichtig waren und die sich besonders in den jeden Morgen in der <italic>domus</italic> stattfindenden <italic>salutationes</italic> manifestierten, oder die ,Freundschaften&#8216; zwischen den Aristokraten, die im ,Haus&#8216; beim Gastmahl, dem <italic>convivium</italic>, gepflegt wurden. Folglich erkl&#228;rt J.R. Clarke, dass &#8222;unlike our modern house, conceived as a refuge for the nuclear family, located far from the factory or office, the Roman house was in no way private&#8220;. Er f&#228;hrt fort, dass vielmehr das Haus &#8222;the locus of the owner&#8217;s social political, and business activities&#8220; gewesen sei (Clarke 1991, 2). &#196;hnlich Wallace-Hadrill: 1994. Zum Thema s. aus der mittlerweile recht umfangreichen Literatur Beck 2009; Egelhaaf-Gaiser 2006; Burckhardt 2003; Riggsby 1997; Saller 1984.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4304">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[68] 	Dies verdeutlicht, dass die politischen Institutionen Roms nicht Teil einer Verfassung im modernen Sinn sind, die im staatsrechtlichen Verst&#228;ndnis einen autonomen Bereich darstellt, der von gesellschaftlichen Gegebenheiten isoliert werden kann und folglich abgeschafft werden k&#246;nnte, ohne dass die gesellschaftliche Struktur davon betroffen w&#228;re. Zum Problem der Beschreibung der politischen Ordnung Roms als Verfassung in traditionellen, verfassungsgeschichtlich gepr&#228;gten &#220;berlegungen aus den Altertumswissenschaften s. H&#246;lkeskamp 2004, 19&#8211;29, zusammenfassend u. mit weiterf&#252;hrender Literatur. Grundlegend Meier 1997, bes. die Einleitung; 56f. u. passim. &#8211; Zum Problem der Akzeptanz der kaiserlichen Herrschaft s. bes. Flaig 1992, hier bes. 11&#8211;13; 174&#8211;207. E. Flaig geht davon aus, dass die dauerhafte Sicherung der Herrschaft eines Kaiser in hohem Ma&#223; davon abhing, die Akzeptanz der drei ma&#223;geblichen Gruppen der politischen Gemeinschaft des <italic>Imperium Romanum</italic> zu erlangen, n&#228;mlich der <italic>plebs urbana</italic> des Senates und der Truppen mit r&#246;mischen B&#252;rgerrecht. Flaig betont daher die besondere Bedeutung der Kommunikation der Kaiser mit diesen Gruppen.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4327">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[69] 	Dazu s.&#8239;a. Meier 1980. S. ferner Bringmann 2002, hier bes. 119&#8211;123.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4343">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[70] 	So formuliert es Winterling 2004, 209.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4365">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[71] 	S. ebd., 208; da auch das Zitat.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4372">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[72] 	Dabei zeigte sich bald, dass es f&#252;r die Kaiser geradezu &#252;berlebensnotwendig war, sich entsprechend zu verhalten. Denn Kaiser, die im Umgang mit der Aristokratie auf Dauer nicht gewillt waren, ihre &#252;berlegene Position zu verschleiern, fielen Verschw&#246;rungen zum Opfer. Dazu s. ausf&#252;hrlich am Beispiel des Kaisers Gaius Caligula Winterling 2003.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4380">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[73] 	Zur Institutionalisierung des kaiserlichen Hofes s. Winterling 1997, 91&#8211;112; Winterling 1999. Zur kaiserlichen Verwaltung s. Eck 1995 (1989). </div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4387">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[74] 	Zum Senat der Kaiserzeit s. Chastagnol 1992; Talbert 1984.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4399">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[75] 	F&#252;r bestimmte Machtpositionen brauchte der Kaiser &#8218;ehrenwerte&#8216; Leute, am besten Senatoren, zumindest aber Ritter. Das galt zum einen f&#252;r die h&#246;fische Organisation &#8211; zumindest seit Ende der iulisch-claudischen Zeit l&#228;sst sich dort eine &#8218;Aristokratisierung&#8216; nachweisen &#8211;, und auch hinsichtlich ihrer Nahbeziehungen sahen sich die Kaiser gen&#246;tigt, sich nicht nur mit Sklaven und Freigelassenen, sondern auch mit Aristokraten zu umgeben (Winterling 1999, 111f.; 169&#8211;194). Zum anderen wurde besonders f&#252;r die Kommandos &#252;ber die Legionen senatorisches Personal ben&#246;tigt: Die Soldaten bestanden darauf, von M&#228;nnern mit gro&#223;er Ehre befehligt zu werden und drohten zu meutern, wenn dem nicht stattgegeben wurde. S. Cass. Dio. 60,19,2f.; SHA Comm. 6,2. Siehe auch Tac. ann. 2,13; hist. 1,9; Cass. Dio 52,8,6f.; Plut. Galba 22,5. Das stellte die Kaiser vor ein Problem, denn gerade M&#228;nner senatorischer Herkunft mit gro&#223;em Familienprestige waren ihre gef&#228;hrlichsten Konkurrenten. Die Kaiser reagierten darauf, indem sie Positionen, die ihnen gef&#228;hrlich werden konnten, zunehmend mit <italic>homines novi</italic> ritterlicher Herkunft oder aus den lokalen Oberschichten der St&#228;dte im Reich besetzten, nicht aber mit Personen, die bereits aus konsularischen Familien stammten. Diese &#8218;neuen M&#228;nner&#8216;, die der Kaiser in den Senat aufnahm, verf&#252;gten von Haus aus &#252;ber vergleichsweise wenig <italic>dignitas</italic> und waren den Kaisern daher weniger gef&#228;hrlich, abgesehen davon, dass sie dem Kaiser verpflichtet waren. Doch auch die <italic>homines novi</italic> mussten die traditionelle Magistratur durchlaufen, bevor sie jene bedeutenden Positionen einnehmen konnten, was die Bedeutung der republikanischen Institutionen best&#228;tigte. S. Burton u. Hopkins 1983; Winterling 2004, 209f.; zum Zusammenhang von &#8218;Ehre&#8216; der Herrschenden und deren Akzeptanz bei den Beherrschten s.&#8239;a. Lendon 1997, 242f. auch zu milit&#228;rischem Kommando und Ehre.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4423">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[76] 	Vgl. Winterling 2001, 110.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4453">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[77] 	H&#246;lkeskamp 2004a, 81; allgemein zum Thema und mit weiterf&#252;hrender Literatur s.&#8239;a. 79&#8211;82. Zur Parallelit&#228;t von politischer und kultureller Aktivit&#228;t s. Leppin 1992; etwas schw&#228;cher auch Stein-H&#246;lkeskamp 2005a. Dass weiterhin Mitgliedschaft im Senat und &#196;mter der Magistratur angestrebt wurden, best&#228;tigen auch zahlreiche senatorische Ehreninschriften aus der Kaiserzeit, die &#8211; bei allen Ver&#228;nderungen &#8211; wie in der Republik die erreichten Positionen eines zu Ehrenden im <italic>cursus honorum</italic> nennen (s. etwa Alf&#246;ldy 1982; Alf&#246;ldy 1986; Eck 1984; Eck 2003).</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4472">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[78] 	S. Amherdt 2004, der darauf hinweist, dass Sidonius sich damit im Rahmen traditioneller r&#246;mischer Vorstellungen und Topoi bewegt. Siehe dazu Sidon. epist. 1,6; 8,8.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4484">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[79] 	Zur Zusammensetzung des Senates, zur Besetzung der magistratischen &#196;mter, die in der Kaiserzeit nicht mehr durch Wahl in der Volksversammlung, sondern im Senat selbst erfolgte, und zum Einfluss des Kaisers dabei s. die einschl&#228;gigen Kapitel bei Talbert 1984.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4516">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[80] 	Letztlich hat Cassius Dio sowohl die Instabilit&#228;t insbesondere der sp&#228;ten Republik und ihres problematischen Freiheitsanspruch als auch die tyrannische Tendenz des Prinzipats kritisiert. Perfekt erscheint ihm ein Mittelding: die Monarchie, gemildert durch den Einfluss der besten M&#228;nner auf den Herrscher. Dieser Anspruch ist vor dem Hintergrund von Cassius Dios eigener Zeit zu sehen, deren Realit&#228;ten der Senator Cassius Dio Rechnung tr&#228;gt, indem er der Senatsaristokratie eine angemessene Rolle in der faktisch nun einmal bestehenden Monarchie zuweist und das Verh&#228;ltnis zwischen Senat und princeps zum Indikator daf&#252;r erhebt, ob ein bestimmter Kaiser ein &#8218;guter&#8216; <italic>princeps</italic> oder ein &#8218;schlechter&#8216; Tyrann war: Ein &#8218;guter&#8216; Kaiser sucht den Rat des Senates bzw. der &#8218;guten&#8216; Senatoren, ein &#8218;schlechter&#8216; Kaiser umgibt sich mit fragw&#252;rdigen Gestalten und ignoriert den Senat, wenn er nicht gar zum M&#246;rder an den &#8218;ersten&#8216; und &#8218;besten&#8216; Mitgliedern dieser Institution bzw. deren Angeh&#246;rigen wird. Zum Thema s.&#8239;a. Fechner 1986. Tac. hist. 1,80&#8211;85, wo Tacitus Kaiser Otho u.&#8239;a. den Anspruch vertreten l&#228;sst, dass die Kaiser aus den Reihen der Senatoren stammten, ebenso wie die Senatoren den Reihen der Soldaten entstammten.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4529">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[81] 	Wenn Alter oder Krankheit der Grund f&#252;r den R&#252;ckzug war, so scheint das auch kaum weiter bemerkenswert gewesen zu sein. In Livius&#8217; R&#246;mischer Geschichte etwa verschwinden die meisten Personen irgendwann einfach, ohne dass der Historiker sich veranlasst gesehen h&#228;tte, dies eigens zu kommentieren. Wenn die fragliche Person sehr ber&#252;hmt war, erw&#228;hnt Livius vielleicht noch ihren Tod und die mehr oder weniger aufw&#228;ndigen Leichenspiele zu ihren Ehren &#8211; aber nicht mehr. Allenfalls wenn diese M&#228;nner nach ihrem R&#252;ckzug aus Alters- oder Gesundheitsgr&#252;nden noch einmal spektakul&#228;r in Erscheinung traten, wird der R&#252;ckzug selbst thematisiert. Siehe z.&#8239;B. Liv. 7,39,11&#8211;13; 13 per.; Liv. 26,22</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4550">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[82] 	Cicero musste sich etwa auch den Tadel gefallen lassen, er dehne seinen Aufenthalt auf dem Land allzu sehr aus, als er sich aus Trauer um seine verstorbene Tochter eine Weile in seine Villen zur&#252;ckzog (s. Cic. Att. 12,42; 12,44).</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4571">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[83] 	Cic. fam. 9,2,1: &#8222;Was soll ich Dir also schreiben? Was Du wahrscheinlich gern h&#246;ren willst: dass ich demn&#228;chst zu Dir komme. Doch &#252;berlege Dir bitte, ob es ganz richtig ist, wenn wir uns in dieser &#228;u&#223;ersten Gefahr f&#252;r die B&#252;rgerschaft in jenen Gegenden treffen; wir geben allen Stoff zum Klatschen, die nicht wissen, dass wir von demselben m&#228;&#223;igen Komfort umgeben sind und genauso leben wie sonst, m&#246;gen wir uns befinden, wo wir wollen. [...] Man muss sich, glaube ich, sehr darum bem&#252;hen, dass nicht, w&#228;hrend sich alle in jeder Art von Verbrechen und Schandtaten w&#228;lzen, unsere gemeinsame Unt&#228;tigkeit gescholten wird!&#8220; &#196;hnlich s. auch Cic. fam. 9,3,5; Att. 2,11.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4601">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[84] 	Zum historischen Hintergrund s. Bleicken 2004, 83&#8211;85 u. passim, mit weiterf&#252;hrender Literatur; Christ 2000, 356&#8211;378.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4614">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[85] 	Ausf&#252;hrlich thematisiert diesen Zwiespalt Andr&#233; 1966, 279&#8211;334. S. aber u.&#8239;a. auch Christes 1988 u. Fuhrmann 1960. &#8211; Allerdings stellt sich gerade im Fall von Cicero das Problem, dass jener einerseits verschiedentlich betont hat, seine <italic>negotia</italic> &#252;ber sein <italic>otium</italic> zu stellen, andererseits scheinbar jedoch auch wiederholt in f&#252;r ihn pers&#246;nlich kritischen politischen Situationen den freiwilligen R&#252;ckzug in ein dauerhaftes <italic>otium</italic> als denkbare Alternative zu einer politisch frustrierenden, wenn nicht unertr&#228;glichen Situation propagiert hat. Wie dies zu interpretieren ist, darauf wird noch einzugehen sein (s. Kap. 3.1).</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4631">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[86] 	So z.&#8239;B. in Plin. epist. 1,3; 1,6; 1,9,6; 1,10,10f.; 1,13; 3,1,11f.; 4,23; 6,10,1; 7,25,2.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4643">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[87] 	Plin. epist. 7,3,1&#8211;3: &#8222;Fabelhaft, diese Ausdauer! Bald bist Du in Lucanien, bald in Campanien! &#8218;Ich selbst bin doch aus Lucanien, meine Frau aus Campanien!&#8216;, sagst Du. Ein triftiger Grund f&#252;r eine etwas l&#228;ngere Abwesenheit, aber doch nicht f&#252;r eine dauernde! Also warum kehrst Du nicht ab und zu einmal in die Stadt zur&#252;ck, wo Ansehen, Ehre, engere und fernerstehende Freunde warten? Wie lange willst Du noch den Herrscher spielen, wie lange noch wachen, wann Du Lust hast, und schlafen, so lange Du willst? Wie lange keine Stiefeletten, die Toga auf Ferien, der ganze Tag frei? Es wird Zeit, dass Du einmal wieder unsere Plackereien zu Gesicht bekommst, und sei es nur, dass die dortigen Gen&#252;sse nicht durch &#220;bers&#228;ttigung fade werden. Mach&#8217; ein paar Besuche, damit Du die Gegenbesuche umso netter findest. Lass Dich in dem Getriebe hier umhersto&#223;en, damit die Einsamkeit Dir wieder Freude macht!&#8220;</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4663">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[88] 	Dazu s. die Einleitung zu Kap.&#160; 2.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4681">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[89] 	Diese Gesch&#228;fte und Verpflichtungen eines Villenbesitzers thematisiert auch Plinius selbst an verschiedener Stelle (s. z.&#160;B. Plin. epist. 3,19; 4,1; 4,6; 4,13). Siehe auch Krieckhaus 2006, mit f&#252;nf Fallstudien zu den T&#228;tigkeiten senatorischer Familien des 1./2. Jhd.s&#160;n.&#160;Chr. in ihrer <italic>patria,</italic> sowie Quass 1982.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4693">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[90] 	Zu dieser Interpretation des Plinius-Briefes s.&#8239;a. Rebenich 2005, 187.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4721">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[91] 	S. dazu etwa Gotter 1996b, mit ausf&#252;hrlichen Literaturhinweisen. Speziell zum Verst&#228;ndnis von <italic>amicitia</italic> beim j&#252;ngeren Plinius s. Castagna 2003.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4751">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[92] 	Dazu sei exemplarisch nur auf die folgenden Nachrichten hingewiesen, welche die Quellen zu diesem Thema &#252;berliefern: Tacitus berichtet, ein Bruder des einflussreichen Vertrauten Neros, des Philosophen Seneca, habe aus falschem Ehrgeiz heraus kein Interesse an einer senatorischen Karriere gehabt, sondern sei lieber im Ritterstand verblieben, wo er leichter Reicht&#252;mer und eine Machtposition anzuh&#228;ufen hoffte. Von einem Gro&#223;vater des Kaisers Galba berichtet Sueton, er sei im <italic>cursus honorum</italic> nicht &#252;ber die Praetur hinausgekommen und als Verfasser eines Geschichtswerkes ber&#252;hmter gewesen als f&#252;r seine <italic>dignitas;</italic> der Bruder Galbas wiederum habe Rom verlassen, nachdem er sein Verm&#246;gen durchgebracht hatte, und sich schlie&#223;lich das Leben genommen, angeblich weil Kaiser Claudius ihm nicht gestattete, sich so fr&#252;h auf ein Prokonsulat zu bewerben, wie er gekonnt h&#228;tte (Suet.&#160;Galba&#160;2f.). Licinius Mucianus, der sich im Vierkaiserjahr als Unterst&#252;tzer Vespasians profilierte, habe als junger Mann ambitionierte Freundschaften gepflegt, sich dann jedoch nach Asien zur&#252;ckgezogen, weil er sich den Unmut des Claudius zugezogen habe bzw. sein Geld aufgebraucht gewesen sei (Tac.&#160;hist.&#160;1,10). Von Kaiser Vespasian berichtet Sueton, dass der sp&#228;tere Kaiser nach Anlegen der M&#228;nnertoga den Senatorenrang lange abgelehnt habe, obgleich sein Bruder sich bereits beworben hatte; erst die Mutter habe ihn dazu bewegt, indem sie ihn immer wieder als Wegbereiter seines Bruders bezeichnete (Suet.&#160;Vesp. 2,2). Flavius Clemens (PIR<sup>2</sup> F&#160;240), ein Cousin Domitians, soll tr&#228;ge gewesen sein und keinerlei Interesse an den &#196;mtern gezeigt haben.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4762">
+        <element-citation publication-type="journal"><person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4782">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[93] 	Plin. epist. 3,1,11f.: &#8222;Solch ein Leben w&#252;nsche ich mir schon jetzt in Gedanken und werde es begierig antreten, sobald mein Alter zum R&#252;ckzug zu blasen erlaubt. Vorerst nutze ich mich in tausenderlei M&#252;hen ab, wobei mir Spurinna Trost und Leitbild ist; denn auch er hat, solange es die Ehre erforderte, Dienste geleistet, &#196;mter bekleidet, Provinzen verwaltet und durch M&#252;he und Arbeit sich diese Mu&#223;e verdient. Darum nehme ich mir dieselbe Laufbahn vor, setze mir das gleiche zum Ziel und gebe Dir jetzt schon Brief und Siegel darauf, damit Du mich, falls Du siehst, dass ich &#252;ber die Strenge schlage, aufgrund dieses Schreibens zur Verantwortung ziehst und mir auszuruhen gebietest, wenn man mir nicht mehr den Vorwurf der Tr&#228;gheit machen kann.&#8220; Ebenso: Plin.&#160;epist. 4,23; 6,10,1; 7,25,2. Siehe auch Mart.&#160;1,49; 4,25. </div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4804">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[94] 	S. Kap.&#160;3.2 am Beispiel von Plinius&#8217; Panegyrikus auf Trajan.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4843">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[95] 	S. Suet. Tib. 41,1. Ausf&#252;hrlich zu Tiberius&#8217; R&#252;ckzug nach Capri s. Kap.&#160;4.3.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4850">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[96] 	Nero soll auch erwogen haben, dem Kaisertum zu entsagen und die Stadt zu verlassen, um in Alexandria als Kithar&#246;de zu leben, was Sueton der Gipfel der Torheit zu sein scheint (s. Kap.&#160;4.1.2). &#220;ber Caligula berichtet Sueton, jener habe geplant, den Sitz der Regierung nach Antium zu verlegen, das er allen anderen Erholungsorten vorgezogen habe (Suet.&#160;Cal. 8,5). </div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4870">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[97] 	Suet.&#160;Cal. 48&#8211;49. </div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4881">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[98] 	Suet.&#160;Dom.&#160;3;20&#8211;21</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+      <ref id="bibd2e4897">
+        <element-citation publication-type="journal">
+          <article-title>
+            <div>[99] 	Plin.&#160;paneg.&#160;48,3; 5: <italic>nec salutationes tuas fuga et vastitas sequitur: remoramur, resistimus ut in communi domo, quam nuper illa immanissima belua plurimo terrore munierat, cum velut quodam specu inclusa nunc propinquorum sanguinem lamberet, nunc se ad clarissimorum civium strages caedesque proferret. [&#8230;] non adire quisquam, non adloqui audebat tenebras semper secretumque captantem nec umquam ex solitudine sua prodeuntem, nisi ut solitudinem faceret.</italic> (&#8222;Wenn dann deine <italic>salutationes</italic> vor&#252;ber sind, ergreift man nicht eilends die Flucht, keine g&#228;hnende Leere bleibt zur&#252;ck; wir verweilen noch, bleiben beieinander stehen, ganz als geh&#246;re das Haus uns allen. Und eben aus diesem Haus hatte vor kurzem noch jenes abscheuliche Ungeheuer <italic>[Domitian; Anm. A.&#160;H.]</italic> eine Festung des Schreckens gemacht, als es wie in einer H&#246;hle eingeschlossen bald das Blut seiner Verwandten leckte, bald losbrach, um den edelsten B&#252;rgern Tod und Verderben zu bringen. [&#8230;] Niemand wagte, zu ihm hinzugehen, ihn anzusprechen. Stets zog es ihn in dunkle Abgeschiedenheit, und wenn er je aus seiner Einsamkeit losbrach, dann nur, um anderswo Einsamkeit zu schaffen.&#8220;). Siehe auch Kap.&#160;3.2.</div>
+          </article-title>
+        <person-group person-group-type="author"/></element-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>
