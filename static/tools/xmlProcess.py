@@ -89,7 +89,7 @@ class XMLProcess(Debuggable):
          Parameters
          ----------
          tags: list
-         list of elements
+          list of elements
 
          """
          for tag in tags:
@@ -98,6 +98,7 @@ class XMLProcess(Debuggable):
             for i in sh:
                 i.set('id', tag.replace('-', '') + str(sid))
                 sid += 1
+         return self.tr
 
 
     def set_uuids_for_back_matter(self, tags):
@@ -105,8 +106,8 @@ class XMLProcess(Debuggable):
         Add unique id tags to  any of the sub-elements of the back matter
 
         Parameters
-         ----------
-         tags: list
+        ----------
+        tags: list
          list of elements
 
 
@@ -128,30 +129,37 @@ class XMLProcess(Debuggable):
                     else:
                         self.debug.print_debug(
                             self, self.gv.XML_ELEMENT_NOT_FOUND)
-            
+        return self.tr
     def set_numbering(
             self,
-            name,
+            tag,
             attr,
             value,
             count,
-            range_array):
+            range_list):
         """
         Adds numerical values to  a  tag  in arguments list
-        :param tr:
-        :param name:
-        :param attr:
-        :param value:
-        :param count:
-        :param range_array:
-        :return:
+
+        Parameters
+        ---------
+        tag: str
+         xml tag name
+        attr: str
+         attribute name
+        value :str
+         value name
+        count : int
+         current sequence number
+        range_list : list
+            lower and upper level for the  numbering
+
         """
-        searchTag = './/' + name + '[@' + attr + '="' + value + '"]'
+        searchTag = './/' + tag + '[@' + attr + '="' + value + '"]'
         elems = self.tr.getroot().findall(searchTag)
         range_count = 1
         for elem in elems:
             elem.text, range_count = self.set_roman_numbers(
-                count, range_count, range_array)
+                count, range_count, range_list)
             count += 1
 
         return self.tr, count
@@ -159,8 +167,12 @@ class XMLProcess(Debuggable):
     def convert_int_to_roman(self, i):
         """
         Converts an integer number into a roman number
-        :param i:
-        :return:
+
+        Parameters
+        ---------
+        i : int
+         integer number
+
         """
         result = []
         for integer, numeral in self.gv.numeral_map:
@@ -169,17 +181,18 @@ class XMLProcess(Debuggable):
             i -= integer * count
         return ''.join(result)
 
-    def set_roman_numbers(self, count, r_count, range_array):
+    def set_roman_numbers(self, count, r_count, range_list):
         """
         Converts a given set of elements defined by range_array into roman numbers
-        :param count:
-        :param r_count:
-        :param range_array:
-        :return:
+
+        Parameters
+        ---------
+
+
         """
 
         val = str(count)
-        if int(range_array[0]) <= count <= int(range_array[1]):
+        if int(range_list[0]) <= count <= int(range_list[1]):
             val = self.convert_int_to_roman(r_count).lower()
             r_count += 1
         else:
