@@ -1,7 +1,0 @@
-xmlMerge module
-===============
-
-.. automodule:: xmlMerge
-    :members:
-    :undoc-members:
-    :show-inheritance:
