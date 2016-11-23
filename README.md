@@ -20,9 +20,9 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
  * Python is avaliable in your system: check with  `python --version`
  * Git is installed : check `git --version`
  * Not compulsory , but helpful to install missing module: `pip --version` . Install   any missing python module with `pip install mymodule`
- * Installation folder  `/usr/local/mpt`
- 
- 
+ * We assume Installation folder is  `/usr/local/mpt`
+
+
 
 ## doc2pdf Conversion Pipeline
 
