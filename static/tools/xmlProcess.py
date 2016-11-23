@@ -59,7 +59,6 @@ class XMLProcess(Debuggable):
         Set unique ids to ceratain tag types
         Sort references
 
-
     """
 
     def __init__(self):
