@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>xmlProcess module &#8212; MPT 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="MPT 0.0.1 documentation" href="index.html" />
+    <link rel="next" title="xmlMerge module" href="xmlMerge.html" />
+    <link rel="prev" title="mpt module" href="mpt.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="xmlMerge.html" title="xmlMerge module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mpt.html" title="mpt module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPT 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-xmlProcess">
+<span id="xmlprocess-module"></span><h1>xmlProcess module<a class="headerlink" href="#module-xmlProcess" title="Permalink to this headline">¶</a></h1>
+<p>This  program is a utility file  which executes a set of specified functions on a element tree  of a xml file.</p>
+<p>The current functions are limited to JATS and BITS XML Scheme of the Library of Congress. However the methods defined in
+this program can be used to modify any element tree. Some of the  current avaliable functions are sorting footnotes,
+numbering elements of a certain type  or setting unique ids to a certain element type.</p>
+<dl class="docutils">
+<dt>Usage:</dt>
+<dd>xmlProcess.py  &lt;input_file&gt;  &lt;path&gt; [options]</dd>
+<dt>Options:</dt>
+<dd><table class="first docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-d</span>, <span class="option">--debug</span></kbd></td>
+<td>Enable debug output</td></tr>
+</tbody>
+</table>
+<p class="last">-f &#8211;sort-footnotes=&lt;tag list as comma seperated lists&gt;
+-h &#8211;help
+-m &#8211;metadata=&lt;file__name_schema.xml&gt;
+-n &#8211;set-numbering=&lt;elemennt types as comma seperated lists&gt;
+-r  &#8211;remove-references-unused
+-s &#8211;sort-references=&lt;tag list as comma seperated lists&gt;
+-t &#8211;set-numbering-types=&lt;numbering types e.g. roman , roman[1,2] &gt;
+-u &#8211;set-uuids=&lt;element types as comma seperated list&gt;</p>
+</dd>
+</dl>
+<dl class="class">
+<dt id="xmlProcess.XMLProcess">
+<em class="property">class </em><code class="descclassname">xmlProcess.</code><code class="descname">XMLProcess</code><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="debug.html#debug.Debuggable" title="debug.Debuggable"><code class="xref py py-class docutils literal"><span class="pre">debug.Debuggable</span></code></a></p>
+<p>Standalone module to combine, clean and modify a JATS XML file and optionally inject BITS Metadata headers.</p>
+<dl class="docutils">
+<dt>Features:        Add Id numbering for any tag type</dt>
+<dd>Clean comments
+Remove unused references
+Set numbering
+Add unique ids to certain tag types
+Sort references</dd>
+</dl>
+<dl class="method">
+<dt id="xmlProcess.XMLProcess.convert_int_to_roman">
+<code class="descname">convert_int_to_roman</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.convert_int_to_roman"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.convert_int_to_roman" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts an integer number into a roman number</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>i</strong> (<em>int</em>) &#8211; integer number</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmlProcess.XMLProcess.create_metadata_path">
+<code class="descname">create_metadata_path</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.create_metadata_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.create_metadata_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>creates the correct folder path for the metadata file. Metadata files should be in a folder : metadata
+:param metadata:
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmlProcess.XMLProcess.merge_metadata">
+<code class="descname">merge_metadata</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.merge_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.merge_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a metadata file path and  merge its content into the metadata section
+:param tr:
+:param metadata:
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmlProcess.XMLProcess.process_xml_file">
+<code class="descname">process_xml_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.process_xml_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.process_xml_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>process  xml  file and do all transformations
+:return:</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="xmlProcess.XMLProcess.read_command_line">
+<em class="property">static </em><code class="descname">read_command_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.read_command_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.read_command_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads and  generates a docopt dictionary from the command line parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>docopt</strong> &#8211; A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
+elements.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dictionary</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmlProcess.XMLProcess.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>main function  which call xml processing
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmlProcess.XMLProcess.set_numbering">
+<code class="descname">set_numbering</code><span class="sig-paren">(</span><em>tag</em>, <em>attr</em>, <em>value</em>, <em>count</em>, <em>range_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.set_numbering"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.set_numbering" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds numerical values to  a  tag  in arguments list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tag</strong> (<em>str</em>) &#8211; xml tag name</li>
+<li><strong>attr</strong> (<em>str</em>) &#8211; attribute name</li>
+<li><strong>value</strong> (<em>str</em>) &#8211; value name</li>
+<li><strong>count</strong> (<em>int</em>) &#8211; current sequence number</li>
+<li><strong>range_list</strong> (<em>list</em>) &#8211; lower and upper level for the  numbering</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmlProcess.XMLProcess.set_roman_numbers">
+<code class="descname">set_roman_numbers</code><span class="sig-paren">(</span><em>count</em>, <em>r_count</em>, <em>range_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.set_roman_numbers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.set_roman_numbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a given set of elements defined by range_array into roman numbers</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmlProcess.XMLProcess.set_tag_numbering">
+<code class="descname">set_tag_numbering</code><span class="sig-paren">(</span><em>tags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.set_tag_numbering"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.set_tag_numbering" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatic numbering of the list of elements</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tags</strong> (<em>list</em>) &#8211; list of elements</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmlProcess.XMLProcess.set_uuids_for_back_matter">
+<code class="descname">set_uuids_for_back_matter</code><span class="sig-paren">(</span><em>tags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.set_uuids_for_back_matter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.set_uuids_for_back_matter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add unique id tags to  any of the sub-elements of the back matter</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tags</strong> (<em>list</em>) &#8211; list of elements</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmlProcess.XMLProcess.sort_by_tags">
+<code class="descname">sort_by_tags</code><span class="sig-paren">(</span><em>tag_list</em>, <em>elem</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.sort_by_tags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.sort_by_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sorts  a   list  of elements alphabetically
+:param tag_list:
+:param elem:
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmlProcess.XMLProcess.sort_footnotes">
+<code class="descname">sort_footnotes</code><span class="sig-paren">(</span><em>tag_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.sort_footnotes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.sort_footnotes" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort footnotes
+:param tr:
+:param tag_list:
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmlProcess.XMLProcess.sort_references">
+<code class="descname">sort_references</code><span class="sig-paren">(</span><em>tag_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.sort_references"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.sort_references" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort references
+:param self.tr:
+:param tag_list:
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmlProcess.XMLProcess.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>global function to apply the transformation in to the element tree
+:param tr:
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="xmlProcess.main">
+<code class="descclassname">xmlProcess.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>main method
+:return:</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mpt.html"
+                        title="previous chapter">mpt module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="xmlMerge.html"
+                        title="next chapter">xmlMerge module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/xmlProcess.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="xmlMerge.html" title="xmlMerge module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mpt.html" title="mpt module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPT 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    </div>
+  </body>
+</html>

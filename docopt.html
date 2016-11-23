@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>docopt module &#8212; MPT 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="MPT 0.0.1 documentation" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPT 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-docopt">
+<span id="docopt-module"></span><h1>docopt module<a class="headerlink" href="#module-docopt" title="Permalink to this headline">¶</a></h1>
+<p>Pythonic command-line interface parser that will make you smile.</p>
+<ul class="simple">
+<li><a class="reference external" href="http://docopt.org">http://docopt.org</a></li>
+<li>Repository and issue-tracker: <a class="reference external" href="https://github.com/docopt/docopt">https://github.com/docopt/docopt</a></li>
+<li>Licensed under terms of MIT license (see LICENSE-MIT)</li>
+<li>Copyright (c) 2013 Vladimir Keleshev, <a class="reference external" href="mailto:vladimir&#37;&#52;&#48;keleshev&#46;com">vladimir<span>&#64;</span>keleshev<span>&#46;</span>com</a></li>
+</ul>
+<dl class="function">
+<dt id="docopt.docopt">
+<code class="descclassname">docopt.</code><code class="descname">docopt</code><span class="sig-paren">(</span><em>doc</em>, <em>argv=None</em>, <em>help=True</em>, <em>version=None</em>, <em>options_first=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/docopt.html#docopt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#docopt.docopt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse <cite>argv</cite> based on command-line interface described in <cite>doc</cite>.</p>
+<p><cite>docopt</cite> creates your command-line interface based on its
+description that you pass as <cite>doc</cite>. Such description can contain
+&#8211;options, &lt;positional-argument&gt;, commands, which could be
+[optional], (required), (mutually | exclusive) or repeated...</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>doc</strong> (<em>str</em>) &#8211; Description of your command-line interface.</li>
+<li><strong>argv</strong> (<em>list of str, optional</em>) &#8211; Argument vector to be parsed. sys.argv[1:] is used if not
+provided.</li>
+<li><strong>help</strong> (<em>bool (default: True)</em>) &#8211; Set to False to disable automatic help on -h or &#8211;help
+options.</li>
+<li><strong>version</strong> (<em>any object</em>) &#8211; If passed, the object will be printed if &#8211;version is in
+<cite>argv</cite>.</li>
+<li><strong>options_first</strong> (<em>bool (default: False)</em>) &#8211; Set to True to require options precede positional arguments,
+i.e. to forbid options and positional arguments intermix.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>args</strong> &#8211; A dictionary, where keys are names of command-line elements
+such as e.g. &#8220;&#8211;verbose&#8221; and &#8220;&lt;path&gt;&#8221;, and values are the
+parsed values of those elements.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">docopt</span> <span class="k">import</span> <span class="n">docopt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="gp">... </span><span class="s1">Usage:</span>
+<span class="gp">... </span><span class="s1">    my_program tcp &lt;host&gt; &lt;port&gt; [--timeout=&lt;seconds&gt;]</span>
+<span class="gp">... </span><span class="s1">    my_program serial &lt;port&gt; [--baud=&lt;n&gt;] [--timeout=&lt;seconds&gt;]</span>
+<span class="gp">... </span><span class="s1">    my_program (-h | --help | --version)</span>
+<span class="gp">...</span><span class="s1"></span>
+<span class="gp">... </span><span class="s1">Options:</span>
+<span class="gp">... </span><span class="s1">    -h, --help  Show this screen and exit.</span>
+<span class="gp">... </span><span class="s1">    --baud=&lt;n&gt;  Baudrate [default: 9600]</span>
+<span class="gp">... </span><span class="s1">&#39;&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">argv</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tcp&#39;</span><span class="p">,</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;80&#39;</span><span class="p">,</span> <span class="s1">&#39;--timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;30&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">docopt</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">argv</span><span class="p">)</span>
+<span class="go">{&#39;--baud&#39;: &#39;9600&#39;,</span>
+<span class="go"> &#39;--help&#39;: False,</span>
+<span class="go"> &#39;--timeout&#39;: &#39;30&#39;,</span>
+<span class="go"> &#39;--version&#39;: False,</span>
+<span class="go"> &#39;&lt;host&gt;&#39;: &#39;127.0.0.1&#39;,</span>
+<span class="go"> &#39;&lt;port&gt;&#39;: &#39;80&#39;,</span>
+<span class="go"> &#39;serial&#39;: False,</span>
+<span class="go"> &#39;tcp&#39;: True}</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li>For video introduction see <a class="reference external" href="http://docopt.org">http://docopt.org</a></li>
+<li>Full documentation is available in README.rst as well as online
+at <a class="reference external" href="https://github.com/docopt/docopt#readme">https://github.com/docopt/docopt#readme</a></li>
+</ul>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/docopt.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPT 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    </div>
+  </body>
+</html>
