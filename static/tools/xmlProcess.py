@@ -49,15 +49,20 @@ except ImportError:
 
 class XMLProcess(Debuggable):
     """
+    Standalone module to combine, clean and modify a JATS XML file and optionally inject BITS Metadata headers.
+
+    Features:
+        Add Id numbering for any tag type
+        Clean comments
+        Remove references
+        Set numbering
+        Set unique ids to ceratain tag types
+        Sort references
+
 
     """
 
     def __init__(self):
-        """
-        Initializes
-
-        """
-
         self.args = self.read_command_line()
         self.debug = Debug()
         self.gv = GV()
@@ -72,7 +77,7 @@ class XMLProcess(Debuggable):
     def read_command_line():
         return docopt(__doc__, version='xml 0.1')
 
-    def set_tag_numbering(self,  tags):
+    def set_tag_numbering(self, tags):
         """
         automatic numbering of certain tags
         :param tree:
@@ -181,8 +186,6 @@ class XMLProcess(Debuggable):
         sort_footnotes = self.args.get('--sort-footnotes')
         sort_references = self.args.get('--sort-references')
 
-
-
         metadata = self.args.get('--metadata')
         self.tr = self.merge_metadata(metadata) if metadata else self.tr
 
@@ -191,9 +194,9 @@ class XMLProcess(Debuggable):
         self.tr = self.set_uuids_for_back_matter(
             set_uuids.split(',')) if set_uuids else self.tr
         self.tr = self.sort_footnotes(
-             sort_footnotes.split(',')) if sort_footnotes else self.tr
+            sort_footnotes.split(',')) if sort_footnotes else self.tr
         self.tr = self.sort_references(
-           sort_references.split(',')) if sort_references else self.tr
+            sort_references.split(',')) if sort_references else self.tr
 
         return self.tr
 
@@ -256,7 +259,7 @@ class XMLProcess(Debuggable):
         data.sort()
         elem[:] = [item[-1] for item in data]
 
-    def sort_references(self,  tag_list):
+    def sort_references(self, tag_list):
         """
         sort references
         :param self.tr:
@@ -268,7 +271,7 @@ class XMLProcess(Debuggable):
 
         return self.tr
 
-    def sort_footnotes(self,tag_list):
+    def sort_footnotes(self, tag_list):
         """
         sort footnotes
         :param tr:
@@ -291,7 +294,8 @@ class XMLProcess(Debuggable):
         self.tr = self.transform()
         count = 1
         range_count = [1, 2]
-        self.tr, count = self.set_numbering("xref", "ref-type", "fn", count, range_count)
+        self.tr, count = self.set_numbering(
+            "xref", "ref-type", "fn", count, range_count)
         self.gv.create_dirs_recursive(self.dr.split('/'))
         self.gv.create_xml_file(
             self.tr, os.path.join(

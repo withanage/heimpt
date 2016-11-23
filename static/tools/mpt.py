@@ -76,7 +76,6 @@ class MPT(Debuggable):
 
     @staticmethod
     def read_command_line():
-
         """
         Reads and  genrates a docopt dictionary from the command line parameters.
 
@@ -101,7 +100,6 @@ class MPT(Debuggable):
         return name
 
     def call_typesetter(self, args):
-
         """Runs  typesetter with given arguments
 
         Creates the execution path for a typesetter or an application and runs it  as a system process. Output,
@@ -130,9 +128,7 @@ class MPT(Debuggable):
         exit_code = process.wait()
         return output, err, exit_code
 
-
     def arguments_parse(self, t_props):
-
         """
         Reads typesetter properties from json  configuration and create  arguments.
 
@@ -171,7 +167,6 @@ class MPT(Debuggable):
             args,
             prefix,
             uid):
-
         """
         Creates the output path for  the current file
 
@@ -258,7 +253,6 @@ class MPT(Debuggable):
             project file type of the current typesetter
         """
 
-
         p_path = ''
         pf_type = ''
         prefix = f_name.split('.')[0]
@@ -292,7 +286,7 @@ class MPT(Debuggable):
         else:
             self.debug.print_debug(
                 self,
-                self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST +' '+
+                self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + ' ' +
                 os.path.join(f_path))
 
         return p_path, pf_type
@@ -380,7 +374,7 @@ class MPT(Debuggable):
             project file type of the previously executed typesetter
         pre_id :int
             sequence number of the previously executed file
-        
+
         Returns
         --------
         p_path : str
@@ -475,7 +469,6 @@ class MPT(Debuggable):
             self.debug.print_debug(self, self.gv.PROJECTS_VAR_IS_NOT_SPECIFIED)
         return True
 
-
     def check_program(self, p):
         """
         Checks  whether a  the program or typesetter is installed and executable
@@ -521,8 +514,6 @@ class MPT(Debuggable):
 
         return None
 
-
-
     def organize_output(
             self,
             p,
@@ -556,7 +547,7 @@ class MPT(Debuggable):
         --------
         project_path: str
             Final path for the current file
-        
+
         """
         t_path = [p.get('path'), uid]
         p_path = ''
