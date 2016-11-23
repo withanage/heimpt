@@ -123,22 +123,34 @@
 
     <span class="nd">@staticmethod</span>
 <div class="viewcode-block" id="XMLProcess.read_command_line"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.read_command_line">[docs]</a>    <span class="k">def</span> <span class="nf">read_command_line</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads and  generates a docopt dictionary from the command line parameters.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        docopt : dictionary</span>
+<span class="sd">          A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those</span>
+<span class="sd">          elements.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">docopt</span><span class="p">(</span><span class="n">__doc__</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;xml 0.1&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="XMLProcess.set_tag_numbering"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.set_tag_numbering">[docs]</a>    <span class="k">def</span> <span class="nf">set_tag_numbering</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tags</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        automatic numbering of certain tags</span>
-<span class="sd">        :param tree:</span>
-<span class="sd">        :param tags:</span>
-<span class="sd">        :return:</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">         Automatic numbering of the list of elements</span>
+<span class="sd">         Parameters</span>
+<span class="sd">         ----------</span>
+<span class="sd">         tags: list</span>
+<span class="sd">         list of elements</span>
+
+<span class="sd">        </span>
+<span class="sd">         &quot;&quot;&quot;</span>
+         <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
             <span class="n">sh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//&#39;</span> <span class="o">+</span> <span class="n">tag</span><span class="p">)</span>
             <span class="n">sid</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sh</span><span class="p">:</span>
                 <span class="n">i</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sid</span><span class="p">))</span>
-                <span class="n">sid</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span></div>
+                <span class="n">sid</span> <span class="o">+=</span> <span class="mi">1</span></div>
+
 
 <div class="viewcode-block" id="XMLProcess.set_uuids_for_back_matter"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.set_uuids_for_back_matter">[docs]</a>    <span class="k">def</span> <span class="nf">set_uuids_for_back_matter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tags</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
