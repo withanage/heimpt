@@ -27,7 +27,12 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
  cd $BUILD_DIR
  git submodule init
  git submodule update
- python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/example.json --debug
+```
+## Test  Instllation
+If you changed the $BUILD_DIR in the previous step, you have to change the project path in example.josn 
+
+```
+python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/example.json --debug
 ```
 
 ## API Documentation
