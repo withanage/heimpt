@@ -10,13 +10,16 @@ generate the output.
 
 
 Usage:
-    preProcess.py  <config_file> [options]
+    mpr.py  <config_file> [options]
 Options:
     -d, --debug  Enable debug output
 
 Example
 --------
-python /usr/local/mpt/static/tools/mpt.py /home/wit/mpt.json  --debug
+BUILD_DIR=/usr/local/mpt
+python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/example.json
+python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/example.json --debug
+
 
 
 
