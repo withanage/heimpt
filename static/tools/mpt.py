@@ -75,6 +75,10 @@ class MPT(Debuggable):
         True: boolean
             Returns True if all the projects are typeset
 
+        See Also
+        --------
+        typeset_all_projects
+
         """
         self.typeset_all_projects()
         return True
