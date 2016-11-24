@@ -24,7 +24,6 @@ Options:
 * Web : https://github.com/withanage/mpt
 * Repository and issue-tracker: https://github.com/withanage/mpt/issues
 * Licensed under terms of GPL 3  license (LICENSE.md)
-* Copyright (c) 2016 Dulip Withanage, University of Heidelberg
 
 
 """
@@ -54,12 +53,10 @@ class XMLProcess(Debuggable):
     """
     Standalone module to combine, clean and modify a JATS XML file and optionally inject BITS Metadata headers.
 
-    Features:        Add Id numbering for any tag type
-        Clean comments
-        Remove unused references
-        Set numbering
-        Add unique ids to certain tag types
-        Sort references
+    Features
+    --------
+    add Id numbering for any tag type, clean comments, remove unused references,
+    set numbering, add unique ids to certain tag types, sort references
 
     """
 
