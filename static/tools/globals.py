@@ -63,21 +63,65 @@ class GV(object):
 
     @staticmethod
     def fatal_error(module, message):
+        """
+        Prints a formatted error message and exits
+
+        Parameters
+        ----------
+        module: python module
+             Returns the name of the module
+        message: str
+            Error message
+
+
+        See Also
+        --------
+        module.get_module_name()
+
+        """
         print(u'[FATAL ERROR] [{0}] {1}'.format(
             module.get_module_name(), message))
         sys.exit(1)
 
-    def is_json(self, j):
+    def is_json(self, s):
+        """
+        Checks whether a string is valid json string
+
+        Parameters
+        ----------
+        s : str
+            JSON data as string
+
+        Raises
+        ------
+        ValueError  error
+             Inappropriate json string
+
+        """
         try:
-            return json.loads(j)
+            return json.loads(s)
         except ValueError as e:
             return False
         return True
 
 
-    def read_json(self, f):
-        if os.path.isfile(f):
-            with open(f) as j:
+    def read_json(self, pth):
+        """
+        Reads a json file from system path or exits
+
+        Parameters
+        ----------
+        pth: str
+             path of the  file in the folder structure
+
+        Returns
+        -------
+        josn : json
+            json object
+
+        """
+        if os.path.isfile(pth):
+            with open(pth) as j:
                 return json.load(j)
         else:
             self.debug.print_debug(
@@ -85,13 +129,23 @@ class GV(object):
             sys.exit(1)
 
 
-    def create_dirs_recursive(self, project_path):
+    def create_dirs_recursive(self, pth):
+        """
+        Recursively create directories for a system path or exists if folder exists
+
+        Parameters
+        ----------
+        pth : str
+            system path to be created
+
+        """
         p = ''
-        for path in project_path:
+        for path in pth:
             p = p + os.path.sep + path.strip('/').strip('/')
             if not os.path.exists(p):
                 try:
                     os.makedirs(p)
                 except OSError as o:
                     print o
+                    sys.exit(1)
         return p
