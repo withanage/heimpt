@@ -23,12 +23,10 @@ Notes
 This program may be used to consolidate output files, generated from a certain tool.  But a consolidation tool should
 be set as the last tool in a process chain.
 
-Information
------------
-* Web : https://github.com/withanage/mpt
-* Repository and issue-tracker: https://github.com/withanage/mpt/issues
-* Licensed under terms of GPL 3  license (LICENSE.md)
-* Copyright (c) 2016 Dulip Withanage, University of Heidelberg
+Web : https://github.com/withanage/mpt
+Repository and issue-tracker: https://github.com/withanage/mpt/issues
+Licensed under terms of GPL 3  license [LICENSE.md](https://github.com/withanage/mpt/blob/master/LICENSE.md)
+Copyright (c) 2016 Dulip Withanage, University of Heidelberg
 
 """
 
