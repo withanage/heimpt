@@ -65,7 +65,7 @@ the current typesetter. If chaining is not set, all the typesetters take the set
 generate the output.</p>
 <dl class="docutils">
 <dt>Usage:</dt>
-<dd>preProcess.py  &lt;config_file&gt; [options]</dd>
+<dd>mpr.py  &lt;config_file&gt; [options]</dd>
 <dt>Options:</dt>
 <dd><table class="first last docutils option-list" frame="void" rules="none">
 <col class="option" />
@@ -79,7 +79,9 @@ generate the output.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<p>python /usr/local/mpt/static/tools/mpt.py /home/wit/mpt.json  &#8211;debug</p>
+<p>BUILD_DIR=/usr/local/mpt
+python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/example.json
+python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/example.json &#8211;debug</p>
 <p class="rubric">Notes</p>
 <p>This program may be used to consolidate output files, generated from a certain tool.  But a consolidation tool should
 be set as the last tool in a process chain.</p>
