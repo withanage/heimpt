@@ -61,17 +61,65 @@
 <dl class="staticmethod">
 <dt id="debug.Debug.fatal_error">
 <em class="property">static </em><code class="descname">fatal_error</code><span class="sig-paren">(</span><em>module</em>, <em>message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/debug.html#Debug.fatal_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#debug.Debug.fatal_error" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Prints a formatted error message and exits</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>module</strong> (<em>python module</em>) &#8211; Returns the name of the module</li>
+<li><strong>message</strong> (<em>str</em>) &#8211; Error message</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-meth docutils literal"><span class="pre">module.get_module_name()</span></code></p>
+</div>
+</dd></dl>
 
 <dl class="method">
 <dt id="debug.Debug.get_module_name">
 <code class="descname">get_module_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/debug.html#Debug.get_module_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#debug.Debug.get_module_name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Reads the name of the module for debugging and logging</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Name of the Module</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">name string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="debug.Debug.print_">
 <code class="descname">print_</code><span class="sig-paren">(</span><em>module</em>, <em>message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/debug.html#Debug.print_"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#debug.Debug.print_" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Prints a formatted message</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>module</strong> (<em>python module</em>) &#8211; Returns the name of the module</li>
+<li><strong>message</strong> (<em>str</em>) &#8211; message as a string</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>message</strong> (<em>str</em>)</li>
+<li><em>Formatted Message , [Module name] message</em></li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="debug.Debug.print_debug">

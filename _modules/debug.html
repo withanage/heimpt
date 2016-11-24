@@ -81,13 +81,55 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">print_</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Debug.print_"><a class="viewcode-back" href="../debug.html#debug.Debug.print_">[docs]</a>    <span class="k">def</span> <span class="nf">print_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prints a formatted message</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        module: python module</span>
+<span class="sd">             Returns the name of the module</span>
+<span class="sd">        message: str</span>
+<span class="sd">            message as a string</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        message :str</span>
+<span class="sd">        Formatted Message , [Module name] message</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">u&#39;[</span><span class="si">{0}</span><span class="s1">] </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">get_module_name</span><span class="p">(),</span> <span class="n">unicode</span><span class="p">(</span><span class="n">message</span><span class="p">)))</span></div>
 
 <div class="viewcode-block" id="Debug.get_module_name"><a class="viewcode-back" href="../debug.html#debug.Debug.get_module_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_module_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads the name of the module for debugging and logging</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        name string</span>
+<span class="sd">         Name of the Module</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s1">&#39;Debugger&#39;</span></div>
 
     <span class="nd">@staticmethod</span>
 <div class="viewcode-block" id="Debug.fatal_error"><a class="viewcode-back" href="../debug.html#debug.Debug.fatal_error">[docs]</a>    <span class="k">def</span> <span class="nf">fatal_error</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prints a formatted error message and exits</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        module: python module</span>
+<span class="sd">             Returns the name of the module</span>
+<span class="sd">        message: str</span>
+<span class="sd">            Error message</span>
+
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        module.get_module_name()</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="nb">print</span><span class="p">(</span><span class="s1">u&#39;[FATAL ERROR] [</span><span class="si">{0}</span><span class="s1">] </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">module</span><span class="o">.</span><span class="n">get_module_name</span><span class="p">(),</span> <span class="n">message</span><span class="p">))</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div></div>
