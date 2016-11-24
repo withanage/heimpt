@@ -18,10 +18,26 @@ class Debug(object):
         self.debug = False
 
     def enable_debug(self):
+        """
+        Enables debugging. Is generally  set by Module initialisation
+
+        """
         self.debug = True
 
     def print_debug(self, module, message):
-        ''' Print debug message '''
+        """
+        Print debug message
+
+        Parameters
+        ----------
+        module: python module
+             Returns the name of the module
+        message: str
+            message as a string
+
+        """
+
+
         if self.debug:
             if not isinstance(message, unicode):
                 self.fatal_error(
