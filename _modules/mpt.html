@@ -178,6 +178,9 @@
 <span class="sd">        exit_code: str</span>
 <span class="sd">            system exit_code.</span>
 
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        subprocess.Popen()</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">m</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
@@ -244,10 +247,16 @@
 <span class="sd">            file name prefix  of  the current file</span>
 <span class="sd">        uid: str</span>
 <span class="sd">            unique id of the current current typesetter</span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        --------</span>
 <span class="sd">        True: boolean</span>
 <span class="sd">            Returns True if the output file is created</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        os.makedirs()</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ts_args</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span>
             <span class="nb">sorted</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typesetters&#39;</span><span class="p">)[</span><span class="n">p_id</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;arguments&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
