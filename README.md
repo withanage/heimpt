@@ -24,16 +24,14 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
  * Install  any missing python module with `pip install mymodule`
  * Installation folder  `/usr/local/mpt` if you use other folder, please change accordingly
 
-`
+```
  BUILD_DIR=/usr/local/mpt
  git clone https://github.com/withanage/mpt.git $BUILD_DIR
  cd $BUILD_DIR
  git submodule init
  git submodule update
  python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/example.json --debug
-
-`
-
+```
 
 
 
