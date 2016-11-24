@@ -25,6 +25,13 @@ Notes
 This program may be used to consolidate output files, generated from a certain tool.  But a consolidation tool should
 be set as the last tool in a process chain.
 
+
+
+* Web : https://github.com/withanage/mpt
+* Repository and issue-tracker: https://github.com/withanage/mpt/issues
+* Licensed under terms of GPL 3  license (LICENSE.md)
+
+
 """
 
 __author__ = "Dulip Withanage"
@@ -660,9 +667,3 @@ def main():
 if __name__ == '__main__':
     main()
 
-
-"""
-* Web : https://github.com/withanage/mpt
-* Repository and issue-tracker: https://github.com/withanage/mpt/issues
-* Licensed under terms of GPL 3  license (LICENSE.md)
-"""
