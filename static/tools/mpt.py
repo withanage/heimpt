@@ -596,7 +596,7 @@ class MPT(Debuggable):
         See Also
         --------
         gv.create_dirs_recursive
-        
+
         """
         t_path = [p.get('path'), uid]
         p_path = ''

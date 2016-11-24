@@ -78,8 +78,6 @@ class XMLMerge(Debuggable):
         """
         return docopt(__doc__, version='xml 0.1')
 
-
-
     def create_output_bits(self):
         """
         Create bits output file, generates a new file, if no file is found.

@@ -104,7 +104,6 @@ class GV(object):
             return False
         return True
 
-
     def read_json(self, pth):
         """
         Reads a json file from system path or exits
@@ -127,7 +126,6 @@ class GV(object):
             self.debug.print_debug(
                 self, self.PROJECT_INPUT_FILE_JSON_IS_NOT_VALID)
             sys.exit(1)
-
 
     def create_dirs_recursive(self, pth):
         """

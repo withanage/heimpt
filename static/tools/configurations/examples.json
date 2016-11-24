@@ -4,24 +4,13 @@
             "active": true,
             "chain": true,
             "files": {
-                "1": "Lieb_Minnereden_01_Einleitung.docx",
-                "2": "Lieb_Minnereden_02_Zusammenfassung.docx",
-                "3": "Lieb_Minnereden_03_Achnitz.docx",
-                "4": "Lieb_Minnereden_04_Glauch.docx",
-                "5": "Lieb_Minnereden_05_Philipowski.docx",
-                "6": "Lieb_Minnereden_06_Oosterman.docx",
-                "7": "Lieb_Minnereden_07_Schatzmann.docx",
-                "8": "Lieb_Minnereden_08_Mohr.docx",
-                "9": "Lieb_Minnereden_09_Glueck.docx",
-                "10": "Lieb_Minnereden_10_Stridde.docx",
-                "11": "Lieb_Minnereden_11_Rehbach.docx",
-                "12": "Lieb_Minnereden_12_Fasbender.docx",
-                "13": "Lieb_Minnereden_13_Bulang.docx",
-                "14": "Lieb_Minnereden_14_Ott.docx",
-                "15": "Lieb_Minnereden_15_Autoren.docx"
+                "1": "01_headline.docx",
+                "2": "02_boxed_text.docx",
+                "3": "03_tables.docx"
+
             },
             "name": "Lieb_Minnereden",
-            "path": "/home/wit/Arbeit/OMP/Lieb/lieb_minnereden",
+            "path": "/usr/local/mpt/static/tests/examples/",
             "typesetters": {
                 "1": {
                     "arguments": {
@@ -41,7 +30,7 @@
                    "arguments": {
                         "1": "fn:append_out_dir",
                         "2":"bits",
-                        "3":"Lieb_Minnereden.xml",
+                        "3":"Example_Full.xml",
                         "4":"--metadata book-meta.bits2"
 
                     },
@@ -79,7 +68,7 @@
             "arguments": {
                 "1":"--metadata book-part-meta.bits2",
                 "2": "--set-uuids=fn,ref",
-                "3": "--set-numbering-values=xref,ref-type,fn,{1:2};xref,ref-type,fn,{1:2}"
+                "3": "--set-numbering-values=xref,ref-type,fn,{1:2}"
 
             },
             "executable": "/usr/local/mpt/static/tools/xmlProcess.py"

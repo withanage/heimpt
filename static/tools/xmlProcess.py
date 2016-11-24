@@ -89,23 +89,22 @@ class XMLProcess(Debuggable):
         return docopt(__doc__, version='xml 0.1')
 
     def set_numbering_tags(self, tags):
-         """
-         Automatic numbering of the list of elements
+        """
+        Automatic numbering of the list of elements
 
-         Parameters
-         ----------
-         tags: list
-          list of elements
+        Parameters
+        ----------
+        tags: list
+         list of elements
 
-         """
-         for tag in tags:
+        """
+        for tag in tags:
             sh = self.tr.findall('.//' + tag)
             sid = 1
             for i in sh:
                 i.set('id', tag.replace('-', '') + str(sid))
                 sid += 1
-         return self.tr
-
+        return self.tr
 
     def set_uuids_for_back_matter(self, tags):
         """
@@ -136,6 +135,7 @@ class XMLProcess(Debuggable):
                         self.debug.print_debug(
                             self, self.gv.XML_ELEMENT_NOT_FOUND)
         return self.tr
+
     def set_numbering_values(
             self,
             tag,
@@ -226,7 +226,6 @@ class XMLProcess(Debuggable):
             val = str(count - r_count + 1)
         return val, r_count
 
-
     def merge_metadata(self, metadata):
         """
         reads a metadata file path and  merge its content into the metadata section
@@ -315,7 +314,6 @@ class XMLProcess(Debuggable):
         data.sort()
         elem[:] = [item[-1] for item in data]
 
-
     def sort_references(self, tag_list):
         """
         Sort references based on the  sub-elements list
@@ -383,7 +381,6 @@ class XMLProcess(Debuggable):
         sort_references = self.args.get('--sort-references')
         set_numbering_values = self.args.get('--set-numbering-values')
 
-
         metadata = self.args.get('--metadata')
         self.tr = self.merge_metadata(metadata) if metadata else self.tr
 
@@ -402,17 +399,17 @@ class XMLProcess(Debuggable):
             count = 1
             range_count = [0, 0]
 
-            if len(vals) > 3 :
+            if len(vals) > 3:
                 r = vals[3].lstrip('{').rstrip('}').split(':')
-                range_count = [int(r[0]) , int(r[1])]
-            self.tr, count = self.set_numbering_values(vals[0], vals[1], vals[2], count, range_count)
+                range_count = [int(r[0]), int(r[1])]
+            self.tr, count = self.set_numbering_values(
+                vals[0], vals[1], vals[2], count, range_count)
 
         self.gv.create_dirs_recursive(self.dr.split('/'))
         self.create_xml_file(
             os.path.join(
                 self.dr, os.path.basename(
                     self.f)))
-
 
     def create_xml_file(self, pth):
         """
@@ -445,7 +442,6 @@ class XMLProcess(Debuggable):
         except IOError as e:
             print e
             self.debug.print_debug(self, self.XML_FILE_NOT_CREATED)
-
 
     def run(self):
         """
