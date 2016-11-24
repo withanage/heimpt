@@ -10,7 +10,9 @@ this program can be used to modify any element tree.
 
 Usage:
     xmlMerge.py  <input_file>  <path>  <scheme> <output_file>  [options]
+
     xmlMerge.py -h --help
+
 Options:
     -d, --debug   Enable debug output
     -m --metadata=<file__name_schema.xml>
@@ -137,7 +139,7 @@ class XMLMerge(Debuggable):
         book : elementtree
             Elementtree which complies to BITS XML Schheme.
 
-        See  Also
+        See Also
         ---------
         create_metadata_path, create_book_part_bits
 
