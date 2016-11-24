@@ -87,8 +87,11 @@
 <span class="sd">        message: str</span>
 <span class="sd">            message as a string</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        print_()</span>
 
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">unicode</span><span class="p">):</span>
@@ -110,8 +113,11 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        message :str</span>
-<span class="sd">        Formatted Message , [Module name] message</span>
+<span class="sd">            Formatted Message , [Module name] message</span>
 
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        module.get_module_name()</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">u&#39;[</span><span class="si">{0}</span><span class="s1">] </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">get_module_name</span><span class="p">(),</span> <span class="n">unicode</span><span class="p">(</span><span class="n">message</span><span class="p">)))</span></div>
 
@@ -121,7 +127,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        name string</span>
+<span class="sd">        name :string</span>
 <span class="sd">         Name of the Module</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
