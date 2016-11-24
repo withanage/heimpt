@@ -18,15 +18,16 @@ Example
 --------
 python /usr/local/mpt/static/tools/mpt.py /home/wit/mpt.json  --debug
 
+
+
+* Web : https://github.com/withanage/mpt
+* Repository and issue-tracker: https://github.com/withanage/mpt/issues
+* Licensed under terms of GPL 3  license (LICENSE.md)
+
 Notes
 -------
 This program may be used to consolidate output files, generated from a certain tool.  But a consolidation tool should
 be set as the last tool in a process chain.
-
-Web : https://github.com/withanage/mpt
-Repository and issue-tracker: https://github.com/withanage/mpt/issues
-Licensed under terms of GPL 3  license [LICENSE.md](https://github.com/withanage/mpt/blob/master/LICENSE.md)
-Copyright (c) 2016 Dulip Withanage, University of Heidelberg
 
 """
 
