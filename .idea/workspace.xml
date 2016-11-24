@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fab97355-afb8-49bc-80ee-ecae6ed0b0f7" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/tools/xmlProcess.py" afterPath="$PROJECT_DIR$/static/tools/xmlProcess.py" />
     </list>
     <ignored path="mpt.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -49,7 +48,7 @@
             <state relative-caret-position="30">
               <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="5" selection-end-column="62" />
               <folding>
-                <marker date="1479983009931" expanded="true" signature="17712:18051" ph="'''...'''" />
+                <marker date="1479983200259" expanded="true" signature="17712:18051" ph="'''...'''" />
               </folding>
             </state>
           </provider>
@@ -351,7 +350,7 @@
         <state relative-caret-position="30">
           <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="5" selection-end-column="62" />
           <folding>
-            <marker date="1479983009931" expanded="true" signature="17712:18051" ph="'''...'''" />
+            <marker date="1479983200259" expanded="true" signature="17712:18051" ph="'''...'''" />
           </folding>
         </state>
       </provider>
