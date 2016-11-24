@@ -257,6 +257,10 @@ class XMLMerge(Debuggable):
         """
         Runs the configuration on the processing object
 
+        See Also
+        --------
+        process_xml_file
+
         """
         self.process_xml_file()
 
