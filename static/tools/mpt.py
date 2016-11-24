@@ -1,4 +1,4 @@
-#!/usr/bin/env python   
+#!/usr/bin/env python   ,
 # -*- coding: utf-8 -*-
 """
 Main  program which  initializes the  Monograph  Publication Tool , read the configuration from the json file.
@@ -48,7 +48,7 @@ from termcolor import colored
 
 class MPT(Debuggable):
     """
-    Main class ,
+    MPT Class Object,  which initializes the properties.
 
     """
 

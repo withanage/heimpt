@@ -51,7 +51,7 @@ except ImportError:
 
 class XMLProcess(Debuggable):
     """
-    Standalone module to combine, clean and modify a JATS XML file and optionally inject BITS Metadata headers.
+    Standalone Processing object to combine, clean and modify a JATS XML file and optionally inject BITS Metadata headers.
 
     Features
     --------
