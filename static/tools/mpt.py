@@ -648,6 +648,10 @@ def main():
     """
     main method, initializes the  Monograph  Publication Tool and  runs the configuration
 
+    See Also
+    --------
+    run
+
     """
     pre_process_instance = MPT()
     pre_process_instance.run()
