@@ -20,10 +20,6 @@ python /usr/local/mpt/static/tools/mpt.py /home/wit/mpt.json  --debug
 
 
 
-* Web : https://github.com/withanage/mpt
-* Repository and issue-tracker: https://github.com/withanage/mpt/issues
-* Licensed under terms of GPL 3  license (LICENSE.md)
-
 Notes
 -------
 This program may be used to consolidate output files, generated from a certain tool.  But a consolidation tool should
@@ -663,3 +659,10 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+"""
+* Web : https://github.com/withanage/mpt
+* Repository and issue-tracker: https://github.com/withanage/mpt/issues
+* Licensed under terms of GPL 3  license (LICENSE.md)
+"""

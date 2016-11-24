@@ -370,9 +370,6 @@ class XMLProcess(Debuggable):
         --------
         merge_metadata, set_numbering_tags,set_uuids_for_back_matter,sort_footnotes,sort_references,set_numbering_values
 
-
-
-
         """
 
         set_numbering_tags = self.args.get('--set-numbering-tags')

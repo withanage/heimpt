@@ -115,7 +115,7 @@ class GV(object):
 
         Returns
         -------
-        josn : json
+        json : json
             json object
 
         """
