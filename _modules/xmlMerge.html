@@ -53,12 +53,23 @@
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This  program is a utility file to merge a JATS/BITS XML  section into a BIS-XML files</span>
+
+<span class="sd">The current functions are limited to JATS and BITS XML Scheme of the Library of Congress. However the methods defined in</span>
+<span class="sd">this program can be used to modify any element tree.</span>
+
+
+
 <span class="sd">Usage:</span>
 <span class="sd">    xmlMerge.py  &lt;input_file&gt;  &lt;path&gt;  &lt;scheme&gt; &lt;output_file&gt;  [options]</span>
 <span class="sd">    xmlMerge.py -h --help</span>
 <span class="sd">Options:</span>
 <span class="sd">    -d, --debug   Enable debug output</span>
 <span class="sd">    -m --metadata=&lt;file__name_schema.xml&gt;</span>
+
+<span class="sd">* Web : https://github.com/withanage/mpt</span>
+<span class="sd">* Repository and issue-tracker: https://github.com/withanage/mpt/issues</span>
+<span class="sd">* Licensed under terms of GPL 3  license (LICENSE.md)</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -83,9 +94,10 @@
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="XMLProcess"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLProcess">[docs]</a><span class="k">class</span> <span class="nc">XMLProcess</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+<div class="viewcode-block" id="XMLMerge"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLMerge">[docs]</a><span class="k">class</span> <span class="nc">XMLMerge</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">      command line tool to clean, modify, delete, merge jats files</span>
+<span class="sd">     Standalone Processing object which merges current  JATS/BITS XML file in to the Body of a BITS-XML document.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -97,55 +109,68 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;&lt;input_file&gt;&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scheme</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;&lt;scheme&gt;&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">o</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;&lt;output_file&gt;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tr</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">))</span>
         <span class="n">Debuggable</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Main&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;--debug&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">enable_debug</span><span class="p">()</span>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="XMLProcess.read_command_line"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLProcess.read_command_line">[docs]</a>    <span class="k">def</span> <span class="nf">read_command_line</span><span class="p">():</span>
+<div class="viewcode-block" id="XMLMerge.read_command_line"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLMerge.read_command_line">[docs]</a>    <span class="k">def</span> <span class="nf">read_command_line</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Reads and evaluates command line</span>
-<span class="sd">        :return:</span>
+<span class="sd">        Reads and  generates a docopt dictionary from the command line parameters.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        docopt : dictionary</span>
+<span class="sd">          A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those</span>
+<span class="sd">          elements.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">docopt</span><span class="p">(</span><span class="n">__doc__</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;xml 0.1&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="XMLProcess.get_children"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLProcess.get_children">[docs]</a>    <span class="k">def</span> <span class="nf">get_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath_expression</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        get element children  as array</span>
-<span class="sd">        :param xpath_expression:</span>
-<span class="sd">        :param root:</span>
-<span class="sd">        :return:</span>
-<span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">e</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">xpath_expression</span><span class="p">):</span>
-                <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">i</span><span class="o">.</span><span class="n">getchildren</span><span class="p">():</span>
-                    <span class="n">e</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">pretty_print</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-        <span class="k">except</span> <span class="ne">SyntaxError</span> <span class="k">as</span> <span class="n">se</span><span class="p">:</span>
-            <span class="nb">print</span> <span class="n">se</span>
-        <span class="k">return</span> <span class="n">e</span></div>
 
-<div class="viewcode-block" id="XMLProcess.create_output_bits"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLProcess.create_output_bits">[docs]</a>    <span class="k">def</span> <span class="nf">create_output_bits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">):</span>
+<div class="viewcode-block" id="XMLMerge.create_output_bits"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLMerge.create_output_bits">[docs]</a>    <span class="k">def</span> <span class="nf">create_output_bits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        create bits output file</span>
-<span class="sd">        :param tr:</span>
-<span class="sd">        :return:</span>
+<span class="sd">        Create bits output file, generates a new file, if no file is found.</span>
+<span class="sd">        Otherwise the current file is appended to the book body as a book-part.</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        create_book_part_bits, do_file_io</span>
+
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">fuf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">o</span><span class="p">)</span>
         <span class="n">pt</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">o</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fuf</span><span class="p">):</span>
             <span class="n">trf</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">fuf</span><span class="p">)</span>
             <span class="n">bp</span> <span class="o">=</span> <span class="n">trf</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.//book-body&quot;</span><span class="p">)</span>
-            <span class="n">book_part</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_book_part_bits</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+            <span class="n">book_part</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_book_part_bits</span><span class="p">()</span>
             <span class="n">bp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">book_part</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">do_file_io</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">trf</span><span class="p">,</span> <span class="n">pretty_print</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">pt</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">book</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_book_bits</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+            <span class="n">book</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_book_bits</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">do_file_io</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">book</span><span class="p">,</span> <span class="n">pretty_print</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">pt</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="XMLProcess.create_metadata_path"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLProcess.create_metadata_path">[docs]</a>    <span class="k">def</span> <span class="nf">create_metadata_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
+<div class="viewcode-block" id="XMLMerge.create_metadata_path"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLMerge.create_metadata_path">[docs]</a>    <span class="k">def</span> <span class="nf">create_metadata_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        creates the correct folder path for the metadata file. Metadata files should be in a folder : metadata</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        metadata : str</span>
+<span class="sd">            Suffix of the metadata  files</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pth : str</span>
+<span class="sd">            Correct path of the metadata file in the folder structure</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        We assume that  metadata files are stored in a sub-folder named metadata</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span>
         <span class="k">del</span> <span class="n">p</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span>
         <span class="n">name</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">o</span><span class="p">))</span>
@@ -155,11 +180,19 @@
         <span class="n">pth</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pth</span></div>
 
-<div class="viewcode-block" id="XMLProcess.create_book_bits"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLProcess.create_book_bits">[docs]</a>    <span class="k">def</span> <span class="nf">create_book_bits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">):</span>
+<div class="viewcode-block" id="XMLMerge.create_book_bits"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLMerge.create_book_bits">[docs]</a>    <span class="k">def</span> <span class="nf">create_book_bits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        creates a  bits book part element</span>
-<span class="sd">        :param tr:</span>
-<span class="sd">        :return:</span>
+<span class="sd">        creates a  full BITS XML book and optionally adds metadata</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        book : elementtree</span>
+<span class="sd">            Elementtree which complies to BITS XML Schheme.</span>
+
+<span class="sd">        See  Also</span>
+<span class="sd">        ---------</span>
+<span class="sd">        create_metadata_path, create_book_part_bits</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">book</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s2">&quot;book&quot;</span><span class="p">)</span>
 
@@ -171,15 +204,24 @@
                 <span class="n">book</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">bp</span><span class="p">)</span>
 
         <span class="n">bd</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s2">&quot;book-body&quot;</span><span class="p">)</span>
-        <span class="n">bpbd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_book_part_bits</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+        <span class="n">bpbd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_book_part_bits</span><span class="p">()</span>
         <span class="n">bd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bpbd</span><span class="p">)</span>
         <span class="n">book</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bd</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">book</span></div>
 
-<div class="viewcode-block" id="XMLProcess.create_book_part_bits"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLProcess.create_book_part_bits">[docs]</a>    <span class="k">def</span> <span class="nf">create_book_part_bits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">):</span>
-        <span class="n">f</span><span class="p">,</span> <span class="n">bd</span><span class="p">,</span> <span class="n">bk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_xml_parts</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
-        <span class="nb">print</span> <span class="n">f</span><span class="p">,</span> <span class="n">bd</span><span class="p">,</span> <span class="n">bk</span>
+<div class="viewcode-block" id="XMLMerge.create_book_part_bits"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLMerge.create_book_part_bits">[docs]</a>    <span class="k">def</span> <span class="nf">create_book_part_bits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads a JATS XNl File and creates a book-part element tree according to BITS-XML.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bp : elementtree</span>
+<span class="sd">            Book part elementTree</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">f</span><span class="p">,</span> <span class="n">bd</span><span class="p">,</span> <span class="n">bk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_xml_parts</span><span class="p">()</span>
+
         <span class="n">bp</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s2">&quot;book-part&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">f</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
@@ -188,8 +230,21 @@
         <span class="n">bp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bk</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">bp</span></div>
 
-<div class="viewcode-block" id="XMLProcess.get_xml_parts"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLProcess.get_xml_parts">[docs]</a>    <span class="k">def</span> <span class="nf">get_xml_parts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">):</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+<div class="viewcode-block" id="XMLMerge.get_xml_parts"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLMerge.get_xml_parts">[docs]</a>    <span class="k">def</span> <span class="nf">get_xml_parts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns  the front-matter , body and back-matter of a JATS XML file in the above order</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        f : elementtree</span>
+<span class="sd">            Front-matter of JATS elementTree</span>
+<span class="sd">        bd : elementtree</span>
+<span class="sd">            Body of JATS elementTree</span>
+<span class="sd">        bk : elementtree</span>
+<span class="sd">            Back-matter of JATS elementTree</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
         <span class="n">f</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.//front&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">f</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.//book-part-meta&quot;</span><span class="p">)</span>
@@ -197,11 +252,29 @@
         <span class="n">bk</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.//back&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">f</span><span class="p">,</span> <span class="n">bd</span><span class="p">,</span> <span class="n">bk</span></div>
 
-<div class="viewcode-block" id="XMLProcess.do_file_io"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLProcess.do_file_io">[docs]</a>    <span class="k">def</span> <span class="nf">do_file_io</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<div class="viewcode-block" id="XMLMerge.do_file_io"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLMerge.do_file_io">[docs]</a>    <span class="k">def</span> <span class="nf">do_file_io</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">pth</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Executes read or write operations on a path</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        s: str</span>
+<span class="sd">            Content to be written or None for read</span>
+<span class="sd">        mode: str</span>
+<span class="sd">            w for write , r for r</span>
+<span class="sd">        pth : str</span>
+<span class="sd">            Path to the file to be read or written</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        IOError</span>
+<span class="sd">            I/O operation fails</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">w</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">pth</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;w&#39;</span><span class="p">:</span>
-                <span class="n">w</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+                <span class="n">w</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
                 <span class="n">w</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
                 <span class="n">o</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
@@ -211,24 +284,44 @@
             <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="XMLProcess.process_xml_file"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLProcess.process_xml_file">[docs]</a>    <span class="k">def</span> <span class="nf">process_xml_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="XMLMerge.process_xml_file"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLMerge.process_xml_file">[docs]</a>    <span class="k">def</span> <span class="nf">process_xml_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process  JATS-XML file and merges it into the full BITS-XML file</span>
 
-        <span class="n">tr</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">))</span>
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        create_output_bits</span>
 
-        <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">range_count</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="sd">        Warning</span>
+<span class="sd">        -------</span>
+<span class="sd">        function create_output_jats not yet used</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">create_dirs_recursive</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">))</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheme</span> <span class="o">==</span> <span class="s1">&#39;jats&#39;</span><span class="p">:</span>
-            <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_output_jats</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheme</span> <span class="o">==</span> <span class="s1">&#39;bits&#39;</span><span class="p">:</span>
-            <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_output_bits</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheme</span> <span class="o">==</span> <span class="s1">&#39;bits&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_output_bits</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheme</span> <span class="o">==</span> <span class="s1">&#39;jats&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_output_jats</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="XMLProcess.run"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLProcess.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="XMLMerge.run"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.XMLMerge.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs the configuration on the processing object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">process_xml_file</span><span class="p">()</span></div></div>
 
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../xmlMerge.html#xmlMerge.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="n">xp</span> <span class="o">=</span> <span class="n">XMLProcess</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initializes a processing object from  a xml file and   and runs it.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    run</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">xp</span> <span class="o">=</span> <span class="n">XMLMerge</span><span class="p">()</span>
     <span class="n">xp</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>

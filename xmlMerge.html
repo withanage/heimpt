@@ -53,6 +53,9 @@
             
   <div class="section" id="module-xmlMerge">
 <span id="xmlmerge-module"></span><h1>xmlMerge module<a class="headerlink" href="#module-xmlMerge" title="Permalink to this headline">¶</a></h1>
+<p>This  program is a utility file to merge a JATS/BITS XML  section into a BIS-XML files</p>
+<p>The current functions are limited to JATS and BITS XML Scheme of the Library of Congress. However the methods defined in
+this program can be used to modify any element tree.</p>
 <dl class="docutils">
 <dt>Usage:</dt>
 <dd>xmlMerge.py  &lt;input_file&gt;  &lt;path&gt;  &lt;scheme&gt; &lt;output_file&gt;  [options]
@@ -70,79 +73,172 @@ xmlMerge.py -h &#8211;help</dd>
 <p class="last">-m &#8211;metadata=&lt;file__name_schema.xml&gt;</p>
 </dd>
 </dl>
+<ul class="simple">
+<li>Web : <a class="reference external" href="https://github.com/withanage/mpt">https://github.com/withanage/mpt</a></li>
+<li>Repository and issue-tracker: <a class="reference external" href="https://github.com/withanage/mpt/issues">https://github.com/withanage/mpt/issues</a></li>
+<li>Licensed under terms of GPL 3  license (LICENSE.md)</li>
+</ul>
 <dl class="class">
-<dt id="xmlMerge.XMLProcess">
-<em class="property">class </em><code class="descclassname">xmlMerge.</code><code class="descname">XMLProcess</code><a class="reference internal" href="_modules/xmlMerge.html#XMLProcess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLProcess" title="Permalink to this definition">¶</a></dt>
+<dt id="xmlMerge.XMLMerge">
+<em class="property">class </em><code class="descclassname">xmlMerge.</code><code class="descname">XMLMerge</code><a class="reference internal" href="_modules/xmlMerge.html#XMLMerge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLMerge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="debug.html#debug.Debuggable" title="debug.Debuggable"><code class="xref py py-class docutils literal"><span class="pre">debug.Debuggable</span></code></a></p>
-<p>command line tool to clean, modify, delete, merge jats files</p>
+<p>Standalone Processing object which merges current  JATS/BITS XML file in to the Body of a BITS-XML document.</p>
 <dl class="method">
-<dt id="xmlMerge.XMLProcess.create_book_bits">
-<code class="descname">create_book_bits</code><span class="sig-paren">(</span><em>tr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLProcess.create_book_bits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLProcess.create_book_bits" title="Permalink to this definition">¶</a></dt>
-<dd><p>creates a  bits book part element
-:param tr:
-:return:</p>
+<dt id="xmlMerge.XMLMerge.create_book_bits">
+<code class="descname">create_book_bits</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLMerge.create_book_bits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLMerge.create_book_bits" title="Permalink to this definition">¶</a></dt>
+<dd><p>creates a  full BITS XML book and optionally adds metadata</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>book</strong> (<em>elementtree</em>) &#8211; Elementtree which complies to BITS XML Schheme.</li>
+<li><em>See  Also</em></li>
+<li><em>&#8212;&#8212;&#8212;</em></li>
+<li><em>create_metadata_path, create_book_part_bits</em></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
-<dt id="xmlMerge.XMLProcess.create_book_part_bits">
-<code class="descname">create_book_part_bits</code><span class="sig-paren">(</span><em>tr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLProcess.create_book_part_bits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLProcess.create_book_part_bits" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="xmlMerge.XMLProcess.create_metadata_path">
-<code class="descname">create_metadata_path</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLProcess.create_metadata_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLProcess.create_metadata_path" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="xmlMerge.XMLProcess.create_output_bits">
-<code class="descname">create_output_bits</code><span class="sig-paren">(</span><em>tr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLProcess.create_output_bits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLProcess.create_output_bits" title="Permalink to this definition">¶</a></dt>
-<dd><p>create bits output file
-:param tr:
-:return:</p>
+<dt id="xmlMerge.XMLMerge.create_book_part_bits">
+<code class="descname">create_book_part_bits</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLMerge.create_book_part_bits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLMerge.create_book_part_bits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a JATS XNl File and creates a book-part element tree according to BITS-XML.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>bp</strong> &#8211; Book part elementTree</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">elementtree</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
-<dt id="xmlMerge.XMLProcess.do_file_io">
-<code class="descname">do_file_io</code><span class="sig-paren">(</span><em>l</em>, <em>mode</em>, <em>p</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLProcess.do_file_io"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLProcess.do_file_io" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="xmlMerge.XMLProcess.get_children">
-<code class="descname">get_children</code><span class="sig-paren">(</span><em>xpath_expression</em>, <em>root</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLProcess.get_children"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLProcess.get_children" title="Permalink to this definition">¶</a></dt>
-<dd><p>get element children  as array
-:param xpath_expression:
-:param root:
-:return:</p>
+<dt id="xmlMerge.XMLMerge.create_metadata_path">
+<code class="descname">create_metadata_path</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLMerge.create_metadata_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLMerge.create_metadata_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>creates the correct folder path for the metadata file. Metadata files should be in a folder : metadata</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>metadata</strong> (<em>str</em>) &#8211; Suffix of the metadata  files</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>pth</strong> &#8211; Correct path of the metadata file in the folder structure</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>We assume that  metadata files are stored in a sub-folder named metadata</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="xmlMerge.XMLProcess.get_xml_parts">
-<code class="descname">get_xml_parts</code><span class="sig-paren">(</span><em>tr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLProcess.get_xml_parts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLProcess.get_xml_parts" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="xmlMerge.XMLMerge.create_output_bits">
+<code class="descname">create_output_bits</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLMerge.create_output_bits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLMerge.create_output_bits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create bits output file, generates a new file, if no file is found.
+Otherwise the current file is appended to the book body as a book-part.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#xmlMerge.XMLMerge.create_book_part_bits" title="xmlMerge.XMLMerge.create_book_part_bits"><code class="xref py py-meth docutils literal"><span class="pre">create_book_part_bits()</span></code></a>, <a class="reference internal" href="#xmlMerge.XMLMerge.do_file_io" title="xmlMerge.XMLMerge.do_file_io"><code class="xref py py-meth docutils literal"><span class="pre">do_file_io()</span></code></a></p>
+</div>
+</dd></dl>
 
 <dl class="method">
-<dt id="xmlMerge.XMLProcess.process_xml_file">
-<code class="descname">process_xml_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLProcess.process_xml_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLProcess.process_xml_file" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="xmlMerge.XMLMerge.do_file_io">
+<code class="descname">do_file_io</code><span class="sig-paren">(</span><em>s</em>, <em>mode</em>, <em>pth</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLMerge.do_file_io"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLMerge.do_file_io" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes read or write operations on a path</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>s</strong> (<em>str</em>) &#8211; Content to be written or None for read</li>
+<li><strong>mode</strong> (<em>str</em>) &#8211; w for write , r for r</li>
+<li><strong>pth</strong> (<em>str</em>) &#8211; Path to the file to be read or written</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">IOError</span></code> &#8211; I/O operation fails</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmlMerge.XMLMerge.get_xml_parts">
+<code class="descname">get_xml_parts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLMerge.get_xml_parts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLMerge.get_xml_parts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns  the front-matter , body and back-matter of a JATS XML file in the above order</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>f</strong> (<em>elementtree</em>) &#8211; Front-matter of JATS elementTree</li>
+<li><strong>bd</strong> (<em>elementtree</em>) &#8211; Body of JATS elementTree</li>
+<li><strong>bk</strong> (<em>elementtree</em>) &#8211; Back-matter of JATS elementTree</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmlMerge.XMLMerge.process_xml_file">
+<code class="descname">process_xml_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLMerge.process_xml_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLMerge.process_xml_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process  JATS-XML file and merges it into the full BITS-XML file</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#xmlMerge.XMLMerge.create_output_bits" title="xmlMerge.XMLMerge.create_output_bits"><code class="xref py py-meth docutils literal"><span class="pre">create_output_bits()</span></code></a></p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">function create_output_jats not yet used</p>
+</div>
+</dd></dl>
 
 <dl class="staticmethod">
-<dt id="xmlMerge.XMLProcess.read_command_line">
-<em class="property">static </em><code class="descname">read_command_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLProcess.read_command_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLProcess.read_command_line" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reads and evaluates command line
-:return:</p>
+<dt id="xmlMerge.XMLMerge.read_command_line">
+<em class="property">static </em><code class="descname">read_command_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLMerge.read_command_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLMerge.read_command_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads and  generates a docopt dictionary from the command line parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>docopt</strong> &#8211; A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
+elements.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dictionary</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
-<dt id="xmlMerge.XMLProcess.run">
-<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLProcess.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLProcess.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="xmlMerge.XMLMerge.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#XMLMerge.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.XMLMerge.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the configuration on the processing object</p>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="function">
 <dt id="xmlMerge.main">
 <code class="descclassname">xmlMerge.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlMerge.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlMerge.main" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Initializes a processing object from  a xml file and   and runs it.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-func docutils literal"><span class="pre">run()</span></code></p>
+</div>
+</dd></dl>
 
 </div>
 
