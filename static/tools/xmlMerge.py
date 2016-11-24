@@ -87,7 +87,6 @@ class XMLMerge(Debuggable):
         --------
         create_book_part_bits, create_book_bits, do_file_io
 
-
         """
         fuf = os.path.join(self.dr, self.o)
         pt = os.path.join(self.dr, os.path.basename(self.o))
