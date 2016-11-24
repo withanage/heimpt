@@ -35,8 +35,11 @@ class Debug(object):
         message: str
             message as a string
 
-        """
+        See Also
+        --------
+        print_()
 
+        """
 
         if self.debug:
             if not isinstance(message, unicode):
@@ -58,8 +61,11 @@ class Debug(object):
         Returns
         -------
         message :str
-        Formatted Message , [Module name] message
+            Formatted Message , [Module name] message
 
+        See Also
+        --------
+        module.get_module_name()
         """
         print(u'[{0}] {1}'.format(module.get_module_name(), unicode(message)))
 
@@ -69,7 +75,7 @@ class Debug(object):
 
         Returns
         -------
-        name string
+        name :string
          Name of the Module
 
         """
