@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python   
 # -*- coding: utf-8 -*-
 """
 Main  program which  initializes the  Monograph  Publication Tool , read the configuration from the json file.
