@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <fo:layout-master-set>
+        <!-- A5 Page -->
+        <fo:simple-page-master master-name="MasterPage"
+            page-height="210mm" page-width="148mm"
+            margin-top="20mm" margin-bottom="20mm" margin-left="20mm" margin-right="20mm">
+            <fo:region-body/>
+        </fo:simple-page-master>
+    </fo:layout-master-set>
+
+    <fo:page-sequence master-reference="MasterPage">
+        <fo:flow flow-name="xsl-region-body">
+            <fo:block font-size="9pt">Remarks:</fo:block>
+            <fo:block font-size="9pt">- All images have been processed using Adobe Photoshop CS6;</fo:block>
+            <fo:block font-size="9pt">- all images have the same dimensions and resolutions;</fo:block>
+            <fo:block font-size="9pt">- all images are embedded by using the command &lt;fo:external-graphic src=""/&gt;;</fo:block>
+            <fo:block font-size="9pt">- no other/proprietary commands were used.</fo:block>
+            <fo:block font-size="9pt">- not included: Image formats: SVG, Phosohop PSD, PDF, EPS and images containing layers</fo:block>
+        </fo:flow>
+    </fo:page-sequence>
+    
+    <!-- Testing the Bitmap images -->
+   
+    <fo:page-sequence master-reference="MasterPage">
+        <fo:flow flow-name="xsl-region-body">
+            <fo:block>Part I: Bitmap images</fo:block>
+        </fo:flow>
+    </fo:page-sequence>
+
+    <fo:page-sequence master-reference="MasterPage">
+        <fo:flow flow-name="xsl-region-body">
+            <fo:block>
+                <fo:block font-size="9pt">Bitmap-no_icc_LZW-300.tif; Bitmap image, no embedded ICC profile (not allowed for bitmap images), LZW compression, 300 dpi, TIFF format:</fo:block>
+                <fo:external-graphic src="Bitmap-no_icc_LZW-300.tif"/>
+            </fo:block>
+            <fo:block>
+                <fo:block font-size="9pt">Bitmap-no_icc_ZIP-300.tif; Bitmap image, no embedded ICC profile (not allowed for bitmap images), ZIP compression, 300 dpi, TIFF format:</fo:block>
+                <fo:external-graphic src="Bitmap-no_icc_ZIP-300.tif"/>
+            </fo:block>
+            <fo:block>
+                <fo:block font-size="9pt">Bitmap-no_icc-no_compression-300.tif; Bitmap image, no embedded ICC profile (not allowed for bitmap images), no compression, 300 dpi, TIFF format:</fo:block>
+                <fo:external-graphic src="Bitmap-no_icc-no_compression-300.tif"/>
+            </fo:block>
+            <fo:block>
+                <fo:block font-size="9pt">Bitmap-no_icc_png-300.png; Bitmap image, no embedded ICC profile (not allowed for bitmap images), PNG's compression algorithm, 300 dpi, PNG format:</fo:block>
+                <fo:external-graphic src="Bitmap-no_icc_png-300.png"/>
+            </fo:block>
+            <fo:block>
+                <fo:block font-size="9pt">JPEG does not support bitmap images, so this scenario cannot be tested.</fo:block>
+            </fo:block>            
+        </fo:flow>
+    </fo:page-sequence>
+   
+    <!-- Testing the Greyscale images -->
+    
+    <fo:page-sequence master-reference="MasterPage">
+        <fo:flow flow-name="xsl-region-body">
+            <fo:block>Part II: Greyscale images</fo:block>
+        </fo:flow>
+    </fo:page-sequence>
+    
+    <fo:page-sequence master-reference="MasterPage">
+        <fo:flow flow-name="xsl-region-body">
+            <fo:block>
+                <fo:block font-size="9pt">Greyscale-Gamma22-jpg-300.jpg; Greyscale, ICC profile embedded: Gamma 2.2, JPG compression, 300 dpi, JPEG:</fo:block>
+                <fo:external-graphic src="Greyscale-Gamma22-jpg-300.jpg"/>
+            </fo:block>
+            <fo:block>
+                <fo:block font-size="9pt">Greyscale-no_icc_profile-jpg-300.jpg; Greyscale, no ICC profile embedded, JPG compression, 300 dpi, JPEG:</fo:block>
+                <fo:external-graphic src="Greyscale-no_icc_profile-jpg-300.jpg"/>
+            </fo:block>
+            <fo:block>
+                <fo:block font-size="9pt">Greyscale-no_icc_profile-png-300.png; Greyscale, no ICC profile embedded (not allowed in PNG), PNG's compression algorithm, 300 dpi, JPEG:</fo:block>
+                <fo:external-graphic src="Greyscale-no_icc_profile-png-300.png"/>
+            </fo:block>
+            <fo:block>
+                <fo:block font-size="9pt">Greyscale-Gamma22-LZW-300.tif; Greyscale, ICC profile embedded: Gamma 2.2, LZW compression, 300 dpi, TIFF:</fo:block>
+                <fo:external-graphic src="Greyscale-Gamma22-LZW-300.tif"/>
+            </fo:block>
+            <fo:block>
+                <fo:block font-size="9pt">Greyscale-Gamma22-ZIP-300.tif; Greyscale, ICC profile embedded: Gamma 2.2, ZIP compression, 300 dpi, TIFF:</fo:block>
+                <fo:external-graphic src="Greyscale-Gamma22-ZIP-300.tif"/>
+            </fo:block>
+            <fo:block>
+                <fo:block font-size="9pt">Greyscale-Gamma22-no_compression-300.tif; Greyscale, ICC profile embedded: Gamma 2.2, no compression, 300 dpi, TIFF:</fo:block>
+                <fo:external-graphic src="Greyscale-Gamma22-no_compression-300.tif"/>
+            </fo:block>            
+        </fo:flow>
+    </fo:page-sequence>
+
+    <!-- Testing the RGB images -->
+    
+    <fo:page-sequence master-reference="MasterPage">
+        <fo:flow flow-name="xsl-region-body">
+            <fo:block>Part III: RGB images</fo:block>
+        </fo:flow>
+    </fo:page-sequence>
+    
+    <fo:page-sequence master-reference="MasterPage">
+        <fo:flow flow-name="xsl-region-body">
+            <fo:block>
+                <fo:block font-size="9pt">RGB-no_icc_profile-jpg-300.jpg; RGB, no ICC profile embedded, JPG compression, 300 dpi, JPEG:</fo:block>
+                <fo:external-graphic src="RGB-no_icc_profile-jpg-300.jpg"/>
+            </fo:block>
+            <fo:block>
+                <fo:block font-size="9pt">RGB-sRGB-jpg-300.jpg; RGB, ICC profile embedded: sRGB, JPG compression, 300 dpi, JPEG:</fo:block>
+                <fo:external-graphic src="RGB-sRGB-jpg-300.jpg"/>
+            </fo:block>
+            <fo:block>
+                <fo:block font-size="9pt">RGB-no_icc_profile-png-300.png; RGB, no ICC profile embedded (not allowed in PNG), PNG's compression algorithm, 300 dpi, PNG:</fo:block>
+                <fo:external-graphic src="RGB-no_icc_profile-png-300.png"/>
+            </fo:block>
+            <fo:block>
+                <fo:block font-size="9pt">RGB-sRGB-LZW-300.tif; RGB, ICC profile embedded: sRGB, LZW compression, 300 dpi, TIFF:</fo:block>
+                <fo:external-graphic src="RGB-sRGB-LZW-300.tif"/>
+            </fo:block>
+            <fo:block>
+                <fo:block font-size="9pt">RGB-sRGB-zip-300.tif; RGB, ICC profile embedded: sRGB, ZIP compression, 300 dpi, TIFF:</fo:block>
+                <fo:external-graphic src="RGB-sRGB-zip-300.tif"/>
+            </fo:block>
+            <fo:block>
+                <fo:block font-size="9pt">RGB-sRGB-no_compression-300.tif, ICC profile embedded: sRGB, no compression, 300 dpi, TIFF:</fo:block>
+                <fo:external-graphic src="RGB-sRGB-no_compression-300.tif"/>
+            </fo:block>            
+        </fo:flow>
+    </fo:page-sequence>
+
+    <!-- Testing the RGB images -->
+    
+    <fo:page-sequence master-reference="MasterPage">
+        <fo:flow flow-name="xsl-region-body">
+            <fo:block>Part IV: CMYK images</fo:block>
+        </fo:flow>
+    </fo:page-sequence>
+    
+    <fo:page-sequence master-reference="MasterPage">
+        <fo:flow flow-name="xsl-region-body">
+            <fo:block>
+                <fo:block font-size="9pt">CMYK-no_icc_profile-no_compression-300.tif; CMYK, no ICC profile embedded, no compression, 300 dpi, TIFF:</fo:block>
+                <fo:external-graphic src="CMYK-no_icc_profile-no_compression-300.tif"/>
+            </fo:block>
+            <fo:block>
+                <fo:block font-size="9pt">CMYK-cFogra39-no_compression-300.tif; CMYK, ICC profile embedded: Coated Fogra39, no compression, 300 dpi, TIFF:</fo:block>
+                <fo:external-graphic src="CMYK-cFogra39-no_compression-300.tif"/>
+            </fo:block>
+            <fo:block>
+                <fo:block font-size="9pt">CMYK-cFogra39-LZW-300.tif; CMYK, ICC profile embedded: Coated Fogra39, LZW compression, 300 dpi, TIFF:</fo:block>
+                <fo:external-graphic src="CMYK-cFogra39-LZW-300.tif"/>
+            </fo:block>
+            <fo:block>
+                <fo:block font-size="9pt">CMYK-cFogra39-zip-300.tif; CMYK, ICC profile embedded: Coated Fogra39, ZIP compression, 300 dpi, TIFF:</fo:block>
+                <fo:external-graphic src="CMYK-cFogra39-zip-300.tif"/>
+            </fo:block>
+        </fo:flow>
+    </fo:page-sequence>
+    
+</fo:root>

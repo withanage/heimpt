@@ -419,7 +419,7 @@ class MPT(Debuggable):
         Returns
         --------
         True: boolean
-            Returns True, if the  all the typesetters in project run
+            Returns True, if  all the typesetters in project has run successfully.
         """
         typesetters_ordered, temp_path, temp_pre_out_type = '', '', ''
         pre_path = ''

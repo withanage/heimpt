@@ -1,0 +1,60 @@
+@page {
+  margin: 2.5cm;
+  marks: crop;
+}
+
+journal-meta {
+  display: none;
+}
+
+article-meta {
+  display: none;
+}
+
+sec sec { 
+  display: block;
+  text-align: justify;
+  line-height: 130%;
+  font-size: 13pt;
+  columns: 2;
+}
+
+p { 
+  display: block;
+  margin: 0;
+  padding: 0;
+/*  text-indent: 10pt; */
+}
+
+footnote {
+/*  footnote-position: inside; */
+  float: footnote;
+  counter-increment: footnote;
+  font-size: 80%;
+}
+
+body > sec > title {
+  display: block;
+  font-family: "FreeSerifBold", Georgia, sans-serif;
+  font-size: 16pt;
+  margin: 16pt 0 14pt; 
+  padding: 0;
+  text-align: center;
+  column-span: 2;
+}
+
+body > sec > sec > title {
+  display: block;
+  font-size: 14pt;
+  text-align: left;
+  margin: 10pt 0 14pt;
+}
+
+italic {
+  font-style: italic;
+}
+
+boxed-text {
+  display: block;
+  margin: 15pt;
+}

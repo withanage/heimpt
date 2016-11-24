@@ -1,0 +1,178 @@
+/* --------------- Page setup ------------------------ */
+@page {
+    margin: 2.5cm;
+    marks: crop;
+    @footnotes {
+	border-top: solid black thin;
+	padding-top: 8pt
+    }
+}
+
+@page chapter:first {
+}
+
+@page chapter:left {
+  @bottom-right-corner {
+    content: counter(page);
+    font-size: 8pt;
+  }
+}
+
+@page chapter:right {
+  @bottom-left-corner {
+    content: counter(page);
+    font-size: 10pt;
+  }
+}
+
+body {
+  hyphens: auto;
+  counter-reset: chapter;
+}
+
+.figure-float-left {
+  float: left;
+  width: 50%;
+  counter-increment: figure;
+  margin-right: 12px;
+}
+
+.figure-float-right {
+  float: right;
+  width: 25%;
+  counter-increment: figure;
+  margin-left: 12px;
+}
+
+.figure-top {
+  width: 100%;
+  float: column-top-corner;
+  column-span: 2;
+  counter-increment: figure;
+  margin-bottom: 10px;
+}
+
+.figure-bottom {
+  width: 100%;
+  float: column-bottom-corner;
+  column-span: 2;
+  counter-increment: figure;
+  margin-top: 10px;
+}
+
+.figure-column {
+  width: 100%;
+  float: column-bottom;
+  counter-increment: figure;
+  margin-top: 10px;
+}
+
+div.chapter {
+/*  page-break-before: always; */
+  columns: 3;
+  column-gap: .5cm;
+  text-align: justify;
+}
+
+div.multi-column {
+  columns: 3;
+  text-align: justify;
+  column-fill: auto;
+}
+
+.chapterContent {
+  text-align: justify;
+}
+
+img {
+  width: 100%;
+}
+
+span.caption:before {
+  content: "Fig. " counter(figure) " ";
+}
+
+span.caption {
+  font-size: 80%;
+}
+
+span.footnote {
+  float: footnote;
+  counter-increment: footnote;
+  footnote-style-position: inside;
+  page-break-inside: auto;
+  font-size: 80%;
+}
+
+h1, h2 {
+  column-span: all;
+  prince-bookmark-level: none;
+}
+
+h1.title {
+  font-family: serif;
+  text-align: center;
+}
+
+h2.chapterTitle {
+  font-family: sans-serif;
+  text-align: center;
+  text-transform: capitalize;
+  prince-bookmark-level: 1;
+  prince-bookmark-label: content();
+  prince-bookmark-state: open;
+}
+
+h2.chapterTitle:before {
+  color: rgb(234,13,110);
+  counter-increment: chapter;
+  content: "Chapter " counter(chapter) " · ";
+}
+
+.abstract {
+  font-style: italic;
+  margin-bottom: 5px;
+  text-indent: 25px;
+}
+
+h2.column {
+  column-span: 1;
+}
+
+p.cn, p.jp{
+  font-family: Droid Sans Fallback;
+}
+
+p.jp {
+  writing-mode: vertical-lr;
+}
+
+p.ar {
+  text-align: right;
+}
+
+.multicolumn {
+  columns: 2;
+  column-fill: auto;
+}
+
+.fancy1 {
+  font-family: Cheddar Jack;
+  font-size: 24pt;
+  color: rgb(123,34,53);
+}
+
+.fancy2 {
+  font-family: eufm10;
+  font-size: 24pt;
+}
+
+.fancy3 {
+  font-family: LittleBird;
+  font-size: 24pt;
+}
+
+.fancy4 {
+  font-family: Hanging Letters;
+  font-size: 24pt;
+}

@@ -1,0 +1,82 @@
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format">
+  <fo:layout-master-set>
+    <fo:simple-page-master master-name="cover" page-height="11in" page-width="8.5in" margin-top="0.5in" margin-bottom="1.0in" margin-left="1.25in" margin-right="1.25in">
+      <fo:region-body region-name="body" margin-top="24pt" margin-bottom="0in" margin-left="0in" margin-right="0in"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="blank" page-height="11in" page-width="8.5in" margin-top="0.5in" margin-bottom="1.0in" margin-left="1.25in" margin-right="1.25in">
+      <fo:region-body region-name="body" margin-top="24pt" margin-bottom="0in" margin-left="0in" margin-right="0in"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="first" page-height="11in" page-width="8.5in" margin-top="0.5in" margin-bottom="1in" margin-left="1.25in" margin-right="1.25in">
+      <fo:region-body region-name="body" margin-top="24pt" margin-bottom="0in" margin-left="0in" margin-right="0in"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="verso" page-height="11in" page-width="8.5in" margin-top="0.5in" margin-bottom="1.0in" margin-left="1.25in" margin-right="1.25in">
+      <fo:region-body region-name="body" margin-top="36pt" margin-bottom="0in" margin-left="0in" margin-right="0in"/>
+      <fo:region-before region-name="verso-header" display-align="before" extent="36pt"/>
+    </fo:simple-page-master>
+    <fo:simple-page-master master-name="recto" page-height="11in" page-width="8.5in" margin-top="0.5in" margin-bottom="1.0in" margin-left="1.25in" margin-right="1.25in">
+      <fo:region-body region-name="body" margin-top="36pt" margin-bottom="0in" margin-left="0in" margin-right="0in"/>
+      <fo:region-before region-name="recto-header" extent="36pt" display-align="before"/>
+    </fo:simple-page-master>
+    <fo:page-sequence-master master-name="cover-sequence">
+      <fo:repeatable-page-master-alternatives>
+        <fo:conditional-page-master-reference master-reference="cover"/>
+        <fo:conditional-page-master-reference master-reference="blank" blank-or-not-blank="blank"/>
+      </fo:repeatable-page-master-alternatives></fo:page-sequence-master>
+    <fo:page-sequence-master master-name="content-sequence">
+      <fo:single-page-master-reference master-reference="first"/>
+      <fo:repeatable-page-master-alternatives>
+        <fo:conditional-page-master-reference odd-or-even="even" master-reference="verso"/>
+        <fo:conditional-page-master-reference odd-or-even="odd" master-reference="recto"/>
+      </fo:repeatable-page-master-alternatives>
+    </fo:page-sequence-master>
+    <fo:page-sequence-master master-name="diagnostics-sequence">
+      <fo:repeatable-page-master-alternatives><fo:conditional-page-master-reference odd-or-even="odd" master-reference="recto"/>
+        <fo:conditional-page-master-reference odd-or-even="even" master-reference="verso"/>
+      </fo:repeatable-page-master-alternatives>
+    </fo:page-sequence-master>
+  </fo:layout-master-set>
+  
+  <fo:page-sequence master-reference="content-sequence" initial-page-number="1">
+    <fo:flow flow-name="body">
+    <fo:block line-stacking-strategy="font-height" line-height-shift-adjustment="disregard-shifts" widows="2" orphans="2">
+    <fo:block margin-left="5pc" font-family="serif" font-size="10pt" line-height="12pt" text-align="start" font-style="normal" font-weight="normal">
+    <fo:block space-before="12pt">
+      <fo:block space-before="4pt">
+        A footnote<fo:footnote>
+          <fo:inline font-size="60%" baseline-shift="super">1</fo:inline>
+          <fo:footnote-body>
+            <fo:block font-size="8pt">                         
+              <fo:block space-after="2pt">
+                <fo:inline font-size="60%" baseline-shift="super">1</fo:inline>
+                This is the footnote text. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</fo:block>
+              <fo:block>
+                Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. </fo:block>
+            </fo:block>
+          </fo:footnote-body>
+        </fo:footnote>                         
+        test.
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.   
+      </fo:block>
+      <fo:block space-before="4pt">
+        Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.   
+
+        Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.   
+
+        Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.   
+      </fo:block>
+      <fo:block space-before="4pt">
+        Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.   
+        
+        At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.   
+        
+        Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus.   
+        
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.   
+        
+        Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.   
+      </fo:block>       
+    </fo:block>
+    </fo:block>
+    </fo:block>
+    </fo:flow>
+  </fo:page-sequence></fo:root>
