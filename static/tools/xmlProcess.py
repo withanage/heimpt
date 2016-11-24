@@ -4,7 +4,7 @@
 This  program is a utility file  which executes a set of specified functions on a element tree  of a xml file.
 
 The current functions are limited to JATS and BITS XML Scheme of the Library of Congress. However the methods defined in
-this program can be used to modify any element tree. Some of the  current avaliable functions are sorting footnotes,
+this program can be used to modify any element tree. Some of the  current available functions are sorting footnotes,
 numbering elements of a certain type  or setting unique ids to a certain element types.
 
 Usage:
@@ -20,6 +20,10 @@ Options:
     -s --sort-references=<tag list as comma seperated lists>
     -u --set-uuids=<element types as comma seperated list>
     -v --set-numbering-values=<numbering values, additionaly roman numbers e.g.xref,ref-type,fn,{1:2} >
+
+Notes
+-----
+All the functions are done  in the global element tree for performance reasons.
 
 * Web : https://github.com/withanage/mpt
 * Repository and issue-tracker: https://github.com/withanage/mpt/issues
@@ -178,6 +182,11 @@ class XMLProcess(Debuggable):
         ---------
         i : int
             integer number
+
+        Returns
+        -------
+        result : str
+            Roman number
 
         """
         result = []
