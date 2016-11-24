@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fab97355-afb8-49bc-80ee-ecae6ed0b0f7" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/tools/configurations/examples.json" afterPath="$PROJECT_DIR$/static/tools/configurations/example.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/tools/configurations/lieb_minnereden.json" afterPath="$PROJECT_DIR$/static/tools/configurations/lieb_minnereden.json" />
     </list>
     <ignored path="mpt.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,11 +32,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="xmlProcess.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="xmlProcess.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/tools/xmlProcess.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2529">
-              <caret line="294" column="18" selection-start-line="294" selection-start-column="18" selection-end-line="294" selection-end-column="18" />
+            <state relative-caret-position="273">
+              <caret line="206" column="8" selection-start-line="206" selection-start-column="8" selection-end-line="206" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -47,8 +45,18 @@
       <file leaf-file-name="example.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/tools/configurations/example.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1180">
-              <caret line="59" column="10" selection-start-line="59" selection-start-column="10" selection-end-line="59" selection-end-column="10" />
+            <state relative-caret-position="180">
+              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Example_Full.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/static/tests/example/example_project/2016_11_24-16-01-00bdb29e/3_xmlmerge/xml/Example_Full.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2970">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -85,12 +93,12 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/static/tools/xmlMerge.py" />
         <option value="$PROJECT_DIR$/static/tools/mpt.py" />
-        <option value="$PROJECT_DIR$/static/tools/xmlProcess.py" />
         <option value="$PROJECT_DIR$/static/tools/globals.py" />
         <option value="$PROJECT_DIR$/static/tools/debug.py" />
         <option value="$PROJECT_DIR$/static/tools/configurations/examples.json" />
         <option value="$PROJECT_DIR$/static/tools/configurations/example.json" />
         <option value="$PROJECT_DIR$/static/tools/configurations/lieb_minnereden.json" />
+        <option value="$PROJECT_DIR$/static/tools/xmlProcess.py" />
       </list>
     </option>
   </component>
@@ -125,6 +133,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/static/tests/example/example_project/2016_11_24-16-01-00bdb29e/3_xmlmerge/xml/Example_Full.xml" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -326,7 +337,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/static/tools/mpt.py" />
     <entry file="file://$PROJECT_DIR$/static/tools/configurations/lieb_minnereden.json" />
     <entry file="file://$PROJECT_DIR$/README.md" />
     <entry file="file://$PROJECT_DIR$/static/tools/configurations/lieb_minnereden.json" />
@@ -456,18 +466,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/tools/configurations/example.json">
+    <entry file="file://$PROJECT_DIR$/static/tools/xmlProcess.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1180">
-          <caret line="59" column="10" selection-start-line="59" selection-start-column="10" selection-end-line="59" selection-end-column="10" />
+        <state relative-caret-position="273">
+          <caret line="206" column="8" selection-start-line="206" selection-start-column="8" selection-end-line="206" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/tools/xmlProcess.py">
+    <entry file="file://$PROJECT_DIR$/static/tools/configurations/example.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2529">
-          <caret line="294" column="18" selection-start-line="294" selection-start-column="18" selection-end-line="294" selection-end-column="18" />
+        <state relative-caret-position="180">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/tests/example/example_project/2016_11_24-16-01-00bdb29e/3_xmlmerge/xml/Example_Full.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2970">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
