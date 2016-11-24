@@ -399,10 +399,44 @@ class XMLProcess(Debuggable):
             self.tr, count = self.set_numbering_values(vals[0], vals[1], vals[2], count, range_count)
 
         self.gv.create_dirs_recursive(self.dr.split('/'))
-        self.gv.create_xml_file(
-            self.tr, os.path.join(
+        self.create_xml_file(
+            os.path.join(
                 self.dr, os.path.basename(
                     self.f)))
+
+
+    def create_xml_file(self, pth):
+        """
+        Write the current elementTree into the file path
+
+        Parameters
+        ----------
+        pth : str
+            Correct path of the metadata file in the folder structure
+
+        Raises
+        ------
+        IOError
+            I/O operation fails
+
+        Notes
+        -----
+        Default configuration writes a normalized XML file with XML scheme
+
+        """
+
+        try:
+
+            self.tr.write(
+                pth,
+                pretty_print=False,
+                xml_declaration=True
+            )
+            print
+        except IOError as e:
+            print e
+            self.debug.print_debug(self, self.XML_FILE_NOT_CREATED)
+
 
     def run(self):
         """

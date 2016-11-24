@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+"""
+Global Variables and global functions
+
+"""
+
 
 __author__ = "Dulip Withanage"
 
@@ -69,21 +74,6 @@ class GV(object):
             return False
         return True
 
-    def convert_int_to_roman(self, i):
-        result = []
-        for integer, numeral in numeral_map:
-            count = i // integer
-            result.append(numeral * count)
-            i -= integer * count
-        return ''.join(result)
-
-    def convert_roman_to_int(self, n):
-        i = result = 0
-        for integer, numeral in numeral_map:
-            while n[i:i + len(numeral)] == numeral:
-                result += integer
-                i += len(numeral)
-        return result
 
     def read_json(self, f):
         if os.path.isfile(f):
@@ -94,19 +84,6 @@ class GV(object):
                 self, self.PROJECT_INPUT_FILE_JSON_IS_NOT_VALID)
             sys.exit(1)
 
-    def create_xml_file(self, tr, f):
-        ''' write element tr to f '''
-        try:
-
-            tr.write(
-                f,
-                pretty_print=False,
-                xml_declaration=True
-            )
-            print
-        except IOError as e:
-            print e
-            self.debug.print_debug(self, self.XML_FILE_NOT_CREATED)
 
     def create_dirs_recursive(self, project_path):
         p = ''
