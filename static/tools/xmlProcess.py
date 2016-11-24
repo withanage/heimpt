@@ -25,6 +25,9 @@ Notes
 -----
 All the functions are done  in the global element tree for performance reasons.
 
+
+References
+----------
 * Web : https://github.com/withanage/mpt
 * Repository and issue-tracker: https://github.com/withanage/mpt/issues
 * Licensed under terms of GPL 3  license (LICENSE.md)

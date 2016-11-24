@@ -21,8 +21,6 @@ python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/ex
 python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/example.json --debug
 
 
-
-
 Notes
 -------
 This program may be used to consolidate output files, generated from a certain tool.  But a consolidation tool should

@@ -17,6 +17,9 @@ Options:
     -d, --debug   Enable debug output
     -m --metadata=<file__name_schema.xml>
 
+
+References
+----------
 * Web : https://github.com/withanage/mpt
 * Repository and issue-tracker: https://github.com/withanage/mpt/issues
 * Licensed under terms of GPL 3  license (LICENSE.md)
