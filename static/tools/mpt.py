@@ -17,7 +17,7 @@ Options:
 Example
 --------
 
-python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/example.json --debug
+python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/example.json
 
 
 Notes
