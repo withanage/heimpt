@@ -8,10 +8,6 @@ A specific project can be configured to run in a chain modus, which  takes the o
 the current typesetter. If chaining is not set, all the typesetters take the set of files and execute the typesetter and
 generate the output.
 
-Notes
--------
-This program may be used to consolidate output files , generated from a certain tool.  But a consolidation tool should
-be set as the last tool in a process chain.
 
 Usage:
     preProcess.py  <config_file> [options]
@@ -22,7 +18,17 @@ Example
 --------
 python /usr/local/mpt/static/tools/mpt.py /home/wit/mpt.json  --debug
 
+Notes
+-------
+This program may be used to consolidate output files, generated from a certain tool.  But a consolidation tool should
+be set as the last tool in a process chain.
 
+Information
+-----------
+* Web : https://github.com/withanage/mpt
+* Repository and issue-tracker: https://github.com/withanage/mpt/issues
+* Licensed under terms of GPL 3  license (LICENSE.md)
+* Copyright (c) 2016 Dulip Withanage, University of Heidelberg
 
 """
 

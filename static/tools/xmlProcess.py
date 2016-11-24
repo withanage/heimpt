@@ -7,12 +7,6 @@ The current functions are limited to JATS and BITS XML Scheme of the Library of 
 this program can be used to modify any element tree. Some of the  current avaliable functions are sorting footnotes,
 numbering elements of a certain type  or setting unique ids to a certain element types.
 
-* https://github.com/withanage/mpt
-* Repository and issue-tracker: https://github.com/withanage/mpt/issues
-* Licensed under terms of GPL 3  license (LICENSE.md)
-* Copyright (c) 2016 Dulip Withanage, University of Heidelberg
-
-
 Usage:
     xmlProcess.py  <input_file>  <path> [options]
 
@@ -27,6 +21,10 @@ Options:
     -u --set-uuids=<element types as comma seperated list>
     -v --set-numbering-values=<numbering values, additionaly roman numbers e.g.xref,ref-type,fn,{1:2} >
 
+* Web : https://github.com/withanage/mpt
+* Repository and issue-tracker: https://github.com/withanage/mpt/issues
+* Licensed under terms of GPL 3  license (LICENSE.md)
+* Copyright (c) 2016 Dulip Withanage, University of Heidelberg
 
 
 """
