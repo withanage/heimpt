@@ -9,8 +9,8 @@
                 "3": "03_tables.docx"
 
             },
-            "name": "Lieb_Minnereden",
-            "path": "/usr/local/mpt/static/tests/examples/",
+            "name": "example_project",
+            "path": "/usr/local/mpt/static/tests/example/",
             "typesetters": {
                 "1": {
                     "arguments": {

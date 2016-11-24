@@ -2,38 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fab97355-afb8-49bc-80ee-ecae6ed0b0f7" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/BoxedText1.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/BoxedText2.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/BoxedText3.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/Common_Unicode_characters_DE.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/Continuous_text_with_emphases_DE.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/Endnotes_DE.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/Figures_DE.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/Footnotes_DE.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/Footnotes_and_Endnotes_DE.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/Glossario_test.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/Headings_DE..docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/Languages.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/Lists,_Boxes,_Interview,_Verse_etc_DE.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/SmallCaps_BlockQuotes.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/StrikeThrough.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/SubScript.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/SuperScript.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/Superscript_Subscript_Strike.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/Table.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/Tables_DE.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/Testdokument.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/Testdokument2.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/doubleColumned.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/footnotes.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/headlines.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/tests/example/rightToLeftFonts.docx" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/tools/configurations/example.json" afterPath="$PROJECT_DIR$/static/tools/configurations/examples.json" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/static/tools/configurations/examples.json" afterPath="$PROJECT_DIR$/static/tools/configurations/example.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/tools/globals.py" afterPath="$PROJECT_DIR$/static/tools/globals.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/tools/mpt.py" afterPath="$PROJECT_DIR$/static/tools/mpt.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/tools/xmlMerge.py" afterPath="$PROJECT_DIR$/static/tools/xmlMerge.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/tools/xmlProcess.py" afterPath="$PROJECT_DIR$/static/tools/xmlProcess.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/tools/configurations/lieb_minnereden.json" afterPath="$PROJECT_DIR$/static/tools/configurations/lieb_minnereden.json" />
     </list>
     <ignored path="mpt.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -63,21 +34,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="xmlProcess.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="xmlProcess.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/tools/xmlProcess.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="276" column="17" selection-start-line="276" selection-start-column="8" selection-end-line="277" selection-end-column="0" />
+            <state relative-caret-position="2529">
+              <caret line="294" column="18" selection-start-line="294" selection-start-column="18" selection-end-line="294" selection-end-column="18" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="examples.json" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/static/tools/configurations/examples.json">
+      <file leaf-file-name="example.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/tools/configurations/example.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="900">
-              <caret line="70" column="67" selection-start-line="70" selection-start-column="67" selection-end-line="70" selection-end-column="67" />
+            <state relative-caret-position="1180">
+              <caret line="59" column="10" selection-start-line="59" selection-start-column="10" selection-end-line="59" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="lieb_minnereden.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/tools/configurations/lieb_minnereden.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1784">
+              <caret line="95" column="5" selection-start-line="95" selection-start-column="5" selection-end-line="95" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -107,8 +88,9 @@
         <option value="$PROJECT_DIR$/static/tools/xmlProcess.py" />
         <option value="$PROJECT_DIR$/static/tools/globals.py" />
         <option value="$PROJECT_DIR$/static/tools/debug.py" />
-        <option value="$PROJECT_DIR$/static/tools/configurations/example.json" />
         <option value="$PROJECT_DIR$/static/tools/configurations/examples.json" />
+        <option value="$PROJECT_DIR$/static/tools/configurations/example.json" />
+        <option value="$PROJECT_DIR$/static/tools/configurations/lieb_minnereden.json" />
       </list>
     </option>
   </component>
@@ -348,7 +330,7 @@
     <entry file="file://$PROJECT_DIR$/static/tools/configurations/lieb_minnereden.json" />
     <entry file="file://$PROJECT_DIR$/README.md" />
     <entry file="file://$PROJECT_DIR$/static/tools/configurations/lieb_minnereden.json" />
-    <entry file="file://$PROJECT_DIR$/static/tools/configurations/examples.json" />
+    <entry file="file://$PROJECT_DIR$/static/tools/configurations/example.json" />
     <entry file="file://$PROJECT_DIR$/static/tools/mpt.py" />
     <entry file="file://$PROJECT_DIR$/static/tools/docopt.py" />
     <entry file="file://$PROJECT_DIR$/static/tools/xmlProcess.py" />
@@ -357,7 +339,7 @@
     <entry file="file://$PROJECT_DIR$/static/tools/configurations/lieb_minnereden.json" />
     <entry file="file://$PROJECT_DIR$/README.md" />
     <entry file="file://$PROJECT_DIR$/static/tools/configurations/lieb_minnereden.json" />
-    <entry file="file://$PROJECT_DIR$/static/tools/configurations/examples.json" />
+    <entry file="file://$PROJECT_DIR$/static/tools/configurations/example.json" />
     <entry file="file://$PROJECT_DIR$/static/tools/docopt.py" />
     <entry file="file://$PROJECT_DIR$/static/tools/xmlProcess.py" />
     <entry file="file://$PROJECT_DIR$/static/tools/mpt.py" />
@@ -382,7 +364,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/tools/configurations/examples.json">
+    <entry file="file://$PROJECT_DIR$/static/tools/configurations/example.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1215">
           <caret line="81" column="90" selection-start-line="81" selection-start-column="44" selection-end-line="81" selection-end-column="90" />
@@ -392,14 +374,14 @@
     <entry file="file://$PROJECT_DIR$/static/tools/xmlProcess.py" />
     <entry file="file://$PROJECT_DIR$/static/tools/docopt.py" />
     <entry file="file://$PROJECT_DIR$/static/tools/mpt.py" />
-    <entry file="file://$PROJECT_DIR$/static/tools/configurations/examples.json" />
+    <entry file="file://$PROJECT_DIR$/static/tools/configurations/example.json" />
     <entry file="file://$PROJECT_DIR$/README.md" />
     <entry file="file://$PROJECT_DIR$/static/tools/xmlProcess.py" />
     <entry file="file://$PROJECT_DIR$/static/tools/mpt.py" />
     <entry file="file://$PROJECT_DIR$/static/tools/configurations/lieb_minnereden.json" />
     <entry file="file://$PROJECT_DIR$/README.md" />
     <entry file="file://$PROJECT_DIR$/static/tools/configurations/lieb_minnereden.json" />
-    <entry file="file://$PROJECT_DIR$/static/tools/configurations/examples.json" />
+    <entry file="file://$PROJECT_DIR$/static/tools/configurations/example.json" />
     <entry file="file://$PROJECT_DIR$/static/tools/mpt.py" />
     <entry file="file://$PROJECT_DIR$/static/tools/docopt.py" />
     <entry file="file://$PROJECT_DIR$/static/tools/xmlProcess.py" />
@@ -407,7 +389,6 @@
     <entry file="file://$PROJECT_DIR$/static/tools/mpt.py" />
     <entry file="file://$PROJECT_DIR$/static/tools/configurations/lieb_minnereden.json" />
     <entry file="file://$PROJECT_DIR$/README.md" />
-    <entry file="file://$PROJECT_DIR$/static/tools/configurations/lieb_minnereden.json" />
     <entry file="file://$PROJECT_DIR$/docopt.html" />
     <entry file="file://$PROJECT_DIR$/static/tools/docopt.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -467,18 +448,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/tools/xmlProcess.py">
+    <entry file="file://$PROJECT_DIR$/static/tools/configurations/lieb_minnereden.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="276" column="17" selection-start-line="276" selection-start-column="8" selection-end-line="277" selection-end-column="0" />
+        <state relative-caret-position="1784">
+          <caret line="95" column="5" selection-start-line="95" selection-start-column="5" selection-end-line="95" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/tools/configurations/examples.json">
+    <entry file="file://$PROJECT_DIR$/static/tools/configurations/example.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="70" column="67" selection-start-line="70" selection-start-column="67" selection-end-line="70" selection-end-column="67" />
+        <state relative-caret-position="1180">
+          <caret line="59" column="10" selection-start-line="59" selection-start-column="10" selection-end-line="59" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/tools/xmlProcess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2529">
+          <caret line="294" column="18" selection-start-line="294" selection-start-column="18" selection-end-line="294" selection-end-column="18" />
           <folding />
         </state>
       </provider>
