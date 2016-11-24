@@ -29,13 +29,55 @@ class Debug(object):
             self.print_(module, message)
 
     def print_(self, module, message):
+        """
+        Prints a formatted message
+
+        Parameters
+        ----------
+        module: python module
+             Returns the name of the module
+        message: str
+            message as a string
+
+        Returns
+        -------
+        message :str
+        Formatted Message , [Module name] message
+
+        """
         print(u'[{0}] {1}'.format(module.get_module_name(), unicode(message)))
 
     def get_module_name(self):
+        """
+        Reads the name of the module for debugging and logging
+
+        Returns
+        -------
+        name string
+         Name of the Module
+
+        """
         return 'Debugger'
 
     @staticmethod
     def fatal_error(module, message):
+        """
+        Prints a formatted error message and exits
+
+        Parameters
+        ----------
+        module: python module
+             Returns the name of the module
+        message: str
+            Error message
+
+
+        See Also
+        --------
+        module.get_module_name()
+
+        """
+
         print(u'[FATAL ERROR] [{0}] {1}'.format(
             module.get_module_name(), message))
         sys.exit(1)
