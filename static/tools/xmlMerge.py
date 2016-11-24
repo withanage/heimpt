@@ -85,7 +85,7 @@ class XMLMerge(Debuggable):
 
         See Also
         --------
-        create_book_part_bits, do_file_io
+        create_book_part_bits, create_book_bits, do_file_io
 
 
         """
