@@ -18,7 +18,7 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
  * Git is installed : check `git --version`
  * Not compulsory , but helpful to install missing modules: `pip --version`
  * Install  any missing python module with `pip install mymodule`
- * Installation folder  `/usr/local/mpt`.  Make sure you have the correct rights to install the software in the $BUILD_DIR.
+ * Installation folder  `/usr/local/mpt`.  Make sure you have the correct rights to install the software in the `$BUILD_DIR`.
 
 ## Installation
 ```
@@ -28,17 +28,21 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
  git submodule init
  git submodule update
 ```
-## Test  Instllation
-If you changed the $BUILD_DIR in the previous step, you have to change the project path in example.josn 
+## Test your Instllation
+If you changed the `$BUILD_DIR` in the previous step, you have to change the project path in `example.json`
 
 ```
 python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/example.json --debug
+```
+## Update Installation in a later time
+```
+cd $BUILD_DIR
+git checkout master;git fetch; git pull; git submodule update
 ```
 
 ## API Documentation
 
 https://withanage.github.io/mpt
-
 
 
 ## Credits
