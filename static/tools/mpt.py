@@ -16,8 +16,7 @@ Options:
 
 Example
 --------
-BUILD_DIR=/usr/local/mpt
-python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/example.json
+
 python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/example.json --debug
 
 
