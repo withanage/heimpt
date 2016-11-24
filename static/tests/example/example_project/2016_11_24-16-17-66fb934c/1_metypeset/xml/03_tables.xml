@@ -1,0 +1,245 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article>
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="publisher-id">Heidelberg University Publishing</journal-id>
+      <issn pub-type="epub">0000-000X</issn>
+      <publisher>
+        <publisher-name>Heidelberg University Publishing</publisher-name>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="doi">10.1000/123456</article-id>
+      <article-categories>
+        <subj-group>
+          <subject>Sample Articles</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>A Sample Article Title</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Sander</surname>
+            <given-names>Marie</given-names>
+          </name>
+          <xref ref-type="aff" rid="bremen"/>
+        </contrib>
+        <aff id="bremen"><institution content-type="dept">Referat f&#252;r Forschung und wissenschaftlichen Nachwuchs</institution>,
+                <institution>Universit&#228;t Bremen</institution>,
+                <addr-line><named-content content-type="city">Bremen</named-content></addr-line>,
+                <country>Deutschland</country></aff>
+      </contrib-group>
+      <pub-date pub-type="epub">
+        <year>2013</year>
+      </pub-date>
+      <volume>1</volume>
+      <issue>1</issue>
+      <fpage>1</fpage>
+      <lpage>2</lpage>
+      <permissions>
+        <copyright-statement>&#169; 2015, Heidelberg University Publishing</copyright-statement>
+        <copyright-year>2015</copyright-year>
+        <copyright-holder>Heidelberg University Publishing</copyright-holder>
+        <license xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://creativecommons.org/licenses/by/3.0/">
+          <license-p>Dieses Werk ist unter der Creative Commons-Lizenz 4.0 (CC BY-SA 4.0 <ext-link ext-link-type="uri" xlink:href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">)</ext-link> ver&#246;ffentlicht.
+            credited.</license-p>
+        </license>
+      </permissions>
+      <abstract>
+        <p/>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec>
+      <title>Tables</title>
+      <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+      <sec>
+        <title>Inline- table</title>
+        <p>It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
+        <table-wrap specific-use="rules" position="float" orientation="portrait">
+          <table>
+            <tr>
+              <td rowspan="1" colspan="1">
+                <bold>Name</bold>
+              </td>
+              <td rowspan="1" colspan="1">
+                <bold>Symbol</bold>
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="1" colspan="1">Hydrogen</td>
+              <td rowspan="1" colspan="1">H</td>
+            </tr>
+            <tr>
+              <td rowspan="1" colspan="1">Helium</td>
+              <td rowspan="1" colspan="1">He</td>
+            </tr>
+            <tr>
+              <td rowspan="1" colspan="1">Oxygen</td>
+              <td rowspan="1" colspan="1">O</td>
+            </tr>
+          </table>
+        </table-wrap>
+      </sec>
+      <sec>
+        <title>Simple Floating table</title>
+        <p>The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn&#8217;t listen. She packed her seven versalia, put her initial into the belt and made herself on the way.</p>
+        <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way. On her way she met a copy.</p>
+        <fig position="float" orientation="portrait">
+          <caption>
+            <title>Tabele 1:  Description</title>
+          </caption>
+        </fig>
+        <table-wrap specific-use="rules" position="float" orientation="portrait">
+          <table>
+            <tr>
+              <td rowspan="1" colspan="1">
+                <bold>Language level</bold>
+              </td>
+              <td rowspan="1" colspan="1">
+                <bold>time</bold>
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="1" colspan="1">Old-german</td>
+              <td rowspan="1" colspan="1">750-1050<xref ref-type="fn" rid="bibd2e94"/>
+                     </td>
+            </tr>
+            <tr>
+              <td rowspan="1" colspan="1">Middle-high german</td>
+              <td rowspan="1" colspan="1">1050-1350<xref ref-type="fn" rid="bibd2e105"/>
+                     </td>
+            </tr>
+            <tr>
+              <td rowspan="1" colspan="1">Early germn</td>
+              <td rowspan="1" colspan="1">1350-1650</td>
+            </tr>
+            <tr>
+              <td rowspan="1" colspan="1">New German</td>
+              <td rowspan="1" colspan="1">since 1650</td>
+            </tr>
+          </table>
+        </table-wrap>
+      </sec>
+      <sec>
+        <title>Komplexe Tabelle</title>
+        <fig position="float" orientation="portrait">
+          <caption>
+            <title>Tab. 2: Komplexe Tabelle mit allerlei Elementen und verschiedenen Inhalten.</title>
+          </caption>
+        </fig>
+        <table-wrap specific-use="rules" position="float" orientation="portrait">
+          <table>
+            <tr>
+              <td rowspan="1" colspan="1">
+                <bold>Kopfzelle A</bold>
+              </td>
+              <td rowspan="1" colspan="1">
+                <bold>Kopfzelle B</bold>
+              </td>
+              <td rowspan="1" colspan="1">
+                <bold>Kopfzelle E</bold>
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="1" colspan="1"/>
+              <td rowspan="1" colspan="1">
+                <bold>Kopfzelle C</bold>
+              </td>
+              <td rowspan="1" colspan="1">
+                <bold>Kopfzelle D</bold>
+              </td>
+              <td rowspan="1" colspan="1"/>
+            </tr>
+            <tr>
+              <td rowspan="1" colspan="1">Zelle F enth&#228;lt eine kleine Liste<list list-type="order"><list-item><p>Liste</p></list-item><list-item><p>Liste</p></list-item><list-item><p>Liste</p></list-item></list>
+                     </td>
+              <td rowspan="1" colspan="1">Zelle G mit formatiertem Text:<break/>Als Gregor Samsa eines Morgens aus unruhigen Tr&#228;umen erwachte, [...] seinem Bett <italic>zu einem ungeheuren Ungeziefer</italic> verwandelt. Er lag <bold>auf seinem panzerartig harten R&#252;cken</bold> und sah, [...], auf dessen H&#246;he sich die Bettdecke, zum g&#228;nzlichen Niedergleiten bereit, [...].</td>
+              <td rowspan="1" colspan="1">Zelle H enth&#228;lt Text in unterschiedlichen Sprachen:<break/>Er glitt wieder in seine fr&#252;here Lage zur&#252;ck. &#187;Dies fr&#252;hzeitige Aufstehen&#171;, dachte er, [...] <italic>Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly [...] I account it high time to get to sea as soon as I can.</italic> hinausfliegen. <italic>Phileas Fogg fut inscrit comme un cheval de course, &#224; une sorte de studbook. [...] ferme ou &#224; prime, et il se fit des affaires &#233;normes. M. vero Catoni homini ignoto et novo, quo omnes qui isdem [...] certe licuit Tusculi se in otio delectare, salubri et propinquo loco.</italic> 
+                     </td>
+              <td rowspan="1" colspan="1">Zelle I1</td>
+              <td rowspan="1" colspan="1">Zelle J1</td>
+              <td rowspan="1" colspan="1">Zelle J2</td>
+            </tr>
+            <tr>
+              <td rowspan="1" colspan="1"/>
+              <td rowspan="1" colspan="1"/>
+              <td rowspan="1" colspan="1"/>
+              <td rowspan="1" colspan="1">Zelle I2</td>
+              <td rowspan="1" colspan="1"/>
+              <td rowspan="1" colspan="1"/>
+            </tr>
+            <tr>
+              <td rowspan="1" colspan="1">
+                <bold>Verbundene Reihen werden gerne f&#252;r Zwischengliederungen oder &#8222;Zwischen&#252;berschriften&#8220; genutzt (<xref rid="TO_LINK" ref-type="bibr" id="ID2cfcc768-4e9e-4f95-84ed-3dfc93527d98">Zelle K</xref>).</bold>
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="1" colspan="1">Zelle L</td>
+              <td rowspan="1" colspan="1">Zelle M mit mathematischer Formel (<xref rid="TO_LINK" ref-type="bibr" id="IDfc0e6f1b-848e-44c3-a5d6-ff0845c0889c">Fourierreihe, MS Formeleditor</xref>):<break/>
+                        <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi>f</mml:mi><mml:mfenced separators="|"><mml:mrow><mml:mi>x</mml:mi></mml:mrow></mml:mfenced><mml:mo>=</mml:mo><mml:msub><mml:mrow><mml:mi>a</mml:mi></mml:mrow><mml:mrow><mml:mn>0</mml:mn></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msubsup><mml:mo>&#8721;</mml:mo><mml:mrow><mml:mi>n</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mrow><mml:mi>&#8734;</mml:mi></mml:mrow></mml:msubsup><mml:mrow><mml:mfenced separators="|"><mml:mrow><mml:msub><mml:mrow><mml:mi>a</mml:mi></mml:mrow><mml:mrow><mml:mi>n</mml:mi></mml:mrow></mml:msub><mml:mi>c</mml:mi><mml:mi>o</mml:mi><mml:mi>s</mml:mi><mml:mfrac><mml:mrow><mml:mi>n</mml:mi><mml:mi>&#960;</mml:mi><mml:mi>x</mml:mi></mml:mrow><mml:mrow><mml:mi>L</mml:mi></mml:mrow></mml:mfrac><mml:mo>+</mml:mo><mml:msub><mml:mrow><mml:mi>b</mml:mi></mml:mrow><mml:mrow><mml:mi>n</mml:mi></mml:mrow></mml:msub><mml:mi>s</mml:mi><mml:mi>i</mml:mi><mml:mi>n</mml:mi><mml:mfrac><mml:mrow><mml:mi>n</mml:mi><mml:mi>&#960;</mml:mi><mml:mi>x</mml:mi></mml:mrow><mml:mrow><mml:mi>L</mml:mi></mml:mrow></mml:mfrac></mml:mrow></mml:mfenced></mml:mrow></mml:math>
+                     </td>
+              <td rowspan="1" colspan="1">Zelle N</td>
+              <td rowspan="1" colspan="1">Zelle mit Abbildung<graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="media/image1.png" position="float" orientation="portrait" xlink:type="simple"/>
+                     </td>
+              <td rowspan="1" colspan="1">Zelle</td>
+            </tr>
+            <tr>
+              <td rowspan="1" colspan="1">Letzte Zeile komplett verbunden &#252;ber alle Spalten als Tabellenfu&#223;zeile.</td>
+            </tr>
+          </table>
+        </table-wrap>
+      </sec>
+      <sec>
+        <title>Einfache Tabelle ohne Tabellenkopf und Legende, mit viel Zelleninhalt</title>
+        <p>Die folgende Tabelle ist zwar einfach strukturiert, beinhaltet aber eine gr&#246;&#223;ere Textmenge, sodass sie einen Tabellenumbruch erzwingen sollte. Dabei sollten die Abbildungslegende und der Tabellenkopf auf der Folgeseite wiederholt werden. Die Tabellenlegende wird um den Zusatz &#8222;(<xref rid="TO_LINK" ref-type="bibr" id="ID36647ad5-390b-40c5-bcda-5dddd58b39a9">Fortsetzung</xref>)&#8220; erg&#228;nzt. Zugleich finden sich Hervorhebungen in der ersten Zelle (<xref rid="TO_LINK" ref-type="bibr" id="ID9fe453c8-d646-4c99-9072-d9e540e6f236">Tab. 3</xref>).</p>
+        <fig position="float" orientation="portrait">
+          <caption>
+            <title>Tab. 3: Einfach strukturierte Tabelle mit viel Zelleninhalt.</title>
+          </caption>
+        </fig>
+        <table-wrap specific-use="rules" position="float" orientation="portrait">
+          <table>
+            <tr>
+              <td rowspan="1" colspan="1">Tabellenkopfzelle 1</td>
+              <td rowspan="1" colspan="1">Tabellenkopfzelle 2</td>
+              <td rowspan="1" colspan="1">Tabellenkopfzelle 3</td>
+              <td rowspan="1" colspan="1">Tabellenkopfzelle 4</td>
+            </tr>
+            <tr>
+              <td rowspan="1" colspan="1">Als Gregor Samsa eines Morgens aus unruhigen Tr&#228;umen erwachte, fand er sich in seinem Bett <italic>zu einem ungeheuren Ungeziefer</italic> verwandelt. Er lag <bold>auf seinem panzerartig harten R&#252;cken</bold> und sah, wenn er den Kopf ein wenig hob, seinen gew&#246;lbten, braunen, von bogenf&#246;rmigen Versteifungen geteilten Bauch, auf dessen H&#246;he sich die Bettdecke, zum g&#228;nzlichen Niedergleiten bereit, kaum noch erhalten konnte. Seine vielen, im Vergleich zu seinem sonstigen Umfang kl&#228;glich d&#252;nnen Beine flimmerten ihm hilflos vor den Augen.</td>
+              <td rowspan="1" colspan="1">Der n&#228;chste Zug ging um sieben Uhr; um den einzuholen, h&#228;tte er sich unsinnig beeilen m&#252;ssen, und die Kollektion war noch nicht eingepackt, und er selbst f&#252;hlte sich durchaus nicht besonders frisch und beweglich. Und selbst wenn er den Zug einholte, ein Donnerwetter des Chefs war nicht zu vermeiden, denn der Gesch&#228;ftsdiener hatte beim F&#252;nfuhrzug gewartet und die Meldung von seiner Vers&#228;umnis l&#228;ngst erstattet.</td>
+              <td rowspan="1" colspan="1">Es war eine Kreatur des Chefs, ohne R&#252;ckgrat und Verstand. Wie nun, wenn er sich krank meldete? Das war aber &#228;u&#223;erst peinlich und verd&#228;chtig, denn Gregor war w&#228;hrend seines f&#252;nfj&#228;hrigen Dienstes noch nicht einmal krank gewesen. Gewi&#223; w&#252;rde der Chef mit dem Krankenkassenarzt kommen, w&#252;rde den Eltern wegen des faulen Sohnes Vorw&#252;rfe machen und alle Einw&#228;nde durch den Hinweis auf den Krankenkassenarzt abschneiden, f&#252;r den es ja &#252;berhaupt nur ganz gesunde, aber arbeitsscheue Menschen gibt.</td>
+              <td rowspan="1" colspan="1">Und h&#228;tte er &#252;brigens in diesem Falle so ganz unrecht? Gregor f&#252;hlte sich tats&#228;chlich, abgesehen von einer nach dem langen Schlaf wirklich &#252;berfl&#252;ssigen Schl&#228;frigkeit, ganz wohl und hatte sogar einen besonders kr&#228;ftigen Hunger.</td>
+            </tr>
+            <tr>
+              <td rowspan="1" colspan="1">Als er dies alles in gr&#246;&#223;ter Eile &#252;berlegte, ohne sich entschlie&#223;en zu k&#246;nnen, das Bett zu verlassen - gerade schlug der Wecker dreiviertel sieben - klopfte es vorsichtig an die T&#252;r am Kopfende seines Bettes. &#187;Gregor,&#171; rief es - es war die Mutter -, &#187;es ist dreiviertel sieben.</td>
+              <td rowspan="1" colspan="1">Wolltest du nicht wegfahren?&#171; Die sanfte Stimme! Gregor erschrak, als er seine antwortende Stimme h&#246;rte, die wohl unverkennbar seine fr&#252;here war, in die sich aber, wie von unten her, ein nicht zu unterdr&#252;ckendes, schmerzliches Piepsen mischte, das die Worte f&#246;rmlich nur im ersten Augenblick in ihrer Deutlichkeit belie&#223;, um sie im Nachklang derart zu zerst&#246;ren, da&#223; man nicht</td>
+              <td rowspan="1" colspan="1">wu&#223;te, ob man recht geh&#246;rt hatte. Gregor hatte ausf&#252;hrlich antworten und alles erkl&#228;ren wollen, beschr&#228;nkte sich aber bei diesen Umst&#228;nden darauf, zu sagen: &#187;Ja, ja, danke Mutter, ich stehe schon auf.&#171; Infolge der Holzt&#252;r war die Ver&#228;nderung in Gregors Stimme drau&#223;en wohl nicht zu merken, denn die Mutter beruhigte sich mit dieser Erkl&#228;rung und schl&#252;rfte davon. Aber durch das kleine Gespr&#228;ch waren die anderen Familienmitglieder darauf aufmerksam geworden, da&#223; Gregor wider Erwarten noch zu Hause war, und schon klopfte an der einen Seitent&#252;r der Vater, schwach, aber schon mit der Faust.</td>
+              <td rowspan="1" colspan="1">&#187;Gregor, Gregor,&#171; rief er, &#187;was ist denn?&#171; Und nach einer kleinen Weile mahnte er nochmals mit tieferer Stimme: &#187;Gregor! Gregor!&#171; An der anderen Seitent&#252;r aber klagte leise die Schwester: &#187;Gregor? Ist dir nicht wohl? Brauchst du etwas?&#171; Nach beiden Seiten hin antwortete Gregor: &#187;Bin schon fertig,&#171; und bem&#252;hte sich, durch die sorgf&#228;ltigste Aussprache und durch Einschaltung von langen Pausen zwischen den einzelnen Worten seiner Stimme alles Auffallende zu nehmen.</td>
+            </tr>
+            <tr>
+              <td rowspan="1" colspan="1">Der Vater kehrte auch zu seinem Fr&#252;hst&#252;ck zur&#252;ck, die Schwester aber fl&#252;sterte: &#187;Gregor, mach auf, ich beschw&#246;re dich.&#171; Gregor aber dachte gar nicht daran aufzumachen, sondern lobte die vom Reisen her &#252;bernommene Vorsicht, auch zu Hause alle T&#252;ren w&#228;hrend der Nacht zu versperren.</td>
+              <td rowspan="1" colspan="1">Zun&#228;chst wollte er ruhig und ungest&#246;rt aufstehen, sich anziehen und vor allem fr&#252;hst&#252;cken, und dann erst das Weitere &#252;berlegen, denn, das merkte er wohl, im Bett w&#252;rde er mit dem Nachdenken zu keinem vern&#252;nftigen Ende kommen. Er erinnerte sich, schon &#246;fters im Bett irgendeinen vielleicht durch ungeschicktes Liegen erzeugten, leichten Schmerz empfunden zu haben, der sich dann beim Aufstehen als reine Einbildung herausstellte, und er war gespannt, wie sich seine heutigen Vorstellungen allm&#228;hlich aufl&#246;sen w&#252;rden.</td>
+              <td rowspan="1" colspan="1">Da&#223; die Ver&#228;nderung der Stimme nichts anderes war, als der Vorbote einer t&#252;chtigen Verk&#252;hlung, einer Berufskrankheit der Reisenden, daran zweifelte er nicht im geringsten.<break/>Die Decke abzuwerfen war ganz einfach; er brauchte sich nur ein wenig aufzublasen und sie fiel von selbst. Aber weiterhin wurde es schwierig, besonders weil er so ungemein breit war. Er h&#228;tte Arme und H&#228;nde gebraucht, um sich aufzurichten; statt dessen aber</td>
+              <td rowspan="1" colspan="1">hatte er nur die vielen Beinchen, die ununterbrochen in der verschiedensten Bewegung waren und die er &#252;berdies nicht beherrschen konnte. Wollte er eines einmal einknicken, so war es das erste, da&#223; es sich streckte; und gelang es ihm endlich, mit diesem Bein das auszuf&#252;hren, was er wollte, so arbeiteten inzwischen alle anderen, wie freigelassen, in h&#246;chster, schmerzlicher Aufregung. &#187;Nur sich nicht im Bett unn&#252;tz aufhalten,&#171; sagte sich Gregor.</td>
+            </tr>
+          </table>
+        </table-wrap>
+      </sec>
+    </sec>
+  </body>
+  <back>
+    <fn-group>
+      <fn id="bibd2e94">
+        <p>	 Der &#220;bergang verl&#228;uft flie&#223;end und je nach dialektalem Raum und Schreibort in unterschiedlicher Dynamik.</p>
+      </fn>
+      <fn id="bibd2e105">
+        <p>	 H&#246;hepunkt: sog. &#8222;Staufische Klassik&#8220;.</p>
+      </fn>
+    </fn-group>
+  </back>
+</article>
