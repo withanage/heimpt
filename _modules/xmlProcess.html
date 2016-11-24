@@ -56,7 +56,7 @@
 <span class="sd">This  program is a utility file  which executes a set of specified functions on a element tree  of a xml file.</span>
 
 <span class="sd">The current functions are limited to JATS and BITS XML Scheme of the Library of Congress. However the methods defined in</span>
-<span class="sd">this program can be used to modify any element tree. Some of the  current avaliable functions are sorting footnotes,</span>
+<span class="sd">this program can be used to modify any element tree. Some of the  current available functions are sorting footnotes,</span>
 <span class="sd">numbering elements of a certain type  or setting unique ids to a certain element types.</span>
 
 <span class="sd">Usage:</span>
@@ -72,6 +72,10 @@
 <span class="sd">    -s --sort-references=&lt;tag list as comma seperated lists&gt;</span>
 <span class="sd">    -u --set-uuids=&lt;element types as comma seperated list&gt;</span>
 <span class="sd">    -v --set-numbering-values=&lt;numbering values, additionaly roman numbers e.g.xref,ref-type,fn,{1:2} &gt;</span>
+
+<span class="sd">Notes</span>
+<span class="sd">-----</span>
+<span class="sd">All the functions are done  in the global element tree for performance reasons.</span>
 
 <span class="sd">* Web : https://github.com/withanage/mpt</span>
 <span class="sd">* Repository and issue-tracker: https://github.com/withanage/mpt/issues</span>
@@ -230,6 +234,11 @@
 <span class="sd">        ---------</span>
 <span class="sd">        i : int</span>
 <span class="sd">            integer number</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        result : str</span>
+<span class="sd">            Roman number</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
@@ -451,10 +460,44 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_numbering_values</span><span class="p">(</span><span class="n">vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vals</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">vals</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">count</span><span class="p">,</span> <span class="n">range_count</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">create_dirs_recursive</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">create_xml_file</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_xml_file</span><span class="p">(</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="XMLProcess.create_xml_file"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.create_xml_file">[docs]</a>    <span class="k">def</span> <span class="nf">create_xml_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pth</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write the current elementTree into the file path</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pth : str</span>
+<span class="sd">            Correct path of the metadata file in the folder structure</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        IOError</span>
+<span class="sd">            I/O operation fails</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        Default configuration writes a normalized XML file with XML scheme</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="n">pth</span><span class="p">,</span>
+                <span class="n">pretty_print</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">xml_declaration</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="nb">print</span>
+        <span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="n">e</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">XML_FILE_NOT_CREATED</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="XMLProcess.run"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

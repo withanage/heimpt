@@ -59,7 +59,7 @@
 <span id="xmlprocess-module"></span><h1>xmlProcess module<a class="headerlink" href="#module-xmlProcess" title="Permalink to this headline">¶</a></h1>
 <p>This  program is a utility file  which executes a set of specified functions on a element tree  of a xml file.</p>
 <p>The current functions are limited to JATS and BITS XML Scheme of the Library of Congress. However the methods defined in
-this program can be used to modify any element tree. Some of the  current avaliable functions are sorting footnotes,
+this program can be used to modify any element tree. Some of the  current available functions are sorting footnotes,
 numbering elements of a certain type  or setting unique ids to a certain element types.</p>
 <dl class="docutils">
 <dt>Usage:</dt>
@@ -84,6 +84,8 @@ numbering elements of a certain type  or setting unique ids to a certain element
 -v &#8211;set-numbering-values=&lt;numbering values, additionaly roman numbers e.g.xref,ref-type,fn,{1:2} &gt;</p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p>All the functions are done  in the global element tree for performance reasons.</p>
 <ul class="simple">
 <li>Web : <a class="reference external" href="https://github.com/withanage/mpt">https://github.com/withanage/mpt</a></li>
 <li>Repository and issue-tracker: <a class="reference external" href="https://github.com/withanage/mpt/issues">https://github.com/withanage/mpt/issues</a></li>
@@ -105,6 +107,10 @@ set numbering, add unique ids to certain tag types, sort references</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>i</strong> (<em>int</em>) &#8211; integer number</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>result</strong> &#8211; Roman number</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
 </tr>
 </tbody>
 </table>
@@ -128,6 +134,24 @@ set numbering, add unique ids to certain tag types, sort references</p>
 </table>
 <p class="rubric">Notes</p>
 <p>We assume that  metadata files are stored in a sub-folder named metadata</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmlProcess.XMLProcess.create_xml_file">
+<code class="descname">create_xml_file</code><span class="sig-paren">(</span><em>pth</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.create_xml_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.create_xml_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the current elementTree into the file path</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pth</strong> (<em>str</em>) &#8211; Correct path of the metadata file in the folder structure</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">IOError</span></code> &#8211; I/O operation fails</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Default configuration writes a normalized XML file with XML scheme</p>
 </dd></dl>
 
 <dl class="method">

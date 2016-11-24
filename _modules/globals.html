@@ -51,6 +51,11 @@
             
   <h1>Source code for globals</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Global Variables and global functions</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
 
 <span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Dulip Withanage&quot;</span>
 
@@ -121,21 +126,6 @@
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="GV.convert_int_to_roman"><a class="viewcode-back" href="../globals.html#globals.GV.convert_int_to_roman">[docs]</a>    <span class="k">def</span> <span class="nf">convert_int_to_roman</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">integer</span><span class="p">,</span> <span class="n">numeral</span> <span class="ow">in</span> <span class="n">numeral_map</span><span class="p">:</span>
-            <span class="n">count</span> <span class="o">=</span> <span class="n">i</span> <span class="o">//</span> <span class="n">integer</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">numeral</span> <span class="o">*</span> <span class="n">count</span><span class="p">)</span>
-            <span class="n">i</span> <span class="o">-=</span> <span class="n">integer</span> <span class="o">*</span> <span class="n">count</span>
-        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="GV.convert_roman_to_int"><a class="viewcode-back" href="../globals.html#globals.GV.convert_roman_to_int">[docs]</a>    <span class="k">def</span> <span class="nf">convert_roman_to_int</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">integer</span><span class="p">,</span> <span class="n">numeral</span> <span class="ow">in</span> <span class="n">numeral_map</span><span class="p">:</span>
-            <span class="k">while</span> <span class="n">n</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">numeral</span><span class="p">)]</span> <span class="o">==</span> <span class="n">numeral</span><span class="p">:</span>
-                <span class="n">result</span> <span class="o">+=</span> <span class="n">integer</span>
-                <span class="n">i</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">numeral</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="GV.read_json"><a class="viewcode-back" href="../globals.html#globals.GV.read_json">[docs]</a>    <span class="k">def</span> <span class="nf">read_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
@@ -146,19 +136,6 @@
                 <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_INPUT_FILE_JSON_IS_NOT_VALID</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="GV.create_xml_file"><a class="viewcode-back" href="../globals.html#globals.GV.create_xml_file">[docs]</a>    <span class="k">def</span> <span class="nf">create_xml_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39; write element tr to f &#39;&#39;&#39;</span>
-        <span class="k">try</span><span class="p">:</span>
-
-            <span class="n">tr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
-                <span class="n">f</span><span class="p">,</span>
-                <span class="n">pretty_print</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                <span class="n">xml_declaration</span><span class="o">=</span><span class="kc">True</span>
-            <span class="p">)</span>
-            <span class="nb">print</span>
-        <span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="nb">print</span> <span class="n">e</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">XML_FILE_NOT_CREATED</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GV.create_dirs_recursive"><a class="viewcode-back" href="../globals.html#globals.GV.create_dirs_recursive">[docs]</a>    <span class="k">def</span> <span class="nf">create_dirs_recursive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_path</span><span class="p">):</span>
         <span class="n">p</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
