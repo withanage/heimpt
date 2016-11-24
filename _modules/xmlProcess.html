@@ -141,23 +141,22 @@
         <span class="k">return</span> <span class="n">docopt</span><span class="p">(</span><span class="n">__doc__</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;xml 0.1&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="XMLProcess.set_numbering_tags"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.set_numbering_tags">[docs]</a>    <span class="k">def</span> <span class="nf">set_numbering_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tags</span><span class="p">):</span>
-         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">         Automatic numbering of the list of elements</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Automatic numbering of the list of elements</span>
 
-<span class="sd">         Parameters</span>
-<span class="sd">         ----------</span>
-<span class="sd">         tags: list</span>
-<span class="sd">          list of elements</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tags: list</span>
+<span class="sd">         list of elements</span>
 
-<span class="sd">         &quot;&quot;&quot;</span>
-         <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
             <span class="n">sh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//&#39;</span> <span class="o">+</span> <span class="n">tag</span><span class="p">)</span>
             <span class="n">sid</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sh</span><span class="p">:</span>
                 <span class="n">i</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sid</span><span class="p">))</span>
                 <span class="n">sid</span> <span class="o">+=</span> <span class="mi">1</span>
-         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span></div>
 
 <div class="viewcode-block" id="XMLProcess.set_uuids_for_back_matter"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.set_uuids_for_back_matter">[docs]</a>    <span class="k">def</span> <span class="nf">set_uuids_for_back_matter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tags</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -188,6 +187,7 @@
                         <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span>
                             <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">XML_ELEMENT_NOT_FOUND</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span></div>
+
 <div class="viewcode-block" id="XMLProcess.set_numbering_values"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.set_numbering_values">[docs]</a>    <span class="k">def</span> <span class="nf">set_numbering_values</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">tag</span><span class="p">,</span>
@@ -278,7 +278,6 @@
             <span class="n">val</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">count</span> <span class="o">-</span> <span class="n">r_count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">val</span><span class="p">,</span> <span class="n">r_count</span></div>
 
-
 <div class="viewcode-block" id="XMLProcess.merge_metadata"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.merge_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">merge_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        reads a metadata file path and  merge its content into the metadata section</span>
@@ -367,7 +366,6 @@
         <span class="n">data</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
         <span class="n">elem</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span></div>
 
-
 <div class="viewcode-block" id="XMLProcess.sort_references"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.sort_references">[docs]</a>    <span class="k">def</span> <span class="nf">sort_references</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag_list</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sort references based on the  sub-elements list</span>
@@ -435,7 +433,6 @@
         <span class="n">sort_references</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;--sort-references&#39;</span><span class="p">)</span>
         <span class="n">set_numbering_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;--set-numbering-values&#39;</span><span class="p">)</span>
 
-
         <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;--metadata&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">merge_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span> <span class="k">if</span> <span class="n">metadata</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span>
 
@@ -454,17 +451,17 @@
             <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="n">range_count</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
                 <span class="n">r</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
-                <span class="n">range_count</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_numbering_values</span><span class="p">(</span><span class="n">vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vals</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">vals</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">count</span><span class="p">,</span> <span class="n">range_count</span><span class="p">)</span>
+                <span class="n">range_count</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_numbering_values</span><span class="p">(</span>
+                <span class="n">vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vals</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">vals</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">count</span><span class="p">,</span> <span class="n">range_count</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">create_dirs_recursive</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_xml_file</span><span class="p">(</span>
             <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">)))</span></div>
-
 
 <div class="viewcode-block" id="XMLProcess.create_xml_file"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.create_xml_file">[docs]</a>    <span class="k">def</span> <span class="nf">create_xml_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pth</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -497,7 +494,6 @@
         <span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="nb">print</span> <span class="n">e</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">XML_FILE_NOT_CREATED</span><span class="p">)</span></div>
-
 
 <div class="viewcode-block" id="XMLProcess.run"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
