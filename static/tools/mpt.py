@@ -126,6 +126,9 @@ class MPT(Debuggable):
         exit_code: str
             system exit_code.
 
+        See Also
+        --------
+        subprocess.Popen()
 
         """
         m = ' '.join(args).strip().split(' ')
@@ -192,10 +195,16 @@ class MPT(Debuggable):
             file name prefix  of  the current file
         uid: str
             unique id of the current current typesetter
+
         Returns
         --------
         True: boolean
             Returns True if the output file is created
+
+        See Also
+        --------
+        os.makedirs()
+
         """
         ts_args = collections.OrderedDict(
             sorted(p.get('typesetters')[p_id].get("arguments").items()))
