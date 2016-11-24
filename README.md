@@ -16,9 +16,9 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
 ## Prequisites
  * Python is available in your system: check with  `python --version`
  * Git is installed : check `git --version`
- * Not compulsory , but helpful to install missing modules: `pip --version` .
+ * Not compulsory , but helpful to install missing modules: `pip --version`
  * Install  any missing python module with `pip install mymodule`
- * Installation folder  `/usr/local/mpt` if you use other folder, please change accordingly
+ * Installation folder  `/usr/local/mpt`.  Make sure you have the correct rights to install the software in the $BUILD_DIR.
 
 ## Installation
 ```
