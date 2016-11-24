@@ -60,7 +60,13 @@
 <p>This  program is a utility file  which executes a set of specified functions on a element tree  of a xml file.</p>
 <p>The current functions are limited to JATS and BITS XML Scheme of the Library of Congress. However the methods defined in
 this program can be used to modify any element tree. Some of the  current avaliable functions are sorting footnotes,
-numbering elements of a certain type  or setting unique ids to a certain element type.</p>
+numbering elements of a certain type  or setting unique ids to a certain element types.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/withanage/mpt">https://github.com/withanage/mpt</a></li>
+<li>Repository and issue-tracker: <a class="reference external" href="https://github.com/withanage/mpt/issues">https://github.com/withanage/mpt/issues</a></li>
+<li>Licensed under terms of GPL 3  license (LICENSE.md)</li>
+<li>Copyright (c) 2016 Dulip Withanage, University of Heidelberg</li>
+</ul>
 <dl class="docutils">
 <dt>Usage:</dt>
 <dd>xmlProcess.py  &lt;input_file&gt;  &lt;path&gt; [options]</dd>
@@ -81,7 +87,7 @@ numbering elements of a certain type  or setting unique ids to a certain element
 -r  &#8211;remove-references-unused
 -s &#8211;sort-references=&lt;tag list as comma seperated lists&gt;
 -u &#8211;set-uuids=&lt;element types as comma seperated list&gt;
--v &#8211;set-numbering-values=&lt;numbering values e.g. roman , roman[1,2] e.g. [xref,ref-type,fn,[1,2]] &gt;</p>
+-v &#8211;set-numbering-values=&lt;numbering values, additionaly roman numbers e.g.xref,ref-type,fn,{1:2} &gt;</p>
 </dd>
 </dl>
 <dl class="class">
@@ -159,7 +165,7 @@ Sort references</dd>
 <dd><p>Process  JATS-XML file and do all transformations into the elementtree</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#xmlProcess.XMLProcess.merge_metadata" title="xmlProcess.XMLProcess.merge_metadata"><code class="xref py py-meth docutils literal"><span class="pre">merge_metadata()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.set_numbering_tags" title="xmlProcess.XMLProcess.set_numbering_tags"><code class="xref py py-meth docutils literal"><span class="pre">set_numbering_tags()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.set_uuids_for_back_matter" title="xmlProcess.XMLProcess.set_uuids_for_back_matter"><code class="xref py py-meth docutils literal"><span class="pre">set_uuids_for_back_matter()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.sort_footnotes" title="xmlProcess.XMLProcess.sort_footnotes"><code class="xref py py-meth docutils literal"><span class="pre">sort_footnotes()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.sort_references" title="xmlProcess.XMLProcess.sort_references"><code class="xref py py-meth docutils literal"><span class="pre">sort_references()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.set_numbering_values" title="xmlProcess.XMLProcess.set_numbering_values"><code class="xref py py-meth docutils literal"><span class="pre">set_numbering_values()</span></code></a>, <code class="xref py py-meth docutils literal"><span class="pre">create_dirs_recursive()</span></code>, <code class="xref py py-meth docutils literal"><span class="pre">create_xml_file()</span></code></p>
+<p class="last"><a class="reference internal" href="#xmlProcess.XMLProcess.merge_metadata" title="xmlProcess.XMLProcess.merge_metadata"><code class="xref py py-meth docutils literal"><span class="pre">merge_metadata()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.set_numbering_tags" title="xmlProcess.XMLProcess.set_numbering_tags"><code class="xref py py-meth docutils literal"><span class="pre">set_numbering_tags()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.set_uuids_for_back_matter" title="xmlProcess.XMLProcess.set_uuids_for_back_matter"><code class="xref py py-meth docutils literal"><span class="pre">set_uuids_for_back_matter()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.sort_footnotes" title="xmlProcess.XMLProcess.sort_footnotes"><code class="xref py py-meth docutils literal"><span class="pre">sort_footnotes()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.sort_references" title="xmlProcess.XMLProcess.sort_references"><code class="xref py py-meth docutils literal"><span class="pre">sort_references()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.set_numbering_values" title="xmlProcess.XMLProcess.set_numbering_values"><code class="xref py py-meth docutils literal"><span class="pre">set_numbering_values()</span></code></a></p>
 </div>
 </dd></dl>
 
