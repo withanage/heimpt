@@ -5,7 +5,12 @@ This  program is a utility file  which executes a set of specified functions on 
 
 The current functions are limited to JATS and BITS XML Scheme of the Library of Congress. However the methods defined in
 this program can be used to modify any element tree. Some of the  current avaliable functions are sorting footnotes,
-numbering elements of a certain type  or setting unique ids to a certain element type.
+numbering elements of a certain type  or setting unique ids to a certain element types.
+
+* https://github.com/withanage/mpt
+* Repository and issue-tracker: https://github.com/withanage/mpt/issues
+* Licensed under terms of GPL 3  license (LICENSE.md)
+* Copyright (c) 2016 Dulip Withanage, University of Heidelberg
 
 
 Usage:
@@ -20,7 +25,8 @@ Options:
     -r  --remove-references-unused
     -s --sort-references=<tag list as comma seperated lists>
     -u --set-uuids=<element types as comma seperated list>
-    -v --set-numbering-values=<numbering values e.g. roman , roman[1,2] e.g. [xref,ref-type,fn,[1,2]] >
+    -v --set-numbering-values=<numbering values, additionaly roman numbers e.g.xref,ref-type,fn,{1:2} >
+
 
 
 """
@@ -361,7 +367,7 @@ class XMLProcess(Debuggable):
         See Also
         --------
         merge_metadata, set_numbering_tags,set_uuids_for_back_matter,sort_footnotes,sort_references,set_numbering_values
-        ,create_dirs_recursive,create_xml_file
+
 
 
 
