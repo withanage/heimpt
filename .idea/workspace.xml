@@ -26,8 +26,8 @@
       <file leaf-file-name="xmlProcess.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/tools/xmlProcess.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="590">
-              <caret line="357" column="72" selection-start-line="357" selection-start-column="72" selection-end-line="357" selection-end-column="72" />
+            <state relative-caret-position="700">
+              <caret line="65" column="8" selection-start-line="65" selection-start-column="8" selection-end-line="65" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -46,8 +46,8 @@
       <file leaf-file-name="mpt.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/tools/mpt.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="1020">
+              <caret line="599" column="89" selection-start-line="599" selection-start-column="3" selection-end-line="599" selection-end-column="89" />
               <folding />
             </state>
           </provider>
@@ -82,8 +82,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/static/tools/mpt.py" />
         <option value="$PROJECT_DIR$/static/tools/configurations/example.json" />
+        <option value="$PROJECT_DIR$/static/tools/mpt.py" />
         <option value="$PROJECT_DIR$/static/tools/xmlProcess.py" />
       </list>
     </option>
@@ -476,14 +476,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/tools/mpt.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/tools/configurations/example.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="961">
@@ -492,10 +484,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/static/tools/mpt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1020">
+          <caret line="599" column="89" selection-start-line="599" selection-start-column="3" selection-end-line="599" selection-end-column="89" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/static/tools/xmlProcess.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="590">
-          <caret line="357" column="72" selection-start-line="357" selection-start-column="72" selection-end-line="357" selection-end-column="72" />
+        <state relative-caret-position="700">
+          <caret line="65" column="8" selection-start-line="65" selection-start-column="8" selection-end-line="65" selection-end-column="8" />
           <folding />
         </state>
       </provider>

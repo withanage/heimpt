@@ -202,6 +202,9 @@ class XMLProcess(Debuggable):
         val : str
         r_count: int
 
+        See Also
+        --------
+        convert_int_to_roman
 
         """
 
@@ -228,6 +231,9 @@ class XMLProcess(Debuggable):
         tr : elementTree
             Element tree of the  current file
 
+        See Also
+        -------
+        create_metadata_path
 
         """
         r = self.tr.getroot()
@@ -354,8 +360,8 @@ class XMLProcess(Debuggable):
 
         See Also
         --------
-        merge_metadata :  reads a metadata file path and  merge its content into the metadata section
-        set_numbering_tags:  Automatic numbering of the list of elements
+        merge_metadata, set_numbering_tags,set_uuids_for_back_matter,sort_footnotes,sort_references,set_numbering_values
+        ,create_dirs_recursive,create_xml_file
 
 
 
@@ -399,16 +405,20 @@ class XMLProcess(Debuggable):
 
     def run(self):
         """
-        main function  which call xml processing
-        :return:
+        Runs the configuration on the processing object
+
         """
         self.process_xml_file()
 
 
 def main():
     """
-    main method
-    :return:
+    Initializes a processing object from  a xml file and   and runs it.
+
+    See Also
+    --------
+    run
+
     """
     xp = XMLProcess()
     xp.run()
