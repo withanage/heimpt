@@ -22,18 +22,12 @@ Utilities
 
 
 
-List of Modules
+Indices and tables
 ==================================================
 
 * :ref:`modindex`
 
-Indices and tables
-==================================================
-
 * :ref:`genindex`
-
-Fulltext Search
-==================================================
 
 * :ref:`search`
 
