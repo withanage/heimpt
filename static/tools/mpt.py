@@ -125,6 +125,8 @@ class MPT(Debuggable):
             system standard error.
         exit_code: str
             system exit_code.
+
+
         """
         m = ' '.join(args).strip().split(' ')
         self.debug.print_debug(self, ' '.join(m))
@@ -256,6 +258,12 @@ class MPT(Debuggable):
             project output path of the current typesetter
         pf_type : str
             project file type of the current typesetter
+
+        See Also
+        --------
+
+        call_typesetter, organize_output
+
         """
 
         p_path = ''
@@ -335,6 +343,11 @@ class MPT(Debuggable):
         pf_type : str
             project file type of the current typesetter
 
+
+        See Also
+        --------
+        run_typesetter
+
         """
         t_props = self.all_typesetters.get(
             p.get('typesetters')[p_id].get("name"))
@@ -387,6 +400,11 @@ class MPT(Debuggable):
         pf_type : str
             project file type of the current typesetter
 
+
+        See Also
+        --------
+        typeset_file
+
         """
         p_path, pf_type = '', ''
 
@@ -412,14 +430,22 @@ class MPT(Debuggable):
     def typeset_project(self, p):
         """
         Typesets a certain project
+
         Parameters
         ---------
         p: dictionary
             json program properties
+
         Returns
         --------
         True: boolean
             Returns True, if  all the typesetters in project has run successfully.
+
+
+        See Also
+        --------
+        typeset_files
+
         """
         typesetters_ordered, temp_path, temp_pre_out_type = '', '', ''
         pre_path = ''
@@ -463,6 +489,10 @@ class MPT(Debuggable):
         --------
         True: boolean
             Returns True, if the  all the typesetters in project run
+
+        See Also
+        --------
+        typeset_project
 
         """
         projects = self.config.get('projects')
@@ -553,6 +583,11 @@ class MPT(Debuggable):
         project_path: str
             Final path for the current file
 
+
+        See Also
+        --------
+        gv.create_dirs_recursive
+        
         """
         t_path = [p.get('path'), uid]
         p_path = ''
