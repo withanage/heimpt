@@ -177,6 +177,8 @@
 <span class="sd">            system standard error.</span>
 <span class="sd">        exit_code: str</span>
 <span class="sd">            system exit_code.</span>
+
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">m</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
@@ -308,6 +310,12 @@
 <span class="sd">            project output path of the current typesetter</span>
 <span class="sd">        pf_type : str</span>
 <span class="sd">            project file type of the current typesetter</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        call_typesetter, organize_output</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">p_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
@@ -387,6 +395,11 @@
 <span class="sd">        pf_type : str</span>
 <span class="sd">            project file type of the current typesetter</span>
 
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        run_typesetter</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">t_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_typesetters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
             <span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typesetters&#39;</span><span class="p">)[</span><span class="n">p_id</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">))</span>
@@ -439,6 +452,11 @@
 <span class="sd">        pf_type : str</span>
 <span class="sd">            project file type of the current typesetter</span>
 
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        typeset_file</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p_path</span><span class="p">,</span> <span class="n">pf_type</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span>
 
@@ -464,14 +482,22 @@
 <div class="viewcode-block" id="MPT.typeset_project"><a class="viewcode-back" href="../mpt.html#mpt.MPT.typeset_project">[docs]</a>    <span class="k">def</span> <span class="nf">typeset_project</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Typesets a certain project</span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ---------</span>
 <span class="sd">        p: dictionary</span>
 <span class="sd">            json program properties</span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        --------</span>
 <span class="sd">        True: boolean</span>
 <span class="sd">            Returns True, if  all the typesetters in project has run successfully.</span>
+
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        typeset_files</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">typesetters_ordered</span><span class="p">,</span> <span class="n">temp_path</span><span class="p">,</span> <span class="n">temp_pre_out_type</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span>
         <span class="n">pre_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
@@ -515,6 +541,10 @@
 <span class="sd">        --------</span>
 <span class="sd">        True: boolean</span>
 <span class="sd">            Returns True, if the  all the typesetters in project run</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        typeset_project</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">projects</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;projects&#39;</span><span class="p">)</span>
@@ -605,6 +635,11 @@
 <span class="sd">        project_path: str</span>
 <span class="sd">            Final path for the current file</span>
 
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        gv.create_dirs_recursive</span>
+<span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">t_path</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">),</span> <span class="n">uid</span><span class="p">]</span>
         <span class="n">p_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
