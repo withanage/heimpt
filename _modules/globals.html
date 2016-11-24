@@ -115,21 +115,65 @@
 
     <span class="nd">@staticmethod</span>
 <div class="viewcode-block" id="GV.fatal_error"><a class="viewcode-back" href="../globals.html#globals.GV.fatal_error">[docs]</a>    <span class="k">def</span> <span class="nf">fatal_error</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prints a formatted error message and exits</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        module: python module</span>
+<span class="sd">             Returns the name of the module</span>
+<span class="sd">        message: str</span>
+<span class="sd">            Error message</span>
+
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        module.get_module_name()</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">u&#39;[FATAL ERROR] [</span><span class="si">{0}</span><span class="s1">] </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">module</span><span class="o">.</span><span class="n">get_module_name</span><span class="p">(),</span> <span class="n">message</span><span class="p">))</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="GV.is_json"><a class="viewcode-back" href="../globals.html#globals.GV.is_json">[docs]</a>    <span class="k">def</span> <span class="nf">is_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+<div class="viewcode-block" id="GV.is_json"><a class="viewcode-back" href="../globals.html#globals.GV.is_json">[docs]</a>    <span class="k">def</span> <span class="nf">is_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks whether a string is valid json string</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        s : str</span>
+<span class="sd">            JSON data as string</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError  error</span>
+<span class="sd">             Inappropriate json string</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
 
-<div class="viewcode-block" id="GV.read_json"><a class="viewcode-back" href="../globals.html#globals.GV.read_json">[docs]</a>    <span class="k">def</span> <span class="nf">read_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">as</span> <span class="n">j</span><span class="p">:</span>
+<div class="viewcode-block" id="GV.read_json"><a class="viewcode-back" href="../globals.html#globals.GV.read_json">[docs]</a>    <span class="k">def</span> <span class="nf">read_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pth</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads a json file from system path or exits</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pth: str</span>
+<span class="sd">             path of the  file in the folder structure</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        josn : json</span>
+<span class="sd">            json object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">pth</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pth</span><span class="p">)</span> <span class="k">as</span> <span class="n">j</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span>
@@ -137,15 +181,25 @@
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="GV.create_dirs_recursive"><a class="viewcode-back" href="../globals.html#globals.GV.create_dirs_recursive">[docs]</a>    <span class="k">def</span> <span class="nf">create_dirs_recursive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_path</span><span class="p">):</span>
+<div class="viewcode-block" id="GV.create_dirs_recursive"><a class="viewcode-back" href="../globals.html#globals.GV.create_dirs_recursive">[docs]</a>    <span class="k">def</span> <span class="nf">create_dirs_recursive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pth</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Recursively create directories for a system path or exists if folder exists</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pth : str</span>
+<span class="sd">            system path to be created</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">project_path</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">pth</span><span class="p">:</span>
             <span class="n">p</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">path</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">o</span><span class="p">:</span>
                     <span class="nb">print</span> <span class="n">o</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">p</span></div></div>
 </pre></div>
 
