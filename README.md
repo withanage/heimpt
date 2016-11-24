@@ -35,18 +35,8 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
 https://withanage.github.io/mpt
 
 
-## doc2pdf Conversion Pipeline
 
-* [Overview](https://github.com/withanage/mpt/wiki/doc2pdf:-Overview)
-
-### Tests
-* [Test suite documentation](https://github.com/withanage/mpt/wiki/doc2pdf:-Test-Suite)
-* [Test reports](https://github.com/withanage/mpt/wiki/doc2pdf:-Tests)
-
-### Post Process Tools
- * [Merge, clean, set IDs, remove duplicates etc.](https://github.com/withanage/mpt/wiki/xmlToxml:-post-Process)
-
-# Credits
+## Credits
 
 The lead developer is Dulip Withanage,  Heidelberg  University Library
 
