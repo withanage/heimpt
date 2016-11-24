@@ -82,7 +82,7 @@ class XMLProcess(Debuggable):
         """
         return docopt(__doc__, version='xml 0.1')
 
-    def set_tag_numbering(self, tags):
+    def set_numbering_tags(self, tags):
          """
          Automatic numbering of the list of elements
 
@@ -130,7 +130,7 @@ class XMLProcess(Debuggable):
                         self.debug.print_debug(
                             self, self.gv.XML_ELEMENT_NOT_FOUND)
         return self.tr
-    def set_numbering(
+    def set_numbering_values(
             self,
             tag,
             attr,
@@ -208,35 +208,6 @@ class XMLProcess(Debuggable):
             val = str(count - r_count + 1)
         return val, r_count
 
-    def transform(self):
-        """
-        Function applies transformation into the elementtree
-
-        Returns
-        -------
-        tr : elementTree
-            Element tree of the  current file
-
-
-        """
-        set_numbering_tags = self.args.get('--set-numbering')
-        set_uuids = self.args.get('--set-uuids')
-        sort_footnotes = self.args.get('--sort-footnotes')
-        sort_references = self.args.get('--sort-references')
-
-        metadata = self.args.get('--metadata')
-        self.tr = self.merge_metadata(metadata) if metadata else self.tr
-
-        self.tr = self.set_tag_numbering(set_numbering_tags.split(
-            ',')) if set_numbering_tags else self.tr
-        self.tr = self.set_uuids_for_back_matter(
-            set_uuids.split(',')) if set_uuids else self.tr
-        self.tr = self.sort_footnotes(
-            sort_footnotes.split(',')) if sort_footnotes else self.tr
-        self.tr = self.sort_references(
-            sort_references.split(',')) if sort_references else self.tr
-
-        return self.tr
 
     def merge_metadata(self, metadata):
         """
@@ -274,8 +245,20 @@ class XMLProcess(Debuggable):
     def create_metadata_path(self, metadata):
         """
         creates the correct folder path for the metadata file. Metadata files should be in a folder : metadata
-        :param metadata:
-        :return:
+
+        Parameters
+        ----------
+        metadata : str
+            Suffix of the metadata  files
+
+        Returns
+        -------
+        pth : str
+            Correct path of the metadata file in the folder structure
+
+        Notes
+        -----
+        We assume that  metadata files are stored in a sub-folder named metadata
         """
         p = os.path.dirname(self.f).split(os.sep)
         del p[-4:]
@@ -290,9 +273,14 @@ class XMLProcess(Debuggable):
     def sort_by_tags(self, tag_list, elem):
         """
         Sorts  a   list  of elements alphabetically
-        :param tag_list:
-        :param elem:
-        :return:
+
+        Parameters
+        ----------
+        tag_list : list
+            A list of tag types
+        elem : Element
+            Element to be modified
+
         """
         data = []
         for e in elem:
@@ -306,12 +294,25 @@ class XMLProcess(Debuggable):
         data.sort()
         elem[:] = [item[-1] for item in data]
 
+
     def sort_references(self, tag_list):
         """
-        sort references
-        :param self.tr:
-        :param tag_list:
-        :return:
+        Sort references based on the  sub-elements list
+
+        Parameters
+        ----------
+        tag_list : list
+            A list of tag types
+
+
+        Returns
+        -------
+        tr : elementTree
+            Element tree of the  current file
+
+        See Also
+        --------
+        sort_by_tags
         """
         elem = self.tr.find('./back/ref-list')
         self.sort_by_tags(tag_list, elem)
@@ -320,10 +321,22 @@ class XMLProcess(Debuggable):
 
     def sort_footnotes(self, tag_list):
         """
-        sort footnotes
-        :param tr:
-        :param tag_list:
-        :return:
+        Sort footnotes based on the  sub-elements list
+
+        Parameters
+        ----------
+        tag_list : list
+            A list of tag types
+
+
+        Returns
+        -------
+        tr : elementTree
+            Element tree of the  current file
+
+        See Also
+        --------
+        sort_by_tags
         """
         elem = self.tr.find('./back/fn-group')
         self.sort_by_tags(tag_list, elem)
@@ -332,17 +345,35 @@ class XMLProcess(Debuggable):
 
     def process_xml_file(self):
         """
-        process  xml  file and do all transformations
-        :return:
+        Process  JATS-XML file and do all transformations into the elementtree
+
+
+
+
         """
 
-        #tr = etree.parse(os.path.join(self.dr, self.f))
+        set_numbering_tags = self.args.get('--set-numbering')
+        set_uuids = self.args.get('--set-uuids')
+        sort_footnotes = self.args.get('--sort-footnotes')
+        sort_references = self.args.get('--sort-references')
 
-        self.tr = self.transform()
+        metadata = self.args.get('--metadata')
+        self.tr = self.merge_metadata(metadata) if metadata else self.tr
+
+        self.tr = self.set_numbering_tags(set_numbering_tags.split(
+            ',')) if set_numbering_tags else self.tr
+        self.tr = self.set_uuids_for_back_matter(
+            set_uuids.split(',')) if set_uuids else self.tr
+        self.tr = self.sort_footnotes(
+            sort_footnotes.split(',')) if sort_footnotes else self.tr
+        self.tr = self.sort_references(
+            sort_references.split(',')) if sort_references else self.tr
+
         count = 1
         range_count = [1, 2]
-        self.tr, count = self.set_numbering(
+        self.tr, count = self.set_numbering_values(
             "xref", "ref-type", "fn", count, range_count)
+
         self.gv.create_dirs_recursive(self.dr.split('/'))
         self.gv.create_xml_file(
             self.tr, os.path.join(
