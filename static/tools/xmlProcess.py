@@ -16,11 +16,12 @@ Options:
     -f --sort-footnotes=<tag list as comma seperated lists>
     -h --help
     -m --metadata=<file__name_schema.xml>
-    -n --set-numbering=<elemennt types as comma seperated lists>
+    -n --set-numbering-tags=<elemennt types as comma seperated lists>
     -r  --remove-references-unused
     -s --sort-references=<tag list as comma seperated lists>
-    -t --set-numbering-types=<numbering types e.g. roman , roman[1,2] >
     -u --set-uuids=<element types as comma seperated list>
+    -v --set-numbering-values=<numbering values e.g. roman , roman[1,2] e.g. [xref,ref-type,fn,[1,2]] >
+
 
 """
 
@@ -153,6 +154,10 @@ class XMLProcess(Debuggable):
         range_list : list
            lower and upper level for the  numbering
 
+        See Also
+        --------
+        set_roman_numbers
+
         """
         searchTag = './/' + tag + '[@' + attr + '="' + value + '"]'
         elems = self.tr.getroot().findall(searchTag)
@@ -211,7 +216,7 @@ class XMLProcess(Debuggable):
 
     def merge_metadata(self, metadata):
         """
-        Reads a metadata file path and  merge its content into the metadata section
+        reads a metadata file path and  merge its content into the metadata section
 
         Parameters
         ----------
@@ -347,15 +352,21 @@ class XMLProcess(Debuggable):
         """
         Process  JATS-XML file and do all transformations into the elementtree
 
+        See Also
+        --------
+        merge_metadata :  reads a metadata file path and  merge its content into the metadata section
+        set_numbering_tags:  Automatic numbering of the list of elements
 
 
 
         """
 
-        set_numbering_tags = self.args.get('--set-numbering')
-        set_uuids = self.args.get('--set-uuids')
+        set_numbering_tags = self.args.get('--set-numbering-tags')
+        set_unique_ids = self.args.get('--set-uuids')
         sort_footnotes = self.args.get('--sort-footnotes')
         sort_references = self.args.get('--sort-references')
+        set_numbering_values = self.args.get('--set-numbering-values')
+
 
         metadata = self.args.get('--metadata')
         self.tr = self.merge_metadata(metadata) if metadata else self.tr
@@ -363,16 +374,22 @@ class XMLProcess(Debuggable):
         self.tr = self.set_numbering_tags(set_numbering_tags.split(
             ',')) if set_numbering_tags else self.tr
         self.tr = self.set_uuids_for_back_matter(
-            set_uuids.split(',')) if set_uuids else self.tr
+            set_unique_ids.split(',')) if set_unique_ids else self.tr
         self.tr = self.sort_footnotes(
             sort_footnotes.split(',')) if sort_footnotes else self.tr
         self.tr = self.sort_references(
             sort_references.split(',')) if sort_references else self.tr
 
-        count = 1
-        range_count = [1, 2]
-        self.tr, count = self.set_numbering_values(
-            "xref", "ref-type", "fn", count, range_count)
+        for s in set_numbering_values.split(';'):
+            vals = s.split(',')
+
+            count = 1
+            range_count = [0, 0]
+
+            if len(vals) > 3 :
+                r = vals[3].lstrip('{').rstrip('}').split(':')
+                range_count = [int(r[0]) , int(r[1])]
+            self.tr, count = self.set_numbering_values(vals[0], vals[1], vals[2], count, range_count)
 
         self.gv.create_dirs_recursive(self.dr.split('/'))
         self.gv.create_xml_file(
