@@ -13,17 +13,14 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
 
 (4) XML documents are converted to desired output formats that can then be offered to users, including HTML, PDF, and ePub.
 
-# Documentation
-
-# Installation
-
-## Perquisites
+## Prequisites
  * Python is available in your system: check with  `python --version`
  * Git is installed : check `git --version`
  * Not compulsory , but helpful to install missing modules: `pip --version` .
  * Install  any missing python module with `pip install mymodule`
  * Installation folder  `/usr/local/mpt` if you use other folder, please change accordingly
 
+## Installation
 ```
  BUILD_DIR=/usr/local/mpt
  git clone https://github.com/withanage/mpt.git $BUILD_DIR
@@ -33,6 +30,9 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
  python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/example.json --debug
 ```
 
+## API Documentation
+
+https://withanage.github.io/mpt
 
 
 ## doc2pdf Conversion Pipeline
