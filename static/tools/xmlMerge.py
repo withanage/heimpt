@@ -79,7 +79,7 @@ class XMLMerge(Debuggable):
           A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
           elements.
         """
-        return docopt(__doc__, version='xml 0.1')
+        return docopt(__doc__, version='xmlMerge 0.0.1')
 
     def create_output_bits(self):
         """

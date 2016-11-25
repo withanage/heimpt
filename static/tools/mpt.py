@@ -52,7 +52,7 @@ from termcolor import colored
 
 class MPT(Debuggable):
     """
-    MPT Class Object,  which initializes the properties.
+    MPT Class Object,  which initializes the properties and defines the methods.
 
     """
 
@@ -98,7 +98,7 @@ class MPT(Debuggable):
           A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
           elements.
         """
-        return docopt(__doc__, version='mpt 0.1')
+        return docopt(__doc__, version='mpt 0.0.1')
 
     def get_module_name(self):
         """

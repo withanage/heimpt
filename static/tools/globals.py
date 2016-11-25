@@ -61,6 +61,8 @@ class GV(object):
         self.debug = Debug()
         self.numeral_map = numeral_map
 
+        self.version='0.0.1'
+
     @staticmethod
     def fatal_error(module, message):
         """
