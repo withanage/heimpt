@@ -1,4 +1,4 @@
-#!/usr/bin/env python   ,
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 Main  program which  initializes the  Monograph  Publication Tool , read the configuration from the json file.
@@ -10,7 +10,7 @@ generate the output.
 
 
 Usage:
-    mpr.py  <config_file> [options]
+    mpt.py  <config_file> [options]
 Options:
     -d, --debug  Enable debug output
 
