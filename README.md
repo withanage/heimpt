@@ -30,7 +30,7 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
  git submodule init
  git submodule update
 ```
-## Test your Instllation
+## Test your Installation
 If you changed the `$BUILD_DIR` in the previous step, you have to change the project path in `example.json`
 
 ```
