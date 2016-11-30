@@ -13,6 +13,8 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
 
 (4) XML documents are converted to desired output formats that can then be offered to users, including HTML, PDF, and ePub.
 
+![doc2pdf Pipeline](https://raw.githubusercontent.com/withanage/mpt/master/static/images/mpt.png)
+
 ## Prequisites
  * Python is available in your system: check with  `python --version`
  * Git is installed : check `git --version`
