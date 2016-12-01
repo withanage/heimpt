@@ -146,6 +146,7 @@ class XMLMerge(Debuggable):
 
         """
         book = etree.Element("book")
+        book.attrib['']
 
         metadata = self.args.get('--metadata')
         if metadata:
