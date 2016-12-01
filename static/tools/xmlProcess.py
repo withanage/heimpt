@@ -94,29 +94,8 @@ class XMLProcess(Debuggable):
 
 
 
-    def get_ref_ids_back(self):
-        '''returns references in back '''
-        back_refs = Set()
-
-
-        for back in self.tr.getroot().findall(".//back/ref-list"):
-
-            for ref in back.findall(".//ref"):
-                if ref.keys():
-                    back_refs.add(ref.attrib['id'])
-        return back_refs
-
-    def get_ref_ids_body(self):
-        '''returns references in body '''
-        body_refs = Set()
-        for body in self.tr.getroot().findall(".//body"):
-            for ref in body.findall(".//xref[@ref-type='bibr']"):
-                if ref.keys():
-                    body_refs.add(ref.attrib['rid'])
-        return body_refs
-
-    def remove_not_used_in_back(self, tag):
-        """ removes  footnotes, references, which are not linked.
+    def remove_references(self):
+        """ removes  references, which are not linked.
 
          Parameters
          -----------
@@ -129,23 +108,26 @@ class XMLProcess(Debuggable):
 
 
         """
-        body_refs = self.get_ref_ids_body()
-        back_refs = self.get_ref_ids_back()
-        print body_refs
-        print back_refs
-
-        for i in back_refs:
-            if i in body_refs:
-                pass
+        r = self.tr.getroot()
+        for e in r.findall('.//back/ref-list/ref'):
+            if e.attrib.get('id'):
+                if r.find(".//xref[@ref-type='bibr'][@rid='"+e.attrib.get('id')+"']")  is  None:
+                    self.remove_element(e)
             else:
-                elems = self.tr.getroot().findall(
-                    ''.join(['.//back/', tag, '/[@id="', str(i), '"]']))
-                for e in elems:
-                    if e.getparent() is not None:
-                        e.getparent().remove(e)
+                self.remove_element(e)
         return self.tr
 
+    def remove_element(self, e):
+        """
+        Remove any element only if it has a parent
 
+        
+        """
+        if e.getparent() is not None:
+            e.getparent().remove(e)
+            return True
+        else:
+            return False
 
     def set_numbering_tags(self, tags):
         """
@@ -452,7 +434,7 @@ class XMLProcess(Debuggable):
         metadata = self.args.get('--metadata')
         self.tr = self.merge_metadata(metadata) if metadata else self.tr
 
-        self.tr = self.remove_not_used_in_back(clean_references) if clean_references else self.tr
+        self.tr = self.remove_references() if clean_references else self.tr
         self.tr = self.set_numbering_tags(set_numbering_tags.split(
             ',')) if set_numbering_tags else self.tr
         self.tr = self.set_uuids_for_back_matter(
