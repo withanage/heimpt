@@ -77,7 +77,9 @@
             "arguments": {
                 "1":"--metadata book-part-meta.bits2",
                 "2": "--set-uuids=fn,ref",
-                "3": "--set-numbering-values=xref,ref-type,fn"
+                "3": "--set-numbering-values=xref,ref-type,fn",
+                "4":"--clean-references"
+
 
             },
             "executable": "/usr/local/mpt/static/tools/xmlProcess.py"

@@ -9,14 +9,13 @@ numbering elements of a certain type  or setting unique ids to a certain element
 
 Usage:
     xmlProcess.py  <input_file>  <path> [options]
-
 Options:
-    -d, --debug   Enable debug output
+    -d --debug   Enable debug output
     -f --sort-footnotes=<tag list as comma seperated lists>
     -h --help
     -m --metadata=<file__name_schema.xml>
     -n --set-numbering-tags=<elemennt types as comma seperated lists>
-    -r  --remove-references-unused
+    -r --clean-references
     -s --sort-references=<tag list as comma seperated lists>
     -u --set-uuids=<element types as comma seperated list>
     -v --set-numbering-values=<numbering values, additionaly roman numbers e.g.xref,ref-type,fn,{1:2} >
@@ -46,6 +45,7 @@ import uuid
 from debug import Debuggable, Debug
 from docopt import docopt
 from globals import GV
+from sets import Set
 
 
 try:
@@ -91,6 +91,62 @@ class XMLProcess(Debuggable):
         """
         return docopt(__doc__, version='xml 0.1')
 
+
+
+
+    def get_ref_ids_back(self):
+        '''returns references in back '''
+        back_refs = Set()
+
+
+        for back in self.tr.getroot().findall(".//back/ref-list"):
+
+            for ref in back.findall(".//ref"):
+                if ref.keys():
+                    back_refs.add(ref.attrib['id'])
+        return back_refs
+
+    def get_ref_ids_body(self):
+        '''returns references in body '''
+        body_refs = Set()
+        for body in self.tr.getroot().findall(".//body"):
+            for ref in body.findall(".//xref[@ref-type='bibr']"):
+                if ref.keys():
+                    body_refs.add(ref.attrib['rid'])
+        return body_refs
+
+    def remove_not_used_in_back(self, tag):
+        """ removes  footnotes, references, which are not linked.
+
+         Parameters
+         -----------
+         tag : str
+            name of the XML tag
+
+         Returns
+         -------
+         tr : elementtree
+
+
+        """
+        body_refs = self.get_ref_ids_body()
+        back_refs = self.get_ref_ids_back()
+        print body_refs
+        print back_refs
+
+        for i in back_refs:
+            if i in body_refs:
+                pass
+            else:
+                elems = self.tr.getroot().findall(
+                    ''.join(['.//back/', tag, '/[@id="', str(i), '"]']))
+                for e in elems:
+                    if e.getparent() is not None:
+                        e.getparent().remove(e)
+        return self.tr
+
+
+
     def set_numbering_tags(self, tags):
         """
         Automatic numbering of the list of elements
@@ -99,6 +155,11 @@ class XMLProcess(Debuggable):
         ----------
         tags: list
          list of elements
+
+        Returns
+        -------
+        tr : elementtree
+
 
         """
         for tag in tags:
@@ -118,12 +179,16 @@ class XMLProcess(Debuggable):
         tags: list
          list of elements
 
+        Returns
+        -------
+        tr : elementtree
 
         """
         for s in tags:
             f = {}
+            ref_type = 'bibr' if s == 'ref' else s
             fns = self.tr.getroot().findall(
-                ''.join(['.//xref/[@ref-type="', s, '"]']))
+                ''.join(['.//xref/[@ref-type="', ref_type, '"]']))
             for i in fns:
                 rid = ''.join(['bibd', uuid.uuid4().get_hex()])
                 f[i.attrib['rid']] = rid
@@ -375,15 +440,19 @@ class XMLProcess(Debuggable):
 
         """
 
+        clean_references = self.args.get('--clean-references')
+
         set_numbering_tags = self.args.get('--set-numbering-tags')
         set_unique_ids = self.args.get('--set-uuids')
         sort_footnotes = self.args.get('--sort-footnotes')
         sort_references = self.args.get('--sort-references')
         set_numbering_values = self.args.get('--set-numbering-values')
 
+
         metadata = self.args.get('--metadata')
         self.tr = self.merge_metadata(metadata) if metadata else self.tr
 
+        self.tr = self.remove_not_used_in_back(clean_references) if clean_references else self.tr
         self.tr = self.set_numbering_tags(set_numbering_tags.split(
             ',')) if set_numbering_tags else self.tr
         self.tr = self.set_uuids_for_back_matter(
