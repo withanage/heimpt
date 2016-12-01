@@ -47,6 +47,9 @@ except ImportError:
     print(PYTHON_IMPORT_FAILED_LXML_MODULE)
     sys.exit(1)
 
+class XMLNamespaces:
+   s = 'http://www.w3.org/2003/05/soap-envelope'
+   a = 'http://www.w3.org/2005/08/addressing'
 
 class XMLMerge(Debuggable):
     """
@@ -145,8 +148,12 @@ class XMLMerge(Debuggable):
         create_metadata_path, create_book_part_bits
 
         """
-        book = etree.Element("book")
-        book.attrib['']
+
+        book = etree.Element(etree.QName('book'), nsmap={'xlink': "http://www.w3.org/1999/xlink", 'mml': "http://www.w3.org/1998/Math/MathML"})
+        book.attrib['dtd-version'] = "2.0"
+        book.attrib[etree.QName( 'lang')] = "de"
+        book.attrib['book-type'] = "proceedings"
+
 
         metadata = self.args.get('--metadata')
         if metadata:
