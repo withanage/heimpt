@@ -52,8 +52,7 @@
   <h1>Source code for xmlProcess</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">This  program is a utility file  which executes a set of specified functions on a element tree  of a xml file.</span>
+<span class="sd">&quot;&quot;&quot;This  program is a utility file  which executes a set of specified functions on a element tree  of a xml file.</span>
 
 <span class="sd">The current functions are limited to JATS and BITS XML Scheme of the Library of Congress. However the methods defined in</span>
 <span class="sd">this program can be used to modify any element tree. Some of the  current available functions are sorting footnotes,</span>
@@ -61,14 +60,13 @@
 
 <span class="sd">Usage:</span>
 <span class="sd">    xmlProcess.py  &lt;input_file&gt;  &lt;path&gt; [options]</span>
-
 <span class="sd">Options:</span>
-<span class="sd">    -d, --debug   Enable debug output</span>
+<span class="sd">    -d --debug   Enable debug output</span>
 <span class="sd">    -f --sort-footnotes=&lt;tag list as comma seperated lists&gt;</span>
 <span class="sd">    -h --help</span>
 <span class="sd">    -m --metadata=&lt;file__name_schema.xml&gt;</span>
 <span class="sd">    -n --set-numbering-tags=&lt;elemennt types as comma seperated lists&gt;</span>
-<span class="sd">    -r  --remove-references-unused</span>
+<span class="sd">    -r --clean-references</span>
 <span class="sd">    -s --sort-references=&lt;tag list as comma seperated lists&gt;</span>
 <span class="sd">    -u --set-uuids=&lt;element types as comma seperated list&gt;</span>
 <span class="sd">    -v --set-numbering-values=&lt;numbering values, additionaly roman numbers e.g.xref,ref-type,fn,{1:2} &gt;</span>
@@ -143,23 +141,77 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">docopt</span><span class="p">(</span><span class="n">__doc__</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;xml 0.1&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="XMLProcess.set_numbering_tags"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.set_numbering_tags">[docs]</a>    <span class="k">def</span> <span class="nf">set_numbering_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tags</span><span class="p">):</span>
+
+
+
+<div class="viewcode-block" id="XMLProcess.remove_references"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.remove_references">[docs]</a>    <span class="k">def</span> <span class="nf">remove_references</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; removes  references, which are not linked.</span>
+
+<span class="sd">         Parameters</span>
+<span class="sd">         -----------</span>
+<span class="sd">         tag : str</span>
+<span class="sd">            name of the XML tag</span>
+
+<span class="sd">         Returns</span>
+<span class="sd">         -------</span>
+<span class="sd">         tr : elementtree</span>
+
+<span class="sd">         See Also</span>
+<span class="sd">         --------</span>
+<span class="sd">         remove_element, remove_tags</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//back/ref-list/ref&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.//xref[@ref-type=&#39;bibr&#39;][@rid=&#39;&quot;</span><span class="o">+</span><span class="n">e</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;&#39;]&quot;</span><span class="p">)</span>  <span class="ow">is</span>  <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">remove_element</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">remove_element</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//xref[@ref-type=&#39;bibr&#39;]&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;.//back/ref-list/ref[@id=&#39;&quot;</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rid&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&#39;]&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">print</span> <span class="mi">10</span> <span class="o">*</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">getiterator</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">tag</span><span class="o">==</span><span class="s1">&#39;xref&#39;</span> <span class="ow">and</span> <span class="n">c</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ref-type&#39;</span><span class="p">)</span><span class="o">==</span><span class="s1">&#39;bibr&#39;</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">remove_tags</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span></div>
+
+<div class="viewcode-block" id="XMLProcess.remove_tags"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.remove_tags">[docs]</a>    <span class="k">def</span> <span class="nf">remove_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Automatic numbering of the list of elements</span>
+<span class="sd">        Takes an etree element and replaces it with its own text</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        tags: list</span>
-<span class="sd">         list of elements</span>
+<span class="sd">        e : element</span>
+<span class="sd">            Element to be replaced</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
-            <span class="n">sh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//&#39;</span> <span class="o">+</span> <span class="n">tag</span><span class="p">)</span>
-            <span class="n">sid</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sh</span><span class="p">:</span>
-                <span class="n">i</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sid</span><span class="p">))</span>
-                <span class="n">sid</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span></div>
+        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">previous</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">getprevious</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">previous</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">previous</span><span class="o">.</span><span class="n">tail</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+                        <span class="n">previous</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">previous</span><span class="o">.</span><span class="n">tail</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="n">text</span>
+                    <span class="k">if</span>  <span class="n">e</span><span class="o">.</span><span class="n">tail</span><span class="p">:</span>
+                        <span class="n">previous</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">previous</span><span class="o">.</span><span class="n">tail</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="n">tail</span>
+                    <span class="n">e</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="XMLProcess.remove_element"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.remove_element">[docs]</a>    <span class="k">def</span> <span class="nf">remove_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove any element only if it has a parent</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        e : element</span>
+<span class="sd">            Element to be replaced</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">e</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+
 
 <div class="viewcode-block" id="XMLProcess.set_uuids_for_back_matter"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.set_uuids_for_back_matter">[docs]</a>    <span class="k">def</span> <span class="nf">set_uuids_for_back_matter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tags</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -170,12 +222,16 @@
 <span class="sd">        tags: list</span>
 <span class="sd">         list of elements</span>
 
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tr : elementtree</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
             <span class="n">f</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">ref_type</span> <span class="o">=</span> <span class="s1">&#39;bibr&#39;</span> <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;ref&#39;</span> <span class="k">else</span> <span class="n">s</span>
             <span class="n">fns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span>
-                <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;.//xref/[@ref-type=&quot;&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="s1">&#39;&quot;]&#39;</span><span class="p">]))</span>
+                <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;.//xref/[@ref-type=&quot;&#39;</span><span class="p">,</span> <span class="n">ref_type</span><span class="p">,</span> <span class="s1">&#39;&quot;]&#39;</span><span class="p">]))</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fns</span><span class="p">:</span>
                 <span class="n">rid</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;bibd&#39;</span><span class="p">,</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">get_hex</span><span class="p">()])</span>
                 <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rid&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">rid</span>
@@ -184,11 +240,7 @@
                 <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
                     <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;.//&#39;</span> <span class="o">+</span> <span class="n">s</span> <span class="o">+</span> <span class="s1">&#39;/[@id=&quot;&#39;</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="s1">&#39;&quot;]&#39;</span><span class="p">]))</span>
                 <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                        <span class="n">n</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">f</span><span class="p">[</span><span class="n">m</span><span class="p">])</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span>
-                            <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">XML_ELEMENT_NOT_FOUND</span><span class="p">)</span>
+                    <span class="n">n</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">f</span><span class="p">[</span><span class="n">m</span><span class="p">])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span></div>
 
 <div class="viewcode-block" id="XMLProcess.set_numbering_values"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.set_numbering_values">[docs]</a>    <span class="k">def</span> <span class="nf">set_numbering_values</span><span class="p">(</span>
@@ -417,7 +469,7 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span></div>
 
-<div class="viewcode-block" id="XMLProcess.process_xml_file"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.process_xml_file">[docs]</a>    <span class="k">def</span> <span class="nf">process_xml_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="XMLProcess.process"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.XMLProcess.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process  JATS-XML file and do all transformations into the elementtree</span>
 
@@ -427,17 +479,21 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="n">clean_references</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;--clean-references&#39;</span><span class="p">)</span>
+
         <span class="n">set_numbering_tags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;--set-numbering-tags&#39;</span><span class="p">)</span>
         <span class="n">set_unique_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;--set-uuids&#39;</span><span class="p">)</span>
         <span class="n">sort_footnotes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;--sort-footnotes&#39;</span><span class="p">)</span>
         <span class="n">sort_references</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;--sort-references&#39;</span><span class="p">)</span>
         <span class="n">set_numbering_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;--set-numbering-values&#39;</span><span class="p">)</span>
 
+
         <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;--metadata&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">merge_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span> <span class="k">if</span> <span class="n">metadata</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_numbering_tags</span><span class="p">(</span><span class="n">set_numbering_tags</span><span class="o">.</span><span class="n">split</span><span class="p">(</span>
-            <span class="s1">&#39;,&#39;</span><span class="p">))</span> <span class="k">if</span> <span class="n">set_numbering_tags</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_references</span><span class="p">()</span> <span class="k">if</span> <span class="n">clean_references</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">set_numbering_tags</span><span class="p">(</span><span class="n">set_numbering_tags</span><span class="o">.</span><span class="n">split</span><span class="p">(</span>
+            <span class="s1">&#39;,&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">)</span> <span class="k">if</span> <span class="n">set_numbering_tags</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_uuids_for_back_matter</span><span class="p">(</span>
             <span class="n">set_unique_ids</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span> <span class="k">if</span> <span class="n">set_unique_ids</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_footnotes</span><span class="p">(</span>
@@ -501,11 +557,11 @@
 
 <span class="sd">        See Also</span>
 <span class="sd">        --------</span>
-<span class="sd">        process_xml_file</span>
+<span class="sd">        process</span>
 
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">process_xml_file</span><span class="p">()</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">()</span></div></div>
 
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../xmlProcess.html#xmlProcess.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>

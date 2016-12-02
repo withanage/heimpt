@@ -65,24 +65,15 @@ numbering elements of a certain type  or setting unique ids to a certain element
 <dt>Usage:</dt>
 <dd>xmlProcess.py  &lt;input_file&gt;  &lt;path&gt; [options]</dd>
 <dt>Options:</dt>
-<dd><table class="first docutils option-list" frame="void" rules="none">
-<col class="option" />
-<col class="description" />
-<tbody valign="top">
-<tr><td class="option-group">
-<kbd><span class="option">-d</span>, <span class="option">--debug</span></kbd></td>
-<td>Enable debug output</td></tr>
-</tbody>
-</table>
-<p class="last">-f &#8211;sort-footnotes=&lt;tag list as comma seperated lists&gt;
+<dd>-d &#8211;debug   Enable debug output
+-f &#8211;sort-footnotes=&lt;tag list as comma seperated lists&gt;
 -h &#8211;help
 -m &#8211;metadata=&lt;file__name_schema.xml&gt;
 -n &#8211;set-numbering-tags=&lt;elemennt types as comma seperated lists&gt;
--r  &#8211;remove-references-unused
+-r &#8211;clean-references
 -s &#8211;sort-references=&lt;tag list as comma seperated lists&gt;
 -u &#8211;set-uuids=&lt;element types as comma seperated list&gt;
--v &#8211;set-numbering-values=&lt;numbering values, additionaly roman numbers e.g.xref,ref-type,fn,{1:2} &gt;</p>
-</dd>
+-v &#8211;set-numbering-values=&lt;numbering values, additionaly roman numbers e.g.xref,ref-type,fn,{1:2} &gt;</dd>
 </dl>
 <p class="rubric">Notes</p>
 <p>All the functions are done  in the global element tree for performance reasons.</p>
@@ -178,12 +169,12 @@ set numbering, add unique ids to certain tag types, sort references</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="xmlProcess.XMLProcess.process_xml_file">
-<code class="descname">process_xml_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.process_xml_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.process_xml_file" title="Permalink to this definition">¶</a></dt>
+<dt id="xmlProcess.XMLProcess.process">
+<code class="descname">process</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Process  JATS-XML file and do all transformations into the elementtree</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#xmlProcess.XMLProcess.merge_metadata" title="xmlProcess.XMLProcess.merge_metadata"><code class="xref py py-meth docutils literal"><span class="pre">merge_metadata()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.set_numbering_tags" title="xmlProcess.XMLProcess.set_numbering_tags"><code class="xref py py-meth docutils literal"><span class="pre">set_numbering_tags()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.set_uuids_for_back_matter" title="xmlProcess.XMLProcess.set_uuids_for_back_matter"><code class="xref py py-meth docutils literal"><span class="pre">set_uuids_for_back_matter()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.sort_footnotes" title="xmlProcess.XMLProcess.sort_footnotes"><code class="xref py py-meth docutils literal"><span class="pre">sort_footnotes()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.sort_references" title="xmlProcess.XMLProcess.sort_references"><code class="xref py py-meth docutils literal"><span class="pre">sort_references()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.set_numbering_values" title="xmlProcess.XMLProcess.set_numbering_values"><code class="xref py py-meth docutils literal"><span class="pre">set_numbering_values()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#xmlProcess.XMLProcess.merge_metadata" title="xmlProcess.XMLProcess.merge_metadata"><code class="xref py py-meth docutils literal"><span class="pre">merge_metadata()</span></code></a>, <code class="xref py py-meth docutils literal"><span class="pre">set_numbering_tags()</span></code>, <a class="reference internal" href="#xmlProcess.XMLProcess.set_uuids_for_back_matter" title="xmlProcess.XMLProcess.set_uuids_for_back_matter"><code class="xref py py-meth docutils literal"><span class="pre">set_uuids_for_back_matter()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.sort_footnotes" title="xmlProcess.XMLProcess.sort_footnotes"><code class="xref py py-meth docutils literal"><span class="pre">sort_footnotes()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.sort_references" title="xmlProcess.XMLProcess.sort_references"><code class="xref py py-meth docutils literal"><span class="pre">sort_references()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.set_numbering_values" title="xmlProcess.XMLProcess.set_numbering_values"><code class="xref py py-meth docutils literal"><span class="pre">set_numbering_values()</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -205,27 +196,63 @@ elements.</td>
 </dd></dl>
 
 <dl class="method">
+<dt id="xmlProcess.XMLProcess.remove_element">
+<code class="descname">remove_element</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.remove_element"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.remove_element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove any element only if it has a parent</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>e</strong> (<em>element</em>) &#8211; Element to be replaced</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmlProcess.XMLProcess.remove_references">
+<code class="descname">remove_references</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.remove_references"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.remove_references" title="Permalink to this definition">¶</a></dt>
+<dd><p>removes  references, which are not linked.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tag</strong> (<em>str</em>) &#8211; name of the XML tag</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>tr</strong></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">elementtree</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#xmlProcess.XMLProcess.remove_element" title="xmlProcess.XMLProcess.remove_element"><code class="xref py py-meth docutils literal"><span class="pre">remove_element()</span></code></a>, <a class="reference internal" href="#xmlProcess.XMLProcess.remove_tags" title="xmlProcess.XMLProcess.remove_tags"><code class="xref py py-meth docutils literal"><span class="pre">remove_tags()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmlProcess.XMLProcess.remove_tags">
+<code class="descname">remove_tags</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.remove_tags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.remove_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes an etree element and replaces it with its own text</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>e</strong> (<em>element</em>) &#8211; Element to be replaced</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="xmlProcess.XMLProcess.run">
 <code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs the configuration on the processing object</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#xmlProcess.XMLProcess.process_xml_file" title="xmlProcess.XMLProcess.process_xml_file"><code class="xref py py-meth docutils literal"><span class="pre">process_xml_file()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#xmlProcess.XMLProcess.process" title="xmlProcess.XMLProcess.process"><code class="xref py py-meth docutils literal"><span class="pre">process()</span></code></a></p>
 </div>
-</dd></dl>
-
-<dl class="method">
-<dt id="xmlProcess.XMLProcess.set_numbering_tags">
-<code class="descname">set_numbering_tags</code><span class="sig-paren">(</span><em>tags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xmlProcess.html#XMLProcess.set_numbering_tags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xmlProcess.XMLProcess.set_numbering_tags" title="Permalink to this definition">¶</a></dt>
-<dd><p>Automatic numbering of the list of elements</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tags</strong> (<em>list</em>) &#8211; list of elements</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 <dl class="method">
@@ -292,6 +319,10 @@ elements.</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tags</strong> (<em>list</em>) &#8211; list of elements</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>tr</strong></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">elementtree</td>
 </tr>
 </tbody>
 </table>

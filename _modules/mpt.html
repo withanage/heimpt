@@ -50,10 +50,9 @@
           <div class="body" role="main">
             
   <h1>Source code for mpt</h1><div class="highlight"><pre>
-<span></span><span class="ch">#!/usr/bin/env python   ,</span>
+<span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Main  program which  initializes the  Monograph  Publication Tool , read the configuration from the json file.</span>
+<span class="sd">&quot;&quot;&quot;Main  program which  initializes the  Monograph  Publication Tool , read the configuration from the json file.</span>
 <span class="sd">Configuration json file is organized into projects and typesetters. Each project may contain a set of files ordered and</span>
 <span class="sd">a ordered subset of typesetters.  Typesetter and file arguments can be specifically configured in a pre-defined order.</span>
 <span class="sd">A specific project can be configured to run in a chain modus, which  takes the output of the previous typesetter as the input for</span>
@@ -62,7 +61,7 @@
 
 
 <span class="sd">Usage:</span>
-<span class="sd">    mpr.py  &lt;config_file&gt; [options]</span>
+<span class="sd">    mpt.py  &lt;config_file&gt; [options]</span>
 <span class="sd">Options:</span>
 <span class="sd">    -d, --debug  Enable debug output</span>
 
@@ -99,12 +98,12 @@
 <span class="kn">from</span> <span class="nn">debug</span> <span class="k">import</span> <span class="n">Debuggable</span><span class="p">,</span> <span class="n">Debug</span>
 <span class="kn">from</span> <span class="nn">docopt</span> <span class="k">import</span> <span class="n">docopt</span>
 <span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span>
-<span class="kn">from</span> <span class="nn">termcolor</span> <span class="k">import</span> <span class="n">colored</span>
+
 
 
 <div class="viewcode-block" id="MPT"><a class="viewcode-back" href="../mpt.html#mpt.MPT">[docs]</a><span class="k">class</span> <span class="nc">MPT</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    MPT Class Object,  which initializes the properties.</span>
+<span class="sd">    MPT Class Object,  which initializes the properties and defines the methods.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -150,7 +149,7 @@
 <span class="sd">          A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those</span>
 <span class="sd">          elements.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">docopt</span><span class="p">(</span><span class="n">__doc__</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;mpt 0.1&#39;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">docopt</span><span class="p">(</span><span class="n">__doc__</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;mpt 0.0.1&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MPT.get_module_name"><a class="viewcode-back" href="../mpt.html#mpt.MPT.get_module_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_module_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -699,7 +698,7 @@
                     <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">PROJECT_OUTPUT_FILE_WAS_NOT_CREATED</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">f_id</span><span class="p">):</span>
-            <span class="nb">print</span> <span class="n">p_path</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_console</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">OUTPUT_FOLDER</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">+</span><span class="n">p_path</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_path</span><span class="p">)</span></div></div>
 
