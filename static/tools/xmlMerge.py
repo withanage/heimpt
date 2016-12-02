@@ -14,8 +14,9 @@ Usage:
     xmlMerge.py -h --help
 
 Options:
-    -d, --debug   Enable debug output
+    -d --debug   Enable debug output
     -m --metadata=<file__name_schema.xml>
+    -n --set-numbering-tags=<elemennt types as comma seperated lists>
 
 
 References
@@ -64,7 +65,9 @@ class XMLMerge(Debuggable):
         self.f = self.args.get('<input_file>')
         self.scheme = self.args.get('<scheme>')
         self.o = self.args.get('<output_file>')
+        self.set_numbering_tags = self.args.get('--set-numbering-tags')
         self.tr = etree.parse(os.path.join(self.dr, self.f))
+
         Debuggable.__init__(self, 'Main')
         if self.args.get('--debug'):
             self.debug.enable_debug()
@@ -82,28 +85,51 @@ class XMLMerge(Debuggable):
         """
         return docopt(__doc__, version='xmlMerge 0.0.1')
 
-    def create_output_bits(self):
+    def create_output_jpts(self):
         """
         Create bits output file, generates a new file, if no file is found.
         Otherwise the current file is appended to the book body as a book-part.
 
         See Also
         --------
-        create_book_part_bits, create_book_bits, do_file_io
+        create_book_part_jpts, create_book_jpts, do_file_io
 
         """
         fuf = os.path.join(self.dr, self.o)
         pt = os.path.join(self.dr, os.path.basename(self.o))
+        trf = None
         if os.path.isfile(fuf):
             trf = etree.parse(fuf)
             bp = trf.find(".//book-body")
-            book_part = self.create_book_part_bits()
+            book_part = self.create_book_part_jpts()
             bp.append(book_part)
-            self.do_file_io(etree.tostring(trf, pretty_print=True), 'w', pt)
-
         else:
-            book = self.create_book_bits()
-            self.do_file_io(etree.tostring(book, pretty_print=True), 'w', pt)
+            trf = self.create_book_jpts()
+        trf = self.process(trf)
+        self.do_file_io(etree.tostring(trf, pretty_print=True), 'w', pt)
+
+    def process(self, tr):
+        """
+        Process  JPTS-XML file and do all transformations into the elementtree
+
+        Parameters
+        ----------
+        tr : elementtree
+            element tree as input
+
+        Returns
+        -------
+        tr : elementtree
+            transformed element tree
+
+        See Also
+        --------
+        globals.set_numbering_tags()
+
+        """
+        tr = self.gv.set_numbering_tags(self.set_numbering_tags.split(
+            ','), tr) if self.set_numbering_tags else tr
+        return tr
 
     def create_metadata_path(self, metadata):
         """
@@ -132,18 +158,18 @@ class XMLMerge(Debuggable):
         pth = os.sep.join(p)
         return pth
 
-    def create_book_bits(self):
+    def create_book_jpts(self):
         """
-        creates a  full BITS XML book and optionally adds metadata
+        creates a  full JPTS XML book and optionally adds metadata
 
         Returns
         -------
         book : elementtree
-            Elementtree which complies to BITS XML Schheme.
+            Elementtree which complies to JPTS XML Schheme.
 
         See Also
         ---------
-        create_metadata_path, create_book_part_bits
+        create_metadata_path, create_book_part_jpts
 
         """
 
@@ -161,15 +187,17 @@ class XMLMerge(Debuggable):
                 book.insert(0, bp)
 
         bd = etree.Element("book-body")
-        bpbd = self.create_book_part_bits()
+        bpbd = self.create_book_part_jpts()
         bd.append(bpbd)
         book.append(bd)
 
         return book
 
-    def create_book_part_bits(self):
+
+
+    def create_book_part_jpts(self):
         """
-        Reads a JATS XNl File and creates a book-part element tree according to BITS-XML.
+        Reads a JATS XNl File and creates a book-part element tree according to JPTS-XML.
 
         Returns
         -------
@@ -180,6 +208,7 @@ class XMLMerge(Debuggable):
         f, bd, bk = self.get_xml_parts()
 
         bp = etree.Element("book-part")
+
         if f is not None:
             if len(f):
                 bp.append(f)
@@ -241,13 +270,13 @@ class XMLMerge(Debuggable):
             print(i)
             sys.exit(1)
 
-    def process_xml_file(self):
+    def run(self):
         """
-        Process  JATS-XML file and merges it into the full BITS-XML file
+         Runs the configuration on the processing object. Process  JATS-XML file and merges it into the full JPTS-XML file
 
         See Also
         --------
-        create_output_bits
+        create_output_jpts
 
         Warning
         -------
@@ -256,21 +285,13 @@ class XMLMerge(Debuggable):
         """
 
         self.gv.create_dirs_recursive(self.dr.split('/'))
-        if self.scheme == 'bits':
-            self.tr = self.create_output_bits()
+        if self.scheme == 'jpts':
+            self.create_output_jpts()
+
         elif self.scheme == 'jats':
             self.tr = self.create_output_jats(self.tr)
 
-    def run(self):
-        """
-        Runs the configuration on the processing object
 
-        See Also
-        --------
-        process_xml_file
-
-        """
-        self.process_xml_file()
 
 
 def main():

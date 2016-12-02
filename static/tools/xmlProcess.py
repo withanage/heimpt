@@ -159,28 +159,7 @@ class XMLProcess(Debuggable):
         if e.getparent() is not None:
             e.getparent().remove(e)
 
-    def set_numbering_tags(self, tags):
-        """
-        Automatic numbering of the list of elements
 
-        Parameters
-        ----------
-        tags: list
-         list of elements
-
-        Returns
-        -------
-        tr : elementtree
-
-
-        """
-        for tag in tags:
-            sh = self.tr.findall('.//' + tag)
-            sid = 1
-            for i in sh:
-                i.set('id', tag.replace('-', '') + str(sid))
-                sid += 1
-        return self.tr
 
     def set_uuids_for_back_matter(self, tags):
         """
@@ -438,7 +417,7 @@ class XMLProcess(Debuggable):
 
         return self.tr
 
-    def process_xml_file(self):
+    def process(self):
         """
         Process  JATS-XML file and do all transformations into the elementtree
 
@@ -461,8 +440,8 @@ class XMLProcess(Debuggable):
         self.tr = self.merge_metadata(metadata) if metadata else self.tr
 
         self.tr = self.remove_references() if clean_references else self.tr
-        self.tr = self.set_numbering_tags(set_numbering_tags.split(
-            ',')) if set_numbering_tags else self.tr
+        self.tr = self.gv.set_numbering_tags(set_numbering_tags.split(
+            ','), self.tr) if set_numbering_tags else self.tr
         self.tr = self.set_uuids_for_back_matter(
             set_unique_ids.split(',')) if set_unique_ids else self.tr
         self.tr = self.sort_footnotes(
@@ -526,11 +505,11 @@ class XMLProcess(Debuggable):
 
         See Also
         --------
-        process_xml_file
+        process
 
 
         """
-        self.process_xml_file()
+        self.process()
 
 
 def main():

@@ -40,7 +40,7 @@
                 "3": {
                    "arguments": {
                         "1": "fn:append_out_dir",
-                        "2":"bits",
+                        "2":"jpts",
                         "3":"Lieb_Minnereden.xml",
                         "4":"--metadata book-meta.bits2"
 
@@ -89,7 +89,7 @@
         "xmlmerge": {
             "arguments": {
 
-
+              "1": "--set-numbering-tags=disp-quote"
 
             },
             "executable": "/usr/local/mpt/static/tools/xmlMerge.py"

@@ -152,3 +152,26 @@ class GV(object):
                     print o
                     sys.exit(1)
         return p
+
+    def set_numbering_tags(self, tags ,tr):
+        """
+        Automatic numbering of the list of elements
+
+        Parameters
+        ----------
+        tags: list
+         list of elements
+
+        Returns
+        -------
+        tr : elementtree
+
+
+        """
+        for tag in tags:
+            sh = tr.findall('.//' + tag)
+            sid = 1
+            for i in sh:
+                i.set('id', tag.replace('-', '') + str(sid))
+                sid += 1
+        return tr
