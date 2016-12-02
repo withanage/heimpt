@@ -85,14 +85,14 @@ class XMLMerge(Debuggable):
         """
         return docopt(__doc__, version='xmlMerge 0.0.1')
 
-    def create_output_jpts(self):
+    def create_output_bits(self):
         """
         Create bits output file, generates a new file, if no file is found.
         Otherwise the current file is appended to the book body as a book-part.
 
         See Also
         --------
-        create_book_part_jpts, create_book_jpts, do_file_io
+        create_book_part_bits, create_book_bits, do_file_io
 
         """
         fuf = os.path.join(self.dr, self.o)
@@ -101,17 +101,17 @@ class XMLMerge(Debuggable):
         if os.path.isfile(fuf):
             trf = etree.parse(fuf)
             bp = trf.find(".//book-body")
-            book_part = self.create_book_part_jpts()
+            book_part = self.create_book_part_bits()
             bp.append(book_part)
         else:
-            trf = self.create_book_jpts()
+            trf = self.create_book_bits()
         trf = self.process(trf)
-        
+
         self.do_file_io(etree.tostring(trf, pretty_print=True), 'w', pt)
 
     def process(self, tr):
         """
-        Process  JPTS-XML file and do all transformations into the elementtree
+        Process  BITS-XML file and do all transformations into the elementtree
 
         Parameters
         ----------
@@ -161,24 +161,24 @@ class XMLMerge(Debuggable):
         pth = os.sep.join(p)
         return pth
 
-    def create_book_jpts(self):
+    def create_book_bits(self):
         """
-        creates a  full JPTS XML book and optionally adds metadata
+        creates a  full BITS XML book and optionally adds metadata
 
         Returns
         -------
         book : elementtree
-            Elementtree which complies to JPTS XML Schheme.
+            Elementtree which complies to BITS XML Schheme.
 
         See Also
         ---------
-        create_metadata_path, create_book_part_jpts
+        create_metadata_path, create_book_part_bits
 
         """
 
-        book = etree.Element(etree.QName('book'), nsmap={'xlink': "http://www.w3.org/1999/xlink", 'mml': "http://www.w3.org/1998/Math/MathML"})
-        book.attrib['dtd-version'] = "2.0"
-        book.attrib[etree.QName( 'lang')] = "de"
+        book = etree.Element(etree.QName('book'), nsmap={'xlink': "http://www.w3.org/1999/xlink", 'mml': "http://www.w3.org/1998/Math/MathML","xml": "http://www.w3.org/XML/1998/namespace"})
+        book.attrib['dtd-version'] = "2.1"
+        book.attrib[etree.QName('{http://www.w3.org/XML/1998/namespace}lang')] = "de"
         book.attrib['book-type'] = "proceedings"
 
 
@@ -190,7 +190,7 @@ class XMLMerge(Debuggable):
                 book.insert(0, bp)
 
         bd = etree.Element("book-body")
-        bpbd = self.create_book_part_jpts()
+        bpbd = self.create_book_part_bits()
         bd.append(bpbd)
         book.append(bd)
 
@@ -198,9 +198,9 @@ class XMLMerge(Debuggable):
 
 
 
-    def create_book_part_jpts(self):
+    def create_book_part_bits(self):
         """
-        Reads a JATS XNl File and creates a book-part element tree according to JPTS-XML.
+        Reads a JATS XNl File and creates a book-part element tree according to BITS-XML.
 
         Returns
         -------
@@ -275,11 +275,11 @@ class XMLMerge(Debuggable):
 
     def run(self):
         """
-         Runs the configuration on the processing object. Process  JATS-XML file and merges it into the full JPTS-XML file
+         Runs the configuration on the processing object. Process  JATS-XML file and merges it into the full BITS-XML file
 
         See Also
         --------
-        create_output_jpts
+        create_output_bits
 
         Warning
         -------
@@ -288,8 +288,8 @@ class XMLMerge(Debuggable):
         """
 
         self.gv.create_dirs_recursive(self.dr.split('/'))
-        if self.scheme == 'jpts':
-            self.create_output_jpts()
+        if self.scheme == 'bits':
+            self.create_output_bits()
 
         elif self.scheme == 'jats':
             self.tr = self.create_output_jats(self.tr)

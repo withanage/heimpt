@@ -40,7 +40,7 @@
                 "3": {
                    "arguments": {
                         "1": "fn:append_out_dir",
-                        "2":"jpts",
+                        "2":"bits",
                         "3":"Lieb_Minnereden.xml",
                         "4":"--metadata book-meta.bits2"
 

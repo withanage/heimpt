@@ -29,7 +29,7 @@
                 "3": {
                    "arguments": {
                         "1": "fn:append_out_dir",
-                        "2":"jpts",
+                        "2":"bits",
                         "3":"Example_Full.xml",
                         "4":"--metadata book-meta.bits2",
                         "5": "--set-numbering-tags=disp-quote,tr"
