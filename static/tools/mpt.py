@@ -222,6 +222,8 @@ class MPT(Debuggable):
             arg = ts_args[i]
             if arg == 'fn:append_out_dir':
                 args.append(out_path)
+
+
             elif arg == 'fn:create_out_file':
                 if not os.path.exists(out_path):
                     os.makedirs(out_path)

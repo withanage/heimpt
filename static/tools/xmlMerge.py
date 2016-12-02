@@ -129,6 +129,8 @@ class XMLMerge(Debuggable):
         """
         tr = self.gv.set_numbering_tags(self.set_numbering_tags.split(
             ','), tr) if self.set_numbering_tags else tr
+
+        print tr
         return tr
 
     def create_metadata_path(self, metadata):

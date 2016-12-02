@@ -19,9 +19,7 @@ Options:
     -u --set-uuids=<element types as comma seperated list>
     -v --set-numbering-values=<numbering values, additionaly roman numbers e.g.xref,ref-type,fn,{1:2} >
 
-Notes
------
-All the functions are done  in the global element tree for performance reasons.
+All the  are done  in the global element tree for performance reasons.
 
 
 References
