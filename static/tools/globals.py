@@ -58,6 +58,9 @@ class GV(object):
         self.XML_INPUT_FILE_IS_NOT_FOUND = u'xml input file is not found'
         self.XML_INPUT_FILE_IS_NOT_VALID = u'xml input file is not valid'
 
+        # WORDS
+        self.OUTPUT_FOLDER = u'Output Folder'
+
         self.debug = Debug()
         self.numeral_map = numeral_map
 

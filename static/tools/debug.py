@@ -3,7 +3,7 @@
 #
 # Author    : Dulip Withanage , University of Heidelberg
 import sys
-
+from termcolor import colored
 
 class Debuggable(object):
 
@@ -46,6 +46,24 @@ class Debug(object):
                 self.fatal_error(
                     self, u'A non unicode string was passed to the debugger')
             self.print_(module, message)
+
+    def print_console(self, module, message):
+        """
+        Print debug message
+
+        Parameters
+        ----------
+        module: python module
+             Returns the name of the module
+        message: str
+            message as a string
+
+        See Also
+        --------
+        print_()
+
+        """
+        print(u'[{0}] {1}'.format(colored(module.get_module_name(),'green'), unicode(message)))
 
     def print_(self, module, message):
         """

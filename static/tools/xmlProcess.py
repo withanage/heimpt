@@ -44,7 +44,6 @@ import uuid
 from debug import Debuggable, Debug
 from docopt import docopt
 from globals import GV
-from sets import Set
 
 
 try:
@@ -105,6 +104,9 @@ class XMLProcess(Debuggable):
          -------
          tr : elementtree
 
+         See Also
+         --------
+         remove_element, remove_tags
 
         """
         r = self.tr.getroot()
@@ -117,25 +119,45 @@ class XMLProcess(Debuggable):
                 self.remove_element(e)
         for e in r.findall(".//xref[@ref-type='bibr']"):
             if r.find(".//back/ref-list/ref[@id='" + e.attrib.get('rid') + "']") is None:
-                #for c in e.getparent().getiterator():
-                #    print c.items(), c.text, 100*'-', '\n'
-                print 10*'-', '\n'
-                print etree.tostring(e.getparent())
-                print e.getparent().
-        #       self.remove_element(e)
+                print 10 * '-', '\n'
+                if e.getparent() is not None:
+                    for c in e.getparent().getiterator():
+                        if c.tag=='xref' and c.attrib.get('ref-type')=='bibr':
+                            self.remove_tags(c)
         return self.tr
+
+    def remove_tags(self, e):
+        """
+        Takes an etree element and replaces it with its own text
+
+        Parameters
+        ----------
+        e : element
+            Element to be replaced
+
+        """
+        if e.getparent() is not None:
+            previous = e.getprevious()
+            if previous is not None:
+                if previous.tail:
+                    if e.text:
+                        previous.tail = previous.tail + e.text
+                    if  e.tail:
+                        previous.tail = previous.tail + e.tail
+                    e.getparent().remove(e)
 
     def remove_element(self, e):
         """
         Remove any element only if it has a parent
 
+        Parameters
+        ----------
+        e : element
+            Element to be replaced
 
         """
         if e.getparent() is not None:
             e.getparent().remove(e)
-            return True
-        else:
-            return False
 
     def set_numbering_tags(self, tags):
         """
@@ -187,11 +209,7 @@ class XMLProcess(Debuggable):
                 n = self.tr.getroot().find(
                     ''.join(['.//' + s + '/[@id="', m, '"]']))
                 if n is not None:
-                    if len(n) > 0:
-                        n.set('id', f[m])
-                    else:
-                        self.debug.print_debug(
-                            self, self.gv.XML_ELEMENT_NOT_FOUND)
+                    n.set('id', f[m]) if len(n) > 0 else ''
         return self.tr
 
     def set_numbering_values(

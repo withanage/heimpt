@@ -46,7 +46,7 @@ from globals import GV
 from debug import Debuggable, Debug
 from docopt import docopt
 from subprocess import Popen, PIPE
-from termcolor import colored
+
 
 
 class MPT(Debuggable):
@@ -646,7 +646,7 @@ class MPT(Debuggable):
                     self, self.gv.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
 
         if len(files) == int(f_id):
-            print p_path
+            self.debug.print_console(self,self.gv.OUTPUT_FOLDER+' '+p_path)
 
         return os.path.sep.join(project_path)
 

@@ -47,9 +47,7 @@ except ImportError:
     print(PYTHON_IMPORT_FAILED_LXML_MODULE)
     sys.exit(1)
 
-class XMLNamespaces:
-   s = 'http://www.w3.org/2003/05/soap-envelope'
-   a = 'http://www.w3.org/2005/08/addressing'
+
 
 class XMLMerge(Debuggable):
     """
