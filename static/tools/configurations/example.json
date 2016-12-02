@@ -50,6 +50,7 @@
                 "1": "docx",
                 "2": "--debug",
                 "3": "--nogit"
+
             },
             "executable": "/usr/local/mpt/static/tools/meTypeset/bin/meTypeset.py"
         },

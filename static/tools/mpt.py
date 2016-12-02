@@ -304,7 +304,9 @@ class MPT(Debuggable):
                 p_id,
                 args,
                 prefix, uid)
-            self.call_typesetter(args)
+            output, err, exit_code = self.call_typesetter(args)
+            self.debug.print_debug(self, output.decode('utf-8'))
+
             p_path = self.organize_output(
                 p,
                 p_id,

@@ -125,13 +125,26 @@ class XMLMerge(Debuggable):
 
         See Also
         --------
-        globals.set_numbering_tags()
+        globals.set_numbering_tags(), set_book_part_attributes()
 
         """
         tr = self.gv.set_numbering_tags(self.set_numbering_tags.split(
             ','), tr) if self.set_numbering_tags else tr
 
+        self.set_book_part_attributes(tr)
 
+        return tr
+
+    def set_book_part_attributes(self, tr):
+        """
+        Add  specific attributes to book-part
+
+
+        """
+        book_parts = tr.findall('.//book-part')
+        for b in book_parts:
+            b.attrib['id'] = "ch_" + str(len(book_parts))
+            b.attrib['book-part-type'] = "chapter"
         return tr
 
     def create_metadata_path(self, metadata):

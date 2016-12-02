@@ -117,7 +117,6 @@ class XMLProcess(Debuggable):
                 self.remove_element(e)
         for e in r.findall(".//xref[@ref-type='bibr']"):
             if r.find(".//back/ref-list/ref[@id='" + e.attrib.get('rid') + "']") is None:
-                print 10 * '-', '\n'
                 if e.getparent() is not None:
                     for c in e.getparent().getiterator():
                         if c.tag=='xref' and c.attrib.get('ref-type')=='bibr':
