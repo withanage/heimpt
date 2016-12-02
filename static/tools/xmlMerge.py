@@ -106,6 +106,7 @@ class XMLMerge(Debuggable):
         else:
             trf = self.create_book_jpts()
         trf = self.process(trf)
+        
         self.do_file_io(etree.tostring(trf, pretty_print=True), 'w', pt)
 
     def process(self, tr):
@@ -130,7 +131,7 @@ class XMLMerge(Debuggable):
         tr = self.gv.set_numbering_tags(self.set_numbering_tags.split(
             ','), tr) if self.set_numbering_tags else tr
 
-        print tr
+
         return tr
 
     def create_metadata_path(self, metadata):
