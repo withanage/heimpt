@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
-Main  program which  initializes the  Monograph  Publication Tool , read the configuration from the json file.
+"""Main  program which  initializes the  Monograph  Publication Tool , read the configuration from the json file.
 Configuration json file is organized into projects and typesetters. Each project may contain a set of files ordered and
 a ordered subset of typesetters.  Typesetter and file arguments can be specifically configured in a pre-defined order.
 A specific project can be configured to run in a chain modus, which  takes the output of the previous typesetter as the input for

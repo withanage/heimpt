@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
-This  program is a utility file  which executes a set of specified functions on a element tree  of a xml file.
+"""This  program is a utility file  which executes a set of specified functions on a element tree  of a xml file.
 
 The current functions are limited to JATS and BITS XML Scheme of the Library of Congress. However the methods defined in
 this program can be used to modify any element tree. Some of the  current available functions are sorting footnotes,
@@ -109,19 +108,28 @@ class XMLProcess(Debuggable):
 
         """
         r = self.tr.getroot()
+
         for e in r.findall('.//back/ref-list/ref'):
             if e.attrib.get('id'):
                 if r.find(".//xref[@ref-type='bibr'][@rid='"+e.attrib.get('id')+"']")  is  None:
                     self.remove_element(e)
             else:
                 self.remove_element(e)
+        for e in r.findall(".//xref[@ref-type='bibr']"):
+            if r.find(".//back/ref-list/ref[@id='" + e.attrib.get('rid') + "']") is None:
+                #for c in e.getparent().getiterator():
+                #    print c.items(), c.text, 100*'-', '\n'
+                print 10*'-', '\n'
+                print etree.tostring(e.getparent())
+                print e.getparent().
+        #       self.remove_element(e)
         return self.tr
 
     def remove_element(self, e):
         """
         Remove any element only if it has a parent
 
-        
+
         """
         if e.getparent() is not None:
             e.getparent().remove(e)
