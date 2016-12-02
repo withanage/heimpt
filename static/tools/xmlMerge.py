@@ -142,8 +142,8 @@ class XMLMerge(Debuggable):
 
         """
         book_parts = tr.findall('.//book-part')
-        for b in book_parts:
-            b.attrib['id'] = "ch_" + str(len(book_parts))
+        for i,b in enumerate(book_parts):
+            b.attrib['id'] = "ch_" + str(i)
             b.attrib['book-part-type'] = "chapter"
         return tr
 
