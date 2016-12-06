@@ -27,6 +27,7 @@ from debug import Debuggable, Debug
 from globals import GV
 import sys
 import os
+import inspect
 from docopt import docopt
 from subprocess import Popen, PIPE
 
@@ -42,7 +43,7 @@ class XD(Debuggable):
             self.debug.enable_debug()
         self.dr = self.args.get('<path>')
         self.f = self.args.get('<input_file>')
-
+        self.script_path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
     @staticmethod
     def read_command_line():
@@ -66,8 +67,8 @@ class XD(Debuggable):
             True, if saxon is available. False, if not.
 
         """
-        s='meTypeset/runtime/saxon9.jar'
 
+        s = os.path.join(self.script_path, 'meTypeset/runtime/saxon9.jar')
         if os.path.isfile(s):
             return s
         elif self.args.get('--saxon'):
@@ -147,13 +148,27 @@ class XD(Debuggable):
 
     def create_saxon_parametes(self ,saxon_path):
         """
-        Creates the
+        Creates the executable path for saxon
 
+        Parameters
+        ---------
+        saxon_path : str
+            absolute path  of the saxon binary jar file
+
+        Returns
+        ------
+        args:list
+            List of arguments for saxon execution path
 
         """
-        print self.args.get('--xsl')
-        print 100*'-'
         args = ["java", "-jar", saxon_path]
+        if self.args.get('--xsl'):
+            xsl = self.script_path.split(os.sep)[:-1]
+            xsl.append('stylesheets')
+            xsl.append(self.args.get('--xsl'))
+            args.append("-xsl:"+os.sep.join(xsl))
+        args.append("-s:"+self.args.get('<input_file>'))
+        args.append("-o:" + self.args.get('<path>'))
         return args
 
 
@@ -182,6 +197,8 @@ def main():
     run
 
     """
+
+
     xp = XD()
     xp.run()
 

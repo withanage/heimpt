@@ -105,7 +105,7 @@
       ,
         "xml2pdf": {
             "arguments": {
-              "1":"--xsl=heiup_formatter.xml"
+              "1":"--xsl=/heiup_formatter.xsl"
             },
             "executable": "/usr/local/mpt/static/tools/xmlDisseminate.py"
         }
