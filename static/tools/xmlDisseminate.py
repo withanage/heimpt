@@ -9,7 +9,7 @@ Usage:
 Options:
     -d, --debug  Enable debug output
     -s --saxon=<location_of_the_saxon_jar_file>
-    -x --xsl=<filename>     Stylesheet file
+    -x --xsl=<filename>    Stylesheet file
 
 
 
@@ -43,6 +43,7 @@ class XD(Debuggable):
         self.dr = self.args.get('<path>')
         self.f = self.args.get('<input_file>')
 
+
     @staticmethod
     def read_command_line():
         """
@@ -54,9 +55,9 @@ class XD(Debuggable):
           A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
           elements.
         """
-        return docopt(__doc__, version='xml2PDF 0.1')
+        return docopt(__doc__, version='XD 0.1')
 
-    def check_saxon(self):
+    def get_saxon_path(self):
         """Checks if saxon is available in the default path
 
         Returns
@@ -66,6 +67,7 @@ class XD(Debuggable):
 
         """
         s='meTypeset/runtime/saxon9.jar'
+
         if os.path.isfile(s):
             return s
         elif self.args.get('--saxon'):
@@ -73,6 +75,7 @@ class XD(Debuggable):
                 return self.args.get('--saxon')
             else:
                 return False
+
         else:
             return False
 
@@ -86,7 +89,7 @@ class XD(Debuggable):
         name string
          Name of the Module
         """
-        name = 'XML PDF Converter'
+        name = 'OUTPUT Generation'
         return name
     def process(self, args):
         """Runs  typesetter with given arguments
@@ -127,19 +130,33 @@ class XD(Debuggable):
 
         See Also
         --------
-        check_saxon, process
+        get_saxon_path, process
 
         """
-        if not self.check_saxon():
+        saxon_path = self.get_saxon_path()
+        if not saxon_path:
             self.debug.print_debug(self, self.gv.SAXON_IS_NOT_AVAILABLE)
             sys.exit(1)
         else:
             self.debug.print_console(self, self.gv.RUNNING_SAXON_CONVERSION)
-            args=["java","-jar",self.check_saxon()]
+            args = self.create_saxon_parametes(saxon_path)
             output, err, exit_code = self.process(args)
             if exit_code == 1:
                 print err
                 sys.exit(1)
+
+    def create_saxon_parametes(self ,saxon_path):
+        """
+        Creates the
+
+
+        """
+        print self.args.get('--xsl')
+        print 100*'-'
+        args = ["java", "-jar", saxon_path]
+        return args
+
+
 """
 /usr/local/mpt/static/stylesheets/heiup_formatter.xsl
 java -jar /Volumes/DATENSTICK/14\ XSL-FO/bin/saxon/saxon9he.jar

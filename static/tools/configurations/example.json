@@ -46,8 +46,8 @@
                   "out_type": "xml",
                   "expand":true
                   , "arguments": {
-                     "1": "fn:append_out_dir",
-                     "2": "-xsl:heiup_formatter.xsl"
+                     "1": "fn:append_out_dir"
+
                   }
                 }
 
@@ -83,7 +83,7 @@
                 "3": "--set-numbering-values=xref,ref-type,fn,{1:2}"
 
             },
-            "executable": "/usr/local/mpt/static/tools/xmlProcess.py"
+            "executable": "/usr/local/mpt/static/tools/xmlPrepare.py"
         } ,
         "xmlprocess": {
             "arguments": {
@@ -94,7 +94,7 @@
 
 
             },
-            "executable": "/usr/local/mpt/static/tools/xmlProcess.py"
+            "executable": "/usr/local/mpt/static/tools/xmlPrepare.py"
         } ,
         "xmlmerge": {
             "arguments": {
@@ -107,7 +107,7 @@
             "arguments": {
               "1":"--xsl=heiup_formatter.xml"
             },
-            "executable": "/usr/local/mpt/static/tools/xml2PDF.py"
+            "executable": "/usr/local/mpt/static/tools/xmlDisseminate.py"
         }
 
     }

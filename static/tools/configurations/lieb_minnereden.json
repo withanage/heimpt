@@ -84,7 +84,7 @@
 
 
             },
-            "executable": "/usr/local/mpt/static/tools/xmlProcess.py"
+            "executable": "/usr/local/mpt/static/tools/xmlPrepare.py"
         } ,
         "xmlmerge": {
             "arguments": {
@@ -92,7 +92,7 @@
               "1": "--set-numbering-tags=disp-quote,aff"
 
             },
-            "executable": "/usr/local/mpt/static/tools/xmlMerge.py"
+            "executable": "/usr/local/mpt/static/tools/xmlPrepare.py"
         }
 
     }
