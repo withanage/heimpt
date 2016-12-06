@@ -9,14 +9,16 @@ this program can be used to modify any element tree.
 
 
 Usage:
-    xmlMerge.py  <input_file>  <path>  <scheme> <output_file>  [options]
+    xmlMerge.py  <input_file>  <path>  <scheme>  [options]
 
     xmlMerge.py -h --help
 
 Options:
+    -o --out-file=<output_file_name_without_escapes>
     -d --debug   Enable debug output
     -m --metadata=<file__name_schema.xml>
     -n --set-numbering-tags=<elemennt types as comma seperated lists>
+
 
 
 References
@@ -57,14 +59,14 @@ class XMLMerge(Debuggable):
     """
 
     def __init__(self):
+
         self.args = self.read_command_line()
         self.debug = Debug()
         self.gv = GV()
-        self.uid = '4e4dd8cf-26bf-4893-b037-1fd3bf08f112'
+        self.uid = self.gv.uuid
         self.dr = self.args.get('<path>')
         self.f = self.args.get('<input_file>')
         self.scheme = self.args.get('<scheme>')
-        self.o = self.args.get('<output_file>')
         self.set_numbering_tags = self.args.get('--set-numbering-tags')
         self.tr = etree.parse(os.path.join(self.dr, self.f))
 
@@ -95,8 +97,8 @@ class XMLMerge(Debuggable):
         create_book_part_bits, create_book_bits, do_file_io
 
         """
-        fuf = os.path.join(self.dr, self.o)
-        pt = os.path.join(self.dr, os.path.basename(self.o))
+        fuf = os.path.join(self.dr, self.uid)
+        pt = os.path.join(self.dr, os.path.basename(self.uid))
         trf = None
         if os.path.isfile(fuf):
             trf = etree.parse(fuf)
@@ -108,6 +110,7 @@ class XMLMerge(Debuggable):
         trf = self.process(trf)
 
         self.do_file_io(etree.tostring(trf, pretty_print=True), 'w', pt)
+
 
     def process(self, tr):
         """
@@ -139,6 +142,17 @@ class XMLMerge(Debuggable):
         """
         Add  specific attributes to book-part
 
+        Parameters
+        ----------
+        tr : elementtree
+            element tree as input
+
+
+        Returns
+        -------
+        tr : elementtree
+            transformed element tree
+
 
         """
         book_parts = tr.findall('.//book-part')
@@ -167,7 +181,7 @@ class XMLMerge(Debuggable):
         """
         p = os.path.dirname(self.f).split(os.sep)
         del p[-4:]
-        name, ext = os.path.splitext(os.path.basename(self.o))
+        name, ext = os.path.splitext(os.path.basename(self.uid))
         file_name = [name, '.', metadata, ext]
         p.append('metadata')
         p.append(''.join(file_name))
@@ -213,7 +227,7 @@ class XMLMerge(Debuggable):
 
     def create_book_part_bits(self):
         """
-        Reads a JATS XNl File and creates a book-part element tree according to BITS-XML.
+        Reads a JATS XMl File and creates a book-part element tree according to BITS-XML.
 
         Returns
         -------

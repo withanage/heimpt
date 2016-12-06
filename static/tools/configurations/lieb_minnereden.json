@@ -89,7 +89,7 @@
         "xmlmerge": {
             "arguments": {
 
-              "1": "--set-numbering-tags=disp-quote"
+              "1": "--set-numbering-tags=disp-quote,aff"
 
             },
             "executable": "/usr/local/mpt/static/tools/xmlMerge.py"

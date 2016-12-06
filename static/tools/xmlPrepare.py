@@ -7,7 +7,7 @@ this program can be used to modify any element tree. Some of the  current availa
 numbering elements of a certain type  or setting unique ids to a certain element types.
 
 Usage:
-    xmlProcess.py  <input_file>  <path> [options]
+    xmlPrepare.py  <input_file>  <path> [options]
 Options:
     -d --debug   Enable debug output
     -f --sort-footnotes=<tag list as comma seperated lists>

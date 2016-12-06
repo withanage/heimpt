@@ -53,10 +53,12 @@ class GV(object):
         self.TYPESETTER_RUNS_WITH_NO_ARGUMENTS = u'typesetter runs with no arguments'
 
         # xml
+        self.RUNNING_SAXON_CONVERSION = u'running saxon conversion'
         self.XML_ELEMENT_NOT_FOUND = u'xml element not found'
         self.XML_FILE_NOT_CREATED = u'xml file not created'
         self.XML_INPUT_FILE_IS_NOT_FOUND = u'xml input file is not found'
         self.XML_INPUT_FILE_IS_NOT_VALID = u'xml input file is not valid'
+        self.SAXON_IS_NOT_AVAILABLE = u'saxon is not available'
 
         # WORDS
         self.OUTPUT_FOLDER = u'Output Folder'
@@ -64,7 +66,9 @@ class GV(object):
         self.debug = Debug()
         self.numeral_map = numeral_map
 
+        self.uuid = '4e4dd8cf-26bf-4893-b037-1fd3bf08f112.xml'
         self.version='0.0.1'
+
 
     @staticmethod
     def fatal_error(module, message):

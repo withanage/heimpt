@@ -297,7 +297,7 @@ class MPT(Debuggable):
                 '.' +
                 pre_out_type)
 
-        if os.path.isfile(f_path):
+        if os.path.isfile(f_path) or p['typesetters'].get(p_id).get('expand'):
             args.append(f_path)
             self.create_output_path(
                 p,
@@ -369,9 +369,8 @@ class MPT(Debuggable):
         run_typesetter
 
         """
-        t_props = self.all_typesetters.get(
-            p.get('typesetters')[p_id].get("name"))
-        p_path, pf_type = '', ''
+        t_props = self.all_typesetters.get(p.get('typesetters')[p_id].get("name"))
+
         if t_props:
             mt = self.arguments_parse(t_props)
             if self.check_program(t_props.get('executable')):
@@ -428,22 +427,29 @@ class MPT(Debuggable):
         """
         p_path, pf_type = '', ''
 
-        uid = str(uuid.uuid4())[:8]
+        uid = str(uuid.uuid4())
 
         project_files = collections.OrderedDict(
             sorted((int(key), value) for key, value in p.get('files').items()))
 
         for f_id in project_files:
             f_name = project_files[f_id]
-            p_path, pf_type = self.typeset_file(
-                p,
-                pre_path,
-                pre_out_type,
-                pre_id,
-                uid,
-                f_id,
-                f_name
-            )
+            p_path, pf_type = '', ''
+            run_typeset_file = True
+            if p.get('typesetters')[pre_id].get("expand"):
+                f_name =self.gv.uuid
+                if f_id != len(p.get('files')):
+                    run_typeset_file = False
+            if run_typeset_file:
+                p_path, pf_type = self.typeset_file(
+                    p,
+                    pre_path,
+                    pre_out_type,
+                    pre_id,
+                    uid,
+                    f_id,
+                    f_name
+                )
 
         return p_path, pf_type
 
@@ -625,14 +631,18 @@ class MPT(Debuggable):
             self.current_result,
             step_ts,
             out_type]
+
         if p['typesetters'][p_id].get('merge'):
 
-            ff = p['typesetters'][p_id].get('arguments')["3"]
+            ff = self.gv.uuid
             t_path.append(ff)
             t_file = os.path.sep.join(t_path)
             p_path = self.gv.create_dirs_recursive(project_path)
             f_path = p_path + os.path.sep + ff
             shutil.copy2(t_file, f_path)
+            copy_file_name =p['typesetters'][p_id].get('out_file')
+            if copy_file_name:
+                shutil.copy2(t_file, p_path + os.path.sep+copy_file_name)
             if len(files) == f_id:
                 shutil.rmtree(os.path.join(p.get('path'), uid))
 
