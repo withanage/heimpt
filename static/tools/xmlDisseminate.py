@@ -122,6 +122,7 @@ class XD(Debuggable):
         """
 
         m = ' '.join(args).strip().split(' ')
+        print m
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
         exit_code = process.wait()
