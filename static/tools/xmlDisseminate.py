@@ -82,7 +82,6 @@ class XD(Debuggable):
         else:
             return False
 
-
     def get_module_name(self):
         """
         Reads the name of the module for debugging and logging
@@ -94,6 +93,7 @@ class XD(Debuggable):
         """
         name = 'OUTPUT Generation'
         return name
+
     def process(self, args):
         """Runs  typesetter with given arguments
 
@@ -122,7 +122,7 @@ class XD(Debuggable):
         """
 
         m = ' '.join(args).strip().split(' ')
-        print m
+        print ' '.join(args)
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
         exit_code = process.wait()
@@ -143,13 +143,13 @@ class XD(Debuggable):
             sys.exit(1)
         else:
             self.debug.print_console(self, self.gv.RUNNING_SAXON_CONVERSION)
-            args = self.create_saxon_parametes(saxon_path)
+            args = self.create_saxon_parameters(saxon_path)
             output, err, exit_code = self.process(args)
             if exit_code == 1:
                 print err
                 sys.exit(1)
 
-    def create_saxon_parametes(self ,saxon_path):
+    def create_saxon_parameters(self, saxon_path):
         """
         Creates the executable path for saxon
 
@@ -169,15 +169,22 @@ class XD(Debuggable):
             xsl = self.script_path.split(os.sep)[:-1]
             xsl.append('stylesheets')
             xsl.append(self.args.get('--xsl'))
-            args.append("-xsl:"+os.sep.join(xsl))
-        args.append("-s:"+self.args.get('<input_file>'))
-        args.append("-o:" + self.args.get('<path>')+'/')
+            args.append("-xsl:" + os.sep.join(xsl))
+        s = self.args.get('<input_file>')
+        if os.path.exists(s):
+            args.append("-s:" + s)
+        else:
+            self.debug.print_debug(self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST+' '+s)
+            sys.exit(1)
+
+
+        args.append("-o:" + os.path.join(self.args.get('<path>'),self.gv.uuid))
         f = self.args.get('--formatter')
         if f:
-            args.append('formatter='+f)
+            args.append('formatter=' + f)
         m = self.args.get('--medium')
         if m:
-            args.append('medium='+m)
+            args.append('medium=' + m)
 
         return args
 
@@ -198,6 +205,8 @@ medium=electronic formatter=XEP
 -d /Volumes/DATENSTICK/14\ XSL-FO/out/fo/Testdokument_epdf_ah.fo
 -o /Volumes/DATENSTICK/14\ XSL-FO/out/pdf/Testdokument_epdf_ah.pdf
 """
+
+
 def main():
     """
     Calls the conversion process
@@ -207,7 +216,6 @@ def main():
     run
 
     """
-
 
     xp = XD()
     xp.run()

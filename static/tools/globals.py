@@ -66,7 +66,7 @@ class GV(object):
         self.debug = Debug()
         self.numeral_map = numeral_map
 
-        self.uuid = '4e4dd8cf-26bf-4893-b037-1fd3bf08f112.xml'
+        self.uuid = '4e4dd8cf-26bf-4893-b037-1fd3bf08f112'
         self.version='0.0.1'
 
 

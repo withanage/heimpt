@@ -99,6 +99,7 @@ class XMLMerge(Debuggable):
         """
         fuf = os.path.join(self.dr, self.uid)
         pt = os.path.join(self.dr, os.path.basename(self.uid))
+        print pt
         trf = None
         if os.path.isfile(fuf):
             trf = etree.parse(fuf)

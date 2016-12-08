@@ -632,7 +632,7 @@ class MPT(Debuggable):
             step_ts,
             out_type]
 
-        if p['typesetters'][p_id].get('merge'):
+        if p['typesetters'][p_id].get('merge') :
 
             ff = self.gv.uuid
             t_path.append(ff)
@@ -650,7 +650,7 @@ class MPT(Debuggable):
             t_path.append(prefix + '.' + out_type)
             t_file = os.path.sep.join(t_path)
             p_path = self.gv.create_dirs_recursive(project_path)
-
+            print "mpt", t_file
             if os.path.isfile(t_file):
                 f_path = p_path + os.path.sep + prefix + '.' + out_type
                 os.rename(t_file, f_path)
