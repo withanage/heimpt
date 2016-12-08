@@ -109,7 +109,7 @@ class XMLMerge(Debuggable):
             trf = self.create_book_bits()
         trf = self.process(trf)
 
-        self.do_file_io(etree.tostring(trf, pretty_print=True), 'w', pt)
+        self.do_file_io(etree.tostring(trf, pretty_print=True, xml_declaration = True, encoding='UTF-8', standalone='yes'), 'w', pt)
 
 
     def process(self, tr):

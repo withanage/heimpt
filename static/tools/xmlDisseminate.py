@@ -8,6 +8,8 @@ Usage:
     xmlDisseminate.py  <input_file>  <path>  [options]
 Options:
     -d, --debug  Enable debug output
+    -f --formatter=<electronic_or_print>    Formatter
+    -m --medium=<filename>    Stylesheet file
     -s --saxon=<location_of_the_saxon_jar_file>
     -x --xsl=<filename>    Stylesheet file
 
@@ -168,7 +170,14 @@ class XD(Debuggable):
             xsl.append(self.args.get('--xsl'))
             args.append("-xsl:"+os.sep.join(xsl))
         args.append("-s:"+self.args.get('<input_file>'))
-        args.append("-o:" + self.args.get('<path>'))
+        args.append("-o:" + self.args.get('<path>')+'/')
+        f = self.args.get('--formatter')
+        if f:
+            args.append('formatter='+f)
+        m = self.args.get('--medium')
+        if m:
+            args.append('medium='+m)
+
         return args
 
 

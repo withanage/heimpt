@@ -42,8 +42,8 @@
 
                 },
                 "4":{
-                  "name":"xml2pdf",
-                  "out_type": "xml",
+                  "name":"xml2fo",
+                  "out_type": "fo",
                   "expand":true
                   , "arguments": {
                      "1": "fn:append_out_dir"
@@ -103,9 +103,11 @@
             "executable": "/usr/local/mpt/static/tools/xmlMerge.py"
         }
       ,
-        "xml2pdf": {
+        "xml2fo": {
             "arguments": {
-              "1":"--xsl=/heiup_formatter.xsl"
+              "1":"--xsl=/heiup_formatter.xsl",
+              "2":"--medium=electronic",
+              "3":"--formatter=XEP"
             },
             "executable": "/usr/local/mpt/static/tools/xmlDisseminate.py"
         }
