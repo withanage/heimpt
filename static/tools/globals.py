@@ -67,8 +67,7 @@ class GV(object):
         self.numeral_map = numeral_map
 
         self.uuid = '4e4dd8cf-26bf-4893-b037-1fd3bf08f112'
-        self.version='0.0.1'
-
+        self.version = '0.0.1'
 
     @staticmethod
     def fatal_error(module, message):
@@ -157,7 +156,7 @@ class GV(object):
                     sys.exit(1)
         return p
 
-    def set_numbering_tags(self, tags ,tr):
+    def set_numbering_tags(self, tags, tr):
         """
         Automatic numbering of the list of elements
 

@@ -143,6 +143,7 @@ class XD(Debuggable):
             sys.exit(1)
         else:
             self.debug.print_console(self, self.gv.RUNNING_SAXON_CONVERSION)
+            self.gv.create_dirs_recursive(self.args.get('<path>').split(os.pathsep))
             args = self.create_saxon_parameters(saxon_path)
             output, err, exit_code = self.process(args)
             if exit_code == 1:
@@ -170,15 +171,15 @@ class XD(Debuggable):
             xsl.append('stylesheets')
             xsl.append(self.args.get('--xsl'))
             args.append("-xsl:" + os.sep.join(xsl))
+
         s = self.args.get('<input_file>')
         if os.path.exists(s):
             args.append("-s:" + s)
         else:
-            self.debug.print_debug(self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST+' '+s)
+            self.debug.print_debug(self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + ' ' + s)
             sys.exit(1)
 
-
-        args.append("-o:" + os.path.join(self.args.get('<path>'),self.gv.uuid))
+        args.append("-o:" + os.path.join(self.args.get('<path>'),self.gv.uuid+'.fo'))
         f = self.args.get('--formatter')
         if f:
             args.append('formatter=' + f)

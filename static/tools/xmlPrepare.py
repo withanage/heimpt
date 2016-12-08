@@ -87,9 +87,6 @@ class XMLProcess(Debuggable):
         """
         return docopt(__doc__, version='xml 0.1')
 
-
-
-
     def remove_references(self):
         """ removes  references, which are not linked.
 
@@ -111,7 +108,7 @@ class XMLProcess(Debuggable):
 
         for e in r.findall('.//back/ref-list/ref'):
             if e.attrib.get('id'):
-                if r.find(".//xref[@ref-type='bibr'][@rid='"+e.attrib.get('id')+"']")  is  None:
+                if r.find(".//xref[@ref-type='bibr'][@rid='" + e.attrib.get('id') + "']") is None:
                     self.remove_element(e)
             else:
                 self.remove_element(e)
@@ -119,7 +116,7 @@ class XMLProcess(Debuggable):
             if r.find(".//back/ref-list/ref[@id='" + e.attrib.get('rid') + "']") is None:
                 if e.getparent() is not None:
                     for c in e.getparent().getiterator():
-                        if c.tag=='xref' and c.attrib.get('ref-type')=='bibr':
+                        if c.tag == 'xref' and c.attrib.get('ref-type') == 'bibr':
                             self.remove_tags(c)
         return self.tr
 
@@ -139,7 +136,7 @@ class XMLProcess(Debuggable):
                 if previous.tail:
                     if e.text:
                         previous.tail = previous.tail + e.text
-                    if  e.tail:
+                    if e.tail:
                         previous.tail = previous.tail + e.tail
                     e.getparent().remove(e)
 
@@ -155,8 +152,6 @@ class XMLProcess(Debuggable):
         """
         if e.getparent() is not None:
             e.getparent().remove(e)
-
-
 
     def set_uuids_for_back_matter(self, tags):
         """
@@ -431,7 +426,6 @@ class XMLProcess(Debuggable):
         sort_footnotes = self.args.get('--sort-footnotes')
         sort_references = self.args.get('--sort-references')
         set_numbering_values = self.args.get('--set-numbering-values')
-
 
         metadata = self.args.get('--metadata')
         self.tr = self.merge_metadata(metadata) if metadata else self.tr

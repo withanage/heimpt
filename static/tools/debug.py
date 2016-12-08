@@ -5,6 +5,7 @@
 import sys
 from termcolor import colored
 
+
 class Debuggable(object):
 
     def __init__(self, module_name):
@@ -63,7 +64,7 @@ class Debug(object):
         print_()
 
         """
-        print(u'[{0}] {1}'.format(colored(module.get_module_name(),'green'), unicode(message)))
+        print(u'[{0}] {1}'.format(colored(module.get_module_name(), 'green'), unicode(message)))
 
     def print_(self, module, message):
         """

@@ -51,7 +51,6 @@ except ImportError:
     sys.exit(1)
 
 
-
 class XMLMerge(Debuggable):
     """
      Standalone Processing object which merges current  JATS/BITS XML file in to the Body of a BITS-XML document.
@@ -99,7 +98,8 @@ class XMLMerge(Debuggable):
         """
         fuf = os.path.join(self.dr, self.uid)
         pt = os.path.join(self.dr, os.path.basename(self.uid))
-        print pt
+
+
         trf = None
         if os.path.isfile(fuf):
             trf = etree.parse(fuf)
@@ -110,8 +110,7 @@ class XMLMerge(Debuggable):
             trf = self.create_book_bits()
         trf = self.process(trf)
 
-        self.do_file_io(etree.tostring(trf, pretty_print=True, xml_declaration = True, encoding='UTF-8', standalone='yes'), 'w', pt)
-
+        self.do_file_io(etree.tostring(trf, pretty_print=True, xml_declaration=True, encoding='UTF-8', standalone='yes'), 'w', pt)
 
     def process(self, tr):
         """
@@ -157,7 +156,7 @@ class XMLMerge(Debuggable):
 
         """
         book_parts = tr.findall('.//book-part')
-        for i,b in enumerate(book_parts):
+        for i, b in enumerate(book_parts):
             b.attrib['id'] = "ch_" + str(i)
             b.attrib['book-part-type'] = "chapter"
         return tr
@@ -204,11 +203,10 @@ class XMLMerge(Debuggable):
 
         """
 
-        book = etree.Element(etree.QName('book'), nsmap={'xlink': "http://www.w3.org/1999/xlink", 'mml': "http://www.w3.org/1998/Math/MathML","xml": "http://www.w3.org/XML/1998/namespace"})
+        book = etree.Element(etree.QName('book'), nsmap={'xlink': "http://www.w3.org/1999/xlink", 'mml': "http://www.w3.org/1998/Math/MathML", "xml": "http://www.w3.org/XML/1998/namespace"})
         book.attrib['dtd-version'] = "2.1"
         book.attrib[etree.QName('{http://www.w3.org/XML/1998/namespace}lang')] = "de"
         book.attrib['book-type'] = "proceedings"
-
 
         metadata = self.args.get('--metadata')
         if metadata:
@@ -223,8 +221,6 @@ class XMLMerge(Debuggable):
         book.append(bd)
 
         return book
-
-
 
     def create_book_part_bits(self):
         """
@@ -321,8 +317,6 @@ class XMLMerge(Debuggable):
 
         elif self.scheme == 'jats':
             self.tr = self.create_output_jats(self.tr)
-
-
 
 
 def main():

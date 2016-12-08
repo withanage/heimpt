@@ -48,7 +48,6 @@ from docopt import docopt
 from subprocess import Popen, PIPE
 
 
-
 class MPT(Debuggable):
     """
     MPT Class Object,  which initializes the properties and defines the methods.
@@ -223,7 +222,6 @@ class MPT(Debuggable):
             if arg == 'fn:append_out_dir':
                 args.append(out_path)
 
-
             elif arg == 'fn:create_out_file':
                 if not os.path.exists(out_path):
                     os.makedirs(out_path)
@@ -280,7 +278,7 @@ class MPT(Debuggable):
         See Also
         --------
 
-        call_typesetter, organize_output
+        call_typesetter, copy_results
 
         """
 
@@ -307,7 +305,7 @@ class MPT(Debuggable):
             output, err, exit_code = self.call_typesetter(args)
             self.debug.print_debug(self, output.decode('utf-8'))
 
-            p_path = self.organize_output(
+            p_path = self.copy_results(
                 p,
                 p_id,
                 prefix,
@@ -437,7 +435,7 @@ class MPT(Debuggable):
             p_path, pf_type = '', ''
             run_typeset_file = True
             if p.get('typesetters')[pre_id].get("expand"):
-                f_name =self.gv.uuid
+                f_name = self.gv.uuid
                 if f_id != len(p.get('files')):
                     run_typeset_file = False
             if run_typeset_file:
@@ -575,7 +573,7 @@ class MPT(Debuggable):
 
         return None
 
-    def organize_output(
+    def copy_results(
             self,
             p,
             p_id,
@@ -615,42 +613,18 @@ class MPT(Debuggable):
         gv.create_dirs_recursive
 
         """
-        t_path = [p.get('path'), uid]
-        p_path = ''
-        t_name = p.get('typesetters')[p_id].get("name")
-        files = collections.OrderedDict(sorted(p.get('files').items()))
-        out_type = p['typesetters'][p_id]['out_type']
-        step_ts = p_id + '_' + t_name
-
-        if t_name == 'metypeset':
-            t_path = t_path + ['nlm']
-
-        project_path = [
-            p.get('path'),
-            p['name'],
-            self.current_result,
-            step_ts,
-            out_type]
-
-        if p['typesetters'][p_id].get('merge') :
-
-            ff = self.gv.uuid
-            t_path.append(ff)
-            t_file = os.path.sep.join(t_path)
-            p_path = self.gv.create_dirs_recursive(project_path)
-            f_path = p_path + os.path.sep + ff
-            shutil.copy2(t_file, f_path)
-            copy_file_name =p['typesetters'][p_id].get('out_file')
-            if copy_file_name:
-                shutil.copy2(t_file, p_path + os.path.sep+copy_file_name)
-            if len(files) == f_id:
-                shutil.rmtree(os.path.join(p.get('path'), uid))
+        if p['typesetters'][p_id].get('merge'):
+            p_path, project_path = self.copy_merge(f_id, p, p_id,  uid)
 
         else:
+            t_name = p.get('typesetters')[p_id].get("name")
+            out_type = p['typesetters'][p_id]['out_type']
+            project_path = [p.get('path'), p['name'], self.current_result,  p_id + '_' + t_name, out_type]
+            t_path = [p.get('path'), uid] + ['nlm'] if t_name == 'metypeset' else [p.get('path'), uid]
             t_path.append(prefix + '.' + out_type)
             t_file = os.path.sep.join(t_path)
             p_path = self.gv.create_dirs_recursive(project_path)
-            print "mpt", t_file
+
             if os.path.isfile(t_file):
                 f_path = p_path + os.path.sep + prefix + '.' + out_type
                 os.rename(t_file, f_path)
@@ -658,11 +632,59 @@ class MPT(Debuggable):
             else:
                 self.debug.print_debug(
                     self, self.gv.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
-
-        if len(files) == int(f_id):
-            self.debug.print_console(self,self.gv.OUTPUT_FOLDER+' '+p_path)
+        files_len = len(collections.OrderedDict(sorted(p.get('files').items())))
+        if files_len == int(f_id):
+            self.debug.print_console(self, self.gv.OUTPUT_FOLDER + ' ' + p_path)
 
         return os.path.sep.join(project_path)
+
+    def copy_merge(self, f_id, p, p_id,  uid):
+        """
+        copy  files  to the relevant directory after merging
+
+        Parameters
+        ------------
+        f_id:  int
+              sequence number of the current file
+        p: dict
+            json program properties
+        p_id:  int
+            typesetter id
+
+
+        uid: str
+            unique id of the current current typesetter
+
+        Returns
+        --------
+        project_path: str
+            Final path for the current file
+
+
+        See Also
+        --------
+        gv.create_dirs_recursive
+
+        """
+        t_name = p.get('typesetters')[p_id].get("name")
+        files_len = len(collections.OrderedDict(sorted(p.get('files').items())))
+        out_type = p['typesetters'][p_id]['out_type']
+        project_path = [p.get('path'), p['name'], self.current_result,  p_id + '_' + t_name, out_type]
+        t_path = [p.get('path'), uid] + ['nlm'] if t_name == 'metypeset' else [p.get('path'), uid]
+        t_path.append(self.gv.uuid)
+        t_file = os.path.sep.join(t_path)
+        p_path = self.gv.create_dirs_recursive(project_path)
+        if os.path.isfile(t_file):
+            f_path = p_path + os.path.sep + self.gv.uuid + '.xml'
+            shutil.copy2(t_file, f_path)
+        # special copy
+        copy_file_name = p['typesetters'][p_id].get('out_file')
+        if copy_file_name:
+            shutil.copy2(t_file, p_path + os.path.sep + copy_file_name)
+        # letzte
+        if files_len == f_id:
+            shutil.rmtree(os.path.join(p.get('path'), uid))
+        return p_path, project_path
 
 
 def main():
@@ -680,4 +702,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
