@@ -34,6 +34,7 @@ References
 
 """
 
+
 __author__ = "Dulip Withanage"
 
 import os
@@ -47,6 +48,7 @@ from debug import Debuggable, Debug
 from docopt import docopt
 from subprocess import Popen, PIPE
 
+SEP = os.path.sep
 
 class MPT(Debuggable):
     """
@@ -278,7 +280,7 @@ class MPT(Debuggable):
         See Also
         --------
 
-        call_typesetter, copy_results
+        call_typesetter, organize_output
 
         """
 
@@ -305,7 +307,7 @@ class MPT(Debuggable):
             output, err, exit_code = self.call_typesetter(args)
             self.debug.print_debug(self, output.decode('utf-8'))
 
-            p_path = self.copy_results(
+            p_path = self.organize_output(
                 p,
                 p_id,
                 prefix,
@@ -573,7 +575,7 @@ class MPT(Debuggable):
 
         return None
 
-    def copy_results(
+    def organize_output(
             self,
             p,
             p_id,
@@ -613,49 +615,49 @@ class MPT(Debuggable):
         gv.create_dirs_recursive
 
         """
-        t_name = p.get('typesetters')[p_id].get("name")
-        step_ts = p_id + '_' + t_name
-
-        t_path = [p.get('path'), uid] + ['nlm'] if t_name == 'metypeset' else [p.get('path'), uid]
-
-        files_len = len(collections.OrderedDict(sorted(p.get('files').items())))
+        p_name = p.get('typesetters')[p_id].get("name")
+        t_path = [p.get('path'), uid] + ['nlm'] if p_name == 'metypeset' else [p.get('path'), uid]
         out_type = p['typesetters'][p_id]['out_type']
-
-        project_path = [p.get('path'),  p['name'],  self.current_result, step_ts, out_type]
+        project_path = [p.get('path'),p['name'], self.current_result, p_id + '_' + p_name,out_type]
 
         if p['typesetters'][p_id].get('merge'):
-
-
             t_path.append(self.gv.uuid)
-            t_file = os.path.sep.join(t_path)
             p_path = self.gv.create_dirs_recursive(project_path)
-
-            if os.path.isfile(t_file):
-                shutil.copy2(t_file, f_path)
-            # specuak copy
-            copy_file_name = p['typesetters'][p_id].get('out_file')
-            if copy_file_name:
-                shutil.copy2(t_file, p_path + os.path.sep + copy_file_name)
-            # letzte
-            if files_len == f_id:
+            f_path = p_path + SEP + self.gv.uuid + '.xml'
+            shutil.copy2(SEP.join(t_path), f_path)
+            self.create_named_file(p, p_id, p_path, t_path)
+            if len(p.get('files').items()) == f_id:
                 shutil.rmtree(os.path.join(p.get('path'), uid))
-
         else:
             t_path.append(prefix + '.' + out_type)
-            t_file = os.path.sep.join(t_path)
             p_path = self.gv.create_dirs_recursive(project_path)
-            if os.path.isfile(t_file):
-                f_path = p_path + os.path.sep + prefix + '.' + out_type
-                os.rename(t_file, f_path)
-                shutil.rmtree(os.path.join(p.get('path'), uid))
-            else:
-                self.debug.print_debug(
-                    self, self.gv.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
+            f_path = p_path + SEP + prefix + '.' + out_type
+            os.rename(SEP.join(t_path), f_path)
+            shutil.rmtree(os.path.join(p.get('path'), uid))
 
-        if files_len == int(f_id):
-            self.debug.print_console(self, self.gv.OUTPUT_FOLDER + ' ' + p_path)
+        self.debug.print_console(self, self.gv.OUTPUT_FOLDER + ' ' + f_path)
 
-        return os.path.sep.join(project_path)
+        return SEP.join(project_path)
+
+    def create_named_file(self,  p, p_id, t_path, p_path):
+        """
+        Copy  unique file name to a named file
+
+        p: dict
+            json program properties
+        p_id:  int
+            typesetter id
+        t_path : str
+            temporary  output directory
+        p_path : str
+            output directory for the current typesetter
+
+        """
+        f = p['typesetters'][p_id].get('out_file')
+        if f:
+            f_path = p_path + SEP + f
+            shutil.copy2(SEP.join(t_path), f_path)
+        return
 
 
 def main():
