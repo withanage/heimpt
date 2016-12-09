@@ -613,18 +613,37 @@ class MPT(Debuggable):
         gv.create_dirs_recursive
 
         """
-        if p['typesetters'][p_id].get('merge'):
-            p_path, project_path = self.copy_merge(f_id, p, p_id,  uid)
+        t_name = p.get('typesetters')[p_id].get("name")
+        step_ts = p_id + '_' + t_name
 
-        else:
-            t_name = p.get('typesetters')[p_id].get("name")
-            out_type = p['typesetters'][p_id]['out_type']
-            project_path = [p.get('path'), p['name'], self.current_result,  p_id + '_' + t_name, out_type]
-            t_path = [p.get('path'), uid] + ['nlm'] if t_name == 'metypeset' else [p.get('path'), uid]
-            t_path.append(prefix + '.' + out_type)
+        t_path = [p.get('path'), uid] + ['nlm'] if t_name == 'metypeset' else [p.get('path'), uid]
+
+        files_len = len(collections.OrderedDict(sorted(p.get('files').items())))
+        out_type = p['typesetters'][p_id]['out_type']
+
+        project_path = [p.get('path'),  p['name'],  self.current_result, step_ts, out_type]
+
+        if p['typesetters'][p_id].get('merge'):
+
+
+            t_path.append(self.gv.uuid)
             t_file = os.path.sep.join(t_path)
             p_path = self.gv.create_dirs_recursive(project_path)
 
+            if os.path.isfile(t_file):
+                shutil.copy2(t_file, f_path)
+            # specuak copy
+            copy_file_name = p['typesetters'][p_id].get('out_file')
+            if copy_file_name:
+                shutil.copy2(t_file, p_path + os.path.sep + copy_file_name)
+            # letzte
+            if files_len == f_id:
+                shutil.rmtree(os.path.join(p.get('path'), uid))
+
+        else:
+            t_path.append(prefix + '.' + out_type)
+            t_file = os.path.sep.join(t_path)
+            p_path = self.gv.create_dirs_recursive(project_path)
             if os.path.isfile(t_file):
                 f_path = p_path + os.path.sep + prefix + '.' + out_type
                 os.rename(t_file, f_path)
@@ -632,59 +651,11 @@ class MPT(Debuggable):
             else:
                 self.debug.print_debug(
                     self, self.gv.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED)
-        files_len = len(collections.OrderedDict(sorted(p.get('files').items())))
+
         if files_len == int(f_id):
             self.debug.print_console(self, self.gv.OUTPUT_FOLDER + ' ' + p_path)
 
         return os.path.sep.join(project_path)
-
-    def copy_merge(self, f_id, p, p_id,  uid):
-        """
-        copy  files  to the relevant directory after merging
-
-        Parameters
-        ------------
-        f_id:  int
-              sequence number of the current file
-        p: dict
-            json program properties
-        p_id:  int
-            typesetter id
-
-
-        uid: str
-            unique id of the current current typesetter
-
-        Returns
-        --------
-        project_path: str
-            Final path for the current file
-
-
-        See Also
-        --------
-        gv.create_dirs_recursive
-
-        """
-        t_name = p.get('typesetters')[p_id].get("name")
-        files_len = len(collections.OrderedDict(sorted(p.get('files').items())))
-        out_type = p['typesetters'][p_id]['out_type']
-        project_path = [p.get('path'), p['name'], self.current_result,  p_id + '_' + t_name, out_type]
-        t_path = [p.get('path'), uid] + ['nlm'] if t_name == 'metypeset' else [p.get('path'), uid]
-        t_path.append(self.gv.uuid)
-        t_file = os.path.sep.join(t_path)
-        p_path = self.gv.create_dirs_recursive(project_path)
-        if os.path.isfile(t_file):
-            f_path = p_path + os.path.sep + self.gv.uuid + '.xml'
-            shutil.copy2(t_file, f_path)
-        # special copy
-        copy_file_name = p['typesetters'][p_id].get('out_file')
-        if copy_file_name:
-            shutil.copy2(t_file, p_path + os.path.sep + copy_file_name)
-        # letzte
-        if files_len == f_id:
-            shutil.rmtree(os.path.join(p.get('path'), uid))
-        return p_path, project_path
 
 
 def main():
