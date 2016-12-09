@@ -51,7 +51,7 @@ except ImportError:
     sys.exit(1)
 
 
-class XMLMerge(Debuggable):
+class Merge(Debuggable):
     """
      Standalone Processing object which merges current  JATS/BITS XML file in to the Body of a BITS-XML document.
 
@@ -328,7 +328,7 @@ def main():
     run
 
     """
-    xp = XMLMerge()
+    xp = Merge()
     xp.run()
 
 if __name__ == '__main__':

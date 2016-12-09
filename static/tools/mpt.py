@@ -370,6 +370,7 @@ class MPT(Debuggable):
 
         """
         t_props = self.all_typesetters.get(p.get('typesetters')[p_id].get("name"))
+        p_path, pf_type = '',''
 
         if t_props:
             mt = self.arguments_parse(t_props)

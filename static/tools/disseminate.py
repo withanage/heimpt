@@ -5,7 +5,7 @@ Reads a xml file , transforms it to a intermediate format (e.g. formattion objec
 
 
 Usage:
-    disseminate.py  <input_file>  <path>  <output_type> [options]
+    disseminate.py  <input_file>  <path>  --out-type=<FO_PDF> [options]
 Options:
     -d, --debug  Enable debug output
     -f --formatter=<electronic_or_print>    Formatter
@@ -34,7 +34,7 @@ from docopt import docopt
 from subprocess import Popen, PIPE
 
 
-class XD(Debuggable):
+class Disseminate(Debuggable):
 
     def __init__(self):
         self.args = self.read_command_line()
@@ -45,7 +45,7 @@ class XD(Debuggable):
             self.debug.enable_debug()
         self.dr = self.args.get('<path>')
         self.f = self.args.get('<input_file>')
-        self.out_type = self.args.get('<output_type>').lower()
+        self.out_type = self.args.get('--out-type').lower()
         self.script_path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
     @staticmethod
@@ -59,7 +59,7 @@ class XD(Debuggable):
           A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
           elements.
         """
-        return docopt(__doc__, version='XD 0.1')
+        return docopt(__doc__, version='Disseminate 0.1')
 
     def get_saxon_path(self):
         """Checks if saxon is available in the default path
@@ -234,7 +234,7 @@ def main():
 
     """
 
-    xp = XD()
+    xp = Disseminate()
     xp.run()
 
 
