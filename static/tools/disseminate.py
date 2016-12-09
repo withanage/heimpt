@@ -5,7 +5,7 @@ Reads a xml file , transforms it to a intermediate format (e.g. formattion objec
 
 
 Usage:
-    disseminate.py  <input_file>  <path>  [options]
+    disseminate.py  <input_file>  <path>  <output_type> [options]
 Options:
     -d, --debug  Enable debug output
     -f --formatter=<electronic_or_print>    Formatter
@@ -45,6 +45,7 @@ class XD(Debuggable):
             self.debug.enable_debug()
         self.dr = self.args.get('<path>')
         self.f = self.args.get('<input_file>')
+        self.out_type = self.args.get('<output_type>').lower()
         self.script_path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
     @staticmethod
@@ -126,17 +127,35 @@ class XD(Debuggable):
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
         exit_code = process.wait()
+        if exit_code == 1:
+            print err
+            sys.exit(1)
         return output, err, exit_code
 
     def run(self):
         """
-        Runs the  converter
+        Runs converters
 
         See Also
         --------
         get_saxon_path, process
 
         """
+        if self.out_type=='fo':
+            self.create_fo()
+
+
+
+    def create_fo(self):
+        """
+        Create  FO output
+
+
+        See Also
+        -------
+        run_saxon(), get_saxon_path()
+        """
+
         saxon_path = self.get_saxon_path()
         if not saxon_path:
             self.debug.print_debug(self, self.gv.SAXON_IS_NOT_AVAILABLE)
@@ -144,13 +163,10 @@ class XD(Debuggable):
         else:
             self.debug.print_console(self, self.gv.RUNNING_SAXON_CONVERSION)
             self.gv.create_dirs_recursive(self.args.get('<path>').split(os.pathsep))
-            args = self.create_saxon_parameters(saxon_path)
-            output, err, exit_code = self.process(args)
-            if exit_code == 1:
-                print err
-                sys.exit(1)
+            args = self.run_saxon(saxon_path)
+            self.process(args)
 
-    def create_saxon_parameters(self, saxon_path):
+    def run_saxon(self, saxon_path):
         """
         Creates the executable path for saxon
 

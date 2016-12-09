@@ -631,7 +631,7 @@ class MPT(Debuggable):
             os.rename(SEP.join(t_path), f_path)
             shutil.rmtree(os.path.join(p.get('path'), uid))
 
-        self.debug.print_console(self, self.gv.OUTPUT_FOLDER + ' ' + f_path)
+        self.debug.print_console(self, self.gv.OUTPUT + ' ' + f_path)
 
         return SEP.join(project_path)
 

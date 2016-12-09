@@ -107,7 +107,9 @@
             "arguments": {
               "1":"--xsl=/heiup_formatter.xsl",
               "2":"--medium=electronic",
-              "3":"--formatter=XEP"
+              "3":"--formatter=XEP",
+              "4":"FO"
+
             },
             "executable": "/usr/local/mpt/static/tools/disseminate.py"
         }

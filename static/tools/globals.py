@@ -61,7 +61,7 @@ class GV(object):
         self.SAXON_IS_NOT_AVAILABLE = u'saxon is not available'
 
         # WORDS
-        self.OUTPUT_FOLDER = u'Output Folder'
+        self.OUTPUT = u'Output'
 
         self.debug = Debug()
         self.numeral_map = numeral_map
