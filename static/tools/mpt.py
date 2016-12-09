@@ -612,7 +612,7 @@ class MPT(Debuggable):
 
         See Also
         --------
-        gv.create_dirs_recursive
+        create_merged_file, gv.create_dirs_recursive
 
         """
         p_name = p.get('typesetters')[p_id].get("name")
@@ -621,11 +621,7 @@ class MPT(Debuggable):
         project_path = [p.get('path'),p['name'], self.current_result, p_id + '_' + p_name,out_type]
 
         if p['typesetters'][p_id].get('merge'):
-            t_path.append(self.gv.uuid)
-            p_path = self.gv.create_dirs_recursive(project_path)
-            f_path = p_path + SEP + self.gv.uuid + '.xml'
-            shutil.copy2(SEP.join(t_path), f_path)
-            self.create_named_file(p, p_id, p_path, t_path)
+            f_path = self.create_merged_file(p, p_id, project_path, t_path)
             if len(p.get('files').items()) == f_id:
                 shutil.rmtree(os.path.join(p.get('path'), uid))
         else:
@@ -638,6 +634,34 @@ class MPT(Debuggable):
         self.debug.print_console(self, self.gv.OUTPUT_FOLDER + ' ' + f_path)
 
         return SEP.join(project_path)
+
+    def create_merged_file(self, p, p_id, project_path, t_path):
+        """
+        Create a combined file from a set of input files
+
+        Parameters
+        ------------
+        p: dict
+            json program properties
+        p_id:  int
+            typesetter id
+        t_path : str
+            temporary  output directory
+        project_path : str
+            system path to be created
+
+        See Also
+        --------
+        create_named_file()
+
+
+        """
+        t_path.append(self.gv.uuid)
+        p_path = self.gv.create_dirs_recursive(project_path)
+        f_path = p_path + SEP + self.gv.uuid + '.xml'
+        shutil.copy2(SEP.join(t_path), f_path)
+        self.create_named_file(p, p_id, p_path, t_path)
+        return f_path
 
     def create_named_file(self,  p, p_id, p_path ,t_path,):
         """
@@ -656,7 +680,6 @@ class MPT(Debuggable):
         f = p['typesetters'][p_id].get('out_file')
         if f:
             f_path = p_path + SEP + f
-
             shutil.copy2(SEP.join(t_path), f_path)
         return
 
