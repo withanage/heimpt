@@ -639,7 +639,7 @@ class MPT(Debuggable):
 
         return SEP.join(project_path)
 
-    def create_named_file(self,  p, p_id, t_path, p_path):
+    def create_named_file(self,  p, p_id, p_path ,t_path,):
         """
         Copy  unique file name to a named file
 
@@ -656,6 +656,7 @@ class MPT(Debuggable):
         f = p['typesetters'][p_id].get('out_file')
         if f:
             f_path = p_path + SEP + f
+
             shutil.copy2(SEP.join(t_path), f_path)
         return
 
