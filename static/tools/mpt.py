@@ -291,19 +291,11 @@ class MPT(Debuggable):
             f_path = os.path.join(p.get('path'), f_name)
 
         elif p.get("chain"):
-            f_path = os.path.join(
-                pre_path,
-                prefix +
-                '.' +
-                pre_out_type)
+            f_path = os.path.join(pre_path,prefix +'.' + pre_out_type)
 
         if os.path.isfile(f_path) or p['typesetters'].get(p_id).get('expand'):
             args.append(f_path)
-            self.create_output_path(
-                p,
-                p_id,
-                args,
-                prefix, uid)
+            self.create_output_path( p, p_id,  args, prefix, uid)
             output, err, exit_code = self.call_typesetter(args)
             self.debug.print_debug(self, output.decode('utf-8'))
 
@@ -628,11 +620,12 @@ class MPT(Debuggable):
         else:
             t_path.append(prefix + '.' + out_type)
             p_path = self.gv.create_dirs_recursive(project_path)
-            f_path = p_path + SEP + prefix + '.' + out_type
+            f_path = '{}{}{}.{}'.format(p_path,SEP,prefix, out_type)
+
             os.rename(SEP.join(t_path), f_path)
             shutil.rmtree(os.path.join(p.get('path'), uid))
 
-        self.debug.print_console(self, self.gv.OUTPUT + ' ' + f_path)
+        self.debug.print_console(self, '{}  {}'.format(self.gv.OUTPUT,f_path))
 
         return SEP.join(project_path)
 
@@ -659,7 +652,7 @@ class MPT(Debuggable):
         """
         t_path.append(self.gv.uuid)
         p_path = self.gv.create_dirs_recursive(project_path)
-        f_path = p_path + SEP + self.gv.uuid + '.xml'
+        f_path = '{}{}{}.xml'.format(p_path,SEP ,self.gv.uuid)
         shutil.copy2(SEP.join(t_path), f_path)
         self.create_named_file(p, p_id, p_path, t_path)
         return f_path
@@ -680,7 +673,7 @@ class MPT(Debuggable):
         """
         f = p['typesetters'][p_id].get('out_file')
         if f:
-            f_path = p_path + SEP + f
+            f_path = '{}{}{}'.format(p_path, SEP,f)
             shutil.copy2(SEP.join(t_path), f_path)
         return
 

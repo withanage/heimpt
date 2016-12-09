@@ -202,8 +202,10 @@ class Merge(Debuggable):
         create_metadata_path, create_book_part_bits
 
         """
-
-        book = etree.Element(etree.QName('book'), nsmap={'xlink': "http://www.w3.org/1999/xlink", 'mml': "http://www.w3.org/1998/Math/MathML", "xml": "http://www.w3.org/XML/1998/namespace"})
+        nsmap = {'xlink': "http://www.w3.org/1999/xlink",
+                 'mml': "http://www.w3.org/1998/Math/MathML",
+                 "xml": "http://www.w3.org/XML/1998/namespace"}
+        book = etree.Element(etree.QName('book'), nsmap=nsmap)
         book.attrib['dtd-version'] = "2.1"
         book.attrib[etree.QName('{http://www.w3.org/XML/1998/namespace}lang')] = "de"
         book.attrib['book-type'] = "proceedings"
