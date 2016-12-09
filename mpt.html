@@ -158,6 +158,46 @@ exit-code and  system error codes are captured and returned.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="mpt.MPT.create_merged_file">
+<code class="descname">create_merged_file</code><span class="sig-paren">(</span><em>p</em>, <em>p_id</em>, <em>project_path</em>, <em>t_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.create_merged_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.create_merged_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a combined file from a set of input files</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>p</strong> (<em>dict</em>) &#8211; json program properties</li>
+<li><strong>p_id</strong> (<em>int</em>) &#8211; typesetter id</li>
+<li><strong>t_path</strong> (<em>str</em>) &#8211; temporary  output directory</li>
+<li><strong>project_path</strong> (<em>str</em>) &#8211; system path to be created</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#mpt.MPT.create_named_file" title="mpt.MPT.create_named_file"><code class="xref py py-meth docutils literal"><span class="pre">create_named_file()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpt.MPT.create_named_file">
+<code class="descname">create_named_file</code><span class="sig-paren">(</span><em>p</em>, <em>p_id</em>, <em>p_path</em>, <em>t_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.create_named_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.create_named_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy  unique file name to a named file</p>
+<dl class="docutils">
+<dt>p: dict</dt>
+<dd>json program properties</dd>
+<dt>p_id:  int</dt>
+<dd>typesetter id</dd>
+<dt>t_path</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">str</span><dd>temporary  output directory</dd>
+<dt>p_path</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">str</span><dd>output directory for the current typesetter</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="mpt.MPT.create_output_path">
 <code class="descname">create_output_path</code><span class="sig-paren">(</span><em>p</em>, <em>p_id</em>, <em>args</em>, <em>prefix</em>, <em>uid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.create_output_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.create_output_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the output path for  the current file</p>
@@ -236,7 +276,7 @@ and the sequence number of the current file.  Customized tool specific actions a
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><code class="xref py py-meth docutils literal"><span class="pre">gv.create_dirs_recursive()</span></code></p>
+<p class="last"><a class="reference internal" href="#mpt.MPT.create_merged_file" title="mpt.MPT.create_merged_file"><code class="xref py py-meth docutils literal"><span class="pre">create_merged_file()</span></code></a>, <code class="xref py py-meth docutils literal"><span class="pre">gv.create_dirs_recursive()</span></code></p>
 </div>
 </dd></dl>
 
