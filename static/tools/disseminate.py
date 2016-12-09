@@ -5,7 +5,7 @@ Reads a xml file , transforms it to a intermediate format (e.g. formattion objec
 
 
 Usage:
-    xmlDisseminate.py  <input_file>  <path>  [options]
+    disseminate.py  <input_file>  <path>  [options]
 Options:
     -d, --debug  Enable debug output
     -f --formatter=<electronic_or_print>    Formatter
@@ -18,7 +18,7 @@ Options:
 Example
 --------
 
-python $BUILD_DIR/static/tools/xmlDisseminate.py
+python $BUILD_DIR/static/tools/disseminate.py
 
 
 """

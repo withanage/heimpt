@@ -94,13 +94,13 @@
 
 
             },
-            "executable": "/usr/local/mpt/static/tools/xmlPrepare.py"
+            "executable": "/usr/local/mpt/static/tools/prepare.py"
         } ,
         "xmlmerge": {
             "arguments": {
 
             },
-            "executable": "/usr/local/mpt/static/tools/xmlMerge.py"
+            "executable": "/usr/local/mpt/static/tools/merge.py"
         }
       ,
         "xml2fo": {
@@ -109,7 +109,7 @@
               "2":"--medium=electronic",
               "3":"--formatter=XEP"
             },
-            "executable": "/usr/local/mpt/static/tools/xmlDisseminate.py"
+            "executable": "/usr/local/mpt/static/tools/disseminate.py"
         }
 
     }

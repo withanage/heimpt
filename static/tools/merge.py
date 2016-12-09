@@ -9,9 +9,9 @@ this program can be used to modify any element tree.
 
 
 Usage:
-    xmlMerge.py  <input_file>  <path>  <scheme>  [options]
+    merge.py  <input_file>  <path>  <scheme>  [options]
 
-    xmlMerge.py -h --help
+    merge.py -h --help
 
 Options:
     -o --out-file=<output_file_name_without_escapes>
