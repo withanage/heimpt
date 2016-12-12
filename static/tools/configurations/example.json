@@ -51,6 +51,7 @@
                   }
                 }
 
+
             }
         }
     ],
@@ -106,13 +107,24 @@
         "xml2fo": {
             "arguments": {
               "1":"--xsl=/heiup_formatter.xsl",
-              "2":"--medium=electronic",
-              "3":"--formatter=XEP",
+              "2":"--medium=electronic,print",
+              "3":"--formatter=XEP,FOP,AH",
               "4":"--out-type=FO"
 
             },
             "executable": "/usr/local/mpt/static/tools/disseminate.py"
+        },
+      "fo2pdf": {
+            "arguments": {
+              "1":"--xsl=/heiup_formatter.xsl",
+              "2":"--medium=electronic",
+              "3":"--formatter=XEP",
+              "4":"--out-type=PDF"
+
+            },
+            "executable": "/usr/local/mpt/static/tools/disseminate.py"
         }
+
 
     }
 }

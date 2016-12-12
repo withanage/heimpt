@@ -138,13 +138,18 @@ class Disseminate(Debuggable):
 
         See Also
         --------
-        get_saxon_path, process
+        create_fo, create_pdf
 
         """
-        if self.out_type=='fo':
+        if self.out_type == 'fo':
             self.create_fo()
 
+        if self.out_type == 'pdf':
+            self.create_pdf()
 
+    def create_pdf(self):
+
+        return
 
     def create_fo(self):
         """
@@ -161,12 +166,16 @@ class Disseminate(Debuggable):
             self.debug.print_debug(self, self.gv.SAXON_IS_NOT_AVAILABLE)
             sys.exit(1)
         else:
-            self.debug.print_console(self, self.gv.RUNNING_SAXON_CONVERSION)
-            self.gv.create_dirs_recursive(self.args.get('<path>').split(os.pathsep))
-            args = self.run_saxon(saxon_path)
-            self.process(args)
+            formatters = self.args.get('--formatter').split(',')
+            mediums = self.args.get('--medium').split(',')
+            for f in formatters:
+                for m in mediums:
+                    self.debug.print_console(self, self.gv.RUNNING_SAXON_CONVERSION)
+                    self.gv.create_dirs_recursive(self.args.get('<path>').split(os.pathsep))
+                    args = self.run_saxon(saxon_path,f, m)
+                    self.process(args)
 
-    def run_saxon(self, saxon_path):
+    def run_saxon(self, saxon_path, formatter, medium):
         """
         Creates the executable path for saxon
 
@@ -174,6 +183,10 @@ class Disseminate(Debuggable):
         ---------
         saxon_path : str
             absolute path  of the saxon binary jar file
+        formatter : str
+            name of the FO formatter
+        medium : str
+            name of the medium
 
         Returns
         ------
@@ -194,14 +207,12 @@ class Disseminate(Debuggable):
         else:
             self.debug.print_debug(self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + ' ' + s)
             sys.exit(1)
+        file_name = ''.join([self.gv.uuid ,'.',formatter.lower(),'.', medium.lower(),'.','fo'])
+        args.append("-o:" + os.path.join(self.args.get('<path>'), file_name))
+        args.append('formatter=' + formatter)
+        args.append('medium=' + medium)
 
-        args.append("-o:" + os.path.join(self.args.get('<path>'),self.gv.uuid+'.fo'))
-        f = self.args.get('--formatter')
-        if f:
-            args.append('formatter=' + f)
-        m = self.args.get('--medium')
-        if m:
-            args.append('medium=' + m)
+
 
         return args
 

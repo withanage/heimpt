@@ -619,13 +619,19 @@ class MPT(Debuggable):
                 shutil.rmtree(os.path.join(p.get('path'), uid))
         else:
             t_path.append(prefix + '.' + out_type)
+            #print t_path
             p_path = self.gv.create_dirs_recursive(project_path)
-            f_path = '{}{}{}.{}'.format(p_path,SEP,prefix, out_type)
+            print 100*'-'
+            temp_path = os.path.dirname(os.path.abspath(SEP.join(t_path)))
+            for filename in os.listdir(os.path.dirname(os.path.abspath(SEP.join(t_path)))):
+                f_path = '{}{}{}'.format(p_path, SEP, filename)
+                if os.path.exists(SEP.join(t_path)):
+                    os.rename(SEP.join(t_path), f_path)
 
-            os.rename(SEP.join(t_path), f_path)
-            shutil.rmtree(os.path.join(p.get('path'), uid))
+            if not p['typesetters'][p_id].get('merge'):
+                shutil.rmtree(os.path.join(p.get('path'), uid))
 
-        self.debug.print_console(self, '{}  {}'.format(self.gv.OUTPUT,f_path))
+        #self.debug.print_console(self, '{}  {}'.format(self.gv.OUTPUT,f_path))
 
         return SEP.join(project_path)
 
