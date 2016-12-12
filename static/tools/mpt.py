@@ -628,7 +628,7 @@ class MPT(Debuggable):
                 if os.path.exists(SEP.join(t_path)):
                     os.rename(SEP.join(t_path), f_path)
 
-            if not p['typesetters'][p_id].get('merge'):
+            if not p['typesetters'][p_id].get('expand'):
                 shutil.rmtree(os.path.join(p.get('path'), uid))
 
         #self.debug.print_console(self, '{}  {}'.format(self.gv.OUTPUT,f_path))
