@@ -207,7 +207,7 @@ class Disseminate(Debuggable):
         else:
             self.debug.print_debug(self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + ' ' + s)
             sys.exit(1)
-        file_name = ''.join([self.gv.uuid ,'.',formatter.lower(),'.', medium.lower(),'.','fo'])
+        file_name = ''.join([self.gv.uuid ,'.','fo'])
         args.append("-o:" + os.path.join(self.args.get('<path>'), file_name))
         args.append('formatter=' + formatter)
         args.append('medium=' + medium)

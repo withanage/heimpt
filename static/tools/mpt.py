@@ -612,6 +612,7 @@ class MPT(Debuggable):
         t_path = [p.get('path'), uid] + ['nlm'] if p_name == 'metypeset' else [p.get('path'), uid]
         out_type = p['typesetters'][p_id]['out_type']
         project_path = [p.get('path'),p['name'], self.current_result, p_id + '_' + p_name,out_type]
+        print 100 * '-'
 
         if p['typesetters'][p_id].get('merge'):
             f_path = self.create_merged_file(p, p_id, project_path, t_path)
@@ -621,15 +622,14 @@ class MPT(Debuggable):
             t_path.append(prefix + '.' + out_type)
             #print t_path
             p_path = self.gv.create_dirs_recursive(project_path)
-            print 100*'-'
             temp_path = os.path.dirname(os.path.abspath(SEP.join(t_path)))
-            for filename in os.listdir(os.path.dirname(os.path.abspath(SEP.join(t_path)))):
+            for filename in os.listdir(temp_path):
                 f_path = '{}{}{}'.format(p_path, SEP, filename)
                 if os.path.exists(SEP.join(t_path)):
                     os.rename(SEP.join(t_path), f_path)
 
-            if not p['typesetters'][p_id].get('expand'):
-                shutil.rmtree(os.path.join(p.get('path'), uid))
+
+            shutil.rmtree(os.path.join(p.get('path'), uid))
 
         #self.debug.print_console(self, '{}  {}'.format(self.gv.OUTPUT,f_path))
 
