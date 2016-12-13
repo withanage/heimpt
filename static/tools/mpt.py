@@ -691,8 +691,8 @@ def main():
     run
 
     """
-    pre_process_instance = MPT()
-    pre_process_instance.run()
+    process_instance = MPT()
+    process_instance.run()
 
 
 if __name__ == '__main__':
