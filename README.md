@@ -21,7 +21,6 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
  * Make sure you have the correct rights to install the software in the `$BUILD_DIR`. Default Installation folder  `/usr/local/mpt`.  
  * Any one of the tools, only needed for PDF Generation
   * Apache FOP (Opensource) : http://www.apache.org/dyn/closer.cgi/xmlgraphics/fop
-  * 
 
 ## Installation 
 ```
