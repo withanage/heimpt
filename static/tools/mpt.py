@@ -618,20 +618,17 @@ class MPT(Debuggable):
             f_path = self.create_merged_file(p, p_id, project_path, t_path)
             if len(p.get('files').items()) == f_id:
                 shutil.rmtree(os.path.join(p.get('path'), uid))
-        else:
+        else :
             t_path.append(prefix + '.' + out_type)
             p_path = self.gv.create_dirs_recursive(project_path)
-            temp_path = os.path.dirname(os.path.abspath(SEP.join(t_path)))
-            for filename in os.listdir(temp_path):
-                #f_path = '{}{}{}'.format(p_path, SEP, filename)
-                f_path = '{}{}{}.{}'.format(p_path, SEP, prefix, out_type)
-                os.rename(SEP.join(t_path), f_path)
-                if not p['typesetters'][p_id].get('merge'):
-                    shutil.rmtree(os.path.join(p.get('path'), uid))
+            f_path = '{}{}{}.{}'.format(p_path, SEP, prefix, out_type)
+            os.rename(SEP.join(t_path), f_path)
+            if not p['typesetters'][p_id].get('merge'):
+               shutil.rmtree(os.path.join(p.get('path'), uid))
+           # temp_path = os.path.dirname(os.path.abspath(SEP.join(t_path)))
+           # for filename in os.listdir(temp_path):
+           # f_path = '{}{}{}'.format(p_path, SEP, filename)
 
-
-
-        #shutil.rmtree(os.path.join(p.get('path'), uid))
 
         #self.debug.print_console(self, '{}  {}'.format(self.gv.OUTPUT,f_path))
 
