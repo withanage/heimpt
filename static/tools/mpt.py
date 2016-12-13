@@ -612,7 +612,6 @@ class MPT(Debuggable):
         t_path = [p.get('path'), uid] + ['nlm'] if p_name == 'metypeset' else [p.get('path'), uid]
         out_type = p['typesetters'][p_id]['out_type']
         project_path = [p.get('path'),p['name'], self.current_result, p_id + '_' + p_name,out_type]
-        print 100 * '-'
 
         if p['typesetters'][p_id].get('merge'):
             f_path = self.create_merged_file(p, p_id, project_path, t_path)
