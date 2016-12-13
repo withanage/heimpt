@@ -1,0 +1,7 @@
+disseminate module
+=================
+
+.. automodule:: disseminate
+    :members:
+    :undoc-members:
+    :show-inheritance:

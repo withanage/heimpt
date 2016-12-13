@@ -17,7 +17,7 @@ Utilities
 .. toctree::
    :maxdepth: 2
 
-   process
+   prepare
    merge
    disseminate	
 

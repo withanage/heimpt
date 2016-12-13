@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>xmlMerge module &#8212; MPT 0.0.1 documentation</title>
+    <title>merge module &#8212; MPT 0.0.1 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,7 +27,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="MPT 0.0.1 documentation" href="index.html" />
-    <link rel="prev" title="xmlProcess module" href="process.html" /> 
+    <link rel="prev" title="prepare module" href="prepare.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -40,7 +40,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="process.html" title="xmlProcess module"
+          <a href="prepare.html" title="prepare module"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">MPT 0.0.1 documentation</a> &#187;</li> 
       </ul>
@@ -52,7 +52,7 @@
           <div class="body" role="main">
             
   <div class="section" id="module-merge">
-<span id="xmlmerge-module"></span><h1>xmlMerge module<a class="headerlink" href="#module-merge" title="Permalink to this headline">¶</a></h1>
+<span id="merge-module"></span><h1>merge module<a class="headerlink" href="#module-merge" title="Permalink to this headline">¶</a></h1>
 <p>This  program is a utility file to merge a JATS/BITS XML  section into a BIS-XML files</p>
 <p>The current functions are limited to JATS and BITS XML Scheme of the Library of Congress. However the methods defined in
 this program can be used to modify any element tree.</p>
@@ -74,13 +74,13 @@ this program can be used to modify any element tree.</p>
 <li>Licensed under terms of GPL 3  license (LICENSE.md)</li>
 </ul>
 <dl class="class">
-<dt id="merge.XMLMerge">
-<em class="property">class </em><code class="descclassname">merge.</code><code class="descname">XMLMerge</code><a class="reference internal" href="_modules/merge.html#XMLMerge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.XMLMerge" title="Permalink to this definition">¶</a></dt>
+<dt id="merge.Merge">
+<em class="property">class </em><code class="descclassname">merge.</code><code class="descname">Merge</code><a class="reference internal" href="_modules/merge.html#Merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.Merge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="debug.html#debug.Debuggable" title="debug.Debuggable"><code class="xref py py-class docutils literal"><span class="pre">debug.Debuggable</span></code></a></p>
 <p>Standalone Processing object which merges current  JATS/BITS XML file in to the Body of a BITS-XML document.</p>
 <dl class="method">
-<dt id="merge.XMLMerge.create_book_bits">
-<code class="descname">create_book_bits</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#XMLMerge.create_book_bits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.XMLMerge.create_book_bits" title="Permalink to this definition">¶</a></dt>
+<dt id="merge.Merge.create_book_bits">
+<code class="descname">create_book_bits</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#Merge.create_book_bits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.Merge.create_book_bits" title="Permalink to this definition">¶</a></dt>
 <dd><p>creates a  full BITS XML book and optionally adds metadata</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -94,13 +94,13 @@ this program can be used to modify any element tree.</p>
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#merge.XMLMerge.create_metadata_path" title="merge.XMLMerge.create_metadata_path"><code class="xref py py-meth docutils literal"><span class="pre">create_metadata_path()</span></code></a>, <a class="reference internal" href="#merge.XMLMerge.create_book_part_bits" title="merge.XMLMerge.create_book_part_bits"><code class="xref py py-meth docutils literal"><span class="pre">create_book_part_bits()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#merge.Merge.create_metadata_path" title="merge.Merge.create_metadata_path"><code class="xref py py-meth docutils literal"><span class="pre">create_metadata_path()</span></code></a>, <a class="reference internal" href="#merge.Merge.create_book_part_bits" title="merge.Merge.create_book_part_bits"><code class="xref py py-meth docutils literal"><span class="pre">create_book_part_bits()</span></code></a></p>
 </div>
 </dd></dl>
 
 <dl class="method">
-<dt id="merge.XMLMerge.create_book_part_bits">
-<code class="descname">create_book_part_bits</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#XMLMerge.create_book_part_bits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.XMLMerge.create_book_part_bits" title="Permalink to this definition">¶</a></dt>
+<dt id="merge.Merge.create_book_part_bits">
+<code class="descname">create_book_part_bits</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#Merge.create_book_part_bits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.Merge.create_book_part_bits" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads a JATS XMl File and creates a book-part element tree according to BITS-XML.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -115,8 +115,8 @@ this program can be used to modify any element tree.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="merge.XMLMerge.create_metadata_path">
-<code class="descname">create_metadata_path</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#XMLMerge.create_metadata_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.XMLMerge.create_metadata_path" title="Permalink to this definition">¶</a></dt>
+<dt id="merge.Merge.create_metadata_path">
+<code class="descname">create_metadata_path</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#Merge.create_metadata_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.Merge.create_metadata_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>creates the correct folder path for the metadata file. Metadata files should be in a folder : metadata</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -135,19 +135,19 @@ this program can be used to modify any element tree.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="merge.XMLMerge.create_output_bits">
-<code class="descname">create_output_bits</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#XMLMerge.create_output_bits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.XMLMerge.create_output_bits" title="Permalink to this definition">¶</a></dt>
+<dt id="merge.Merge.create_output_bits">
+<code class="descname">create_output_bits</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#Merge.create_output_bits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.Merge.create_output_bits" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create bits output file, generates a new file, if no file is found.
 Otherwise the current file is appended to the book body as a book-part.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#merge.XMLMerge.create_book_part_bits" title="merge.XMLMerge.create_book_part_bits"><code class="xref py py-meth docutils literal"><span class="pre">create_book_part_bits()</span></code></a>, <a class="reference internal" href="#merge.XMLMerge.create_book_bits" title="merge.XMLMerge.create_book_bits"><code class="xref py py-meth docutils literal"><span class="pre">create_book_bits()</span></code></a>, <a class="reference internal" href="#merge.XMLMerge.do_file_io" title="merge.XMLMerge.do_file_io"><code class="xref py py-meth docutils literal"><span class="pre">do_file_io()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#merge.Merge.create_book_part_bits" title="merge.Merge.create_book_part_bits"><code class="xref py py-meth docutils literal"><span class="pre">create_book_part_bits()</span></code></a>, <a class="reference internal" href="#merge.Merge.create_book_bits" title="merge.Merge.create_book_bits"><code class="xref py py-meth docutils literal"><span class="pre">create_book_bits()</span></code></a>, <a class="reference internal" href="#merge.Merge.do_file_io" title="merge.Merge.do_file_io"><code class="xref py py-meth docutils literal"><span class="pre">do_file_io()</span></code></a></p>
 </div>
 </dd></dl>
 
 <dl class="method">
-<dt id="merge.XMLMerge.do_file_io">
-<code class="descname">do_file_io</code><span class="sig-paren">(</span><em>s</em>, <em>mode</em>, <em>pth</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#XMLMerge.do_file_io"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.XMLMerge.do_file_io" title="Permalink to this definition">¶</a></dt>
+<dt id="merge.Merge.do_file_io">
+<code class="descname">do_file_io</code><span class="sig-paren">(</span><em>s</em>, <em>mode</em>, <em>pth</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#Merge.do_file_io"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.Merge.do_file_io" title="Permalink to this definition">¶</a></dt>
 <dd><p>Executes read or write operations on a path</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -168,8 +168,8 @@ Otherwise the current file is appended to the book body as a book-part.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="merge.XMLMerge.get_xml_parts">
-<code class="descname">get_xml_parts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#XMLMerge.get_xml_parts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.XMLMerge.get_xml_parts" title="Permalink to this definition">¶</a></dt>
+<dt id="merge.Merge.get_xml_parts">
+<code class="descname">get_xml_parts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#Merge.get_xml_parts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.Merge.get_xml_parts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns  the front-matter , body and back-matter of a JATS XML file in the above order</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -187,8 +187,8 @@ Otherwise the current file is appended to the book body as a book-part.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="merge.XMLMerge.process">
-<code class="descname">process</code><span class="sig-paren">(</span><em>tr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#XMLMerge.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.XMLMerge.process" title="Permalink to this definition">¶</a></dt>
+<dt id="merge.Merge.process">
+<code class="descname">process</code><span class="sig-paren">(</span><em>tr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#Merge.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.Merge.process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Process  BITS-XML file and do all transformations into the elementtree</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -204,13 +204,13 @@ Otherwise the current file is appended to the book body as a book-part.</p>
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><code class="xref py py-meth docutils literal"><span class="pre">globals.set_numbering_tags()</span></code>, <a class="reference internal" href="#merge.XMLMerge.set_book_part_attributes" title="merge.XMLMerge.set_book_part_attributes"><code class="xref py py-meth docutils literal"><span class="pre">set_book_part_attributes()</span></code></a></p>
+<p class="last"><code class="xref py py-meth docutils literal"><span class="pre">globals.set_numbering_tags()</span></code>, <a class="reference internal" href="#merge.Merge.set_book_part_attributes" title="merge.Merge.set_book_part_attributes"><code class="xref py py-meth docutils literal"><span class="pre">set_book_part_attributes()</span></code></a></p>
 </div>
 </dd></dl>
 
 <dl class="staticmethod">
-<dt id="merge.XMLMerge.read_command_line">
-<em class="property">static </em><code class="descname">read_command_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#XMLMerge.read_command_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.XMLMerge.read_command_line" title="Permalink to this definition">¶</a></dt>
+<dt id="merge.Merge.read_command_line">
+<em class="property">static </em><code class="descname">read_command_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#Merge.read_command_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.Merge.read_command_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads and  generates a docopt dictionary from the command line parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -226,13 +226,13 @@ elements.</td>
 </dd></dl>
 
 <dl class="method">
-<dt id="merge.XMLMerge.run">
-<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#XMLMerge.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.XMLMerge.run" title="Permalink to this definition">¶</a></dt>
+<dt id="merge.Merge.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#Merge.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.Merge.run" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Runs the configuration on the processing object. Process  JATS-XML file and merges it into the full BITS-XML file</div></blockquote>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#merge.XMLMerge.create_output_bits" title="merge.XMLMerge.create_output_bits"><code class="xref py py-meth docutils literal"><span class="pre">create_output_bits()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#merge.Merge.create_output_bits" title="merge.Merge.create_output_bits"><code class="xref py py-meth docutils literal"><span class="pre">create_output_bits()</span></code></a></p>
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -241,8 +241,8 @@ elements.</td>
 </dd></dl>
 
 <dl class="method">
-<dt id="merge.XMLMerge.set_book_part_attributes">
-<code class="descname">set_book_part_attributes</code><span class="sig-paren">(</span><em>tr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#XMLMerge.set_book_part_attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.XMLMerge.set_book_part_attributes" title="Permalink to this definition">¶</a></dt>
+<dt id="merge.Merge.set_book_part_attributes">
+<code class="descname">set_book_part_attributes</code><span class="sig-paren">(</span><em>tr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#Merge.set_book_part_attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.Merge.set_book_part_attributes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add  specific attributes to book-part</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -279,8 +279,8 @@ elements.</td>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="process.html"
-                        title="previous chapter">xmlProcess module</a></p>
+  <p class="topless"><a href="prepare.html"
+                        title="previous chapter">prepare module</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -312,7 +312,7 @@ elements.</td>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="process.html" title="xmlProcess module"
+          <a href="prepare.html" title="prepare module"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">MPT 0.0.1 documentation</a> &#187;</li> 
       </ul>

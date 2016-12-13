@@ -1,7 +1,7 @@
-merge module
-===============
+prepare module
+=================
 
-.. automodule:: merge
+.. automodule:: prepare
     :members:
     :undoc-members:
     :show-inheritance:

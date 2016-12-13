@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>disseminate module &#8212; MPT 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="MPT 0.0.1 documentation" href="index.html" />
+    <link rel="prev" title="merge module" href="merge.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="merge.html" title="merge module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPT 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="disseminate-module">
+<h1>disseminate module<a class="headerlink" href="#disseminate-module" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-disseminate"></span><p>Reads a xml file , transforms it to a intermediate format (e.g. formattion objects: FO ) and converts  to PDF subsequently</p>
+<dl class="docutils">
+<dt>Usage:</dt>
+<dd>disseminate.py  &lt;input_file&gt;  &lt;path&gt;  &#8211;out-type=&lt;FO_PDF&gt; [options]</dd>
+<dt>Options:</dt>
+<dd><table class="first docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-d</span>, <span class="option">--debug</span></kbd></td>
+<td>Enable debug output</td></tr>
+</tbody>
+</table>
+<p class="last">-f &#8211;formatter=&lt;electronic_or_print&gt;    Formatter
+-m &#8211;medium=&lt;filename&gt;    Stylesheet file
+-s &#8211;saxon=&lt;location_of_the_saxon_jar_file&gt;
+-x &#8211;xsl=&lt;filename&gt;    Stylesheet file</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>python $BUILD_DIR/static/tools/disseminate.py</p>
+<dl class="class">
+<dt id="disseminate.Disseminate">
+<em class="property">class </em><code class="descclassname">disseminate.</code><code class="descname">Disseminate</code><a class="reference internal" href="_modules/disseminate.html#Disseminate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#disseminate.Disseminate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="debug.html#debug.Debuggable" title="debug.Debuggable"><code class="xref py py-class docutils literal"><span class="pre">debug.Debuggable</span></code></a></p>
+<dl class="method">
+<dt id="disseminate.Disseminate.create_fo">
+<code class="descname">create_fo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/disseminate.html#Disseminate.create_fo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#disseminate.Disseminate.create_fo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create  FO output</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#disseminate.Disseminate.run_saxon" title="disseminate.Disseminate.run_saxon"><code class="xref py py-meth docutils literal"><span class="pre">run_saxon()</span></code></a>, <a class="reference internal" href="#disseminate.Disseminate.get_saxon_path" title="disseminate.Disseminate.get_saxon_path"><code class="xref py py-meth docutils literal"><span class="pre">get_saxon_path()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="disseminate.Disseminate.create_pdf">
+<code class="descname">create_pdf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/disseminate.html#Disseminate.create_pdf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#disseminate.Disseminate.create_pdf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="disseminate.Disseminate.get_module_name">
+<code class="descname">get_module_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/disseminate.html#Disseminate.get_module_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#disseminate.Disseminate.get_module_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the name of the module for debugging and logging</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Name of the Module</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">name string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="disseminate.Disseminate.get_saxon_path">
+<code class="descname">get_saxon_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/disseminate.html#Disseminate.get_saxon_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#disseminate.Disseminate.get_saxon_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if saxon is available in the default path</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>saxon</strong> &#8211; True, if saxon is available. False, if not.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="disseminate.Disseminate.process">
+<code class="descname">process</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/disseminate.html#Disseminate.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#disseminate.Disseminate.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs  typesetter with given arguments</p>
+<p>Creates the execution path for  the conversion process. Output,exit-code and  system error codes are captured and returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> (<em>list</em>) &#8211; application arguments in the correct oder.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>output</strong> (<em>str</em>) &#8211; system standard output.</li>
+<li><strong>err</strong> (<em>str</em>) &#8211; system standard error.</li>
+<li><strong>exit_code</strong> (<em>str</em>) &#8211; system exit_code.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-meth docutils literal"><span class="pre">subprocess.Popen()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="disseminate.Disseminate.read_command_line">
+<em class="property">static </em><code class="descname">read_command_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/disseminate.html#Disseminate.read_command_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#disseminate.Disseminate.read_command_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads and  generates a docopt dictionary from the command line parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>docopt</strong> &#8211; A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
+elements.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dictionary</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="disseminate.Disseminate.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/disseminate.html#Disseminate.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#disseminate.Disseminate.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs converters</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#disseminate.Disseminate.create_fo" title="disseminate.Disseminate.create_fo"><code class="xref py py-meth docutils literal"><span class="pre">create_fo()</span></code></a>, <a class="reference internal" href="#disseminate.Disseminate.create_pdf" title="disseminate.Disseminate.create_pdf"><code class="xref py py-meth docutils literal"><span class="pre">create_pdf()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="disseminate.Disseminate.run_saxon">
+<code class="descname">run_saxon</code><span class="sig-paren">(</span><em>saxon_path</em>, <em>formatter</em>, <em>medium</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/disseminate.html#Disseminate.run_saxon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#disseminate.Disseminate.run_saxon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the executable path for saxon</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>saxon_path</strong> (<em>str</em>) &#8211; absolute path  of the saxon binary jar file</li>
+<li><strong>formatter</strong> (<em>str</em>) &#8211; name of the FO formatter</li>
+<li><strong>medium</strong> (<em>str</em>) &#8211; name of the medium</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>args</strong> &#8211; List of arguments for saxon execution path</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="disseminate.main">
+<code class="descclassname">disseminate.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/disseminate.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#disseminate.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls the conversion process</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-func docutils literal"><span class="pre">run()</span></code></p>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="merge.html"
+                        title="previous chapter">merge module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/disseminate.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="merge.html" title="merge module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MPT 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, Dulip Withanage, University of Heidelberg.
+    </div>
+  </body>
+</html>
