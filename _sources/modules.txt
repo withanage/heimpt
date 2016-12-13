@@ -8,5 +8,5 @@ tools
    docopt
    globals
    mpt
-   xmlMerge
-   xmlProcess
+   merge
+   process
