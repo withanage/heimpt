@@ -30,8 +30,7 @@ Check if you have persmissions  to the BUILD_DIR
 ```
 only needed if you generate PDF
 ## FO Processors
-* Apache FOP processor
-Download  [fop-2.1-bin.tar.gz](https://xmlgraphics.apache.org/fop/download.html) or [direct link](http://mirrors.cicku.me/apache/xmlgraphics/fop/binaries/fop-2.1-bin.tar.gz) into  $BUILD_DIR/mpt/static/tools
+Download [Apache FOP processor 2.1](https://xmlgraphics.apache.org/fop/download.html) or [direct link](http://mirrors.cicku.me/apache/xmlgraphics/fop/binaries/fop-2.1-bin.tar.gz) into  $BUILD_DIR/mpt/static/tools
 ```
 cd $BUILD_DIR/mpt/static/tools
 tar -xvzf fop-2.1-bin.tar.gz;
