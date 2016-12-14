@@ -37,6 +37,7 @@ wget https://github.com/apache/fop/archive/fop-2_1.tar.gz
 tar -xvzf fop-2_1.tar.gz
 rm  fop-2_1.tar.gz
 mv  fop-fop-2_1/ fop
+FOP_HOME=/usr/local/mpt/static/tools/fop 
 ```
 ## Test
 If your `$BUILD_DIR` differs from the previous path, change project path in `example.json`
