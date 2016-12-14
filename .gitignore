@@ -3,3 +3,4 @@
 *.pyc
 .idea/*
 static/tests/example/example_project/*
+static/tools/fop/*
