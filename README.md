@@ -33,7 +33,7 @@ only needed if you generate PDF
 * Apache FOP processor
 ```
 cd $BUILD_DIR/mpt/static/tools
-Download  from [fop-2.1-bin.tar.gz](https://xmlgraphics.apache.org/fop/download.html)
+Download  (fop-2.1-bin.tar.gz)[https://xmlgraphics.apache.org/fop/download.html] or (direct link)[http://mirrors.cicku.me/apache/xmlgraphics/fop/binaries/fop-2.1-bin.tar.gz]
 tar -xvzf fop-2.1-bin.tar.gz;
 mv fop-2.1 fop
 ```
