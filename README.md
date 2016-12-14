@@ -16,14 +16,15 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
 ![doc2pdf Pipeline](https://raw.githubusercontent.com/withanage/mpt/master/static/images/mpt.png)
 
 ## Prequisites
- * Python:  `python --version`
- * Git :check `git --version`
+ * Python: `python --version`
+ * Git: `git --version`
 
 ## MPT Installation 
+Check if you have persmissions  to the BUILD_DIR
 ```
- BUILD_DIR=/usr/local/mpt
-  git clone https://github.com/withanage/mpt.git $BUILD_DIR
- cd $BUILD_DIR
+ BUILD_DIR=/usr/local
+ git clone https://github.com/withanage/mpt.git $BUILD_DIR/mpt 
+ cd $BUILD_DIR/mpt
  git submodule init
  git submodule update
 ```
@@ -31,18 +32,19 @@ only needed if you generate PDF
 ## FO Processors
 * Apache FOP processor
 ```
-cd $BUILD_DIR/static/tools
+cd $BUILD_DIR/mpt/static/tools
 wget https://github.com/apache/fop/archive/fop-2_1.tar.gz
 tar -xvzf fop-2_1.tar.gz
 rm  fop-2_1.tar.gz
+mv  fop-2_1 fop
 ```
-## Test your Installation
-If you changed the `$BUILD_DIR` in the previous step, you have to change the project path in `example.json`
+## Test
+If your `$BUILD_DIR` differs from the previous path, change project path in `example.json`
 
 ```
 python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/example.json --debug
 ```
-## Update Installation in a later time
+## Update
 ```
 cd $BUILD_DIR
 git checkout master;git fetch; git pull; git submodule update
