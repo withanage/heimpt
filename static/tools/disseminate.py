@@ -121,6 +121,7 @@ class Disseminate(Debuggable):
         subprocess.Popen()
 
         """
+        self.gv.create_dirs_recursive(self.dr.split('/'))
 
         m = ' '.join(args).strip().split(' ')
         print ' '.join(args)

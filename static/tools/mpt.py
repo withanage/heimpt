@@ -425,18 +425,18 @@ class MPT(Debuggable):
             sorted((int(key), value) for key, value in p.get('files').items()))
         if p.get('typesetters')[pre_id].get("expand"):
             print 'running merge/expand'
-            if p.get('typesetters')[pre_id].get("expand"):
-                f_name = self.gv.uuid
-                f_id = len(p.get('files'))
-                p_path, pf_type = self.typeset_file(
-                    p,
-                    pre_path,
-                    pre_out_type,
-                    pre_id,
-                    uid,
-                    f_id,
-                    f_name
-                )
+            f_name = self.gv.uuid
+            temp_dir = os.path.join(p.get('path'), uid)
+            p_path, pf_type = self.typeset_file(
+                p,
+                pre_path,
+                pre_out_type,
+                pre_id,
+                uid,
+                0,
+                f_name
+            )
+
 
         else:
             for f_id in project_files:

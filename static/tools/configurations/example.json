@@ -44,19 +44,17 @@
                 "4":{
                   "name":"xml2fo",
                   "out_type": "fo",
-                  "expand":true
-                  , "arguments": {
-                     "1": "fn:append_out_dir"
-
+                  "expand":true,
+                  "arguments": {
+                    "1": "fn:append_out_dir"
                   }
                 },
               "5":{
                   "name":"fo2pdf",
                   "out_type": "pdf",
-                  "expand":true
-                  , "arguments": {
-                     "1": "fn:append_out_dir"
-
+                  "expand":true,
+                  "arguments": {
+                    "1": "fn:append_out_dir"
                   }
                 }
 
@@ -113,7 +111,7 @@
             "executable": "/usr/local/mpt/static/tools/merge.py"
         }
       ,
-        "xml2pdf": {
+        "xml2fo": {
             "arguments": {
               "1":"--xsl=/heiup_formatter.xsl",
               "2":"--medium=electronic,print",
