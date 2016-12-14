@@ -37,7 +37,6 @@ wget https://github.com/apache/fop/archive/fop-2_1.tar.gz
 tar -xvzf fop-2_1.tar.gz
 rm  fop-2_1.tar.gz
 mv  fop-fop-2_1/ fop
-echo "Set the FOP_HOME variable. See your system documentation for permanently setting."
 FOP_HOME=/usr/local/mpt/static/tools/fop 
 ```
 ## Test
