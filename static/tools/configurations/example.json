@@ -32,8 +32,6 @@
                         "2":"bits",
                         "3":"--metadata book-meta.bits2",
                         "4": "--set-numbering-tags=disp-quote,tr"
-
-
                     },
                     "name": "xmlmerge",
                     "out_type": "xml",
