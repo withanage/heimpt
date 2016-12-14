@@ -113,7 +113,7 @@
             "executable": "/usr/local/mpt/static/tools/merge.py"
         }
       ,
-        "xml2fo": {
+        "xml2pdf": {
             "arguments": {
               "1":"--xsl=/heiup_formatter.xsl",
               "2":"--medium=electronic,print",

@@ -157,7 +157,8 @@ class Disseminate(Debuggable):
                 for m in mediums:
                     self.debug.print_console(self, self.gv.RUNNING_PDF_CONVERSION)
                     self.gv.create_dirs_recursive(self.args.get('<path>').split(os.pathsep))
-                    self.process(args)
+                    output, err, exit_code = self.process(args)
+
         else:
             self.debug.print_debug(self, self.gv.PROJECT_FO_PROCESSOR_DOES_NOT_EXIST+' '+ s)
         return

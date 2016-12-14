@@ -423,16 +423,11 @@ class MPT(Debuggable):
 
         project_files = collections.OrderedDict(
             sorted((int(key), value) for key, value in p.get('files').items()))
-
-        for f_id in project_files:
-            f_name = project_files[f_id]
-            p_path, pf_type = '', ''
-            run_typeset_file = True
+        if p.get('typesetters')[pre_id].get("expand"):
+            print 'running merge/expand'
             if p.get('typesetters')[pre_id].get("expand"):
                 f_name = self.gv.uuid
-                if f_id != len(p.get('files')):
-                    run_typeset_file = False
-            if run_typeset_file:
+                f_id = len(p.get('files'))
                 p_path, pf_type = self.typeset_file(
                     p,
                     pre_path,
@@ -442,6 +437,19 @@ class MPT(Debuggable):
                     f_id,
                     f_name
                 )
+
+        else:
+            for f_id in project_files:
+                f_name = project_files[f_id]
+                p_path, pf_type = self.typeset_file(
+                        p,
+                        pre_path,
+                        pre_out_type,
+                        pre_id,
+                        uid,
+                        f_id,
+                        f_name
+                    )
 
         return p_path, pf_type
 
@@ -484,7 +492,7 @@ class MPT(Debuggable):
                 sys.exit(1)
 
             for p_id in typesetters_ordered:
-
+                print 'running typesetter',p_id
                 temp_path, temp_pre_out_type = self.typeset_files(
                     p,
                     pre_path,
@@ -614,7 +622,7 @@ class MPT(Debuggable):
         temp_dir = os.path.join(p.get('path'), uid)
 
         if p['typesetters'][p_id].get('merge'):
-            f_path = self.create_merged_file(p, p_id, project_path, t_path)
+            self.create_merged_file(p, p_id, project_path, t_path)
             if len(p.get('files').items()) == f_id:
                 shutil.rmtree(temp_dir)
         elif p['typesetters'][p_id].get('expand'):
