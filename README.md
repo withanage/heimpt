@@ -16,28 +16,26 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
 ![doc2pdf Pipeline](https://raw.githubusercontent.com/withanage/mpt/master/static/images/mpt.png)
 
 ## Prequisites
- * Python is available in your system: check with  `python --version`
- * Git is installed : check `git --version`
- * Make sure you have the correct rights to install the software in the `$BUILD_DIR`. Default Installation folder  `/usr/local/mpt`.  
- * Any one of the tools, only needed for PDF Generation
-  * Apache FOP (Opensource) : http://www.apache.org/dyn/closer.cgi/xmlgraphics/fop
+ * Python:  `python --version`
+ * Git :check `git --version`
 
-## Installation 
+## MPT Installation 
 ```
  BUILD_DIR=/usr/local/mpt
- git clone https://github.com/withanage/mpt.git $BUILD_DIR
+  git clone https://github.com/withanage/mpt.git $BUILD_DIR
  cd $BUILD_DIR
  git submodule init
  git submodule update
 ```
-## Installation  (as system-root or administrator)
+only needed if you generate PDF
+## FO Processors
+* Apache FOP processor
 ```
- BUILD_DIR=/usr/local/mpt
- sudo git clone https://github.com/withanage/mpt.git $BUILD_DIR
- cd $BUILD_DIR
- sudo git submodule init
- sudo git submodule update
- ```
+cd $BUILD_DIR/static/tools
+wget https://github.com/apache/fop/archive/fop-2_1.tar.gz
+tar -xvzf fop-2_1.tar.gz
+rm  fop-2_1.tar.gz
+```
 ## Test your Installation
 If you changed the `$BUILD_DIR` in the previous step, you have to change the project path in `example.json`
 
