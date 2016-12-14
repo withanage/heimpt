@@ -36,7 +36,7 @@ cd $BUILD_DIR/mpt/static/tools
 wget https://github.com/apache/fop/archive/fop-2_1.tar.gz
 tar -xvzf fop-2_1.tar.gz
 rm  fop-2_1.tar.gz
-mv  fop-2_1 fop
+mv  fop-fop-2_1/ fop
 ```
 ## Test
 If your `$BUILD_DIR` differs from the previous path, change project path in `example.json`
