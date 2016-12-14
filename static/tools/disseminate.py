@@ -148,7 +148,18 @@ class Disseminate(Debuggable):
             self.create_pdf()
 
     def create_pdf(self):
-
+        s = os.path.join(self.script_path, 'fop/fop')
+        args=[s]
+        if os.path.isfile(s):
+            formatters = self.args.get('--formatter').split(',')
+            mediums = self.args.get('--medium').split(',')
+            for f in formatters:
+                for m in mediums:
+                    self.debug.print_console(self, self.gv.RUNNING_PDF_CONVERSION)
+                    self.gv.create_dirs_recursive(self.args.get('<path>').split(os.pathsep))
+                    self.process(args)
+        else:
+            self.debug.print_debug(self, self.gv.PROJECT_FO_PROCESSOR_DOES_NOT_EXIST+' '+ s)
         return
 
     def create_fo(self):
@@ -170,7 +181,7 @@ class Disseminate(Debuggable):
             mediums = self.args.get('--medium').split(',')
             for f in formatters:
                 for m in mediums:
-                    self.debug.print_console(self, self.gv.RUNNING_SAXON_CONVERSION)
+                    self.debug.print_console(self, self.gv.RUNNING_FO_CONVERSION)
                     self.gv.create_dirs_recursive(self.args.get('<path>').split(os.pathsep))
                     args = self.run_saxon(saxon_path,f, m)
                     self.process(args)
@@ -207,7 +218,7 @@ class Disseminate(Debuggable):
         else:
             self.debug.print_debug(self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST + ' ' + s)
             sys.exit(1)
-        file_name = ''.join([self.gv.uuid ,'.','fo'])
+        file_name = '.'.join([self.gv.uuid,formatter.lower(),medium.lower(),'fo'])
         args.append("-o:" + os.path.join(self.args.get('<path>'), file_name))
         args.append('formatter=' + formatter)
         args.append('medium=' + medium)
@@ -218,12 +229,11 @@ class Disseminate(Debuggable):
 
 
 """
-/usr/local/mpt/static/stylesheets/heiup_formatter.xsl
-java -jar /Volumes/DATENSTICK/14\ XSL-FO/bin/saxon/saxon9he.jar
--s:/Volumes/DATENSTICK/14\ XSL-FO/out/xml/Testdokument.xml
--xsl:/Volumes/DATENSTICK/14\ XSL-FO/stylesheets/heiup_formatter.xsl
--o:/Volumes/DATENSTICK/14\ XSL-FO/out/fo/Testdokument_epdf_xep.fo
-medium=electronic formatter=XEP
+bin/fop/fop -fo Testdokument_print_fop.fo
+-pdf Testdokument_print_fop.pdf -c
+conf/fop-print.xml
+-pdfprofile PDF/X-3:2003
+
 
 /bin/xep/xep
 -fo /Volumes/DATENSTICK/14\ XSL-FO/out/fo/Testdokument_epdf_xep.fo

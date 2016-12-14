@@ -295,10 +295,9 @@ class MPT(Debuggable):
 
         if os.path.isfile(f_path) or p['typesetters'].get(p_id).get('expand'):
             args.append(f_path)
-            self.create_output_path( p, p_id,  args, prefix, uid)
+            self.create_output_path(p, p_id,  args, prefix, uid)
             output, err, exit_code = self.call_typesetter(args)
             self.debug.print_debug(self, output.decode('utf-8'))
-
             p_path = self.organize_output(
                 p,
                 p_id,
@@ -612,22 +611,26 @@ class MPT(Debuggable):
         t_path = [p.get('path'), uid] + ['nlm'] if p_name == 'metypeset' else [p.get('path'), uid]
         out_type = p['typesetters'][p_id]['out_type']
         project_path = [p.get('path'),p['name'], self.current_result, p_id + '_' + p_name,out_type]
+        temp_dir = os.path.join(p.get('path'), uid)
 
         if p['typesetters'][p_id].get('merge'):
             f_path = self.create_merged_file(p, p_id, project_path, t_path)
             if len(p.get('files').items()) == f_id:
-                shutil.rmtree(os.path.join(p.get('path'), uid))
+                shutil.rmtree(temp_dir)
         elif p['typesetters'][p_id].get('expand'):
-            print 'expand'
-        else:
+            for filename in os.listdir(temp_dir):
+                p_path = self.gv.create_dirs_recursive(project_path)
+                f_path = '{}{}{}'.format(p_path,SEP,filename)
+                os.rename(os.path.join(temp_dir,filename), f_path)
+            shutil.rmtree(temp_dir)
+        elif p['typesetters'][p_id].get('process'):
             t_path.append(prefix + '.' + out_type)
             p_path = self.gv.create_dirs_recursive(project_path)
             f_path = '{}{}{}.{}'.format(p_path, SEP, prefix, out_type)
             os.rename(SEP.join(t_path), f_path)
-            if not p['typesetters'][p_id].get('merge'):
-               shutil.rmtree(os.path.join(p.get('path'), uid))
-           
-
+            shutil.rmtree(temp_dir)
+        else:
+            self.debug.print_debug(self, self.gv.PROJECT_TYPESETTER_PROCESS_METHOD_NOT_SPECIFIED)
 
         #self.debug.print_console(self, '{}  {}'.format(self.gv.OUTPUT,f_path))
 

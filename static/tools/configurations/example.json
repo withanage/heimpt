@@ -17,14 +17,16 @@
                         "1": "fn:append_out_dir"
                     },
                     "name": "metypeset",
-                    "out_type": "xml"
+                    "out_type": "xml",
+                    "process":true
                 },
                 "2": {
                    "arguments": {
                         "1": "fn:append_out_dir"
                     },
                     "name": "xmlprocess",
-                    "out_type": "xml"
+                    "out_type": "xml",
+                    "process":true
                 },
                 "3": {
                    "arguments": {
@@ -42,6 +44,15 @@
                 "4":{
                   "name":"xml2fo",
                   "out_type": "fo",
+                  "expand":true
+                  , "arguments": {
+                     "1": "fn:append_out_dir"
+
+                  }
+                },
+              "5":{
+                  "name":"fo2pdf",
+                  "out_type": "pdf",
                   "expand":true
                   , "arguments": {
                      "1": "fn:append_out_dir"
@@ -114,10 +125,9 @@
         },
       "fo2pdf": {
             "arguments": {
-              "1":"--xsl=/heiup_formatter.xsl",
-              "2":"--medium=electronic",
-              "3":"--formatter=XEP",
-              "4":"--out-type=PDF"
+              "1":"--medium=electronic",
+              "2":"--formatter=XEP,FO",
+              "3":"--out-type=PDF"
 
             },
             "executable": "/usr/local/mpt/static/tools/disseminate.py"

@@ -40,7 +40,9 @@ class GV(object):
         self.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED = u'project typesetter varaible is not specified'
         self.PROJECT_TYPESETTERS_ARE_NOT_SPECIFIED = u'project typesetters are not specified'
         self.PROJECTS_VAR_IS_NOT_SPECIFIED = u'project variable is not  specified'
+        self.PROJECT_TYPESETTER_PROCESS_METHOD_NOT_SPECIFIED=u'project typesetter process method not specified'
         self.PROJECTS_TYPESETTER_RUNS_WITH_NO_ARGUMENTS = u'projects typesetter runs with no arguments'
+
 
         # typesetter errors
         self.TYPESETTER_EXECUTABLE_VARIABLE_IS_UNDEFINED = u'typesetter executable variable is undefined'
@@ -53,7 +55,8 @@ class GV(object):
         self.TYPESETTER_RUNS_WITH_NO_ARGUMENTS = u'typesetter runs with no arguments'
 
         # xml
-        self.RUNNING_SAXON_CONVERSION = u'running saxon conversion'
+        self.RUNNING_FO_CONVERSION = u'running FO conversion'
+        self.RUNNING_PDF_CONVERSION = u'running PDF conversion'
         self.XML_ELEMENT_NOT_FOUND = u'xml element not found'
         self.XML_FILE_NOT_CREATED = u'xml file not created'
         self.XML_INPUT_FILE_IS_NOT_FOUND = u'xml input file is not found'
