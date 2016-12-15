@@ -5,8 +5,8 @@
             "chain": true,
             "files": {
                 "1": "01_headline.docx",
-                "2": "02_boxed_text.docx",
-                "3": "03_tables.docx"
+                "2": "02_boxed_text.docx"
+
 
             },
             "name": "example_project",
@@ -113,7 +113,7 @@
       ,
         "xml2fo": {
             "arguments": {
-              "1":"--xsl=/heiup_formatter.xsl",
+              "1":"--xsl=/formatter.xsl",
               "2":"--medium=electronic,print",
               "3":"--formatter=FOP",
               "4":"--out-type=FO"
