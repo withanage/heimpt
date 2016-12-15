@@ -175,8 +175,8 @@ class Disseminate(Debuggable):
                 if self.out_type=='pdf':
                     self.debug.print_console(self, self.gv.RUNNING_PDF_CONVERSION)
                     args = self.run_fop_processor(f, m)
-                output, err, exit_code = self.process(args)
-                print output
+                #output, err, exit_code = self.process(args)
+                #print output
 
     def run_fop_processor(self,  formatter, medium):
 
@@ -194,9 +194,7 @@ class Disseminate(Debuggable):
 
 
     def run_apache_fop(self, pth, formatter, medium):
-        sc = self.script_path.split(os.sep)[:-1]
-        sc.append('stylesheets/fo/conf/fop-print.xml')
-        style_path = os.path.sep.join(sc)
+        style_path = '{}/configurations/fop/conf/{}.{}.xml'.format(self.script_path, formatter,medium)
         print style_path
         args = [pth]
 
