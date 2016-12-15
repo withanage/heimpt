@@ -28,7 +28,6 @@ Check if you have persmissions  to the BUILD_DIR
  git submodule init
  git submodule update
 ```
-only needed if you generate PDF
 ## FO Processors
 Download [Apache FOP processor 2.1](https://xmlgraphics.apache.org/fop/download.html) or [direct link](http://mirrors.cicku.me/apache/xmlgraphics/fop/binaries/fop-2.1-bin.tar.gz) into  $BUILD_DIR/mpt/static/tools
 ```
