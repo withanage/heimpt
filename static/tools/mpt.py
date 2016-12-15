@@ -109,7 +109,7 @@ class MPT(Debuggable):
         name string
          Name of the Module
         """
-        name = 'Monograph Publication Tool'
+        name = 'MPT'
         return name
 
     def call_typesetter(self, args):
@@ -140,7 +140,7 @@ class MPT(Debuggable):
 
         """
         m = ' '.join(args).strip().split(' ')
-        self.debug.print_debug(self, ' '.join(m))
+        self.debug.print_console(self, ' '.join(m))
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
         exit_code = process.wait()
@@ -365,7 +365,7 @@ class MPT(Debuggable):
 
         if t_props:
             mt = self.arguments_parse(t_props)
-            if self.check_program(t_props.get('executable')):
+            if self.gv.check_program(t_props.get('executable')):
                 p_path, pf_type = self.run_typesetter(
                     p,
                     pre_path,
@@ -377,8 +377,7 @@ class MPT(Debuggable):
                     mt)
 
             else:
-                self.debug.print_debug(
-                    self, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
+                self.debug.print_debug(self, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
         else:
             self.debug.print_debug(
                 self, self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
@@ -424,9 +423,7 @@ class MPT(Debuggable):
         project_files = collections.OrderedDict(
             sorted((int(key), value) for key, value in p.get('files').items()))
         if p.get('typesetters')[pre_id].get("expand"):
-            print 'running merge/expand'
             f_name = self.gv.uuid
-            temp_dir = os.path.join(p.get('path'), uid)
             p_path, pf_type = self.typeset_file(
                 p,
                 pre_path,
@@ -492,7 +489,7 @@ class MPT(Debuggable):
                 sys.exit(1)
 
             for p_id in typesetters_ordered:
-                print 'running typesetter',p_id
+                self.debug.print_console(self, ' '.join(['Runnning Typesetter',p_id,':', p.get('typesetters')[p_id].get("name")]))
                 temp_path, temp_pre_out_type = self.typeset_files(
                     p,
                     pre_path,
@@ -502,6 +499,7 @@ class MPT(Debuggable):
 
                 pre_path = temp_path
                 prev_out_type = temp_pre_out_type
+                self.debug.print_console(self, ' '.join(['ls -al',temp_path]))
 
         else:
             self.debug.print_debug(self, self.gv.PROJECT_IS_NOT_ACTIVE)
@@ -530,50 +528,6 @@ class MPT(Debuggable):
             self.debug.print_debug(self, self.gv.PROJECTS_VAR_IS_NOT_SPECIFIED)
         return True
 
-    def check_program(self, p):
-        """
-        Checks  whether a  the program or typesetter is installed and executable
-
-        Parameters
-        ---------
-        p: str
-            Program path
-
-        Returns
-        --------
-        None: bool
-            Returns None , if  program exists
-
-        """
-
-        def is_exe(f_path):
-            """
-            Checks whether path is available and executable
-            Parameters
-            ---------
-            f_path: str
-                File path
-
-            Returns
-            --------
-            boolean: bool
-                True or False
-
-            """
-            return os.path.isfile(f_path) and os.access(f_path, os.X_OK)
-
-        fpath, fname = os.path.split(p)
-        if fpath:
-            if is_exe(p):
-                return p
-        else:
-            for path in os.environ["PATH"].split(os.pathsep):
-                path = path.strip('"')
-                exe_file = os.path.join(path, p)
-                if is_exe(exe_file):
-                    return exe_file
-
-        return None
 
     def organize_output(
             self,

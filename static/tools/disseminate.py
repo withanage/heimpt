@@ -61,6 +61,30 @@ class Disseminate(Debuggable):
         """
         return docopt(__doc__, version='Disseminate 0.1')
 
+    def get_fop_path(self, formatter):
+        """Checks if a certaion FO processor  is available in the default path
+
+        formatter : str
+            name of the FO formatter
+
+
+        Returns
+        --------
+        fop : boolean
+            True, if saxon is available. False, if not.
+
+        """
+
+
+
+
+
+        """
+        else:
+            self.debug.print_console(self, '{}  {} {}'.format(formatter,pth,self.gv.FOP_PATH_IS_NOT_AVAILABLE))
+            return False
+        """
+
     def get_saxon_path(self):
         """Checks if saxon is available in the default path
 
@@ -71,7 +95,7 @@ class Disseminate(Debuggable):
 
         """
 
-        s = os.path.join(self.script_path, 'meTypeset/runtime/saxon9.jar')
+        s = os.path.join(self.script_path, self.gv.METYPESET_PATH)
         if os.path.isfile(s):
             return s
         elif self.args.get('--saxon'):
@@ -121,7 +145,6 @@ class Disseminate(Debuggable):
         subprocess.Popen()
 
         """
-        self.gv.create_dirs_recursive(self.dr.split('/'))
 
         m = ' '.join(args).strip().split(' ')
         print ' '.join(args)
@@ -139,34 +162,20 @@ class Disseminate(Debuggable):
 
         See Also
         --------
-        create_fo, create_pdf
+        create_output, create_pdf
 
         """
-        if self.out_type == 'fo':
-            self.create_fo()
+        self.create_output(self.out_type)
 
-        if self.out_type == 'pdf':
-            self.create_pdf()
 
-    def create_pdf(self):
-        s = os.path.join(self.script_path, 'fop/fop')
-        args=[s]
-        if os.path.isfile(s):
-            formatters = self.args.get('--formatter').split(',')
-            mediums = self.args.get('--medium').split(',')
-            for f in formatters:
-                for m in mediums:
-                    self.debug.print_console(self, self.gv.RUNNING_PDF_CONVERSION)
-                    self.gv.create_dirs_recursive(self.args.get('<path>').split(os.pathsep))
-                    output, err, exit_code = self.process(args)
-
-        else:
-            self.debug.print_debug(self, self.gv.PROJECT_FO_PROCESSOR_DOES_NOT_EXIST+' '+ s)
-        return
-
-    def create_fo(self):
+    def create_output(self, out_type):
         """
         Create  FO output
+
+        Parameters
+        ----------
+        out_type: str
+            Output Type
 
 
         See Also
@@ -174,19 +183,47 @@ class Disseminate(Debuggable):
         run_saxon(), get_saxon_path()
         """
 
-        saxon_path = self.get_saxon_path()
-        if not saxon_path:
-            self.debug.print_debug(self, self.gv.SAXON_IS_NOT_AVAILABLE)
-            sys.exit(1)
-        else:
-            formatters = self.args.get('--formatter').split(',')
-            mediums = self.args.get('--medium').split(',')
-            for f in formatters:
-                for m in mediums:
+        formatters = self.args.get('--formatter').split(',')
+        mediums = self.args.get('--medium').split(',')
+        for f in formatters:
+            f = f.lower()
+            for m in mediums:
+                m = m.lower()
+                self.gv.create_dirs_recursive(self.args.get('<path>').split(os.pathsep))
+                if self.out_type=='fo':
                     self.debug.print_console(self, self.gv.RUNNING_FO_CONVERSION)
-                    self.gv.create_dirs_recursive(self.args.get('<path>').split(os.pathsep))
+                    saxon_path = self.get_saxon_path()
                     args = self.run_saxon(saxon_path,f, m)
-                    self.process(args)
+                if self.out_type=='pdf':
+                    self.debug.print_console(self, self.gv.RUNNING_PDF_CONVERSION)
+                    args = self.run_fop_processor(f, m)
+                output, err, exit_code = self.process(args)
+                print output
+
+    def run_fop_processor(self,  formatter, medium):
+
+        args = []
+        if formatter.lower() == 'fop':
+            pth = os.path.join(self.script_path, self.gv.APACHE_FOP_PATH)
+            if self.gv.check_program(pth):
+                args = self.run_apache_fop(pth,formatter, medium)
+
+        elif formatter.lower() == 'ah':
+            pth = self.gv.APACHE_ANTENNA_HOUSE_FOP_PATH
+            if self.gv.check_program(pth):
+                args = self.run_ah_fop(pth,formatter, medium)
+        return args
+
+
+    def run_apache_fop(self, pth, formatter, medium):
+        args=[pth]
+        args.append('-fo')
+        args.append('{}/{}.{}.{}.fo'.format(os.path.dirname(self.f),self.gv.uuid, formatter, medium))
+        args.append('-pdf')
+        args.append('{}.{}.{}.pdf'.format(self.gv.uuid, formatter, medium))
+        return args
+
+
 
     def run_saxon(self, saxon_path, formatter, medium):
         """
@@ -222,8 +259,8 @@ class Disseminate(Debuggable):
             sys.exit(1)
         file_name = '.'.join([self.gv.uuid,formatter.lower(),medium.lower(),'fo'])
         args.append("-o:" + os.path.join(self.args.get('<path>'), file_name))
-        args.append('formatter=' + formatter)
-        args.append('medium=' + medium)
+        args.append('formatter=' + formatter.lower())
+        args.append('medium=' + medium.lower())
 
 
 

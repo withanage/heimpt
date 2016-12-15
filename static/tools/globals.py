@@ -26,6 +26,12 @@ class GV(object):
     def __init__(self):
         # GLOBAL VARIABLES
 
+        #application paths
+        self.APACHE_FOP_PATH = u'fop/fop'
+        self.METYPESET_PATH = u'meTypeset/runtime/saxon9.jar'
+        self.ANTENNA_HOUSE_FOP_PATH=u'/usr/local/AHFormatterV63/run.sh'
+        self.XEP_FOP_PATH = u'/usr/local/xep/bin/xep/xep'
+
         # projects
         self.PROJECT_INPUT_FILE_JSON_IS_NOT_VALID = u'project input file json is not valid'
         self.PROJECT_INPUT_FILE_TYPE_IS_NOT_SPECIFIED = u'project input file type is not specified'
@@ -62,6 +68,7 @@ class GV(object):
         self.XML_INPUT_FILE_IS_NOT_FOUND = u'xml input file is not found'
         self.XML_INPUT_FILE_IS_NOT_VALID = u'xml input file is not valid'
         self.SAXON_IS_NOT_AVAILABLE = u'saxon is not available'
+        self.FOP_PATH_IS_NOT_AVAILABLE=u'fop path is not available'
 
         # WORDS
         self.OUTPUT = u'Output'
@@ -181,3 +188,48 @@ class GV(object):
                 i.set('id', tag.replace('-', '') + str(sid))
                 sid += 1
         return tr
+
+    def check_program(self, p):
+        """
+        Checks  whether a  the program or typesetter is installed and executable
+
+        Parameters
+        ---------
+        p: str
+            Program path
+
+        Returns
+        --------
+        None: bool
+            Returns None , if  program exists
+
+        """
+
+        def is_exe(f_path):
+            """
+            Checks whether path is available and executable
+            Parameters
+            ---------
+            f_path: str
+                File path
+
+            Returns
+            --------
+            boolean: bool
+                True or False
+
+            """
+            return os.path.isfile(f_path) and os.access(f_path, os.X_OK)
+
+        fpath, fname = os.path.split(p)
+        if fpath:
+            if is_exe(p):
+                return p
+        else:
+            for path in os.environ["PATH"].split(os.pathsep):
+                path = path.strip('"')
+                exe_file = os.path.join(path, p)
+                if is_exe(exe_file):
+                    return exe_file
+
+        return None

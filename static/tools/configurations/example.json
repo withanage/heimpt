@@ -115,7 +115,7 @@
             "arguments": {
               "1":"--xsl=/heiup_formatter.xsl",
               "2":"--medium=electronic,print",
-              "3":"--formatter=XEP,FOP,AH",
+              "3":"--formatter=FOP",
               "4":"--out-type=FO"
 
             },
@@ -124,7 +124,7 @@
       "fo2pdf": {
             "arguments": {
               "1":"--medium=electronic",
-              "2":"--formatter=XEP,FO",
+              "2":"--formatter=FOP",
               "3":"--out-type=PDF"
 
             },
