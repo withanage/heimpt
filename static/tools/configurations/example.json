@@ -123,7 +123,7 @@
         },
       "fo2pdf": {
             "arguments": {
-              "1":"--medium=electronic",
+              "1":"--medium=electronic,print",
               "2":"--formatter=FOP",
               "3":"--out-type=PDF"
 

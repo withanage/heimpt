@@ -175,8 +175,8 @@ class Disseminate(Debuggable):
                 if self.out_type=='pdf':
                     self.debug.print_console(self, self.gv.RUNNING_PDF_CONVERSION)
                     args = self.run_fop_processor(f, m)
-                #output, err, exit_code = self.process(args)
-                #print output
+                output, err, exit_code = self.process(args)
+                print output
 
     def run_fop_processor(self,  formatter, medium):
 
@@ -201,7 +201,7 @@ class Disseminate(Debuggable):
         args.append('-fo')
         args.append('{}/{}.{}.{}.fo'.format(os.path.dirname(self.f),self.gv.uuid, formatter, medium))
         args.append('-pdf')
-        args.append('{}.{}.{}.pdf'.format(self.gv.uuid, formatter, medium))
+        args.append('{}/{}.{}.{}.pdf'.format(self.dr,self.gv.uuid, formatter, medium))
         args.append('-c')
         args.append(style_path)
         print args

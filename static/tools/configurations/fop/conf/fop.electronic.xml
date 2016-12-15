@@ -15,8 +15,8 @@ the location of this file.
 <!-- NOTE: This is the version of the configuration -->
 <fop version="1.0">
     <font-base>/usr/local/mpt/</font-base>
-   <!-- automatically detect operating system installed fonts -->
-        <auto-detect/>
+    <base>/usr/local/mpt/</base>
+
 
   <renderers>
 

@@ -14,13 +14,14 @@ the location of this file.
 
 <!-- NOTE: This is the version of the configuration -->
 <fop version="1.0">
+   <base>/usr/local/mpt//</base>
     <font-base>/usr/local/mpt/</font-base>
   <renderers>
 
     <renderer mime="application/pdf">
 
       <pdf-x-mode>PDF/X-3:2003</pdf-x-mode>
-      <output-profile>static/colorprofiles/CoatedFOGRA39.icc</output-profile>
+      <output-profile>static/color-profiles/CoatedFOGRA39.icc</output-profile>
 
       <fonts>
         
