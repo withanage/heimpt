@@ -61,29 +61,7 @@ class Disseminate(Debuggable):
         """
         return docopt(__doc__, version='Disseminate 0.1')
 
-    def get_fop_path(self, formatter):
-        """Checks if a certaion FO processor  is available in the default path
 
-        formatter : str
-            name of the FO formatter
-
-
-        Returns
-        --------
-        fop : boolean
-            True, if saxon is available. False, if not.
-
-        """
-
-
-
-
-
-        """
-        else:
-            self.debug.print_console(self, '{}  {} {}'.format(formatter,pth,self.gv.FOP_PATH_IS_NOT_AVAILABLE))
-            return False
-        """
 
     def get_saxon_path(self):
         """Checks if saxon is available in the default path
@@ -216,11 +194,19 @@ class Disseminate(Debuggable):
 
 
     def run_apache_fop(self, pth, formatter, medium):
-        args=[pth]
+        sc = self.script_path.split(os.sep)[:-1]
+        sc.append('stylesheets/fo/conf/fop-print.xml')
+        style_path = os.path.sep.join(sc)
+        print style_path
+        args = [pth]
+
         args.append('-fo')
         args.append('{}/{}.{}.{}.fo'.format(os.path.dirname(self.f),self.gv.uuid, formatter, medium))
         args.append('-pdf')
         args.append('{}.{}.{}.pdf'.format(self.gv.uuid, formatter, medium))
+        args.append('-c')
+        args.append(style_path)
+        print args
         return args
 
 
@@ -261,7 +247,6 @@ class Disseminate(Debuggable):
         args.append("-o:" + os.path.join(self.args.get('<path>'), file_name))
         args.append('formatter=' + formatter.lower())
         args.append('medium=' + medium.lower())
-
 
 
         return args
