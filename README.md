@@ -51,22 +51,16 @@ If your `$BUILD_DIR` differs from the previous path, change project path in `exa
 ```
 python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/example.json --debug
 ```
-## Update
-```
-cd $BUILD_DIR
-git checkout master;git fetch; git pull; git submodule update
-```
 
 ## API Documentation
 
 https://withanage.github.io/mpt
 
-
 ## Credits
 
 The lead developer is Dulip Withanage,  Heidelberg  University Library
 
-  Additional contributions were made, in (alphabetical order) by:
+Additional contributions were made, in (alphabetical order) by:
 
 
 * Frank Krabbes , Heidelberg  University Library 
