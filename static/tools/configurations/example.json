@@ -115,7 +115,7 @@
             "arguments": {
               "1":"--xsl=/formatter.xsl",
               "2":"--medium=electronic,print",
-              "3":"--formatter=AH",
+              "3":"--formatter=AH,FOP",
               "4":"--out-type=FO"
 
             },
@@ -124,7 +124,7 @@
       "fo2pdf": {
             "arguments": {
               "1":"--medium=electronic,print",
-              "2":"--formatter=AH",
+              "2":"--formatter=AH,FOP",
               "3":"--out-type=PDF"
 
             },
