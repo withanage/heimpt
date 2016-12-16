@@ -35,7 +35,8 @@ cd $BUILD_DIR/mpt/static/tools
 tar -xvzf fop-2.1-bin.tar.gz;
 mv fop-2.1 fop
 ```
-If you change the default $BUILD_DIR,  set the new path in fop.print.xml and fop.electronic.xml in static/tools/configurations/fop/conf/ folder
+If you changed the default $BUILD_DIR in the installation step, set the path in fop.print.xml and fop.electronic.xml in static/tools/configurations/fop/conf/ folder.
+
 ## Test
 If your `$BUILD_DIR` differs from the previous path, change project path in `example.json`
 
