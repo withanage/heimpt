@@ -14,7 +14,7 @@ the location of this file.
 
 <!-- NOTE: This is the version of the configuration -->
 <fop version="1.0">
-   <base>/usr/local/mpt//</base>
+   <base>/usr/local/mpt/</base>
     <font-base>/usr/local/mpt/</font-base>
   <renderers>
 

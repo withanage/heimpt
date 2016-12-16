@@ -29,7 +29,7 @@ class GV(object):
         #application paths
         self.APACHE_FOP_PATH = u'fop/fop'
         self.METYPESET_PATH = u'meTypeset/runtime/saxon9.jar'
-        self.ANTENNA_HOUSE_FOP_PATH=u'/usr/local/AHFormatterV63/run.sh'
+        self.ANTENNA_HOUSE_FOP_PATH=u'/usr/AHFormatterV61_64/run.sh'
         self.XEP_FOP_PATH = u'/usr/local/xep/bin/xep/xep'
 
         # projects

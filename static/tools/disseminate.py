@@ -187,24 +187,34 @@ class Disseminate(Debuggable):
                 args = self.run_apache_fop(pth,formatter, medium)
 
         elif formatter.lower() == 'ah':
-            pth = self.gv.APACHE_ANTENNA_HOUSE_FOP_PATH
+            pth = self.gv.ANTENNA_HOUSE_FOP_PATH
             if self.gv.check_program(pth):
                 args = self.run_ah_fop(pth,formatter, medium)
         return args
 
+    def run_ah_fop(self, pth, formatter, medium):
+        args=[pth]
+        args.append('-d')
+        args.append('{}/{}.{}.{}.fo'.format(os.path.dirname(self.f), self.gv.uuid, formatter, medium))
+        args.append('-o')
+        args.append('{}/{}.{}.{}.pdf'.format(self.dr, self.gv.uuid, formatter, medium))
+
+        return args
+
+
+
+
+
 
     def run_apache_fop(self, pth, formatter, medium):
         style_path = '{}/configurations/fop/conf/{}.{}.xml'.format(self.script_path, formatter,medium)
-        print style_path
         args = [pth]
-
         args.append('-fo')
         args.append('{}/{}.{}.{}.fo'.format(os.path.dirname(self.f),self.gv.uuid, formatter, medium))
         args.append('-pdf')
         args.append('{}/{}.{}.{}.pdf'.format(self.dr,self.gv.uuid, formatter, medium))
         args.append('-c')
         args.append(style_path)
-        print args
         return args
 
 
