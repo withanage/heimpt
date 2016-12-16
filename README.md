@@ -30,14 +30,16 @@ Check if you have persmissions  to the BUILD_DIR
  git submodule init
  git submodule update
 ```
-## FO Processors
-Download [Apache FOP processor 2.1](https://xmlgraphics.apache.org/fop/download.html) or [direct link](http://mirrors.cicku.me/apache/xmlgraphics/fop/binaries/fop-2.1-bin.tar.gz) into  $BUILD_DIR/mpt/static/tools
-```
-cd $BUILD_DIR/mpt/static/tools
-tar -xvzf fop-2.1-bin.tar.gz;
-mv fop-2.1 fop
-```
-If you changed the default $BUILD_DIR in the installation step, set the path in fop.print.xml and fop.electronic.xml in static/tools/configurations/fop/conf/ folder.
+### FO Processors
+* APache FOP 
+  Download [Apache FOP processor 2.1](https://xmlgraphics.apache.org/fop/download.html) or [direct link](http://mirrors.cicku.me/apache/xmlgraphics/fop/binaries/fop-2.1-bin.tar.gz) into  $BUILD_DIR/mpt/static/tools
+  ```
+  cd $BUILD_DIR/mpt/static/tools
+  tar -xvzf fop-2.1-bin.tar.gz;
+  mv fop-2.1 fop
+  ```
+  If you changed the default $BUILD_DIR in the installation step, set the path in fop.print.xml and fop.electronic.xml in static/tools/configurations/fop/conf/ folder.
+
 
 ## Test
 If your `$BUILD_DIR` differs from the previous path, change project path in `example.json`
