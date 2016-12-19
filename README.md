@@ -22,7 +22,7 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
  * Git: `git --version`
 
 ## MPT Installation 
-Check if you have persmissions  to the BUILD_DIR
+Check if you have persmissions  to intall in the BUILD_DIR
 ```
  BUILD_DIR=/usr/local
  git clone https://github.com/withanage/mpt.git $BUILD_DIR/mpt 
