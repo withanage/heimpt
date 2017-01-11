@@ -44,7 +44,7 @@ Only needed if you generate PDF files
 * Antenna- House(Commercial) : See the [distributor's](https://www.antennahouse.com) instructions
 
 
-### Test Installation
+### Test your  Installation
 If your `$BUILD_DIR` differs from the previous path, change project path in `example.json`
 
 ```
