@@ -53,7 +53,7 @@ python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/ex
 ## Tests
 ```
 pip install  -U pytest 
-
+pip install pytest-json
 ```
 
 ## API Documentation
