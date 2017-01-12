@@ -44,12 +44,16 @@ Only needed if you generate PDF files
 * Antenna- House(Commercial) : See the [distributor's](https://www.antennahouse.com) instructions
 
 
-
-## Test
+### Test your  Installation
 If your `$BUILD_DIR` differs from the previous path, change project path in `example.json`
 
 ```
 python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/example.json --debug
+```
+## Tests
+```
+pip install  -U pytest pytest-xdist pytest-json
+
 ```
 
 ## API Documentation
