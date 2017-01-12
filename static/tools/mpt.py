@@ -489,7 +489,7 @@ class MPT(Debuggable):
                 sys.exit(1)
 
             for p_id in typesetters_ordered:
-                self.debug.print_console(self, ' '.join(['Runnning Typesetter',p_id,':', p.get('typesetters')[p_id].get("name")]))
+                self.debug.print_console(self, ' '.join(['Runnning step',p_id,':', p.get('typesetters')[p_id].get("name")]))
                 temp_path, temp_pre_out_type = self.typeset_files(
                     p,
                     pre_path,
@@ -499,7 +499,7 @@ class MPT(Debuggable):
 
                 pre_path = temp_path
                 prev_out_type = temp_pre_out_type
-                self.debug.print_console(self, ' '.join(['ls -al',temp_path]))
+                #self.debug.print_console(self, ' '.join(['ls -al',temp_path]))
 
         else:
             self.debug.print_debug(self, self.gv.PROJECT_IS_NOT_ACTIVE)

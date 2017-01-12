@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Reads a xml file , transforms it to a intermediate format (e.g. formattion objects: FO ) and converts  to PDF subsequently
+Reads a xml file , transforms it to a intermediate format (e.g. formatting objects: FO ) and converts  to PDF subsequently
 
 
 Usage:
@@ -260,21 +260,6 @@ class Disseminate(Debuggable):
         return args
 
 
-"""
-bin/fop/fop -fo Testdokument_print_fop.fo
--pdf Testdokument_print_fop.pdf -c
-conf/fop-print.xml
--pdfprofile PDF/X-3:2003
-
-
-/bin/xep/xep
--fo /Volumes/DATENSTICK/14\ XSL-FO/out/fo/Testdokument_epdf_xep.fo
--pdf /Volumes/DATENSTICK/14\ XSL-FO/out/pdf/Testdokument_epdf_xep.pdf
-
-/usr/local/AHFormatterV63/run.sh
--d /Volumes/DATENSTICK/14\ XSL-FO/out/fo/Testdokument_epdf_ah.fo
--o /Volumes/DATENSTICK/14\ XSL-FO/out/pdf/Testdokument_epdf_ah.pdf
-"""
 
 
 def main():
