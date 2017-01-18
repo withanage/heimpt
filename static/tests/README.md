@@ -2,4 +2,4 @@
 this folder contains all the tests
 
 #Tool comparison
-[Report](Report.md)
+[Report](ToolComparison.md)
