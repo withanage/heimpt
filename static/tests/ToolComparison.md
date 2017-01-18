@@ -24,8 +24,8 @@
 |||||
 | **Columns**||||
 |||||
-| multi-column layout | :x: | :white_check_mark:[:paperclip:](https://github.com/withanage/mpt/blob/master/static/tests/misc/pdf/doubleColumned.prince.pdf)  |  :white_check_mark: | :white_check_mark:  [:page_facing_up:](https://github.com/withanage/mpt/blob/master/static/tests/misc/pdf/columns-ahf.pdf)|
-| balanced columns | :x: | :white_check_mark:[:paperclip:](https://github.com/withanage/mpt/blob/master/static/tests/misc/pdf/doubleColumned.prince.pdf)  | :x: | :white_check_mark: |
+| multi-column layout | :x: | :white_check_mark: |  :white_check_mark: | :white_check_mark:  |
+| balanced columns | :x: | :white_check_mark: | :x: | :white_check_mark: |
 |||||
 | **Page flow**||||
 |||||
@@ -37,10 +37,10 @@
 | **Miscellaneous** ||||
 |||||
 | hyphenation dict |  :white_check_mark: |  :white_check_mark: |  :white_check_mark: |  :white_check_mark: |
-| font embedding | | :white_check_mark:[:paperclip:](https://github.com/withanage/mpt/blob/master/static/tests/misc/pdf/fonts.prince.pdf) | | |
-| image options | | :white_check_mark:[:paperclip:](https://github.com/withanage/mpt/blob/master/static/tests/misc/pdf/images.prince.pdf) | see below | see below |
-| floating elements | |  :white_check_mark:[:paperclip:](https://github.com/withanage/mpt/blob/master/static/tests/misc/pdf/wrapAndFloat.prince.pdf) | (:white_check_mark:) | :white_check_mark: |
-| text wrapping | | :white_check_mark:[:paperclip:](https://github.com/withanage/mpt/blob/master/static/tests/misc/pdf/wrapAndFloat.prince.pdf)  | :x: | :white_check_mark: :lock:|
+| font embedding | | :white_check_mark: | | |
+| image options | | :white_check_mark: | see below | see below |
+| floating elements | |  :white_check_mark: | (:white_check_mark:) | :white_check_mark: |
+| text wrapping | | :white_check_mark: | :x: | :white_check_mark: :lock:|
 
 # Test Reports
 
