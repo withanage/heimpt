@@ -11,10 +11,10 @@
 | **Foot- and endnotes** ||||
 |||||
 | endnotes |  :white_check_mark: |  :white_check_mark: |  :white_check_mark: |  :white_check_mark: |
-| footnotes | :x:  |  :white_check_mark:[:paperclip:](https://github.com/withanage/mpt/blob/master/static/tests/misc/pdf/doubleColumned.prince.pdf) | :white_check_mark: |  :white_check_mark: [:page_facing_up:] (https://github.com/withanage/mpt/blob/master/static/tests/misc/pdf/footnotes.ahf.pdf)|
-| page breaking footnotes | :x:  |  :white_check_mark:[:paperclip:](https://github.com/withanage/mpt/blob/master/static/tests/misc/pdf/doubleColumned.prince.pdf) |  :white_check_mark: |  :white_check_mark: |
+| footnotes | :x:  |  :white_check_mark: | :white_check_mark: |  :white_check_mark: [:page_facing_up:] (https://github.com/withanage/mpt/blob/master/static/tests/misc/pdf/footnotes.ahf.pdf)|
+| page breaking footnotes | :x:  |  :white_check_mark:|  :white_check_mark: |  :white_check_mark: |
 | continuous footnotes | :x:  | :white_check_mark: | :x: |  :white_check_mark: :lock: |
-| multi-column footnotes | :x:  |  :white_check_mark:[:paperclip:](https://github.com/withanage/mpt/blob/master/static/tests/misc/pdf/doubleColumned.prince.pdf) | :x: |  :white_check_mark: :lock: |
+| multi-column footnotes | :x:  |  :white_check_mark: | :x: |  :white_check_mark: :lock: |
 |||||
 | **PDF versions** ||||
 |||||
