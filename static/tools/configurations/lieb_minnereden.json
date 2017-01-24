@@ -25,39 +25,50 @@
             "typesetters": {
                 "1": {
                     "arguments": {
-                        "1": "fn:append_out_dir"
+                        "1": "create_output_directory()"
                     },
                     "name": "metypeset",
-                    "out_type": "xml"
+                    "out_type": "xml",
+                    "process":true
                 },
                 "2": {
                    "arguments": {
-                        "1": "fn:append_out_dir"
+                        "1": "create_output_directory()"
                     },
                     "name": "xmlprocess",
-                    "out_type": "xml"
+                    "out_type": "xml",
+                    "process":true
                 },
                 "3": {
                    "arguments": {
-                        "1": "fn:append_out_dir",
+                        "1": "create_output_directory()",
                         "2":"bits",
                         "4":"--metadata book-meta.bits2"
 
                     },
                     "name": "xmlmerge",
                     "out_type": "xml",
+                    "out_file":"fullFile.xml",
                     "merge":true
 
                 },
-              "4":{
-                  "name":"xml2pdf",
-                  "out_type": "xml",
-                  "expand":true
-                  , "arguments": {
-                     "1": "fn:append_out_dir"
-
+                "4":{
+                  "name":"xml2fo",
+                  "out_type": "fo",
+                  "expand":true,
+                  "arguments": {
+                    "1": "create_output_directory()"
+                  }
+                },
+              "5":{
+                  "name":"fo2pdf",
+                  "out_type": "pdf",
+                  "expand":true,
+                  "arguments": {
+                    "1": "create_output_directory()"
                   }
                 }
+
 
             }
         }
@@ -68,26 +79,15 @@
                 "1": "docx",
                 "2": "--debug",
                 "3": "--nogit"
+
             },
             "executable": "/usr/local/mpt/static/tools/meTypeset/bin/meTypeset.py"
-        },
-        "pandoc": {
-            "arguments": {
-                "1": "-t html"
-            },
-            "executable": "pandoc"
-        },
-        "pandoc_md": {
-            "arguments": {
-                "1": "-t html"
-            },
-            "executable": "pandoc"
         },
         "xmlprocess": {
             "arguments": {
                 "1":"--metadata book-part-meta.bits2",
                 "2": "--set-uuids=fn,ref",
-                "3": "--set-numbering-values=xref,ref-type,fn,{1:2}",
+                "3": "--set-numbering-values=xref,ref-type,fn",
                 "4":"--clean-references"
 
 
@@ -97,18 +97,30 @@
         "xmlmerge": {
             "arguments": {
 
-              "1": "--set-numbering-tags=disp-quote,aff"
-
             },
             "executable": "/usr/local/mpt/static/tools/merge.py"
-        },
-
-        "xml2pdf": {
+        }
+      ,
+        "xml2fo": {
             "arguments": {
-              "1":"--xsl=/heiup_formatter.xsl"
+              "1":"--xsl=/formatter.xsl",
+              "2":"--medium=electronic,print",
+              "3":"--formatter=AH,FOP",
+              "4":"--out-type=FO"
+
+            },
+            "executable": "/usr/local/mpt/static/tools/disseminate.py"
+        },
+      "fo2pdf": {
+            "arguments": {
+              "1":"--medium=electronic,print",
+              "2":"--formatter=AH,FOP",
+              "3":"--out-type=PDF"
+
             },
             "executable": "/usr/local/mpt/static/tools/disseminate.py"
         }
+
 
     }
 }
