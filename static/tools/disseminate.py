@@ -73,7 +73,7 @@ class Disseminate(Debuggable):
 
         """
 
-        s = os.path.join(self.script_path, self.gv.METYPESET_PATH)
+        s = os.path.join(self.script_path, self.gv.SAXON_PATH)
         if os.path.isfile(s):
             return s
         elif self.args.get('--saxon'):

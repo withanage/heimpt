@@ -217,6 +217,8 @@ class Merge(Debuggable):
                 bp = etree.parse(pth).find('.//book-meta')
                 book.insert(0, bp)
 
+        else:
+            sys.exit('Metadata fails')
         bd = etree.Element("book-body")
         bpbd = self.create_book_part_bits()
         bd.append(bpbd)
