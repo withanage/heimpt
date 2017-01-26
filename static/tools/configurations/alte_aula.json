@@ -1,0 +1,44 @@
+{
+  "projects": [
+    {
+      "active": true,
+      "chain": true,
+      "files": {
+        "1": "122-69-76635-3-10-20170125.xml",
+        "2": "122-69-76622-2-10-20170126.xml",
+        "3": "122-69-76627-2-10-20170125.xml",
+        "4": "122-69-76628-2-10-20170125.xml",
+        "5": "122-69-76629-2-10-20170125.xml",
+        "6": "122-69-76630-2-10-20170125.xml",
+        "7": "122-69-76631-2-10-20170126.xml",
+        "8": "122-69-76632-2-10-20170125.xml",
+        "9": "122-69-76633-2-10-20170125.xml",
+        "10": "122-69-76634-2-10-20170126.xml",
+        "11": "122-69-76743-1-10-20170126.xml"
+        
+      },
+      "name": "full_xml",
+      "path": "/home/wit/Arbeit/OMP/AlteAula/",
+      "typesetters": {
+        "1": {
+          "arguments": {
+            "1": "create_output_directory()",
+            "2": "jats",
+            "4": "--metadata book-meta.bits2"
+          },
+          "name": "xmlmerge",
+          "out_type": "xml",
+          "out_file": "fullFile.xml",
+          "merge": true
+        }
+      }
+    }
+  ],
+  "typesetters": {
+    "xmlmerge": {
+      "arguments": {
+      },
+      "executable": "/usr/local/mpt/static/tools/merge.py"
+    }
+  }
+}

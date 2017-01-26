@@ -112,6 +112,32 @@ class Merge(Debuggable):
 
         self.do_file_io(etree.tostring(trf, pretty_print=True, xml_declaration=True, encoding='UTF-8', standalone='yes'), 'w', pt)
 
+    def create_output_jats(self):
+        """
+        Create jats output file, generates a new file,
+
+        See Also
+        --------
+        create_book_part_bits, create_book_bits, do_file_io
+
+        """
+        fuf = os.path.join(self.dr, self.uid)
+        pt = os.path.join(self.dr, os.path.basename(self.uid))
+
+        trf = None
+        if os.path.isfile(fuf):
+            trf = etree.parse(fuf)
+            bp = trf.find(".//body")
+            journal_part = self.create_journal_part_jats()
+            bp.append(journal_part)
+        else:
+            trf = self.create_journal_jats()
+        trf = self.process(trf)
+
+        self.do_file_io(
+            etree.tostring(trf, pretty_print=True, xml_declaration=True, encoding='UTF-8', standalone='yes'), 'w',
+            pt)
+
     def process(self, tr):
         """
         Process  BITS-XML file and do all transformations into the elementtree
@@ -195,7 +221,7 @@ class Merge(Debuggable):
         Returns
         -------
         book : elementtree
-            Elementtree which complies to BITS XML Schheme.
+            Elementtree which complies to BITS XML Scheme.
 
         See Also
         ---------
@@ -226,6 +252,44 @@ class Merge(Debuggable):
 
         return book
 
+    def create_journal_jats(self):
+        """
+        creates a  full JATS XML book and optionally adds metadata
+
+        Returns
+        -------
+        book : elementtree
+            Elementtree which complies to BITS XML Scheme.
+
+        See Also
+        ---------
+        create_metadata_path, create_book_part_bits
+
+        """
+        
+
+        nsmap = {'xlink': "http://www.w3.org/1999/xlink",
+                 'mml': "http://www.w3.org/1998/Math/MathML",
+                 "xml": "http://www.w3.org/XML/1998/namespace"}
+        journal = etree.Element(etree.QName('book'), nsmap=nsmap)
+        journal.attrib['dtd-version'] = "1.1d1"
+        journal.attrib[etree.QName('{http://www.w3.org/XML/1998/namespace}lang')] = "de"
+        journal.attrib['article-type'] = "research-article"
+
+        metadata = self.args.get('--metadata')
+        if metadata:
+            pth = self.create_metadata_path(metadata)
+            if os.path.isfile(pth):
+                bp = etree.parse(pth).find('.//book-meta')
+                journal.insert(0, bp)
+
+        else:
+            sys.exit('Metadata fails')
+        bpbd = self.create_journal_part_jats()
+        journal.append(bpbd)
+
+        return journal
+
     def create_book_part_bits(self):
         """
         Reads a JATS XMl File and creates a book-part element tree according to BITS-XML.
@@ -243,8 +307,33 @@ class Merge(Debuggable):
         if f is not None:
             if len(f):
                 bp.append(f)
-        bp.append(bd)
-        bp.append(bk)
+        if bd is not None:
+            bp.append(bd)
+        if bk is not None:
+            bp.append(bk)
+        return bp
+
+    def create_journal_part_jats(self):
+        """
+        Reads a JATS XMl File and creates a book-part element tree according to BITS-XML.
+
+        Returns
+        -------
+        bp : elementtree
+            Journal part elementTree
+        """
+
+        f, bd, bk = self.get_xml_parts()
+
+        bp = etree.Element("body")
+
+        if f is not None:
+            if len(f):
+                bp.append(f)
+        if bd is not None:
+            bp.append(bd)
+        if bk is not None:
+            bp.append(bk)
         return bp
 
     def get_xml_parts(self):
@@ -320,7 +409,7 @@ class Merge(Debuggable):
             self.create_output_bits()
 
         elif self.scheme == 'jats':
-            self.tr = self.create_output_jats(self.tr)
+            self.tr = self.create_output_jats()
 
 
 def main():
