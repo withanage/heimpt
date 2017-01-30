@@ -496,7 +496,7 @@ class PostProcess:
         fns = tr.getroot().findall(
             ''.join(['.//xref/[@ref-type="', s, '"]']))
         for i in fns:
-            rid = ''.join(['bibd', uuid.uuid4().get_hex()])
+            rid = ''.join(['bibd', str(uuid.uuid4().int)])
             f[i.attrib['rid']] = rid
             i.set('rid', rid)
         for m in f.keys():
@@ -525,8 +525,8 @@ class PostProcess:
 
 
 def main():
-    p = PostProcess('postProcessConfig.json')
-    context = "moehren"
+    p = PostProcess('example.json')
+    context = "alte_aula"
     p.create_files(context)
     with open(LOG_FILE) as f:
         print f.read()

@@ -1,0 +1,45 @@
+{
+  "createFull": {
+
+
+    "alte_aula": {
+      "dir": "/home/wit/Arbeit/OMP/AlteAula",
+      "files": [
+
+
+        {
+          "122-69-76622-2-10-20170126.xml": {
+            "order": 2
+          }
+        },
+        {
+          "122-69-76627-2-10-20170125.xml": {
+            "order": 3
+          }
+        }
+      ],
+      "fullfile": {
+        "alte_aula.xml": {
+
+
+        }
+      },
+      "enumeration": 1
+
+
+    }
+
+
+
+  },
+  "errors": {
+    "FILE_NOT_FOUND": " File found or non-valid xml",
+    "FILE_NOT_WRITTEN": "No file written",
+    "FILE_NO_WRITE_ACCESS": "No permission to write file in the directory"
+  },
+  "zip": {
+    "enable": 1,
+    "name-prefix": "xml-back-"
+  }
+}
+
