@@ -496,7 +496,7 @@ class PostProcess:
         fns = tr.getroot().findall(
             ''.join(['.//xref/[@ref-type="', s, '"]']))
         for i in fns:
-            rid = ''.join(['', str(uuid.uuid4().int)])
+            rid = ''.join(['bibd', str(uuid.uuid4().int)])
             f[i.attrib['rid']] = rid
             i.set('rid', rid)
         for m in f.keys():
