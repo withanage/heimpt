@@ -202,8 +202,6 @@ class PostProcess:
         ''' write element tree to f '''
 
         if  type(tree) == etree._ElementTree:
-            tree = self.clean_xlinks(tree)
-
             try:
                 tree.write(
                     f,
