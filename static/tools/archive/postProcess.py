@@ -48,16 +48,6 @@ class PostProcess:
 
         self.JATS_XML_HEADER = '<article xmlns:xlink="http://www.w3.org/1999/xlink">'
 
-    def clean_xlinks(self, tree):
-        root = tree.getroot()
-        penv = root.xpath("fn")
-
-        for e in penv:
-            child = e.get("{http://www.w3.org/1999/xlink}href")
-            if child:
-                c = etree.parse(child).getroot()
-                root.replace(e, c)
-        return  tree
 
 
     def apply_transformations(self, tr, context, f, chapter, order, count):
@@ -203,6 +193,7 @@ class PostProcess:
 
         if  type(tree) == etree._ElementTree:
             try:
+                etree.cleanup_namespaces(tree.getroot())
                 tree.write(
                     f,
                     pretty_print=True,
