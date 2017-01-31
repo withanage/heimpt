@@ -2,7 +2,7 @@
   "createFull": {
 
 
-    "alte_aula": {
+    "example": {
       "dir": "/home/wit/Arbeit/OMP/AlteAula",
       "files": [
 
@@ -19,7 +19,7 @@
         }
       ],
       "fullfile": {
-        "alte_aula.xml": {
+        "example.xml": {
 
 
         }

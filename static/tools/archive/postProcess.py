@@ -42,11 +42,23 @@ class PostProcess:
         try:
             with open(cf) as json_data_file:
                 self.config = json.load(json_data_file)
-        except:
+        except  :
             print 'Please define', cf
             sys.exit(1)
 
-        self.JATS_XML_HEADER = '<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd"><article xmlns:xlink="http://www.w3.org/1999/xlink">'
+        self.JATS_XML_HEADER = '<article xmlns:xlink="http://www.w3.org/1999/xlink">'
+
+    def clean_xlinks(self, tree):
+        root = tree.getroot()
+        penv = root.xpath("fn")
+
+        for e in penv:
+            child = e.get("{http://www.w3.org/1999/xlink}href")
+            if child:
+                c = etree.parse(child).getroot()
+                root.replace(e, c)
+        return  tree
+
 
     def apply_transformations(self, tr, context, f, chapter, order, count):
         ''' main method to apply transformations'''
@@ -123,8 +135,6 @@ class PostProcess:
             elem_secs,
             elem_fns)
 
-        logging.info('Full file\t' + fullfile)
-
         return None
 
     def create_footnote_file(
@@ -172,16 +182,16 @@ class PostProcess:
 
     def create_merged_file(self, fullfile, body_secs,
                            back_fns, back_refs, header_text, cfb, context):
-        print fullfile
+
         fp = os.path.join(cfb["dir"], fullfile)
         body_text = ''.join(body_secs)
         fns = ''.join(back_fns)
         refs = ''.join(back_refs)
         out = "%s%s<body>%s</body><back><fn-group>%s</fn-group><ref-list>%s</ref-list></back></article>" % (
             self.JATS_XML_HEADER, header_text, body_text, fns, refs)
-        print fp
         f = open(fp, 'w')
         f.write(out)
+        logging.info('Writing file\t{0}'.format(fp))
         f.close()
         count = 1
         tr = self.apply_transformations(
@@ -190,15 +200,19 @@ class PostProcess:
 
     def create_output(self, tree, f):
         ''' write element tree to f '''
-        try:
-            tree.write(
-                f,
-                pretty_print=True,
-                xml_declaration=True,
-                encoding='UTF-8')
 
-        except:
-            logging.info(self.config['errors']['FILE_NOT_WRITTEN'])
+        if  type(tree) == etree._ElementTree:
+            tree = self.clean_xlinks(tree)
+
+            try:
+                tree.write(
+                    f,
+                    pretty_print=True,
+                    xml_declaration=True,
+                    encoding='UTF-8')
+                logging.info('File written {0}'.format(f))
+            except:
+                logging.info(self.config['errors']['FILE_NOT_WRITTEN'])
 
     def create_refs_csv(self, dr, infile, outfile, types):
         ''' write a csv f from the references '''
@@ -525,12 +539,15 @@ class PostProcess:
 
 
 def main():
-    p = PostProcess('example.json')
-    context = "alte_aula"
-    p.create_files(context)
-    with open(LOG_FILE) as f:
-        print f.read()
-    os.remove(LOG_FILE)
+    if len(sys.argv) == 2:
+        p = PostProcess(sys.argv[1])
+        context = "example"
+        p.create_files(context)
+        with open(LOG_FILE) as f:
+            print f.read()
+        os.remove(LOG_FILE)
+    else:
+        print 'json file not defined, please define the path'
 
 if __name__ == "__main__":
     main()
