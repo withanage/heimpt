@@ -42,13 +42,11 @@ class PostProcess:
         try:
             with open(cf) as json_data_file:
                 self.config = json.load(json_data_file)
-        except  :
+        except:
             print 'Please define', cf
             sys.exit(1)
 
         self.JATS_XML_HEADER = '<article xmlns:xlink="http://www.w3.org/1999/xlink">'
-
-
 
     def apply_transformations(self, tr, context, f, chapter, order, count):
         ''' main method to apply transformations'''
@@ -191,7 +189,7 @@ class PostProcess:
     def create_output(self, tree, f):
         ''' write element tree to f '''
 
-        if  type(tree) == etree._ElementTree:
+        if isinstance(tree, etree._ElementTree):
             try:
                 etree.cleanup_namespaces(tree.getroot())
                 tree.write(
