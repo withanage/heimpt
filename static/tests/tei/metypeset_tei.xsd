@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.tei-c.org/ns/1.0" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tei="http://www.tei-c.org/ns/1.0">
+    <xs:import namespace="http://www.w3.org/1999/xhtml" schemaLocation="html.xsd"/>
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+    <xs:element name="TEI">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:teiHeader"/>
+                <xs:element ref="tei:text"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="teiHeader">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:fileDesc"/>
+                <xs:element ref="tei:encodingDesc"/>
+                <xs:element ref="tei:revisionDesc"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="fileDesc">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:titleStmt"/>
+                <xs:element ref="tei:editionStmt"/>
+                <xs:element ref="tei:publicationStmt"/>
+                <xs:element ref="tei:sourceDesc"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="titleStmt">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:title"/>
+                <xs:element ref="tei:author"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="title">
+        <xs:complexType mixed="true">
+            <xs:attribute name="type" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="author" type="xs:NCName"/>
+    <xs:element name="editionStmt">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:edition"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="edition">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:date"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="publicationStmt">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:p"/>
+                <xs:element ref="tei:date"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="sourceDesc">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:p"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="encodingDesc">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:appInfo"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="appInfo">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:application"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="application">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:label"/>
+            </xs:sequence>
+            <xs:attribute name="ident" use="required" type="xs:NCName"/>
+            <xs:attribute name="version" use="required" type="xs:NMTOKEN"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="label" type="xs:string"/>
+    <xs:element name="revisionDesc">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:change"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="change">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:date"/>
+                <xs:element ref="tei:name"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="name" type="xs:NCName"/>
+    <xs:element name="text">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:body"/>
+                <xs:element ref="tei:back"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="body">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="tei:div"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="back">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:div"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="date">
+        <xs:complexType mixed="true">
+            <xs:attribute name="when" type="xs:date"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="p">
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="tei:anchor"/>
+                <xs:element ref="tei:hi"/>
+                <xs:element ref="tei:note"/>
+                <xs:element ref="tei:g"/>
+                <xs:element ref="tei:seg"/>
+            </xs:choice>
+            <xs:attribute name="meTypesetHeadingID" type="xs:integer"/>
+            <xs:attribute name="rend"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="g">
+        <xs:complexType>
+            <xs:attribute name="n" use="required" type="xs:NCName"/>
+            <xs:attribute ref="html:style" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="seg">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="div">
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="tei:div"/>
+                <xs:element ref="tei:p"/>
+                <xs:element ref="tei:figure"/>
+                <xs:element ref="tei:head"/>
+                <xs:element ref="tei:list"/>
+            </xs:choice>
+            <xs:attribute name="type" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="figure">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="tei:p"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="head">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="tei:hi"/>
+            </xs:sequence>
+            <xs:attribute name="meTypesetHeadingID" use="required" type="xs:integer"/>
+            <xs:attribute name="meTypesetSize" use="required" type="xs:decimal"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="list">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tei:item"/>
+            </xs:sequence>
+            <xs:attribute name="type" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="item">
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="tei:hi"/>
+                <xs:element ref="tei:note"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="anchor">
+        <xs:complexType>
+            <xs:attribute ref="xml:id" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hi">
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="tei:anchor"/>
+                <xs:element ref="tei:note"/>
+            </xs:choice>
+            <xs:attribute name="meTypesetSize" type="xs:decimal"/>
+            <xs:attribute name="rend"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="note">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="tei:p"/>
+            </xs:sequence>
+            <xs:attribute name="place" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
