@@ -38,7 +38,7 @@ The following entries have been extracted from logfile: [/logs/mysql-log-submiss
 The submission was initiated by pressing "New Submission" from the "Submissions" page.
 
 ### Step 1
-Connection 45 from log:
+After submitting the first form. Connection 45 from log.
 ### Table "submissions"
 ```sql
 INSERT INTO submissions
@@ -46,9 +46,12 @@ INSERT INTO submissions
      date_submitted, date_status_modified, last_modified, status,
      submission_progress, stage_id, pages, hide_author, edited_volume, citations)
 VALUES
-    ('en_US', 6, 0, NULL, '', '', null,
-    '2017-02-24 08:56:06', '2017-02-24 08:56:06', 1, 2, 1, NULL, 0, 2, NULL)
+    ('en_US', 6, 0, NULL, '', '',
+     null, '2017-02-24 08:56:06', '2017-02-24 08:56:06', 1,
+     2, 1, NULL, 0, 2, NULL)
 ```
+The column "submission_progress" refers to the progress within the submission wizard.
+
 ### Table "authors" and "author_settings"
 ```sql
 INSERT INTO authors
@@ -111,25 +114,18 @@ INSERT INTO event_log_settings (log_id, setting_name, setting_value, setting_typ
 
 #### Table "submission_settings"
 Completing tab "2. Metadata" from Upload Submission File popup.
-Connection 177 from logfile. Many redundant SQL statements have been executed.
+Connection 177 from logfile.
 ```sql
-UPDATE submission_file_settings
-SET setting_type='string',setting_value='Test name'
-WHERE file_id='76844' and locale='en_US' and setting_name='name'
-
-INSERT INTO submission_file_settings (file_id,locale,setting_name,set
-ting_type,setting_value) VALUES ('76844','en_US','name','string','Test name')
-
-UPDATE submission_file_settings
-SET setting_type='string',setting_value=''
-WHERE file_id='76844' and locale='de_DE' and setting_name='name'
-
+INSERT INTO submission_file_settings
+    (file_id,locale,setting_name,setting_type,setting_value)
+VALUES
+    ('76844','en_US','name','string','Test name')
 INSERT INTO submission_file_settings
     (file_id,locale,setting_name,setting_type,setting_value)
 VALUES
     ('76844','de_DE','name','string','')
 ```
-
+Many redundant SQL statements for setting updates have been omitted.
 Completing Step 2.
 
 #### Table "controlled_vocabularies"
@@ -162,10 +158,40 @@ VALUES
 ```
 The values for "assoc_type" fields are numerical identifiers defined in the file: lib/pkp/classes/core/PKPApplication.inc.php.
 
+#### Submission file path ####
+The submission file has been copied to a path constructed by the function [getFilePath in the class SumbissionFile](https://github.com/pkp/pkp-lib/blob/c3b503dc9dccf7460d0c21f0f5e8e451f2cd5ced/classes/submission/SubmissionFile.inc.php#L447).
+It consists of the following parts:
+`basePath + fileStagePath + serverFileName`
+The path for the submission file above the components would look like.
+
+##### basePath #####
+The following pseudo code describes the basePath component:
+
+`"files/presses/" + pressId + "/monographs/" + submissionId + "/"`
+
+The basePath for the uploaded file above would be `files/presses/6/monographs/217/`.
+
+##### fileStagePath #####
+The [method _fileStageToPath](https://github.com/pkp/pkp-lib/blob/c3b503dc9dccf7460d0c21f0f5e8e451f2cd5ced/classes/submission/SubmissionFile.inc.php#L601) maps a numerical stage id to a path.
+File stages are defined in [lib/pkp/classes/submission/SubmissionFile.inc.php](https://github.com/pkp/pkp-lib/blob/c3b503dc9dccf7460d0c21f0f5e8e451f2cd5ced/classes/submission/SubmissionFile.inc.php).
+
+For example, stage 2 (`SUBMISSION_FILE_SUBMISSION`), will be mapped to `"submission"`.
+
+##### serverFileName #####
+The following pattern describes the file name of a submission file on the server.
+```
+submissionId-genreId-fileId-revision-fileStage-timestamp
+```
+The placeholders above are field names from the SubmissionFile class.
+
+`timestamp` is a date stamp of the format `"Ymd"`, e.g., `20170222`.
+
 ### Step 3: Catalog
 Adding meta data for catalog entry.
-#### Adding Chapter
+
+#### Adding a chapter
 Connection 204.
+
 ##### Table "submission_chapters" and "submission_chapter_settings"
 ```sql
 INSERT INTO submission_chapters (submission_id, chapter_seq)
@@ -187,8 +213,10 @@ INSERT INTO submission_chapter_settings
 (chapter_id,locale,setting_name,setting_type,setting_value)
 VALUES ('1977','de_DE','subtitle','string','subtitle de')
 ```
+
 #### Saving
 Connection 212.
+
 ##### Table "submissions" and "submission_settings"
 ```sql
 UPDATE  submissions
