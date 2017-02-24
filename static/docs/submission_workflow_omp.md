@@ -37,6 +37,43 @@ The following entries have been extracted from logfile: ...
 ## Submission wizard
 The submission was initiated by pressing "New Submission" from the "Submissions" page.
 
+### Step 1
+Connection 45 from log:
+### Table "submissions"
+```
+INSERT INTO submissions
+    (locale, context_id, series_id, series_position, language, comments_to_ed,
+     date_submitted, date_status_modified, last_modified, status,
+     submission_progress, stage_id, pages, hide_author, edited_volume, citations)
+VALUES
+    ('en_US', 6, 0, NULL, '', '', null,
+    '2017-02-24 08:56:06', '2017-02-24 08:56:06', 1, 2, 1, NULL, 0, 2, NULL)
+```
+### Table "authors" and "author_settings"
+```
+INSERT INTO authors
+    (submission_id, first_name, middle_name, last_name, suffix, country,
+    email, url, user_group_id, primary_contact, seq, include_in_browse)
+VALUES
+    (219, 'Nils', '', 'Weiher', '', 'DE',
+    'weiher@ub.uni-heidelberg.de', '', 87, 1, 1, 1)
+
+INSERT INTO author_settings (author_id,locale,setting_name,setting_type,setting_value) VALUES ('2386','de_DE','biography','string','')
+INSERT INTO author_settings (author_id,locale,setting_name,setting_type,setting_value) VALUES ('2386','en_US','biography','string','')
+INSERT INTO author_settings (author_id,locale,setting_name,setting_type,setting_value) VALUES ('2386','de_DE','affiliation','string','')
+INSERT INTO author_settings (author_id,locale,setting_name,setting_type,setting_value) VALUES ('2386','en_US','affiliation','string','')
+DELETE FROM author_settings WHERE author_id = 2386 AND setting_name IN ( 'competingInterests' ,'orcid' )
+```
+Redundant UPDATE statements for author_settings have been omitted.
+
+### Table "stage_assignments"
+```
+INSERT INTO stage_assignments
+    (submission_id, user_group_id, user_id, date_assigned)
+VALUES
+    (219, 87, 33, '2017-02-24 08:56:06')
+```
+
 ### Step 2: Upload Submission file
 In popup uploading file.
 submissionId: 217
@@ -126,6 +163,7 @@ VALUES
 The values for "assoc_type" fields are numerical identifiers defined in the file: lib/pkp/classes/core/PKPApplication.inc.php.
 
 ### Step 3: Catalog
+Adding meta data for catalog entry.
 #### Adding Chapter
 Connection 204.
 ##### Table "submission_chapters" and "submission_chapter_settings"
