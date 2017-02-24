@@ -33,7 +33,7 @@ And the instructions on the JetBrains website.
 OMP branch: omp-stable-1_2_0, commit: e7edf095c3c037abeef3bb92db6d24adb23f77cb
 On localhost, with user nweiher, userid: 33, usergroupid: 87.
 
-The following entries have been extracted from logfile: ...
+The following entries have been extracted from logfile: [/logs/mysql-log-submission-steps-1-3.log]
 ## Submission wizard
 The submission was initiated by pressing "New Submission" from the "Submissions" page.
 
