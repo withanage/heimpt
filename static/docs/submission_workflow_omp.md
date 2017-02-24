@@ -40,7 +40,7 @@ The submission was initiated by pressing "New Submission" from the "Submissions"
 ### Step 1
 Connection 45 from log:
 ### Table "submissions"
-```
+```sql
 INSERT INTO submissions
     (locale, context_id, series_id, series_position, language, comments_to_ed,
      date_submitted, date_status_modified, last_modified, status,
@@ -50,7 +50,7 @@ VALUES
     '2017-02-24 08:56:06', '2017-02-24 08:56:06', 1, 2, 1, NULL, 0, 2, NULL)
 ```
 ### Table "authors" and "author_settings"
-```
+```sql
 INSERT INTO authors
     (submission_id, first_name, middle_name, last_name, suffix, country,
     email, url, user_group_id, primary_contact, seq, include_in_browse)
@@ -67,7 +67,7 @@ DELETE FROM author_settings WHERE author_id = 2386 AND setting_name IN ( 'compet
 Redundant UPDATE statements for author_settings have been omitted.
 
 ### Table "stage_assignments"
-```
+```sql
 INSERT INTO stage_assignments
     (submission_id, user_group_id, user_id, date_assigned)
 VALUES
@@ -134,7 +134,7 @@ Completing Step 2.
 
 #### Table "controlled_vocabularies"
 Connection 191 in logfile. Double inserts have been omitted.
-```
+```sql
 INSERT INTO controlled_vocabs
     (symbolic, assoc_type, assoc_id)
 VALUES
@@ -190,7 +190,7 @@ VALUES ('1977','de_DE','subtitle','string','subtitle de')
 #### Saving
 Connection 212.
 ##### Table "submissions" and "submission_settings"
-```
+```sql
 UPDATE  submissions
 SET     series_id = 0,
         series_position = NULL,
