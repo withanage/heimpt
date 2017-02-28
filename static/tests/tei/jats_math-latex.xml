@@ -1,0 +1,1847 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article article-type="research-article" dtd-version="1.1d1" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <front>
+        <journal-meta>
+            <journal-id journal-id-type="publisher-id">eLife</journal-id>
+            <journal-title-group>
+                <journal-title>My Journal</journal-title>
+            </journal-title-group>
+            <publisher>
+                <publisher-name>My Journal</publisher-name>
+            </publisher>
+        </journal-meta>
+        <article-meta>
+            <article-id pub-id-type="publisher-id">00778</article-id>
+            <article-id pub-id-type="doi">10.7554/eLife.00778</article-id>
+            <article-categories>
+                <subj-group subj-group-type="display-channel">
+                    <subject>Research article</subject>
+                </subj-group>
+                <subj-group subj-group-type="heading">
+                    <subject>Biophysics and structural biology</subject>
+                </subj-group>
+            </article-categories>
+            <title-group>
+                <article-title>Beispiel Doc</article-title>
+            </title-group>
+            <contrib-group>
+                <contrib contrib-type="author" equal-contrib="yes" id="author-4813">
+                    <name>
+                        <surname>O'Donoghue</surname>
+                        <given-names>Geoff P</given-names>
+                    </name>
+                    <xref ref-type="aff" rid="aff1" />
+                    <xref ref-type="aff" rid="aff2" />
+                    <xref ref-type="fn" rid="equal-contrib">†</xref>
+                    <xref ref-type="other" rid="par-1" />
+                    <xref ref-type="fn" rid="con1" />
+                    <xref ref-type="fn" rid="conf1" />
+                </contrib>
+                
+                
+                
+                
+                
+                
+                
+            </contrib-group>
+            <contrib-group content-type="section">
+                <contrib contrib-type="editor">
+                    <name>
+                        <surname>Brunger</surname>
+                        <given-names>Axel T</given-names>
+                    </name>
+                    <role>Reviewing editor</role>
+                    <aff>
+                        <institution>Howard Hughes Medical Institute, Stanford University</institution>, <country>United States</country></aff>
+                </contrib>
+            </contrib-group>
+            <author-notes>
+                <corresp id="cor1">
+                    <label>*</label>For correspondence: <email>JTGroves@lbl.gov</email></corresp>
+                <fn fn-type="con" id="equal-contrib">
+                    <label>†</label>
+                    <p>These authors contributed equally to this work</p>
+                </fn>
+            </author-notes>
+            <pub-date date-type="pub" publication-format="electronic">
+                <day>03</day>
+                <month>07</month>
+                <year>2013</year>
+            </pub-date>
+            <pub-date pub-type="collection">
+                <year>2013</year>
+            </pub-date>
+            <volume>2</volume>
+            <elocation-id>e00778</elocation-id>
+            <history>
+                <date date-type="received">
+                    <day>26</day>
+                    <month>03</month>
+                    <year>2013</year>
+                </date>
+                <date date-type="accepted">
+                    <day>17</day>
+                    <month>05</month>
+                    <year>2013</year>
+                </date>
+            </history>
+            <permissions>
+                <copyright-statement>© 2013, O'Donoghue et al</copyright-statement>
+                <copyright-year>2013</copyright-year>
+                <copyright-holder>O'Donoghue et al</copyright-holder>
+                <license xlink:href="http://creativecommons.org/licenses/by/3.0/">
+                    <license-p>This article is distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution License</ext-link>, which permits unrestricted use and redistribution provided that the original author and source are credited.</license-p>
+                </license>
+            </permissions>
+            <self-uri content-type="pdf" xlink:href="elife00778.pdf" />
+            <abstract>
+                <object-id pub-id-type="doi">10.7554/eLife.00778.001</object-id>
+                <p>Abst </p>
+                <p>
+                    <bold>DOI:</bold>
+                    <ext-link ext-link-type="doi" xlink:href="10.7554/eLife.00778.001">http://dx.doi.org/10.7554/eLife.00778.001</ext-link>
+                </p>
+            </abstract>
+            <kwd-group kwd-group-type="author-keywords">
+                <title>Author keywords</title>
+                <kwd>TCR triggering</kwd>
+                <kwd>single molecule kinetics</kwd>
+                <kwd>T cells</kwd>
+            </kwd-group>
+            <kwd-group kwd-group-type="research-organism">
+                <title>Research organism</title>
+                <kwd>Mouse</kwd>
+            </kwd-group>
+            <funding-group>
+                <award-group id="par-1">
+                    <funding-source>
+                        <institution-wrap>
+                            <institution>National Institute of Allergy and Infectious Diseases</institution>
+                        </institution-wrap>
+                    </funding-source>
+                    <award-id>PO1 AI091580</award-id>
+                    <principal-award-recipient>
+                        <name>
+                            <surname>O'Donoghue</surname>
+                            <given-names>Geoff P</given-names>
+                        </name>
+                        <name>
+                            <surname>Pielak</surname>
+                            <given-names>Rafal M</given-names>
+                        </name>
+                        <name>
+                            <surname>Smoligovets</surname>
+                            <given-names>Alexander A</given-names>
+                        </name>
+                        <name>
+                            <surname>Lin</surname>
+                            <given-names>Jenny J</given-names>
+                        </name>
+                        <name>
+                            <surname>Groves</surname>
+                            <given-names>Jay T</given-names>
+                        </name>
+                    </principal-award-recipient>
+                </award-group>
+                <funding-statement>The funders had no role in study design, data collection and interpretation, or the decision to submit the work for publication.</funding-statement>
+            </funding-group>
+            <custom-meta-group>
+                <custom-meta>
+                    <meta-name>elife-xml-version</meta-name>
+                    <meta-value>2</meta-value>
+                </custom-meta>
+                <custom-meta specific-use="meta-only">
+                    <meta-name>Author impact statement</meta-name>
+                    <meta-value>Quantitative observations of single-molecule binding between antigen and T cell receptor (TCR) in living primary T cells reveals unbinding kinetics, stoichiometry and signaling molecule recruitment, providing insights into the mechanisms of antigen recognition by the immune system.</meta-value>
+                </custom-meta>
+            </custom-meta-group>
+        </article-meta>
+    </front>
+    <body>
+        <sec id="s2" sec-type="results">
+            <title>Results</title>
+            <sec id="s2-1">
+                <title>ZItation Beispiel</title>
+                <!--my_raptor img_path="https://placehold.it/350x150" short_description="Raptor!">asdasdsad</my_raptor-->
+                <!--P><xref ref-type="fig" rid="raptor_1">Raptor</xref>)</P-->
+               
+                <p>
+                    <boxed-text id="93475984357983">
+                        <p>This is a test box for lens .The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health. We thank David King of the HHMI Mass Spec Facility for peptide synthesis and Mass Spectroscopy, Nicole Fay, Kate Alfieri, and Niña Hartman for MHC purification, and Brian D Belardi for a critical reading of the manuscript.</p>
+                        
+                    </boxed-text>
+                </p>
+                
+                <p>
+                    <disp-quote id="93475984357983">
+                        <p>This is a quotation for lens .The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health. We thank David King of the HHMI Mass Spec Facility for peptide synthesis and Mass Spectroscopy, Nicole Fay, Kate Alfieri, and Niña Hartman for MHC purification, and Brian D Belardi for a critical reading of the manuscript.</p>
+                        
+                    </disp-quote>
+                </p>
+                
+                <p>
+<disp-formula>
+<tex-math>
+A^{(t+1)} = R^{(t)}L^{(t)} = [L^{(t)}]^{-1} 
+          	\underbrace{L^{(t)}R^{(t)}}_{\displaystyle = A^{(t)}}L^{(t)}
+</tex-math>
+</disp-formula>   
+                 
+   <disp-formula>
+	<tex-math>
+\lambda_{\rm min}(A) = \min_{x\in{\mathbb K}^n\setminus\{0\}}\frac{(Ax,x)_2}{\|x\|_2^2}
+      	\le \max_{x\in{\mathbb K}^n\setminus\{0\}}\frac{(Ax,x)_2}{\|x\|_2^2} = \lambda_{\rm max}(A),
+	</tex-math>
+
+   </disp-formula>
+                    
+                </p>
+                
+                <p>
+                    <disp-quote id="93475984357983">
+                        <p>This is a quotation for lens. The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health. We thank David King of the HHMI Mass Spec Facility for peptide synthesis and Mass Spectroscopy, Nicole Fay, Kate Alfieri, and Niña Hartman for MHC purification, and Brian D Belardi for a critical reading of the manuscript.</p>
+                        
+                    </disp-quote>
+                    
+                </p>
+                <p>The agonist pMHC densities used in these experiments range from 0.2 to 100 molecules/µm<sup>2</sup>. The lowest densities are near thresholds for triggering Ca<sup>2+</sup> flux (<xref ref-type="bibr" rid="bib26">Manz et al., 2011</xref>) and below levels where stable TCR microclusters are readily visible (<xref ref-type="fig" rid="fig2">Figure 2</xref>), whereas the higher densities are well above the densities at which microclusters are observed (<xref ref-type="bibr" rid="bib5">Campi et al., 2005</xref>; <xref ref-type="bibr" rid="bib47">Yokosuka et al., 2005</xref>; <xref ref-type="bibr" rid="bib9">DeMond et al., 2008</xref>; <xref ref-type="bibr" rid="bib48">Yu et al., 2012</xref>). Nonetheless, the observed single molecule pMHC motion at all densities is reminiscent of the well-characterized actomyosin-driven TCR microcluster radial transport in cells that are activated (<xref ref-type="bibr" rid="bib5">Campi et al., 2005</xref>; <xref ref-type="bibr" rid="bib47">Yokosuka et al., 2005</xref>; <xref ref-type="bibr" rid="bib21">Kaizuka et al., 2007</xref>; <xref ref-type="bibr" rid="bib9">DeMond et al., 2008</xref>; <xref ref-type="bibr" rid="bib48">Yu et al., 2012</xref>).</p>
+            </sec>
+            <sec id="s2-4">
+                <title>Stochastic reaction-diffusion simulations</title>
+               
+            </sec>
+        </sec>
+    </body>
+    <back>
+        <ack id="ack">
+            <title>Acknowledgements</title>
+            
+        </ack>
+        <sec sec-type="additional-information">
+            <title>Additional information</title>
+            <fn-group content-type="competing-interest">
+                <title>Competing interests</title>
+                <fn fn-type="conflict" id="conf1">
+                    <p>The authors declare that no competing interests exist.</p>
+                </fn>
+            </fn-group>
+            <fn-group content-type="author-contribution">
+                <title>Author contributions</title>
+                
+                <fn fn-type="con" id="con5">
+                    <p>JTG, Conception and design, Analysis and interpretation of data, Drafting or revising the article</p>
+                </fn>
+            </fn-group>
+            <fn-group content-type="ethics-information">
+                <title>Ethics</title>
+                <fn fn-type="other">
+                    <p>Animal experimentation: CD4+ T-cell blasts were cultured from the lymph nodes and spleens of first generation AND x B10.BR and 5c.c7 TCR transgenic mice on day 1 of the T-cell protocol in accordance with Lawrence Berkeley National Laboratory Animal Welfare and Research Committee-approved protocol 17702.</p>
+                </fn>
+            </fn-group>
+        </sec>
+        <ref-list>
+            <title>References</title>
+            <ref id="bib1">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Adams</surname>
+                            <given-names>JJ</given-names>
+                        </name>
+                       
+                        <etal />
+                    </person-group>
+                    <year>2011</year>
+                    <article-title>T cell receptor signaling is limited by docking geometry to peptide-major histocompatibility complex</article-title>
+                    <source>Immunity</source>
+                    <volume>35</volume>
+                    <fpage>681</fpage>
+                    <lpage>93</lpage>
+                    <pub-id pub-id-type="doi">10.1016/j.immuni.2011.09.013</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib1a">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Altan-Bonnet</surname>
+                            <given-names>G</given-names>
+                        </name>
+                        <name>
+                            <surname>Germain</surname>
+                            <given-names>RN</given-names>
+                        </name>
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>Modeling T Cell antigen discrimination based on feedback control of digital ERK responses</article-title>
+                    <source>PLoS Biol</source>
+                    <volume>3</volume>
+                    <fpage>e356</fpage>
+                    <pub-id pub-id-type="doi">10.1371/journal.pbio.0030356</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib2">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Axmann</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name>
+                            <surname>Huppa</surname>
+                            <given-names>JB</given-names>
+                        </name>
+                        <name>
+                            <surname>Davis</surname>
+                            <given-names>MM</given-names>
+                        </name>
+                        <name>
+                            <surname>Schütz</surname>
+                            <given-names>GJ</given-names>
+                        </name>
+                    </person-group>
+                    <year>2012</year>
+                    <article-title>Determination of interaction kinetics between the T cell receptor and peptide-loaded MHC class II via single-molecule diffusion measurements</article-title>
+                    <source>Biophys J</source>
+                    <volume>103</volume>
+                    <fpage>L17</fpage>
+                    <lpage>9</lpage>
+                    <pub-id pub-id-type="doi">10.1016/j.bpj.2012.06.019</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib3">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Bunnell</surname>
+                            <given-names>SC</given-names>
+                        </name>
+                        <name>
+                            <surname>Hong</surname>
+                            <given-names>DI</given-names>
+                        </name>
+                        <name>
+                            <surname>Kardon</surname>
+                            <given-names>JR</given-names>
+                        </name>
+                        <name>
+                            <surname>Yamazaki</surname>
+                            <given-names>T</given-names>
+                        </name>
+                        <name>
+                            <surname>McGlade</surname>
+                            <given-names>CJ</given-names>
+                        </name>
+                        <name>
+                            <surname>Barr</surname>
+                            <given-names>VA</given-names>
+                        </name>
+                        <etal />
+                    </person-group>
+                    <year>2002</year>
+                    <article-title>T cell receptor ligation induces the formation of dynamically regulated signaling assemblies</article-title>
+                    <source>J Cell Biol</source>
+                    <volume>158</volume>
+                    <fpage>1263</fpage>
+                    <lpage>75</lpage>
+                    <pub-id pub-id-type="doi">10.1083/jcb.200203043</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib4">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Burroughs</surname>
+                            <given-names>NJ</given-names>
+                        </name>
+                        <name>
+                            <surname>Wulfing</surname>
+                            <given-names>C</given-names>
+                        </name>
+                    </person-group>
+                    <year>2002</year>
+                    <article-title>Differential segregation in a cell-cell contact interface: the dynamics of the immunological synapse</article-title>
+                    <source>Biophys J</source>
+                    <volume>83</volume>
+                    <fpage>1784</fpage>
+                    <lpage>96</lpage>
+                    <pub-id pub-id-type="doi">10.1016/S0006-3495(02)73944-1</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib5">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Campi</surname>
+                            <given-names>G</given-names>
+                        </name>
+                        <name>
+                            <surname>Varma</surname>
+                            <given-names>R</given-names>
+                        </name>
+                        <name>
+                            <surname>Dustin</surname>
+                            <given-names>ML</given-names>
+                        </name>
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>Actin and agonist MHC-peptide complex-dependent T cell receptor microclusters as scaffolds for signaling</article-title>
+                    <source>J Exp Med</source>
+                    <volume>202</volume>
+                    <fpage>1031</fpage>
+                    <lpage>6</lpage>
+                    <pub-id pub-id-type="doi">10.1084/jem.20051182</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib5a">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Chan</surname>
+                            <given-names>C</given-names>
+                        </name>
+                        <name>
+                            <surname>Stark</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name>
+                            <surname>George</surname>
+                            <given-names>AJ</given-names>
+                        </name>
+                    </person-group>
+                    <year>2004</year>
+                    <article-title>Feedback control of T-cell receptor activation</article-title>
+                    <source>Proc Biol Sci</source>
+                    <volume>271</volume>
+                    <fpage>931</fpage>
+                    <lpage>9</lpage>
+                    <pub-id pub-id-type="doi">10.1098/rspb.2003.2587</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib6">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Cooper</surname>
+                            <given-names>JA</given-names>
+                        </name>
+                        <name>
+                            <surname>Qian</surname>
+                            <given-names>H</given-names>
+                        </name>
+                    </person-group>
+                    <year>2008</year>
+                    <article-title>A mechanism for Src kinase-dependent signaling by noncatalytic receptors</article-title>
+                    <source>Biochemistry</source>
+                    <volume>47</volume>
+                    <fpage>5681</fpage>
+                    <lpage>8</lpage>
+                    <pub-id pub-id-type="doi">10.1021/bi8003044</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib7">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Corse</surname>
+                            <given-names>E</given-names>
+                        </name>
+                        <name>
+                            <surname>Gottschalk</surname>
+                            <given-names>RA</given-names>
+                        </name>
+                        <name>
+                            <surname>Krogsgaard</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name>
+                            <surname>Allison</surname>
+                            <given-names>JP</given-names>
+                        </name>
+                    </person-group>
+                    <year>2010</year>
+                    <article-title>Attenuated T cell responses to a high-potency ligand in vivo</article-title>
+                    <source>PLOS Biol</source>
+                    <volume>8</volume>
+                    <fpage>e1000481</fpage>
+                    <pub-id pub-id-type="doi">10.1371/journal.pbio.1000481</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib8">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Crocker</surname>
+                            <given-names>JC</given-names>
+                        </name>
+                        <name>
+                            <surname>Grier</surname>
+                            <given-names>DG</given-names>
+                        </name>
+                    </person-group>
+                    <year>1996</year>
+                    <article-title>Methods of digital video microscopy for colloidal studies</article-title>
+                    <source>J Colloid Interface Sci</source>
+                    <volume>179</volume>
+                    <fpage>298</fpage>
+                    <lpage>310</lpage>
+                    <pub-id pub-id-type="doi">10.1006/jcis.1996.0217</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib8a">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Das</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name>
+                            <surname>Ho</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name>
+                            <surname>Zikherman</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name>
+                            <surname>Govern</surname>
+                            <given-names>C</given-names>
+                        </name>
+                        <name>
+                            <surname>Yang</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name>
+                            <surname>Weiss</surname>
+                            <given-names>A</given-names>
+                        </name>
+                        <etal />
+                    </person-group>
+                    <year>2009</year>
+                    <article-title>Digital signaling and hysteresis characterize ras activation in lymphoid cells</article-title>
+                    <source>Cell</source>
+                    <volume>136</volume>
+                    <fpage>337</fpage>
+                    <lpage>51</lpage>
+                    <pub-id pub-id-type="doi">10.1016/j.cell.2008.11.051</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib9">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>DeMond</surname>
+                            <given-names>AL</given-names>
+                        </name>
+                        <name>
+                            <surname>Mossman</surname>
+                            <given-names>KD</given-names>
+                        </name>
+                        <name>
+                            <surname>Starr</surname>
+                            <given-names>T</given-names>
+                        </name>
+                        <name>
+                            <surname>Dustin</surname>
+                            <given-names>ML</given-names>
+                        </name>
+                        <name>
+                            <surname>Groves</surname>
+                            <given-names>JT</given-names>
+                        </name>
+                    </person-group>
+                    <year>2008</year>
+                    <article-title>T cell receptor microcluster transport through molecular mazes reveals mechanism of translocation</article-title>
+                    <source>Biophys J</source>
+                    <volume>94</volume>
+                    <fpage>3286</fpage>
+                    <lpage>92</lpage>
+                    <pub-id pub-id-type="doi">10.1529/biophysj.107.119099</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib10">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Domanski</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name>
+                            <surname>Stansfeld</surname>
+                            <given-names>P</given-names>
+                        </name>
+                        <name>
+                            <surname>Sansom</surname>
+                            <given-names>MP</given-names>
+                        </name>
+                        <name>
+                            <surname>Beckstein</surname>
+                            <given-names>O</given-names>
+                        </name>
+                    </person-group>
+                    <year>2010</year>
+                    <article-title>Lipidbook: a public repository for force-field parameters used in membrane simulations</article-title>
+                    <source>J Membr Biol</source>
+                    <volume>236</volume>
+                    <fpage>255</fpage>
+                    <lpage>8</lpage>
+                    <pub-id pub-id-type="doi">10.1007/s00232-010-9296-8</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib11">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Dustin</surname>
+                            <given-names>ML</given-names>
+                        </name>
+                        <name>
+                            <surname>Groves</surname>
+                            <given-names>JT</given-names>
+                        </name>
+                    </person-group>
+                    <year>2012</year>
+                    <article-title>Receptor signaling clusters in the immune synapse</article-title>
+                    <source>Annu Rev Biophys</source>
+                    <volume>41</volume>
+                    <fpage>543</fpage>
+                    <lpage>56</lpage>
+                    <pub-id pub-id-type="doi">10.1146/annurev-biophys-042910-155238</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib12">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Ensign</surname>
+                            <given-names>DL</given-names>
+                        </name>
+                        <name>
+                            <surname>Pande</surname>
+                            <given-names>VS</given-names>
+                        </name>
+                    </person-group>
+                    <year>2009</year>
+                    <article-title>Bayesian detection of intensity changes in single molecule and molecular dynamics trajectories</article-title>
+                    <source>J Phys Chem B</source>
+                    <volume>114</volume>
+                    <fpage>280</fpage>
+                    <lpage>92</lpage>
+                    <pub-id pub-id-type="doi">10.1021/jp906786b</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib13">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Govern</surname>
+                            <given-names>CC</given-names>
+                        </name>
+                        <name>
+                            <surname>Paczosa</surname>
+                            <given-names>MK</given-names>
+                        </name>
+                        <name>
+                            <surname>Chakraborty</surname>
+                            <given-names>AK</given-names>
+                        </name>
+                        <name>
+                            <surname>Huseby</surname>
+                            <given-names>ES</given-names>
+                        </name>
+                    </person-group>
+                    <year>2010</year>
+                    <article-title>Fast on-rates allow short dwell time ligands to activate T cells</article-title>
+                    <source>Proc Natl Acad Sci USA</source>
+                    <volume>107</volume>
+                    <fpage>8724</fpage>
+                    <lpage>9</lpage>
+                    <pub-id pub-id-type="doi">10.1073/pnas.1000966107</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib14">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Grakoui</surname>
+                            <given-names>A</given-names>
+                        </name>
+                        <name>
+                            <surname>Bromley</surname>
+                            <given-names>SK</given-names>
+                        </name>
+                        <name>
+                            <surname>Sumen</surname>
+                            <given-names>C</given-names>
+                        </name>
+                        <name>
+                            <surname>Davis</surname>
+                            <given-names>MM</given-names>
+                        </name>
+                        <name>
+                            <surname>Shaw</surname>
+                            <given-names>AS</given-names>
+                        </name>
+                        <name>
+                            <surname>Allen</surname>
+                            <given-names>PM</given-names>
+                        </name>
+                        <etal />
+                    </person-group>
+                    <year>1999</year>
+                    <article-title>The immunological synapse: a molecular machine controlling T cell activation</article-title>
+                    <source>Science</source>
+                    <volume>285</volume>
+                    <fpage>221</fpage>
+                    <lpage>7</lpage>
+                    <pub-id pub-id-type="doi">10.1126/science.285.5425.221</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib15">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Ha</surname>
+                            <given-names>T</given-names>
+                        </name>
+                        <name>
+                            <surname>Ting</surname>
+                            <given-names>AY</given-names>
+                        </name>
+                        <name>
+                            <surname>Liang</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name>
+                            <surname>Caldwell</surname>
+                            <given-names>WB</given-names>
+                        </name>
+                        <name>
+                            <surname>Deniz</surname>
+                            <given-names>AA</given-names>
+                        </name>
+                        <name>
+                            <surname>Chemla</surname>
+                            <given-names>DS</given-names>
+                        </name>
+                        <etal />
+                    </person-group>
+                    <year>1999</year>
+                    <article-title>Single-molecule fluorescence spectroscopy of enzyme conformational dynamics and cleavage mechanism</article-title>
+                    <source>Proc Natl Acad Sci USA</source>
+                    <volume>96</volume>
+                    <fpage>893</fpage>
+                    <lpage>8</lpage>
+                    <pub-id pub-id-type="doi">10.1073/pnas.96.3.893</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib16">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Hawse</surname>
+                            <given-names>WF</given-names>
+                        </name>
+                        <name>
+                            <surname>Champion</surname>
+                            <given-names>MM</given-names>
+                        </name>
+                        <name>
+                            <surname>Joyce</surname>
+                            <given-names>MV</given-names>
+                        </name>
+                        <name>
+                            <surname>Hellman</surname>
+                            <given-names>LM</given-names>
+                        </name>
+                        <name>
+                            <surname>Hossain</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name>
+                            <surname>Ryan</surname>
+                            <given-names>V</given-names>
+                        </name>
+                        <etal />
+                    </person-group>
+                    <year>2012</year>
+                    <article-title>Cutting edge: evidence for a dynamically driven T cell signaling mechanism</article-title>
+                    <source>J Immunol</source>
+                    <volume>188</volume>
+                    <fpage>5819</fpage>
+                    <lpage>23</lpage>
+                    <pub-id pub-id-type="doi">10.4049/jimmunol.1200952</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib17">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Huang</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name>
+                            <surname>Zarnitsyna</surname>
+                            <given-names>VI</given-names>
+                        </name>
+                        <name>
+                            <surname>Liu</surname>
+                            <given-names>B</given-names>
+                        </name>
+                        <name>
+                            <surname>Edwards</surname>
+                            <given-names>LJ</given-names>
+                        </name>
+                        <name>
+                            <surname>Jiang</surname>
+                            <given-names>N</given-names>
+                        </name>
+                        <name>
+                            <surname>Evavold</surname>
+                            <given-names>BD</given-names>
+                        </name>
+                        <etal />
+                    </person-group>
+                    <year>2010</year>
+                    <article-title>The kinetics of two-dimensional TCR and pMHC interactions determine T-cell responsiveness</article-title>
+                    <source>Nature</source>
+                    <volume>464</volume>
+                    <fpage>932</fpage>
+                    <lpage>6</lpage>
+                    <pub-id pub-id-type="doi">10.1038/nature08944</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib18">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Huppa</surname>
+                            <given-names>JB</given-names>
+                        </name>
+                        <name>
+                            <surname>Axmann</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name>
+                            <surname>Mortelmaier</surname>
+                            <given-names>MA</given-names>
+                        </name>
+                        <name>
+                            <surname>Lillemeier</surname>
+                            <given-names>BF</given-names>
+                        </name>
+                        <name>
+                            <surname>Newell</surname>
+                            <given-names>EW</given-names>
+                        </name>
+                        <name>
+                            <surname>Brameshuber</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <etal />
+                    </person-group>
+                    <year>2010</year>
+                    <article-title>TCR-peptide-MHC interactions in situ show accelerated kinetics and increased affinity</article-title>
+                    <source>Nature</source>
+                    <volume>463</volume>
+                    <fpage>963</fpage>
+                    <lpage>7</lpage>
+                    <pub-id pub-id-type="doi">10.1038/nature08746</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib18a">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Huse</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name>
+                            <surname>Klein</surname>
+                            <given-names>LO</given-names>
+                        </name>
+                        <name>
+                            <surname>Girvin</surname>
+                            <given-names>AT</given-names>
+                        </name>
+                        <name>
+                            <surname>Faraj</surname>
+                            <given-names>JM</given-names>
+                        </name>
+                        <name>
+                            <surname>Li</surname>
+                            <given-names>Q-J</given-names>
+                        </name>
+                        <name>
+                            <surname>Kuhns</surname>
+                            <given-names>MS</given-names>
+                        </name>
+                        <etal />
+                    </person-group>
+                    <year>2007</year>
+                    <article-title>Spatial and temporal dynamics of T cell receptor signaling with a photoactivatable agonist</article-title>
+                    <source>Immunity</source>
+                    <volume>27</volume>
+                    <fpage>76</fpage>
+                    <lpage>88</lpage>
+                    <pub-id pub-id-type="doi">10.1016/j.immuni.2007.05.017</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib19">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Irvine</surname>
+                            <given-names>DJ</given-names>
+                        </name>
+                        <name>
+                            <surname>Purbhoo</surname>
+                            <given-names>MA</given-names>
+                        </name>
+                        <name>
+                            <surname>Krogsgaard</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name>
+                            <surname>Davis</surname>
+                            <given-names>MM</given-names>
+                        </name>
+                    </person-group>
+                    <year>2002</year>
+                    <article-title>Direct observation of ligand recognition by T cells</article-title>
+                    <source>Nature</source>
+                    <volume>419</volume>
+                    <fpage>845</fpage>
+                    <lpage>9</lpage>
+                    <pub-id pub-id-type="doi">10.1038/nature01076</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib20">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Iwashima</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name>
+                            <surname>Irving</surname>
+                            <given-names>BA</given-names>
+                        </name>
+                        <name>
+                            <surname>van Oers</surname>
+                            <given-names>NS</given-names>
+                        </name>
+                        <name>
+                            <surname>Chan</surname>
+                            <given-names>AC</given-names>
+                        </name>
+                        <name>
+                            <surname>Weiss</surname>
+                            <given-names>A</given-names>
+                        </name>
+                    </person-group>
+                    <year>1994</year>
+                    <article-title>Sequential interactions of the TCR with two distinct cytoplasmic tyrosine kinases</article-title>
+                    <source>Science</source>
+                    <volume>263</volume>
+                    <fpage>1136</fpage>
+                    <lpage>9</lpage>
+                    <pub-id pub-id-type="doi">10.1126/science.7509083</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib21">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Kaizuka</surname>
+                            <given-names>Y</given-names>
+                        </name>
+                        <name>
+                            <surname>Douglass</surname>
+                            <given-names>AD</given-names>
+                        </name>
+                        <name>
+                            <surname>Varma</surname>
+                            <given-names>R</given-names>
+                        </name>
+                        <name>
+                            <surname>Dustin</surname>
+                            <given-names>ML</given-names>
+                        </name>
+                        <name>
+                            <surname>Vale</surname>
+                            <given-names>RD</given-names>
+                        </name>
+                    </person-group>
+                    <year>2007</year>
+                    <article-title>Mechanisms for segregating T cell receptor and adhesion molecules during immunological synapse formation in Jurkat T cells</article-title>
+                    <source>Proc Natl Acad Sci USA</source>
+                    <volume>104</volume>
+                    <fpage>20296</fpage>
+                    <lpage>301</lpage>
+                    <pub-id pub-id-type="doi">10.1073/pnas.0710258105</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib22">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Kaye</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name>
+                            <surname>Hsu</surname>
+                            <given-names>ML</given-names>
+                        </name>
+                        <name>
+                            <surname>Sauron</surname>
+                            <given-names>ME</given-names>
+                        </name>
+                        <name>
+                            <surname>Jameson</surname>
+                            <given-names>SC</given-names>
+                        </name>
+                        <name>
+                            <surname>Gascoigne</surname>
+                            <given-names>NR</given-names>
+                        </name>
+                        <name>
+                            <surname>Hedrick</surname>
+                            <given-names>SM</given-names>
+                        </name>
+                    </person-group>
+                    <year>1989</year>
+                    <article-title>Selective development of CD4+ T cells in transgenic mice expressing a class II MHC-restricted antigen receptor</article-title>
+                    <source>Nature</source>
+                    <volume>341</volume>
+                    <fpage>746</fpage>
+                    <lpage>9</lpage>
+                    <pub-id pub-id-type="doi">10.1038/341746a0</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib23">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Krogsgaard</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name>
+                            <surname>Li</surname>
+                            <given-names>QJ</given-names>
+                        </name>
+                        <name>
+                            <surname>Sumen</surname>
+                            <given-names>C</given-names>
+                        </name>
+                        <name>
+                            <surname>Huppa</surname>
+                            <given-names>JB</given-names>
+                        </name>
+                        <name>
+                            <surname>Huse</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name>
+                            <surname>Davis</surname>
+                            <given-names>MM</given-names>
+                        </name>
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>Agonist/endogenous peptide-MHC heterodimers drive T cell activation and sensitivity</article-title>
+                    <source>Nature</source>
+                    <volume>434</volume>
+                    <fpage>238</fpage>
+                    <lpage>43</lpage>
+                    <pub-id pub-id-type="doi">10.1038/nature03391</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib24">
+                <element-citation publication-type="book">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Lin</surname>
+                            <given-names>W-C</given-names>
+                        </name>
+                        <name>
+                            <surname>Yu</surname>
+                            <given-names>C-H</given-names>
+                        </name>
+                        <name>
+                            <surname>Triffo</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <name>
+                            <surname>Groves</surname>
+                            <given-names>JT</given-names>
+                        </name>
+                    </person-group>
+                    <year>2010</year>
+                    <article-title>Supported membrane formation, characterization, functionalization, and patterning for application in biological science and technology</article-title>
+                    <source>Current protocols in chemical biology</source>
+                    <volume>2</volume>
+                    <publisher-name>John Wiley &amp; Sons, Inc</publisher-name>
+                    <fpage>235</fpage>
+                    <lpage>69</lpage>
+                    <pub-id pub-id-type="doi">10.1002/9780470559277.ch100131</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib25">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Majumdar</surname>
+                            <given-names>DS</given-names>
+                        </name>
+                        <name>
+                            <surname>Smirnova</surname>
+                            <given-names>I</given-names>
+                        </name>
+                        <name>
+                            <surname>Kasho</surname>
+                            <given-names>V</given-names>
+                        </name>
+                        <name>
+                            <surname>Nir</surname>
+                            <given-names>E</given-names>
+                        </name>
+                        <name>
+                            <surname>Kong</surname>
+                            <given-names>X</given-names>
+                        </name>
+                        <name>
+                            <surname>Weiss</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <etal />
+                    </person-group>
+                    <year>2007</year>
+                    <article-title>Single-molecule FRET reveals sugar-induced conformational dynamics in LacY</article-title>
+                    <source>Proc Natl Acad Sci USA</source>
+                    <volume>104</volume>
+                    <fpage>12640</fpage>
+                    <lpage>5</lpage>
+                    <pub-id pub-id-type="doi">10.1073/pnas.0700969104</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib26">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Manz</surname>
+                            <given-names>BN</given-names>
+                        </name>
+                        <name>
+                            <surname>Jackson</surname>
+                            <given-names>BL</given-names>
+                        </name>
+                        <name>
+                            <surname>Petit</surname>
+                            <given-names>RS</given-names>
+                        </name>
+                        <name>
+                            <surname>Dustin</surname>
+                            <given-names>ML</given-names>
+                        </name>
+                        <name>
+                            <surname>Groves</surname>
+                            <given-names>J</given-names>
+                        </name>
+                    </person-group>
+                    <year>2011</year>
+                    <article-title>T-cell triggering thresholds are modulated by the number of antigen within individual T-cell receptor clusters</article-title>
+                    <source>Proc Natl Acad Sci USA</source>
+                    <volume>108</volume>
+                    <fpage>9089</fpage>
+                    <lpage>94</lpage>
+                    <pub-id pub-id-type="doi">10.1073/pnas.1018771108</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib27">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Matsui</surname>
+                            <given-names>K</given-names>
+                        </name>
+                        <name>
+                            <surname>Boniface</surname>
+                            <given-names>JJ</given-names>
+                        </name>
+                        <name>
+                            <surname>Steffner</surname>
+                            <given-names>P</given-names>
+                        </name>
+                        <name>
+                            <surname>Reay</surname>
+                            <given-names>PA</given-names>
+                        </name>
+                        <name>
+                            <surname>Davis</surname>
+                            <given-names>MM</given-names>
+                        </name>
+                    </person-group>
+                    <year>1994</year>
+                    <article-title>Kinetics of T-cell receptor binding to peptide/I-Ek complexes: correlation of the dissociation rate with T-cell responsiveness</article-title>
+                    <source>Proc Natl Acad Sci USA</source>
+                    <volume>91</volume>
+                    <fpage>12862</fpage>
+                    <lpage>6</lpage>
+                    <pub-id pub-id-type="doi">10.1073/pnas.91.26.12862</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib28">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>McKeithan</surname>
+                            <given-names>TW</given-names>
+                        </name>
+                    </person-group>
+                    <year>1995</year>
+                    <article-title>Kinetic proofreading in T-cell receptor signal transduction</article-title>
+                    <source>Proc Natl Acad Sci USA</source>
+                    <volume>92</volume>
+                    <fpage>5042</fpage>
+                    <lpage>6</lpage>
+                    <pub-id pub-id-type="doi">10.1073/pnas.92.11.5042</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib29">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Newell</surname>
+                            <given-names>EW</given-names>
+                        </name>
+                        <name>
+                            <surname>Ely</surname>
+                            <given-names>LK</given-names>
+                        </name>
+                        <name>
+                            <surname>Kruse</surname>
+                            <given-names>AC</given-names>
+                        </name>
+                        <name>
+                            <surname>Reay</surname>
+                            <given-names>PA</given-names>
+                        </name>
+                        <name>
+                            <surname>Rodriguez</surname>
+                            <given-names>SN</given-names>
+                        </name>
+                        <name>
+                            <surname>Lin</surname>
+                            <given-names>AE</given-names>
+                        </name>
+                        <etal />
+                    </person-group>
+                    <year>2011</year>
+                    <article-title>Structural basis of specificity and cross-reactivity in T cell receptors specific for cytochrome c-I-E(k)</article-title>
+                    <source>J Immunol</source>
+                    <volume>186</volume>
+                    <fpage>5823</fpage>
+                    <lpage>32</lpage>
+                    <pub-id pub-id-type="doi">10.4049/jimmunol.1100197</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib30">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Nye</surname>
+                            <given-names>JA</given-names>
+                        </name>
+                        <name>
+                            <surname>Groves</surname>
+                            <given-names>JT</given-names>
+                        </name>
+                    </person-group>
+                    <year>2008</year>
+                    <article-title>Kinetic control of Histidine-tagged protein surface density on supported lipid bilayers</article-title>
+                    <source>Langmuir</source>
+                    <volume>24</volume>
+                    <fpage>4145</fpage>
+                    <lpage>9</lpage>
+                    <pub-id pub-id-type="doi">10.1021/la703788h</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib31">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Palmer</surname>
+                            <given-names>E</given-names>
+                        </name>
+                        <name>
+                            <surname>Naeher</surname>
+                            <given-names>D</given-names>
+                        </name>
+                    </person-group>
+                    <year>2009</year>
+                    <article-title>Affinity threshold for thymic selection through a T-cell receptor-co-receptor zipper</article-title>
+                    <source>Nat Rev Immunol</source>
+                    <volume>9</volume>
+                    <fpage>207</fpage>
+                    <lpage>13</lpage>
+                    <pub-id pub-id-type="doi">10.1038/nri2469</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib32">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Qi</surname>
+                            <given-names>SY</given-names>
+                        </name>
+                        <name>
+                            <surname>Groves</surname>
+                            <given-names>JT</given-names>
+                        </name>
+                        <name>
+                            <surname>Chakraborty</surname>
+                            <given-names>AK</given-names>
+                        </name>
+                    </person-group>
+                    <year>2001</year>
+                    <article-title>Synaptic pattern formation during cellular recognition</article-title>
+                    <source>Proc Natl Acad Sci USA</source>
+                    <volume>98</volume>
+                    <fpage>6548</fpage>
+                    <lpage>53</lpage>
+                    <pub-id pub-id-type="doi">10.1073/pnas.111536798</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib33">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Rabinowitz</surname>
+                            <given-names>JD</given-names>
+                        </name>
+                        <name>
+                            <surname>Beeson</surname>
+                            <given-names>C</given-names>
+                        </name>
+                        <name>
+                            <surname>Lyons</surname>
+                            <given-names>DS</given-names>
+                        </name>
+                        <name>
+                            <surname>Davis</surname>
+                            <given-names>MM</given-names>
+                        </name>
+                        <name>
+                            <surname>McConnell</surname>
+                            <given-names>HM</given-names>
+                        </name>
+                    </person-group>
+                    <year>1996</year>
+                    <article-title>Kinetic discrimination in T-cell activation</article-title>
+                    <source>Proc Natl Acad Sci USA</source>
+                    <volume>93</volume>
+                    <fpage>1401</fpage>
+                    <lpage>5</lpage>
+                    <pub-id pub-id-type="doi">10.1073/pnas.93.4.1401</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib34">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Reboul</surname>
+                            <given-names>CF</given-names>
+                        </name>
+                        <name>
+                            <surname>Meyer</surname>
+                            <given-names>GR</given-names>
+                        </name>
+                        <name>
+                            <surname>Porebski</surname>
+                            <given-names>BT</given-names>
+                        </name>
+                        <name>
+                            <surname>Borg</surname>
+                            <given-names>NA</given-names>
+                        </name>
+                        <name>
+                            <surname>Buckle</surname>
+                            <given-names>AM</given-names>
+                        </name>
+                    </person-group>
+                    <year>2012</year>
+                    <article-title>Epitope flexibility and dynamic footprint revealed by molecular dynamics of a pMHC-TCR complex</article-title>
+                    <source>PLOS Comput Biol</source>
+                    <volume>8</volume>
+                    <fpage>e1002404</fpage>
+                    <pub-id pub-id-type="doi">10.1371/journal.pcbi.1002404</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib35">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Schamel</surname>
+                            <given-names>WW</given-names>
+                        </name>
+                        <name>
+                            <surname>Alarcon</surname>
+                            <given-names>B</given-names>
+                        </name>
+                    </person-group>
+                    <year>2013</year>
+                    <article-title>Organization of the resting TCR in nanoscale oligomers</article-title>
+                    <source>Immunol Rev</source>
+                    <volume>251</volume>
+                    <fpage>13</fpage>
+                    <lpage>20</lpage>
+                    <pub-id pub-id-type="doi">10.1111/imr.12019</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib36">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Shaw</surname>
+                            <given-names>AS</given-names>
+                        </name>
+                        <name>
+                            <surname>Dustin</surname>
+                            <given-names>ML</given-names>
+                        </name>
+                    </person-group>
+                    <year>1997</year>
+                    <article-title>Making the T cell receptor go the distance: a topological view of T cell activation</article-title>
+                    <source>Immunity</source>
+                    <volume>6</volume>
+                    <fpage>361</fpage>
+                    <lpage>9</lpage>
+                    <pub-id pub-id-type="doi">10.1016/S1074-7613(00)80279-4</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib37">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Smith</surname>
+                            <given-names>AW</given-names>
+                        </name>
+                        <name>
+                            <surname>Smoligovets</surname>
+                            <given-names>AA</given-names>
+                        </name>
+                        <name>
+                            <surname>Groves</surname>
+                            <given-names>JT</given-names>
+                        </name>
+                    </person-group>
+                    <year>2011</year>
+                    <article-title>Patterned two-photon photoactivation illuminates spatial reorganization in live cells</article-title>
+                    <source>J Phys Chem A</source>
+                    <volume>115</volume>
+                    <fpage>3867</fpage>
+                    <lpage>75</lpage>
+                    <pub-id pub-id-type="doi">10.1021/jp108295s</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib38">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Smoligovets</surname>
+                            <given-names>AA</given-names>
+                        </name>
+                        <name>
+                            <surname>Smith</surname>
+                            <given-names>AW</given-names>
+                        </name>
+                        <name>
+                            <surname>Wu</surname>
+                            <given-names>H-J</given-names>
+                        </name>
+                        <name>
+                            <surname>Petit</surname>
+                            <given-names>RS</given-names>
+                        </name>
+                        <name>
+                            <surname>Groves</surname>
+                            <given-names>JT</given-names>
+                        </name>
+                    </person-group>
+                    <year>2012</year>
+                    <article-title>Characterization of dynamic actin associations with T-cell receptor microclusters in primary T cells</article-title>
+                    <source>J Cell Sci</source>
+                    <volume>125</volume>
+                    <fpage>735</fpage>
+                    <lpage>42</lpage>
+                    <pub-id pub-id-type="doi">10.1242/jcs.092825</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib38a">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Stefanová</surname>
+                            <given-names>I</given-names>
+                        </name>
+                        <name>
+                            <surname>Hemmer</surname>
+                            <given-names>B</given-names>
+                        </name>
+                        <name>
+                            <surname>Vergelli</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name>
+                            <surname>Martin</surname>
+                            <given-names>R</given-names>
+                        </name>
+                        <name>
+                            <surname>Biddison</surname>
+                            <given-names>WE</given-names>
+                        </name>
+                        <name>
+                            <surname>Germain</surname>
+                            <given-names>RN</given-names>
+                        </name>
+                    </person-group>
+                    <year>2003</year>
+                    <article-title>TCR ligand discrimination is enforced by competing ERK positive and SHP-1 negative feedback pathways</article-title>
+                    <source>Nat Immunol</source>
+                    <volume>4</volume>
+                    <fpage>248</fpage>
+                    <lpage>54</lpage>
+                    <pub-id pub-id-type="doi">10.1038/ni895</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib39">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Tian</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <name>
+                            <surname>Maile</surname>
+                            <given-names>R</given-names>
+                        </name>
+                        <name>
+                            <surname>Collins</surname>
+                            <given-names>EJ</given-names>
+                        </name>
+                        <name>
+                            <surname>Frelinger</surname>
+                            <given-names>JA</given-names>
+                        </name>
+                    </person-group>
+                    <year>2007</year>
+                    <article-title>CD8+ T cell activation is governed by TCR-Peptide/MHC affinity, not dissociation rate</article-title>
+                    <source>J Immunol</source>
+                    <volume>179</volume>
+                    <fpage>2952</fpage>
+                    <lpage>60</lpage>
+                </element-citation>
+            </ref>
+            <ref id="bib40">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Valitutti</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <name>
+                            <surname>Muller</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <name>
+                            <surname>Cella</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name>
+                            <surname>Padovan</surname>
+                            <given-names>E</given-names>
+                        </name>
+                        <name>
+                            <surname>Lanzavecchia</surname>
+                            <given-names>A</given-names>
+                        </name>
+                    </person-group>
+                    <year>1995</year>
+                    <article-title>Serial triggering of many T-cell receptors by a few peptide-MHC complexes</article-title>
+                    <source>Nature</source>
+                    <volume>375</volume>
+                    <fpage>148</fpage>
+                    <lpage>51</lpage>
+                    <pub-id pub-id-type="doi">10.1038/375148a0</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib41">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>van der Merwe</surname>
+                            <given-names>PA</given-names>
+                        </name>
+                        <name>
+                            <surname>Dushek</surname>
+                            <given-names>O</given-names>
+                        </name>
+                    </person-group>
+                    <year>2011</year>
+                    <article-title>Mechanisms for T cell receptor triggering</article-title>
+                    <source>Nat Rev Immunol</source>
+                    <volume>11</volume>
+                    <fpage>47</fpage>
+                    <lpage>55</lpage>
+                    <pub-id pub-id-type="doi">10.1038/nri2887</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib42">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Varma</surname>
+                            <given-names>R</given-names>
+                        </name>
+                        <name>
+                            <surname>Campi</surname>
+                            <given-names>G</given-names>
+                        </name>
+                        <name>
+                            <surname>Yokosuka</surname>
+                            <given-names>T</given-names>
+                        </name>
+                        <name>
+                            <surname>Saito</surname>
+                            <given-names>T</given-names>
+                        </name>
+                        <name>
+                            <surname>Dustin</surname>
+                            <given-names>ML</given-names>
+                        </name>
+                    </person-group>
+                    <year>2006</year>
+                    <article-title>T cell receptor-proximal signals are sustained in peripheral microclusters and terminated in the central supramolecular activation cluster</article-title>
+                    <source>Immunity</source>
+                    <volume>25</volume>
+                    <fpage>117</fpage>
+                    <lpage>27</lpage>
+                    <pub-id pub-id-type="doi">10.1016/j.immuni.2006.04.010</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib43">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Weiss</surname>
+                            <given-names>A</given-names>
+                        </name>
+                        <name>
+                            <surname>Littman</surname>
+                            <given-names>DR</given-names>
+                        </name>
+                    </person-group>
+                    <year>1994</year>
+                    <article-title>Signal transduction by lymphocyte antigen receptors</article-title>
+                    <source>Cell</source>
+                    <volume>76</volume>
+                    <fpage>263</fpage>
+                    <lpage>74</lpage>
+                    <pub-id pub-id-type="doi">10.1016/0092-8674(94)90334-4</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib44">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Williams</surname>
+                            <given-names>CB</given-names>
+                        </name>
+                        <name>
+                            <surname>Engle</surname>
+                            <given-names>DL</given-names>
+                        </name>
+                        <name>
+                            <surname>Kersh</surname>
+                            <given-names>GJ</given-names>
+                        </name>
+                        <name>
+                            <surname>Michael White</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name>
+                            <surname>Allen</surname>
+                            <given-names>PM</given-names>
+                        </name>
+                    </person-group>
+                    <year>1999</year>
+                    <article-title>A kinetic threshold between negative and positive selection based on the longevity of the T cell receptor-ligand complex</article-title>
+                    <source>J Exp Med</source>
+                    <volume>189</volume>
+                    <fpage>1531</fpage>
+                    <lpage>44</lpage>
+                    <pub-id pub-id-type="doi">10.1084/jem.189.10.1531</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib45">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Xu</surname>
+                            <given-names>Q</given-names>
+                        </name>
+                        <name>
+                            <surname>Lin</surname>
+                            <given-names>WC</given-names>
+                        </name>
+                        <name>
+                            <surname>Petit</surname>
+                            <given-names>RS</given-names>
+                        </name>
+                        <name>
+                            <surname>Groves</surname>
+                            <given-names>JT</given-names>
+                        </name>
+                    </person-group>
+                    <year>2011</year>
+                    <article-title>EphA2 receptor activation by monomeric Ephrin-A1 on supported membranes</article-title>
+                    <source>Biophys J</source>
+                    <volume>101</volume>
+                    <fpage>2731</fpage>
+                    <lpage>9</lpage>
+                    <pub-id pub-id-type="doi">10.1016/j.bpj.2011.10.039</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib46">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Yin</surname>
+                            <given-names>Y</given-names>
+                        </name>
+                        <name>
+                            <surname>Wang</surname>
+                            <given-names>XX</given-names>
+                        </name>
+                        <name>
+                            <surname>Mariuzza</surname>
+                            <given-names>RA</given-names>
+                        </name>
+                    </person-group>
+                    <year>2012</year>
+                    <article-title>Crystal structure of a complete ternary complex of T-cell receptor, peptide-MHC, and CD4</article-title>
+                    <source>Proc Natl Acad Sci USA</source>
+                    <volume>109</volume>
+                    <fpage>5405</fpage>
+                    <lpage>10</lpage>
+                    <pub-id pub-id-type="doi">10.1073/pnas.1118801109</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib47">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Yokosuka</surname>
+                            <given-names>T</given-names>
+                        </name>
+                        <name>
+                            <surname>Sakata-Sogawa</surname>
+                            <given-names>K</given-names>
+                        </name>
+                        <name>
+                            <surname>Kobayashi</surname>
+                            <given-names>W</given-names>
+                        </name>
+                        <name>
+                            <surname>Hiroshima</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name>
+                            <surname>Hashimoto-Tane</surname>
+                            <given-names>A</given-names>
+                        </name>
+                        <name>
+                            <surname>Tokunaga</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <etal />
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>Newly generated T cell receptor microclusters initiate and sustain T cell activation by recruitment of Zap70 and SLP-76</article-title>
+                    <source>Nat Immunol</source>
+                    <volume>6</volume>
+                    <fpage>1253</fpage>
+                    <lpage>62</lpage>
+                    <pub-id pub-id-type="doi">10.1038/ni1272</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib48">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Yu</surname>
+                            <given-names>Y</given-names>
+                        </name>
+                        <name>
+                            <surname>Fay</surname>
+                            <given-names>NC</given-names>
+                        </name>
+                        <name>
+                            <surname>Smoligovets</surname>
+                            <given-names>AA</given-names>
+                        </name>
+                        <name>
+                            <surname>Wu</surname>
+                            <given-names>HJ</given-names>
+                        </name>
+                        <name>
+                            <surname>Groves</surname>
+                            <given-names>JT</given-names>
+                        </name>
+                    </person-group>
+                    <year>2012</year>
+                    <article-title>Myosin IIA modulates T cell receptor transport and CasL phosphorylation during early immunological synapse formation</article-title>
+                    <source>PLOS ONE</source>
+                    <volume>7</volume>
+                    <fpage>e30704</fpage>
+                    <pub-id pub-id-type="doi">10.1371/journal.pone.0030704</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib49">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Zhu</surname>
+                            <given-names>C</given-names>
+                        </name>
+                        <name>
+                            <surname>Jiang</surname>
+                            <given-names>N</given-names>
+                        </name>
+                        <name>
+                            <surname>Huang</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name>
+                            <surname>Zarnitsyna</surname>
+                            <given-names>VI</given-names>
+                        </name>
+                        <name>
+                            <surname>Evavold</surname>
+                            <given-names>BD</given-names>
+                        </name>
+                    </person-group>
+                    <year>2013</year>
+                    <article-title>Insights from in situ analysis of TCR-pMHC recognition: response of an interaction network</article-title>
+                    <source>Immunol Rev</source>
+                    <volume>251</volume>
+                    <fpage>49</fpage>
+                    <lpage>64</lpage>
+                    <pub-id pub-id-type="doi">10.1111/imr.12016</pub-id>
+                </element-citation>
+            </ref>
+        </ref-list>
+    </back>
+  
+</article>
