@@ -78,6 +78,10 @@ class MPT(Debuggable):
            self.run_prompt(True)
 
     def run_prompt(self, interactive):
+        """
+        Runs the interactive modus
+         
+        """
         prompt = Interactive(self.gv)
         opts = ('Confirm', 'Unconfirm')
         sel = prompt.input_options(opts)
