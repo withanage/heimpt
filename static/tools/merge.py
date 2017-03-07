@@ -41,6 +41,7 @@ import uuid
 from debug import Debuggable, Debug
 from docopt import docopt
 from globals import GV
+from settingsconfiguration import Settings
 
 
 try:
@@ -61,7 +62,8 @@ class Merge(Debuggable):
 
         self.args = self.read_command_line()
         self.debug = Debug()
-        self.gv = GV()
+        self.settings = Settings(self.args)
+        self.gv = GV(self.settings)
         self.uid = self.gv.uuid
         self.dr = self.args.get('<path>')
         self.f = self.args.get('<input_file>')

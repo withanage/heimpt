@@ -42,6 +42,7 @@ import uuid
 from debug import Debuggable, Debug
 from docopt import docopt
 from globals import GV
+from settingsconfiguration import Settings
 
 
 try:
@@ -66,7 +67,8 @@ class Process(Debuggable):
     def __init__(self):
         self.args = self.read_command_line()
         self.debug = Debug()
-        self.gv = GV()
+        self.settings = Settings(self.args)
+        self.gv = GV(self.settings)
         Debuggable.__init__(self, 'Main')
         if self.args.get('--debug'):
             self.debug.enable_debug()

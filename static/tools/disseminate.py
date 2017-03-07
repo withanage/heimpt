@@ -32,6 +32,7 @@ import os
 import inspect
 from docopt import docopt
 from subprocess import Popen, PIPE
+from settingsconfiguration import Settings
 
 
 class Disseminate(Debuggable):
@@ -39,7 +40,8 @@ class Disseminate(Debuggable):
     def __init__(self):
         self.args = self.read_command_line()
         self.debug = Debug()
-        self.gv = GV()
+        self.settings = Settings(self.args)
+        self.gv = GV(self.settings)
         Debuggable.__init__(self, 'Main')
         if self.args.get('--debug'):
             self.debug.enable_debug()

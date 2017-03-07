@@ -11,6 +11,7 @@ generate the output.
 Usage:
     mpt.py  <config_file> [options]
 Options:
+    --interactive                                   Enable step-by-step interactive mode
     -d, --debug  Enable debug output
 
 Example
@@ -37,16 +38,18 @@ References
 
 __author__ = "Dulip Withanage"
 
-import os
 import collections
+import datetime
+from debug import Debuggable, Debug
+from docopt import docopt
+from globals import GV
+from interactive import Interactive
+import os
+from settingsconfiguration import Settings
+from subprocess import Popen, PIPE
 import sys
 import shutil
 import uuid
-import datetime
-from globals import GV
-from debug import Debuggable, Debug
-from docopt import docopt
-from subprocess import Popen, PIPE
 
 SEP = os.path.sep
 
@@ -60,15 +63,29 @@ class MPT(Debuggable):
 
         self.args = self.read_command_line()
         self.debug = Debug()
-        self.gv = GV()
+        self.settings = Settings(self.args)
+        self.gv = GV(self.settings)
         Debuggable.__init__(self, 'Main')
         if self.args.get('--debug'):
             self.debug.enable_debug()
+
 
         self.current_result = datetime.datetime.now().strftime(
             "%Y_%m_%d-%H-%M-") + str(uuid.uuid4())[:8]
         self.config = self.gv.read_json(self.args['<config_file>'])
         self.all_typesetters = self.config.get('typesetters')
+        if self.args['--interactive']:
+           self.run_prompt(True)
+
+    def run_prompt(self, interactive):
+        prompt = Interactive(self.gv)
+        opts = ('Confirm', 'Unconfirm')
+        sel = prompt.input_options(opts)
+        print sel
+
+
+
+
 
     def run(self):
         """

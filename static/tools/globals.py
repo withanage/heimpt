@@ -23,8 +23,10 @@ numeral_map = tuple(zip(
 class GV(object):
     '''    Global variables    '''
 
-    def __init__(self):
+    def __init__(self, settings):
         # GLOBAL VARIABLES
+        self.settings = settings
+
 
         #application paths
         self.APACHE_FOP_PATH = u'fop/fop'
@@ -77,7 +79,7 @@ class GV(object):
         self.debug = Debug()
         self.numeral_map = numeral_map
 
-        self.uuid = '4e4dd8cf-26bf-4893-b037-1fd3bf08f112'
+        self.uuid = 'mpt'
         self.version = '0.0.1'
 
     @staticmethod
@@ -142,6 +144,7 @@ class GV(object):
             with open(pth) as j:
                 return json.load(j)
         else:
+            print pth, self.PROJECT_INPUT_FILE_JSON_IS_NOT_VALID
             self.debug.print_debug(
                 self, self.PROJECT_INPUT_FILE_JSON_IS_NOT_VALID)
             sys.exit(1)
