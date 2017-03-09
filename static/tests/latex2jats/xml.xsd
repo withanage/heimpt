@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.w3.org/XML/1998/namespace" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tei="http://www.tei-c.org/ns/1.0">
-    <xs:import namespace="http://www.tei-c.org/ns/1.0" schemaLocation="metypeset_tei.xsd"/>
-    <xs:import namespace="http://www.w3.org/1999/xhtml" schemaLocation="html.xsd"/>
-    <xs:attribute name="id" type="xs:NCName"/>
-</xs:schema>

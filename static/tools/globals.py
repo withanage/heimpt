@@ -42,6 +42,7 @@ class GV(object):
         self.PROJECT_INPUT_FILE_DOES_NOT_EXIST = u'project input_file does not exist'
         self.PROJECT_IS_NOT_ACTIVE = u'project is not active'
         self.PROJECT_OUTPUT_FILE_IS_NOT_DEFINED = u'project output file is not defined'
+        self.PROJECT_OUTPUT_FILE_TYPE_IS_NOT_SPECIFIED = u'project output file type is not defined'
         self.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED = u'project output file was not created'
         self.PROJECT_TYPESETTER_IS_NOT_AVAILABLE = u'project typesetter is not available'
         self.PROJECT_TYPESETTER_IS_NOT_SPECIFIED = u'project typesetter is not specified'
@@ -54,6 +55,7 @@ class GV(object):
 
 
         # typesetter errors
+        self.TYPESETTER_ARGUMENTS_NOT_DEFINED = u"typesetter arguments not defined"
         self.TYPESETTER_EXECUTABLE_VARIABLE_IS_UNDEFINED = u'typesetter executable variable is undefined'
         self.TYPESETTER_FILE_OUTPUT_TYPE_IS_UNDEFINED = u'typesetter file output type is undefined'
         self.TYPESETTER_METADATA_FILE_WAS_NOT_SPECIFIED = u'Metadata file wasn\'t specified '

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+<teiHeader>
+  <fileDesc>
+    <titleStmt>
+      <title>Bare Demo of IEEEtran.cls for Conferences</title>
+      <author></author>
+      <author></author>
+      <author></author>
+    </titleStmt>
+    <publicationStmt>
+      <p></p>
+          </publicationStmt>
+    <sourceDesc>
+      <p>Produced by pandoc.</p>
+    </sourceDesc>
+  </fileDesc>
+</teiHeader>
+<text>
+<body>
+<div type="level1">
+  <head>Introduction</head>
+  <p>This demo file is intended to serve as a <quote>starter
+  file</quote> for IEEE conference papers produced under LaTeX using
+  IEEEtran.cls version 1.8 and later. I wish you the best of
+  success.</p>
+  <p>mds</p>
+  <p>December 27, 2012</p>
+  <div type="level2">
+    <head>Subsection Heading Here</head>
+    <p>Subsection text here.</p>
+    <div type="level3">
+      <head>Subsubsection Heading Here</head>
+      <p>Subsubsection text here.</p>
+    </div>
+  </div>
+</div>
+<div type="level1">
+  <head>Conclusion</head>
+  <p>The conclusion goes here.</p>
+</div>
+<div type="level1">
+  <head>Acknowledgment</head>
+  <p>The authors would like to thank...</p>
+  <p>1</p>
+  <p>H. Kopka and P. W. Daly, <hi rendition="simple:italic">A Guide to
+  LaTeX</hi>, 3rd ed.1em plus 0.5em minus 0.4emHarlow, England:
+  Addison-Wesley, 1999.</p>
+</div>
+</body>
+</text>
+</TEI>
