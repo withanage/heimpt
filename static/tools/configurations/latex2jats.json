@@ -1,0 +1,122 @@
+{
+    "projects": [
+     {
+            "active": true,
+            "chain": true,
+            "files": {
+                "1": "01_headline.docx",
+                "2": "02_boxed_text.docx"
+
+
+            },
+            "name": "example_project",
+            "path": "/usr/local/mpt/static/tests/example/",
+            "typesetters": {
+                "1": {
+                    "arguments": {
+                        "1": "create_output_directory()"
+                    },
+                    "name": "metypeset",
+                    "out_type": "xml",
+                    "process":true
+                },
+                "2": {
+                   "arguments": {
+                        "1": "create_output_directory()"
+                    },
+                    "name": "xmlprocess",
+                    "out_type": "xml",
+                    "process":true
+                },
+                "3": {
+                   "arguments": {
+                        "1": "create_output_directory()",
+                        "2":"bits",
+                        "3":"--metadata book-meta.bits2",
+                        "4": "--set-numbering-tags=disp-quote,tr"
+                    },
+                    "name": "xmlmerge",
+                    "out_type": "xml",
+                    "out_file":"fullFile.xml",
+                    "merge":true
+
+                },
+                "4":{
+                  "name":"xml2fo",
+                  "out_type": "fo",
+                  "expand":true,
+                  "arguments": {
+                    "1": "create_output_directory()"
+                  }
+                },
+              "5":{
+                  "name":"fo2pdf",
+                  "out_type": "pdf",
+                  "expand":true,
+                  "arguments": {
+                    "1": "create_output_directory()"
+                  }
+                }
+
+
+            }
+        }
+    ],
+    "typesetters": {
+        "metypeset": {
+            "arguments": {
+                "1": "docx",
+                "2": "--debug",
+                "3": "--nogit"
+
+            },
+            "executable": "/usr/local/mpt/static/tools/meTypeset/bin/meTypeset.py"
+        },
+        "pandoc": {
+            "arguments": {
+                "1": "-t html"
+            },
+            "executable": "pandoc"
+        },
+
+        "xmlprocess": {
+            "arguments": {
+                "1":"--metadata book-part-meta.bits2",
+                "2": "--set-uuids=fn,ref",
+                "3": "--set-numbering-values=xref,ref-type,fn",
+                "4":"--clean-references"
+
+
+            },
+            "executable": "/usr/local/mpt/static/tools/prepare.py"
+        } ,
+        "xmlmerge": {
+            "arguments": {
+
+            },
+            "executable": "/usr/local/mpt/static/tools/merge.py"
+        }
+      ,
+        "xml2fo": {
+            "arguments": {
+              "1":"--xsl=/formatter.xsl",
+              "2":"--medium=electronic,print",
+              "3":"--formatter=AH",
+              "4":"--out-type=FO"
+
+            },
+            "executable": "/usr/local/mpt/static/tools/disseminate.py"
+        },
+      "fo2pdf": {
+            "arguments": {
+              "1":"--medium=electronic,print",
+              "2":"--formatter=AH",
+              "3":"--out-type=PDF"
+
+            },
+            "executable": "/usr/local/mpt/static/tools/disseminate.py"
+        }
+
+
+    }
+}
