@@ -160,8 +160,13 @@ class MPT(Debuggable):
         subprocess.Popen()
 
         """
-        m = ' '.join(args).strip().split(' ')
-        self.debug.print_console(self, ' '.join(m))
+        args_str = ' '.join(args)
+
+        if ': ' in args_str:
+
+            args_str = args_str.replace(': ',':')
+            self.debug.print_debug(self, u"Merging command: file into command:file, can be a problem for some applications")
+        m = args_str.strip().split(' ')
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
         exit_code = process.wait()
@@ -235,8 +240,12 @@ class MPT(Debuggable):
         os.makedirs()
 
         """
+        config_args = p.get('typesetters')[p_id].get("arguments")
+        if  config_args is None:
+            self.debug.print_debug(self, self.gv.TYPESETTER_ARGUMENTS_NOT_DEFINED)
+            sys.exit(1)
         ts_args = collections.OrderedDict(
-            sorted(p.get('typesetters')[p_id].get("arguments").items()))
+            sorted(config_args.items()))
         out_type = p.get('typesetters')[p_id].get("out_type")
         out_path = os.path.join(p.get('path'), uid)
 
@@ -325,7 +334,7 @@ class MPT(Debuggable):
                 prefix,
                 f_id,
                 uid)
-
+            self.debug.print_console(self, u'Output folder:\t:'+p_path)
             pf_type = p.get('typesetters')[p_id].get("out_type")
 
         else:
@@ -496,6 +505,7 @@ class MPT(Debuggable):
         prev_out_type = ''
 
         if p.get('active'):
+            self.debug.print_console(self, u'PROJECT : '+p.get('name'))
             ts = p.get('typesetters')
             if ts:
                 typesetters_ordered = collections.OrderedDict(
@@ -510,7 +520,7 @@ class MPT(Debuggable):
                 sys.exit(1)
 
             for p_id in typesetters_ordered:
-                self.debug.print_console(self, ' '.join(['Runnning step',p_id,':', p.get('typesetters')[p_id].get("name")]))
+                self.debug.print_console(self, ' '.join(['Step',p_id,':','\t', p.get('typesetters')[p_id].get("name")]))
                 temp_path, temp_pre_out_type = self.typeset_files(
                     p,
                     pre_path,
@@ -523,7 +533,7 @@ class MPT(Debuggable):
                 #self.debug.print_console(self, ' '.join(['ls -al',temp_path]))
 
         else:
-            self.debug.print_debug(self, self.gv.PROJECT_IS_NOT_ACTIVE)
+            self.debug.print_debug(self, self.gv.PROJECT_IS_NOT_ACTIVE+' '+p.get('name'))
         return True
 
     def typeset_all_projects(self):
@@ -592,7 +602,11 @@ class MPT(Debuggable):
         """
         p_name = p.get('typesetters')[p_id].get("name")
         t_path = [p.get('path'), uid] + ['nlm'] if p_name == 'metypeset' else [p.get('path'), uid]
-        out_type = p['typesetters'][p_id]['out_type']
+        out_type = p['typesetters'][p_id].get('out_type')
+
+        if out_type is None:
+            self.debug.print_console(self,self.gv.PROJECT_OUTPUT_FILE_TYPE_IS_NOT_SPECIFIED)
+            sys.exit(1)
         project_path = [p.get('path'),p['name'], self.current_result, p_id + '_' + p_name,out_type]
         temp_dir = os.path.join(p.get('path'), uid)
 
