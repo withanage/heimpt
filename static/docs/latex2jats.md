@@ -2,10 +2,11 @@
 # Latex -> TEI -> JATS
 
 ## Prototype
+- normal
+
 > python /usr/local/mpt/static/tools/mpt.py /usr/local/mpt/static/tools/configurations/latex2jats.json
 
-oder  für debugging
-
+- debug modus
 > python /usr/local/mpt/static/tools/mpt.py /usr/local/mpt/static/tools/configurations/latex2jats.json --debug
 
 ---
