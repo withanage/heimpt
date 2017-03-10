@@ -37,7 +37,7 @@ oder  für debugging
 
 > https://github.com/withanage/mpt/blob/master/static/tools/configurations/latex2jats.json#L33:L47
 
-3. Prjokt Zur Nicht Aktiv (er wird laufen, wenn Arne's skript in 1.Prjekt  meTypeset Valide TEI generieren)
+- 3.Prjokt (1 und 2 zusammen) Zur Nicht Aktiv (er wird laufen, wenn Arne's  in 1.Projekt  meTypeset Valide TEI generieren)
 
 > https://github.com/withanage/mpt/blob/master/static/tools/configurations/latex2jats.json#L52:L87
 
