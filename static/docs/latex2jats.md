@@ -13,7 +13,7 @@
 
 ### Ausgabe
 ```
-> https://github.com/withanage/mpt/blob/master/static/docs/latex2jats.md
+> python /usr/local/mpt/static/tools/mpt.py /usr/local/mpt/static/tools/configurations/latex2jats.json
 [MPT] PROJECT : tex2tei
 [MPT] Step 1 :  pandoc
 /usr/local/mpt/static/tests/latex2jats//tex2tei/2017_03_10-10-24-6e29f746/1_pandoc/xml
