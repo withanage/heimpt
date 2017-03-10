@@ -15,7 +15,7 @@
             "2": "create_output_file()"
           },
           "name": "pandoc",
-         "out_type": "xml",
+          "out_type": "xml",
           "process": true
         },
         "2": {
@@ -24,13 +24,13 @@
             "2": "create_output_file()"
           },
           "name": "tei2tei",
-         "out_type": "xml",
+          "out_type": "xml",
           "process": true
         }
       }
     },
     {
-      "active": false,
+      "active": true,
       "chain": true,
       "files": {
         "1": "metypeset_tei.xml"
