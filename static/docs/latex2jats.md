@@ -4,7 +4,7 @@
 ## Prototype
 Program laufen
 
-- normal modues
+- normal modus
 
 > python /usr/local/mpt/static/tools/mpt.py /usr/local/mpt/static/tools/configurations/latex2jats.json
 
@@ -49,14 +49,12 @@ Program laufen
 > https://github.com/withanage/mpt/blob/master/static/tools/configurations/latex2jats.json#L52:L87
 
 ####  XSL im Server
-
 > /usr/local/mpt/static/tools/tei2tei/pandoc2metypeset.xsl
 
 #### git
-
 > https://github.com/withanage/mpt/blob/master/static/tools/tei2tei/pandoc2metypeset.xsl
 
-### Beispiel Dateien
+### Beispiel Dateien (tex, tei, jats)
 
 https://github.com/withanage/mpt/tree/master/static/tests/latex2jats
 
