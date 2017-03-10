@@ -49,7 +49,7 @@ oder  für debugging
 
 > https://github.com/withanage/mpt/blob/master/static/tools/tei2tei/pandoc2metypeset.xsl
 
-### Beispiel Datein
+### Beispiel Dateien
 
 https://github.com/withanage/mpt/tree/master/static/tests/latex2jats
 
