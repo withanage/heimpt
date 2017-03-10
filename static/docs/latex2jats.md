@@ -10,8 +10,8 @@ oder  für debugging
 
 ---
 
-Ausgabe
-
+### Ausgabe
+```
 [MPT] PROJECT : tex2tei
 [MPT] Step 1 :      pandoc
 /usr/local/mpt/static/tests/latex2jats//tex2tei/2017_03_10-10-24-6e29f746/1_pandoc/xml
@@ -20,14 +20,14 @@ Ausgabe
 [MPT] PROJECT : tei2jats
 [MPT] Step 1 :      metypeset
 /usr/local/mpt/static/tests/latex2jats//tei2jats/2017_03_10-10-24-6e29f746/1_metypeset/xml
-
+```
 ----
 
 Kleine Erklärung
 
 - Ausgabe liegen unter
 
-/usr/local/mpt/static/tests/latex2jats/ und /usr/local/mpt/static/tests/latex2jats//tei2jats/ mit Datum die Ausgabe Dateien
+> /usr/local/mpt/static/tests/latex2jats/ und /usr/local/mpt/static/tests/latex2jats//tei2jats/ mit Datum die Ausgabe Dateien
 
 -  1. Projekt tex2tei (aktiv)
 
