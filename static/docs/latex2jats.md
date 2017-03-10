@@ -43,7 +43,7 @@ Program laufen
 > https://github.com/withanage/mpt/blob/master/static/tools/configurations/latex2jats.json#L33:L47
 
 
--  Projekt 3  (aktueul nicht aktiv)    ist eine Zusammenlegung (1 und 2)
+-  Projekt 3  (aktuell nicht aktiv)    ist eine Zusammenlegung (1 und 2)
 -  wird ohne Fehler laufen, wenn Projekt 1 , valide Eingabe Dateien für Projekt 2 generieren
 
 > https://github.com/withanage/mpt/blob/master/static/tools/configurations/latex2jats.json#L52:L87
