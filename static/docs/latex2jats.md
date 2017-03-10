@@ -8,8 +8,9 @@
       * [Beispiel Dateien (tex, tei, jats)](#beispiel-dateien-tex-tei-jats)
 
 
-## Prototype
-Program laufen
+## Prototyp
+
+### Run
 
 - normal modus
 
