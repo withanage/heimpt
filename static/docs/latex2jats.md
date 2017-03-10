@@ -14,12 +14,12 @@
 ### Ausgabe
 ```
 [MPT] PROJECT : tex2tei
-[MPT] Step 1 :      pandoc
+[MPT] Step 1 :  pandoc
 /usr/local/mpt/static/tests/latex2jats//tex2tei/2017_03_10-10-24-6e29f746/1_pandoc/xml
-[MPT] Step 2 :      tei2tei
+[MPT] Step 2 :  tei2tei
 /usr/local/mpt/static/tests/latex2jats//tex2tei/2017_03_10-10-24-6e29f746/2_tei2tei/xml
 [MPT] PROJECT : tei2jats
-[MPT] Step 1 :      metypeset
+[MPT] Step 1 :  metypeset
 /usr/local/mpt/static/tests/latex2jats//tei2jats/2017_03_10-10-24-6e29f746/1_metypeset/xml
 ```
 ----
