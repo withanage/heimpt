@@ -334,8 +334,7 @@ class MPT(Debuggable):
                 prefix,
                 f_id,
                 uid)
-            self.debug.print_console(self, u'Output folder:\t:'+p_path)
-            pf_type = p.get('typesetters')[p_id].get("out_type")
+            self.debug.print_console(self, u'Output folder:\t'+p_path)
 
         else:
             self.debug.print_debug(
