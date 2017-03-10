@@ -1,12 +1,13 @@
 
 # Latex -> TEI -> JATS
 
-* [Prototype](#prototype)
+* [Latex -&gt; TEI -&gt; JATS](#latex---tei---jats)
+    * [Prototyp](#prototyp)
+      * [Run](#run)
       * [Ausgabe](#ausgabe)
         * [Erklärung](#erklärung)
         * [TEI 2  TEI](#tei-2--tei)
       * [Beispiel Dateien (tex, tei, jats)](#beispiel-dateien-tex-tei-jats)
-
 
 ## Prototyp
 
