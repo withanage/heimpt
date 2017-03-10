@@ -45,7 +45,7 @@ oder  für debugging
 
 > /usr/local/mpt/static/tools/tei2tei/pandoc2metypeset.xsl
 
-in git
+#### git
 
 > https://github.com/withanage/mpt/blob/master/static/tools/tei2tei/pandoc2metypeset.xsl
 
