@@ -1,6 +1,14 @@
 
 # Latex -> TEI -> JATS
 
+  * [Latex -&gt; TEI -&gt; JATS](#latex---tei---jats)
+    * [Prototype](#prototype)
+      * [Ausgabe](#ausgabe)
+        * [Erklärung](#erklärung)
+        * [XSL im Server](#xsl-im-server)
+        * [git](#git)
+      * [Beispiel Dateien (tex, tei, jats)](#beispiel-dateien-tex-tei-jats)
+
 ## Prototype
 Program laufen
 
@@ -48,10 +56,10 @@ Program laufen
 
 > https://github.com/withanage/mpt/blob/master/static/tools/configurations/latex2jats.json#L52:L87
 
-####  XSL im Server
+####  TEI 2  TEI
+- Server
 > /usr/local/mpt/static/tools/tei2tei/pandoc2metypeset.xsl
-
-#### git
+- git
 > https://github.com/withanage/mpt/blob/master/static/tools/tei2tei/pandoc2metypeset.xsl
 
 ### Beispiel Dateien (tex, tei, jats)
