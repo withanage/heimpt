@@ -23,36 +23,36 @@ oder  für debugging
 ```
 ----
 
-Kleine Erklärung
+#### Erklärung
 
-- Ausgabe liegen unter
+- Ausgabe Ordner
 
-> /usr/local/mpt/static/tests/latex2jats/ und /usr/local/mpt/static/tests/latex2jats//tei2jats/ mit Datum die Ausgabe Dateien
+> /usr/local/mpt/static/tests/latex2jats/ und /usr/local/mpt/static/tests/latex2jats//tei2jats/ 
 
 -  1. Projekt tex2tei (aktiv)
 
-https://github.com/withanage/mpt/blob/master/static/tools/configurations/latex2jats.json#L2:L31
+> https://github.com/withanage/mpt/blob/master/static/tools/configurations/latex2jats.json#L2:L31
 
 - 2. Projekt tei2jats (aktiv)
 
-https://github.com/withanage/mpt/blob/master/static/tools/configurations/latex2jats.json#L33:L47
+> https://github.com/withanage/mpt/blob/master/static/tools/configurations/latex2jats.json#L33:L47
 
 3. Prjokt Zur Nicht Aktiv (er wird laufen, wenn Arne's skript in 1.Prjekt  meTypeset Valide TEI generieren)
 
-https://github.com/withanage/mpt/blob/master/static/tools/configurations/latex2jats.json#L52:L87
+> https://github.com/withanage/mpt/blob/master/static/tools/configurations/latex2jats.json#L52:L87
 
-Leere XSL im Server
+####  XSL im Server
 
-/usr/local/mpt/static/tools/tei2tei/pandoc2metypeset.xsl
+> /usr/local/mpt/static/tools/tei2tei/pandoc2metypeset.xsl
 
 in git
 
-https://github.com/withanage/mpt/blob/master/static/tools/tei2tei/pandoc2metypeset.xsl
+> https://github.com/withanage/mpt/blob/master/static/tools/tei2tei/pandoc2metypeset.xsl
 
-Beispiel Datein
+### Beispiel Datein
 
 https://github.com/withanage/mpt/tree/master/static/tests/latex2jats
-### Documents
+
 
 
     
