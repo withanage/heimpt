@@ -1,8 +1,7 @@
 
 # Latex -> TEI -> JATS
-  
-   * [Latex -&gt; TEI -&gt; JATS](#latex---tei---jats)
-    * [Prototype](#prototype)
+
+* [Prototype](#prototype)
       * [Ausgabe](#ausgabe)
         * [Erklärung](#erklärung)
         * [TEI 2  TEI](#tei-2--tei)
