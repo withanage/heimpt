@@ -41,19 +41,20 @@
 
 - Ausgabe Ordner
 
-> /usr/local/mpt/static/tests/latex2jats/ und /usr/local/mpt/static/tests/latex2jats//tei2jats/ 
+> /usr/local/mpt/static/tests/latex2jats/ 
+> /usr/local/mpt/static/tests/latex2jats//tei2jats/ 
 
--  Projekt 1   tex2tei (aktiv)
+-  Projekt 1 :  tex2tei (aktiv) 
 
 > https://github.com/withanage/mpt/blob/master/static/tools/configurations/latex2jats.json#L2:L31
 
-- Projekt 2 tei2jats (aktiv)
+- Projekt 2 : tei2jats (aktiv)
 
 > https://github.com/withanage/mpt/blob/master/static/tools/configurations/latex2jats.json#L33:L47
 
 
--  Projekt 3  (aktuell nicht aktiv)    ist eine Zusammenlegung (1 und 2)
--  wird ohne Fehler laufen, wenn Projekt 1 , valide Eingabe Dateien für Projekt 2 generieren
+-  Projekt 3  : (nicht aktiv)    ist eine Zusammenlegung (1 und 2)
+-  Zum Testen geeignet.
 
 > https://github.com/withanage/mpt/blob/master/static/tools/configurations/latex2jats.json#L52:L87
 
