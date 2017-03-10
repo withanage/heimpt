@@ -2,11 +2,14 @@
 # Latex -> TEI -> JATS
 
 ## Prototype
-- normal
+Program laufen
+
+- normal modues
 
 > python /usr/local/mpt/static/tools/mpt.py /usr/local/mpt/static/tools/configurations/latex2jats.json
 
 - debug modus
+
 > python /usr/local/mpt/static/tools/mpt.py /usr/local/mpt/static/tools/configurations/latex2jats.json --debug
 
 ---
@@ -31,15 +34,17 @@
 
 > /usr/local/mpt/static/tests/latex2jats/ und /usr/local/mpt/static/tests/latex2jats//tei2jats/ 
 
--  1. Projekt tex2tei (aktiv)
+-  Projekt 1   tex2tei (aktiv)
 
 > https://github.com/withanage/mpt/blob/master/static/tools/configurations/latex2jats.json#L2:L31
 
-- 2. Projekt tei2jats (aktiv)
+- Projekt 2 tei2jats (aktiv)
 
 > https://github.com/withanage/mpt/blob/master/static/tools/configurations/latex2jats.json#L33:L47
 
-- 3.Projekt , 1 und 2 zusammen (aktueul nicht aktiv)  wird laufen, wenn 1.Projekt  meTypeset valide TEI generieren)
+
+-  Projekt 3  (aktueul nicht aktiv)    ist eine Zusammenlegung (1 und 2)
+-  wird ohne Fehler laufen, wenn Projekt 1 , valide Eingabe Dateien für Projekt 2 generieren
 
 > https://github.com/withanage/mpt/blob/master/static/tools/configurations/latex2jats.json#L52:L87
 
