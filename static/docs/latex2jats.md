@@ -1,13 +1,13 @@
 
 # Latex -> TEI -> JATS
-
-  * [Latex -&gt; TEI -&gt; JATS](#latex---tei---jats)
+  
+   * [Latex -&gt; TEI -&gt; JATS](#latex---tei---jats)
     * [Prototype](#prototype)
       * [Ausgabe](#ausgabe)
         * [Erklärung](#erklärung)
-        * [XSL im Server](#xsl-im-server)
-        * [git](#git)
+        * [TEI 2  TEI](#tei-2--tei)
       * [Beispiel Dateien (tex, tei, jats)](#beispiel-dateien-tex-tei-jats)
+
 
 ## Prototype
 Program laufen
