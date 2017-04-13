@@ -9,7 +9,7 @@ Latex to TEI: Vorgehen
 Testen mit Latex
 ----------------
 
-Frage: Kö¶nnen wir hier dieselbe pdf-Datei als Output erzeugen, die wir
+Frage: Können wir hier dieselbe pdf-Datei als Output erzeugen, die wir
 in der Datenlieferung erhalten haben?
 
 ### (pdf)latex (Versuch 1)
@@ -60,7 +60,7 @@ pandoc
 find . -name '*tex' -print0 | sort -z | xargs -0 perl -e '$v=1;grep{$f="$_";print "\n=== Datei \"$f\" ===\n" if $v;open(A,"$f")||die "$!";while(<A>){chomp;s/\t/<TAB>/g;next unless /([\x00-\x1F]|[\x7F-\xFF])/;@f=split(//,$_);print "\nORIG: $_\n" if $v;grep{$char="$_";$dec=ord($char);if($char=~/([\x00-\x1F]|[\x7F-\xFF])/){print " $dec ($char) " if $v;$hc{$dec}++;$hb{$f}++}}@f;print "\n" if $v;};close A}@ARGV;print STDERR "\n\n== Welches Zeichen (dezimal (hex)) kommt wie oft vor (gesamt Ã¼ber alle Dateien):\n";foreach $k (sort keys %hc){$hex=sprintf(qq(%02X), $k);print "$k ($hex): $hc{$k}\n"};print "\n== Anzahl Zeichen in Datei:\n";foreach $k (sort keys %hb){print "$k:  $hb{$k}\n"}' | less
 ```
 
-#### beheben (Achtung, *Ã¼berschreibt* Dateien!!!)
+#### beheben (Achtung, *Überschreibt* Dateien!!!)
 ```
     for f in *tex; do perl -n -i -e 's/[\x7F-\xFF]//g;print' $f; done
     perl -n -i -e 's/[\x7F-\xFF]//g;print' doublespace.sty 
