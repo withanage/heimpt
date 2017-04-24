@@ -63,8 +63,8 @@ The lead developer is Dulip Withanage,  Heidelberg  University Library
 
 Additional contributions were made, in (alphabetical order) by:
 
-
 * Frank Krabbes, Heidelberg  University Library 
-* Mayumi Ohta, Cluster of Excellence,  University Heidelberg
+* Mayumi Ohta (Jun.2014 - Feb.2015 ), Cluster of Excellence,  University Heidelberg
 * Katharina Wäschle, Heidelberg  University Library 
+
 
