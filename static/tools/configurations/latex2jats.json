@@ -41,7 +41,7 @@
         "1": {
           "name": "metypeset",
           "arguments": {
-            "1": "create_output_directory()"
+            "1": "--create-dir"
           },
           "out_type": "xml",
           "process": true
@@ -78,7 +78,7 @@
         "3": {
           "name": "metypeset",
           "arguments": {
-            "1": "create_output_directory()"
+            "1": "--create-dir"
           },
           "out_type": "xml",
           "process": true

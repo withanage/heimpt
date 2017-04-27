@@ -16,7 +16,7 @@
             "typesetters": {
                 "1": {
                     "arguments": {
-                        "1": "create_output_directory()"
+                        "1": "--create-dir"
                     },
                     "name": "metypeset",
                     "out_type": "xml",
@@ -24,7 +24,7 @@
                 },
                 "2": {
                    "arguments": {
-                        "1": "create_output_directory()"
+                        "1": "--create-dir"
                     },
                     "name": "xmlprocess",
                     "out_type": "xml",
@@ -32,7 +32,7 @@
                 },
                 "3": {
                    "arguments": {
-                        "1": "create_output_directory()",
+                        "1": "--create-dir",
                         "2":"bits",
                         "3":"--metadata book-meta.bits2",
                         "4": "--set-numbering-tags=disp-quote,tr"
@@ -48,7 +48,7 @@
                   "out_type": "fo",
                   "expand":true,
                   "arguments": {
-                    "1": "create_output_directory()"
+                    "1": "--create-dir"
                   }
                 },
               "5":{
@@ -56,7 +56,7 @@
                   "out_type": "pdf",
                   "expand":true,
                   "arguments": {
-                    "1": "create_output_directory()"
+                    "1": "--create-dir"
                   }
                 }
 

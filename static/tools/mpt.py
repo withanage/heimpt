@@ -71,7 +71,7 @@ class MPT(Debuggable):
 
 
         self.current_result = datetime.datetime.now().strftime(
-            "%Y_%m_%d-%H-%M-") + str(uuid.uuid4())[:8]
+            "%Y_%m_%d-%H-%M-%S-") + str(uuid.uuid4())[:4]
         self.config = self.gv.read_json(self.args['<config_file>'])
         self.all_typesetters = self.config.get('typesetters')
         if self.args['--interactive']:
@@ -85,9 +85,6 @@ class MPT(Debuggable):
         prompt = Interactive(self.gv)
         opts = ('Confirm', 'Unconfirm')
         sel = prompt.input_options(opts)
-        print sel
-
-
 
 
 
@@ -251,7 +248,7 @@ class MPT(Debuggable):
 
         for i in ts_args:
             arg = ts_args[i]
-            if arg == 'create_output_directory()':
+            if arg == '--create-dir':
                 args.append(out_path)
 
             elif arg == 'create_output_file()':

@@ -22,7 +22,7 @@
       "typesetters": {
         "1": {
           "arguments": {
-            "1": "create_output_directory()",
+            "1": "--create-dir",
             "2": "jats",
             "4": "--metadata book-meta.bits2"
           },
