@@ -53,7 +53,7 @@ except ImportError:
     sys.exit(1)
 
 
-class Process(Debuggable):
+class Prepare(Debuggable):
     """
     Standalone Processing object to combine, clean and modify a JATS XML file and optionally inject BITS Metadata headers.
 
@@ -514,7 +514,7 @@ def main():
     run
 
     """
-    xp = Process()
+    xp = Prepare()
     xp.run()
 
 

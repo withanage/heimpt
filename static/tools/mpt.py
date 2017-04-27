@@ -248,20 +248,13 @@ class MPT(Debuggable):
 
         for i in ts_args:
             arg = ts_args[i]
+
             if arg == '--create-dir':
                 args.append(out_path)
 
-            elif arg == 'create_output_file()':
-                if not os.path.exists(out_path):
-                    os.makedirs(out_path)
-                args.append(
-                    os.path.join(
-                        out_path,
-                        prefix +
-                        '.' +
-                        out_type))
             else:
                 args.append(arg)
+            print args
         return True
 
     def run_typesetter(
@@ -689,6 +682,7 @@ def main():
 
     """
     process_instance = MPT()
+
     process_instance.run()
 
 

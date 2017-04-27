@@ -91,7 +91,7 @@
                 "3": "--set-numbering-values=xref,ref-type,fn,{1:2}"
 
             },
-            "executable": "/usr/local/mpt/static/tools/xmlPrepare.py"
+            "executable": "/usr/local/mpt/static/tools/prepare.py"
         } ,
         "xmlprocess": {
             "arguments": {
