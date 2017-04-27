@@ -75,7 +75,7 @@ class Disseminate(Debuggable):
 
         """
 
-        s = os.path.join(self.script_path, self.gv.apps.get('SAXON_PATH'))
+        s = os.path.join(self.script_path, self.gv.apps.get('saxon'))
         if os.path.isfile(s):
             return s
         elif self.args.get('--saxon'):
@@ -184,12 +184,12 @@ class Disseminate(Debuggable):
 
         args = []
         if formatter.lower() == 'fop':
-            pth = os.path.join(self.script_path, self.gv.apps.get('APACHE_FOP_PATH'))
+            pth = os.path.join(self.script_path, self.gv.apps.get('fop'))
             if self.gv.check_program(pth):
                 args = self.run_apache_fop(pth,formatter, medium)
 
         elif formatter.lower() == 'ah':
-            pth = self.gv.apps.get('ANTENNA_HOUSE_FOP_PATH')
+            pth = self.gv.apps.get('ah')
             if self.gv.check_program(pth):
                 args = self.run_ah_fop(pth,formatter, medium)
         return args

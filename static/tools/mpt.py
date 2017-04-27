@@ -667,8 +667,7 @@ class MPT(Debuggable):
         """
         f = p['typesetters'][p_id].get('out_file')
         if f:
-            f_path = '{}{}{}'.format(p_path, SEP,f)
-            shutil.copy2(SEP.join(t_path), f_path)
+            shutil.copy2(SEP.join(t_path), '{}{}{}'.format(p_path, SEP,f))
         return
 
 
@@ -682,6 +681,12 @@ def main():
 
     """
     process_instance = MPT()
+    ps = process_instance.config.get('projects')
+    psf = filter(lambda s: s.get(u'active') == True, ps)
+    pts = [i['typesetters'] for i in psf]
+    ts = process_instance.config.get('typesetters')
+    tsf = filter((lambda t: t), ts)
+    print tsf
 
     process_instance.run()
 
