@@ -13,13 +13,13 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
 
 (4)  The WYSIWYG editor, provides an interactive interface to confirm the information detected by meTypeset and to generate a suitable layout for the desired output format. The editor is written in both HTML and JavaScript, and handles data in XML format, so that each monograph is efficiently standardized and can be re-used. The editor is designed in a WYSIWYG (what you see is what you get) format that enables users to work with both text and images as they envision them.
 
-
-
 ![doc2pdf Pipeline](https://raw.githubusercontent.com/withanage/mpt/master/static/images/mpt.png)
 
-## Prequisites
- * Python: `python --version`
- * Git: `git --version`
+
+## API Documentation
+
+https://withanage.github.io/mpt
+
 
 ## MPT Installation 
 Check if you have persmissions  to intall in the BUILD_DIR
@@ -56,9 +56,6 @@ pip install  -U pytest pytest-xdist pytest-json
 
 ```
 
-## API Documentation
-
-https://withanage.github.io/mpt
 
 ## Credits
 
@@ -66,8 +63,8 @@ The lead developer is Dulip Withanage,  Heidelberg  University Library
 
 Additional contributions were made, in (alphabetical order) by:
 
-
 * Frank Krabbes, Heidelberg  University Library 
-* Mayumi Ohta, Cluster of Excellence,  University Heidelberg
+* Mayumi Ohta (Jun.2014 - Feb.2015 ), Cluster of Excellence,  University Heidelberg
 * Katharina Wäschle, Heidelberg  University Library 
+
 
