@@ -10,6 +10,7 @@ generate the output.
 
 Usage:
     mpt.py  <config_file> [options]
+    mpt.py --modules <modules>
 Options:
     --interactive                                   Enable step-by-step interactive mode
     -d, --debug  Enable debug output
@@ -72,8 +73,8 @@ class MPT(Debuggable):
 
         self.current_result = datetime.datetime.now().strftime(
             "%Y_%m_%d-%H-%M-%S-") + str(uuid.uuid4())[:4]
-        self.config = self.gv.read_json(self.args['<config_file>'])
-        self.all_typesetters = self.config.get('typesetters')
+        self.config = None
+        self.all_typesetters = None
         if self.args['--interactive']:
            self.run_prompt(True)
 
@@ -666,9 +667,19 @@ class MPT(Debuggable):
 
         """
         f = p['typesetters'][p_id].get('out_file')
-        if f:
-            shutil.copy2(SEP.join(t_path), '{}{}{}'.format(p_path, SEP,f))
+        if f: shutil.copy2(SEP.join(t_path), '{}{}{}'.format(p_path, SEP,f))
         return
+
+    def run_modules(self):
+        """
+        Run MPT in module modus
+         
+        """
+        for m in self.args.get('<modules>').split(','):
+            sys.path.insert(0, '{}/{}'.format('static/tools/plugins/import/',m))
+            __import__(m)
+        return
+
 
 
 def main():
@@ -680,15 +691,22 @@ def main():
     run
 
     """
-    process_instance = MPT()
+
+    '''
     ps = process_instance.config.get('projects')
     psf = filter(lambda s: s.get(u'active') == True, ps)
     pts = [i['typesetters'] for i in psf]
     ts = process_instance.config.get('typesetters')
     tsf = filter((lambda t: t), ts)
     print tsf
+    '''
 
-    process_instance.run()
+    pi = MPT()
+    if pi.args.get('--modules') : pi.run_modules()
+
+    #pi.config = pi.gv.read_json(pi.args['<config_file>'])
+    #pi.all_typesetters = pi.config.get('typesetters')
+    #pi.run()
 
 
 if __name__ == '__main__':
