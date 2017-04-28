@@ -75,8 +75,14 @@
 <div class="viewcode-block" id="GV"><a class="viewcode-back" href="../globals.html#globals.GV">[docs]</a><span class="k">class</span> <span class="nc">GV</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;    Global variables    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">):</span>
         <span class="c1"># GLOBAL VARIABLES</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="n">settings</span>
+
+
+        <span class="c1">#application paths</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apps</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;fop&#39;</span><span class="p">:</span><span class="s1">u&#39;fop/fop&#39;</span><span class="p">,</span><span class="s1">&#39;saxon&#39;</span><span class="p">:</span> <span class="s1">u&#39;saxon-he/saxon9he.jar&#39;</span><span class="p">,</span><span class="s1">&#39;ah&#39;</span><span class="p">:</span><span class="s1">u&#39;/usr/AHFormatterV61_64/run.sh&#39;</span><span class="p">,</span><span class="s1">&#39;xep&#39;</span><span class="p">:</span><span class="s1">u&#39;/usr/local/xep/bin/xep/xep&#39;</span><span class="p">}</span>
+
 
         <span class="c1"># projects</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_INPUT_FILE_JSON_IS_NOT_VALID</span> <span class="o">=</span> <span class="s1">u&#39;project input file json is not valid&#39;</span>
@@ -85,6 +91,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_INPUT_FILE_DOES_NOT_EXIST</span> <span class="o">=</span> <span class="s1">u&#39;project input_file does not exist&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_IS_NOT_ACTIVE</span> <span class="o">=</span> <span class="s1">u&#39;project is not active&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_OUTPUT_FILE_IS_NOT_DEFINED</span> <span class="o">=</span> <span class="s1">u&#39;project output file is not defined&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_OUTPUT_FILE_TYPE_IS_NOT_SPECIFIED</span> <span class="o">=</span> <span class="s1">u&#39;project output file type is not defined&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_OUTPUT_FILE_WAS_NOT_CREATED</span> <span class="o">=</span> <span class="s1">u&#39;project output file was not created&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_TYPESETTER_IS_NOT_AVAILABLE</span> <span class="o">=</span> <span class="s1">u&#39;project typesetter is not available&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_TYPESETTER_IS_NOT_SPECIFIED</span> <span class="o">=</span> <span class="s1">u&#39;project typesetter is not specified&#39;</span>
@@ -92,9 +99,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED</span> <span class="o">=</span> <span class="s1">u&#39;project typesetter varaible is not specified&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_TYPESETTERS_ARE_NOT_SPECIFIED</span> <span class="o">=</span> <span class="s1">u&#39;project typesetters are not specified&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">PROJECTS_VAR_IS_NOT_SPECIFIED</span> <span class="o">=</span> <span class="s1">u&#39;project variable is not  specified&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_TYPESETTER_PROCESS_METHOD_NOT_SPECIFIED</span><span class="o">=</span><span class="s1">u&#39;project typesetter process method not specified&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">PROJECTS_TYPESETTER_RUNS_WITH_NO_ARGUMENTS</span> <span class="o">=</span> <span class="s1">u&#39;projects typesetter runs with no arguments&#39;</span>
 
+
         <span class="c1"># typesetter errors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TYPESETTER_ARGUMENTS_NOT_DEFINED</span> <span class="o">=</span> <span class="s2">u&quot;typesetter arguments not defined&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">TYPESETTER_EXECUTABLE_VARIABLE_IS_UNDEFINED</span> <span class="o">=</span> <span class="s1">u&#39;typesetter executable variable is undefined&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">TYPESETTER_FILE_OUTPUT_TYPE_IS_UNDEFINED</span> <span class="o">=</span> <span class="s1">u&#39;typesetter file output type is undefined&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">TYPESETTER_METADATA_FILE_WAS_NOT_SPECIFIED</span> <span class="o">=</span> <span class="s1">u&#39;Metadata file wasn</span><span class="se">\&#39;</span><span class="s1">t specified &#39;</span>
@@ -105,12 +115,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">TYPESETTER_RUNS_WITH_NO_ARGUMENTS</span> <span class="o">=</span> <span class="s1">u&#39;typesetter runs with no arguments&#39;</span>
 
         <span class="c1"># xml</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">RUNNING_SAXON_CONVERSION</span> <span class="o">=</span> <span class="s1">u&#39;running saxon conversion&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RUNNING_FO_CONVERSION</span> <span class="o">=</span> <span class="s1">u&#39;running FO conversion&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RUNNING_PDF_CONVERSION</span> <span class="o">=</span> <span class="s1">u&#39;running PDF conversion&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">XML_ELEMENT_NOT_FOUND</span> <span class="o">=</span> <span class="s1">u&#39;xml element not found&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">XML_FILE_NOT_CREATED</span> <span class="o">=</span> <span class="s1">u&#39;xml file not created&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">XML_INPUT_FILE_IS_NOT_FOUND</span> <span class="o">=</span> <span class="s1">u&#39;xml input file is not found&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">XML_INPUT_FILE_IS_NOT_VALID</span> <span class="o">=</span> <span class="s1">u&#39;xml input file is not valid&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">SAXON_IS_NOT_AVAILABLE</span> <span class="o">=</span> <span class="s1">u&#39;saxon is not available&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">FOP_PATH_IS_NOT_AVAILABLE</span><span class="o">=</span><span class="s1">u&#39;fop path is not available&#39;</span>
 
         <span class="c1"># WORDS</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">OUTPUT</span> <span class="o">=</span> <span class="s1">u&#39;Output&#39;</span>
@@ -118,7 +130,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">Debug</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">numeral_map</span> <span class="o">=</span> <span class="n">numeral_map</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">uuid</span> <span class="o">=</span> <span class="s1">&#39;4e4dd8cf-26bf-4893-b037-1fd3bf08f112&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uuid</span> <span class="o">=</span> <span class="s1">&#39;mpt&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span>
 
     <span class="nd">@staticmethod</span>
@@ -183,6 +195,7 @@
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pth</span><span class="p">)</span> <span class="k">as</span> <span class="n">j</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="n">pth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_INPUT_FILE_JSON_IS_NOT_VALID</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span>
                 <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">PROJECT_INPUT_FILE_JSON_IS_NOT_VALID</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
@@ -229,7 +242,52 @@
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sh</span><span class="p">:</span>
                 <span class="n">i</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sid</span><span class="p">))</span>
                 <span class="n">sid</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">tr</span></div></div>
+        <span class="k">return</span> <span class="n">tr</span></div>
+
+<div class="viewcode-block" id="GV.check_program"><a class="viewcode-back" href="../globals.html#globals.GV.check_program">[docs]</a>    <span class="k">def</span> <span class="nf">check_program</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks  whether a  the program or typesetter is installed and executable</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        p: str</span>
+<span class="sd">            Program path</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        --------</span>
+<span class="sd">        None: bool</span>
+<span class="sd">            Returns None , if  program exists</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">is_exe</span><span class="p">(</span><span class="n">f_path</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Checks whether path is available and executable</span>
+<span class="sd">            Parameters</span>
+<span class="sd">            ---------</span>
+<span class="sd">            f_path: str</span>
+<span class="sd">                File path</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            --------</span>
+<span class="sd">            boolean: bool</span>
+<span class="sd">                True or False</span>
+
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">f_path</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">f_path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">X_OK</span><span class="p">)</span>
+
+        <span class="n">fpath</span><span class="p">,</span> <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fpath</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">is_exe</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">p</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PATH&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="p">):</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+                <span class="n">exe_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">is_exe</span><span class="p">(</span><span class="n">exe_file</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">exe_file</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div></div>
 </pre></div>
 
           </div>

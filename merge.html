@@ -27,6 +27,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="MPT 0.0.1 documentation" href="index.html" />
+    <link rel="next" title="disseminate module" href="disseminate.html" />
     <link rel="prev" title="prepare module" href="prepare.html" /> 
   </head>
   <body role="document">
@@ -39,6 +40,9 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="disseminate.html" title="disseminate module"
+             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="prepare.html" title="prepare module"
              accesskey="P">previous</a> |</li>
@@ -86,7 +90,7 @@ this program can be used to modify any element tree.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>book</strong> &#8211; Elementtree which complies to BITS XML Schheme.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>book</strong> &#8211; Elementtree which complies to BITS XML Scheme.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">elementtree</td>
 </tr>
@@ -107,6 +111,42 @@ this program can be used to modify any element tree.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>bp</strong> &#8211; Book part elementTree</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">elementtree</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="merge.Merge.create_journal_jats">
+<code class="descname">create_journal_jats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#Merge.create_journal_jats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.Merge.create_journal_jats" title="Permalink to this definition">¶</a></dt>
+<dd><p>creates a  full JATS XML book and optionally adds metadata</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>book</strong> &#8211; Elementtree which complies to BITS XML Scheme.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">elementtree</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#merge.Merge.create_metadata_path" title="merge.Merge.create_metadata_path"><code class="xref py py-meth docutils literal"><span class="pre">create_metadata_path()</span></code></a>, <a class="reference internal" href="#merge.Merge.create_book_part_bits" title="merge.Merge.create_book_part_bits"><code class="xref py py-meth docutils literal"><span class="pre">create_book_part_bits()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="merge.Merge.create_journal_part_jats">
+<code class="descname">create_journal_part_jats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#Merge.create_journal_part_jats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.Merge.create_journal_part_jats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a JATS XMl File and creates a book-part element tree according to BITS-XML.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>bp</strong> &#8211; Journal part elementTree</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">elementtree</td>
 </tr>
@@ -139,6 +179,16 @@ this program can be used to modify any element tree.</p>
 <code class="descname">create_output_bits</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#Merge.create_output_bits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.Merge.create_output_bits" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create bits output file, generates a new file, if no file is found.
 Otherwise the current file is appended to the book body as a book-part.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#merge.Merge.create_book_part_bits" title="merge.Merge.create_book_part_bits"><code class="xref py py-meth docutils literal"><span class="pre">create_book_part_bits()</span></code></a>, <a class="reference internal" href="#merge.Merge.create_book_bits" title="merge.Merge.create_book_bits"><code class="xref py py-meth docutils literal"><span class="pre">create_book_bits()</span></code></a>, <a class="reference internal" href="#merge.Merge.do_file_io" title="merge.Merge.do_file_io"><code class="xref py py-meth docutils literal"><span class="pre">do_file_io()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="merge.Merge.create_output_jats">
+<code class="descname">create_output_jats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/merge.html#Merge.create_output_jats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#merge.Merge.create_output_jats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create jats output file, generates a new file,</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <p class="last"><a class="reference internal" href="#merge.Merge.create_book_part_bits" title="merge.Merge.create_book_part_bits"><code class="xref py py-meth docutils literal"><span class="pre">create_book_part_bits()</span></code></a>, <a class="reference internal" href="#merge.Merge.create_book_bits" title="merge.Merge.create_book_bits"><code class="xref py py-meth docutils literal"><span class="pre">create_book_bits()</span></code></a>, <a class="reference internal" href="#merge.Merge.do_file_io" title="merge.Merge.do_file_io"><code class="xref py py-meth docutils literal"><span class="pre">do_file_io()</span></code></a></p>
@@ -281,6 +331,9 @@ elements.</td>
   <h4>Previous topic</h4>
   <p class="topless"><a href="prepare.html"
                         title="previous chapter">prepare module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="disseminate.html"
+                        title="next chapter">disseminate module</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -311,6 +364,9 @@ elements.</td>
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="disseminate.html" title="disseminate module"
+             >next</a> |</li>
         <li class="right" >
           <a href="prepare.html" title="prepare module"
              >previous</a> |</li>

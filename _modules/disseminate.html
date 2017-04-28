@@ -53,7 +53,7 @@
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Reads a xml file , transforms it to a intermediate format (e.g. formattion objects: FO ) and converts  to PDF subsequently</span>
+<span class="sd">Reads a xml file , transforms it to a intermediate format (e.g. formatting objects: FO ) and converts  to PDF subsequently</span>
 
 
 <span class="sd">Usage:</span>
@@ -84,6 +84,7 @@
 <span class="kn">import</span> <span class="nn">inspect</span>
 <span class="kn">from</span> <span class="nn">docopt</span> <span class="k">import</span> <span class="n">docopt</span>
 <span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span>
+<span class="kn">from</span> <span class="nn">settingsconfiguration</span> <span class="k">import</span> <span class="n">Settings</span>
 
 
 <div class="viewcode-block" id="Disseminate"><a class="viewcode-back" href="../disseminate.html#disseminate.Disseminate">[docs]</a><span class="k">class</span> <span class="nc">Disseminate</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
@@ -91,7 +92,8 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_command_line</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">Debug</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">GV</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="n">Settings</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">GV</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">)</span>
         <span class="n">Debuggable</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Main&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;--debug&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">enable_debug</span><span class="p">()</span>
@@ -113,6 +115,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">docopt</span><span class="p">(</span><span class="n">__doc__</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;Disseminate 0.1&#39;</span><span class="p">)</span></div>
 
+
+
 <div class="viewcode-block" id="Disseminate.get_saxon_path"><a class="viewcode-back" href="../disseminate.html#disseminate.Disseminate.get_saxon_path">[docs]</a>    <span class="k">def</span> <span class="nf">get_saxon_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Checks if saxon is available in the default path</span>
 
@@ -123,7 +127,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">s</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">script_path</span><span class="p">,</span> <span class="s1">&#39;meTypeset/runtime/saxon9.jar&#39;</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">script_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">apps</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;saxon&#39;</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">s</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;--saxon&#39;</span><span class="p">):</span>
@@ -190,22 +194,20 @@
 
 <span class="sd">        See Also</span>
 <span class="sd">        --------</span>
-<span class="sd">        create_fo, create_pdf</span>
+<span class="sd">        create_output, create_pdf</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span> <span class="o">==</span> <span class="s1">&#39;fo&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">create_fo</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_output</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_type</span><span class="p">)</span></div>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span> <span class="o">==</span> <span class="s1">&#39;pdf&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">create_pdf</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Disseminate.create_pdf"><a class="viewcode-back" href="../disseminate.html#disseminate.Disseminate.create_pdf">[docs]</a>    <span class="k">def</span> <span class="nf">create_pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-        <span class="k">return</span></div>
-
-<div class="viewcode-block" id="Disseminate.create_fo"><a class="viewcode-back" href="../disseminate.html#disseminate.Disseminate.create_fo">[docs]</a>    <span class="k">def</span> <span class="nf">create_fo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Disseminate.create_output"><a class="viewcode-back" href="../disseminate.html#disseminate.Disseminate.create_output">[docs]</a>    <span class="k">def</span> <span class="nf">create_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out_type</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create  FO output</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        out_type: str</span>
+<span class="sd">            Output Type</span>
 
 
 <span class="sd">        See Also</span>
@@ -213,19 +215,63 @@
 <span class="sd">        run_saxon(), get_saxon_path()</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">saxon_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_saxon_path</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">saxon_path</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">SAXON_IS_NOT_AVAILABLE</span><span class="p">)</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">formatters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;--formatter&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
-            <span class="n">mediums</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;--medium&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">formatters</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mediums</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_console</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">RUNNING_SAXON_CONVERSION</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">create_dirs_recursive</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;&lt;path&gt;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="p">))</span>
+        <span class="n">formatters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;--formatter&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="n">mediums</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;--medium&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">formatters</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mediums</span><span class="p">:</span>
+                <span class="n">m</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">create_dirs_recursive</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;&lt;path&gt;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="p">))</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span><span class="o">==</span><span class="s1">&#39;fo&#39;</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_console</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">RUNNING_FO_CONVERSION</span><span class="p">)</span>
+                    <span class="n">saxon_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_saxon_path</span><span class="p">()</span>
                     <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_saxon</span><span class="p">(</span><span class="n">saxon_path</span><span class="p">,</span><span class="n">f</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span><span class="o">==</span><span class="s1">&#39;pdf&#39;</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_console</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">RUNNING_PDF_CONVERSION</span><span class="p">)</span>
+                    <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_fop_processor</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+                <span class="n">output</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="n">exit_code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+                <span class="nb">print</span> <span class="n">output</span></div>
+
+<div class="viewcode-block" id="Disseminate.run_fop_processor"><a class="viewcode-back" href="../disseminate.html#disseminate.Disseminate.run_fop_processor">[docs]</a>    <span class="k">def</span> <span class="nf">run_fop_processor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>  <span class="n">formatter</span><span class="p">,</span> <span class="n">medium</span><span class="p">):</span>
+
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">formatter</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;fop&#39;</span><span class="p">:</span>
+            <span class="n">pth</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">script_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">apps</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fop&#39;</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">check_program</span><span class="p">(</span><span class="n">pth</span><span class="p">):</span>
+                <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_apache_fop</span><span class="p">(</span><span class="n">pth</span><span class="p">,</span><span class="n">formatter</span><span class="p">,</span> <span class="n">medium</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">formatter</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;ah&#39;</span><span class="p">:</span>
+            <span class="n">pth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">apps</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ah&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">check_program</span><span class="p">(</span><span class="n">pth</span><span class="p">):</span>
+                <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_ah_fop</span><span class="p">(</span><span class="n">pth</span><span class="p">,</span><span class="n">formatter</span><span class="p">,</span> <span class="n">medium</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">args</span></div>
+
+<div class="viewcode-block" id="Disseminate.run_ah_fop"><a class="viewcode-back" href="../disseminate.html#disseminate.Disseminate.run_ah_fop">[docs]</a>    <span class="k">def</span> <span class="nf">run_ah_fop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pth</span><span class="p">,</span> <span class="n">formatter</span><span class="p">,</span> <span class="n">medium</span><span class="p">):</span>
+        <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">pth</span><span class="p">]</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-d&#39;</span><span class="p">)</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">.fo&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span> <span class="n">formatter</span><span class="p">,</span> <span class="n">medium</span><span class="p">))</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-o&#39;</span><span class="p">)</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">.pdf&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span> <span class="n">formatter</span><span class="p">,</span> <span class="n">medium</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">args</span></div>
+
+
+
+
+
+
+<div class="viewcode-block" id="Disseminate.run_apache_fop"><a class="viewcode-back" href="../disseminate.html#disseminate.Disseminate.run_apache_fop">[docs]</a>    <span class="k">def</span> <span class="nf">run_apache_fop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pth</span><span class="p">,</span> <span class="n">formatter</span><span class="p">,</span> <span class="n">medium</span><span class="p">):</span>
+        <span class="n">style_path</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/configurations/fop/conf/</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">.xml&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">script_path</span><span class="p">,</span> <span class="n">formatter</span><span class="p">,</span><span class="n">medium</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">pth</span><span class="p">]</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-fo&#39;</span><span class="p">)</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">.fo&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span> <span class="n">formatter</span><span class="p">,</span> <span class="n">medium</span><span class="p">))</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-pdf&#39;</span><span class="p">)</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">.pdf&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span> <span class="n">formatter</span><span class="p">,</span> <span class="n">medium</span><span class="p">))</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-c&#39;</span><span class="p">)</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">style_path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">args</span></div>
+
+
 
 <div class="viewcode-block" id="Disseminate.run_saxon"><a class="viewcode-back" href="../disseminate.html#disseminate.Disseminate.run_saxon">[docs]</a>    <span class="k">def</span> <span class="nf">run_saxon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">saxon_path</span><span class="p">,</span> <span class="n">formatter</span><span class="p">,</span> <span class="n">medium</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -259,32 +305,15 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">PROJECT_INPUT_FILE_DOES_NOT_EXIST</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">s</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">file_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">uuid</span> <span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="s1">&#39;fo&#39;</span><span class="p">])</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span><span class="n">formatter</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span><span class="n">medium</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span><span class="s1">&#39;fo&#39;</span><span class="p">])</span>
         <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-o:&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;&lt;path&gt;&#39;</span><span class="p">),</span> <span class="n">file_name</span><span class="p">))</span>
-        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;formatter=&#39;</span> <span class="o">+</span> <span class="n">formatter</span><span class="p">)</span>
-        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;medium=&#39;</span> <span class="o">+</span> <span class="n">medium</span><span class="p">)</span>
-
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;formatter=&#39;</span> <span class="o">+</span> <span class="n">formatter</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;medium=&#39;</span> <span class="o">+</span> <span class="n">medium</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
 
 
         <span class="k">return</span> <span class="n">args</span></div></div>
 
 
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">/usr/local/mpt/static/stylesheets/heiup_formatter.xsl</span>
-<span class="sd">java -jar /Volumes/DATENSTICK/14\ XSL-FO/bin/saxon/saxon9he.jar</span>
-<span class="sd">-s:/Volumes/DATENSTICK/14\ XSL-FO/out/xml/Testdokument.xml</span>
-<span class="sd">-xsl:/Volumes/DATENSTICK/14\ XSL-FO/stylesheets/heiup_formatter.xsl</span>
-<span class="sd">-o:/Volumes/DATENSTICK/14\ XSL-FO/out/fo/Testdokument_epdf_xep.fo</span>
-<span class="sd">medium=electronic formatter=XEP</span>
-
-<span class="sd">/bin/xep/xep</span>
-<span class="sd">-fo /Volumes/DATENSTICK/14\ XSL-FO/out/fo/Testdokument_epdf_xep.fo</span>
-<span class="sd">-pdf /Volumes/DATENSTICK/14\ XSL-FO/out/pdf/Testdokument_epdf_xep.pdf</span>
-
-<span class="sd">/usr/local/AHFormatterV63/run.sh</span>
-<span class="sd">-d /Volumes/DATENSTICK/14\ XSL-FO/out/fo/Testdokument_epdf_ah.fo</span>
-<span class="sd">-o /Volumes/DATENSTICK/14\ XSL-FO/out/pdf/Testdokument_epdf_ah.pdf</span>
-<span class="sd">&quot;&quot;&quot;</span>
 
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../disseminate.html#disseminate.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>

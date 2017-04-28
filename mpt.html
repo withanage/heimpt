@@ -65,12 +65,16 @@ the current typesetter. If chaining is not set, all the typesetters take the set
 generate the output.</p>
 <dl class="docutils">
 <dt>Usage:</dt>
-<dd>mpt.py  &lt;config_file&gt; [options]</dd>
+<dd>mpt.py  &lt;config_file&gt; [options]
+mpt.py &#8211;modules &lt;modules&gt;</dd>
 <dt>Options:</dt>
 <dd><table class="first last docutils option-list" frame="void" rules="none">
 <col class="option" />
 <col class="description" />
 <tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">--interactive</span></kbd></td>
+<td>Enable step-by-step interactive mode</td></tr>
 <tr><td class="option-group">
 <kbd><span class="option">-d</span>, <span class="option">--debug</span></kbd></td>
 <td>Enable debug output</td></tr>
@@ -137,24 +141,6 @@ exit-code and  system error codes are captured and returned.</p>
 <p class="first admonition-title">See also</p>
 <p class="last"><code class="xref py py-meth docutils literal"><span class="pre">subprocess.Popen()</span></code></p>
 </div>
-</dd></dl>
-
-<dl class="method">
-<dt id="mpt.MPT.check_program">
-<code class="descname">check_program</code><span class="sig-paren">(</span><em>p</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.check_program"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.check_program" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks  whether a  the program or typesetter is installed and executable</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>p</strong> (<em>str</em>) &#8211; Program path</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>None</strong> &#8211; Returns None , if  program exists</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 <dl class="method">
@@ -315,6 +301,18 @@ elements.</td>
 <p class="first admonition-title">See also</p>
 <p class="last"><a class="reference internal" href="#mpt.MPT.typeset_all_projects" title="mpt.MPT.typeset_all_projects"><code class="xref py py-meth docutils literal"><span class="pre">typeset_all_projects()</span></code></a></p>
 </div>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpt.MPT.run_modules">
+<code class="descname">run_modules</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.run_modules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.run_modules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run MPT in module modus</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpt.MPT.run_prompt">
+<code class="descname">run_prompt</code><span class="sig-paren">(</span><em>interactive</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mpt.html#MPT.run_prompt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpt.MPT.run_prompt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the interactive modus</p>
 </dd></dl>
 
 <dl class="method">

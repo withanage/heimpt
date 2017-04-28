@@ -26,7 +26,9 @@
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="MPT 0.0.1 documentation" href="index.html" /> 
+    <link rel="top" title="MPT 0.0.1 documentation" href="index.html" />
+    <link rel="next" title="merge module" href="merge.html" />
+    <link rel="prev" title="mpt module" href="mpt.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -38,6 +40,12 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="merge.html" title="merge module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mpt.html" title="mpt module"
+             accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">MPT 0.0.1 documentation</a> &#187;</li> 
       </ul>
     </div>  
@@ -75,15 +83,15 @@ numbering elements of a certain type  or setting unique ids to a certain element
 <li>Licensed under terms of GPL 3  license (LICENSE.md)</li>
 </ul>
 <dl class="class">
-<dt id="prepare.Process">
-<em class="property">class </em><code class="descclassname">prepare.</code><code class="descname">Process</code><a class="reference internal" href="_modules/prepare.html#Process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Process" title="Permalink to this definition">¶</a></dt>
+<dt id="prepare.Prepare">
+<em class="property">class </em><code class="descclassname">prepare.</code><code class="descname">Prepare</code><a class="reference internal" href="_modules/prepare.html#Prepare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Prepare" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="debug.html#debug.Debuggable" title="debug.Debuggable"><code class="xref py py-class docutils literal"><span class="pre">debug.Debuggable</span></code></a></p>
 <p>Standalone Processing object to combine, clean and modify a JATS XML file and optionally inject BITS Metadata headers.</p>
 <p>add Id numbering for any tag type, clean comments, remove unused references,
 set numbering, add unique ids to certain tag types, sort references</p>
 <dl class="method">
-<dt id="prepare.Process.convert_int_to_roman">
-<code class="descname">convert_int_to_roman</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Process.convert_int_to_roman"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Process.convert_int_to_roman" title="Permalink to this definition">¶</a></dt>
+<dt id="prepare.Prepare.convert_int_to_roman">
+<code class="descname">convert_int_to_roman</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Prepare.convert_int_to_roman"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Prepare.convert_int_to_roman" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts an integer number into a roman number</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -100,8 +108,8 @@ set numbering, add unique ids to certain tag types, sort references</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="prepare.Process.create_metadata_path">
-<code class="descname">create_metadata_path</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Process.create_metadata_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Process.create_metadata_path" title="Permalink to this definition">¶</a></dt>
+<dt id="prepare.Prepare.create_metadata_path">
+<code class="descname">create_metadata_path</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Prepare.create_metadata_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Prepare.create_metadata_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>creates the correct folder path for the metadata file. Metadata files should be in a folder : metadata</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -120,8 +128,8 @@ set numbering, add unique ids to certain tag types, sort references</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="prepare.Process.create_xml_file">
-<code class="descname">create_xml_file</code><span class="sig-paren">(</span><em>pth</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Process.create_xml_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Process.create_xml_file" title="Permalink to this definition">¶</a></dt>
+<dt id="prepare.Prepare.create_xml_file">
+<code class="descname">create_xml_file</code><span class="sig-paren">(</span><em>pth</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Prepare.create_xml_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Prepare.create_xml_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write the current elementTree into the file path</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -138,8 +146,8 @@ set numbering, add unique ids to certain tag types, sort references</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="prepare.Process.merge_metadata">
-<code class="descname">merge_metadata</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Process.merge_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Process.merge_metadata" title="Permalink to this definition">¶</a></dt>
+<dt id="prepare.Prepare.merge_metadata">
+<code class="descname">merge_metadata</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Prepare.merge_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Prepare.merge_metadata" title="Permalink to this definition">¶</a></dt>
 <dd><p>reads a metadata file path and  merge its content into the metadata section</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -155,23 +163,23 @@ set numbering, add unique ids to certain tag types, sort references</p>
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#prepare.Process.create_metadata_path" title="prepare.Process.create_metadata_path"><code class="xref py py-meth docutils literal"><span class="pre">create_metadata_path()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#prepare.Prepare.create_metadata_path" title="prepare.Prepare.create_metadata_path"><code class="xref py py-meth docutils literal"><span class="pre">create_metadata_path()</span></code></a></p>
 </div>
 </dd></dl>
 
 <dl class="method">
-<dt id="prepare.Process.process">
-<code class="descname">process</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Process.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Process.process" title="Permalink to this definition">¶</a></dt>
+<dt id="prepare.Prepare.process">
+<code class="descname">process</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Prepare.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Prepare.process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Process  JATS-XML file and do all transformations into the elementtree</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#prepare.Process.merge_metadata" title="prepare.Process.merge_metadata"><code class="xref py py-meth docutils literal"><span class="pre">merge_metadata()</span></code></a>, <code class="xref py py-meth docutils literal"><span class="pre">set_numbering_tags()</span></code>, <a class="reference internal" href="#prepare.Process.set_uuids_for_back_matter" title="prepare.Process.set_uuids_for_back_matter"><code class="xref py py-meth docutils literal"><span class="pre">set_uuids_for_back_matter()</span></code></a>, <a class="reference internal" href="#prepare.Process.sort_footnotes" title="prepare.Process.sort_footnotes"><code class="xref py py-meth docutils literal"><span class="pre">sort_footnotes()</span></code></a>, <a class="reference internal" href="#prepare.Process.sort_references" title="prepare.Process.sort_references"><code class="xref py py-meth docutils literal"><span class="pre">sort_references()</span></code></a>, <a class="reference internal" href="#prepare.Process.set_numbering_values" title="prepare.Process.set_numbering_values"><code class="xref py py-meth docutils literal"><span class="pre">set_numbering_values()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#prepare.Prepare.merge_metadata" title="prepare.Prepare.merge_metadata"><code class="xref py py-meth docutils literal"><span class="pre">merge_metadata()</span></code></a>, <code class="xref py py-meth docutils literal"><span class="pre">set_numbering_tags()</span></code>, <a class="reference internal" href="#prepare.Prepare.set_uuids_for_back_matter" title="prepare.Prepare.set_uuids_for_back_matter"><code class="xref py py-meth docutils literal"><span class="pre">set_uuids_for_back_matter()</span></code></a>, <a class="reference internal" href="#prepare.Prepare.sort_footnotes" title="prepare.Prepare.sort_footnotes"><code class="xref py py-meth docutils literal"><span class="pre">sort_footnotes()</span></code></a>, <a class="reference internal" href="#prepare.Prepare.sort_references" title="prepare.Prepare.sort_references"><code class="xref py py-meth docutils literal"><span class="pre">sort_references()</span></code></a>, <a class="reference internal" href="#prepare.Prepare.set_numbering_values" title="prepare.Prepare.set_numbering_values"><code class="xref py py-meth docutils literal"><span class="pre">set_numbering_values()</span></code></a></p>
 </div>
 </dd></dl>
 
 <dl class="staticmethod">
-<dt id="prepare.Process.read_command_line">
-<em class="property">static </em><code class="descname">read_command_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Process.read_command_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Process.read_command_line" title="Permalink to this definition">¶</a></dt>
+<dt id="prepare.Prepare.read_command_line">
+<em class="property">static </em><code class="descname">read_command_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Prepare.read_command_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Prepare.read_command_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads and  generates a docopt dictionary from the command line parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -187,8 +195,8 @@ elements.</td>
 </dd></dl>
 
 <dl class="method">
-<dt id="prepare.Process.remove_element">
-<code class="descname">remove_element</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Process.remove_element"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Process.remove_element" title="Permalink to this definition">¶</a></dt>
+<dt id="prepare.Prepare.remove_element">
+<code class="descname">remove_element</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Prepare.remove_element"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Prepare.remove_element" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove any element only if it has a parent</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -201,8 +209,8 @@ elements.</td>
 </dd></dl>
 
 <dl class="method">
-<dt id="prepare.Process.remove_references">
-<code class="descname">remove_references</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Process.remove_references"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Process.remove_references" title="Permalink to this definition">¶</a></dt>
+<dt id="prepare.Prepare.remove_references">
+<code class="descname">remove_references</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Prepare.remove_references"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Prepare.remove_references" title="Permalink to this definition">¶</a></dt>
 <dd><p>removes  references, which are not linked.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -218,13 +226,13 @@ elements.</td>
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#prepare.Process.remove_element" title="prepare.Process.remove_element"><code class="xref py py-meth docutils literal"><span class="pre">remove_element()</span></code></a>, <a class="reference internal" href="#prepare.Process.remove_tags" title="prepare.Process.remove_tags"><code class="xref py py-meth docutils literal"><span class="pre">remove_tags()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#prepare.Prepare.remove_element" title="prepare.Prepare.remove_element"><code class="xref py py-meth docutils literal"><span class="pre">remove_element()</span></code></a>, <a class="reference internal" href="#prepare.Prepare.remove_tags" title="prepare.Prepare.remove_tags"><code class="xref py py-meth docutils literal"><span class="pre">remove_tags()</span></code></a></p>
 </div>
 </dd></dl>
 
 <dl class="method">
-<dt id="prepare.Process.remove_tags">
-<code class="descname">remove_tags</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Process.remove_tags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Process.remove_tags" title="Permalink to this definition">¶</a></dt>
+<dt id="prepare.Prepare.remove_tags">
+<code class="descname">remove_tags</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Prepare.remove_tags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Prepare.remove_tags" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes an etree element and replaces it with its own text</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -237,18 +245,18 @@ elements.</td>
 </dd></dl>
 
 <dl class="method">
-<dt id="prepare.Process.run">
-<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Process.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Process.run" title="Permalink to this definition">¶</a></dt>
+<dt id="prepare.Prepare.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Prepare.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Prepare.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs the configuration on the processing object</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#prepare.Process.process" title="prepare.Process.process"><code class="xref py py-meth docutils literal"><span class="pre">process()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#prepare.Prepare.process" title="prepare.Prepare.process"><code class="xref py py-meth docutils literal"><span class="pre">process()</span></code></a></p>
 </div>
 </dd></dl>
 
 <dl class="method">
-<dt id="prepare.Process.set_numbering_values">
-<code class="descname">set_numbering_values</code><span class="sig-paren">(</span><em>tag</em>, <em>attr</em>, <em>value</em>, <em>count</em>, <em>range_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Process.set_numbering_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Process.set_numbering_values" title="Permalink to this definition">¶</a></dt>
+<dt id="prepare.Prepare.set_numbering_values">
+<code class="descname">set_numbering_values</code><span class="sig-paren">(</span><em>tag</em>, <em>attr</em>, <em>value</em>, <em>count</em>, <em>range_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Prepare.set_numbering_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Prepare.set_numbering_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds numerical values to  a  tag  in arguments list</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -267,13 +275,13 @@ elements.</td>
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#prepare.Process.set_roman_numbers" title="prepare.Process.set_roman_numbers"><code class="xref py py-meth docutils literal"><span class="pre">set_roman_numbers()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#prepare.Prepare.set_roman_numbers" title="prepare.Prepare.set_roman_numbers"><code class="xref py py-meth docutils literal"><span class="pre">set_roman_numbers()</span></code></a></p>
 </div>
 </dd></dl>
 
 <dl class="method">
-<dt id="prepare.Process.set_roman_numbers">
-<code class="descname">set_roman_numbers</code><span class="sig-paren">(</span><em>count</em>, <em>r_count</em>, <em>range_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Process.set_roman_numbers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Process.set_roman_numbers" title="Permalink to this definition">¶</a></dt>
+<dt id="prepare.Prepare.set_roman_numbers">
+<code class="descname">set_roman_numbers</code><span class="sig-paren">(</span><em>count</em>, <em>r_count</em>, <em>range_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Prepare.set_roman_numbers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Prepare.set_roman_numbers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a given set of elements defined by range_array into roman numbers</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -297,13 +305,13 @@ elements.</td>
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#prepare.Process.convert_int_to_roman" title="prepare.Process.convert_int_to_roman"><code class="xref py py-meth docutils literal"><span class="pre">convert_int_to_roman()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#prepare.Prepare.convert_int_to_roman" title="prepare.Prepare.convert_int_to_roman"><code class="xref py py-meth docutils literal"><span class="pre">convert_int_to_roman()</span></code></a></p>
 </div>
 </dd></dl>
 
 <dl class="method">
-<dt id="prepare.Process.set_uuids_for_back_matter">
-<code class="descname">set_uuids_for_back_matter</code><span class="sig-paren">(</span><em>tags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Process.set_uuids_for_back_matter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Process.set_uuids_for_back_matter" title="Permalink to this definition">¶</a></dt>
+<dt id="prepare.Prepare.set_uuids_for_back_matter">
+<code class="descname">set_uuids_for_back_matter</code><span class="sig-paren">(</span><em>tags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Prepare.set_uuids_for_back_matter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Prepare.set_uuids_for_back_matter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add unique id tags to  any of the sub-elements of the back matter</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -320,8 +328,8 @@ elements.</td>
 </dd></dl>
 
 <dl class="method">
-<dt id="prepare.Process.sort_by_tags">
-<code class="descname">sort_by_tags</code><span class="sig-paren">(</span><em>tag_list</em>, <em>elem</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Process.sort_by_tags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Process.sort_by_tags" title="Permalink to this definition">¶</a></dt>
+<dt id="prepare.Prepare.sort_by_tags">
+<code class="descname">sort_by_tags</code><span class="sig-paren">(</span><em>tag_list</em>, <em>elem</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Prepare.sort_by_tags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Prepare.sort_by_tags" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sorts  a   list  of elements alphabetically</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -338,8 +346,8 @@ elements.</td>
 </dd></dl>
 
 <dl class="method">
-<dt id="prepare.Process.sort_footnotes">
-<code class="descname">sort_footnotes</code><span class="sig-paren">(</span><em>tag_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Process.sort_footnotes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Process.sort_footnotes" title="Permalink to this definition">¶</a></dt>
+<dt id="prepare.Prepare.sort_footnotes">
+<code class="descname">sort_footnotes</code><span class="sig-paren">(</span><em>tag_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Prepare.sort_footnotes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Prepare.sort_footnotes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sort footnotes based on the  sub-elements list</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -355,13 +363,13 @@ elements.</td>
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#prepare.Process.sort_by_tags" title="prepare.Process.sort_by_tags"><code class="xref py py-meth docutils literal"><span class="pre">sort_by_tags()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#prepare.Prepare.sort_by_tags" title="prepare.Prepare.sort_by_tags"><code class="xref py py-meth docutils literal"><span class="pre">sort_by_tags()</span></code></a></p>
 </div>
 </dd></dl>
 
 <dl class="method">
-<dt id="prepare.Process.sort_references">
-<code class="descname">sort_references</code><span class="sig-paren">(</span><em>tag_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Process.sort_references"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Process.sort_references" title="Permalink to this definition">¶</a></dt>
+<dt id="prepare.Prepare.sort_references">
+<code class="descname">sort_references</code><span class="sig-paren">(</span><em>tag_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prepare.html#Prepare.sort_references"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prepare.Prepare.sort_references" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sort references based on the  sub-elements list</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -377,7 +385,7 @@ elements.</td>
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#prepare.Process.sort_by_tags" title="prepare.Process.sort_by_tags"><code class="xref py py-meth docutils literal"><span class="pre">sort_by_tags()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#prepare.Prepare.sort_by_tags" title="prepare.Prepare.sort_by_tags"><code class="xref py py-meth docutils literal"><span class="pre">sort_by_tags()</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -401,6 +409,12 @@ elements.</td>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mpt.html"
+                        title="previous chapter">mpt module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="merge.html"
+                        title="next chapter">merge module</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -431,6 +445,12 @@ elements.</td>
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="merge.html" title="merge module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mpt.html" title="mpt module"
+             >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">MPT 0.0.1 documentation</a> &#187;</li> 
       </ul>
     </div>

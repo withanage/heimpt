@@ -53,7 +53,7 @@
             
   <div class="section" id="disseminate-module">
 <h1>disseminate module<a class="headerlink" href="#disseminate-module" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="module-disseminate"></span><p>Reads a xml file , transforms it to a intermediate format (e.g. formattion objects: FO ) and converts  to PDF subsequently</p>
+<span class="target" id="module-disseminate"></span><p>Reads a xml file , transforms it to a intermediate format (e.g. formatting objects: FO ) and converts  to PDF subsequently</p>
 <dl class="docutils">
 <dt>Usage:</dt>
 <dd>disseminate.py  &lt;input_file&gt;  &lt;path&gt;  &#8211;out-type=&lt;FO_PDF&gt; [options]</dd>
@@ -80,19 +80,22 @@
 <em class="property">class </em><code class="descclassname">disseminate.</code><code class="descname">Disseminate</code><a class="reference internal" href="_modules/disseminate.html#Disseminate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#disseminate.Disseminate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="debug.html#debug.Debuggable" title="debug.Debuggable"><code class="xref py py-class docutils literal"><span class="pre">debug.Debuggable</span></code></a></p>
 <dl class="method">
-<dt id="disseminate.Disseminate.create_fo">
-<code class="descname">create_fo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/disseminate.html#Disseminate.create_fo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#disseminate.Disseminate.create_fo" title="Permalink to this definition">¶</a></dt>
+<dt id="disseminate.Disseminate.create_output">
+<code class="descname">create_output</code><span class="sig-paren">(</span><em>out_type</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/disseminate.html#Disseminate.create_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#disseminate.Disseminate.create_output" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create  FO output</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>out_type</strong> (<em>str</em>) &#8211; Output Type</td>
+</tr>
+</tbody>
+</table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <p class="last"><a class="reference internal" href="#disseminate.Disseminate.run_saxon" title="disseminate.Disseminate.run_saxon"><code class="xref py py-meth docutils literal"><span class="pre">run_saxon()</span></code></a>, <a class="reference internal" href="#disseminate.Disseminate.get_saxon_path" title="disseminate.Disseminate.get_saxon_path"><code class="xref py py-meth docutils literal"><span class="pre">get_saxon_path()</span></code></a></p>
 </div>
 </dd></dl>
-
-<dl class="method">
-<dt id="disseminate.Disseminate.create_pdf">
-<code class="descname">create_pdf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/disseminate.html#Disseminate.create_pdf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#disseminate.Disseminate.create_pdf" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="method">
 <dt id="disseminate.Disseminate.get_module_name">
@@ -175,9 +178,24 @@ elements.</td>
 <dd><p>Runs converters</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#disseminate.Disseminate.create_fo" title="disseminate.Disseminate.create_fo"><code class="xref py py-meth docutils literal"><span class="pre">create_fo()</span></code></a>, <a class="reference internal" href="#disseminate.Disseminate.create_pdf" title="disseminate.Disseminate.create_pdf"><code class="xref py py-meth docutils literal"><span class="pre">create_pdf()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#disseminate.Disseminate.create_output" title="disseminate.Disseminate.create_output"><code class="xref py py-meth docutils literal"><span class="pre">create_output()</span></code></a>, <code class="xref py py-meth docutils literal"><span class="pre">create_pdf()</span></code></p>
 </div>
 </dd></dl>
+
+<dl class="method">
+<dt id="disseminate.Disseminate.run_ah_fop">
+<code class="descname">run_ah_fop</code><span class="sig-paren">(</span><em>pth</em>, <em>formatter</em>, <em>medium</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/disseminate.html#Disseminate.run_ah_fop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#disseminate.Disseminate.run_ah_fop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="disseminate.Disseminate.run_apache_fop">
+<code class="descname">run_apache_fop</code><span class="sig-paren">(</span><em>pth</em>, <em>formatter</em>, <em>medium</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/disseminate.html#Disseminate.run_apache_fop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#disseminate.Disseminate.run_apache_fop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="disseminate.Disseminate.run_fop_processor">
+<code class="descname">run_fop_processor</code><span class="sig-paren">(</span><em>formatter</em>, <em>medium</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/disseminate.html#Disseminate.run_fop_processor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#disseminate.Disseminate.run_fop_processor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="disseminate.Disseminate.run_saxon">

@@ -85,11 +85,11 @@
   </dt>
 
       
-  <dt><a href="mpt.html#mpt.MPT.check_program">check_program() (mpt.MPT method)</a>
+  <dt><a href="globals.html#globals.GV.check_program">check_program() (globals.GV method)</a>
   </dt>
 
       
-  <dt><a href="prepare.html#prepare.Process.convert_int_to_roman">convert_int_to_roman() (prepare.Process method)</a>
+  <dt><a href="prepare.html#prepare.Prepare.convert_int_to_roman">convert_int_to_roman() (prepare.Prepare method)</a>
   </dt>
 
       
@@ -105,7 +105,11 @@
   </dt>
 
       
-  <dt><a href="disseminate.html#disseminate.Disseminate.create_fo">create_fo() (disseminate.Disseminate method)</a>
+  <dt><a href="merge.html#merge.Merge.create_journal_jats">create_journal_jats() (merge.Merge method)</a>
+  </dt>
+
+      
+  <dt><a href="merge.html#merge.Merge.create_journal_part_jats">create_journal_part_jats() (merge.Merge method)</a>
   </dt>
 
   </dl></td>
@@ -120,7 +124,7 @@
 
       <dd><dl>
         
-  <dt><a href="prepare.html#prepare.Process.create_metadata_path">(prepare.Process method)</a>
+  <dt><a href="prepare.html#prepare.Prepare.create_metadata_path">(prepare.Prepare method)</a>
   </dt>
 
       </dl></dd>
@@ -129,7 +133,15 @@
   </dt>
 
       
+  <dt><a href="disseminate.html#disseminate.Disseminate.create_output">create_output() (disseminate.Disseminate method)</a>
+  </dt>
+
+      
   <dt><a href="merge.html#merge.Merge.create_output_bits">create_output_bits() (merge.Merge method)</a>
+  </dt>
+
+      
+  <dt><a href="merge.html#merge.Merge.create_output_jats">create_output_jats() (merge.Merge method)</a>
   </dt>
 
       
@@ -137,11 +149,7 @@
   </dt>
 
       
-  <dt><a href="disseminate.html#disseminate.Disseminate.create_pdf">create_pdf() (disseminate.Disseminate method)</a>
-  </dt>
-
-      
-  <dt><a href="prepare.html#prepare.Process.create_xml_file">create_xml_file() (prepare.Process method)</a>
+  <dt><a href="prepare.html#prepare.Prepare.create_xml_file">create_xml_file() (prepare.Prepare method)</a>
   </dt>
 
   </dl></td>
@@ -293,7 +301,7 @@
   </dt>
 
       
-  <dt><a href="prepare.html#prepare.Process.merge_metadata">merge_metadata() (prepare.Process method)</a>
+  <dt><a href="prepare.html#prepare.Prepare.merge_metadata">merge_metadata() (prepare.Prepare method)</a>
   </dt>
 
       
@@ -321,6 +329,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
+  <dt><a href="prepare.html#prepare.Prepare">Prepare (class in prepare)</a>
+  </dt>
+
+      
   <dt><a href="prepare.html#module-prepare">prepare (module)</a>
   </dt>
 
@@ -332,14 +344,10 @@
   <dt><a href="debug.html#debug.Debug.print_console">print_console() (debug.Debug method)</a>
   </dt>
 
-      
-  <dt><a href="debug.html#debug.Debug.print_debug">print_debug() (debug.Debug method)</a>
-  </dt>
-
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="prepare.html#prepare.Process">Process (class in prepare)</a>
+  <dt><a href="debug.html#debug.Debug.print_debug">print_debug() (debug.Debug method)</a>
   </dt>
 
       
@@ -352,7 +360,7 @@
   </dt>
 
         
-  <dt><a href="prepare.html#prepare.Process.process">(prepare.Process method)</a>
+  <dt><a href="prepare.html#prepare.Prepare.process">(prepare.Prepare method)</a>
   </dt>
 
       </dl></dd>
@@ -376,7 +384,7 @@
   </dt>
 
         
-  <dt><a href="prepare.html#prepare.Process.read_command_line">(prepare.Process static method)</a>
+  <dt><a href="prepare.html#prepare.Prepare.read_command_line">(prepare.Prepare static method)</a>
   </dt>
 
       </dl></dd>
@@ -385,17 +393,15 @@
   </dt>
 
       
-  <dt><a href="prepare.html#prepare.Process.remove_element">remove_element() (prepare.Process method)</a>
+  <dt><a href="prepare.html#prepare.Prepare.remove_element">remove_element() (prepare.Prepare method)</a>
   </dt>
 
       
-  <dt><a href="prepare.html#prepare.Process.remove_references">remove_references() (prepare.Process method)</a>
+  <dt><a href="prepare.html#prepare.Prepare.remove_references">remove_references() (prepare.Prepare method)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="prepare.html#prepare.Process.remove_tags">remove_tags() (prepare.Process method)</a>
+  <dt><a href="prepare.html#prepare.Prepare.remove_tags">remove_tags() (prepare.Prepare method)</a>
   </dt>
 
       
@@ -412,10 +418,32 @@
   </dt>
 
         
-  <dt><a href="prepare.html#prepare.Process.run">(prepare.Process method)</a>
+  <dt><a href="prepare.html#prepare.Prepare.run">(prepare.Prepare method)</a>
   </dt>
 
       </dl></dd>
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="disseminate.html#disseminate.Disseminate.run_ah_fop">run_ah_fop() (disseminate.Disseminate method)</a>
+  </dt>
+
+      
+  <dt><a href="disseminate.html#disseminate.Disseminate.run_apache_fop">run_apache_fop() (disseminate.Disseminate method)</a>
+  </dt>
+
+      
+  <dt><a href="disseminate.html#disseminate.Disseminate.run_fop_processor">run_fop_processor() (disseminate.Disseminate method)</a>
+  </dt>
+
+      
+  <dt><a href="mpt.html#mpt.MPT.run_modules">run_modules() (mpt.MPT method)</a>
+  </dt>
+
+      
+  <dt><a href="mpt.html#mpt.MPT.run_prompt">run_prompt() (mpt.MPT method)</a>
+  </dt>
+
       
   <dt><a href="disseminate.html#disseminate.Disseminate.run_saxon">run_saxon() (disseminate.Disseminate method)</a>
   </dt>
@@ -439,29 +467,29 @@
   </dt>
 
       
-  <dt><a href="prepare.html#prepare.Process.set_numbering_values">set_numbering_values() (prepare.Process method)</a>
+  <dt><a href="prepare.html#prepare.Prepare.set_numbering_values">set_numbering_values() (prepare.Prepare method)</a>
   </dt>
 
       
-  <dt><a href="prepare.html#prepare.Process.set_roman_numbers">set_roman_numbers() (prepare.Process method)</a>
+  <dt><a href="prepare.html#prepare.Prepare.set_roman_numbers">set_roman_numbers() (prepare.Prepare method)</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="prepare.html#prepare.Process.set_uuids_for_back_matter">set_uuids_for_back_matter() (prepare.Process method)</a>
+  <dt><a href="prepare.html#prepare.Prepare.set_uuids_for_back_matter">set_uuids_for_back_matter() (prepare.Prepare method)</a>
   </dt>
 
       
-  <dt><a href="prepare.html#prepare.Process.sort_by_tags">sort_by_tags() (prepare.Process method)</a>
+  <dt><a href="prepare.html#prepare.Prepare.sort_by_tags">sort_by_tags() (prepare.Prepare method)</a>
   </dt>
 
       
-  <dt><a href="prepare.html#prepare.Process.sort_footnotes">sort_footnotes() (prepare.Process method)</a>
+  <dt><a href="prepare.html#prepare.Prepare.sort_footnotes">sort_footnotes() (prepare.Prepare method)</a>
   </dt>
 
       
-  <dt><a href="prepare.html#prepare.Process.sort_references">sort_references() (prepare.Process method)</a>
+  <dt><a href="prepare.html#prepare.Prepare.sort_references">sort_references() (prepare.Prepare method)</a>
   </dt>
 
   </dl></td>
