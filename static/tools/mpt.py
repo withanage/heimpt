@@ -10,10 +10,13 @@ generate the output.
 
 Usage:
     mpt.py  <config_file> [options]
-    mpt.py --modules <modules>
+    mpt.py --modules <modules> [options]
+
 Options:
     --interactive                                   Enable step-by-step interactive mode
     -d, --debug  Enable debug output
+    -i --ids Entry ids   
+    
 
 Example
 --------
@@ -54,6 +57,7 @@ import uuid
 
 SEP = os.path.sep
 
+
 class MPT(Debuggable):
     """
     MPT Class Object,  which initializes the properties and defines the methods.
@@ -70,13 +74,12 @@ class MPT(Debuggable):
         if self.args.get('--debug'):
             self.debug.enable_debug()
 
-
         self.current_result = datetime.datetime.now().strftime(
             "%Y_%m_%d-%H-%M-%S-") + str(uuid.uuid4())[:4]
         self.config = None
         self.all_typesetters = None
         if self.args['--interactive']:
-           self.run_prompt(True)
+            self.run_prompt(True)
 
     def run_prompt(self, interactive):
         """
@@ -86,8 +89,6 @@ class MPT(Debuggable):
         prompt = Interactive(self.gv)
         opts = ('Confirm', 'Unconfirm')
         sel = prompt.input_options(opts)
-
-
 
     def run(self):
         """
@@ -162,8 +163,9 @@ class MPT(Debuggable):
 
         if ': ' in args_str:
 
-            args_str = args_str.replace(': ',':')
-            self.debug.print_debug(self, u"Merging command: file into command:file, can be a problem for some applications")
+            args_str = args_str.replace(': ', ':')
+            self.debug.print_debug(
+                self, u"Merging command: file into command:file, can be a problem for some applications")
         m = args_str.strip().split(' ')
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
@@ -239,8 +241,9 @@ class MPT(Debuggable):
 
         """
         config_args = p.get('typesetters')[p_id].get("arguments")
-        if  config_args is None:
-            self.debug.print_debug(self, self.gv.TYPESETTER_ARGUMENTS_NOT_DEFINED)
+        if config_args is None:
+            self.debug.print_debug(
+                self, self.gv.TYPESETTER_ARGUMENTS_NOT_DEFINED)
             sys.exit(1)
         ts_args = collections.OrderedDict(
             sorted(config_args.items()))
@@ -312,7 +315,7 @@ class MPT(Debuggable):
             f_path = os.path.join(p.get('path'), f_name)
 
         elif p.get("chain"):
-            f_path = os.path.join(pre_path,prefix +'.' + pre_out_type)
+            f_path = os.path.join(pre_path, prefix + '.' + pre_out_type)
 
         if os.path.isfile(f_path) or p['typesetters'].get(p_id).get('expand'):
             args.append(f_path)
@@ -381,8 +384,9 @@ class MPT(Debuggable):
         run_typesetter
 
         """
-        t_props = self.all_typesetters.get(p.get('typesetters')[p_id].get("name"))
-        p_path, pf_type = '',''
+        t_props = self.all_typesetters.get(
+            p.get('typesetters')[p_id].get("name"))
+        p_path, pf_type = '', ''
 
         if t_props:
             mt = self.arguments_parse(t_props)
@@ -398,7 +402,8 @@ class MPT(Debuggable):
                     mt)
 
             else:
-                self.debug.print_debug(self, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
+                self.debug.print_debug(
+                    self, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
         else:
             self.debug.print_debug(
                 self, self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
@@ -455,19 +460,18 @@ class MPT(Debuggable):
                 f_name
             )
 
-
         else:
             for f_id in project_files:
                 f_name = project_files[f_id]
                 p_path, pf_type = self.typeset_file(
-                        p,
-                        pre_path,
-                        pre_out_type,
-                        pre_id,
-                        uid,
-                        f_id,
-                        f_name
-                    )
+                    p,
+                    pre_path,
+                    pre_out_type,
+                    pre_id,
+                    uid,
+                    f_id,
+                    f_name
+                )
 
         return p_path, pf_type
 
@@ -496,7 +500,7 @@ class MPT(Debuggable):
         prev_out_type = ''
 
         if p.get('active'):
-            self.debug.print_console(self, u'PROJECT : '+p.get('name'))
+            self.debug.print_console(self, u'PROJECT : ' + p.get('name'))
             ts = p.get('typesetters')
             if ts:
                 typesetters_ordered = collections.OrderedDict(
@@ -511,7 +515,8 @@ class MPT(Debuggable):
                 sys.exit(1)
 
             for p_id in typesetters_ordered:
-                self.debug.print_console(self, ' '.join(['Step',p_id,':','\t', p.get('typesetters')[p_id].get("name")]))
+                self.debug.print_console(self, ' '.join(
+                    ['Step', p_id, ':', '\t', p.get('typesetters')[p_id].get("name")]))
                 temp_path, temp_pre_out_type = self.typeset_files(
                     p,
                     pre_path,
@@ -524,7 +529,8 @@ class MPT(Debuggable):
                 #self.debug.print_console(self, ' '.join(['ls -al',temp_path]))
 
         else:
-            self.debug.print_debug(self, self.gv.PROJECT_IS_NOT_ACTIVE+' '+p.get('name'))
+            self.debug.print_debug(
+                self, self.gv.PROJECT_IS_NOT_ACTIVE + ' ' + p.get('name'))
         return True
 
     def typeset_all_projects(self):
@@ -549,7 +555,6 @@ class MPT(Debuggable):
         else:
             self.debug.print_debug(self, self.gv.PROJECTS_VAR_IS_NOT_SPECIFIED)
         return True
-
 
     def organize_output(
             self,
@@ -592,13 +597,16 @@ class MPT(Debuggable):
 
         """
         p_name = p.get('typesetters')[p_id].get("name")
-        t_path = [p.get('path'), uid] + ['nlm'] if p_name == 'metypeset' else [p.get('path'), uid]
+        t_path = [p.get('path'), uid] + \
+            ['nlm'] if p_name == 'metypeset' else [p.get('path'), uid]
         out_type = p['typesetters'][p_id].get('out_type')
 
         if out_type is None:
-            self.debug.print_console(self,self.gv.PROJECT_OUTPUT_FILE_TYPE_IS_NOT_SPECIFIED)
+            self.debug.print_console(
+                self, self.gv.PROJECT_OUTPUT_FILE_TYPE_IS_NOT_SPECIFIED)
             sys.exit(1)
-        project_path = [p.get('path'),p['name'], self.current_result, p_id + '_' + p_name,out_type]
+        project_path = [p.get('path'), p['name'],
+                        self.current_result, p_id + '_' + p_name, out_type]
         temp_dir = os.path.join(p.get('path'), uid)
 
         if p['typesetters'][p_id].get('merge'):
@@ -608,8 +616,8 @@ class MPT(Debuggable):
         elif p['typesetters'][p_id].get('expand'):
             for filename in os.listdir(temp_dir):
                 p_path = self.gv.create_dirs_recursive(project_path)
-                f_path = '{}{}{}'.format(p_path,SEP,filename)
-                os.rename(os.path.join(temp_dir,filename), f_path)
+                f_path = '{}{}{}'.format(p_path, SEP, filename)
+                os.rename(os.path.join(temp_dir, filename), f_path)
             shutil.rmtree(temp_dir)
         elif p['typesetters'][p_id].get('process'):
             t_path.append(prefix + '.' + out_type)
@@ -618,7 +626,8 @@ class MPT(Debuggable):
             os.rename(SEP.join(t_path), f_path)
             shutil.rmtree(temp_dir)
         else:
-            self.debug.print_debug(self, self.gv.PROJECT_TYPESETTER_PROCESS_METHOD_NOT_SPECIFIED)
+            self.debug.print_debug(
+                self, self.gv.PROJECT_TYPESETTER_PROCESS_METHOD_NOT_SPECIFIED)
 
         #self.debug.print_console(self, '{}  {}'.format(self.gv.OUTPUT,f_path))
 
@@ -647,12 +656,12 @@ class MPT(Debuggable):
         """
         t_path.append(self.gv.uuid)
         p_path = self.gv.create_dirs_recursive(project_path)
-        f_path = '{}{}{}.xml'.format(p_path,SEP ,self.gv.uuid)
+        f_path = '{}{}{}.xml'.format(p_path, SEP, self.gv.uuid)
         shutil.copy2(SEP.join(t_path), f_path)
         self.create_named_file(p, p_id, p_path, t_path)
         return f_path
 
-    def create_named_file(self,  p, p_id, p_path ,t_path,):
+    def create_named_file(self,  p, p_id, p_path, t_path,):
         """
         Copy  unique file name to a named file
 
@@ -667,19 +676,30 @@ class MPT(Debuggable):
 
         """
         f = p['typesetters'][p_id].get('out_file')
-        if f: shutil.copy2(SEP.join(t_path), '{}{}{}'.format(p_path, SEP,f))
+        if f:
+            shutil.copy2(SEP.join(t_path), '{}{}{}'.format(p_path, SEP, f))
         return
 
     def run_modules(self):
         """
         Run MPT in module modus
-         
-        """
-        for m in self.args.get('<modules>').split(','):
-            sys.path.insert(0, '{}/{}'.format('static/tools/plugins/import/',m))
-            __import__(m)
-        return
 
+        """
+        sys.path.insert(0,'{}/{}/{}'.format(os.getcwd(),'plugins','import'))
+
+        for m in self.args.get('<modules>').split(','):
+            sys.path.insert(
+                0, '{}/{}/{}'.format( os.getcwd(),'plugins/import', m))
+
+            __import__(m)
+
+            try:
+                __import__(m)
+            except:
+                print('{} {}'.format(m, 'method  import failed.'))
+                sys.exit(0)
+
+        return
 
 
 def main():
@@ -701,12 +721,15 @@ def main():
     print tsf
     '''
 
-    pi = MPT()
-    if pi.args.get('--modules') : pi.run_modules()
 
-    #pi.config = pi.gv.read_json(pi.args['<config_file>'])
-    #pi.all_typesetters = pi.config.get('typesetters')
-    #pi.run()
+    pi = MPT()
+    if pi.args.get('--modules'):
+        pi.run_modules()
+
+    else :
+        pi.config = pi.gv.read_json(pi.args['<config_file>'])
+        pi.all_typesetters = pi.config.get('typesetters')
+        pi.run()
 
 
 if __name__ == '__main__':
