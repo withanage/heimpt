@@ -54,6 +54,7 @@ from subprocess import Popen, PIPE
 import sys
 import shutil
 import uuid
+import inspect
 
 SEP = os.path.sep
 
@@ -685,19 +686,28 @@ class MPT(Debuggable):
         Run MPT in module modus
 
         """
-        sys.path.insert(0,'{}/{}/{}'.format(os.getcwd(),'plugins','import'))
-
+        #sys.path.insert(0, '{}/{}/{}'.format(os.getcwd(), 'plugins', 'import'))
+        sys.path.insert(0, '{}/{}/'.format(os.getcwd(), 'plugins/import'))
+        import ImportInterface
         for m in self.args.get('<modules>').split(','):
-            sys.path.insert(
-                0, '{}/{}/{}'.format( os.getcwd(),'plugins/import', m))
+            plugin_package = __import__(m, fromlist=['*'])
+            plugin_module = getattr(plugin_package, m)
 
-            __import__(m)
-
-            try:
-                __import__(m)
-            except:
-                print('{} {}'.format(m, 'method  import failed.'))
-                sys.exit(0)
+            # Find class inheriting form Import abstract class in the module
+            for name in dir(plugin_module):
+                if inspect.isclass(getattr(plugin_module, name))\
+                        and issubclass(getattr(plugin_module, name), ImportInterface.Import)\
+                        and not getattr(plugin_module, name) is ImportInterface.Import:
+                    plugin_class = getattr(plugin_module, name)
+                    print "Found import plugin", name, plugin_class
+                    plugin = plugin_class()
+                    plugin.run()
+            #try:
+            #    plugin_module = __import__(m)
+            #    plugin_module.plugin.run()
+            #except Exception as e:
+            #    print('{} {}: {}'.format(m, 'method  import failed', e))
+            #    sys.exit(0)
 
         return
 
