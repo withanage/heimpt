@@ -702,22 +702,30 @@ class MPT(Debuggable):
                     print "Found import plugin", name, plugin_class
                     plugin = plugin_class()
                     plugin.run()
-            #try:
+            # try:
             #    plugin_module = __import__(m)
             #    plugin_module.plugin.run()
-            #except Exception as e:
+            # except Exception as e:
             #    print('{} {}: {}'.format(m, 'method  import failed', e))
             #    sys.exit(0)
 
         return
 
     def check_applications(self):
+        """
+        Check if program binaries are available 
+        
+        """
         ps = self.config.get('projects')
         psf = filter(lambda s: s.get(u'active') == True, ps)
         ts = self.config.get('typesetters')
+        for i in [self.gv.apps.get('ah'), self.gv.apps.get('xep')]:
+            if not self.gv.check_program(i):
+                self.debug.print_debug(self, u'{} {}'.format(i, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE))
+
         for p in map(lambda i: ts[i]['executable'], ts):
             if not self.gv.check_program(p):
-                self.debug.print_console(self,'{} {}'.format(p, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE))
+                self.debug.print_console(self, u'{} {}'.format(p, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE))
                 sys.exit(1)
 
 
@@ -730,16 +738,11 @@ def main():
     run
 
     """
-
-
-
-
-
     pi = MPT()
     if pi.args.get('--modules'):
         pi.run_modules()
 
-    else :
+    else:
         pi.config = pi.gv.read_json(pi.args['<config_file>'])
         pi.all_typesetters = pi.config.get('typesetters')
         pi.check_applications()
