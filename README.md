@@ -21,23 +21,29 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
 https://withanage.github.io/mpt
 
 
-## MPT Installation 
+## MPT Installation
+ 
 Check if you have persmissions  to intall in the BUILD_DIR
+ 
 ```
  BUILD_DIR=/usr/local
  git clone https://github.com/withanage/mpt.git $BUILD_DIR/mpt 
  cd $BUILD_DIR/mpt
  git submodule init
  git submodule update
+ pip install -r requirements.txt
 ```
+
 ### FO Processors 
 Only needed if you generate PDF files
+For Windows, IOS some commands may differ from this documentation 
 
-* Apache FOP (free): Download from [Apache FOP processor 2.1](https://xmlgraphics.apache.org/fop/download.html) into  $BUILD_DIR/mpt/static/tools
+* Apache FOP (free): Download from [Apache FOP processor](https://xmlgraphics.apache.org/fop/download.html) (Binary version) into  $BUILD_DIR/mpt/static/tools
   ```
   cd $BUILD_DIR/mpt/static/tools
-  tar -xvzf fop-2.1-bin.tar.gz;
-  mv fop-2.1 fop
+  tar -xvzf fop-2.2-bin.tar.gz;
+  mv fop-2.2 fop
+  chmod u+x fop/fop/fop
   ```
   If you changed the default $BUILD_DIR in the installation step, set the path in fop.print.xml and fop.electronic.xml in static/tools/configurations/fop/conf/ folder.
 
@@ -66,5 +72,6 @@ Additional contributions were made, in (alphabetical order) by:
 * Frank Krabbes, Heidelberg  University Library 
 * Mayumi Ohta (Jun.2014 - Feb.2015 ), Cluster of Excellence,  University Heidelberg
 * Katharina Wäschle, Heidelberg  University Library 
+* Nils Weiher, Heidelberg  University Library
 
 
