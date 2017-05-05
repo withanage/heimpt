@@ -4,8 +4,8 @@
             "active": true,
             "chain": true,
             "files": {
-                "1": "template_en.docx"
-
+                "1": "01_headline.docx",
+                "2": "02_boxed_text.docx"
 
 
             },
@@ -124,7 +124,7 @@
       "fo2pdf": {
             "arguments": {
               "1":"--medium=electronic,print",
-              "2":"--formatter=FOP",
+              "2":"--formatter=AH",
               "3":"--out-type=PDF"
 
             },
