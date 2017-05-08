@@ -81,6 +81,7 @@ class MPT(Debuggable):
         self.current_result = 'test'
         self.config = None
         self.all_typesetters = None
+        self.script_folder = os.path.dirname(os.path.realpath(__file__))
         if self.args['--interactive']:
             self.run_prompt(True)
 
@@ -691,7 +692,7 @@ class MPT(Debuggable):
 
         """
         #sys.path.insert(0, '{}/{}/{}'.format(os.getcwd(), 'plugins', 'import'))
-        sys.path.insert(0, '{}/{}/'.format(os.getcwd(), 'plugins/import'))
+        sys.path.insert(0, '{}/{}/'.format(self.script_folder, 'plugins/import'))
         import ImportInterface
         for m in self.args.get('<modules>').split(','):
             plugin_package = __import__(m, fromlist=['*'])
