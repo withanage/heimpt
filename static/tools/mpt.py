@@ -77,7 +77,7 @@ class MPT(Debuggable):
 
         self.current_result = datetime.datetime.now().strftime(
             "%Y_%m_%d-%H-%M-%S-") + str(uuid.uuid4())[:4]
-        # TODO Remove
+        # TODO: Remove
         self.current_result = 'test'
         self.config = None
         self.all_typesetters = None
@@ -706,6 +706,7 @@ class MPT(Debuggable):
                     print "Found import plugin", name, plugin_class
                     plugin = plugin_class()
                     plugin.run()
+
             # try:
             #    plugin_module = __import__(m)
             #    plugin_module.plugin.run()
@@ -734,7 +735,7 @@ class MPT(Debuggable):
 
         for p in map(lambda i: ts[i]['executable'], ts):
             if not self.gv.check_program(p):
-                self.debug.print_console(self, u'{} {}'.format(
+                self.debug.fatal_error(self, u'{} {}'.format(
                     p, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE))
                 sys.exit(1)
 
