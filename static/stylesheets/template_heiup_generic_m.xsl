@@ -26,7 +26,7 @@
     <xsl:variable name="Print_PDF_ColorSystem">RGB</xsl:variable>
     
     <!-- Color profiles -->
-    <xsl:variable name="ICC-Profile">/usr/local/mpt/static/color-profiles/AdobeRGB1998.icc</xsl:variable>
+    <xsl:variable name="ICC-Profile">/Library/Application Support/Adobe/Color/Profiles/Recommended/AdobeRGB1998.icc</xsl:variable>
  
     <!-- PDF Standards for electronic PDF output
             values: 
@@ -73,7 +73,7 @@
     <!--    values: 
                 true  : includes cover images in the pdf file
                 false : no cover images are shown in the pdf file -->
-    <xsl:variable name="include-cover-images">true</xsl:variable>
+    <xsl:variable name="include-cover-images">false</xsl:variable>
 
     <!-- ***************************************************************************** -->
     <!--    Series title page                                                          -->
@@ -178,7 +178,7 @@
                 print      : PDF bookmarks in print version only 
                 both       : PDF bookmarks in electronic and print version 
                 none       : PDF bookmarks are not included -->
-    <xsl:variable name="pdf_bookmark">none</xsl:variable>
+    <xsl:variable name="pdf_bookmark">electronic</xsl:variable>
         
     <!-- Create cover entries in PDF bookmark list
             values:
@@ -227,7 +227,7 @@
     <!-- Hierarchy levels to include in the Table of Contents.
             value:
                 Integer > 0 -->
-    <xsl:variable name="ToC-levels">3</xsl:variable>
+    <xsl:variable name="ToC-levels">2</xsl:variable>
     
     <!-- Configuration of the leader between heading and page number -->
     <xsl:attribute-set name="ToC-leader">

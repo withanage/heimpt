@@ -40,7 +40,7 @@
 
     <!-- Include template containing configuration, static text and styles -->
     <?include stylesheet?>
-    <xsl:include href="template_heibooks_lieb.xsl"/>
+    <xsl:include href="template_heiup_generic_m.xsl"/>
 
     <!-- ********************************************************** -->
     <!-- * Page formatting                                        * -->
@@ -1153,27 +1153,49 @@
             </xsl:if>
             
             <!-- DOI and URN -->
-            <xsl:if
-                test="($medium = 'electronic' and $display_doi_monograph_first_page = 'electronic') or ($medium = 'print' and $display_doi_monograph_first_page = 'print') or ($display_doi_monograph_first_page = 'both')">
+            <xsl:if test="($medium = 'electronic' and $display_doi_monograph_first_page = 'electronic') or ($medium = 'print' and $display_doi_monograph_first_page = 'print') or ($display_doi_monograph_first_page = 'both')">
                 <xsl:if test="../custom-meta-group/custom-meta[@specific-use = 'doi']">
                     <fo:marker marker-class-name="doi">
-                        <xsl:value-of
-                            select="../custom-meta-group/custom-meta[@specific-use = 'doi']/meta-name"/>
+                        <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'doi']/meta-name"/>
                         <xsl:text>: </xsl:text>
-                        <xsl:value-of
-                            select="../custom-meta-group/custom-meta[@specific-use = 'doi']/meta-value"/>
+                        <xsl:choose>
+                            <xsl:when test="$medium = 'electronic'">
+                                <xsl:element name="fo:basic-link" use-attribute-sets="hyperlink">
+                                    <xsl:attribute name="external-destination">
+                                        <xsl:text>url(http://dx.doi.org/</xsl:text>
+                                            <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'doi']/meta-value"/>
+                                        <xsl:text>)</xsl:text>
+                                    </xsl:attribute>
+                                </xsl:element>
+                                <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'doi']/meta-value"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'doi']/meta-value"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </fo:marker>
                 </xsl:if>
             </xsl:if>
-            <xsl:if
-                test="($medium = 'electronic' and $display_urn_monograph_first_page = 'electronic') or ($medium = 'print' and $display_urn_monograph_first_page = 'print') or ($display_urn_monograph_first_page = 'both')">
+            <xsl:if test="($medium = 'electronic' and $display_urn_monograph_first_page = 'electronic') or ($medium = 'print' and $display_urn_monograph_first_page = 'print') or ($display_urn_monograph_first_page = 'both')">
                 <xsl:if test="../custom-meta-group/custom-meta[@specific-use = 'urn']">
                     <fo:marker marker-class-name="urn">
-                        <xsl:value-of
-                            select="../custom-meta-group/custom-meta[@specific-use = 'urn']/meta-name"/>
+                        <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'urn']/meta-name"/>
                         <xsl:text>: </xsl:text>
-                        <xsl:value-of
-                            select="../custom-meta-group/custom-meta[@specific-use = 'urn']/meta-value"/>
+                        <xsl:choose>
+                            <xsl:when test="$medium = 'electronic'">
+                                <xsl:element name="fo:basic-link" use-attribute-sets="hyperlink">
+                                    <xsl:attribute name="external-destination">
+                                        <xsl:text>url(https://nbn-resolving.org/resolver?identifier=</xsl:text>
+                                            <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'urn']/meta-value"/>
+                                        <xsl:text>)</xsl:text>
+                                    </xsl:attribute>
+                                </xsl:element>
+                                <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'urn']/meta-value"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'urn']/meta-value"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </fo:marker>
                 </xsl:if>
             </xsl:if>
@@ -1256,13 +1278,6 @@
          <xsl:apply-templates mode="typesetting"/>
     </xsl:template>
 
-<!--
-    <xsl:template match="title" mode="chapter_title">
-        <xsl:element name="fo:block" use-attribute-sets="fonts_chapter_title keeps-headings">
-            <xsl:apply-templates mode="typesetting"/>
-        </xsl:element>
-    </xsl:template>
--->
     <!-- Chapter subtitle -->
     <xsl:template match="subtitle" mode="chapter_title">
         <xsl:element name="fo:block" use-attribute-sets="fonts_chapter_subtitle keeps-headings">
@@ -1962,7 +1977,16 @@
         <xsl:element name="fo:table">
             <xsl:attribute name="border-style">solid</xsl:attribute>
             <xsl:attribute name="border-width">0.75pt</xsl:attribute>
-            <xsl:apply-templates mode="typesetting"/>
+            <xsl:choose>
+                <xsl:when test="not(child::tbody)">
+                    <xsl:element name="fo:table-body">
+                        <xsl:apply-templates mode="typesetting"/>
+                    </xsl:element>                    
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates mode="typesetting"/>                    
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:element>
     </xsl:template>
     
@@ -2041,7 +2065,9 @@
             <xsl:when test="$medium = 'electronic'">
                 <xsl:element name="fo:basic-link" use-attribute-sets="hyperlink">
                     <xsl:attribute name="external-destination">
+                        <xsl:text>url(</xsl:text>
                         <xsl:value-of select="node()"/>
+                        <xsl:text>)</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="show-destination">new</xsl:attribute>
                     <xsl:apply-templates mode="typesetting"/>
@@ -2204,7 +2230,7 @@
                                 <xsl:element name="fo:basic-link" use-attribute-sets="hyperlink">
                                     <xsl:attribute name="internal-destination">
                                         <xsl:value-of select="generate-id(.)"/>
-                                        </xsl:attribute>
+                                    </xsl:attribute>
                                     <xsl:apply-templates select="book-part-meta/title-group/title"/>
                                     <fo:leader leader-pattern="space"/>
                                     <fo:page-number-citation ref-id="{generate-id(.)}"/>
@@ -2334,8 +2360,9 @@
     </xsl:template>
     
     <xsl:template match="sec" mode="toc">
+        <xsl:if test="not(@sec-type='hide_in_toc')">
             <xsl:element name="fo:list-item">
-                <xsl:element name="fo:list-item-label">
+                 <xsl:element name="fo:list-item-label">
                     <xsl:attribute name="end-indent"><!-- label-end() -->3em</xsl:attribute>
                     <xsl:if test="label">
                         <xsl:element name="fo:block" use-attribute-sets="toc-format-levels-after-first keeps-headings">
@@ -2359,6 +2386,7 @@
                     </xsl:element>
                 </xsl:element>
             </xsl:element>
+        </xsl:if>
         <xsl:if test="(count(ancestor::book-part) + count(ancestor-or-self::sec)) &lt; $ToC-levels">
             <xsl:apply-templates select="sec" mode="toc"/>
         </xsl:if>
@@ -2556,24 +2584,31 @@
     </xsl:template>
 
     <xsl:template match="sec" mode="pdf-bookmark-tree">
-        <xsl:element name="fo:bookmark">
-            <xsl:attribute name="internal-destination">
-                <xsl:value-of select="@id"/>
-            </xsl:attribute>
-            <xsl:attribute name="starting-state">hide</xsl:attribute>
-            <fo:bookmark-title>
-                <xsl:if test="label">
-                    <xsl:value-of select="label"/>
-                    <xsl:text>. </xsl:text>
-                </xsl:if>
-                <xsl:value-of select="title"/>
-                <xsl:if test="subtitle">
-                    <xsl:text>. </xsl:text>
-                    <xsl:value-of select="subtitle"/>
-                </xsl:if>                
-            </fo:bookmark-title>
-            <xsl:apply-templates select="sec" mode="pdf-bookmark-tree"/>
-        </xsl:element>
+        <xsl:choose>
+            <xsl:when test="child::title">
+                <xsl:element name="fo:bookmark">
+                    <xsl:attribute name="internal-destination">
+                        <xsl:value-of select="@id"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="starting-state">hide</xsl:attribute>
+                    <fo:bookmark-title>
+                        <xsl:if test="label">
+                            <xsl:value-of select="label"/>
+                            <xsl:text>. </xsl:text>
+                        </xsl:if>
+                        <xsl:value-of select="title"/>
+                        <xsl:if test="subtitle">
+                            <xsl:text>. </xsl:text>
+                            <xsl:value-of select="subtitle"/>
+                        </xsl:if>                
+                    </fo:bookmark-title>
+                    <xsl:apply-templates select="sec" mode="pdf-bookmark-tree"/>
+                </xsl:element>                
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates select="sec" mode="pdf-bookmark-tree"/>                
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="back" mode="pdf-bookmark-tree">

@@ -11,55 +11,42 @@
      * Contact:      Frank Krabbes                            *
      *               krabbes@ub.uni-heidelberg.de             *
      +               Copyright 2016 CC-BY-NC-ND               *
-     **********************************************************
-     
-     **********************************************************
-     * Variable definitions and include files                 *
      ********************************************************** -->
 
-    <!-- ***************************************************************************** -->
-    <!--    Main Language                                                              -->
-    <!-- ***************************************************************************** -->
-    <xsl:variable name="MainLanguage">de</xsl:variable><!-- could potentially be taken from book[@xml:lang] -->
-
-    <!-- ***************************************************************************** -->
-    <!--    Include static text                                                        -->
-    <!-- ***************************************************************************** -->
-    <!-- <xsl:include href="heiup_static_strings.xsl"/> -->
-
-    <!-- ***************************************************************************** -->
-    <!--    PDF Navigation or interactive functionality                                -->
-    <!-- ***************************************************************************** -->
-    <!-- Count of hierarchy levels of bookmarks to include in the PDF -->
-    <!-- '0' means to not include bookmarks -->
-    <xsl:variable name="Electronic_PDF_bookmarks">4</xsl:variable>
-    <xsl:variable name="Print_PDF_bookmarks">0</xsl:variable>
+    <xsl:variable name="MainLanguage">de</xsl:variable>
     
     <!-- ***************************************************************************** -->
     <!--    Color management and PDF specification                                     -->
     <!-- ***************************************************************************** -->
     
-    <!-- Define the color system used for electronic and print PDF -->
-    <!-- Cave: CMYK or Grayscale not yet supported -->
+    <!-- Define the color system used for electronic and print PDF
+            values:
+                RGB : RGB color system -->
     <xsl:variable name="Electronic_PDF_ColorSystem">RGB</xsl:variable>
     <xsl:variable name="Print_PDF_ColorSystem">RGB</xsl:variable>
     
     <!-- Color profiles -->
     <xsl:variable name="ICC-Profile">/Library/Application Support/Adobe/Color/Profiles/Recommended/AdobeRGB1998.icc</xsl:variable>
  
-    <!-- PDF Standards -->
-    <!-- Values: PDF/A-1a:2005; PDF/A-1b:2005
+    <!-- PDF Standards for electronic PDF output
+            values: 
+                PDF/A-1a:2005
+                PDF/A-1b:2005
          Please note that not every standard is supported by every formatter. Consult the documention
          of the formatter you use. This parameter is not used for FOP. FOP only supports configuration
-         of the pdf standard using the configuration file or command line parameters.
-    -->
+         of the pdf standard using the configuration file or command line parameters. -->
     <xsl:variable name="Electronic_PDF_Standard">PDF/A-1a:2005</xsl:variable>
     
-    <!-- Values: PDF/X-1a:2001; PDF/X-1a:2003; PDF/X-2:2003; PDF/X-3:2002; PDF/X-3:2003; PDF/X-4:2008
+    <!--    values: 
+                PDF/X-1a:2001
+                PDF/X-1a:2003
+                PDF/X-2:2003
+                PDF/X-3:2002
+                PDF/X-3:2003
+                PDF/X-4:2008
          Please note that not every standard is supported by every formatter. Consult the documention
          of the formatter you use. This parameter is not used for FOP. FOP only supports configuration
-         of the pdf standard using the configuration file or command line parameters.
-    -->
+         of the pdf standard using the configuration file or command line parameters. -->
     <xsl:variable name="Print_PDF_Standard">PDF/X-3:2003</xsl:variable>
     
     <!-- ***************************************************************************** -->
@@ -86,7 +73,7 @@
     <!--    values: 
                 true  : includes cover images in the pdf file
                 false : no cover images are shown in the pdf file -->
-    <xsl:variable name="include-cover-images">true</xsl:variable>
+    <xsl:variable name="include-cover-images">false</xsl:variable>
 
     <!-- ***************************************************************************** -->
     <!--    Series title page                                                          -->
@@ -229,18 +216,97 @@
     <xsl:variable name="back_cover_de">Rückencover</xsl:variable>
     
     <!-- ***************************************************************************** -->
-    <!--    Table of contents                                                          -->
+    <!--    Table of Contents                                                          -->
     <!-- ***************************************************************************** -->
     <!-- Heading for the table of contents.
-         Value: Text string -->
+            value: 
+                Unicode text string -->
     <xsl:variable name="heading-ToC-en">Contents</xsl:variable><!-- default -->
     <xsl:variable name="heading-ToC-de">Inhaltsverzeichnis</xsl:variable>
+        
+    <!-- Hierarchy levels to include in the Table of Contents.
+            value:
+                Integer > 0 -->
+    <xsl:variable name="ToC-levels">2</xsl:variable>
+    
+    <!-- Configuration of the leader between heading and page number -->
+    <xsl:attribute-set name="ToC-leader">
+    
+        <!-- Sequences of characters between heading and page number, most likely dots.
+                values:
+                    dots  : dots
+                    space : spaces used -->    
+        <xsl:attribute name="leader-pattern">space</xsl:attribute>
+
+        <!-- Width of a single sequence of leader patters. Used to render the leader
+             narrower or wider.
+                value:
+                    point value, e. g. "5pt" -->
+        <xsl:attribute name="leader-pattern-width">3pt</xsl:attribute>
+        
+        <!-- Alignment of the leaders. Only works with AntennaHouse Formatter
+                value:
+                    reference-area -->
+        <xsl:attribute name="leader-alignment">reference-area</xsl:attribute>        
+
+        <xsl:attribute name="keep-with-next.within-line">always</xsl:attribute>        
+        
+    </xsl:attribute-set>
+    
+    <!-- Paragraph formats -->
+    
+    <!-- Edited volumes -->
+    
+    <!-- Monographs -->
+    
+    <xsl:attribute-set name="toc-format-part">
+        <xsl:attribute name="font-family">
+            <xsl:value-of select="$general_font_family_alternate"/>
+        </xsl:attribute>
+        <xsl:attribute name="font-size">14pt</xsl:attribute>
+        <xsl:attribute name="font-weight">normal</xsl:attribute>
+        <xsl:attribute name="font-style">normal</xsl:attribute>
+        <xsl:attribute name="font-variant">normal</xsl:attribute>
+        <xsl:attribute name="line-height">18pt</xsl:attribute>
+        <!-- margins -->
+        <xsl:attribute name="space-before">18pt</xsl:attribute><!-- Achtung, funktioniert nicht, wenn es am Kopf der Seite steht -->
+        <xsl:attribute name="space-after">14pt</xsl:attribute><!-- Achtung, funktioniert nicht, wenn es am Kopf der Seite steht -->
+    </xsl:attribute-set>
+
+    <xsl:attribute-set name="toc-format-first-level">
+        <xsl:attribute name="font-family">
+            <xsl:value-of select="$general_font_family_base"/>
+        </xsl:attribute>
+        <xsl:attribute name="font-size">12pt</xsl:attribute>
+        <xsl:attribute name="font-weight">normal</xsl:attribute>
+        <xsl:attribute name="font-style">normal</xsl:attribute>
+        <xsl:attribute name="font-variant">normal</xsl:attribute>
+        <xsl:attribute name="line-height">15pt</xsl:attribute>
+        <!-- margins -->
+        <xsl:attribute name="space-before">15pt</xsl:attribute><!-- Achtung, funktioniert nicht, wenn es am Kopf der Seite steht -->
+        <xsl:attribute name="space-after">15pt</xsl:attribute><!-- Achtung, funktioniert nicht, wenn es am Kopf der Seite steht -->
+    </xsl:attribute-set>
+    
+    <xsl:attribute-set name="toc-format-levels-after-first">
+        <xsl:attribute name="font-family">
+            <xsl:value-of select="$general_font_family_base"/>
+        </xsl:attribute>
+        <xsl:attribute name="font-size">10.5pt</xsl:attribute>
+        <xsl:attribute name="font-weight">normal</xsl:attribute>
+        <xsl:attribute name="font-style">normal</xsl:attribute>
+        <xsl:attribute name="font-variant">normal</xsl:attribute>
+        <xsl:attribute name="line-height">13pt</xsl:attribute>
+        <!-- margins -->
+        <xsl:attribute name="margin-top">0pt</xsl:attribute>
+        <xsl:attribute name="margin-bottom">0pt</xsl:attribute>
+    </xsl:attribute-set>    
 
     <!-- ***************************************************************************** -->
     <!--    Pagination of the book                                                     -->
     <!-- ***************************************************************************** -->
-    <!-- Values: arabic       = arabic numbering
-                 roman-arabic = roman numbering for frontmatter, arabic for the rest   -->
+    <!--    values: 
+                arabic       : arabic numbering
+                roman-arabic : roman numbering for frontmatter, arabic for the rest   -->
     <xsl:variable name="pagination">arabic</xsl:variable>
 
     <!-- ***************************************************************************** -->
@@ -249,16 +315,16 @@
 
     <!-- Defines if chapters generally start on a left (recto) page or not 
          Allowed values:
-         auto          Force the last page in this page-sequence to be an odd-page if 
+         auto        : Force the last page in this page-sequence to be an odd-page if 
                        the initial-page-number of the next page-sequence is even. Force 
                        it to be an even-page if the initial-page-number of the next 
                        page-sequence is odd. If there is no next page-sequence or if the 
                        value of its initial-page-number is "auto" do not force any page.
-         even          Force an even number of pages in this page-sequence.
-         odd           Force an odd number of pages in this page-sequence.
-         end-on-even   Force the last page in this page-sequence to be an even-page.
-         end-on-odd    Force the last page in this page-sequence to be an odd-page.
-         no-force      Do not force either an even or an odd number of pages in this 
+         even        : Force an even number of pages in this page-sequence.
+         odd         : Force an odd number of pages in this page-sequence.
+         end-on-even : Force the last page in this page-sequence to be an even-page.
+         end-on-odd  : Force the last page in this page-sequence to be an odd-page.
+         no-force    : Do not force either an even or an odd number of pages in this 
                        page-sequence                                                   -->
     <xsl:variable name="ChapterPageHandling">end-on-even</xsl:variable>
 
@@ -314,13 +380,17 @@
     <!-- ***************************************************************************** -->
     <!--    Handling of footer (DOI and URN)                                           -->
     <!-- ***************************************************************************** -->
-    <!-- values: electronic, print, both, none -->
+    <!--    values: 
+                electronic : in electronic version only
+                print      : in print version only
+                both       : in electronic and print version
+                none       : URN and DOI are not rendered -->
     <!-- For proceedings -->
-    <xsl:variable name="display_doi_proceedings_first_page">electronic</xsl:variable>
-    <xsl:variable name="display_urn_proceedings_first_page">electronic</xsl:variable>
-    <!-- For Monographs -->
-    <xsl:variable name="display_doi_monograph_first_page">none</xsl:variable>
-    <xsl:variable name="display_urn_monograph_first_page">none</xsl:variable>
+    <xsl:variable name="display_doi_proceedings_first_page">both</xsl:variable>
+    <xsl:variable name="display_urn_proceedings_first_page">both</xsl:variable>
+    <!-- For monographs -->
+    <xsl:variable name="display_doi_monograph_first_page">both</xsl:variable>
+    <xsl:variable name="display_urn_monograph_first_page">both</xsl:variable>
     
     <!-- ***************************************************************************** -->
     <!--   Footnote separator                                                          -->
@@ -439,8 +509,6 @@
     <!-- ***************************************************************************** -->
     <!--  Lists                                                                        -->
     <!-- ***************************************************************************** -->
-
-    <!-- Unordered Lists -->
 
     <xsl:attribute-set name="ul_1_block-level">
         <xsl:attribute name="provisional-distance-between-starts">5mm</xsl:attribute>
@@ -663,7 +731,7 @@
     </xsl:attribute-set>
     
     <!-- Emphasis for cross references and hyperlinks; only for $medium='electronic' -->
-    <!-- ATTENTION: Only use formats with identical text flow!!! -->
+    <!-- ATTENTION: Use formats with identical text flow only!!! -->
     <xsl:attribute-set name="hyperlink">
         <xsl:attribute name="color">blue</xsl:attribute>
         <!--    none   No decoration
@@ -683,10 +751,10 @@
     <!-- ***************************************************************************** -->
     
     <!-- Title page -->
-    <xsl:variable name="pub-logo-main-title-xpos">57mm</xsl:variable>
-    <xsl:variable name="pub-logo-main-title-ypos">185mm</xsl:variable>
-    <xsl:variable name="pub-logo-main-title-width">32mm</xsl:variable>
-    <xsl:variable name="pub-logo-main-title-height">8mm</xsl:variable>
-    <xsl:variable name="pub-logo-main-title-fileref">/Volumes/DATENSTICK/14 XSL-FO/static/logos/heiUP-Logo_Wortmarke_sw.png</xsl:variable>
+    <xsl:variable name="pub-logo-main-title-xpos">64.5mm</xsl:variable>
+    <xsl:variable name="pub-logo-main-title-ypos">180mm</xsl:variable>
+    <xsl:variable name="pub-logo-main-title-width">40mm</xsl:variable>
+    <xsl:variable name="pub-logo-main-title-height">26mm</xsl:variable>
+    <xsl:variable name="pub-logo-main-title-fileref">/Volumes/DATENSTICK/14 XSL-FO/static/logos/Logo_UB_rgb.tif</xsl:variable>
     
 </xsl:stylesheet>

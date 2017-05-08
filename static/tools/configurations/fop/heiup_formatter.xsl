@@ -16,7 +16,7 @@
            Frank Krabbes
            University Library Heidelberg, Publication Services
            Plöck 107-109, 69117 Heidelberg, Germany
-           Mailto: krabbes at ub.uni-heidelberg.de
+           Mail to: krabbes at ub.uni-heidelberg.de
         
            (Any other XSLT 2.0 compliant processor can be used)
     -->
@@ -26,15 +26,21 @@
     <!-- ********************************************************** -->
 
     <!-- Definition of the output medium: Defines if PDF files optimized for print or electronic publishing are generated.
-        values: electronic, print) -->
+            values: 
+                electronic : interactive version
+                print      : print optimized version -->
     <xsl:param name="medium" as="xs:string" required="yes"/>
 
     <!-- Defines the renderer used: Defines if proprietary code will be generated.
-        Values: FOP, AntennaHouse, XEP -->
+            values: 
+                FOP          : Fop 2.1 specific optimizations are included
+                AntennaHouse : AntennaHouse 6.3 specific optimizations are included
+                XEP          : XEP 4.25 specific optimizations are included -->
     <xsl:param name="formatter" as="xs:string" required="yes"/>
 
     <!-- Include template containing configuration, static text and styles -->
-    <xsl:include href="heiup_template_generic_m.xsl"/>
+    <?include stylesheet?>
+    <xsl:include href="template_heibooks_generic_m.xsl"/>
 
     <!-- ********************************************************** -->
     <!-- * Page formatting                                        * -->
@@ -875,7 +881,7 @@
                     <xsl:apply-templates select="book-title-group/book-title"/>
                 </xsl:element>
 
-                <!-- Series title -->
+                <!-- Series title / Half title verso page -->
                 <xsl:choose>
                     <xsl:when test="preceding-sibling::collection-meta and $series_title_page='yes'">
                         <xsl:element name="fo:block-container" use-attribute-sets="fonts_regular_text">
@@ -952,9 +958,18 @@
                         <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text">
                             <xsl:attribute name="page-break-after">always</xsl:attribute>
                             <xsl:attribute name="id">series-title</xsl:attribute>
-                            <xsl:text> </xsl:text>
-                        </xsl:element>                        
-                    </xsl:otherwise>                    
+                            <xsl:choose>
+                                <!-- Special treatment for XEP here. XEP does not create a blank page with no contents -->
+                                <xsl:when test="$formatter = 'XEP' or $formatter = 'FOP'">
+                                    <xsl:attribute name="color">#FFFFFF</xsl:attribute>
+                                    <xsl:text>This page is intentionally left blank</xsl:text>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text> </xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:element>
+                    </xsl:otherwise>
                 </xsl:choose>
 
                 <!-- Main title -->
@@ -1001,7 +1016,7 @@
                     <xsl:text>main title page</xsl:text>
                 </xsl:element>
 
-                <!-- Impressum -->
+                <!-- Impressum / main title verso page -->
                 <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text">
                     <xsl:attribute name="id">impressum</xsl:attribute>
                     <xsl:text>Impressum</xsl:text>
@@ -1062,6 +1077,7 @@
             </xsl:if>
 
             <!-- Running headers -->
+            <!-- Running header on left page -->
             <fo:static-content flow-name="column_title_verso">
                 <xsl:element name="fo:block"
                     use-attribute-sets="fonts_petit_text do_not_hyphenate keeps-paragraph running_title_verso">
@@ -1071,6 +1087,7 @@
                         retrieve-class-name="running_head_left"/>
                 </xsl:element>
             </fo:static-content>
+            <!-- Running header on right page -->
             <fo:static-content flow-name="column_title_recto">
                 <xsl:element name="fo:block"
                     use-attribute-sets="fonts_petit_text do_not_hyphenate keeps-paragraph running_title_recto">
@@ -1104,11 +1121,11 @@
     <xsl:template match="book-part-meta" mode="typesetting">
         <xsl:choose>
             <xsl:when test="/book[@book-type = 'monograph']">
-                <xsl:apply-templates select="title-group" mode="monograph"/>
+                <xsl:apply-templates select="title-group" mode="chapter-title"/>
             </xsl:when>
             <xsl:when test="/book[@book-type = 'proceedings']">
                 <xsl:apply-templates select="contrib-group" mode="proceedings"/>
-                <xsl:apply-templates select="title-group" mode="proceedings"/>
+                <xsl:apply-templates select="title-group" mode="chapter-title"/>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
@@ -1126,37 +1143,59 @@
     <!-- ********************************************************** -->
 
     <!-- First page of a chapter in a monograph -->
-    <xsl:template match="title-group" mode="monograph">
+    <xsl:template match="title-group" mode="chapter-title">
 
-        <fo:block>
-            <xsl:attribute name="id">
-                <xsl:value-of select="ancestor::book-part[1]/@id"/>
-            </xsl:attribute>
+        <xsl:element name="fo:block-container" use-attribute-sets="margin_under_title">
+            <xsl:if test="not(/book[@book-type = 'proceedings'])">
+                <xsl:attribute name="id">
+                    <xsl:value-of select="ancestor::book-part[1]/@id"/>
+                </xsl:attribute>
+            </xsl:if>
             
             <!-- DOI and URN -->
-            <xsl:if
-                test="($medium = 'electronic' and $display_doi_monograph_first_page = 'electronic') or ($medium = 'print' and $display_doi_monograph_first_page = 'print') or ($display_doi_monograph_first_page = 'both')">
+            <xsl:if test="($medium = 'electronic' and $display_doi_monograph_first_page = 'electronic') or ($medium = 'print' and $display_doi_monograph_first_page = 'print') or ($display_doi_monograph_first_page = 'both')">
                 <xsl:if test="../custom-meta-group/custom-meta[@specific-use = 'doi']">
                     <fo:marker marker-class-name="doi">
-                        <xsl:value-of
-                            select="../custom-meta-group/custom-meta[@specific-use = 'doi']/meta-name"/>
+                        <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'doi']/meta-name"/>
                         <xsl:text>: </xsl:text>
-                        <xsl:value-of
-                            select="../custom-meta-group/custom-meta[@specific-use = 'doi']/meta-value"
-                        />
+                        <xsl:choose>
+                            <xsl:when test="$medium = 'electronic'">
+                                <xsl:element name="fo:basic-link" use-attribute-sets="hyperlink">
+                                    <xsl:attribute name="external-destination">
+                                        <xsl:text>url(http://dx.doi.org/</xsl:text>
+                                            <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'doi']/meta-value"/>
+                                        <xsl:text>)</xsl:text>
+                                    </xsl:attribute>
+                                </xsl:element>
+                                <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'doi']/meta-value"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'doi']/meta-value"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </fo:marker>
                 </xsl:if>
             </xsl:if>
-            <xsl:if
-                test="($medium = 'electronic' and $display_urn_monograph_first_page = 'electronic') or ($medium = 'print' and $display_urn_monograph_first_page = 'print') or ($display_urn_monograph_first_page = 'both')">
+            <xsl:if test="($medium = 'electronic' and $display_urn_monograph_first_page = 'electronic') or ($medium = 'print' and $display_urn_monograph_first_page = 'print') or ($display_urn_monograph_first_page = 'both')">
                 <xsl:if test="../custom-meta-group/custom-meta[@specific-use = 'urn']">
                     <fo:marker marker-class-name="urn">
-                        <xsl:value-of
-                            select="../custom-meta-group/custom-meta[@specific-use = 'urn']/meta-name"/>
+                        <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'urn']/meta-name"/>
                         <xsl:text>: </xsl:text>
-                        <xsl:value-of
-                            select="../custom-meta-group/custom-meta[@specific-use = 'urn']/meta-value"
-                        />
+                        <xsl:choose>
+                            <xsl:when test="$medium = 'electronic'">
+                                <xsl:element name="fo:basic-link" use-attribute-sets="hyperlink">
+                                    <xsl:attribute name="external-destination">
+                                        <xsl:text>url(https://nbn-resolving.org/resolver?identifier=</xsl:text>
+                                            <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'urn']/meta-value"/>
+                                        <xsl:text>)</xsl:text>
+                                    </xsl:attribute>
+                                </xsl:element>
+                                <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'urn']/meta-value"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'urn']/meta-value"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </fo:marker>
                 </xsl:if>
             </xsl:if>
@@ -1169,62 +1208,14 @@
                 </xsl:if>
                 <xsl:apply-templates select="title" mode="typesetting"/>
             </fo:marker>
-            <xsl:if test="label">
-                <xsl:apply-templates select="label" mode="typesetting"/>
-                <xsl:text>&#x2002;</xsl:text>
-            </xsl:if>
-            <xsl:apply-templates select="title" mode="chapter_title"/>
-        </fo:block>
-        <xsl:apply-templates select="subtitle" mode="chapter_title"/>
-    </xsl:template>
-
-    <!-- First page of a chapter in a proceedings -->
-    <xsl:template match="title-group" mode="proceedings">
-        <xsl:element name="fo:block-container" use-attribute-sets="margin_under_title">
-            <fo:block>
-                <!-- DOI and URN -->
-                <xsl:if
-                    test="($medium = 'electronic' and $display_doi_proceedings_first_page = 'electronic') or ($medium = 'print' and $display_doi_proceedings_first_page = 'print') or ($display_doi_proceedings_first_page = 'both')">
-                    <xsl:if test="../custom-meta-group/custom-meta[@specific-use = 'doi']">
-                        <fo:marker marker-class-name="doi">
-                            <xsl:value-of
-                                select="../custom-meta-group/custom-meta[@specific-use = 'doi']/meta-name"/>
-                            <xsl:text>: </xsl:text>
-                            <xsl:value-of
-                                select="../custom-meta-group/custom-meta[@specific-use = 'doi']/meta-value"
-                            />
-                        </fo:marker>
-                    </xsl:if>
-                </xsl:if>
-                <xsl:if
-                    test="($medium = 'electronic' and $display_urn_proceedings_first_page = 'electronic') or ($medium = 'print' and $display_urn_proceedings_first_page = 'print') or ($display_urn_proceedings_first_page = 'both')">
-                    <xsl:if test="../custom-meta-group/custom-meta[@specific-use = 'urn']">
-                        <fo:marker marker-class-name="urn">
-                            <xsl:value-of
-                                select="../custom-meta-group/custom-meta[@specific-use = 'urn']/meta-name"/>
-                            <xsl:text>: </xsl:text>
-                            <xsl:value-of
-                                select="../custom-meta-group/custom-meta[@specific-use = 'urn']/meta-value"
-                            />
-                        </fo:marker>
-                    </xsl:if>
-                </xsl:if>
-
-                <!-- Running Header Odd Page -->
-                <fo:marker marker-class-name="running_head_right">
-                    <xsl:if test="label">
-                        <xsl:apply-templates select="label" mode="typesetting"/>
-                        <xsl:text>&#x2002;</xsl:text>
-                    </xsl:if>
-                    <xsl:apply-templates select="title" mode="typesetting"/>
-                </fo:marker>
+            <xsl:element name="fo:block" use-attribute-sets="fonts_chapter_title do_not_hyphenate keeps-headings">
                 <xsl:if test="label">
                     <xsl:apply-templates select="label" mode="typesetting"/>
                     <xsl:text>&#x2002;</xsl:text>
                 </xsl:if>
-                <xsl:apply-templates select="title" mode="chapter_title"/>
-            </fo:block>
-            <xsl:apply-templates select="subtitle" mode="chapter_title"/>
+                <xsl:apply-templates select="title" mode="monograph_chapter_title"/>
+                <xsl:apply-templates select="subtitle" mode="chapter_title"/>
+            </xsl:element>
         </xsl:element>
     </xsl:template>
 
@@ -1283,10 +1274,8 @@
     </xsl:template>   
 
     <!-- Chapter title -->
-    <xsl:template match="title" mode="chapter_title">
-        <xsl:element name="fo:block" use-attribute-sets="fonts_chapter_title keeps-headings">
-            <xsl:apply-templates mode="typesetting"/>
-        </xsl:element>
+    <xsl:template match="title" mode="monograph_chapter_title">
+         <xsl:apply-templates mode="typesetting"/>
     </xsl:template>
 
     <!-- Chapter subtitle -->
@@ -1988,7 +1977,16 @@
         <xsl:element name="fo:table">
             <xsl:attribute name="border-style">solid</xsl:attribute>
             <xsl:attribute name="border-width">0.75pt</xsl:attribute>
-            <xsl:apply-templates mode="typesetting"/>
+            <xsl:choose>
+                <xsl:when test="not(child::tbody)">
+                    <xsl:element name="fo:table-body">
+                        <xsl:apply-templates mode="typesetting"/>
+                    </xsl:element>                    
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates mode="typesetting"/>                    
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:element>
     </xsl:template>
     
@@ -2067,7 +2065,9 @@
             <xsl:when test="$medium = 'electronic'">
                 <xsl:element name="fo:basic-link" use-attribute-sets="hyperlink">
                     <xsl:attribute name="external-destination">
+                        <xsl:text>url(</xsl:text>
                         <xsl:value-of select="node()"/>
+                        <xsl:text>)</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="show-destination">new</xsl:attribute>
                     <xsl:apply-templates mode="typesetting"/>
@@ -2230,7 +2230,7 @@
                                 <xsl:element name="fo:basic-link" use-attribute-sets="hyperlink">
                                     <xsl:attribute name="internal-destination">
                                         <xsl:value-of select="generate-id(.)"/>
-                                        </xsl:attribute>
+                                    </xsl:attribute>
                                     <xsl:apply-templates select="book-part-meta/title-group/title"/>
                                     <fo:leader leader-pattern="space"/>
                                     <fo:page-number-citation ref-id="{generate-id(.)}"/>
@@ -2247,7 +2247,7 @@
                                 <xsl:apply-templates select="book-part-meta/title-group/subtitle"/>
                             </xsl:element>
                         </xsl:if>
-                
+
                     </xsl:for-each>
 
                 </xsl:if>
@@ -2255,7 +2255,12 @@
                 <!-- ToC for a monograph -->
                 <xsl:if test="/book/@book-type='monograph'">
                     
-                    <xsl:apply-templates select="/book/book-body/book-part" mode="toc"/>                    
+                    <xsl:element name="fo:list-block">
+                        <!-- Generate toc entries for the book body -->
+                        <xsl:call-template name="toc-book-body"/>
+                        <!-- Generate toc entries for the book backmatter -->
+                        <xsl:call-template name="toc-book-backmatter"/>
+                    </xsl:element>
                     
                 </xsl:if>
                 
@@ -2263,15 +2268,134 @@
 
         </fo:page-sequence>
     </xsl:template>
+
+    <xsl:template name="toc-book-body">
+        <xsl:apply-templates select="book/book-body" mode="toc"/>
+    </xsl:template>
+    
+    <xsl:template name="toc-book-backmatter"/>
+    
+    <xsl:template match="book-body" mode="toc">
+        <xsl:apply-templates select="book-part" mode="toc"/>
+    </xsl:template>
     
     <xsl:template match="book-part" mode="toc">
-        <xsl:apply-templates select="body/book-part | body/sec"/>
-    </xsl:template>
-
-    <xsl:template match="sec" mode="toc">
-        <!-- do someting -->
+        <!-- Create book part entry -->
+        <xsl:apply-templates select="book-part-meta" mode="toc"/>
+        <!-- look for more entries -->
+        <xsl:apply-templates select="body" mode="toc"/>
     </xsl:template>
     
+    <xsl:template match="book-part-meta" mode="toc">
+        <xsl:element name="fo:list-item">
+            <xsl:attribute name="margin-top">12pt</xsl:attribute>
+            <xsl:element name="fo:list-item-label">
+                <xsl:attribute name="end-indent"><!-- label-end() -->3em</xsl:attribute>
+                <xsl:if test="title-group/label">
+                    <xsl:choose>
+                        <xsl:when test="ancestor::book-part[1]/@book-part-type='part'">
+                            <xsl:element name="fo:block" use-attribute-sets="toc-format-part keeps-headings">
+                                <xsl:apply-templates select="title-group/label" mode="toc"/>
+                            </xsl:element>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:element name="fo:block" use-attribute-sets="toc-format-first-level keeps-headings">
+                                <xsl:apply-templates select="title-group/label" mode="toc"/>
+                            </xsl:element>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:if>
+            </xsl:element>
+            <xsl:element name="fo:list-item-body">
+                <xsl:attribute name="start-indent"><!-- body-start() -->4em</xsl:attribute>
+                <xsl:choose>
+                    <xsl:when test="ancestor::book-part[1]/@book-part-type='part'">
+                        <xsl:element name="fo:block" use-attribute-sets="toc-format-part keeps-headings">
+                            <xsl:attribute name="text-align-last">justify</xsl:attribute>
+                            <xsl:apply-templates select="title-group/title" mode="toc"/>
+                            <xsl:if test="title-group/subtitle">
+                                <xsl:text>. </xsl:text>
+                                <xsl:apply-templates select="title-group/subtitle" mode="toc"/>
+                            </xsl:if>
+                            <xsl:text> </xsl:text>
+                            <xsl:element name="fo:leader" use-attribute-sets="ToC-leader"/>
+                            <xsl:text> </xsl:text>
+                            <xsl:element name="fo:page-number-citation">
+                                <xsl:attribute name="ref-id">
+                                    <xsl:value-of select="ancestor::book-part[1]/@id"/>
+                                </xsl:attribute>
+                            </xsl:element>
+                        </xsl:element>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:element name="fo:block" use-attribute-sets="toc-format-first-level keeps-headings">
+                            <xsl:attribute name="text-align-last">justify</xsl:attribute>
+                            <xsl:apply-templates select="title-group/title" mode="toc"/>
+                            <xsl:if test="title-group/subtitle">
+                                <xsl:text>. </xsl:text>
+                                <xsl:apply-templates select="title-group/subtitle" mode="toc"/>
+                            </xsl:if>
+                            <xsl:element name="fo:inline">
+                                <xsl:attribute name="font-size">10.5pt</xsl:attribute>
+                            <xsl:text> </xsl:text>
+                            <xsl:element name="fo:leader" use-attribute-sets="ToC-leader"/>
+                            <xsl:text> </xsl:text>
+                            <xsl:element name="fo:page-number-citation">
+                                <xsl:attribute name="ref-id">
+                                    <xsl:value-of select="ancestor::book-part[1]/@id"/>
+                                </xsl:attribute>
+                            </xsl:element>
+                            </xsl:element>
+                        </xsl:element>                        
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:element>
+        </xsl:element>
+    </xsl:template>
+    
+    <xsl:template match="body" mode="toc">
+        <xsl:if test="(count(ancestor::book-part) + count(ancestor-or-self::sec)) &lt; $ToC-levels">
+            <xsl:apply-templates select="book-part | sec" mode="toc"/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="sec" mode="toc">
+        <xsl:if test="not(@sec-type='hide_in_toc')">
+            <xsl:element name="fo:list-item">
+                 <xsl:element name="fo:list-item-label">
+                    <xsl:attribute name="end-indent"><!-- label-end() -->3em</xsl:attribute>
+                    <xsl:if test="label">
+                        <xsl:element name="fo:block" use-attribute-sets="toc-format-levels-after-first keeps-headings">
+                            <xsl:apply-templates select="label" mode="toc"/>
+                        </xsl:element>
+                    </xsl:if>
+                </xsl:element>
+                <xsl:element name="fo:list-item-body">
+                    <xsl:attribute name="start-indent"><!-- body-start() -->4em</xsl:attribute>
+                    <xsl:element name="fo:block" use-attribute-sets="toc-format-levels-after-first keeps-headings">
+                        <xsl:attribute name="text-align-last">justify</xsl:attribute>
+                        <xsl:apply-templates select="title" mode="toc"/>
+                        <xsl:if test="subtitle">
+                            <xsl:text>. </xsl:text>
+                            <xsl:apply-templates select="subtitle" mode="toc"/>
+                        </xsl:if>
+                        <xsl:text> </xsl:text>
+                        <xsl:element name="fo:leader" use-attribute-sets="ToC-leader"/>
+                        <xsl:text> </xsl:text>
+                        <fo:page-number-citation ref-id="{@id}"/>
+                    </xsl:element>
+                </xsl:element>
+            </xsl:element>
+        </xsl:if>
+        <xsl:if test="(count(ancestor::book-part) + count(ancestor-or-self::sec)) &lt; $ToC-levels">
+            <xsl:apply-templates select="sec" mode="toc"/>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="label | title | subtitle" mode="toc">
+        <xsl:apply-templates mode="typesetting"/>
+    </xsl:template>
+
     <!-- ********************************************************** -->
     <!-- * PDF bookmark tree                                      * -->
     <!-- ********************************************************** -->
@@ -2460,24 +2584,31 @@
     </xsl:template>
 
     <xsl:template match="sec" mode="pdf-bookmark-tree">
-        <xsl:element name="fo:bookmark">
-            <xsl:attribute name="internal-destination">
-                <xsl:value-of select="@id"/>
-            </xsl:attribute>
-            <xsl:attribute name="starting-state">hide</xsl:attribute>
-            <fo:bookmark-title>
-                <xsl:if test="label">
-                    <xsl:value-of select="label"/>
-                    <xsl:text>. </xsl:text>
-                </xsl:if>
-                <xsl:value-of select="title"/>
-                <xsl:if test="subtitle">
-                    <xsl:text>. </xsl:text>
-                    <xsl:value-of select="subtitle"/>
-                </xsl:if>                
-            </fo:bookmark-title>
-            <xsl:apply-templates select="sec" mode="pdf-bookmark-tree"/>
-        </xsl:element>
+        <xsl:choose>
+            <xsl:when test="child::title">
+                <xsl:element name="fo:bookmark">
+                    <xsl:attribute name="internal-destination">
+                        <xsl:value-of select="@id"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="starting-state">hide</xsl:attribute>
+                    <fo:bookmark-title>
+                        <xsl:if test="label">
+                            <xsl:value-of select="label"/>
+                            <xsl:text>. </xsl:text>
+                        </xsl:if>
+                        <xsl:value-of select="title"/>
+                        <xsl:if test="subtitle">
+                            <xsl:text>. </xsl:text>
+                            <xsl:value-of select="subtitle"/>
+                        </xsl:if>                
+                    </fo:bookmark-title>
+                    <xsl:apply-templates select="sec" mode="pdf-bookmark-tree"/>
+                </xsl:element>                
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates select="sec" mode="pdf-bookmark-tree"/>                
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="back" mode="pdf-bookmark-tree">

@@ -10,7 +10,7 @@
 
             },
             "name": "example_project",
-            "path": "/usr/local/mpt/static/tests/example/",
+            "path": "/home/www-data/web2py/applications/mpt/static/tests/example/",
             "typesetters": {
                 "1": {
                     "arguments": {
@@ -67,10 +67,11 @@
             "arguments": {
                 "1": "docx",
                 "2": "--debug",
-                "3": "--nogit"
+                "3": "--nogit",
+                "4":"--noimageprocessing"
 
             },
-            "executable": "/usr/local/mpt/static/tools/meTypeset/bin/meTypeset.py"
+            "executable": "/home/www-data/web2py/applications/mpt/static/tools/meTypeset/bin/meTypeset.py"
         },
         "pandoc": {
             "arguments": {
@@ -91,7 +92,7 @@
                 "3": "--set-numbering-values=xref,ref-type,fn,{1:2}"
 
             },
-            "executable": "/usr/local/mpt/static/tools/prepare.py"
+            "executable": "/home/www-data/web2py/applications/mpt/static/tools/prepare.py"
         } ,
         "xmlprocess": {
             "arguments": {
@@ -102,13 +103,13 @@
 
 
             },
-            "executable": "/usr/local/mpt/static/tools/prepare.py"
+            "executable": "/home/www-data/web2py/applications/mpt/static/tools/prepare.py"
         } ,
         "xmlmerge": {
             "arguments": {
 
             },
-            "executable": "/usr/local/mpt/static/tools/merge.py"
+            "executable": "/home/www-data/web2py/applications/mpt/static/tools/merge.py"
         }
       ,
         "xml2fo": {
@@ -119,16 +120,16 @@
               "4":"--out-type=FO"
 
             },
-            "executable": "/usr/local/mpt/static/tools/disseminate.py"
+            "executable": "/home/www-data/web2py/applications/mpt/static/tools/disseminate.py"
         },
       "fo2pdf": {
             "arguments": {
               "1":"--medium=electronic,print",
-              "2":"--formatter=AH,FOP",
+              "2":"--formatter=AH",
               "3":"--out-type=PDF"
 
             },
-            "executable": "/usr/local/mpt/static/tools/disseminate.py"
+            "executable": "/home/www-data/web2py/applications/mpt/static/tools/disseminate.py"
         }
 
 
