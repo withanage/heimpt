@@ -166,6 +166,7 @@ class Merge(Debuggable):
 
         return tr
 
+
     def set_book_part_attributes(self, tr):
         """
         Add  specific attributes to book-part

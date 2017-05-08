@@ -33,7 +33,7 @@
                         "1": "--create-dir",
                         "2":"bits",
                         "3":"--metadata book-meta.bits2",
-                        "4": "--set-numbering-tags=disp-quote,tr"
+                        "4": "--set-numbering-tags=disp-quote,tr,sec,title,p"
                     },
                     "name": "xmlmerge",
                     "out_type": "xml",
@@ -125,7 +125,7 @@
       "fo2pdf": {
             "arguments": {
               "1":"--medium=electronic,print",
-              "2":"--formatter=AH",
+              "2":"--formatter=FOP",
               "3":"--out-type=PDF"
 
             },
