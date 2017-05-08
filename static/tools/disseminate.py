@@ -127,6 +127,7 @@ class Disseminate(Debuggable):
         """
 
         m = ' '.join(args).strip().split(' ')
+        print ' '.join(args)
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
         exit_code = process.wait()

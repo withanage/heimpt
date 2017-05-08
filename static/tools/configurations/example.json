@@ -10,7 +10,7 @@
 
             },
             "name": "example_project",
-            "path": "/home/www-data/web2py/applications/mpt/static/tests/example/",
+            "path": "/usr/local/mpt/static/tests/example/",
             "typesetters": {
                 "1": {
                     "arguments": {
@@ -70,7 +70,7 @@
                 "3": "--nogit"
 
             },
-            "executable": "/home/www-data/web2py/applications/mpt/static/tools/meTypeset/bin/meTypeset.py"
+            "executable": "/usr/local/mpt/static/tools/meTypeset/bin/meTypeset.py"
         },
         "pandoc": {
             "arguments": {
@@ -91,7 +91,7 @@
                 "3": "--set-numbering-values=xref,ref-type,fn,{1:2}"
 
             },
-            "executable": "/home/www-data/web2py/applications/mpt/static/tools/prepare.py"
+            "executable": "/usr/local/mpt/static/tools/prepare.py"
         } ,
         "xmlprocess": {
             "arguments": {
@@ -102,13 +102,13 @@
 
 
             },
-            "executable": "/home/www-data/web2py/applications/mpt/static/tools/prepare.py"
+            "executable": "/usr/local/mpt/static/tools/prepare.py"
         } ,
         "xmlmerge": {
             "arguments": {
 
             },
-            "executable": "/home/www-data/web2py/applications/mpt/static/tools/merge.py"
+            "executable": "/usr/local/mpt/static/tools/merge.py"
         }
       ,
         "xml2fo": {
@@ -119,7 +119,7 @@
               "4":"--out-type=FO"
 
             },
-            "executable": "/home/www-data/web2py/applications/mpt/static/tools/disseminate.py"
+            "executable": "/usr/local/mpt/static/tools/disseminate.py"
         },
       "fo2pdf": {
             "arguments": {
@@ -128,7 +128,7 @@
               "3":"--out-type=PDF"
 
             },
-            "executable": "/home/www-data/web2py/applications/mpt/static/tools/disseminate.py"
+            "executable": "/usr/local/mpt/static/tools/disseminate.py"
         }
 
 
