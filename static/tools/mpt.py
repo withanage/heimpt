@@ -77,6 +77,8 @@ class MPT(Debuggable):
 
         self.current_result = datetime.datetime.now().strftime(
             "%Y_%m_%d-%H-%M-%S-") + str(uuid.uuid4())[:4]
+        # TODO Remove
+        self.current_result = 'test'
         self.config = None
         self.all_typesetters = None
         if self.args['--interactive']:
@@ -259,7 +261,8 @@ class MPT(Debuggable):
 
             else:
                 args.append(arg)
-            print args
+            self.debug.print_debug(
+                self, u'{} {}'.format('Execute', ' '.join(args)))
         return True
 
     def run_typesetter(
@@ -329,7 +332,8 @@ class MPT(Debuggable):
                 prefix,
                 f_id,
                 uid)
-            print p_path
+            self.debug.print_console(
+                self, u'{} {}'.format('Output folder', p_path))
             pf_type = p.get('typesetters')[p_id].get("out_type")
 
         else:
@@ -714,18 +718,24 @@ class MPT(Debuggable):
     def check_applications(self):
         """
         Check if program binaries are available 
-        
+
         """
         ps = self.config.get('projects')
         psf = filter(lambda s: s.get(u'active') == True, ps)
         ts = self.config.get('typesetters')
-        for i in [self.gv.apps.get('ah'), self.gv.apps.get('xep')]:
-            if not self.gv.check_program(i):
-                self.debug.print_debug(self, u'{} {}'.format(i, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE))
+
+        for p in map(lambda i: ts[i]['arguments'], ts):
+            for k in filter(lambda j: j.find('--formatter') == 0, p.values()):
+                for l in k.split('=')[1].split(','):
+                    if not self.gv.check_program(self.gv.apps.get(l.lower())):
+                        self.debug.fatal_error(self, u'{} {}'.format(self.gv.apps.get(
+                            l.lower()), self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE))
+                        sys.exit(1)
 
         for p in map(lambda i: ts[i]['executable'], ts):
             if not self.gv.check_program(p):
-                self.debug.print_console(self, u'{} {}'.format(p, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE))
+                self.debug.print_console(self, u'{} {}'.format(
+                    p, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE))
                 sys.exit(1)
 
 
@@ -746,7 +756,7 @@ def main():
         pi.config = pi.gv.read_json(pi.args['<config_file>'])
         pi.all_typesetters = pi.config.get('typesetters')
         pi.check_applications()
-        pi.run()
+        # pi.run()
 
 
 if __name__ == '__main__':
