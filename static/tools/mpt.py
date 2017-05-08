@@ -756,7 +756,7 @@ def main():
         pi.config = pi.gv.read_json(pi.args['<config_file>'])
         pi.all_typesetters = pi.config.get('typesetters')
         pi.check_applications()
-        # pi.run()
+        pi.run()
 
 
 if __name__ == '__main__':

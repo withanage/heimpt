@@ -127,8 +127,6 @@ class Disseminate(Debuggable):
         """
 
         m = ' '.join(args).strip().split(' ')
-        print ' '.join(args)
-        print  'm' ,m
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
         exit_code = process.wait()
@@ -179,14 +177,13 @@ class Disseminate(Debuggable):
                     self.debug.print_console(self, self.gv.RUNNING_PDF_CONVERSION)
                     args = self.run_fop_processor(f, m)
                 output, err, exit_code = self.process(args)
-                print output
+                #print output
 
     def run_fop_processor(self,  formatter, medium):
 
         args = []
         if formatter.lower() == 'fop':
             pth = os.path.join(self.script_path, self.gv.apps.get('fop'))
-            print 'pth'*10, pth
             if self.gv.check_program(pth):
 
                 args = self.run_apache_fop(pth,formatter, medium)

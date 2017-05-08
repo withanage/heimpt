@@ -214,6 +214,7 @@ class Merge(Debuggable):
         p.append('metadata')
         p.append(''.join(file_name))
         pth = os.sep.join(p)
+        self.debug.print_debug(self, u'merging headers'+str(pth))
         return pth
 
     def create_book_bits(self):
@@ -239,6 +240,7 @@ class Merge(Debuggable):
         book.attrib['book-type'] = "proceedings"
 
         metadata = self.args.get('--metadata')
+
         if metadata:
             pth = self.create_metadata_path(metadata)
             if os.path.isfile(pth):
@@ -246,7 +248,7 @@ class Merge(Debuggable):
                 book.insert(0, bp)
 
         else:
-            sys.exit('Metadata fails')
+            sys.exit('Metadata argument undefined')
         bd = etree.Element("book-body")
         bpbd = self.create_book_part_bits()
         bd.append(bpbd)

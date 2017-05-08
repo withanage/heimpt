@@ -119,6 +119,5 @@ class Debug(object):
 
         """
 
-        print(u'[FATAL ERROR] [{0}] {1}'.format(
-            module.get_module_name(), message))
+        print(u'[{0}] {1} {2}'.format(colored(module.get_module_name(), 'red'),'[FATAL ERROR]', unicode(message)))
         sys.exit(1)
