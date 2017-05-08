@@ -5,7 +5,7 @@ from ojsdal import *
 
 class OJSImport(Import):
     def __init__(self):
-        self.db = DAL('mysql://omp-user:omp-password@localhost:3306/omp', migrate=False)
+        self.db = DAL('mysql://user:pass@localhost:3306/omp', migrate=False)
         self.dal = OMPDAL(self.db, {})
 
         # TODO define tables

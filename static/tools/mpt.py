@@ -706,6 +706,7 @@ class MPT(Debuggable):
                     print "Found import plugin", name, plugin_class
                     plugin = plugin_class()
                     plugin.run()
+                    print plugin.results
 
             # try:
             #    plugin_module = __import__(m)
