@@ -1,0 +1,9 @@
+{
+  "db-uri": "mysql://omp-user:omp-password@172.17.0.2:3306/omp",
+  "files-dir": "/path/to/omp/files",
+  "press": 1,
+  "file-stage": 2,
+  "genre": 3,
+  "submission": 234,
+  "configurations-dir": ""
+}

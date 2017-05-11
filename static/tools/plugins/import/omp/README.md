@@ -9,3 +9,7 @@ The following packages should be installed in the Python environment.
 pyDAL==17.3
 mysql-connector-python-rf==2.2.2
 </pre>
+
+# Configuration
+Settings can be defined in settings.json in the same directory as `omp.py`.
+Please see the `settings.example.json` for the expected keys.
