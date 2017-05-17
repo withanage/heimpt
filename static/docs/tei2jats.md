@@ -29,11 +29,7 @@ in der Datenlieferung erhalten haben?
   Zeile zeigen:
   
 ```
-    for f in pictex.tex postpictex.tex prepictex.tex pst-node.tex 
-      pst-plot.tex pstricks.tex multido.tex modifications.tex 
-      Skriptum.sty rr.sty pstricks.sty pst-plot.sty pst-node.sty 
-      multido.sty here.sty HD.sty float.sty equations.sty epsf.sty 
-      doublespace.sty; do perl -n -i -e 's/\r/\n/g;print' $f; done
+    for f in pictex.tex postpictex.tex prepictex.tex pst-node.tex pst-plot.tex pstricks.tex multido.tex modifications.tex      Skriptum.sty rr.sty pstricks.sty pst-plot.sty pst-node.sty    multido.sty here.sty HD.sty float.sty equations.sty epsf.sty      doublespace.sty; do perl -n -i -e 's/\r/\n/g;print' $f; done
 ```
 * 
 ```
