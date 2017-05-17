@@ -18,13 +18,13 @@ in der Datenlieferung erhalten haben?
 
 ### Fehler beheben
 
-* Fehlermeldung aus pst-coil: Zeile 93 in "pst-coil.tex" auskommentieren
-* Fehlermeldung Datei nicht gefunden: in Verzeichnis "Figures/" Name
+1. Fehlermeldung aus pst-coil: Zeile 93 in "pst-coil.tex" auskommentieren
+2. Fehlermeldung Datei nicht gefunden: in Verzeichnis "Figures/" Name
   der Graphik anpassen:
 
   `mv Figures/AltnSatz.ps Figures/Altnsatz.ps`
 
-* unschöne Zeilenumbrüche (nur \r ohne \n): \r durch \n ersetzen in
+3. unschöne Zeilenumbrüche (nur \r ohne \n): \r durch \n ersetzen in
   allen *.tex und *-sty-Dateien, die bei `head -5 <Datei>` nur eine
   Zeile zeigen:
   
