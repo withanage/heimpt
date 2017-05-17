@@ -1,7 +1,10 @@
 Latex to TEI: Vorgehen
 ======================
 
-* Tools: pandoc, perl, meTypeset
+* Tools: 
+  * pandoc  (Version ab  1.19.2)
+  * perl 
+  * meTypeset
 * Daten: finale Version von "Numerik\_0.tex" vom 28.3. (Datum in
   ub_pub: 30.3.)
 * Dateien lokal (serv21): `/home/fit/latex2tei`
@@ -9,31 +12,24 @@ Latex to TEI: Vorgehen
 Testen mit Latex
 ----------------
 
-Frage: Können wir hier dieselbe pdf-Datei als Output erzeugen, die wir
-in der Datenlieferung erhalten haben?
-
 ### (pdf)latex (Versuch 1)
 
     pdflatex Numerik_0.tex 
 
 ### Fehler beheben
 
-* Fehlermeldung aus pst-coil: Zeile 93 in "pst-coil.tex" auskommentieren
-* Fehlermeldung Datei nicht gefunden: in Verzeichnis "Figures/" Name
+1. Fehlermeldung aus pst-coil: Zeile 93 in "pst-coil.tex" auskommentieren
+2. Fehlermeldung Datei nicht gefunden: in Verzeichnis "Figures/" Name
   der Graphik anpassen:
 
   `mv Figures/AltnSatz.ps Figures/Altnsatz.ps`
 
-* unschöne Zeilenumbrüche (nur \r ohne \n): \r durch \n ersetzen in
+3. unschöne Zeilenumbrüche (nur \r ohne \n): \r durch \n ersetzen in
   allen *.tex und *-sty-Dateien, die bei `head -5 <Datei>` nur eine
   Zeile zeigen:
   
 ```
-    for f in pictex.tex postpictex.tex prepictex.tex pst-node.tex 
-      pst-plot.tex pstricks.tex multido.tex modifications.tex 
-      Skriptum.sty rr.sty pstricks.sty pst-plot.sty pst-node.sty 
-      multido.sty here.sty HD.sty float.sty equations.sty epsf.sty 
-      doublespace.sty; do perl -n -i -e 's/\r/\n/g;print' $f; done
+    for f in pictex.tex postpictex.tex prepictex.tex pst-node.tex pst-plot.tex pstricks.tex multido.tex modifications.tex      Skriptum.sty rr.sty pstricks.sty pst-plot.sty pst-node.sty    multido.sty here.sty HD.sty float.sty equations.sty epsf.sty      doublespace.sty; do perl -n -i -e 's/\r/\n/g;print' $f; done
 ```
 * 
 ```
