@@ -8,6 +8,16 @@
 # - download is for downloading files uploaded in the db (does streaming)
 # -------------------------------------------------------------------------
 
+from gluon.tools import Expose
+import shutil
+import gluon.contrib.simplejson
+
+"""
+@auth.requires_login()
+def folder():
+    return dict(files=Expose('', basename='.',  extensions=['.py', '.jpg']))
+"""
+
 
 def index():
     """
@@ -58,4 +68,21 @@ def call():
     """
     return service()
 
+
+def upload():
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    d = {}
+    if request.vars:
+        filename = request.vars.upload.filename
+        file = request.vars.upload.file
+        pth ='/home/www-data/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/90/submission/proof/'
+        shutil.copyfileobj(file, open(pth+ filename, 'wb'))
+        if filename:
+                d = {"name":filename, "type": "type", "size": "size",
+                 "url": "url",
+                 "deleteUrl": "delete_url",
+                 "deleteType": "delete_type"}
+
+
+    return gluon.contrib.simplejson.dumps(d)
 

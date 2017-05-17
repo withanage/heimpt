@@ -125,7 +125,7 @@
       "fo2pdf": {
             "arguments": {
               "1":"--medium=electronic,print",
-              "2":"--formatter=FOP",
+              "2":"--formatter=AH,FOP",
               "3":"--out-type=PDF"
 
             },
