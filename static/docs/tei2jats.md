@@ -1,7 +1,10 @@
 Latex to TEI: Vorgehen
 ======================
 
-* Tools: pandoc, perl, meTypeset
+* Tools: 
+  * pandoc  (Version ab  1.19.2)
+  * perl 
+  * meTypeset
 * Daten: finale Version von "Numerik\_0.tex" vom 28.3. (Datum in
   ub_pub: 30.3.)
 * Dateien lokal (serv21): `/home/fit/latex2tei`
