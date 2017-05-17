@@ -12,9 +12,6 @@ Latex to TEI: Vorgehen
 Testen mit Latex
 ----------------
 
-Frage: Können wir hier dieselbe pdf-Datei als Output erzeugen, die wir
-in der Datenlieferung erhalten haben?
-
 ### (pdf)latex (Versuch 1)
 
     pdflatex Numerik_0.tex 
