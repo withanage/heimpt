@@ -9,6 +9,19 @@ Latex to TEI: Vorgehen
   ub_pub: 30.3.)
 * Dateien lokal (serv21): `/home/fit/latex2tei`
 
+
+### Pandoc installation in Ubuntu 
+```
+sudo apt-get install slack
+cd /usr/local/
+wget https://hackage.haskell.org/package/pandoc-1.19.2/pandoc-1.19.2.tar.gz
+tar -xvzf pandoc-1.19.2.tar.gz 
+cd  pandoc-1.19.2/
+stack setup
+# this will take sometime
+stack install --test
+```
+
 Testen mit Latex
 ----------------
 

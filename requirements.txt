@@ -1,1 +1,2 @@
 pydal
+mysql-connector-python-rf
