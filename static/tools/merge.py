@@ -211,12 +211,25 @@ class Merge(Debuggable):
         p = os.path.dirname(self.f).split(os.sep)
         del p[-4:]
         name, ext = os.path.splitext(os.path.basename(self.uid))
-        file_name = [name, '.', metadata, ext]
+        file_name = [name, '.', metadata, '.','xml']
         p.append('metadata')
         p.append(''.join(file_name))
+
         pth = os.sep.join(p)
         self.debug.print_debug(self, u'merging headers'+str(pth))
         return pth
+
+    def get_module_name(self):
+        """
+        Reads the name of the module for debugging and logging
+
+        Returns
+        -------
+        name string
+         Name of the Module
+        """
+        name = 'merge'
+        return name
 
     def create_book_bits(self):
         """
@@ -244,9 +257,12 @@ class Merge(Debuggable):
 
         if metadata:
             pth = self.create_metadata_path(metadata)
+            self.debug.print_console(self, u'merging headers' + str(pth))
             if os.path.isfile(pth):
                 bp = etree.parse(pth).find('.//book-meta')
                 book.insert(0, bp)
+            else:
+                sys.exit(1)
 
         else:
             sys.exit('Metadata argument undefined')
