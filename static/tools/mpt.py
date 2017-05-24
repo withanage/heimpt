@@ -78,7 +78,7 @@ class MPT(Debuggable):
         self.current_result = datetime.datetime.now().strftime(
             "%Y_%m_%d-%H-%M-%S-") + str(uuid.uuid4())[:4]
         # TODO: Remove
-        self.current_result = 'test'
+        #self.current_result = 'test'
         self.config = None
         self.all_typesetters = None
         self.script_folder = os.path.dirname(os.path.realpath(__file__))
@@ -262,8 +262,8 @@ class MPT(Debuggable):
 
             else:
                 args.append(arg)
-            self.debug.print_debug(
-                self, u'{} {}'.format('Execute', ' '.join(args)))
+        self.debug.print_debug(
+            self, u'{} {}'.format('Execute', ' '.join(args)))
         return True
 
     def run_typesetter(
@@ -323,6 +323,7 @@ class MPT(Debuggable):
             f_path = os.path.join(pre_path, prefix + '.' + pre_out_type)
 
         if os.path.isfile(f_path) or p['typesetters'].get(p_id).get('expand'):
+            self.debug.print_console(self, u'\t{}:\t {} '.format('Processing', prefix))
             args.append(f_path)
             self.create_output_path(p, p_id,  args, prefix, uid)
             output, err, exit_code = self.call_typesetter(args)
@@ -333,8 +334,7 @@ class MPT(Debuggable):
                 prefix,
                 f_id,
                 uid)
-            self.debug.print_console(
-                self, u'{} {}'.format('Output folder', p_path))
+
             pf_type = p.get('typesetters')[p_id].get("out_type")
 
         else:
