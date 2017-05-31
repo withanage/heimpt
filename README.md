@@ -18,7 +18,7 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
 
 ## API Documentation
 
-https://withanage.github.io/mpt
+https://withanage.github.io/heimpt
 
 
 ## MPT Installation
