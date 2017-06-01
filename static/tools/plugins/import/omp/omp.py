@@ -1,9 +1,11 @@
+# coding=utf-8
 from ImportInterface import Import
 from pydal.base import DAL
 from omptables import define_tables
 import json
 import os.path
 from lxml import etree
+from lxml import html
 from lxml.builder import E
 from ompdal import OMPSettings, OMPDAL
 
@@ -141,7 +143,7 @@ class OMPImport(Import):
             # load bits xml skeleton from file
             bits_xml = etree.parse(os.path.join(self.module_path, 'templates', 'sample-monograph.bits.xml'))
         locale = submission.locale
-        short_locale = submission.locale[:2]
+        short_locale = locale[:2]
         # Set language of submission on book tag
         bits_xml.xpath('/book')[0].set(LANG_ATTR, short_locale)
         book_meta_xml = bits_xml.xpath('/book/book-meta')[0]
@@ -179,17 +181,40 @@ class OMPImport(Import):
         book_meta_xml.xpath('custom-meta-group/custom-meta[meta-name = "doi"]/meta-value')[0].text = doi
 
         contrib_group_xml = book_meta_xml.xpath('contrib-group')[0]
-        # Load contributors
-        for contrib in self.dal.getAuthorsBySubmission(submission_id):
+        etree.strip_elements(contrib_group_xml, 'contrib')
+        affiliation_counter = 0
+        # Add contributors
+        for contrib in self.dal.getAuthorsBySubmission(submission_id, filter_browse=True):
             contrib_settings = OMPSettings(self.dal.getAuthorSettings(contrib.author_id))
             group_settings = self.dal.getUserGroupSettings(contrib.user_group_id)
+            # Use the english name of the group for mapping to contrib-type attribute
             contrib_type = USER_GROUP_TO_CONTRIB_TYPE[group_settings.getLocalizedValue('name', 'en_US')]
             given_names = contrib.first_name
             if contrib.middle_name:
                 given_names += " " + contrib.middle_name
-            # TODO add affiliation and biography
-            contrib_group_xml.append(E.contrib(E.name(
-                E.surname(contrib.last_name), getattr(E, 'given-names')(given_names)), {'contrib-type': contrib_type}))
+            contrib_xml = E.contrib(E.name(
+                E.surname(contrib.last_name), getattr(E, 'given-names')(given_names), {'name-style': 'western'}),
+                {'contrib-type': contrib_type})
+            # Add biography in all available languages
+            for lang, biography_text in contrib_settings.getValues('biography').items():
+                if biography_text:
+                    # lxml cant parse html in the biographies if they contain multiple tags as root element.
+                    # TODO check which html element should be used to encapsulate the html from biographies
+                    biography_html = html.fragment_fromstring(biography_text, create_parent=True)
+                    contrib_xml.append(getattr(E, 'author-comment')(biography_html, {LANG_ATTR: lang[:2]}))
+            # Somehow there was a bug with german umlauts, so we have to use unicode string
+            affiliation = unicode(contrib_settings.getLocalizedValue('affiliation', locale), 'utf8')
+            if affiliation:
+                affiliation_id = 'aff' + format(affiliation_counter, '02d')
+                contrib_xml.append(E.xref({'ref-type': 'aff', 'rid': affiliation_id}))
+                print 'affiliation', type(affiliation), 'id', affiliation_id
+                contrib_group_xml.append(E.aff(affiliation, {'id': affiliation_id}))
+            contrib_group_xml.append(contrib_xml)
+        book_meta_xml.xpath('permissions/copyright-year')[0].text = submission_settings.getLocalizedValue('copyrightYear', '')
+        book_meta_xml.xpath('permissions/copyright-holder')[0].text = submission_settings.getLocalizedValue(
+            'copyrightHolder', locale)
+        # TODO add copyright-statement. which omp field to use or which value to generate?
+        # TODO add license
         print etree.tostring(bits_xml, pretty_print=True)
         print metadata_file_path
         return bits_xml
