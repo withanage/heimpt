@@ -150,16 +150,10 @@ class OMPDAL:
             orderby=a.seq
         )
         
-    def getActualAuthorsBySubmission(self, submission_id, filter_browse=True):
+    def getActualAuthorsBySubmission(self, submission_id, author_group_ids, filter_browse=True):
         """
         Get all authors associated with the specified submission with chapter author role.
         """
-        try:
-            # Try to extract a list
-            author_group_ids = self.conf.take('omp.author_ids', cast=lambda s: map(int, s.split(',')))
-        except:
-            return []
-        
         a = self.db.authors
         q = (a.submission_id == submission_id) & a.user_group_id.belongs(author_group_ids)
         if filter_browse:
@@ -214,6 +208,9 @@ class OMPDAL:
         q = (us.user_id == user_id)
         
         return self.db(q).select(us.ALL)
+
+    def getUserGroupSettings(self, user_group_id):
+        return OMPSettings(self.db(self.db.user_group_settings.user_group_id == user_group_id).select(self.db.user_group_settings.ALL))
     
     def getSeriesByPress(self, press_id):
         """
@@ -315,7 +312,7 @@ class OMPDAL:
         u = self.db.users
         q = ((se.press_id == press_id) 
              & (se.series_id == series_id) 
-			 & (u.user_id == se.user_id)
+             & (u.user_id == se.user_id)
         )
         
         return self.db(q).select(u.ALL)

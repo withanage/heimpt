@@ -327,6 +327,7 @@ def define_tables(db):
                     Field("setting_name", "string"),
                     Field("setting_value", "string"),
                     Field("setting_type", "string"),
+                    primarykey=['user_group_id'],
                     migrate=False
                     )
 
