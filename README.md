@@ -27,8 +27,8 @@ Check if you have persmissions  to intall in the BUILD_DIR
  
 ```
  BUILD_DIR=/usr/local
- git clone https://github.com/withanage/mpt.git $BUILD_DIR/mpt 
- cd $BUILD_DIR/mpt
+ git clone https://github.com/withanage/heimpt.git $BUILD_DIR/heimpt 
+ cd $BUILD_DIR/heimpt
  git submodule init
  git submodule update
  pip install -r requirements.txt
