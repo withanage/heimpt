@@ -312,7 +312,7 @@ class OMPDAL:
         u = self.db.users
         q = ((se.press_id == press_id) 
              & (se.series_id == series_id) 
-			 & (u.user_id == se.user_id)
+             & (u.user_id == se.user_id)
         )
         
         return self.db(q).select(u.ALL)

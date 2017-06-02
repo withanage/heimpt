@@ -138,16 +138,15 @@ class OMPImport(Import):
                                                          self.settings['output-dir'])
         if os.path.isfile(metadata_file_path):
             # load existing metadata
-            bits_xml = etree.parse(metadata_file_path)
+            book_xml = etree.parse(metadata_file_path)
         else:
             # load bits xml skeleton from file
-            bits_xml = etree.parse(os.path.join(self.module_path, 'templates', 'sample-monograph.bits.xml'))
+            book_xml = etree.parse(os.path.join(self.module_path, 'templates', 'sample-monograph.bits.xml'))
         locale = submission.locale
         short_locale = locale[:2]
         # Set language of submission on book tag
-        bits_xml.xpath('/book')[0].set(LANG_ATTR, short_locale)
-        book_meta_xml = bits_xml.xpath('/book/book-meta')[0]
-        self.db.submission_settings(submission_id=submission_id)
+        book_xml.xpath('/book')[0].set(LANG_ATTR, short_locale)
+        book_meta_xml = book_xml.xpath('/book/book-meta')[0]
         submission_settings = OMPSettings(self.dal.getSubmissionSettings(submission_id))
         press_settings = OMPSettings(self.dal.getPressSettings(submission.context_id))
         book_meta_xml.xpath('book-id')[0].text = unicode(submission_id)
@@ -213,13 +212,20 @@ class OMPImport(Import):
         book_meta_xml.xpath('permissions/copyright-year')[0].text = submission_settings.getLocalizedValue('copyrightYear', '')
         book_meta_xml.xpath('permissions/copyright-holder')[0].text = submission_settings.getLocalizedValue(
             'copyrightHolder', locale)
+        # Add collection data
+        if submission.series_id:
+            series_settings = OMPSettings(self.dal.getSeriesSettings(submission.series_id))
+            collection_meta_xml = book_xml.xpath('collection-meta')[0]
+            collection_meta_xml.xpath('title-group/title')[0].text = series_settings.getLocalizedValue('title', locale)
+            collection_meta_xml.xpath('title-group/subtitle')[0].text = series_settings.getLocalizedValue('subtitle', locale)
+            # TODO series edtiors
         # TODO add copyright-statement. which omp field to use or which value to generate?
         # TODO add license
-        print etree.tostring(bits_xml, pretty_print=True)
+        print etree.tostring(book_xml, pretty_print=True)
         print metadata_file_path
-        return bits_xml
+        return book_xml
 
-    def load_metadata_of_chapter(self, submission_file):
+    def generate_metadata_of_chapter(self, submission_file):
         """
         Loads the metadata for the associated submission of a submission_file 
         
