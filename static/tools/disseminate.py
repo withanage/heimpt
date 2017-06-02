@@ -127,7 +127,7 @@ class Disseminate(Debuggable):
         """
 
         m = ' '.join(args).strip().split(' ')
-        print ' '.join(args)
+        #print ' '.join(args)
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
         exit_code = process.wait()
@@ -197,15 +197,13 @@ class Disseminate(Debuggable):
 
     def run_ah_fop(self, pth, formatter, medium):
         args=[pth]
+        args.append('-silent')
         args.append('-d')
         args.append('{}/{}.{}.{}.fo'.format(os.path.dirname(self.f), self.gv.uuid, formatter, medium))
         args.append('-o')
         args.append('{}/{}.{}.{}.pdf'.format(self.dr, self.gv.uuid, formatter, medium))
 
         return args
-
-
-
 
 
 
@@ -258,7 +256,6 @@ class Disseminate(Debuggable):
         args.append("-o:" + os.path.join(self.args.get('<path>'), file_name))
         args.append('formatter=' + formatter.lower())
         args.append('medium=' + medium.lower())
-
 
         return args
 

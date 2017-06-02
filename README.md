@@ -1,6 +1,6 @@
-# Monograph Publication  Tool (MPT)
+![Heidelberg Monograph Publication  Tool (heiMPT)](https://raw.githubusercontent.com/withanage/heimpt/master/static/images/heiMPT.jpg)
 
-Monograph Publication Tool (MPT) is a stand-alone platform, as well as a plug-in application for OMP. Developed by University of Heidelberg staff in cooperation with external partners, it enables a high degree of automation in the digital publication process. Dulip Withanage of the University of Heidelberg Library supervises MPTs technical development.
+**Heidelberg Monograph Publication Tool (heiMPT)** is a stand-alone platform, as well as a plug-in application for OMP. Developed by staff of **Heidelberg University Library** in cooperation with external partners, it enables a high degree of automation in the digital publication process. Dulip Withanage of the University of Heidelberg Library supervises MPTs technical development.
 
 The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-processor,  (3) an output generation engine and (4) a WYSIWYG editor.
 
@@ -13,12 +13,12 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
 
 (4)  The WYSIWYG editor, provides an interactive interface to confirm the information detected by meTypeset and to generate a suitable layout for the desired output format. The editor is written in both HTML and JavaScript, and handles data in XML format, so that each monograph is efficiently standardized and can be re-used. The editor is designed in a WYSIWYG (what you see is what you get) format that enables users to work with both text and images as they envision them.
 
-![doc2pdf Pipeline](https://raw.githubusercontent.com/withanage/mpt/master/static/images/mpt.png)
+![doc2pdf Pipeline](https://raw.githubusercontent.com/withanage/heimpt/master/static/images/mpt.png)
 
 
 ## API Documentation
 
-https://withanage.github.io/mpt
+https://withanage.github.io/heimpt
 
 
 ## MPT Installation
@@ -38,9 +38,9 @@ Check if you have persmissions  to intall in the BUILD_DIR
 Only needed if you generate PDF files
 For Windows, IOS some commands may differ from this documentation 
 
-* Apache FOP (free): Download from [Apache FOP processor](https://xmlgraphics.apache.org/fop/download.html) (Binary version) into  $BUILD_DIR/mpt/static/tools
+* Apache FOP (free): Download from [Apache FOP processor](https://xmlgraphics.apache.org/fop/download.html) (Binary version) into  $BUILD_DIR/heimpt/static/tools
   ```
-  cd $BUILD_DIR/mpt/static/tools
+  cd $BUILD_DIR/heimpt/static/tools
   tar -xvzf fop-2.2-bin.tar.gz;
   mv fop-2.2 fop
   chmod u+x fop/fop/fop
