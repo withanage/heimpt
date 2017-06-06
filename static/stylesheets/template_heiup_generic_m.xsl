@@ -755,6 +755,6 @@
     <xsl:variable name="pub-logo-main-title-ypos">180mm</xsl:variable>
     <xsl:variable name="pub-logo-main-title-width">40mm</xsl:variable>
     <xsl:variable name="pub-logo-main-title-height">26mm</xsl:variable>
-    <xsl:variable name="pub-logo-main-title-fileref">/Volumes/DATENSTICK/14 XSL-FO/static/logos/Logo_UB_rgb.tif</xsl:variable>
+    <xsl:variable name="pub-logo-main-title-fileref">/home/wit/Arbeit/OMP/wintz/images/heiup/logos/Logo_UB_rgb.tif</xsl:variable>
     
 </xsl:stylesheet>
