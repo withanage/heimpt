@@ -21,7 +21,7 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
 https://withanage.github.io/heimpt
 
 
-## MPT Installation
+## heiMPT Installation
  
 Check if you have persmissions  to intall in the BUILD_DIR
  
