@@ -1,4 +1,7 @@
 # coding=utf-8
+"""
+Usage: mpt.py import omp <submission_id>...
+"""
 from ImportInterface import Import
 from pydal.base import DAL
 from omptables import define_tables
@@ -84,34 +87,38 @@ class OMPImport(Import):
         define_tables(self.db)
         self.dal = OMPDAL(self.db, None)
 
-    def run(self, settings=None):
+    def run(self, args, settings=None):
         print('Running plugin omp import')
         self.initialize(settings)
-        submission_id = self.settings['submission']
-        print "Loading submission files"
-        files = self.get_files(submission_id)
-        if not files:
-            print("No files found with genre={genre} and file_stage={file-stage}".format(**self.settings))
-            return
-        print "Loading metadata for submission"
-        submission = self.db.submissions[submission_id]
-        # generate metadata for the whole submission first and then for each chapter
-        self.generate_metadata_for_submission(submission)
-        file_paths = []
-        for submission_file in files:
-            path = path_to_submission_file(submission_file, submission.context_id, self.settings['files-dir'])
-            if os.path.exists(path):
-                print "Found submission file:", path
-                file_paths.append(path)
-                print "Importing", path
-
-
+        if args.get('<submission_id>'):
+            submission_ids = [int(id_arg) for id_arg in args.get('<submission_id>')]
+        else:
+            # TODO Allow lists in settings.json
+            submission_ids = [self.settings['submission']]
+        print "Importing submissions:", submission_ids
+        for submission_id in submission_ids:
+            print "Loading submission files for submission", submission_id
+            files = self.get_files(submission_id)
+            if not files:
+                print("No files found with genre={genre} and file_stage={file-stage}".format(**self.settings))
+                continue
+            print "Loading metadata for submission"
+            submission = self.db.submissions[submission_id]
+            # generate metadata for the whole submission first and then for each chapter
+            self.generate_metadata_for_submission(submission)
+            file_paths = []
+            for submission_file in files:
+                path = path_to_submission_file(submission_file, submission.context_id, self.settings['files-dir'])
+                if os.path.exists(path):
+                    print "Found submission file:", path
+                    file_paths.append(path)
+                    print "Importing", path
         self.results = {'path': '/tmp/'}
         # TODO Load project configuration template from file
         # TODO extend project configuration with path to imported submission file
-        # TODO Import meta data form omp db
-        # TODO write meta data as xml to file
-        # TODO add path of meta data file to project configuration
+        # TODO Import meta data of complete from omp db and write meta data as xml to file
+        # TODO Import and write meta data for each chapter
+        # TODO add path of meta data files to project configuration
         # TODO write configuration to output directory
         pass
 
@@ -216,9 +223,11 @@ class OMPImport(Import):
         if submission.series_id:
             series_settings = OMPSettings(self.dal.getSeriesSettings(submission.series_id))
             collection_meta_xml = book_xml.xpath('collection-meta')[0]
-            collection_meta_xml.xpath('title-group/title')[0].text = series_settings.getLocalizedValue('title', locale)
-            collection_meta_xml.xpath('title-group/subtitle')[0].text = series_settings.getLocalizedValue('subtitle', locale)
-            # TODO series edtiors
+            series_title = unicode(series_settings.getLocalizedValue('title', locale), 'utf8')
+            collection_meta_xml.xpath('title-group/title')[0].text = series_title
+            series_subtitle = unicode(series_settings.getLocalizedValue('subtitle', locale), 'utf8')
+            collection_meta_xml.xpath('title-group/subtitle')[0].text = series_subtitle
+            # TODO series editors
         # TODO add copyright-statement. which omp field to use or which value to generate?
         # TODO add license
         print etree.tostring(book_xml, pretty_print=True)

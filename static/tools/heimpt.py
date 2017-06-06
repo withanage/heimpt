@@ -9,14 +9,15 @@ generate the output.
 
 
 Usage:
-    mpt.py  <config_file> [options]
-    mpt.py --modules <modules> [options]
+    mpt.py <config_file> [options]
+    mpt.py <module_command> <modules> [options] [<args>...]
 
 Options:
-    --interactive                                   Enable step-by-step interactive mode
-    -d, --debug  Enable debug output
-    -i --ids Entry ids   
-    
+    --interactive       Enable step-by-step interactive mode
+    -d, --debug         Enable debug output
+
+Available module commands are:
+    import  Import project configuration, files and metadata via specified import modules, e.g. "omp" or "ojs"
 
 Example
 --------
@@ -691,31 +692,32 @@ class MPT(Debuggable):
         Run MPT in module modus
 
         """
-        #sys.path.insert(0, '{}/{}/{}'.format(os.getcwd(), 'plugins', 'import'))
-        sys.path.insert(0, '{}/{}/'.format(self.script_folder, 'plugins/import'))
-        import ImportInterface
-        for m in self.args.get('<modules>').split(','):
-            plugin_package = __import__(m, fromlist=['*'])
-            plugin_module = getattr(plugin_package, m)
+        # Run import modules
+        if self.args.get('<module_command>') == 'import':
+            sys.path.insert(0, '{}/{}/'.format(self.script_folder, 'plugins/import'))
+            import ImportInterface
+            for m in self.args.get('<modules>').split(','):
+                plugin_package = __import__(m, fromlist=['*'])
+                plugin_module = getattr(plugin_package, m)
 
-            # Find class inheriting form Import abstract class in the module
-            for name in dir(plugin_module):
-                if inspect.isclass(getattr(plugin_module, name))\
-                        and issubclass(getattr(plugin_module, name), ImportInterface.Import)\
-                        and not getattr(plugin_module, name) is ImportInterface.Import:
-                    plugin_class = getattr(plugin_module, name)
-                    print "Found import plugin", name, plugin_class
-                    plugin = plugin_class()
-                    plugin.run()
-                    print plugin.results
+                # Find class inheriting form Import abstract class in the module
+                for name in dir(plugin_module):
+                    if inspect.isclass(getattr(plugin_module, name))\
+                            and issubclass(getattr(plugin_module, name), ImportInterface.Import)\
+                            and not getattr(plugin_module, name) is ImportInterface.Import:
+                        plugin_class = getattr(plugin_module, name)
+                        print "Found import plugin", name, plugin_class
+                        plugin = plugin_class()
+                        argv = [self.args['<module_command>'], m] + self.args['<args>']
+                        plugin.run(docopt(plugin_module.__doc__, argv=argv))
+                        print plugin.results
 
-            # try:
-            #    plugin_module = __import__(m)
-            #    plugin_module.plugin.run()
-            # except Exception as e:
-            #    print('{} {}: {}'.format(m, 'method  import failed', e))
-            #    sys.exit(0)
-
+                # try:
+                #    plugin_module = __import__(m)
+                #    plugin_module.plugin.run()
+                # except Exception as e:
+                #    print('{} {}: {}'.format(m, 'method  import failed', e))
+                #    sys.exit(0)
         return
 
     def check_applications(self):
@@ -752,7 +754,7 @@ def main():
 
     """
     pi = MPT()
-    if pi.args.get('--modules'):
+    if pi.args['<module_command>']:
         pi.run_modules()
 
     else:
