@@ -32,8 +32,8 @@ be set as the last tool in a process chain.
 
 References
 ----------
-* Web : https://github.com/withanage/mpt
-* Repository and issue-tracker: https://github.com/withanage/mpt/issues
+* Web : https://github.com/withanage/heimpt
+* Repository and issue-tracker: https://github.com/withanage/heimpt/issues
 * Licensed under terms of GPL 3  license (LICENSE.md)
 
 
