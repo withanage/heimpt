@@ -300,7 +300,10 @@ class Prepare(Debuggable):
 
         if os.path.isfile(pth):
             fr = r.find('.//front')
-            fr.getparent().remove(fr)
+            if fr:
+                fr.getparent().remove(fr)
+            else:
+                self.debug.print_debug(self,'{} not found'.format(fr))
             bpm = etree.parse(pth).find('.//book-part-meta')
             bg = r.find('.//body').getparent()
             bg.insert(0, bpm)

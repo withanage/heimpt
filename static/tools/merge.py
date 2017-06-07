@@ -373,6 +373,7 @@ class Merge(Debuggable):
         """
         r = self.tr.getroot()
         f = r.find(".//front")
+        print etree.tostring(f)
         if f is None:
             f = r.find(".//book-part-meta")
         bd = r.find(".//body")

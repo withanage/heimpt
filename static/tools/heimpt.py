@@ -123,7 +123,7 @@ class MPT(Debuggable):
           A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
           elements.
         """
-        return docopt(__doc__, version='heiMP' 0.0.1')
+        return docopt(__doc__, version='heiMPT 0.0.1')
 
     def get_module_name(self):
         """

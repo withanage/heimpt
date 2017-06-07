@@ -1,0 +1,84 @@
+{
+  "projects": [
+    {
+      "active": true,
+      "chain": true,
+      "files": {
+        "1": "Wintz_01_Remerciements.xml",
+        "2": "Wintz_02_Introduction.xml",
+        "3": "Wintz_03_Chapitre_1.xml",
+        "4": "Wintz_04_Chapitre_2.xml",
+        "5": "Wintz_05_Chapitre_3.xml",
+        "6": "Wintz_06_Conclusion.xml",
+        "7": "Wintz_07_Bibliographie.xml"
+      },
+      "name": "wintz_xml",
+      "path": "/home/wit/Arbeit/OMP/wintz/wintz-jats/",
+      "typesetters": {
+        "1": {
+          "arguments": {
+            "1": "--create-dir"
+          },
+          "name": "xmlprocess",
+          "out_type": "xml",
+          "process": true
+        },
+        "2": {
+          "arguments": {
+            "1": "--create-dir",
+            "2": "jats",
+            "3": "--metadata book-meta.jats",
+            "4": "--set-numbering-tags=disp-quote,tr,sec,title,p"
+          },
+          "name": "xmlmerge",
+          "out_type": "xml",
+          "out_file": "fullFile.xml",
+          "merge": true
+        }
+
+      }
+    }
+  ],
+  "typesetters": {
+    "metypeset": {
+      "arguments": {
+        "1": "xml",
+        "2": "--debug",
+        "3": "--nogit",
+        "4": "--noimageprocessing"
+      },
+      "executable": "/home/www-data/web2py/applications/heimpt/static/tools/meTypeset/bin/meTypeset.py"
+    },
+    "xmlprocess": {
+      "arguments": {
+        "1": "--metadata book-part-meta.bits2",
+        "2": "--set-uuids=fn,ref",
+        "3": "--set-numbering-values=xref,ref-type,fn",
+        "4": "--clean-references"
+      },
+      "executable": "/home/www-data/web2py/applications/heimpt/static/tools/prepare.py"
+    },
+    "xmlmerge": {
+      "arguments": {
+      },
+      "executable": "/home/www-data/web2py/applications/heimpt/static/tools/merge.py"
+    },
+    "xml2fo": {
+      "arguments": {
+        "1": "--xsl=/formatter.xsl",
+        "2": "--medium=electronic,print",
+        "3": "--formatter=AH",
+        "4": "--out-type=FO"
+      },
+      "executable": "/home/www-data/web2py/applications/heimpt/static/tools/disseminate.py"
+    },
+    "fo2pdf": {
+      "arguments": {
+        "1": "--medium=electronic,print",
+        "2": "--formatter=AH",
+        "3": "--out-type=PDF"
+      },
+      "executable": "/home/www-data/web2py/applications/heimpt/static/tools/disseminate.py"
+    }
+  }
+}
