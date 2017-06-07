@@ -9,8 +9,8 @@ generate the output.
 
 
 Usage:
-    mpt.py <config_file> [options]
-    mpt.py <module_command> <modules> [options] [<args>...]
+    heimpt.py <config_file> [options]
+    heimpt.py <module_command> <modules> [options] [<args>...]
 
 Options:
     --interactive       Enable step-by-step interactive mode
@@ -22,7 +22,7 @@ Available module commands are:
 Example
 --------
 
-python $BUILD_DIR/static/tools/mpt.py  $BUILD_DIR/static/tools/configurations/example.json
+python $BUILD_DIR/static/tools/heimpt.py  $BUILD_DIR/static/tools/configurations/example.json
 
 
 Notes
@@ -123,7 +123,7 @@ class MPT(Debuggable):
           A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
           elements.
         """
-        return docopt(__doc__, version='heiMPT 0.0.1')
+        return docopt(__doc__, version='heiMP' 0.0.1')
 
     def get_module_name(self):
         """
