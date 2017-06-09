@@ -303,11 +303,11 @@ class Prepare(Debuggable):
             fr.getparent().remove(fr)
 
 
-            #bpm = etree.parse(pth).find('.//book-part-meta')
+            bpm = etree.parse(pth).find('.//book-part-meta')
             #print etree.tostring(bpm)
 
             bg = r.find('.//body').getparent()
-            bpm = etree.parse(pth).find('.')
+            #bpm = etree.parse(pth).find('.')
             bg.insert(0, bpm)
 
 
@@ -336,15 +336,14 @@ class Prepare(Debuggable):
         We assume that  metadata files are stored in a sub-folder named metadata
         """
         p = os.path.dirname(self.f).split(os.sep)
-        print p
-        #del p[-4:]
+
+        del p[-4:]
         f = os.path.basename(self.f)
         name, ext = os.path.splitext(f)
         file_name = [name, '.', metadata, ext]
         p.append('metadata')
         p.append(''.join(file_name))
         pth = os.sep.join(p)
-        print pth
         return pth
 
     def sort_by_tags(self, tag_list, elem):
