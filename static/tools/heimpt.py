@@ -125,6 +125,7 @@ class MPT(Debuggable):
         """
         return docopt(__doc__, version='heiMPT 0.0.1')
 
+
     def get_module_name(self):
         """
         Reads the name of the module for debugging and logging
