@@ -106,6 +106,11 @@ class OMPImport(Import):
             submission = self.db.submissions[submission_id]
             # generate metadata for the whole submission first and then for each chapter
             self.generate_metadata_for_submission(submission)
+            chapters = self.dal.getChaptersBySubmission(submission_id)
+            print "Loading metadata for chapters"
+            for chapter in chapters:
+                print "Loading chapter", chapter.chapter_seq
+                self.generate_metadata_for_chapter(chapter, submission)
             file_paths = []
             for submission_file in files:
                 path = path_to_submission_file(submission_file, submission.context_id, self.settings['files-dir'])
@@ -148,7 +153,7 @@ class OMPImport(Import):
             book_xml = etree.parse(metadata_file_path)
         else:
             # load bits xml skeleton from file
-            book_xml = etree.parse(os.path.join(self.module_path, 'templates', 'sample-monograph.bits.xml'))
+            book_xml = etree.parse(os.path.join(self.module_path, 'templates', 'sample-monograph.bits2.xml'))
         locale = submission.locale
         short_locale = locale[:2]
         # Set language of submission on book tag
@@ -219,7 +224,7 @@ class OMPImport(Import):
         book_meta_xml.xpath('permissions/copyright-year')[0].text = submission_settings.getLocalizedValue('copyrightYear', '')
         book_meta_xml.xpath('permissions/copyright-holder')[0].text = submission_settings.getLocalizedValue(
             'copyrightHolder', locale)
-        # Add collection data
+        # Add collection meta data
         if submission.series_id:
             series_settings = OMPSettings(self.dal.getSeriesSettings(submission.series_id))
             collection_meta_xml = book_xml.xpath('collection-meta')[0]
@@ -227,6 +232,12 @@ class OMPImport(Import):
             collection_meta_xml.xpath('title-group/title')[0].text = series_title
             series_subtitle = unicode(series_settings.getLocalizedValue('subtitle', locale), 'utf8')
             collection_meta_xml.xpath('title-group/subtitle')[0].text = series_subtitle
+            series_print_issn = series_settings.getLocalizedValue('printIssn', '')
+            if series_print_issn:
+                collection_meta_xml.append(E.issn(series_print_issn, {'publication-format': 'print'}))
+            series_electronic_issn = series_settings.getLocalizedValue('onlineIssn', '')
+            if series_electronic_issn:
+                collection_meta_xml.append(E.issn(series_print_issn, {'publication-format': 'online'}))
             # TODO series editors
         # TODO add copyright-statement. which omp field to use or which value to generate?
         # TODO add license
@@ -234,53 +245,37 @@ class OMPImport(Import):
         print metadata_file_path
         return book_xml
 
-    def generate_metadata_of_chapter(self, submission_file):
+    def generate_metadata_for_chapter(self, chapter, submission):
         """
-        Loads the metadata for the associated submission of a submission_file 
-        
-        :param submission_file: 
-        :return: ElementTree with metadata in BITS format
+        Loads the metadata for the chapter
+
+        :param chapter: Chapter row object
+        :param submission: Submission row object, to which the chapter belongs
+        :return: ElementTree with metadata of the chapter in BITS2 format
         """
-        submission = self.db.submissions[submission_id]
-        metadata_file_path = path_to_submission_metadata(submission_id, submission.context_id,
-                                                         self.settings['output-dir'])
+        # TODO Define chapter metadata filename
+        chapter_no = chapter.chapter_seq + 1
+        filename = 'chapter-{}.book-part-meta.bits2.xml'.format(chapter_no)
+        metadata_file_path = os.path.join(self.settings['output-dir'], 'presses',
+                                          str(submission.context_id), 'monographs', str(submission.submission_id),
+                                          'metadata', filename)
         if os.path.isfile(metadata_file_path):
             bits_xml = etree.parse(metadata_file_path)
         else:
             # load bits xml skeleton from file
-            bits_xml = etree.parse(os.path.join(self.module_path, 'templates', 'sample-monograph.bits.xml'))
-        book_meta_xml = bits_xml.xpath('/book/book-meta')[0]
-        self.db.submission_settings(submission_id=submission_id)
-        submission_settings = OMPSettings(self.dal.getSubmissionSettings(submission_id))
-        press_settings = OMPSettings(self.dal.getPressSettings(submission.context_id))
-        book_meta_xml.xpath('book-id')[0].text = unicode(submission_id)
-
-        book_title = unicode(submission_settings.getLocalizedValue('prefix', submission.locale)) + \
-                     " " + unicode(submission_settings.getLocalizedValue('title', submission.locale))
-        subtitle = unicode(submission_settings.getLocalizedValue('subtitle', submission.locale))
-        book_meta_xml.xpath('book-title-group/book-title')[0].text = book_title
-        book_meta_xml.xpath('book-title-group/subtitle')[0].text = subtitle
-
-        # Add abstracts for all languages
-        etree.strip_elements(book_meta_xml, 'abstract')
-        for lang, abstract_text in submission_settings.getValues('abstract').items():
-            if abstract_text:
-                book_meta_xml.append(E.abstract(etree.XML(abstract_text), {LANG_ATTR: lang}))
-        # TODO Where to find publisher location?
-        book_meta_xml.xpath('publisher/publisher-loc')[0].text = ''
-        book_meta_xml.xpath('publisher/publisher-name')[0].text = press_settings.getLocalizedValue('name', submission.locale)
-        # Add isbn identifiers for all formats
-        etree.strip_elements(book_meta_xml, 'isbn')
-        for pub_format in self.dal.getAllPublicationFormatsBySubmission(submission_id):
-            format_settings = OMPSettings(self.dal.getPublicationFormatSettings(pub_format.publication_format_id))
-            format_name = format_settings.getLocalizedValue('name', submission.locale)
-            isbn = self.dal.getIdentificationCodesByPublicationFormat(pub_format.publication_format_id).first().value
-            print isbn
-            book_meta_xml.append(E.isbn(isbn, {'publication-format': PUBLICATION_FORMAT_MAPPING[format_name]}))
-
+            bits_xml = etree.parse(os.path.join(self.module_path, 'templates', 'sample-chapter.bits2.xml'))
+        chapter_settings = OMPSettings(self.dal.getChapterSettings(chapter.chapter_id))
+        # TODO Which id to set for chapters?
+        book_part_xml = bits_xml.xpath('/book-part')[0]
+        book_part_xml.set('id', 'b{}_ch_{}'.format(submission.submission_id, chapter_no))
+        book_part_xml.set('seq', str(chapter_no))
+        book_part_xml.set(LANG_ATTR, submission.locale[:2])
+        # TODO How to distinguish other types?
+        book_part_xml.set('book-part-type', 'chapter')
+        # TODO Determine chapter label
+        book_part_xml.xpath('book-part-meta/title-group/title')[0].text = chapter_settings.getLocalizedValue(
+            'title', submission.locale)
         print etree.tostring(bits_xml, pretty_print=True)
-        print metadata_file_path
-
+        # TODO Chapter authors
+        # TODO doi
         return bits_xml
-        # load metadata for submission from omp db
-        # update the xml file with the metadata from omp db
