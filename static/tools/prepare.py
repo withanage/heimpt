@@ -297,6 +297,8 @@ class Prepare(Debuggable):
         r = self.tr.getroot()
 
         pth = self.create_metadata_path(metadata)
+        self.debug.print_console(self,pth)
+
         if os.path.isfile(pth):
 
             fr = r.find('.//front')
@@ -466,6 +468,18 @@ class Prepare(Debuggable):
             os.path.join(
                 self.dr, os.path.basename(
                     self.f)))
+
+    def get_module_name(self):
+        """
+        Reads the name of the module for debugging and logging
+
+        Returns
+        -------
+        name string
+         Name of the Module
+        """
+        name = 'prepare'
+        return name
 
     def create_xml_file(self, pth):
         """
