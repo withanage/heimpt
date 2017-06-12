@@ -172,6 +172,7 @@ class MPT(Debuggable):
             args_str = args_str.replace(': ', ':')
             self.debug.print_debug(
                 self, u"Merging command: file into command:file, can be a problem for some applications")
+        self.debug.print_console(self, args)
         m = args_str.strip().split(' ')
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
@@ -328,6 +329,7 @@ class MPT(Debuggable):
             self.debug.print_console(self, u'\t{}:\t {} '.format('Processing', prefix))
             args.append(f_path)
             self.create_output_path(p, p_id,  args, prefix, uid)
+            self.debug.print_console(self, p_id)
             output, err, exit_code = self.call_typesetter(args)
             self.debug.print_debug(self, output.decode('utf-8'))
             p_path = self.organize_output(
