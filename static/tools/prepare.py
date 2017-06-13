@@ -299,23 +299,38 @@ class Prepare(Debuggable):
         pth = self.create_metadata_path(metadata)
         self.debug.print_console(self,pth)
 
+
         if os.path.isfile(pth):
-
             fr = r.find('.//front')
-            fr.getparent().remove(fr)
+            if len(fr):
+                bg = r.find('.//body').getparent()
+                fr.getparent().remove(fr)
+                bpm = etree.parse(pth).find('.//book-part-meta')
+                if bpm is None:
+                    bpm = etree.parse(pth).find('.')
+                    if bpm is not None:
+                        if bpm.getroottree().getroot().tag == 'front':
+                            bg.insert(0, bpm)
+                        else:
+                            self.debug.print_debug(self, 'front or bookpart metadata unspecified')
+                            sys.exit(1)
+
+                else:
+                    bg.insert(0, bpm)
 
 
-            bpm = etree.parse(pth).find('.//book-part-meta')
-            #print etree.tostring(bpm)
 
-            bg = r.find('.//body').getparent()
-            #bpm = etree.parse(pth).find('.')
-            bg.insert(0, bpm)
+            else:
+                self.debug.print_debug(self,'front metadata unspecified')
+
+
 
 
         else:
+
             self.debug.print_debug(self, pth +
                                    self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST)
+            sys.exit(1)
 
         return self.tr
 
@@ -339,7 +354,7 @@ class Prepare(Debuggable):
         """
         p = os.path.dirname(self.f).split(os.sep)
 
-        del p[-4:]
+        #del p[-4:]
         f = os.path.basename(self.f)
         name, ext = os.path.splitext(f)
         file_name = [name, '.', metadata, ext]
