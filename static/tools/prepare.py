@@ -297,8 +297,7 @@ class Prepare(Debuggable):
         r = self.tr.getroot()
 
         pth = self.create_metadata_path(metadata)
-        self.debug.print_console(self,pth)
-
+        self.debug.print_console(self, pth)
 
         if os.path.isfile(pth):
             fr = r.find('.//front')
@@ -314,24 +313,14 @@ class Prepare(Debuggable):
                         else:
                             self.debug.print_debug(self, 'front or bookpart metadata unspecified')
                             sys.exit(1)
-
                 else:
                     bg.insert(0, bpm)
-
-
-
             else:
-                self.debug.print_debug(self,'front metadata unspecified')
-
-
-
-
+                self.debug.print_debug(self, 'front metadata unspecified')
         else:
-
             self.debug.print_debug(self, pth +
                                    self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST)
             sys.exit(1)
-
         return self.tr
 
     def create_metadata_path(self, metadata):
@@ -353,7 +342,7 @@ class Prepare(Debuggable):
         We assume that  metadata files are stored in a sub-folder named metadata
         """
         p = os.path.dirname(self.f).split(os.sep)
-
+        #TODO -4 has to be changed
         #del p[-4:]
         f = os.path.basename(self.f)
         name, ext = os.path.splitext(f)

@@ -172,6 +172,7 @@ class MPT(Debuggable):
             args_str = args_str.replace(': ', ':')
             self.debug.print_debug(
                 self, u"Merging command: file into command:file, can be a problem for some applications")
+        #TODO delete
         self.debug.print_console(self, args)
         m = args_str.strip().split(' ')
         process = Popen(m, stdout=PIPE)
@@ -329,7 +330,6 @@ class MPT(Debuggable):
             self.debug.print_console(self, u'\t{}:\t {} '.format('Processing', prefix))
             args.append(f_path)
             self.create_output_path(p, p_id,  args, prefix, uid)
-            self.debug.print_console(self, p_id)
             output, err, exit_code = self.call_typesetter(args)
             self.debug.print_debug(self, output.decode('utf-8'))
             p_path = self.organize_output(
@@ -536,7 +536,7 @@ class MPT(Debuggable):
 
                 pre_path = temp_path
                 prev_out_type = temp_pre_out_type
-                #self.debug.print_console(self, ' '.join(['ls -al',temp_path]))
+
 
         else:
             self.debug.print_debug(
@@ -638,9 +638,6 @@ class MPT(Debuggable):
         else:
             self.debug.print_debug(
                 self, self.gv.PROJECT_TYPESETTER_PROCESS_METHOD_NOT_SPECIFIED)
-
-        #self.debug.print_console(self, '{}  {}'.format(self.gv.OUTPUT,f_path))
-
         return SEP.join(project_path)
 
     def create_merged_file(self, p, p_id, project_path, t_path):

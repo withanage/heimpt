@@ -101,7 +101,6 @@ class Merge(Debuggable):
         fuf = os.path.join(self.dr, self.uid)
         pt = os.path.join(self.dr, os.path.basename(self.uid))
 
-
         trf = None
         if os.path.isfile(fuf):
             trf = etree.parse(fuf)
@@ -112,7 +111,8 @@ class Merge(Debuggable):
             trf = self.create_book_bits()
         trf = self.process(trf)
 
-        self.do_file_io(etree.tostring(trf, pretty_print=True, xml_declaration=True, encoding='UTF-8', standalone='yes'), 'w', pt)
+        self.do_file_io(etree.tostring(trf, pretty_print=True, xml_declaration=True,
+                                       encoding='UTF-8', standalone='yes'), 'w', pt)
 
     def create_output_jats(self):
         """
@@ -130,8 +130,19 @@ class Merge(Debuggable):
         if os.path.isfile(fuf):
             trf = etree.parse(fuf)
             bp = trf.find(".//body")
-            journal_part = self.create_journal_part_jats()
-            bp.append(journal_part)
+            f, bd, bk = self.create_journal_part_jats()
+            if bd is not None:
+                sec = list(bd)[0]
+                bp.append(sec)
+
+            fn_group = bk.findall('.//fn-group')
+            ref_list = bk.findall('.//ref-list')
+            bkf = trf.find(".//back")
+            if fn_group:
+                bkf.insert(0, fn_group[0])
+            if ref_list:
+                bkf.insert(0, ref_list[0])
+
         else:
             trf = self.create_journal_jats()
         trf = self.process(trf)
@@ -165,7 +176,6 @@ class Merge(Debuggable):
         self.set_book_part_attributes(tr)
 
         return tr
-
 
     def set_book_part_attributes(self, tr):
         """
@@ -211,12 +221,12 @@ class Merge(Debuggable):
         p = os.path.dirname(self.f).split(os.sep)
         del p[-4:]
         name, ext = os.path.splitext(os.path.basename(self.uid))
-        file_name = [name, '.', metadata, '.','xml']
+        file_name = [name, '.', metadata, '.', 'xml']
         p.append('metadata')
         p.append(''.join(file_name))
 
         pth = os.sep.join(p)
-        self.debug.print_debug(self, u'merging headers'+str(pth))
+        self.debug.print_debug(self, u'merging headers' + str(pth))
         return pth
 
     def get_module_name(self):
@@ -287,27 +297,33 @@ class Merge(Debuggable):
         create_metadata_path, create_book_part_bits
 
         """
-        
 
         nsmap = {'xlink': "http://www.w3.org/1999/xlink",
                  'mml': "http://www.w3.org/1998/Math/MathML",
                  "xml": "http://www.w3.org/XML/1998/namespace"}
-        journal = etree.Element(etree.QName('book'), nsmap=nsmap)
-        journal.attrib['dtd-version'] = "1.1d1"
+        journal = etree.Element(etree.QName('article'), nsmap=nsmap)
+        journal.attrib['dtd-version'] = "3.0"
         journal.attrib[etree.QName('{http://www.w3.org/XML/1998/namespace}lang')] = "de"
-        journal.attrib['article-type'] = "research-article"
+        #journal.attrib['article-type'] = "research-article"
 
         metadata = self.args.get('--metadata')
+
         if metadata:
+
             pth = self.create_metadata_path(metadata)
             if os.path.isfile(pth):
-                bp = etree.parse(pth).find('.//book-meta')
-                journal.insert(0, bp)
-
+                bpm = etree.parse(pth).find('.')
+                if bpm is not None:
+                    if bpm.getroottree().getroot().tag == 'front':
+                        journal.insert(0, bpm)
+                    else:
+                        self.debug.print_debug(self, 'front metadata unspecified')
+                        sys.exit(1)
         else:
             sys.exit('Metadata fails')
-        bpbd = self.create_journal_part_jats()
-        journal.append(bpbd)
+        f, bd, bk = self.create_journal_part_jats()
+        journal.append(bd)
+        journal.append(bk)
 
         return journal
 
@@ -346,16 +362,7 @@ class Merge(Debuggable):
 
         f, bd, bk = self.get_xml_parts()
 
-        bp = etree.Element("body")
-
-        if f is not None:
-            if len(f):
-                bp.append(f)
-        if bd is not None:
-            bp.append(bd)
-        if bk is not None:
-            bp.append(bk)
-        return bp
+        return f, bd, bk
 
     def get_xml_parts(self):
         """
