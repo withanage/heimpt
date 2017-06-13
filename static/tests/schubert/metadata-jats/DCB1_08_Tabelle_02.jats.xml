@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<front>
+    <journal-meta>
+        <journal-id journal-id-type="publisher-id">Propylaeum</journal-id>
+        <issn pub-type="epub">0000-000X</issn>
+        <publisher>
+            <publisher-name>Propylaeum</publisher-name>
+        </publisher>
+    </journal-meta>
+    <article-meta>
+        <article-id pub-id-type="doi">10.1000/123456</article-id>
+        <title-group>
+            <article-title>Tabelle 2</article-title>
+        </title-group>
+        <contrib-group>
+            <contrib contrib-type="author">
+                <name>
+                    <surname>Schubert</surname>
+                    <given-names>Charlotte</given-names>
+                </name>
+            </contrib>
+        </contrib-group>
+        <pub-date pub-type="epub">
+            <year>2017</year>
+        </pub-date>
+        <volume>1</volume>
+        <issue>1</issue>
+        <fpage>1</fpage>
+        <lpage>2</lpage>
+        <permissions>
+            <copyright-statement>&copy; 2017. Das Copyright liegt bei den Autoren des jeweiligen Beitrages.</copyright-statement>
+            <copyright-year>2017</copyright-year>
+            <license license-type="open-access" xlink:href="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="de">
+                <license-p><inline-graphic xlink:href="http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-sa.svg"/>Dieses Werk ist unter der Creative-Commons-Lizenz 4.0 (CC BY-SA 4.0) veröffentlicht.</license-p>
+            </license>
+            <license license-type="open-access" xlink:href="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="en">
+                <license-p><inline-graphic xlink:href="http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-sa.svg"/>This book is published under the Creative Commons License 4.0 (CC BY-SA 4.0).</license-p>
+            </license>
+        </permissions>
+        <abstract/>
+    </article-meta>
+</front>
