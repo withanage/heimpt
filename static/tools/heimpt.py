@@ -173,7 +173,7 @@ class MPT(Debuggable):
             self.debug.print_debug(
                 self, u"Merging command: file into command:file, can be a problem for some applications")
         #TODO delete
-        self.debug.print_console(self, args_str)
+        #self.debug.print_console(self, args_str)
         m = args_str.strip().split(' ')
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
