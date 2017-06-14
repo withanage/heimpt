@@ -134,15 +134,7 @@ class Merge(Debuggable):
             if bd is not None:
                 sec = list(bd)[0]
                 bpf.append(sec)
-            bkrf = trf.find(".//back/ref-list")
-            print len(trf.findall(".//back/ref-list/ref"))
-            print len(trf.findall('.//fn-group/fn'))
-            for r in  bk.findall('.//ref-list/ref'):
-                bkrf.append(r)
-
-            bkff = trf.find(".//back/fn-group")
-            for fn in bk.findall('.//fn-group/fn'):
-                bkff.append(fn)
+            self.append_back(bk, trf)
 
 
         else:
@@ -153,6 +145,14 @@ class Merge(Debuggable):
         self.do_file_io(
             etree.tostring(trf, pretty_print=True, xml_declaration=True, encoding='UTF-8', standalone='yes'), 'w',
             pt)
+
+    def append_back(self, bk, trf):
+        bkrf = trf.find(".//back/ref-list")
+        for r in bk.findall('.//ref-list/ref'):
+            bkrf.append(r)
+        bkff = trf.find(".//back/fn-group")
+        for fn in bk.findall('.//fn-group/fn'):
+            bkff.append(fn)
 
     def process(self, tr):
         """
