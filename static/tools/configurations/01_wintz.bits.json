@@ -69,6 +69,7 @@
         "2": "--debug",
         "3": "--nogit",
         "4": "--noimageprocessing"
+
       },
       "executable": "/home/www-data/web2py/applications/heimpt/static/tools/meTypeset/bin/meTypeset.py"
     },

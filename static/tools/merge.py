@@ -125,12 +125,13 @@ class Merge(Debuggable):
         """
         fuf = os.path.join(self.dr, self.uid)
         pt = os.path.join(self.dr, os.path.basename(self.uid))
+        print pt
 
         trf = None
         if os.path.isfile(fuf):
             trf = etree.parse(fuf)
             bp = trf.find(".//body")
-            f, bd, bk = self.create_journal_part_jats()
+            f, bd, bk = self.get_xml_parts()
             if bd is not None:
                 sec = list(bd)[0]
                 bp.append(sec)
@@ -138,13 +139,16 @@ class Merge(Debuggable):
             fn_group = bk.findall('.//fn-group')
             ref_list = bk.findall('.//ref-list')
             bkf = trf.find(".//back")
+            '''
             if fn_group:
                 bkf.insert(0, fn_group[0])
             if ref_list:
                 bkf.insert(0, ref_list[0])
+            '''
 
         else:
             trf = self.create_journal_jats()
+
         trf = self.process(trf)
 
         self.do_file_io(
@@ -304,12 +308,9 @@ class Merge(Debuggable):
         journal = etree.Element(etree.QName('article'), nsmap=nsmap)
         journal.attrib['dtd-version'] = "3.0"
         journal.attrib[etree.QName('{http://www.w3.org/XML/1998/namespace}lang')] = "de"
-        #journal.attrib['article-type'] = "research-article"
 
         metadata = self.args.get('--metadata')
-
         if metadata:
-
             pth = self.create_metadata_path(metadata)
             if os.path.isfile(pth):
                 bpm = etree.parse(pth).find('.')
@@ -321,9 +322,15 @@ class Merge(Debuggable):
                         sys.exit(1)
         else:
             sys.exit('Metadata fails')
-        f, bd, bk = self.create_journal_part_jats()
+        f, bd, bk = self.get_xml_parts()
         journal.append(bd)
-        journal.append(bk)
+        if len(bk) > 0:
+            journal.append(bk)
+        else:
+            back = etree.Element(etree.QName('back'))
+            back.append(etree.Element(etree.QName('fn-group')))
+            back.append(etree.Element(etree.QName('ref-list')))
+            journal.append(back)
 
         return journal
 
@@ -349,20 +356,6 @@ class Merge(Debuggable):
         if bk is not None:
             bp.append(bk)
         return bp
-
-    def create_journal_part_jats(self):
-        """
-        Reads a JATS XMl File and creates a book-part element tree according to BITS-XML.
-
-        Returns
-        -------
-        bp : elementtree
-            Journal part elementTree
-        """
-
-        f, bd, bk = self.get_xml_parts()
-
-        return f, bd, bk
 
     def get_xml_parts(self):
         """

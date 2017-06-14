@@ -22,19 +22,8 @@
           "name": "xmlprepare",
           "out_type": "xml",
           "process": true
-        },
-        "2": {
-          "arguments": {
-            "1": "--create-dir",
-            "2": "jats",
-            "3": "--metadata book-meta.jats",
-            "4": "--set-numbering-tags=disp-quote,tr,sec,title,p"
-          },
-          "name": "xmlmerge",
-          "out_type": "xml",
-          "out_file": "fullFile.xml",
-          "merge": true
         }
+
 
       }
     }
