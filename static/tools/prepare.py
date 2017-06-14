@@ -297,7 +297,7 @@ class Prepare(Debuggable):
         r = self.tr.getroot()
 
         pth = self.create_metadata_path(metadata)
-        self.debug.print_console(self, pth)
+
 
         if os.path.isfile(pth):
             fr = r.find('.//front')
@@ -342,8 +342,7 @@ class Prepare(Debuggable):
         We assume that  metadata files are stored in a sub-folder named metadata
         """
         p = os.path.dirname(self.f).split(os.sep)
-        #TODO -4 has to be changed
-        #del p[-4:]
+        del p[-4:]
         f = os.path.basename(self.f)
         name, ext = os.path.splitext(f)
         file_name = [name, '.', metadata, ext]
@@ -369,7 +368,6 @@ class Prepare(Debuggable):
             vl = []
             for tag in tag_list:
                 vl.append(e.findtext(".//" + tag))
-
             vl.append(e)
             data.append(tuple(vl))
 

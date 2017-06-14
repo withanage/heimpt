@@ -134,7 +134,16 @@ class Merge(Debuggable):
             if bd is not None:
                 sec = list(bd)[0]
                 bpf.append(sec)
-            self.append_back(bk, trf)
+
+            bkrf = trf.find(".//back/ref-list")
+            print list(bkrf)
+            for r in bk.findall('.//ref-list/ref'):
+
+                bkrf.append(r)
+
+            bkff = trf.find(".//back/fn-group")
+            for fn in bk.findall('.//fn-group/fn'):
+                bkff.append(fn)
 
 
         else:
@@ -143,16 +152,9 @@ class Merge(Debuggable):
         trf = self.process(trf)
 
         self.do_file_io(
-            etree.tostring(trf, pretty_print=True, xml_declaration=True, encoding='UTF-8', standalone='yes'), 'w',
+            etree.tostring(trf, pretty_print=False, xml_declaration=True, encoding='UTF-8', standalone='yes'), 'w',
             pt)
 
-    def append_back(self, bk, trf):
-        bkrf = trf.find(".//back/ref-list")
-        for r in bk.findall('.//ref-list/ref'):
-            bkrf.append(r)
-        bkff = trf.find(".//back/fn-group")
-        for fn in bk.findall('.//fn-group/fn'):
-            bkff.append(fn)
 
     def process(self, tr):
         """
@@ -323,12 +325,6 @@ class Merge(Debuggable):
             sys.exit('Metadata fails')
         f, bd, bk = self.get_xml_parts()
         journal.append(bd)
-        #print etree.tostring(bk)
-        journal = self.create_back(bk, journal)
-
-        return journal
-
-    def create_back(self, bk, journal):
         if len(bk) > 0:
             journal.append(bk)
         else:
@@ -337,6 +333,7 @@ class Merge(Debuggable):
             back.append(etree.Element(etree.QName('ref-list')))
             journal.append(back)
         return journal
+
 
     def create_book_part_bits(self):
         """
