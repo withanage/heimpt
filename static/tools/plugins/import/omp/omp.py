@@ -114,7 +114,7 @@ class OMPImport(Import):
                 print "Loading chapter", chapter.chapter_seq
                 # TODO Generate filename from corresponding submission file
                 chapter_bits_xml = self.load_chapter_metadata('chapter' + str(chapter.chapter_seq+1), submission)
-                self.generate_metadata_for_chapter(chapter_bits_xml, chapter, submission)
+                self.generate_metadata_for_chapter(chapter_bits_xml, chapter, submission, {"doi": 'doi123', "urn": "urn123"})
             file_paths = []
             for submission_file in files:
                 path = path_to_submission_file(submission_file, submission.context_id, self.settings['files-dir'])
@@ -257,7 +257,7 @@ class OMPImport(Import):
         print etree.tostring(book_xml, pretty_print=True)
         return book_xml
 
-    def generate_metadata_for_chapter(self, bits_xml, chapter, submission):
+    def generate_metadata_for_chapter(self, bits_xml, chapter, submission, custom_meta = None):
         """
         Generates the metadata for the chapter
 
@@ -277,9 +277,16 @@ class OMPImport(Import):
         # TODO Determine chapter label
         book_part_xml.xpath('book-part-meta/title-group/title')[0].text = chapter_settings.getLocalizedValue(
             'title', submission.locale)
-        print etree.tostring(bits_xml, pretty_print=True)
+        if custom_meta:
+            custom_meta_group_xml = book_part_xml.xpath('book-part-meta/custom-meta-group')[0]
+            # Clear old custom-meta tags
+            etree.strip_elements(custom_meta_group_xml, 'custom-meta')
+            for meta_name, meta_value in custom_meta.items():
+                custom_meta_xml = etree.SubElement(custom_meta_group_xml, 'custom-meta', {'specific-use': meta_name})
+                etree.SubElement(custom_meta_xml, 'meta-name').text = meta_name
+                etree.SubElement(custom_meta_xml, 'meta-value').text = meta_value
         # TODO Chapter authors
-        # TODO doi
+        print etree.tostring(bits_xml, pretty_print=True)
         return bits_xml
 
     def load_chapter_metadata(self, filename_prefix, submission):
