@@ -111,8 +111,7 @@ class Merge(Debuggable):
             trf = self.create_book_bits()
         trf = self.process(trf)
 
-        self.do_file_io(etree.tostring(trf, pretty_print=True, xml_declaration=True,
-                                       encoding='UTF-8', standalone='yes'), 'w', pt)
+        self.do_file_io(etree.tostring(trf, pretty_print=False, xml_declaration=True,  encoding='UTF-8', standalone='yes'), 'w', pt)
 
     def create_output_jats(self):
         """
@@ -136,7 +135,6 @@ class Merge(Debuggable):
                 bpf.append(sec)
 
             bkrf = trf.find(".//back/ref-list")
-            print list(bkrf)
             for r in bk.findall('.//ref-list/ref'):
 
                 bkrf.append(r)
@@ -402,7 +400,7 @@ class Merge(Debuggable):
         try:
             w = open(pth, mode)
             if mode == 'w':
-                w.write(s)
+                w.write(s.rstrip('\r\n'))
                 w.close()
             if mode == 'r':
                 o = w.read()
