@@ -16,8 +16,11 @@ Options:
     -n --set-numbering-tags=<elemennt types as comma seperated lists>
     -r --clean-references
     -s --sort-references=<tag list as comma seperated lists>
+    -t --stand-alone
     -u --set-uuids=<element types as comma seperated list>
     -v --set-numbering-values=<numbering values, additionaly roman numbers e.g.xref,ref-type,fn,{1:2} >
+
+
 
 All the  are done  in the global element tree for performance reasons.
 
@@ -74,6 +77,7 @@ class Prepare(Debuggable):
             self.debug.enable_debug()
         self.dr = self.args.get('<path>')
         self.f = self.args.get('<input_file>')
+        self.stand_alone = self.args.get('--stand-alone')
         self.tr = etree.parse(os.path.join(self.dr, self.f))
 
     @staticmethod
@@ -342,7 +346,8 @@ class Prepare(Debuggable):
         We assume that  metadata files are stored in a sub-folder named metadata
         """
         p = os.path.dirname(self.f).split(os.sep)
-        del p[-4:]
+        if not self.stand_alone:
+            del p[-4:]
         f = os.path.basename(self.f)
         name, ext = os.path.splitext(f)
         file_name = [name, '.', metadata, ext]

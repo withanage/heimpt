@@ -17,7 +17,8 @@
       "typesetters": {
         "1": {
           "arguments": {
-            "1": "--create-dir"
+            "1": "--create-dir",
+            "2": "--stand-alone"
           },
           "name": "xmlprepare",
           "out_type": "xml",
