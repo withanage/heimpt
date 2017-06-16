@@ -104,13 +104,17 @@ class OMPImport(Import):
                 continue
             print "Loading metadata for submission"
             submission = self.db.submissions[submission_id]
+            book_bits_xml = self.load_submission_metadata(submission)
             # generate metadata for the whole submission first and then for each chapter
-            self.generate_metadata_for_submission(submission)
+
+            self.inject_metadata_for_submission(submission, book_bits_xml)
             chapters = self.dal.getChaptersBySubmission(submission_id)
             print "Loading metadata for chapters"
             for chapter in chapters:
                 print "Loading chapter", chapter.chapter_seq
-                self.generate_metadata_for_chapter(chapter, submission)
+                # TODO Generate filename from corresponding submission file
+                chapter_bits_xml = self.load_chapter_metadata('chapter' + str(chapter.chapter_seq+1), submission)
+                self.generate_metadata_for_chapter(chapter_bits_xml, chapter, submission)
             file_paths = []
             for submission_file in files:
                 path = path_to_submission_file(submission_file, submission.context_id, self.settings['files-dir'])
@@ -138,22 +142,32 @@ class OMPImport(Import):
         res = self.db(q).select(sf.ALL, orderby=sf.revision)
         return res
 
-    def generate_metadata_for_submission(self, submission, write_file=False):
+    def load_submission_metadata(self, submission):
         """
-        Generate the metadata from omp db for the given submission 
-
-        :param submission: submission Row from db
-        :return: ElementTree with metadata in BITS2 XML format
+        Loads the submission metadata, either from an existing metadata file from a previous import or from a template.
+        :param submission:
+        :return: ElementTree object with bits2 metadata elements.
         """
-        submission_id = submission.submission_id
         metadata_file_path = path_to_submission_metadata(submission.submission_id, submission.context_id,
                                                          self.settings['output-dir'])
+        print "Try to load submission metadata from", metadata_file_path
         if os.path.isfile(metadata_file_path):
             # load existing metadata
             book_xml = etree.parse(metadata_file_path)
         else:
             # load bits xml skeleton from file
             book_xml = etree.parse(os.path.join(self.module_path, 'templates', 'sample-monograph.bits2.xml'))
+        return book_xml
+
+    def inject_metadata_for_submission(self, submission,  book_xml):
+        """
+        Generate the metadata from omp db for the given submission 
+
+        :param book_xml: ElementTree object with bits2 metadata elements.
+        :param submission: submission Row from db
+        :return: ElementTree with metadata in BITS2 XML format
+        """
+        submission_id = submission.submission_id
         locale = submission.locale
         short_locale = locale[:2]
         # Set language of submission on book tag
@@ -218,7 +232,6 @@ class OMPImport(Import):
             if affiliation:
                 affiliation_id = 'aff' + format(affiliation_counter, '02d')
                 contrib_xml.append(E.xref({'ref-type': 'aff', 'rid': affiliation_id}))
-                print 'affiliation', type(affiliation), 'id', affiliation_id
                 contrib_group_xml.append(E.aff(affiliation, {'id': affiliation_id}))
             contrib_group_xml.append(contrib_xml)
         book_meta_xml.xpath('permissions/copyright-year')[0].text = submission_settings.getLocalizedValue('copyrightYear', '')
@@ -242,30 +255,19 @@ class OMPImport(Import):
         # TODO add copyright-statement. which omp field to use or which value to generate?
         # TODO add license
         print etree.tostring(book_xml, pretty_print=True)
-        print metadata_file_path
         return book_xml
 
-    def generate_metadata_for_chapter(self, chapter, submission):
+    def generate_metadata_for_chapter(self, bits_xml, chapter, submission):
         """
-        Loads the metadata for the chapter
+        Generates the metadata for the chapter
 
-        :param chapter: Chapter row object
-        :param submission: Submission row object, to which the chapter belongs
-        :return: ElementTree with metadata of the chapter in BITS2 format
+        :param bits_xml: ElementTree object containing bits2 meta-data for a submission chapter.
+        :param chapter: Chapter row object.
+        :param submission: Submission row object, to which the chapter belongs.
+        :return: Updated ElementTree object with new metadata from OMP db.
         """
-        # TODO Define chapter metadata filename
         chapter_no = chapter.chapter_seq + 1
-        filename = 'chapter-{}.book-part-meta.bits2.xml'.format(chapter_no)
-        metadata_file_path = os.path.join(self.settings['output-dir'], 'presses',
-                                          str(submission.context_id), 'monographs', str(submission.submission_id),
-                                          'metadata', filename)
-        if os.path.isfile(metadata_file_path):
-            bits_xml = etree.parse(metadata_file_path)
-        else:
-            # load bits xml skeleton from file
-            bits_xml = etree.parse(os.path.join(self.module_path, 'templates', 'sample-chapter.bits2.xml'))
         chapter_settings = OMPSettings(self.dal.getChapterSettings(chapter.chapter_id))
-        # TODO Which id to set for chapters?
         book_part_xml = bits_xml.xpath('/book-part')[0]
         book_part_xml.set('id', 'b{}_ch_{}'.format(submission.submission_id, chapter_no))
         book_part_xml.set('seq', str(chapter_no))
@@ -278,4 +280,16 @@ class OMPImport(Import):
         print etree.tostring(bits_xml, pretty_print=True)
         # TODO Chapter authors
         # TODO doi
+        return bits_xml
+
+    def load_chapter_metadata(self, filename_prefix, submission):
+        metadata_file_path = path_to_submission_metadata(submission.submission_id, submission.context_id,
+                                                         self.settings['output-dir'],
+                                                         filename_prefix + self.settings['chapter-metadata-suffix'])
+        print ("Try to load chapter metadata from", metadata_file_path)
+        if os.path.isfile(metadata_file_path):
+            bits_xml = etree.parse(metadata_file_path)
+        else:
+            # load bits xml skeleton from file
+            bits_xml = etree.parse(os.path.join(self.module_path, 'templates', 'sample-chapter.bits2.xml'))
         return bits_xml
