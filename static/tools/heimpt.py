@@ -79,7 +79,7 @@ class MPT(Debuggable):
         self.current_result = datetime.datetime.now().strftime(
             "%Y_%m_%d-%H-%M-%S-") + str(uuid.uuid4())[:4]
         # TODO: Remove
-        #self.current_result = 'test'
+        self.current_result = 'test'
         self.config = None
         self.all_typesetters = None
         self.script_folder = os.path.dirname(os.path.realpath(__file__))
@@ -172,6 +172,8 @@ class MPT(Debuggable):
             args_str = args_str.replace(': ', ':')
             self.debug.print_debug(
                 self, u"Merging command: file into command:file, can be a problem for some applications")
+        #TODO delete
+        #self.debug.print_console(self, args_str)
         m = args_str.strip().split(' ')
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
@@ -534,7 +536,7 @@ class MPT(Debuggable):
 
                 pre_path = temp_path
                 prev_out_type = temp_pre_out_type
-                #self.debug.print_console(self, ' '.join(['ls -al',temp_path]))
+
 
         else:
             self.debug.print_debug(
@@ -636,9 +638,6 @@ class MPT(Debuggable):
         else:
             self.debug.print_debug(
                 self, self.gv.PROJECT_TYPESETTER_PROCESS_METHOD_NOT_SPECIFIED)
-
-        #self.debug.print_console(self, '{}  {}'.format(self.gv.OUTPUT,f_path))
-
         return SEP.join(project_path)
 
     def create_merged_file(self, p, p_id, project_path, t_path):

@@ -16,8 +16,11 @@ Options:
     -n --set-numbering-tags=<elemennt types as comma seperated lists>
     -r --clean-references
     -s --sort-references=<tag list as comma seperated lists>
+    -t --stand-alone
     -u --set-uuids=<element types as comma seperated list>
     -v --set-numbering-values=<numbering values, additionaly roman numbers e.g.xref,ref-type,fn,{1:2} >
+
+
 
 All the  are done  in the global element tree for performance reasons.
 
@@ -74,6 +77,7 @@ class Prepare(Debuggable):
             self.debug.enable_debug()
         self.dr = self.args.get('<path>')
         self.f = self.args.get('<input_file>')
+        self.stand_alone = self.args.get('--stand-alone')
         self.tr = etree.parse(os.path.join(self.dr, self.f))
 
     @staticmethod
@@ -297,24 +301,30 @@ class Prepare(Debuggable):
         r = self.tr.getroot()
 
         pth = self.create_metadata_path(metadata)
+
+
         if os.path.isfile(pth):
-
             fr = r.find('.//front')
-            fr.getparent().remove(fr)
-
-
-            #bpm = etree.parse(pth).find('.//book-part-meta')
-            #print etree.tostring(bpm)
-
-            bg = r.find('.//body').getparent()
-            bpm = etree.parse(pth).find('.')
-            bg.insert(0, bpm)
-
-
+            if len(fr):
+                bg = r.find('.//body').getparent()
+                fr.getparent().remove(fr)
+                bpm = etree.parse(pth).find('.//book-part-meta')
+                if bpm is None:
+                    bpm = etree.parse(pth).find('.')
+                    if bpm is not None:
+                        if bpm.getroottree().getroot().tag == 'front':
+                            bg.insert(0, bpm)
+                        else:
+                            self.debug.print_debug(self, 'front or bookpart metadata unspecified')
+                            sys.exit(1)
+                else:
+                    bg.insert(0, bpm)
+            else:
+                self.debug.print_debug(self, 'front metadata unspecified')
         else:
             self.debug.print_debug(self, pth +
                                    self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST)
-
+            sys.exit(1)
         return self.tr
 
     def create_metadata_path(self, metadata):
@@ -336,15 +346,14 @@ class Prepare(Debuggable):
         We assume that  metadata files are stored in a sub-folder named metadata
         """
         p = os.path.dirname(self.f).split(os.sep)
-        print p
-        #del p[-4:]
+        if not self.stand_alone:
+            del p[-4:]
         f = os.path.basename(self.f)
         name, ext = os.path.splitext(f)
         file_name = [name, '.', metadata, ext]
         p.append('metadata')
         p.append(''.join(file_name))
         pth = os.sep.join(p)
-        print pth
         return pth
 
     def sort_by_tags(self, tag_list, elem):
@@ -364,7 +373,6 @@ class Prepare(Debuggable):
             vl = []
             for tag in tag_list:
                 vl.append(e.findtext(".//" + tag))
-
             vl.append(e)
             data.append(tuple(vl))
 
@@ -467,6 +475,18 @@ class Prepare(Debuggable):
             os.path.join(
                 self.dr, os.path.basename(
                     self.f)))
+
+    def get_module_name(self):
+        """
+        Reads the name of the module for debugging and logging
+
+        Returns
+        -------
+        name string
+         Name of the Module
+        """
+        name = 'prepare'
+        return name
 
     def create_xml_file(self, pth):
         """

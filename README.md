@@ -1,11 +1,10 @@
 ![Heidelberg Monograph Publication  Tool (heiMPT)](https://raw.githubusercontent.com/withanage/heimpt/master/static/images/heiMPT.jpg)
 
-**Heidelberg Monograph Publication Tool (heiMPT)** is a stand-alone platform, as well as a plug-in application for OMP. Developed by staff of **Heidelberg University Library** in cooperation with external partners, it enables a high degree of automation in the digital publication process. Dulip Withanage of the University of Heidelberg Library supervises MPTs technical development.
-
+**Heidelberg Monograph Publication Tool (heiMPT)** is a stand-alone platform, as well as a plug-in application for OMP. Developed by staff of **Heidelberg University Library** in cooperation with external partners, it enables a high degree of automation in the digital publication process.
 The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-processor,  (3) an output generation engine and (4) a WYSIWYG editor.
 
 
-(1) To covert from a Microsoft Word .docx format to NLM/JATS-XML for scholarly/scientific article typesetting, we utilize meTypeset, which Dulip Withanage developed in collaboration with Dr. Martin Eve and the Public Knowledge Project (PKP). meTypeset is an extension/wrapper of OxGarage and uses TEI as an intermediary format to facilitate interchange. meTypeset allows for intelligent size processing of input documents and section grouping algorithms. It automatically detects figure and table lists, footnotes, heading structure, bibliographies, and metadata.
+(1) To covert from a Microsoft Word .docx format to NLM/JATS-XML for scholarly/scientific article typesetting, we utilize meTypeset, which we developed in collaboration with Dr. Martin Eve and the Public Knowledge Project (PKP). meTypeset is an extension/wrapper of OxGarage and uses TEI as an intermediary format to facilitate interchange. meTypeset allows for intelligent size processing of input documents and section grouping algorithms. It automatically detects figure and table lists, footnotes, heading structure, bibliographies, and metadata.
 
 (2)  A Set of utilities to process the  XML files  and functions to manipulate the content. Some of the functions are numbering, sorting references, deleting unreferenced references etc.
 

@@ -1,0 +1,68 @@
+{
+  "projects": [
+    {
+      "active": true,
+      "chain": true,
+      "files": {
+	"1":"DCB1_01_Vorwort.xml",
+	"2":"DCB1_02_Einleitung.xml",
+	"3":"DCB1_03_Schubert.xml",
+	"4":"DCB1_04_Brandt.xml",
+	"5":"DCB1_05_Mernitz.xml",
+	"6":"DCB1_06_Tabellenanhang_Uebersicht.xml",
+	"7":"DCB1_07_Tabelle_01.xml",
+	"8":"DCB1_08_Tabelle_02.xml",
+	"9":"DCB1_09_Tabelle_03.xml",
+	"10":"DCB1_10_Tabelle_04.xml",
+	"11":"DCB1_11_Tabelle_05.xml",
+	"12":"DCB1_12_Tabelle_06.xml",
+	"13":"DCB1_13_Tabelle_07.xml",
+	"14":"DCB1_14_Tabelle_10.xml",
+	"15":"DCB1_15_Tabelle_01_vollstaendig.xml",
+	"16":"DCB1_16_Tabelle_08_eonly.xml",
+	"17":"DCB1_17_Tabelle_09_eonly.xml",
+	"18":"DCB1_18_Tabelle_11_eonly.xml"
+      },
+      "name": "jats_result",
+      "path": "/home/wit/Arbeit/OMP/Schubert/xml/",
+      "typesetters": {
+        "1": {
+          "arguments": {
+            "1": "--create-dir"
+          },
+          "name": "xmlprocess",
+          "out_type": "xml",
+          "process": true
+        },
+        "2": {
+          "arguments": {
+            "1": "--create-dir",
+            "2": "jats",
+            "3": "--set-numbering-tags=disp-quote,tr,sec,title,p"
+          },
+          "name": "xmlmerge",
+          "out_type": "xml",
+          "out_file": "fullFile.xml",
+          "merge": true
+        }
+	}      
+    }
+  ],
+  "typesetters": {
+    "xmlprocess": {
+      "arguments": {
+        "1": "--metadata jats",
+        "2": "--set-uuids=fn,ref",
+        "3": "--set-numbering-values=xref,ref-type,fn",
+        "4": "--clean-references"
+      },
+      "executable": "/home/www-data/web2py/applications/heimpt/static/tools/prepare.py"
+    },
+    "xmlmerge": {
+      "arguments": {
+         "1": "--metadata jats"
+      },
+      "executable": "/home/www-data/web2py/applications/heimpt/static/tools/merge.py"
+    }
+  }
+}

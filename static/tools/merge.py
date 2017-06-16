@@ -101,7 +101,6 @@ class Merge(Debuggable):
         fuf = os.path.join(self.dr, self.uid)
         pt = os.path.join(self.dr, os.path.basename(self.uid))
 
-
         trf = None
         if os.path.isfile(fuf):
             trf = etree.parse(fuf)
@@ -112,7 +111,7 @@ class Merge(Debuggable):
             trf = self.create_book_bits()
         trf = self.process(trf)
 
-        self.do_file_io(etree.tostring(trf, pretty_print=True, xml_declaration=True, encoding='UTF-8', standalone='yes'), 'w', pt)
+        self.do_file_io(etree.tostring(trf, pretty_print=False, xml_declaration=True,  encoding='UTF-8', standalone='yes'), 'w', pt)
 
     def create_output_jats(self):
         """
@@ -129,16 +128,31 @@ class Merge(Debuggable):
         trf = None
         if os.path.isfile(fuf):
             trf = etree.parse(fuf)
-            bp = trf.find(".//body")
-            journal_part = self.create_journal_part_jats()
-            bp.append(journal_part)
+            bpf = trf.find(".//body")
+            f, bd, bk = self.get_xml_parts()
+            if bd is not None:
+                sec = list(bd)[0]
+                bpf.append(sec)
+
+            bkrf = trf.find(".//back/ref-list")
+            for r in bk.findall('.//ref-list/ref'):
+
+                bkrf.append(r)
+
+            bkff = trf.find(".//back/fn-group")
+            for fn in bk.findall('.//fn-group/fn'):
+                bkff.append(fn)
+
+
         else:
             trf = self.create_journal_jats()
+
         trf = self.process(trf)
 
         self.do_file_io(
-            etree.tostring(trf, pretty_print=True, xml_declaration=True, encoding='UTF-8', standalone='yes'), 'w',
+            etree.tostring(trf, pretty_print=False, xml_declaration=True, encoding='UTF-8', standalone='yes'), 'w',
             pt)
+
 
     def process(self, tr):
         """
@@ -165,7 +179,6 @@ class Merge(Debuggable):
         self.set_book_part_attributes(tr)
 
         return tr
-
 
     def set_book_part_attributes(self, tr):
         """
@@ -211,12 +224,12 @@ class Merge(Debuggable):
         p = os.path.dirname(self.f).split(os.sep)
         del p[-4:]
         name, ext = os.path.splitext(os.path.basename(self.uid))
-        file_name = [name, '.', metadata, '.','xml']
+        file_name = [name, '.', metadata, '.', 'xml']
         p.append('metadata')
         p.append(''.join(file_name))
 
         pth = os.sep.join(p)
-        self.debug.print_debug(self, u'merging headers'+str(pth))
+        self.debug.print_debug(self, u'merging headers' + str(pth))
         return pth
 
     def get_module_name(self):
@@ -287,29 +300,38 @@ class Merge(Debuggable):
         create_metadata_path, create_book_part_bits
 
         """
-        
 
         nsmap = {'xlink': "http://www.w3.org/1999/xlink",
                  'mml': "http://www.w3.org/1998/Math/MathML",
                  "xml": "http://www.w3.org/XML/1998/namespace"}
-        journal = etree.Element(etree.QName('book'), nsmap=nsmap)
-        journal.attrib['dtd-version'] = "1.1d1"
+        journal = etree.Element(etree.QName('article'), nsmap=nsmap)
+        journal.attrib['dtd-version'] = "3.0"
         journal.attrib[etree.QName('{http://www.w3.org/XML/1998/namespace}lang')] = "de"
-        journal.attrib['article-type'] = "research-article"
 
         metadata = self.args.get('--metadata')
         if metadata:
             pth = self.create_metadata_path(metadata)
             if os.path.isfile(pth):
-                bp = etree.parse(pth).find('.//book-meta')
-                journal.insert(0, bp)
-
+                bpm = etree.parse(pth).find('.')
+                if bpm is not None:
+                    if bpm.getroottree().getroot().tag == 'front':
+                        journal.insert(0, bpm)
+                    else:
+                        self.debug.print_debug(self, 'front metadata unspecified')
+                        sys.exit(1)
         else:
             sys.exit('Metadata fails')
-        bpbd = self.create_journal_part_jats()
-        journal.append(bpbd)
-
+        f, bd, bk = self.get_xml_parts()
+        journal.append(bd)
+        if len(bk) > 0:
+            journal.append(bk)
+        else:
+            back = etree.Element(etree.QName('back'))
+            back.append(etree.Element(etree.QName('fn-group')))
+            back.append(etree.Element(etree.QName('ref-list')))
+            journal.append(back)
         return journal
+
 
     def create_book_part_bits(self):
         """
@@ -324,29 +346,6 @@ class Merge(Debuggable):
         f, bd, bk = self.get_xml_parts()
 
         bp = etree.Element("book-part")
-
-        if f is not None:
-            if len(f):
-                bp.append(f)
-        if bd is not None:
-            bp.append(bd)
-        if bk is not None:
-            bp.append(bk)
-        return bp
-
-    def create_journal_part_jats(self):
-        """
-        Reads a JATS XMl File and creates a book-part element tree according to BITS-XML.
-
-        Returns
-        -------
-        bp : elementtree
-            Journal part elementTree
-        """
-
-        f, bd, bk = self.get_xml_parts()
-
-        bp = etree.Element("body")
 
         if f is not None:
             if len(f):
@@ -401,7 +400,7 @@ class Merge(Debuggable):
         try:
             w = open(pth, mode)
             if mode == 'w':
-                w.write(s)
+                w.write(s.rstrip('\r\n'))
                 w.close()
             if mode == 'r':
                 o = w.read()
