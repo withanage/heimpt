@@ -1,0 +1,60 @@
+
+<div class="listTitle">
+    <strong>Chapter Title
+    </strong>
+    <span ng-if="!content.hasOwnProperty('title')">
+        <button class="btn btn-default" ng-click="content['title'] = '';triggerClick('div.listTitle span a');">
+            Add
+        </button>
+    </span>
+    <span ng-if="!!content.hasOwnProperty('title')">
+        <a href="#" editable-text="content['title']">{{content['title'] || 'empty'}}</a>
+    </span>
+    <button class="btn btn-default pull-right" ng-click="content['sec'].unshift({'@id': '', 'title': '', 'p': ''});triggerClick('ui.panel-group > li:first-child > h4.panel-title');">Add section</button>
+</div>
+
+
+<ul ui-sortable="sortableOptions" ng-model="content['sec']" class="panel-group">
+    <li ng-repeat="section in content['sec']" class="panel pane-default">
+        <div class="btn btn-default">
+            <i class="glyphicon glyphicon-resize-vertical"></i>
+        </div>
+        <h4 class="panel-title" ng-model="isOpen" ng-init="false" ng-click="isOpen = !isOpen">
+            <span class="pull-left" style="margin-right: 10px;">
+                <i class="glyphicon icon" ng-class="{'glyphicon-chevron-up':isOpen,'glyphicon-chevron-down':!isOpen}"></i>
+            </span>
+            <span><a ng-class="{'editable-empty': !section['@id'] }">{{section['@id'] || 'empty' }}</a></span>
+        </h4>
+        <div class="btn btn-default pull-right" ng-click="content['sec'].splice($index, 1)">
+            <i class="glyphicon glyphicon-remove"></i>
+        </div>
+        <div ng-show="isOpen" class="panel-body">
+            <table class="table">
+                <tr class="no-border-top">
+                    <th width="10%">Label</th>
+                    <td>
+                        <a href="#" editable-text="section['@id']">
+                            {{section['@id'] || 'empty'}}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <th width="10%">Section Title</th>
+                    <td>
+                        <a href="#" editable-text="section['title']">
+                            {{section['title'] || 'empty'}}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Text</th>
+                    <td>
+                        <a href="#" editable-textangular="section['p']">
+                            <span ng-bind-html="section['p'] || 'empty'"></span>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </li>
+</ul>

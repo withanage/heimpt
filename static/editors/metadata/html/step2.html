@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Step 2 | HEIDIEditor</title>
+
+    <link href="css/main.css" type="text/css" rel="stylesheet">
+
+    <!-- Angular modules -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../bower_components/jstree/dist/jstree.min.js"></script>
+    <script src="../bower_components/jstree-directive/jsTree.directive.js"></script>
+    <script src="../bower_components/textAngular/dist/textAngular-sanitize.min.js"></script>
+     <script src="../bower_components/textAngular/dist/textAngular-rangy.min.js"></script>
+    <script src="../bower_components/textAngular/dist/textAngular.min.js"></script>
+    <script src="../bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+    <script src="../bower_components/underscore/underscore-min.js"></script>
+    <script src="../bower_components/angular-underscore-module/angular-underscore-module.js"></script>
+    <script src="../bower_components/angular-ui-sortable/sortable.min.js"></script>
+    <script src="../bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
+    <script src="../bower_components/tinymce/tinymce.min.js"></script>
+    <script src="../bower_components/angular-ui-tinymce/src/tinymce.js "></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/filters.js"></script>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body ng-app="metadata" style="padding-top:40px">
+
+<header step="2"></header>
+
+<div id="content">
+    <div class="container">
+
+        <h2 class="title">Step2: Add Metadata</h2>
+
+        <div class="row" ng-controller="textCtrl">
+            <div class="col-sm-3" ng-controller="jstreeCtrl">
+                <div class="tree-box">
+                    <js-tree
+                            tree-plugins="types,search,sort"
+                            tree-types="typesConfig"
+                            tree-data="json"
+                            tree-src="../../../../../heidieditor/editor/call/json/book_chapters"
+                            tree-events="changed:changedCB">
+                    </js-tree>
+                </div>
+
+            </div>
+
+            <div class="col-sm-9">
+                <!-- book-level metadata-->
+                <div collapse="booktree.selected != tree['book']['book-meta']['book-id']['#text']">
+                    <book-meta></book-meta>
+                </div>
+
+                <!-- part-level metadata-->
+                <div ng-repeat="part in tree['book']['body']['book-part']" ng-if="part['@book-part-type'] == 'part'">
+                    <div collapse="booktree.selected != part['@id']">
+                        <book-part></book-part>
+                    </div>
+                </div>
+                <!-- part-chapter-level metadata-->
+                <div ng-repeat="part in tree['book']['body']['book-part']" ng-if="part['@book-part-type'] == 'part'">
+                    <div ng-repeat="chapter in part['body']['book-part']" ng-if="chapter['@book-part-type'] == 'chapter'">
+                        <div collapse="booktree.selected != chapter['@id']">
+                            <book-chapter></book-chapter>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- chapter-level metadata-->
+                <div ng-repeat="chapter in tree['book']['body']['book-part']" ng-if="chapter['@book-part-type'] == 'chapter'">
+                    <div collapse="booktree.selected != chapter['@id']">
+                        <book-chapter></book-chapter>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="row next-btn">
+                    <button class="btn btn-primary back-btn" onclick="location.href='index.html'"><i class="glyphicon glyphicon-chevron-left"></i>Back</button>
+                    <button class="btn btn-primary next-btn" onclick="location.href='step3.html'">Next<i class="glyphicon glyphicon-chevron-right"></i></button>
+                </div>
+
+                <div>
+                    Debug Area
+                    <pre><code>{{tree | json}}</code></pre>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    <!-- /container -->
+
+</div>
+</div>
+
+
+</body>
+</html>

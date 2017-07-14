@@ -1,0 +1,214 @@
+/* ------------------------------------- <em>/
+/</em>   header
+/* ------------------------------------- */
+#header{
+    //background-color: #a2c6dc;
+    min-height: 50px;
+    margin-bottom: 20px;
+}
+/* ------------------------------------- <em>/
+/</em>   footer
+/* ------------------------------------- */
+#footer{
+    //background-color: #a2c6dc;
+    min-height: 50px;
+    margin-top: 20px;
+}
+
+
+/* ------------------------------------- <em>/
+/</em>   text angular
+/* ------------------------------------- */
+.ta-editor.ta-html, .ta-scroll-window.form-control{
+    width: 100%;
+    min-height: 100px;
+}
+.ta-scroll-window>.ta-bind{
+    min-height: 95px;
+    max-width: 620px;
+}
+
+/* ------------------------------------- <em>/
+/</em>   content
+/* ------------------------------------- */
+#content{
+   min-height: 500px;
+}
+
+.title{
+    text-align: left;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.text-box{
+    margin-bottom: 40px;
+}
+
+.tree-box{
+    padding: 9px 14px;
+    margin: 14px 0;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;
+}
+
+/*  table
+/*--------------------------------- */
+
+.cell-border-left{
+    border-left: 1px solid #ddd;
+}
+
+tr.no-border-top > td,
+tr.no-border-top > th,
+th.no-border-top,
+.table>tbody+tbody {
+    border-top: 0px !important;
+}
+
+tr.even-row {
+    background-color: #f9f9f9;
+}
+
+.table button.btn-default {
+    background-color: inherit;
+}
+.table button.btn-default:hover {
+    background-color: #ddd;
+}
+
+/*  ui-sortable
+/*--------------------------------- */
+
+tbody.ui-sortable tr{ /* doesn't work! */
+    border: none !important;
+}
+
+tbody.ui-sortable th{
+    width: 20%;
+    border: none !important;
+}
+
+tbody.ui-sortable .ui-sortable-placeholder td,
+tbody.ui-sortable .ui-sortable-placeholder th{
+    height: 55px;
+}
+
+tbody.ui-sortable .ui-sortable-helper td{
+    width: 17%;
+    background-color: #fff;
+}
+tbody.ui-sortable .ui-sortable-handle td{
+    cursor:move;
+}
+
+
+/* ------------------------------------- <em>/
+/</em>   back matter
+/* ------------------------------------- */
+
+ul.panel-group {
+    list-style:none;
+}
+
+.back-matter h4 {
+    display:inline-block;
+}
+
+.sorticon {
+    margin:2px !important;
+}
+
+.panel-group .panel {
+    padding: 4px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background-color: #f5f5f5;
+}
+
+.panel-default .panel-heading {
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+}
+.panel-group .panel-title {
+    margin:10px;
+    display: inline-block;
+}
+.panel-group .panel-body {
+    padding:15px;
+    margin-left: 50px;
+    background-color: #fefefe;
+    border-radius: 4px;
+}
+
+.preview-box {
+    padding: 10px 10px 10px 40px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    text-indent: -25px;
+    background-color: #fff;
+    word-wrap: break-word;
+}
+
+select.form-control{
+    display: inline-block;
+    width: inherit;
+    background-color: inherit;
+}
+
+div.listTitle {
+    margin: 10px 10px 10px 20px;
+    padding: 5px;
+    min-height: 44px;
+}
+
+.listTitle > span {
+    margin-left: 20px;
+}
+
+
+/*  breadcrumb
+/*--------------------------------- */
+.breadcrumb > li + li:before {
+    content: ">\00a0";
+}
+.breadcrumb span.current{
+    color: #fff;
+    font-weight: bold;
+    background-color: #149bdf;
+    padding: 5px;
+    margin: 0 -5px;
+    border-radius: 4px;
+}
+
+/*  button
+/*--------------------------------- */
+div.next-btn{
+    text-align: right;
+    margin-top: 20px;
+}
+
+button.next-btn{
+    width: 80px;
+    text-align: center;
+}
+div.back{
+    text-align: left;
+    margin-top: 20px;
+}
+
+button.back-btn{
+    width: 80px;
+    text-align: center;
+}
+
+div.download-btn{
+    text-align: center;
+    margin-top: 20px;
+}
+
+button.margin{
+    margin: 10px;
+}

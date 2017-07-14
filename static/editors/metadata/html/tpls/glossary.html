@@ -1,0 +1,52 @@
+
+<div class="listTitle">
+    <strong>List Title
+    </strong>
+    <span ng-if="!content.hasOwnProperty('title')">
+        <button class="btn btn-default" ng-click="content['title'] = '';triggerClick('div.listTitle span a');">
+            Add
+        </button>
+    </span>
+    <span ng-if="!!content.hasOwnProperty('title')">
+        <a href="#" editable-text="content['title']">{{content['title'] || 'empty'}}</a>
+    </span>
+    <button class="btn btn-default pull-right" ng-click="content['def-item'].unshift({'term': {'@id': '', '#text': ''}, 'def': {'p': ''}});triggerClick('ui.panel-group > li:first-child > h4.panel-title');">Add item</button>
+</div>
+
+
+<ul ui-sortable="sortableOptions" ng-model="content['def-item']" class="panel-group">
+    <li ng-repeat="def in content['def-item']" class="panel pane-default">
+        <div class="btn btn-default">
+            <i class="glyphicon glyphicon-resize-vertical"></i>
+        </div>
+        <h4 class="panel-title" ng-model="isOpen" ng-init="false" ng-click="isOpen = !isOpen">
+            <span class="pull-left" style="margin-right: 10px;">
+                <i class="glyphicon icon" ng-class="{'glyphicon-chevron-up':isOpen,'glyphicon-chevron-down':!isOpen}"></i>
+            </span>
+            <span><a ng-class="{'editable-empty': !def['term']['#text']}">{{def['term']['#text'] || 'empty' }}</a></span>
+        </h4>
+        <div class="btn btn-default pull-right" ng-click="content['def-item'].splice($index, 1)">
+            <i class="glyphicon glyphicon-remove"></i>
+        </div>
+        <div ng-show="isOpen" class="panel-body">
+            <table class="table">
+                <tr class="no-border-top">
+                    <th width="10%">Term</th>
+                    <td>
+                        <a href="#" editable-text="def['term']['#text']">
+                            {{def['term']['#text'] || 'empty'}}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>
+                        <a href="#" editable-textangular="def['def']['p']">
+                            <span ng-bind-html="def['def']['p'] || 'empty'"></span>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </li>
+</ul>

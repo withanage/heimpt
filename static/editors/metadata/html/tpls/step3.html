@@ -1,0 +1,44 @@
+<div class="col-sm-3" ng-controller="jstreeCtrl">
+    <div class="tree-box">
+        <js-tree
+                tree-plugins="types,search,sort"
+                tree-types="typesConfig"
+                tree-data="json"
+                tree-src="../cgi/bookchapters.py"
+                tree-events="changed:changedCB">
+        </js-tree>
+    </div>
+
+</div>
+
+<div class="col-sm-9">
+    <!-- book-level metadata-->
+    <div collapse="booktree.selected != tree['book']['book-meta']['book-id']['#text']">
+        <book-back></book-back>
+    </div>
+
+    <!-- part-chapter-level metadata-->
+    <div ng-repeat="part in tree['book']['body']['book-part']" ng-if="part['@book-part-type'] == 'part'">
+        <div ng-repeat="chapter in part['body']['book-part']" ng-if="chapter['@book-part-type'] == 'chapter'">
+            <div collapse="booktree.selected != chapter['@id']">
+                <chapter-back></chapter-back>
+            </div>
+        </div>
+    </div>
+
+    <!-- chapter-level metadata-->
+    <div ng-repeat="chapter in tree['book']['body']['book-part']" ng-if="chapter['@book-part-type'] == 'chapter'">
+        <div collapse="booktree.selected != chapter['@id']">
+            <chapter-back></chapter-back>
+        </div>
+    </div>
+
+
+    <div class="row next-btn">
+        <button class="btn btn-primary next-btn" onclick="location.href='step4.html'">
+            Next<i class="glyphicon glyphicon-chevron-right"></i>
+        </button>
+    </div>
+
+
+</div>

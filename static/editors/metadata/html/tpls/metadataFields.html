@@ -1,0 +1,113 @@
+<i class="glyphicon"
+   ng-class="{'glyphicon-file':f.type == 'file', 'glyphicon-folder-open':f.type == 'book'}"></i>
+{{f.id}}
+<div ng-if="!!(f.tagset == 'article')">
+    <div ng-if="!!(f.type == 'book')">
+    <table class="table">
+        <tr>
+            <th>Manuscript Type</th>
+            <td colspan="2">
+                <input type="radio" ng-model="f['tagset']" value="article"/>&nbsp;journal article&nbsp;&nbsp;
+                <input type="radio" ng-model="f['tagset']" value="book"/>&nbsp;book&nbsp;&nbsp;
+            </td>
+            <th></th>
+            <td>ID:
+                <div class="btn-group" dropdown>
+                    <button type="button" class="btn btn-default dropdown-toggle">
+                        {{f['article']['front']['journal-meta']['journal-id']['@journal-id-type']}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-repeat="type in idType">
+                        <a ng-click="f['article']['front']['journal-meta']['journal-id']['@journal-id-type']=type.name"
+                           tooltip-placement="right" tooltip="{{type.info}}">{{type.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+            <td>
+                <input class="form-control" ng-model="f['article']['front']['journal-meta']['journal-id']['#text']" />
+            </td>
+        </tr>
+        <tr>
+            <th>ISSN</th>
+            <td>
+                <div class="btn-group" dropdown>
+                    <button type="button" class="btn btn-default dropdown-toggle">
+                        {{f['article']['front']['journal-meta']['issn']['@pub-type']}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-repeat="type in pubType">
+                            <a ng-click="f['article']['front']['journal-meta']['issn']['@pub-type']=type">{{type}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+            <td>
+                <input class="form-control"
+                       ng-model="f['article']['front']['journal-meta']['issn']['#text']"/>
+            </td>
+            <th></th>
+            <td colspan="2">
+            </td>
+        </tr>
+        <tr>
+            <th>Journal Title</th>
+            <td colspan="3">
+                <input type="text" class="form-control" placeholder="Title"
+                       ng-model="f['article']['front']['journal-meta']['journal-title-group']['journal-title']"/>
+            </td>
+        </tr>
+        <tr>
+            <th>Publisher</th>
+            <td colspan="2">
+                <input type="text" class="form-control" placeholder="Publisher name"
+                       ng-model="f['article']['front']['journal-meta']['publisher']['publisher-name']"/>
+            </td>
+            <td>
+                <input type="text" class="form-control" placeholder="Location"
+                       ng-model="f['article']['front']['journal-meta']['publisher']['publisher-loc']"/>
+            </td>
+            <th></th>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    </div>
+    <div ng-if="!!(f.type == 'file')">
+        <table class="table">
+            <tr>
+                <th>Article Title</th>
+                <td colspan="2">
+                    <input type="text" class="form-control" placeholder="Title"
+                           ng-model="f['article']['front']['article-meta']['title-group']['article-title']"/>
+                </td>
+            </tr>
+            <tr ng-repeat="c in f['article']['front']['article-meta']['contrib-group']">
+                <th>Author</th>
+                <td>
+                    <input type="text" class="form-control" placeholder="First name"
+                           ng-model="c['contrib']['name']['surname']"/>
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="Last name"
+                           ng-model="c['contrib']['name']['given-names']"/>
+                </td>
+            </tr>
+            <tr>
+                <th>Keywords</th>
+                <td colspan="2">
+                    <input type="text" name="meta_keywords" class="form-control" placeholder="xxx, yyy, zzz" />
+                </td>
+            </tr>
+            <tr>
+                <th>Abstract</th>
+                <td colspan="2">
+                    <div text-angular ng-model="f['article']['front']['article-meta']['abstract']['p']"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+

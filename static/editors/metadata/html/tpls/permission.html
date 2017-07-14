@@ -1,0 +1,113 @@
+<div class="modal-header">
+    <h3>Permission</h3>
+</div>
+<div class="modal-body">
+    <table class="table table-striped">
+        <tr>
+            <th width="20%">Copyright year
+                <span ng-if="!permissions.hasOwnProperty('copyright-year')">
+                    <button class="btn btn-default pull-right"
+                            ng-click="permissions['copyright-year'] = '';triggerClick('td.copyrightYear a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td width="80%" class="copyrightYear">
+                <span ng-if="!!permissions.hasOwnProperty('copyright-year')">
+                    <a href="#" editable-text="permissions['copyright-year']">
+                        {{permissions['copyright-year'] || 'empty'}}
+                    </a>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th>Copyright holder
+                <span ng-if="!permissions.hasOwnProperty('copyright-holder')">
+                    <button class="btn btn-default pull-right"
+                            ng-click="permissions['copyright-holder'] = '';triggerClick('td.copyrightHolder a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="copyrightHolder">
+                <span ng-if="!!permissions.hasOwnProperty('copyright-holder')">
+                    <a href="#" editable-text="permissions['copyright-holder']">
+                        {{permissions['copyright-holder'] || 'empty'}}
+                    </a>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th>Copyright statement
+                <span ng-if="!permissions.hasOwnProperty('copyright-statement')">
+                    <button class="btn btn-default pull-right"
+                            ng-click="permissions['copyright-statement'] = '';triggerClick('td.copyrightStatement a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="copyright-statement">
+                <span ng-if="!!permissions.hasOwnProperty('copyright-statement')">
+                    <a href="#" editable-text="permissions['copyright-statement']">
+                        {{permissions['copyright-statement'] || 'empty'}}
+                    </a>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th>License type
+                <span ng-if="!permissions['license'].hasOwnProperty('@license-type')">
+                    <button class="btn btn-default pull-right"
+                            ng-click="permissions['license']['@license-type'] = 'open-access';triggerClick('td.licenseType a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="licenseType">
+                <span ng-if="!!permissions['license'].hasOwnProperty('@license-type')" >
+                    <a editable-select="permissions['license']['@license-type']"
+                       e-ng-options="license.name as license.name for license in licenseType">
+                        {{permissions['license']['@license-type'] || 'empty'}}
+                    </a>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th>License link
+                <span ng-if="!permissions['license'].hasOwnProperty('@xlink:href')">
+                    <button class="btn btn-default pull-right"
+                            ng-click="permissions['license']['@xlink:href'] = '';triggerClick('td.licenseLink a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="licenseLink">
+                <span ng-if="!!permissions['license'].hasOwnProperty('@xlink:href')" >
+                    <a href="#" editable-url="permissions['license']['@xlink:href']">
+                        {{permissions['license']['@xlink:href'] || 'empty'}}
+                    </a>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th>License statement
+                <span ng-if="!permissions['license'].hasOwnProperty('license-p')">
+                    <button class="btn btn-default pull-right"
+                            ng-click="permissions['license']['license-p'] = '';triggerClick('td.licenseP a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="licenseP">
+                <span ng-if="!!permissions['license'].hasOwnProperty('license-p')">
+                    <a href="#" editable-textangular="permissions['license']['license-p']">
+                        <span ng-bind-html="permissions['license']['license-p'] || 'empty'"></span>
+                    </a>
+                </span>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="cancel()">Close</button>
+</div>

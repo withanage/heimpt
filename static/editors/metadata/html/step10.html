@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Step 10 | HEIDI Editor</title>
+
+    <!-- Stylesheets -->
+    <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="css/bootstrap-wysihtml5-0.0.2.css" type="text/css" rel="stylesheet">
+    <link href="css/themes/default/style.css" type="text/css" rel="stylesheet">
+    <link href="css/custom.css" type="text/css" rel="stylesheet">
+
+
+    <!-- jQuery and plugins -->
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jstree.min.js"></script>
+    <script src="js/advanced.js"></script>
+    <script src="js/wysihtml5-0.3.0.min.js"></script>
+    <script src="js/bootstrap-wysihtml5-0.0.2.min.js"></script>
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script>
+        $(function(){
+            $("#header").load("header.html", null, function(){
+                $("a.disabled").click(function(){return false;});
+                $("li#nav-step10").addClass("active").nextAll().each(function(){
+                    $(this).find("a").addClass("disabled").attr({href:"javascript:void(0)", onClick:"return false"});
+                });
+            });
+        });
+    </script>
+
+</head>
+<body>
+
+
+<div id="content">
+    <div class="container">
+
+        <div id="header"></div>
+
+        <h2 class="title">Step 10: Pagebreak Insertion</h2>
+        <!-- /title -->
+
+
+        <div class="row">
+            <div class="col-sm-3">
+
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#media" data-toggle="tab">Media</a></li>
+                    <li><a href="#tables" data-toggle="tables">Tables</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="media">
+                        <div class="row">&nbsp;</div>
+                        <div class="row">
+                            <div class="highlight treepane" id="treepane_media">
+                                <ul>
+                                    <li>A</li>
+                                    <li>B</li>
+                                    <li>C</li>
+                                    <li>D</li>
+                                    <li>E</li>
+                                    <li>F</li>
+                                    <li>G</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="tables">
+                        <div class="row">&nbsp;</div>
+                        <div class="row">
+                            <div class="highlight treepane" id="treepane_tables">
+                                <ul>
+                                    <li>A</li>
+                                    <li>B</li>
+                                    <li>C</li>
+                                    <li>D</li>
+                                    <li>E</li>
+                                    <li>F</li>
+                                    <li>G</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- /treepane -->
+
+
+            <div class="col-sm-9">
+
+            </div>
+            <!-- /main -->
+
+
+        </div>
+
+
+
+        <div class="row next-btn">
+            <button class="btn btn-primary next-btn" onclick="location.href='step11.html'">Next<i class="glyphicon glyphicon-chevron-right"></i></button>
+        </div>
+
+
+
+    </div>
+    <!-- /container -->
+
+
+</div>
+<!-- /content -->
+
+
+<div id="footer" class="container">footer</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+
+        $(".treepane").jstree({
+            //"json_data": jsonData
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>HEIDIEditor</title>
+
+    <!-- Stylesheets -->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="../bower_components/bootstrap-additions/dist/bootstrap-additions.min.css" type="text/css" rel="stylesheet">
+    <link href="../bower_components/font-awesome/css/font-awesome.css" type="text/css" rel="stylesheet">
+    <link href="../bower_components/textAngular/dist/textAngular.css" type="text/css" rel="stylesheet">
+    <link href="../bower_components/jstree/dist/themes/default/style.css" type="text/css" rel="stylesheet">
+    <link href="../bower_components/angular-xeditable/dist/css/xeditable.css" type="text/css" rel="stylesheet">
+    <link href="../bower_components/angular-ui-tree/dist/angular-ui-tree.min.css" type="text/css" rel="stylesheet">
+    <link href="css/custom.css" type="text/css" rel="stylesheet">
+
+    <!-- Angular modules -->
+    <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../bower_components/jstree/dist/jstree.min.js"></script>
+    <script type="text/javascript" src="../bower_components/jstree-directive/jsTree.directive.js"></script>
+    <script type="text/javascript" src="../bower_components/rangy/rangy-core.min.js"></script>
+    <script type="text/javascript" src="../bower_components/textAngular/dist/textAngular-sanitize.min.js"></script>
+    <script type="text/javascript" src="../bower_components/textAngular/dist/textAngular-rangy.min.js"></script>
+    <script type="text/javascript" src="../bower_components/textAngular/dist/textAngular.min.js"></script>
+    <script type="text/javascript" src="../bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+    <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
+    <script type="text/javascript" src="../bower_components/angular-underscore-module/angular-underscore-module.js"></script>
+    <script type="text/javascript" src="../bower_components/angular-ui-sortable/sortable.min.js"></script>
+    <script type="text/javascript" src="../bower_components/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
+    <script type="text/javascript" src="../bower_components/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript" src="../bower_components/angular-ui-tinymce/src/tinymce.js"></script>
+    <script type="text/javascript" src="js/controllers.js"></script>
+    <script type="text/javascript" src="js/factories.js"></script>
+    <script type="text/javascript" src="js/directives.js"></script>
+    <script type="text/javascript" src="js/filters.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body id="top" ng-app="metadata" ng-controller="textCtrl">
+
+<nav-bar step-number="stepNumber"></nav-bar>
+
+<div id="content">
+    <div class="container">
+
+        <h2 class="title navbar-fixed-top">Step {{stepNumber}}: {{getStepTitle(stepNumber)}}</h2>
+
+        <div id="step2" class="row"><step2></step2></div>
+        <div id="step3" class="row"><step3></step3></div>
+        <div id="step4" class="row"><step4></step4></div>
+        <div id="step5" class="row"><step5></step5></div>
+
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            Debug Area
+            <pre><code>{{tree['book']['body'] | json}}</code></pre>
+        </div>
+
+
+    </div>
+    <!-- /container -->
+
+</div>
+</div>
+
+
+</body>
+</html>
