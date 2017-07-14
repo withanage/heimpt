@@ -2,17 +2,22 @@
 
 ## Installation
 
-Clone the complete MPT repository.
+Clone the complete heiMPT repository.
 
 ```
-git clone https://github.com/withanage/mpt.git
+git clone https://github.com/withanage/heimpt.git
 ```
 
-Initialize the submodules to get meTypeset.
+
 
 ```
-cd mpt
+cd heimpt
+# Initialize the submodules to get meTypeset.
 git submodule update --init --recursive
+
+# Install the viewer dependencies (needs bower)
+cd static/editors/metadata/
+bower install 
 ```
 
 [mPDF](http://www.mpdf1.com/mpdf/index.php?page=Installation) is included in MPT as the default PDF renderer. To use any of the other three supported tools, you need to install them separately.
