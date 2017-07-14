@@ -23,8 +23,7 @@ Example
 --------
 
 python $BUILD_DIR/static/tools/heimpt.py  $BUILD_DIR/static/tools/configurations/example.json
-
-
+python $BUILD_DIR/static/tools/heimpt.py import  omp 48
 Notes
 -------
 This program may be used to consolidate output files, generated from a certain tool.  But a consolidation tool should

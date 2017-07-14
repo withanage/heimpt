@@ -9,26 +9,19 @@ git clone https://github.com/withanage/heimpt.git
 ```
 
 
-
-```
-cd heimpt
-# Initialize the submodules to get meTypeset.
-git submodule update --init --recursive
-
-# Install the viewer dependencies (needs bower)
-cd static/editors/metadata/
-bower install 
 ```
 
-[mPDF](http://www.mpdf1.com/mpdf/index.php?page=Installation) is included in MPT as the default PDF renderer. To use any of the other three supported tools, you need to install them separately.
+[Apache FO](https://xmlgraphics.apache.org/fop/quickstartguide.html) is included in heiMPT as the default PDF renderer. To use any of the other three supported tools, you need to install them separately.
 
  * [Antenna House Formatter](http://www.antennahouse.com/product/ahf60/download.htm)
  * [Apache FO](https://xmlgraphics.apache.org/fop/quickstartguide.html)
  * [Prince](http://www.princexml.com/download/)
 
+<!---
+
 ## Test directory structure
 
-MPT contains tests in ```./static/tests```. Every test collection is identified by a unique test name and stored in a subfolder, e.g. ```misc```. Input (and intermediate) files are stored in 
+heiMPT contains tests in ```./static/tests```. Every test collection is identified by a unique test name and stored in a subfolder, e.g. ```misc```. Input (and intermediate) files are stored in 
 
 ```
 misc/src/doc
@@ -49,8 +42,8 @@ Test settings are configured via a config file; an example file can be found in 
 
 ### General settings
 
-* ```base_dir``` – path to your MPT installation
-* ```test_collection``` – name of test collection directoryy, i.e. ```misc``` (see above)
+* ```base_dir``` – path to your heiMPT installation
+* ```test_collection``` – name of test collection directory, i.e. ```misc``` (see above)
 * ```test_name``` – unique test identifier, e.g. ```footnotes```, name for all test files (```footnotes.doc```, ```footnotes.xml```, ...)
 
 
@@ -83,3 +76,4 @@ If no path is specified, it will be assumed that the tool is not installed.
 ```
 ./test.py -c config
 ```
+-->
