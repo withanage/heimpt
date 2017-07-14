@@ -9,6 +9,7 @@ numbering elements of a certain type  or setting unique ids to a certain element
 Usage:
     prepare.py  <input_file>  <path> [options]
 Options:
+    -c --citations-to-references
     -d --debug   Enable debug output
     -f --sort-footnotes=<tag list as comma seperated lists>
     -h --help
@@ -93,7 +94,35 @@ class Prepare(Debuggable):
         """
         return docopt(__doc__, version='xml 0.1')
 
-    def remove_references(self):
+    def citations_to_references(self):
+        """ Removes  mixed-citation block, adds as a <sec> Section element
+
+        Returns
+         -------
+         tr : elementtree
+
+        """
+
+        t = self.tr.getroot()
+        bd = t.find('.//body')
+        sc = etree.Element('sec')
+        ttl = etree.Element('title')
+        ttl.text = 'References'
+        sc.append(ttl)
+        mc = t.findall('.//mixed-citation')
+        if len(mc) > 0:
+            for r in mc:
+                r.tag = 'p'
+                sc.append(r)
+            bd.append(sc)
+            rlst = t.find('.//ref-list')
+            rlst.getparent().remove(rlst)
+            bck = t.find('.//back')
+            bck.append(etree.Element('ref-list'))
+
+        return self.tr
+
+    def clean_references(self):
         """ removes  references, which are not linked.
 
          Parameters
@@ -302,7 +331,6 @@ class Prepare(Debuggable):
 
         pth = self.create_metadata_path(metadata)
 
-
         if os.path.isfile(pth):
             fr = r.find('.//front')
             if len(fr):
@@ -315,7 +343,8 @@ class Prepare(Debuggable):
                         if bpm.getroottree().getroot().tag == 'front':
                             bg.insert(0, bpm)
                         else:
-                            self.debug.print_debug(self, 'front or bookpart metadata unspecified')
+                            self.debug.print_debug(
+                                self, 'front or bookpart metadata unspecified')
                             sys.exit(1)
                 else:
                     bg.insert(0, bpm)
@@ -437,8 +466,8 @@ class Prepare(Debuggable):
 
         """
 
+        citations_to_references = self.args.get('--citations-to-references')
         clean_references = self.args.get('--clean-references')
-
         set_numbering_tags = self.args.get('--set-numbering-tags')
         set_unique_ids = self.args.get('--set-uuids')
         sort_footnotes = self.args.get('--sort-footnotes')
@@ -448,7 +477,8 @@ class Prepare(Debuggable):
         metadata = self.args.get('--metadata')
         self.tr = self.merge_metadata(metadata) if metadata else self.tr
 
-        self.tr = self.remove_references() if clean_references else self.tr
+        self.tr = self.citations_to_references() if citations_to_references else self.tr
+        self.tr = self.clean_references() if clean_references else self.tr
         self.tr = self.gv.set_numbering_tags(set_numbering_tags.split(
             ','), self.tr) if set_numbering_tags else self.tr
         self.tr = self.set_uuids_for_back_matter(
