@@ -24,18 +24,18 @@ https://withanage.github.io/heimpt
  
 Check if you have persmissions  to intall in the BUILD_DIR
  
-```
+ ```
  BUILD_DIR=/usr/local
  git clone https://github.com/withanage/heimpt.git $BUILD_DIR/heimpt 
  cd $BUILD_DIR/heimpt
- git submodule init
- git submodule update
+ git submodule update --init --recursive
  pip install -r requirements.txt
-```
+ cd static/editors/metadata/
+ bower install 
+ ```
 
 ### FO Processors 
-Only needed if you generate PDF files
-For Windows, IOS some commands may differ from this documentation 
+Only needed if you generate PDF files.
 
 * Apache FOP (free): Download from [Apache FOP processor](https://xmlgraphics.apache.org/fop/download.html) (Binary version) into  $BUILD_DIR/heimpt/static/tools
   ```
