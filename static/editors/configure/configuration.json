@@ -1,0 +1,71 @@
+{
+
+  "properties": {
+
+    "projects": {
+      "type": "array",
+      "format": "table",
+      "title": "Projects",
+      "uniqueItems": true,
+       "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+              "type": "string",
+              "default":"project_name"
+          },
+          "path": {
+            "type": "string",
+            "default":""
+          },
+          "active": {
+            "type": "boolean",
+            "title": "Active",
+            "default": true
+          }
+        ,
+          "chain": {
+            "type": "boolean",
+            "title": "Chain",
+            "default": true
+          }
+          ,
+          "files":{
+            "type": "array",
+            "format": "table",
+            "title": "Files",
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "title": "Order",
+                  "type": "integer",
+                  "enum": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8
+                  ]
+                },
+                "name":{
+                  "type":"string"
+                }
+              }
+
+            }
+          }
+        }
+      }
+    },
+    "typesetters": {
+      "type": "object",
+      "title": "typesetters",
+      "id": "typesetters"
+    }
+  }
+}

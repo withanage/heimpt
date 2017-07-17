@@ -1,0 +1,11 @@
+.button {
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: #000000;
+}
+button.disabled, button[disabled], .button.disabled, .button[disabled] {
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: #fff;
+
+}

@@ -1,5 +1,5 @@
 {
-  "$ref": "basic_person.json",
+  "$ref": "projects.json",
   "properties": {
     "location": {
       "type": "object",
@@ -13,11 +13,11 @@
         },
         "citystate": {
           "type": "string",
-          "description": "This is generated automatically from the previous two fields",
+          "description": "",
           "template": "{{city}}, {{state}}",
           "watch": {
-            "city": "person.location.city",
-            "state": "person.location.state"
+            "city": "projects.location.city",
+            "state": "projects.location.state"
           }
         }
       }
@@ -34,10 +34,7 @@
             "type": "string",
             "enum": [
               "cat",
-              "dog",
-              "bird",
-              "reptile",
-              "other"
+              "dog"
             ],
             "default": "dog"
           },
@@ -46,7 +43,7 @@
           },
           "fixed": {
             "type": "boolean",
-            "title": "spayed / neutered"
+            "title": "spayed"
           }
         }
       }

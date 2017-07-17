@@ -2,25 +2,27 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>CSS Integration JSON Editor Example</title>
+    <title>heiMPT</title>
     
     <!-- Foundation CSS framework (Bootstrap and jQueryUI also supported) -->
     <link rel='stylesheet' href='//cdn.jsdelivr.net/foundation/5.0.2/css/foundation.min.css'>
     <!-- Font Awesome icons (Bootstrap, Foundation, and jQueryUI also supported) -->
     <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'>
-    
+    <link rel='stylesheet' href="css/main.css">
     <script src="js/jsoneditor.min.js"></script>
     
     <script>
-    // Set the default CSS theme and icon library globally
     JSONEditor.defaults.theme = 'foundation5';
     JSONEditor.defaults.iconlib = 'fontawesome4';
+    JSONEditor.defaults.options.disable_edit_json = false;
+    JSONEditor.defaults.options.disable_properties = false;
+    JSONEditor.defaults.options.disable_collapse = true;
     </script>
   </head>
   <body>
     <div class='row'>
       <div class='medium-12 columns'>
-        <h1>CSS Integration JSON Editor Example</h1>
+        <h4>Configuration</h4>
       </div>
     </div>
 
@@ -40,23 +42,11 @@
       // We will use this to seed the initial editor 
       // and to provide a "Restore to Default" button.
       var starting_value = {
-        name: "John Smith",
-        age: 35,
-        gender: "male",
-        location: {
-          city: "San Francisco",
-          state: "California"
-        },
-        pets: [
+        projects: [
+
           {
-            name: "Spot",
-            type: "dog",
-            fixed: true
-          },
-          {
-            name: "Whiskers",
-            type: "cat",
-            fixed: false
+            path: "/home/www-data/web2py/applications/mpt/static/tests/example"
+
           }
         ]
       };
@@ -68,7 +58,7 @@
         
         // The schema for the editor
         schema: {
-          $ref: "person.json",
+          $ref: "configuration.json",
           format: "grid"
         },
         
