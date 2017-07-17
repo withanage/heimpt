@@ -454,9 +454,11 @@ class MPT(Debuggable):
         p_path, pf_type = '', ''
 
         uid = str(uuid.uuid4())
-
+        files = [(i.get("id"), i.get("name")) for i in p.get('files')]
         project_files = collections.OrderedDict(
-            sorted((int(key), value) for key, value in p.get('files').items()))
+            sorted((int(key), value) for key, value in files))
+
+
         if p.get('typesetters')[pre_id].get("expand"):
             f_name = self.gv.uuid
             p_path, pf_type = self.typeset_file(
@@ -620,7 +622,7 @@ class MPT(Debuggable):
 
         if p['typesetters'][p_id].get('merge'):
             self.create_merged_file(p, p_id, project_path, t_path)
-            if len(p.get('files').items()) == f_id:
+            if len(p.get('files')) == f_id:
                 shutil.rmtree(temp_dir)
         elif p['typesetters'][p_id].get('expand'):
             for filename in os.listdir(temp_dir):
