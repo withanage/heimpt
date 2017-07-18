@@ -3,55 +3,46 @@
 
 <div class="panel panel-info">
   <div class="panel-heading"><h3 class="panel-title"><a class="btn-block"
-      href="{{=URL('admin','default','index')}}">
+      href="">
       <i class="glyphicon glyphicon-cog"></i>
-      {{=T("admin")}}
+      {{=T("my projects")}}
     </a></h3></div>
-  <div class="panel-body">
-    {{=T("Don't know what to do?")}}
-  </div>
+  <!--div class="panel-body">
+    {{=T("Lists all my projects")}}
+  </div-->
   <ul class="list-group">
-    <li class="list-group-item">{{=A(T("Online examples"), _href=URL('examples','default','index'))}}</li>
+
 
   </ul>
 </div>
 
 {{block header}}
-    <header class="container-fluid background">
+<div class="mt-10 col-md-12">
+
+</div>
+    <!--header class="container-fluid background">
       <div class="jumbotron text-center">
         {{if response.title:}}
         <h1>{{=response.title}}
           <small>{{=response.subtitle or ''}}</small></h1>
         {{pass}}
       </div>
-    </header>
+    </header-->
 {{end}}
 
-{{if 'message' in globals():}}
-<h2>{{=message}}</h2>
-<p class="lead">{{=T('How did you get here?')}}</p>
-<ol>
-  <li>{{=T('You are successfully running web2py')}}</li>
 
-</ol>
-{{elif 'content' in globals():}}
-{{=content}}
-{{else:}}
-{{=BEAUTIFY(response._vars)}}
-{{pass}}
 
 {{block right_sidebar}}
 <div class="panel panel-info">
   <div class="panel-heading"><h3 class="panel-title"><a class="btn-block"
-      href="{{=URL('admin','default','index')}}">
+      href="">
       <i class="glyphicon glyphicon-cog"></i>
-      {{=T("admin")}}
+      {{=T("Add data")}}
     </a></h3></div>
-  <div class="panel-body">
-    {{=T("Don't know what to do?")}}
-  </div>
+
   <ul class="list-group">
-    <li class="list-group-item">{{=A(T("Online examples"), _href=URL('examples','default','index'))}}</li>
+  <li class="list-group-item">{{=A(T("Add Project"), _href=URL('configure','add_project'))}}</li>
+  <li class="list-group-item">{{=A(T("Add Typesetter"), _href=URL('configure','add_typesetter'))}}</li>
 
   </ul>
 </div>

@@ -48,7 +48,7 @@
     <!--[if lt IE 8]><p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
     <div class="w2p_flash alert alert-dismissable">{{=response.flash or ''}}</div>
     <!-- Navbar ======================================= -->
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-collapse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -57,11 +57,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+          {{response.logo = A(IMG(_src=URL('static', 'images/heiMPT.jpg'),_height='60px', _href=URL('default', 'index')))}}
           {{=response.logo or ''}}
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav navbar-right">
-            {{='auth' in globals() and auth.navbar('Welcome',mode='dropdown') or ''}}
+            {{='auth' in globals() and auth.navbar('',mode='dropdown') or ''}}
           </ul>
           {{if response.menu:}}
           {{=MENU(response.menu, _class='nav navbar-nav',li_class='dropdown',ul_class='dropdown-menu')}}

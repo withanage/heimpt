@@ -105,7 +105,8 @@ select.autocomplete {
     margin: 20px;
 }
 .background {
-    background: url(../images/background.jpg) no-repeat center center;
+
+  /*  background: url(../images/background.jpg) no-repeat center center;*/
 }
 body {
     padding-top: 60px;
@@ -126,8 +127,8 @@ html {
     bottom: 0;
     width: 100%;
     height: 60px;
-    background: #333;
-    color: #aaa;
+    background: #eee;
+    color: #000;
 }
 header h1 {
     color: #FFF!important;
