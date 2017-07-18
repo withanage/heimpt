@@ -18,7 +18,7 @@ def folder():
     return dict(files=Expose('', basename='.',  extensions=['.py', '.jpg']))
 """
 
-
+@auth.requires_login()
 def index():
     """
     example action using the internationalization operator T and flash
@@ -27,8 +27,11 @@ def index():
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
-    response.flash = T("Hello World")
-    return dict(message=T('Welcome to web2py!'))
+    t=db.projects
+    grid = SQLFORM.grid(t, user_signature=False, fields=[t.name],searchable=False, deletable=False,editable=True, details=False, csv=False, create=False,buttons_placement = 'left',
+                        links=[dict(header='Field', body=lambda row: row.id)]
+                        )
+    return dict(message=T('Welcome to web2py!'),grid=grid)
 
 
 def user():
