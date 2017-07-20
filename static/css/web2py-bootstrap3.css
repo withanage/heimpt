@@ -316,3 +316,26 @@ td.w2p_fc,
 input[type=checkbox], input[type=radio] {
     margin: 4px 4px 0 0;
 }
+
+
+.dynamicTile .col-sm-2.col-xs-4{
+    padding:5px;
+}
+
+
+
+.tilecaption{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    margin:0!important;
+    text-align: center;
+    color:white;
+    font-family: Segoe UI;
+    font-weight: lighter;
+}
+
+
+

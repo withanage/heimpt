@@ -1,50 +1,12 @@
 {{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
 {{extend 'layout.html'}}
 
-<div class="panel panel-info">
-  <div class="panel-heading"><h3 class="panel-title"><a class="btn-block"
-      href="">
-      <i class="glyphicon glyphicon-user"></i>
-      {{=T("Workbench")}}
-    </a></h3></div>
-  <!--div class="panel-body">
-    {{=T("Lists all my projects")}}
-  </div-->
-  <ul class="list-group">
+<div class="container dynamicTile">
+<div class="row ">
 
-
-  </ul>
+    {{for m in ms:
+    =m
+    pass
+    }}
 </div>
 
-{{block header}}
-<div class="mt-10 col-md-12">
-
-</div>
-    <!--header class="container-fluid background">
-      <div class="jumbotron text-center">
-        {{if response.title:}}
-        <h1>{{=response.title}}
-          <small>{{=response.subtitle or ''}}</small></h1>
-        {{pass}}
-      </div>
-    </header-->
-{{end}}
-
-
-
-{{block right_sidebar}}
-<div class="panel panel-info">
-  <div class="panel-heading"><h3 class="panel-title"><a class="btn-block"
-      href="">
-      <i class="glyphicon glyphicon-cog"></i>
-      {{=T("Add data")}}
-    </a></h3></div>
-
-  <ul class="list-group">
-  <li class="list-group-item">{{=A(T("Add Project"), _href=URL('configure','add_project'))}}</li>
-  <li class="list-group-item">{{=A(T("Add Typesetter"), _href=URL('configure','add_typesetter'))}}</li>
-
-  </ul>
-</div>
-{{end}}
-{{=grid}}

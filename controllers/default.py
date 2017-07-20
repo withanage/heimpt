@@ -20,18 +20,65 @@ def folder():
 
 @auth.requires_login()
 def index():
-    """
-    example action using the internationalization operator T and flash
-    rendered by views/default/index.html or views/generic.html
+    ms = []
+    a = {'Projects':["default","projects"],'Typesetters':["default","typesetters"]}
+    for m in a:
+        ms.append(metro_block(m,a[m][0],a[m][1]))
+    return dict(ms=ms)
 
-    if you need a simple wiki simply replace the two lines below with:
-    return auth.wiki()
-    """
-    t=db.projects
-    grid = SQLFORM.grid(t, user_signature=False, fields=[t.name],searchable=False, deletable=False,editable=True, details=False, csv=False, create=False,buttons_placement = 'left',
-                        links=[dict(header='Field', body=lambda row: row.id)]
-                        )
-    return dict(message=T('Welcome to web2py!'),grid=grid)
+def metro_block(t,c,f):
+    img_src= "{}{}{}{}".format("https://dummyimage.com/600x600/","eeeeee","/000000.png&text=",t)
+    div= DIV(_class="col-sm-2 col-xs-4")
+    a = DIV(_class="tile")
+    b = DIV(_class="carousel slide" ,**{"data-ride":"carousel"})
+    d = DIV(_class="item active")
+    d.append(A(IMG(_src=img_src ,_class="img-responsive"),_href=URL(c,f)))
+    e = DIV(_class="item")
+    e.append(IMG(_src=img_src, _class="img-responsive"))
+    c =DIV(d,e, _class="carousel-inner")
+    b.append(c)
+    a.append(b)
+
+    div.append(a)
+
+    return div
+
+
+@auth.requires_login()
+def typesetters():
+
+    def tooltip(m):
+        return {"_data-toggle":"tooltip", "_data-placement":"right", "_title":m}
+
+    def typesetter_path(p):
+        if is_executable(p):
+            return DIV(p)
+        else:
+            return DIV(TAG.DEL(p),**tooltip(T("Path invalid")))
+    def args(a):
+        r = DIV(_class="btn-group btn-group-xs")
+        for i in a :
+            r.append(DIV(i,_class="btn btn-default"))
+        return r
+
+    t=db.typesetters
+    tbl = db(t.id>0).select().as_list()
+    bt = TABLE(_class="table table-bordered")
+    th = THEAD()
+    th.append(TR(TH(T('Projects')),TH(T('OUTPUT Type')),TH(T('Executable path'),TH(T('Arguments')),TH(T('Project Arguments')))))
+    bt.append(th)
+    tb = TBODY()
+    for row in tbl:
+        tb.append(TR(TD(row["name"]),TD(DIV(row["out_type"],_class='text-uppercase')),
+                     TD(typesetter_path(row["executable"])),
+                     TD(args(row['typesetter_arguments'])),
+                     TD(args(row['project_arguments'])),
+                     TD(A(T('EDIT'),_href=URL('configure','{}/{}'.format('edit_typesetter',row["id"]))))
+
+                     ))
+
+    bt.append(tb)
+    return dict(message=T('Loaded'),bt=bt)
 
 
 def user():

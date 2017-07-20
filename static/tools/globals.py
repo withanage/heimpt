@@ -82,6 +82,9 @@ class GV(object):
         self.debug = Debug()
         self.numeral_map = numeral_map
 
+        #LOG Object
+        self.log= []
+
         self.uuid = 'mpt'
         self.version = '0.0.1'
 

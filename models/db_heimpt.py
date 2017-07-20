@@ -1,7 +1,10 @@
 db.define_table('typesetters',
                 Field('name', requires=IS_NOT_EMPTY()),
                 Field('executable', requires=IS_NOT_EMPTY()),
-                Field('arguments', type='list:string'),
+                Field('out_type',label=T('Output Type'), requires=IS_NOT_EMPTY(), default='xml'),
+                Field('process_type', requires=IS_IN_SET(('process','merge','expand')), default='process'),
+                Field('typesetter_arguments', type='list:string', label=T('Typesetter Arguments')),
+                Field('project_arguments', type='list:string', label=T('Project Arguments'),default=['--created-dir'], required=True),
                 format='%(name)s'
                 )
 
@@ -11,11 +14,8 @@ db.define_table('projects',
                 Field('name', requires=IS_NOT_EMPTY(), label=T('Projects')),
                 Field('project_path', requires=IS_NOT_EMPTY()),
                 Field('files',type='list:string', requires=IS_NOT_EMPTY()),
-                Field('typesetter_1', requires= IS_IN_DB(db,db.typesetters.id,'%(name)s')),
-                Field('typesetter_2', requires= IS_EMPTY_OR(IS_IN_DB(db,db.typesetters.id,'%(name)s'))),
-                Field('typesetter_3', requires= IS_EMPTY_OR(IS_IN_DB(db,db.typesetters.id,'%(name)s'))),
-                Field('typesetter_4', requires= IS_EMPTY_OR(IS_IN_DB(db,db.typesetters.id,'%(name)s'))),
-                Field('typesetter_5', requires= IS_EMPTY_OR(IS_IN_DB(db,db.typesetters.id,'%(name)s'))),
+                Field('typesetters',type='list:string'),
+
                 Field('project_active', type="boolean", default=True),
                 Field('project_chain', type="boolean", default=True),
                 Field('user_id', type="integer", default= user, readable=False, writable=False)

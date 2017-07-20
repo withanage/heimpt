@@ -424,7 +424,7 @@ class PostProcess:
                 for e in elems:
                     if e.getparent() is not None:
                         e.getparent().remove(e)
-                        logging.info(tag + e.tostring(e) + " removed")
+                        #logging.info(tag + e.tostring(e) + " removed")
         return tr
 
     def remove_table_references(self, tree, name, attr, value):
