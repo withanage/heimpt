@@ -327,6 +327,7 @@ class MPT(Debuggable):
 
         if os.path.isfile(f_path) or p['typesetters'].get(p_id).get('expand'):
             self.debug.print_console(self, u'\t{}:\t {} '.format('Processing', prefix))
+            self.gv.log.append(prefix)
             args.append(f_path)
             self.create_output_path(p, p_id,  args, prefix, uid)
             output, err, exit_code = self.call_typesetter(args)
@@ -454,11 +455,9 @@ class MPT(Debuggable):
         p_path, pf_type = '', ''
 
         uid = str(uuid.uuid4())
-        files = [(i.get("id"), i.get("name")) for i in p.get('files')]
+
         project_files = collections.OrderedDict(
-            sorted((int(key), value) for key, value in files))
-
-
+            sorted((int(key), value) for key, value in p.get('files').items()))
         if p.get('typesetters')[pre_id].get("expand"):
             f_name = self.gv.uuid
             p_path, pf_type = self.typeset_file(
@@ -512,6 +511,7 @@ class MPT(Debuggable):
 
         if p.get('active'):
             self.debug.print_console(self, u'PROJECT : ' + p.get('name'))
+            self.gv.log.append(p.get("name"))
             ts = p.get('typesetters')
             if ts:
                 typesetters_ordered = collections.OrderedDict(
@@ -528,6 +528,7 @@ class MPT(Debuggable):
             for p_id in typesetters_ordered:
                 self.debug.print_console(self, ' '.join(
                     ['Step', p_id, ':', '\t', p.get('typesetters')[p_id].get("name")]))
+                self.gv.log.append('{} {}'.format(p_id,  p.get('typesetters')[p_id].get("name")))
                 temp_path, temp_pre_out_type = self.typeset_files(
                     p,
                     pre_path,
@@ -622,7 +623,7 @@ class MPT(Debuggable):
 
         if p['typesetters'][p_id].get('merge'):
             self.create_merged_file(p, p_id, project_path, t_path)
-            if len(p.get('files')) == f_id:
+            if len(p.get('files').items()) == f_id:
                 shutil.rmtree(temp_dir)
         elif p['typesetters'][p_id].get('expand'):
             for filename in os.listdir(temp_dir):
@@ -763,6 +764,7 @@ def main():
         pi.all_typesetters = pi.config.get('typesetters')
         pi.check_applications()
         pi.run()
+    print pi.gv.log
 
 
 if __name__ == '__main__':
