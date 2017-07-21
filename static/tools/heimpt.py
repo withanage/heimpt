@@ -78,7 +78,7 @@ class MPT(Debuggable):
         self.current_result = datetime.datetime.now().strftime(
             "%Y_%m_%d-%H-%M-%S-") + str(uuid.uuid4())[:4]
         # TODO: Remove
-        self.current_result = 'test'
+        #self.current_result = 'test'
         self.config = None
         self.all_typesetters = None
         self.script_folder = os.path.dirname(os.path.realpath(__file__))
