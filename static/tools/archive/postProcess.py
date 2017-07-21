@@ -69,7 +69,39 @@ class PostProcess:
             if "duplicates" in cfg["references"].keys():
                 for i in cfg["references"]["duplicates"]:
                     tr = self.remove_duplicate_refs(tr, i)
+        if "citations-to-refererences" in cfg.keys():
+            if cfg["citations-to-refererences"] ==1 :
+                tr = self.citations_to_references(tr)
+
         return tr, count
+
+    def citations_to_references(self, tr):
+        """ Removes  mixed-citation block, adds as a <sec> Section element
+
+        Returns
+         -------
+         tr : elementtree
+
+        """
+
+        t = tr.getroot()
+        bd = t.find('.//body')
+        sc = etree.Element('sec')
+        ttl = etree.Element('title')
+        ttl.text = 'References'
+        sc.append(ttl)
+        mc = t.findall('.//mixed-citation')
+        if len(mc) > 0:
+            for r in mc:
+                r.tag = 'p'
+                sc.append(r)
+            bd.append(sc)
+            rlst = t.find('.//ref-list')
+            rlst.getparent().remove(rlst)
+            bck = t.find('.//back')
+            bck.append(etree.Element('ref-list'))
+
+        return tr
 
     def contains(self, a, v):
         ''' help method to compare references '''

@@ -4,6 +4,11 @@
       "dir": "/home/wit/Arbeit/OMP/Stockheimer/xml/proof/",
       "files": [
         {
+          "195-69-78540-2-10-20170719.xml": {
+            "order": 19
+          }
+        },
+        {
           "195-69-78575-1-10-20170719.xml": {
             "order": 18
           }
@@ -94,7 +99,8 @@
         }
       },
       "enumeration": 1,
-      "chapter-begin-reset":1
+      "chapter-begin-reset":1,
+      "citations-to-refererences":1
     }
   },
   "errors": {

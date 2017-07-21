@@ -18,23 +18,37 @@ def folder():
     return dict(files=Expose('', basename='.',  extensions=['.py', '.jpg']))
 """
 
+
+
+
+
+
+def args(a):
+    r = DIV(_class="btn-group btn-group-xs")
+    for i in a:
+        r.append(DIV(i, _class="btn btn-default"))
+    return r
+
 @auth.requires_login()
 def index():
     ms = []
-    a = {'Projects':["default","projects"],'Typesetters':["default","typesetters"]}
+    a = {'Projects':["default","projects","ddeeff"],
+         'Typesetters':["default","typesetters","ccbbaa"]
+
+         }
     for m in a:
-        ms.append(metro_block(m,a[m][0],a[m][1]))
+        ms.append(metro_block(m,a[m][0],a[m][1],a[m][2]))
     return dict(ms=ms)
 
-def metro_block(t,c,f):
-    img_src= "{}{}{}{}".format("https://dummyimage.com/600x600/","eeeeee","/000000.png&text=",t)
+def metro_block(t,c,f,bg_color):
+    img_src= "{}{}{}{}".format("holder.js/200x200?size=15&bg=",bg_color,"&text=",t)
     div= DIV(_class="col-sm-2 col-xs-4")
     a = DIV(_class="tile")
     b = DIV(_class="carousel slide" ,**{"data-ride":"carousel"})
     d = DIV(_class="item active")
     d.append(A(IMG(_src=img_src ,_class="img-responsive"),_href=URL(c,f)))
     e = DIV(_class="item")
-    e.append(IMG(_src=img_src, _class="img-responsive"))
+    e.append(IMG(**{"data-src":img_src}))
     c =DIV(d,e, _class="carousel-inner")
     b.append(c)
     a.append(b)
@@ -42,6 +56,33 @@ def metro_block(t,c,f):
     div.append(a)
 
     return div
+
+
+
+@auth.requires_login()
+def projects():
+
+    t = db.projects
+    tbl = db (t.id ==auth.user.id).select().as_list()
+    bt = TABLE(_class="table table-bordered")
+    th = THEAD()
+    th.append(TR(TH(T("Run")),TH(T("Project name")),TH(T("Project Path")),TH(T("File List")),TH(T("Typesetters"))))
+    bt.append(th)
+    tb = TBODY()
+    for row in tbl:
+        ts = [db(db.typesetters.id==ts_id).select().first()["name"] for ts_id in row["typesetters"]]
+
+        tb.append(TR(
+            TD(row["id"]),
+            TD(row["name"]),
+            TD(row["project_path"]),
+            TD(args(row["files"])),
+            TD(args(ts)),
+        ))
+    bt.append(tb)
+    return dict(bt=bt)
+
+
 
 
 @auth.requires_login()
@@ -55,11 +96,7 @@ def typesetters():
             return DIV(p)
         else:
             return DIV(TAG.DEL(p),**tooltip(T("Path invalid")))
-    def args(a):
-        r = DIV(_class="btn-group btn-group-xs")
-        for i in a :
-            r.append(DIV(i,_class="btn btn-default"))
-        return r
+
 
     t=db.typesetters
     tbl = db(t.id>0).select().as_list()
