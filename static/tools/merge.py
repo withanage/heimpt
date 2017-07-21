@@ -30,7 +30,6 @@ References
 
 """
 
-
 __author__ = "Dulip Withanage"
 
 PYTHON_IMPORT_FAILED_LXML_MODULE = u'Failed to import python lxml module'
@@ -42,7 +41,6 @@ from debug import Debuggable, Debug
 from docopt import docopt
 from globals import GV
 from settingsconfiguration import Settings
-
 
 try:
     from lxml import etree
@@ -111,7 +109,8 @@ class Merge(Debuggable):
             trf = self.create_book_bits()
         trf = self.process(trf)
 
-        self.do_file_io(etree.tostring(trf, pretty_print=False, xml_declaration=True,  encoding='UTF-8', standalone='yes'), 'w', pt)
+        self.do_file_io(
+            etree.tostring(trf, pretty_print=False, xml_declaration=True, encoding='UTF-8', standalone='yes'), 'w', pt)
 
     def create_output_jats(self):
         """
@@ -131,12 +130,11 @@ class Merge(Debuggable):
             bpf = trf.find(".//body")
             f, bd, bk = self.get_xml_parts()
             if bd is not None:
-                sec = list(bd)[0]
-                bpf.append(sec)
+                for sec in list(bd):
+                    bpf.append(sec)
 
             bkrf = trf.find(".//back/ref-list")
             for r in bk.findall('.//ref-list/ref'):
-
                 bkrf.append(r)
 
             bkff = trf.find(".//back/fn-group")
@@ -148,11 +146,9 @@ class Merge(Debuggable):
             trf = self.create_journal_jats()
 
         trf = self.process(trf)
-
         self.do_file_io(
             etree.tostring(trf, pretty_print=False, xml_declaration=True, encoding='UTF-8', standalone='yes'), 'w',
             pt)
-
 
     def process(self, tr):
         """
@@ -308,7 +304,9 @@ class Merge(Debuggable):
         journal.attrib['dtd-version'] = "3.0"
         journal.attrib[etree.QName('{http://www.w3.org/XML/1998/namespace}lang')] = "de"
 
+        f, bd, bk = self.get_xml_parts()
         metadata = self.args.get('--metadata')
+
         if metadata:
             pth = self.create_metadata_path(metadata)
             if os.path.isfile(pth):
@@ -320,8 +318,8 @@ class Merge(Debuggable):
                         self.debug.print_debug(self, 'front metadata unspecified')
                         sys.exit(1)
         else:
-            sys.exit('Metadata fails')
-        f, bd, bk = self.get_xml_parts()
+            journal.insert(0, f)
+
         journal.append(bd)
         if len(bk) > 0:
             journal.append(bk)
@@ -331,7 +329,6 @@ class Merge(Debuggable):
             back.append(etree.Element(etree.QName('ref-list')))
             journal.append(back)
         return journal
-
 
     def create_book_part_bits(self):
         """
@@ -443,6 +440,7 @@ def main():
     """
     xp = Merge()
     xp.run()
+
 
 if __name__ == '__main__':
     main()

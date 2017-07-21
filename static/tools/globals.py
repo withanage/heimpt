@@ -10,6 +10,7 @@ __author__ = "Dulip Withanage"
 import json
 import os
 import sys
+import requests
 from lxml import etree
 
 from debug import Debuggable, Debug
@@ -149,11 +150,21 @@ class GV(object):
         if os.path.isfile(pth):
             with open(pth) as j:
                 return json.load(j)
+
         else:
-            print pth, self.PROJECT_INPUT_FILE_JSON_IS_NOT_VALID
-            self.debug.print_debug(
-                self, self.PROJECT_INPUT_FILE_JSON_IS_NOT_VALID)
-            sys.exit(1)
+
+            try:
+                r = requests.get(pth, verify=False, stream=True)
+                if r.status_code==200:
+                    return r.json()
+                else:
+                    self.debug.print_debug(self, self.PROJECT_INPUT_FILE_JSON_IS_NOT_VALID)
+                    sys.exit(1)
+            except requests.exceptions.ConnectionError as ce:
+                self.debug.print_debug(self, unicode(ce.message))
+                sys.exit(1)
+
+
 
     def create_dirs_recursive(self, pth):
         """
