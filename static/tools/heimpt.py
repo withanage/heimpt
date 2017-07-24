@@ -56,6 +56,7 @@ import shutil
 import uuid
 import inspect
 
+
 SEP = os.path.sep
 
 
@@ -619,6 +620,7 @@ class MPT(Debuggable):
             sys.exit(1)
         project_path = [p.get('path'), p['name'],
                         self.current_result, p_id + '_' + p_name, out_type]
+
         temp_dir = os.path.join(p.get('path'), uid)
 
         if p['typesetters'][p_id].get('merge'):
@@ -640,6 +642,11 @@ class MPT(Debuggable):
         else:
             self.debug.print_debug(
                 self, self.gv.PROJECT_TYPESETTER_PROCESS_METHOD_NOT_SPECIFIED)
+        if len(p.get('typesetters').items()) == int(p_id) and int(f_id) == len(p.get('files').items()):
+            zip_path = ''.join([p.get('path'),SEP, p['name']])
+            shutil.make_archive('{}/{}'.format(zip_path, p.get("name")),'zip', zip_path)
+
+
         return SEP.join(project_path)
 
     def create_merged_file(self, p, p_id, project_path, t_path):
@@ -764,7 +771,7 @@ def main():
         pi.all_typesetters = pi.config.get('typesetters')
         pi.check_applications()
         pi.run()
-    print pi.gv.log
+    ##print pi.gv.log
 
 
 if __name__ == '__main__':

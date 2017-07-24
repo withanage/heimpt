@@ -1,4 +1,24 @@
-
 {{extend 'layout.html'}}
 {{=bt}}
 
+{{=m1}}
+
+<script>
+function run_heimpt() {
+$( "#runHeimpt" ).on('shown', function(){
+   $("#runHeimptBody").html("running");
+   $.get( "https://localhost:8000/heimpt/run/project/"+, function( data ) {
+   var dta = document.createElement("div");
+   var p;
+   d = data.split("\n")
+   for (key in d) {
+   p = document.createElement("p");
+   p.appendChild(document.createTextNode(key+" : "+d[key]));
+    dta.appendChild(p);
+   }
+   $("#runHeimptBody").html(dta);
+
+    });
+});
+}
+</script>

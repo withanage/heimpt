@@ -3,6 +3,7 @@ import os
 import threading
 from subprocess import Popen, PIPE
 import json
+import gluon.contrib.simplejson
 
 stdout_result = 1
 stderr_result = 1
@@ -20,27 +21,19 @@ def path_to_dict(path):
     return json.dumps(path_to_dict('.'))
 
 
-def heimpt():
-    command = ["python", "/home/www-data/web2py/applications/heimpt/static/tools/heimpt.py", "/home/www-data/web2py/applications/heimpt/static/tools/configurations/02_wintz.bits.json"]
+def project():
+    url = myconf.take("heimpt.url")+request.args[0]
+    command = ["python", myconf.take("heimpt.exec"), url]
 
-    #process = Popen(command, stdout=PIPE)
-    #(output, err) = process.communicate()
-    #exit_code = process.wait()
+    process = Popen(command, stdout=PIPE)
+    (output, err) = process.communicate()
+    exit_code = process.wait()
+    result  = exec_command(command)
+    #while process.poll() is None:
+    #    output = process.stdout.readline()
+    #    return output
+    return output
 
-    #return exec_command(command)
-    return dict(files=path_to_dict("/home/www-data/web2py/applications/heimpt/static/tools/configurations"))
-
-
-
-
-def list_files(startpath):
-    for root, dirs, files in os.walk(startpath):
-        level = root.replace(startpath, '').count(os.sep)
-        indent = ' ' * 4 * (level)
-        print('{}{}/'.format(indent, os.path.basename(root)))
-        subindent = ' ' * 4 * (level + 1)
-        for f in files:
-            print('{}{}'.format(subindent, f))
 
 def stdout_thread(pipe):
     global stdout_result

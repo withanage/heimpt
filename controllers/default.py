@@ -20,7 +20,21 @@ def folder():
 
 
 
+def create_modal(id, title, body, modal_body):
+    a5 = BUTTON(_type="button", _class="close", **{"data-dismiss": "modal"})
+    a6 = H4(title, _class="modal-title")
+    a4 = DIV(a5, a6, _class="modal-header")
 
+    a8 = P(body,**{"_id": modal_body})
+    a7 = DIV(a8, _class="modal-body")
+
+    a10 = BUTTON(T("close"), _type="button", _class="btn btn-default", **{"_data-dismiss": "modal"})
+    a9 = DIV(a10, _class="modal-footer")
+
+    a3 = DIV(a4, a7, a9, _class="modal-content")
+    a2 = DIV(a3, _class="modal-dialog modal-sm")
+    a1 = DIV(a2, _class="modal fade", **{"_id": id, "_role": "dialog"})
+    return a1
 
 
 def args(a):
@@ -44,7 +58,7 @@ def metro_block(t,c,f,bg_color):
     img_src= "{}{}{}{}".format("holder.js/200x200?size=15&bg=",bg_color,"&text=",t)
     div= DIV(_class="col-sm-2 col-xs-4")
     a = DIV(_class="tile")
-    b = DIV(_class="carousel slide" ,**{"data-ride":"carousel"})
+    b = DIV(_class="carousel slide" ,**{"_data-ride":"carousel"})
     d = DIV(_class="item active")
     d.append(A(IMG(_src=img_src ,_class="img-responsive"),_href=URL(c,f)))
     e = DIV(_class="item")
@@ -66,21 +80,28 @@ def projects():
     tbl = db (t.id ==auth.user.id).select().as_list()
     bt = TABLE(_class="table table-bordered")
     th = THEAD()
-    th.append(TR(TH(T("Run")),TH(T("Project name")),TH(T("Project Path")),TH(T("File List")),TH(T("Typesetters"))))
+    th.append(TR(TH(T("Run")),TH(T("Project name")),TH(T("Project Path")),TH(T("File List")),TH(T("Typesetters")),TH(T("Results"))))
     bt.append(th)
     tb = TBODY()
+    # _href=URL('run','{}/{}'.format('project',row["id"])
+    #AG.I(_class="icon icon-play glyphicon glyphicon-play"))
     for row in tbl:
         ts = [db(db.typesetters.id==ts_id).select().first()["name"] for ts_id in row["typesetters"]]
 
         tb.append(TR(
-            TD(row["id"]),
+            TD(BUTTON("Run", _class="btn btn-info btn-sm", **{"_data-toggle":"modal","_data-target":"#runHeimpt"})),
             TD(row["name"]),
             TD(row["project_path"]),
             TD(args(row["files"])),
             TD(args(ts)),
+            #TD(("{}{}".format(row["project_path"],row["name"]))),
+            TD()
         ))
     bt.append(tb)
-    return dict(bt=bt)
+    m1 = create_modal("runHeimpt", T("Runnung"), "","runHeimptBody")
+    return dict(bt=bt, m1=m1)
+
+
 
 
 

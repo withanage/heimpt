@@ -7,6 +7,26 @@ def arg_0(a):
     else:
         raise HTTP(404, 'not found')
 
+startpath= "/home/wit/Arbeit/OMP/Stockheimer/xml/proof/my_project"
+
+def set_leaf(tree, branches, leaf):
+    if len(branches) == 1:
+        tree[branches[0]] = leaf
+        return
+    if not tree.has_key(branches[0]):
+        tree[branches[0]] = {}
+    set_leaf(tree[branches[0]], branches[1:], leaf)
+
+def list_files():
+    tree = {}
+    for root, dirs, files in os.walk(startpath):
+        branches = [startpath]
+        if root != startpath:
+            branches.extend(os.path.relpath(root, startpath).split('/'))
+
+        set_leaf(tree, branches, dict([(d,{}) for d in dirs]+  [(f,None) for f in files]))
+    return tree
+
 
 def project():
     def add_elem(cur, arg1, val1):
