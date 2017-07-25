@@ -25,7 +25,7 @@ def validate(form,c,f):
 def add_project():
     form = SQLFORM(db.projects, col3={'files': "file names"}, comments=True, keepopts=[], separator='')
     form['_style'] = 'border:1px solid white'
-    validate(form)
+    validate(form, 'default', 'typesetters')
     return dict(form=form)
 
 
@@ -45,4 +45,15 @@ def edit_typesetter():
     form = SQLFORM(db.typesetters,entry, comments=True, keepopts=[],
                    col3=typesetter_cols )
     validate(form,'default','typesetters')
+    return dict(form=form)
+
+@auth.requires_login()
+def edit_project():
+    if request.args:
+        entry = request.args[0]
+    else:
+        raise HTTP(404,'not found')
+    form = SQLFORM(db.projects,entry, comments=True, keepopts=[],
+                   col3=typesetter_cols )
+    validate(form,'default','projects')
     return dict(form=form)

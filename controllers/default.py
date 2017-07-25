@@ -47,15 +47,17 @@ def args(a):
 def index():
     ms = []
     a = {'Projects':["default","projects","ddeeff"],
-         'Typesetters':["default","typesetters","ccbbaa"]
+         'Typesetters':["default","typesetters","ddeedd"],
+         'Add Project':["configure","add_project","ddeecc"],
+         'Add Typesetter':["configure","add_typesetter","ddeeee"]
 
          }
-    for m in a:
+    for m in sorted(a):
         ms.append(metro_block(m,a[m][0],a[m][1],a[m][2]))
     return dict(ms=ms)
 
 def metro_block(t,c,f,bg_color):
-    img_src= "{}{}{}{}".format("holder.js/200x200?size=15&bg=",bg_color,"&text=",t)
+    img_src= "{}{}{}{}".format("holder.js/200x200?size=20&bg=",bg_color,"&text=",t)
     div= DIV(_class="col-sm-2 col-xs-4")
     a = DIV(_class="tile")
     b = DIV(_class="carousel slide" ,**{"_data-ride":"carousel"})
@@ -80,13 +82,19 @@ def projects():
     tbl = db (t.id ==auth.user.id).select().as_list()
     bt = TABLE(_class="table table-bordered")
     th = THEAD()
-    th.append(TR(TH(T("Run")),TH(T("Project name")),TH(T("Project Path")),TH(T("File List")),TH(T("Typesetters")),TH(T("Results"))))
+    th.append(TR(TH(T("Run")),TH(T("Project name")),TH(T("Project Path")),TH(T("File List")),TH(T("Typesetters")),TH(T("Download")),TH(T("Edit"))))
     bt.append(th)
     tb = TBODY()
     # _href=URL('run','{}/{}'.format('project',row["id"])
-    #AG.I(_class="icon icon-play glyphicon glyphicon-play"))
+    #
     for row in tbl:
         ts = [db(db.typesetters.id==ts_id).select().first()["name"] for ts_id in row["typesetters"]]
+
+        file_path = os.path.join(row["project_path"], row["name"], row["name"] + '.zip')
+        if os.path.exists(file_path):
+            download_td = TD(A(TAG.I(_class="icon icon-play glyphicon glyphicon-download align-middle "), _href=URL('default', '{}/{}'.format('get_results', row["id"]))))
+        else:
+            download_td = TD()
 
         tb.append(TR(
             TD(BUTTON("Run", _class="btn btn-info btn-sm", **{"_data-toggle":"modal","_data-target":"#runHeimpt"})),
@@ -94,8 +102,9 @@ def projects():
             TD(row["project_path"]),
             TD(args(row["files"])),
             TD(args(ts)),
-            #TD(("{}{}".format(row["project_path"],row["name"]))),
-            TD()
+            download_td,
+            TD(A(T('EDIT'), _href=URL('configure', '{}/{}'.format('edit_project', row["id"]))))
+
         ))
     bt.append(tb)
     m1 = create_modal("runHeimpt", T("Runnung"), "","runHeimptBody")
@@ -165,6 +174,24 @@ def download():
     http://..../[app]/default/download/[filename]
     """
     return response.download(request, db)
+
+
+@auth.requires_login()
+def get_results():
+    from gluon.contenttype import contenttype
+    if  request.args:
+        entry = request.args[0]
+    else:
+        raise HTTP(404, 'not found')
+
+    row = db(db.projects.id==entry).select().first()
+    file_path = os.path.join(row["project_path"],row["name"],row["name"]+'.zip')
+
+    ext = os.path.splitext(file_path)
+    response.headers['Content-Type'] = contenttype('zip')
+    response.headers['Content-disposition'] = 'attachment; filename=%s' % row["name"]+'.zip'
+    res = response.stream(open(file_path, "rb"), chunk_size=4096)
+    return res
 
 
 def call():

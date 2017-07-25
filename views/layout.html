@@ -105,10 +105,10 @@
     {{block footer}} <!-- this is default footer -->      
     <footer class="footer">
       <div class="container-fluid">
-        <div class="copyright pull-left">{{=T('Copyright')}} &#169; {{=request.now.year}}</div>
+        <div class="copyright pull-left">{{#=T('')}}  {{#=request.now.year}}</div>
           <div id="poweredBy" class="pull-right">
-            {{=T('Powered by')}}
-            <a href="http://www.web2py.com/">web2py</a>
+
+            <a href="https://www.github.com/withanage/heimpt">&#169; heiMPT</a>
           </div>
       </div>
     </footer>
@@ -119,12 +119,12 @@
     {{block page_js}}{{end page_js}}
     {{if response.google_analytics_id:}}
     <!-- Analytics ==================================== -->
-    <script src="{{=URL('static','js/analytics.min.js')}}"></script>
+    <!--script src="{{=URL('static','js/analytics.min.js')}}"></script>
     <script type="text/javascript">
       analytics.initialize({
       'Google Analytics':{trackingId:'{{=response.google_analytics_id}}'}
       });
-    </script>
+    </script-->
     {{pass}}
     <!-- Share ============================y============ -->
     <!--script src="{{=URL('static','js/share.js',vars=dict(static=URL('static','images')))}}"></script-->
