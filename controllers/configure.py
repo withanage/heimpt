@@ -38,22 +38,31 @@ def add_typesetter():
 
 @auth.requires_login()
 def edit_typesetter():
-    if request.args:
-        entry = request.args[0]
-    else:
-        raise HTTP(404,'not found')
+    entry = check_arg()
     form = SQLFORM(db.typesetters,entry, comments=True, keepopts=[],
                    col3=typesetter_cols )
     validate(form,'default','typesetters')
     return dict(form=form)
 
-@auth.requires_login()
-def edit_project():
+
+def check_arg():
     if request.args:
         entry = request.args[0]
     else:
-        raise HTTP(404,'not found')
+        raise HTTP(404, 'not found')
+    return entry
+
+
+@auth.requires_login()
+def edit_project():
+    entry = check_arg()
     form = SQLFORM(db.projects,entry, comments=True, keepopts=[],
                    col3=typesetter_cols )
     validate(form,'default','projects')
     return dict(form=form)
+
+@auth.requires_login()
+def delete_project():
+    entry = check_arg()
+    db(db.projects.id==entry).delete()
+    redirect(URL("default", "projects"))
