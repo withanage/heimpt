@@ -5,7 +5,7 @@ db.define_table('typesetters',
                 Field('out_file',label=T('Output File'), default='fullFile.xml'),
                 Field('process_type', requires=IS_IN_SET(('process','merge','expand')), default='process'),
                 Field('typesetter_arguments', type='list:string', label=T('Typesetter Arguments')),
-                Field('project_arguments', type='list:string', label=T('Project Arguments'),default=['--created-dir'], required=True),
+                Field('project_arguments', type='list:string', label=T('Project Arguments'),default=['--create-dir'], required=True),
                 format='%(name)s'
                 )
 

@@ -25,7 +25,7 @@ def validate(form,c,f):
 def add_project():
     form = SQLFORM(db.projects, col3={'files': "file names"}, comments=True, keepopts=[], separator='')
     form['_style'] = 'border:1px solid white'
-    validate(form, 'default', 'typesetters')
+    validate(form, 'default', 'projects')
     return dict(form=form)
 
 

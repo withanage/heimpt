@@ -611,7 +611,7 @@ class MPT(Debuggable):
         """
         p_name = p.get('typesetters')[p_id].get("name")
         t_path = [p.get('path'), uid] + \
-            ['nlm'] if p_name == 'metypeset' else [p.get('path'), uid]
+            ['nlm'] if 'metypeset' in p_name.lower() else [p.get('path'), uid]
         out_type = p['typesetters'][p_id].get('out_type')
 
         if out_type is None:
