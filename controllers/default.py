@@ -104,7 +104,7 @@ def projects():
             TD(args(row["files"])),
             TD(args(ts)),
             download_td,
-            TD(A(T('EDIT'), _href=URL('configure', '{}/{}'.format('edit_project', row["id"]))))
+            TD(A(T('EDIT'), _href=URL('configure', '{}/{}'.format('edit_project', row["id"])))),
             TD(A(T('DELETE'), _href=URL('configure', '{}/{}'.format('delete_project', row["id"]))))
 
         ))
