@@ -79,7 +79,7 @@ def metro_block(t,c,f,bg_color):
 def projects():
 
     t = db.projects
-    tbl = db (t.id ==auth.user.id).select().as_list()
+    tbl = db (t.id >0).select().as_list()
     bt = TABLE(_class="table table-bordered")
     th = THEAD()
     th.append(TR(TH(T("Run")),TH(T("Project name")),TH(T("Project Path")),TH(T("File List")),TH(T("Typesetters")),TH(T("Download")),TH(T("Edit"))))
