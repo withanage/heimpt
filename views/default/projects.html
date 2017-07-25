@@ -26,7 +26,7 @@ $( "#runHeimpt"+id ).on('shown', function(){
     });
 });
 }
-{{for i,m in enumerate(modals):}}
-run_heimpt({{=i+1}});
+{{for i in modals:}}
+run_heimpt({{=i}});
 {{pass}}
 </script>

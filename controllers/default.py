@@ -34,7 +34,7 @@ def create_modal(id, title, body, modal_body):
     a3 = DIV(a4, a7, a9, _class="modal-content")
     a2 = DIV(a3, _class="modal-dialog modal-sm")
     a1 = DIV(a2, _class="modal fade", **{"_id": id, "_role": "dialog"})
-    return a1
+    return a1, id
 
 
 def args(a):
@@ -87,7 +87,7 @@ def projects():
     tb = TBODY()
     # _href=URL('run','{}/{}'.format('project',row["id"])
     #
-    modals = []
+    modals = {}
     for row in tbl:
         ts = [db(db.typesetters.id==ts_id).select().first()["name"] for ts_id in row["typesetters"]]
 
@@ -96,7 +96,7 @@ def projects():
             download_td = TD(A(TAG.I(_class="icon icon-play glyphicon glyphicon-download align-middle "), _href=URL('default', '{}/{}'.format('get_results', row["id"]))))
         else:
             download_td = TD()
-        modals.append(create_modal("runHeimpt"+str(row["id"]), T("Runnung"), "", "runHeimptBody"+str(row["id"])))
+        modals[id] = create_modal("runHeimpt"+str(row["id"]), T("Runnung"), "", "runHeimptBody"+str(row["id"]))
         tb.append(TR(
             TD(BUTTON("Run", _class="btn btn-info btn-sm", **{"_data-toggle":"modal","_data-target":"#runHeimpt"+str(row["id"])})),
             TD(row["name"]),
