@@ -87,6 +87,7 @@ def projects():
     tb = TBODY()
     # _href=URL('run','{}/{}'.format('project',row["id"])
     #
+    modals = []
     for row in tbl:
         ts = [db(db.typesetters.id==ts_id).select().first()["name"] for ts_id in row["typesetters"]]
 
@@ -95,9 +96,9 @@ def projects():
             download_td = TD(A(TAG.I(_class="icon icon-play glyphicon glyphicon-download align-middle "), _href=URL('default', '{}/{}'.format('get_results', row["id"]))))
         else:
             download_td = TD()
-
+        modals.append(create_modal("runHeimpt"+str(row["id"]), T("Runnung"), "", "runHeimptBody"+str(row["id"])))
         tb.append(TR(
-            TD(BUTTON("Run", _class="btn btn-info btn-sm", **{"_data-toggle":"modal","_data-target":"#runHeimpt"})),
+            TD(BUTTON("Run", _class="btn btn-info btn-sm", **{"_data-toggle":"modal","_data-target":"#runHeimpt"+str(row["id"])})),
             TD(row["name"]),
             TD(row["project_path"]),
             TD(args(row["files"])),
@@ -107,8 +108,8 @@ def projects():
 
         ))
     bt.append(tb)
-    m1 = create_modal("runHeimpt", T("Runnung"), "","runHeimptBody")
-    return dict(bt=bt, m1=m1)
+
+    return dict(bt=bt, modals=modals)
 
 
 

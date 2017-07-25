@@ -22,7 +22,7 @@ def path_to_dict(path):
 
 
 def project():
-    url = myconf.take("heimpt.url")+request.args[0]
+    url = myconf.take("heimpt.url")+"/api/project/"+request.args[0]
     command = ["python", myconf.take("heimpt.exec"), url]
 
     process = Popen(command, stdout=PIPE)

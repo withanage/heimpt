@@ -1,13 +1,18 @@
 {{extend 'layout.html'}}
 {{=bt}}
 
-{{=m1}}
+{{
+for m in modals:
+=m
+pass
+}}
 
 <script>
-function run_heimpt() {
-$( "#runHeimpt" ).on('shown', function(){
-   $("#runHeimptBody").html("running");
-   $.get( "https://localhost:8000/heimpt/run/project/"+"1", function( data ) {
+function run_heimpt(id) {
+$( "#runHeimpt"+id ).on('shown', function(){
+   $("#runHeimptBody"+id).html("running");
+   var url= "{{=myconf.take("heimpt.url")}}";
+   $.get( url+"/run/project/"+id, function( data ) {
    var dta = document.createElement("div");
    var p;
    d = data.split("\n")
@@ -16,9 +21,12 @@ $( "#runHeimpt" ).on('shown', function(){
     p.appendChild(document.createTextNode(key+" : "+d[key]));
     dta.appendChild(p);
    }
-   $("#runHeimptBody").html(dta);
+   $("#runHeimptBody"+id).html(dta);
 
     });
 });
 }
+{{for i,m in enumerate(modals):}}
+run_heimpt({{=i+1}});
+{{pass}}
 </script>
