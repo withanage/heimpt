@@ -1,9 +1,19 @@
 # coding=utf-8
 """
-Usage: mpt.py import omp <submission_id>...
+Usage:
+  heimpt.py import omp [options] <submission_id>...
+
+Options:
+  -h --help
+  -p --project-template=<file>
+
 """
+import shutil
+
 from ImportInterface import Import
 from pydal.base import DAL
+
+from debug import Debuggable
 from omptables import define_tables
 import json
 import os.path
@@ -50,22 +60,26 @@ def get_omp_filename(submission_file, revision=None, with_extension=True):
         return filename
 
 
-def path_to_submission_file(submission_file, press_id, files_dir):
+def path_to_omp_submission_file(submission_file, press_id, files_dir):
     return os.path.join(files_dir, 'presses', str(press_id), 'monographs', str(submission_file.submission_id),
                         FILE_STAGE_TO_PATH[submission_file.file_stage], get_omp_filename(submission_file))
 
 
-def path_to_submission_metadata(submission_id, press_id, metadata_dir, filename='mpt.book-meta.bits2.xml'):
+def path_to_submission_output(submission_id, press_id, output_dir):
+    return os.path.join(output_dir, 'presses', str(press_id), 'monographs', str(submission_id))
+
+
+def path_to_submission_metadata(submission_id, press_id, output_dir, filename='mpt.book-meta.bits2.xml'):
     """
     Return the complete path to a metadata file.
     
     :param submission_id: Identifier of the submission
     :param press_id: Identifier of the press
-    :param metadata_dir: Base path to metadata files
+    :param output_dir: Base path to metadata files
     :param filename: Name of the metadata file, defaults to 'mpt.book-meta.bits2.xml'
     :return: 
     """
-    return os.path.join(metadata_dir, 'presses', str(press_id), 'monographs', str(submission_id), 'metadata', filename)
+    return os.path.join(path_to_submission_output(submission_id, press_id, output_dir), 'metadata', filename)
 
 
 class OMPImport(Import):
@@ -87,7 +101,7 @@ class OMPImport(Import):
         define_tables(self.db)
         self.dal = OMPDAL(self.db, None)
 
-    def run(self, args, settings=None):
+    def run(self, args, settings):
         print('Running plugin omp import')
         self.initialize(settings)
         if args.get('<submission_id>'):
@@ -96,6 +110,7 @@ class OMPImport(Import):
             # TODO Allow lists in settings.json
             submission_ids = [self.settings['submission']]
         print "Importing submissions:", submission_ids
+        self.results = []
         for submission_id in submission_ids:
             print "Loading submission files for submission", submission_id
             files = self.get_files(submission_id)
@@ -104,32 +119,74 @@ class OMPImport(Import):
                 continue
             print "Loading metadata for submission"
             submission = self.db.submissions[submission_id]
-            book_bits_xml = self.load_submission_metadata(submission)
+            submission_metadata_path = path_to_submission_metadata(submission.submission_id, submission.context_id,
+                                                             self.settings['files-output-dir'])
+            book_bits_xml = self.read_submission_metadata(submission_metadata_path)
             # generate metadata for the whole submission first and then for each chapter
-
-            self.inject_metadata_for_submission(submission, book_bits_xml)
+            self.inject_submission_metadata(submission, book_bits_xml)
             chapters = self.dal.getChaptersBySubmission(submission_id)
             print "Loading metadata for chapters"
+            chapters_metadata_xml = []
             for chapter in chapters:
                 print "Loading chapter", chapter.chapter_seq
                 # TODO Generate filename from corresponding submission file
-                chapter_bits_xml = self.load_chapter_metadata('chapter' + str(chapter.chapter_seq+1), submission)
-                self.generate_metadata_for_chapter(chapter_bits_xml, chapter, submission, {"doi": 'doi123', "urn": "urn123"})
+                metadata_file_path = path_to_submission_metadata(submission.submission_id, submission.context_id,
+                                                                 self.settings['files-output-dir'],
+                                                                 'chapter' + str(chapter.chapter_seq + 1)
+                                                                 + self.settings['chapter-metadata-suffix'])
+                chapter_bits_xml = self.read_chapter_metadata(metadata_file_path)
+                self.inject_chapter_metadata(chapter_bits_xml, chapter, submission, {"doi": 'doi123', "urn": "urn123"})
+                chapters_metadata_xml.append((metadata_file_path, chapter_bits_xml))
             file_paths = []
             for submission_file in files:
-                path = path_to_submission_file(submission_file, submission.context_id, self.settings['files-dir'])
+                path = path_to_omp_submission_file(submission_file, submission.context_id, self.settings['omp-files-dir'])
                 if os.path.exists(path):
                     print "Found submission file:", path
                     file_paths.append(path)
-                    print "Importing", path
-        self.results = {'path': '/tmp/'}
-        # TODO Load project configuration template from file
-        # TODO extend project configuration with path to imported submission file
-        # TODO Import meta data of complete from omp db and write meta data as xml to file
-        # TODO Import and write meta data for each chapter
-        # TODO add path of meta data files to project configuration
-        # TODO write configuration to output directory
+            project_files_dir = path_to_submission_output(submission_id, submission.context_id,
+                                                          self.settings['files-output-dir'])
+            # Is copying really necessary?
+            self.copy_submission_files(file_paths, project_files_dir)
+            print "Writing submission metadata xml", submission_metadata_path
+            self.write_xml_to_file(book_bits_xml, submission_metadata_path)
+            for file_path, chapter_xml in chapters_metadata_xml:
+                print "Writing chapter metadata", file_path
+                self.write_xml_to_file(chapter_xml, file_path)
+            project_filename = str(submission_id) + '.json'
+            project_config = self.read_project_config(project_filename)
+            project = project_config['projects'][0]
+            project['name'] = 'omp_import_' + str(submission_id)
+            project['files'] = {str(i): os.path.basename(path) for i, path in enumerate(file_paths, start=1)}
+            project['path'] = project_files_dir
+            self.write_project_config(project_filename, project_config)
+            self.results.append(project_config)
+        # TODO Find chapter submission files from omp db
+        # TODO Write submission meta data xml file
+        # TODO Write chapter meta data xml files
         pass
+
+    def copy_submission_files(self, file_paths, target_dir):
+        if not os.path.exists(target_dir):
+            os.makedirs(target_dir)
+        for file_path in file_paths:
+            print "Copying {} to {} ...".format(file_path, target_dir)
+            shutil.copy(file_path, target_dir)
+
+    def write_project_config(self, project_filename, project_config):
+        project_file_dir = os.path.join(self.settings['base-path'], self.settings['project-output'])
+        if not os.path.exists(project_file_dir):
+            os.makedirs(project_file_dir)
+        with open(os.path.join(project_file_dir, project_filename), "w") as f:
+            json.dump(project_config, f, indent=2, sort_keys=True)
+
+    def read_project_config(self, project_filename, template_path=None):
+        project_file_path = os.path.join(self.settings['base-path'], self.settings['project-output'], project_filename)
+        if os.path.isfile(project_file_path):
+            path = project_file_path
+        else:
+            path = os.path.join(self.settings['base-path'], template_path or self.settings['project-template'])
+        with open(path) as f:
+            return json.load(f)
 
     def get_files(self, submission_id):
         genre_id = self.settings['genre']
@@ -142,14 +199,12 @@ class OMPImport(Import):
         res = self.db(q).select(sf.ALL, orderby=sf.revision)
         return res
 
-    def load_submission_metadata(self, submission):
+    def read_submission_metadata(self, metadata_file_path):
         """
-        Loads the submission metadata, either from an existing metadata file from a previous import or from a template.
-        :param submission:
+        Reads the submission metadata, either from an existing metadata file from a previous import or from a template.
+        :param metadata_file_path: Path to bits2 xml file with metadata.
         :return: ElementTree object with bits2 metadata elements.
         """
-        metadata_file_path = path_to_submission_metadata(submission.submission_id, submission.context_id,
-                                                         self.settings['output-dir'])
         print "Try to load submission metadata from", metadata_file_path
         if os.path.isfile(metadata_file_path):
             # load existing metadata
@@ -159,7 +214,12 @@ class OMPImport(Import):
             book_xml = etree.parse(os.path.join(self.module_path, 'templates', 'sample-monograph.bits2.xml'))
         return book_xml
 
-    def inject_metadata_for_submission(self, submission,  book_xml):
+    def write_xml_to_file(self, bits_xml, file_path):
+        if not os.path.exists(os.path.dirname(file_path)):
+            os.makedirs(os.path.dirname(file_path))
+        bits_xml.write(file_path, encoding='utf8', pretty_print=True)
+
+    def inject_submission_metadata(self, submission, book_xml):
         """
         Generate the metadata from omp db for the given submission 
 
@@ -207,6 +267,7 @@ class OMPImport(Import):
 
         contrib_group_xml = book_meta_xml.xpath('contrib-group')[0]
         etree.strip_elements(contrib_group_xml, 'contrib')
+        etree.strip_elements(contrib_group_xml, 'aff')
         affiliation_counter = 0
         # Add contributors
         for contrib in self.dal.getAuthorsBySubmission(submission_id, filter_browse=True):
@@ -254,13 +315,14 @@ class OMPImport(Import):
             # TODO series editors
         # TODO add copyright-statement. which omp field to use or which value to generate?
         # TODO add license
-        print etree.tostring(book_xml, pretty_print=True)
+        # TODO add publisher location
         return book_xml
 
-    def generate_metadata_for_chapter(self, bits_xml, chapter, submission, custom_meta = None):
+    def inject_chapter_metadata(self, bits_xml, chapter, submission, custom_meta = None):
         """
         Generates the metadata for the chapter
 
+        :param custom_meta: Dict containing entries which will be added as <custom-meta> tags.
         :param bits_xml: ElementTree object containing bits2 meta-data for a submission chapter.
         :param chapter: Chapter row object.
         :param submission: Submission row object, to which the chapter belongs.
@@ -274,9 +336,11 @@ class OMPImport(Import):
         book_part_xml.set(LANG_ATTR, submission.locale[:2])
         # TODO How to distinguish other types?
         book_part_xml.set('book-part-type', 'chapter')
-        # TODO Determine chapter label
         book_part_xml.xpath('book-part-meta/title-group/title')[0].text = chapter_settings.getLocalizedValue(
             'title', submission.locale)
+        # TODO Chapter authors
+        authors = self.dal.getAuthorsByChapter(chapter.chapter_id)
+
         if custom_meta:
             custom_meta_group_xml = book_part_xml.xpath('book-part-meta/custom-meta-group')[0]
             # Clear old custom-meta tags
@@ -285,15 +349,10 @@ class OMPImport(Import):
                 custom_meta_xml = etree.SubElement(custom_meta_group_xml, 'custom-meta', {'specific-use': meta_name})
                 etree.SubElement(custom_meta_xml, 'meta-name').text = meta_name
                 etree.SubElement(custom_meta_xml, 'meta-value').text = meta_value
-        # TODO Chapter authors
-        print etree.tostring(bits_xml, pretty_print=True)
         return bits_xml
 
-    def load_chapter_metadata(self, filename_prefix, submission):
-        metadata_file_path = path_to_submission_metadata(submission.submission_id, submission.context_id,
-                                                         self.settings['output-dir'],
-                                                         filename_prefix + self.settings['chapter-metadata-suffix'])
-        print ("Try to load chapter metadata from", metadata_file_path)
+    def read_chapter_metadata(self, metadata_file_path):
+        print "Try to load chapter metadata from", metadata_file_path
         if os.path.isfile(metadata_file_path):
             bits_xml = etree.parse(metadata_file_path)
         else:
