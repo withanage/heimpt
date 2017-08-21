@@ -145,7 +145,7 @@ class OMPImport(Import):
                     file_paths.append(path)
             project_files_dir = path_to_submission_output(submission_id, submission.context_id,
                                                           self.settings['files-output-dir'])
-            # Is copying really necessary?
+            # TODO Clarify if copying is really necessary?
             self.copy_submission_files(file_paths, project_files_dir)
             print "Writing submission metadata xml", submission_metadata_path
             self.write_xml_to_file(book_bits_xml, submission_metadata_path)
@@ -155,6 +155,7 @@ class OMPImport(Import):
             project_filename = str(submission_id) + '.json'
             project_config = self.read_project_config(project_filename)
             project = project_config['projects'][0]
+            # TODO Clarify the project name for imports
             project['name'] = 'omp_import_' + str(submission_id)
             project['files'] = {str(i): os.path.basename(path) for i, path in enumerate(file_paths, start=1)}
             project['path'] = project_files_dir
