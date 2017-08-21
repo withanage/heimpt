@@ -10,7 +10,7 @@ generate the output.
 
 Usage:
     heimpt.py <config_file> [options]
-    heimpt.py <module_command> <modules> [options] [<args>...]
+    heimpt.py [options] <module_command> <modules> [<args>...]
 
 Options:
     --interactive       Enable step-by-step interactive mode
@@ -698,7 +698,7 @@ class MPT(Debuggable):
 
     def run_modules(self):
         """
-        Run MPT in module modus
+        Run MPT in module mode
 
         """
         # Run import modules
@@ -708,18 +708,18 @@ class MPT(Debuggable):
             for m in self.args.get('<modules>').split(','):
                 plugin_package = __import__(m, fromlist=['*'])
                 plugin_module = getattr(plugin_package, m)
-
                 # Find class inheriting form Import abstract class in the module
                 for name in dir(plugin_module):
-                    if inspect.isclass(getattr(plugin_module, name))\
-                            and issubclass(getattr(plugin_module, name), ImportInterface.Import)\
-                            and not getattr(plugin_module, name) is ImportInterface.Import:
-                        plugin_class = getattr(plugin_module, name)
+                    candidate = getattr(plugin_module, name)
+                    if inspect.isclass(candidate)\
+                            and issubclass(candidate, ImportInterface.Import)\
+                            and candidate is not ImportInterface.Import:
+                        plugin_class = candidate
                         print "Found import plugin", name, plugin_class
                         plugin = plugin_class()
                         argv = [self.args['<module_command>'], m] + self.args['<args>']
-                        plugin.run(docopt(plugin_module.__doc__, argv=argv))
-                        print plugin.results
+                        self.debug.print_console(self, str(argv))
+                        plugin.run(docopt(plugin_module.__doc__, argv=argv), {'base-path': self.script_folder})
 
                 # try:
                 #    plugin_module = __import__(m)
@@ -727,6 +727,8 @@ class MPT(Debuggable):
                 # except Exception as e:
                 #    print('{} {}: {}'.format(m, 'method  import failed', e))
                 #    sys.exit(0)
+        else:
+            self.debug.fatal_error(self, "Unsupported module command: " + self.args.get('<module_command>'))
         return
 
     def check_applications(self):
