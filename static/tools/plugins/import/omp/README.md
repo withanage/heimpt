@@ -1,9 +1,9 @@
 # OMP import plugin
 
-Imports submission files from OMP (Version >=1.2.0) and outputs MPT configuration for processing.
+Imports submission files from OMP (Version >=1.2.0) and outputs heiMPT configuration for processing.
 
 # Required Python packages
-The following packages should be installed in the Python environment.
+The following additional packages should be installed in the Python environment, which is used to run heiMPT.
 
 <pre>
 pyDAL==17.3
