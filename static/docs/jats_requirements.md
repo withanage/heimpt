@@ -1,374 +1,231 @@
 
-JATS/BITS Metadata requirement-List from API
-============================================
 
-*This is a long-time metadata requirement list from API to support
-automated print pdf production monographs. (Some of the requirements may
-not be compulsory from OJS)*
+| [book-part](https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/book-part.html) |    XML Tag / Attributes | OMP |  API | Remarks |
+|----------|:-------------:|------:|------------:|-----:| 
+| [book-part-id](https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/book-part-id.html) | | yes | no | OJS section is available in API|
+| [title-group](https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/title-group.html) |[title](https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/title.html) | yes | yes | |
+| [title-group](https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/title-group.html) |[subtitle](https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/subtitle.html) | yes | yes | |
+| [title-group](https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/title-group.html) |[trans-title-group](https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/trans-title-group.html) | no | no | [HD](https://pkp.sfu.ca/wiki/index.php?title=Tech_Committee_Meeting_Minutes_25_July_2017#Extending_metadata_schemes_.28Dulip.29)|
+| [title-group](https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/title-group.html) |[trans-title](https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/trans-title.html) | no | no | |
+| [title-group](https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/title-group.html) |[trans-subtitle](https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/trans-subtitle.html) | no | no | |
+| [contrib-group](https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/contrib-group.html) |[contrib](https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/contrib.html) | yes | part | OMP records name parts independently. Clients such as citation generating engines need the name parts separately. Outputting compound names is also necessary  for convenience. |
 
-General questions/ Ideas
 
--   How the language representation should happen in API? (minimum
-    > duplication of tags, performance)
 
--   Should the client request language through content-negotiation or
-    > using url-parameters?
 
-| **[*&lt;boo | **XML Tag / | **OMP**     | **API**     | **Remarks** || k-part&gt;* | Attributes* |             |             |             |
-| ](https://j | *           |             |             |             |
-| ats.nlm.nih |             |             |             |             |
-| .gov/extens |             |             |             |             |
-| ions/bits/t |             |             |             |             |
-| ag-library/ |             |             |             |             |
-| 2.0/element |             |             |             |             |
-| /book-part. |             |             |             |             |
-| html)**     |             |             |             |             |
-|             |             |             |             |             |
-| [*Example*] |             |             |             |             |
-| (https://gi |             |             |             |             |
-| thub.com/wi |             |             |             |             |
-| thanage/hei |             |             |             |             |
-| mpt/blob/ma |             |             |             |             |
-| ster/static |             |             |             |             |
-| /tests/exam |             |             |             |             |
-| ple/metadat |             |             |             |             |
-| a/02_boxed_ |             |             |             |             |
-| text.book-p |             |             |             |             |
-| art-meta.bi |             |             |             |             |
-| ts2.xml)    |             |             |             |             |
-+=============+=============+=============+=============+=============+
-| [***&lt;boo | -   *book-p | yes         | no          | *What is    |
-| k-part-id&g | art-type="" |             |             | the best    |
-| t;***](http | *           |             |             | way to get  |
-| s://jats.nl |             |             |             | the         |
-| m.nih.gov/e | -   *id="b1 |             |             | language?*  |
-| xtensions/b | 1\_ch\_1"*  |             |             |             |
-| its/tag-lib |             |             |             | *OJS        |
-| rary/2.0/el | -   *seq="1 |             |             | section is  |
-| ement/book- | "*          |             |             | available   |
-| part-id.htm |             |             |             | in API*     |
-| l)          | -   *xml:la |             |             |             |
-|             | ng="de”*    |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-| [***&lt;tit | [***&lt;tit | yes         | yes         |             |
-| le-group&gt | le&gt;***]( |             |             |             |
-| ;***](https | https://jat |             |             |             |
-| ://jats.nlm | s.nlm.nih.g |             |             |             |
-| .nih.gov/ex | ov/extensio |             |             |             |
-| tensions/bi | ns/bits/tag |             |             |             |
-| ts/tag-libr | -library/2. |             |             |             |
-| ary/2.0/ele | 0/element/t |             |             |             |
-| ment/title- | itle.html)  |             |             |             |
-| group.html) |             |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-|             | [***subtitl | yes         | yes         |             |
-|             | e***](https |             |             |             |
-|             | ://jats.nlm |             |             |             |
-|             | .nih.gov/ex |             |             |             |
-|             | tensions/bi |             |             |             |
-|             | ts/tag-libr |             |             |             |
-|             | ary/2.0/ele |             |             |             |
-|             | ment/subtit |             |             |             |
-|             | le.html)    |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-|             | **[*&lt;tra | no          | no          | *Heidelberg |
-|             | ns-title-gr |             |             | contributes |
-|             | oup*](https |             |             | ([*Discussi |
-|             | ://jats.nlm |             |             | on          |
-|             | .nih.gov/ex |             |             | in          |
-|             | tensions/bi |             |             | Technical   |
-|             | ts/tag-libr |             |             | committee*] |
-|             | ary/2.0/ele |             |             | (https://pk |
-|             | ment/trans- |             |             | p.sfu.ca/wi |
-|             | title-group |             |             | ki/index.ph |
-|             | .html)&gt;* |             |             | p?title=Tec |
-|             | *           |             |             | h_Committee |
-|             |             |             |             | _Meeting_Mi |
-|             | -   [***&lt |             |             | nutes_25_Ju |
-|             | ;trans-titl |             |             | ly_2017#Ext |
-|             | e&gt;***](h |             |             | ending_meta |
-|             | ttps://jats |             |             | data_scheme |
-|             | .nlm.nih.go |             |             | s_.28Dulip. |
-|             | v/extension |             |             | 29))*       |
-|             | s/bits/tag- |             |             |             |
-|             | library/2.0 |             |             |             |
-|             | /element/tr |             |             |             |
-|             | ans-title.h |             |             |             |
-|             | tml)        |             |             |             |
-|             |             |             |             |             |
-|             | -   [***&lt |             |             |             |
-|             | ;trans-subt |             |             |             |
-|             | itle&gt;*** |             |             |             |
-|             | ](https://j |             |             |             |
-|             | ats.nlm.nih |             |             |             |
-|             | .gov/extens |             |             |             |
-|             | ions/bits/t |             |             |             |
-|             | ag-library/ |             |             |             |
-|             | 2.0/element |             |             |             |
-|             | /trans-subt |             |             |             |
-|             | itle.html)  |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-| [***&lt;con | [***&lt;con | yes         | part        | *OMP        |
-| trib-group& | trib&gt;*** |             |             | records     |
-| gt;***](htt | ](https://j |             |             | name parts  |
-| ps://jats.n | ats.nlm.nih |             |             | independent |
-| lm.nih.gov/ | .gov/extens |             |             | ly.*        |
-| extensions/ | ions/bits/t |             |             |             |
-| bits/tag-li | ag-library/ |             |             | *Clients    |
-| brary/2.0/e | 2.0/element |             |             | such as     |
-| lement/cont | /contrib.ht |             |             | citation    |
-| rib-group.h | ml)         |             |             | generating  |
-| tml)        |             |             |             | engines     |
-| =========== | -   [***&lt |             |             | need the    |
-| =========== | ;name&gt;** |             |             | name parts  |
-| =========== | *](https:// |             |             | separately. |
-| =========== | jats.nlm.ni |             |             | *           |
-| =========== | h.gov/exten |             |             |             |
-| =========== | sions/bits/ |             |             | *Outputting |
-| =========== | tag-library |             |             | compound    |
-| =========== | /2.0/elemen |             |             | names is    |
-| =========== | t/name.html |             |             | also        |
-| =========== | )           |             |             | necessary   |
-| ====        |             |             |             | for         |
-|             |     -   **& |             |             | convenience |
-|             | lt;surname& |             |             | .*          |
-|             | gt;**       |             |             |             |
-|             |             |             |             | *Idea:*     |
-|             |     -   **& |             |             |             |
-|             | lt;given-na |             |             | *Returning  |
-|             | mes&gt;**   |             |             | the name    |
-|             |             |             |             | parts per   |
-|             |     -   **& |             |             | url-paramet |
-|             | lt;prefix&g |             |             | er*         |
-|             | t;**        |             |             |             |
-|             |             |             |             |             |
-|             |     -       |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-|             | [***&lt;aff | **Yes**     | **Yes**     | *should we  |
-|             | &gt;***](ht |             |             | define the  |
-|             | tps://jats. | **no**      | **no**      | affiliation |
-|             | nlm.nih.gov |             |             | as a json   |
-|             | /extensions |             |             | object , b  |
-|             | /bits/tag-l |             |             | cause it    |
-|             | ibrary/2.0/ |             |             | may contain |
-|             | element/aff |             |             | more        |
-|             | .html)      |             |             | metadata??? |
-|             |             |             |             | *           |
-|             | -   [*&lt;i |             |             |             |
-|             | nstitution& |             |             |             |
-|             | gt;*](https |             |             |             |
-|             | ://jats.nlm |             |             |             |
-|             | .nih.gov/ex |             |             |             |
-|             | tensions/bi |             |             |             |
-|             | ts/tag-libr |             |             |             |
-|             | ary/2.0/ele |             |             |             |
-|             | ment/instit |             |             |             |
-|             | ution.html) |             |             |             |
-|             |             |             |             |             |
-|             | -   [***&lt |             |             |             |
-|             | ;addr-line& |             |             |             |
-|             | gt;***](htt |             |             |             |
-|             | ps://jats.n |             |             |             |
-|             | lm.nih.gov/ |             |             |             |
-|             | extensions/ |             |             |             |
-|             | bits/tag-li |             |             |             |
-|             | brary/2.0/e |             |             |             |
-|             | lement/addr |             |             |             |
-|             | -line.html) |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-|             | **[*&lt;xre | **yes**     | **yes**     | *Any        |
-|             | f&gt;*](htt |             |             | cross-refer |
-|             | ps://jats.n |             |             | ences       |
-|             | lm.nih.gov/ |             |             | can be      |
-|             | extensions/ |             |             | added into  |
-|             | bits/tag-li |             |             | JATS*       |
-|             | brary/2.0/e |             |             |             |
-|             | lement/xref |             |             |             |
-|             | .html)&lt;o |             |             |             |
-|             | rcid&gt;**  |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-|             | [***&lt;bio | **yes**     | **no**      |             |
-|             | &gt;***](ht |             |             |             |
-|             | tps://jats. |             |             |             |
-|             | nlm.nih.gov |             |             |             |
-|             | /extensions |             |             |             |
-|             | /bits/tag-l |             |             |             |
-|             | ibrary/2.0/ |             |             |             |
-|             | element/bio |             |             |             |
-|             | .html)      |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-|             | [***&lt;ema | **yes**     | **no**      |             |
-|             | il&gt;***]( |             |             |             |
-|             | https://jat |             |             |             |
-|             | s.nlm.nih.g |             |             |             |
-|             | ov/extensio |             |             |             |
-|             | ns/bits/tag |             |             |             |
-|             | -library/2. |             |             |             |
-|             | 0/element/b |             |             |             |
-|             | io.html)    |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-|             | [***&lt;cou | **yes**     | **no**      |             |
-|             | ntry&gt;*** |             |             |             |
-|             | ](https://j |             |             |             |
-|             | ats.nlm.nih |             |             |             |
-|             | .gov/extens |             |             |             |
-|             | ions/bits/t |             |             |             |
-|             | ag-library/ |             |             |             |
-|             | 2.0/element |             |             |             |
-|             | /country.ht |             |             |             |
-|             | ml)         |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-|             | [***&lt;isb | **yes**     | **no**      |             |
-|             | n&gt;***](h |             |             |             |
-|             | ttps://jats |             |             |             |
-|             | .nlm.nih.go |             |             |             |
-|             | v/extension |             |             |             |
-|             | s/bits/tag- |             |             |             |
-|             | library/2.0 |             |             |             |
-|             | /element/is |             |             |             |
-|             | bn.html)    |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-| [***&lt;per | [*&lt;copyr | yes         | **no**      | *Omp        |
-| missions&gt | ight-statem |             |             | includes a  |
-| ;***](https | ent&gt;*](h |             |             | license-url |
-| ://jats.nlm | ttps://jats |             |             | *           |
-| .nih.gov/ex | .nlm.nih.go |             |             |             |
-| tensions/bi | v/extension |             |             | *BITS       |
-| ts/tag-libr | s/bits/tag- |             |             | mapping has |
-| ary/2.0/ele | library/2.0 |             |             | to be       |
-| ment/permis | /element/co |             |             | decided.*   |
-| sions.html) | pyright-sta |             |             |             |
-|             | tement.html |             |             | *General    |
-|             | )           |             |             | Requirement |
-|             |             |             |             | of print    |
-|             | [*&lt;copyr |             |             | PDF is to   |
-|             | ight-holder |             |             | get         |
-|             | &gt;*](http |             |             | permissions |
-|             | s://jats.nl |             |             | in          |
-|             | m.nih.gov/e |             |             | &lt;multipl |
-|             | xtensions/b |             |             | e&gt;       |
-|             | its/tag-lib |             |             | languages.* |
-|             | rary/2.0/el |             |             |             |
-|             | ement/copyr |             |             |             |
-|             | ight-holder |             |             |             |
-|             | .html)      |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-| [*&lt;autho | [*&lt;title | **no**      | **no**      | *omp        |
-| r-comment&g | &gt;*](http |             |             | document    |
-| t;*](https: | s://jats.nl |             |             | type can be |
-| //jats.nlm. | m.nih.gov/e |             |             | used to     |
-| nih.gov/ext | xtensions/b |             |             | support     |
-| ensions/bit | its/tag-lib |             |             | this ??*    |
-| s/tag-libra | rary/2.0/el |             |             |             |
-| ry/2.0/elem | ement/title |             |             |             |
-| ent/author- | .html)      |             |             |             |
-| comment.htm |             |             |             |             |
-| l)          | [*&lt;label |             |             |             |
-|             | &gt;*](http |             |             |             |
-|             | s://jats.nl |             |             |             |
-|             | m.nih.gov/e |             |             |             |
-|             | xtensions/b |             |             |             |
-|             | its/tag-lib |             |             |             |
-|             | rary/2.0/el |             |             |             |
-|             | ement/label |             |             |             |
-|             | .html)      |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-| [*&lt;compo | [*&lt;subje | yes         | **no**      |             |
-| und-subject | ct&gt;*](ht |             |             |             |
-| &gt;*](http | tps://jats. |             |             |             |
-| s://jats.nl | nlm.nih.gov |             |             |             |
-| m.nih.gov/e | /extensions |             |             |             |
-| xtensions/b | /bits/tag-l |             |             |             |
-| its/tag-lib | ibrary/2.0/ |             |             |             |
-| rary/2.0/el | element/sub |             |             |             |
-| ement/compo | j-group.htm |             |             |             |
-| und-subject | l)          |             |             |             |
-| .html)      |             |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-| [*&lt;kwd-g | [*&lt;kwd&g | yes         | **no**      | *Compound-* |
-| roup&gt;*]( | t;*](https: |             |             | *keyword*   |
-| https://jat | //jats.nlm. |             |             | *is a cool  |
-| s.nlm.nih.g | nih.gov/ext |             |             | way in JATS |
-| ov/extensio | ensions/bit |             |             | to address  |
-| ns/bits/tag | s/tag-libra |             |             | lot of      |
-| -library/2. | ry/2.0/elem |             |             | keyword     |
-| 0/element/k | ent/kwd.htm |             |             | requirement |
-| wd-group.ht | l)          |             |             | s.          |
-| ml)         |             |             |             | Not         |
-|             | [***&lt;com |             |             | obligatory, |
-|             | pound-kwd&g |             |             | but worth a |
-|             | t;***](http |             |             | look.*      |
-|             | s://jats.nl |             |             |             |
-|             | m.nih.gov/e |             |             |             |
-|             | xtensions/b |             |             |             |
-|             | its/tag-lib |             |             |             |
-|             | rary/2.0/el |             |             |             |
-|             | ement/compo |             |             |             |
-|             | und-kwd.htm |             |             |             |
-|             | l)          |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-|             |             |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-| **Full Book | **Book id** |             |             |             |
-| Metadata**  |             |             |             |             |
-|             |             |             |             |             |
-| [***Example |             |             |             |             |
-| file***](ht |             |             |             |             |
-| tps://githu |             |             |             |             |
-| b.com/witha |             |             |             |             |
-| nage/heimpt |             |             |             |             |
-| /blob/maste |             |             |             |             |
-| r/static/te |             |             |             |             |
-| sts/example |             |             |             |             |
-| /metadata/E |             |             |             |             |
-| xample_Full |             |             |             |             |
-| .book-meta. |             |             |             |             |
-| bits2.xml)  |             |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-|             | Book title  |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-|             | Book        |             |             |             |
-|             | subtitle    |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-|             | Contributor |             |             |             |
-|             | (as in      |             |             |             |
-|             | section)    |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-|             | ISBN        |             |             |             |
-|             | Publication |             |             |             |
-|             | format      |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-|             | ISBN ID     |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-| Publisher   | Publisher   |             |             |             |
-|             | name        |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-|             | Publisher   |             |             |             |
-|             | language    |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-| Permissions | copyright-s |             |             |             |
-|             | tatement    |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-|             | copyright-y |             |             |             |
-|             | ear         |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-| Permissions | License-typ |             |             |             |
-| -&gt;       | e           |             |             |             |
-| license     |             |             |             |             |
-|             | Lincense    |             |             |             |
-|             | href        |             |             |             |
-|             |             |             |             |             |
-|             | License     |             |             |             |
-|             | language    |             |             |             |
-|             |             |             |             |             |
-|             | Inline      |             |             |             |
-|             | graphic     |             |             |             |
-|             |             |             |             |             |
-|             | License     |             |             |             |
-|             | language    |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
-| abstract    | Abstract in |             |             |             |
-|             | language    |             |             |             |
-+-------------+-------------+-------------+-------------+-------------+
 
+
+ 
+
+
+
+<td>no</td>
+<td><h1 id="contrib-group"><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/contrib-group.html"><strong><em>&lt;contrib-group&gt;</em></strong></a></h1></td>
+<td><p><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/contrib.html"><strong><em>&lt;contrib&gt;</em></strong></a></p>
+<ul>
+<li><blockquote>
+<p><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/name.html"><strong><em>&lt;name&gt;</em></strong></a></p>
+</blockquote>
+<ul>
+<li><blockquote>
+<p><strong>&lt;surname&gt;</strong></p>
+</blockquote></li>
+<li><blockquote>
+<p><strong>&lt;given-names&gt;</strong></p>
+</blockquote></li>
+<li><blockquote>
+<p><strong>&lt;prefix&gt;</strong></p>
+</blockquote></li>
+<li></li>
+</ul></li>
+</ul></td>
+<td>yes</td>
+<td>part</td>
+<td><p><em>.</em></p>
+<p><em>Clients such as citation generating engines need the name parts separately.</em></p>
+<p><em>Outputting compound names is also necessary for convenience.</em></p>
+<p><em>Idea:</em></p>
+<p><em>Returning the name parts per url-parameter</em></p></td>
+</tr>
+<tr class="even">
+<td><h1 id="section"></h1></td>
+<td><p><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/aff.html"><strong><em>&lt;aff&gt;</em></strong></a></p>
+<ul>
+<li><blockquote>
+<p><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/institution.html"><em>&lt;institution&gt;</em></a></p>
+</blockquote></li>
+<li><blockquote>
+<p><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/addr-line.html"><strong><em>&lt;addr-line&gt;</em></strong></a></p>
+</blockquote></li>
+</ul></td>
+<td><p><strong>Yes</strong></p>
+<p><strong>no</strong></p></td>
+<td><p><strong>Yes</strong></p>
+<p><strong>no</strong></p></td>
+<td><em>should we define the affiliation as a json object , b cause it may contain more metadata???</em></td>
+</tr>
+<tr class="odd">
+<td><h1 id="section-1"></h1></td>
+<td><strong><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/xref.html"><em>&lt;xref&gt;</em></a>&lt;orcid&gt;</strong></td>
+<td><strong>yes</strong></td>
+<td><strong>yes</strong></td>
+<td><em>Any cross-references can be added into JATS</em></td>
+</tr>
+<tr class="even">
+<td><h1 id="section-2"></h1></td>
+<td><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/bio.html"><strong><em>&lt;bio&gt;</em></strong></a></td>
+<td><strong>yes</strong></td>
+<td><strong>no</strong></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><h1 id="section-3"></h1></td>
+<td><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/bio.html"><strong><em>&lt;email&gt;</em></strong></a></td>
+<td><strong>yes</strong></td>
+<td><strong>no</strong></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><h1 id="section-4"></h1></td>
+<td><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/country.html"><strong><em>&lt;country&gt;</em></strong></a></td>
+<td><strong>yes</strong></td>
+<td><strong>no</strong></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><h1 id="section-5"></h1></td>
+<td><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/isbn.html"><strong><em>&lt;isbn&gt;</em></strong></a></td>
+<td><strong>yes</strong></td>
+<td><strong>no</strong></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/permissions.html"><strong><em>&lt;permissions&gt;</em></strong></a></td>
+<td><p><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/copyright-statement.html"><em>&lt;copyright-statement&gt;</em></a></p>
+<p><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/copyright-holder.html"><em>&lt;copyright-holder&gt;</em></a></p></td>
+<td>yes</td>
+<td><strong>no</strong></td>
+<td><p><em>Omp includes a license-url</em></p>
+<p><em>BITS mapping has to be decided.</em></p>
+<p><em>General Requirement of print PDF is to get permissions in &lt;multiple&gt; languages. </em></p></td>
+</tr>
+<tr class="odd">
+<td><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/author-comment.html"><em>&lt;author-comment&gt;</em></a></td>
+<td><p><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/title.html"><em>&lt;title&gt;</em></a></p>
+<p><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/label.html"><em>&lt;label&gt;</em></a></p></td>
+<td><strong>no</strong></td>
+<td><strong>no</strong></td>
+<td><em>omp document type can be used to support this ??</em></td>
+</tr>
+<tr class="even">
+<td><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/compound-subject.html"><em>&lt;compound-subject&gt;</em></a></td>
+<td><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/subj-group.html"><em>&lt;subject&gt;</em></a></td>
+<td>yes</td>
+<td><strong>no</strong></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/kwd-group.html"><em>&lt;kwd-group&gt;</em></a></td>
+<td><p><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/kwd.html"><em>&lt;kwd&gt;</em></a></p>
+<p><a href="https://jats.nlm.nih.gov/extensions/bits/tag-library/2.0/element/compound-kwd.html"><strong><em>&lt;compound-kwd&gt;</em></strong></a></p></td>
+<td>yes</td>
+<td><strong>no</strong></td>
+<td><em>Compound-</em> <em>keyword</em> <em>is a cool way in JATS to address lot of keyword requirements. Not obligatory, but worth a look.</em></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><p><strong>Full Book Metadata</strong></p>
+<p><a href="https://github.com/withanage/heimpt/blob/master/static/tests/example/metadata/Example_Full.book-meta.bits2.xml"><strong><em>Example file</em></strong></a></p></td>
+<td><strong>Book id </strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Book title</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Book subtitle</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Contributor (as in section)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>ISBN Publication format</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>ISBN ID</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Publisher</td>
+<td>Publisher name</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Publisher language</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Permissions</td>
+<td>copyright-statement</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>copyright-year</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Permissions -&gt; license</td>
+<td><p>License-type</p>
+<p>Lincense href</p>
+<p>License language</p>
+<p>Inline graphic</p>
+<p>License language</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>abstract</td>
+<td>Abstract in language</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
 
