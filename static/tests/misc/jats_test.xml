@@ -42,18 +42,7 @@
                     >Berkeley</named-content></addr-line>, <country>United
                     States</country></aff>
             </contrib-group>
-            <contrib-group content-type="section">
-                <contrib contrib-type="editor">
-                    <name>
-                        <surname>Brunger</surname>
-                        <given-names>Axel T</given-names>
-                    </name>
-                    <role>Reviewing editor</role>
-                    <aff>
-                        <institution>Howard Hughes Medical Institute, Stanford
-                            University</institution>, <country>United States</country></aff>
-                </contrib>
-            </contrib-group>
+
             <!--author-notes>
                 <corresp id="cor1">
                     <label>*</label>For correspondence: <email>JTGroves@lbl.gov</email></corresp>
@@ -94,11 +83,10 @@
             </permissions>
             <self-uri content-type="pdf" xlink:href="elife00778.pdf"/>
             <abstract>
-                <title>Article abstract Title</title>
+                <title>Abstract Title</title>
                 <p>---------------------------------------------------------------------------------------------</p>
                 <p>article-meta Abstract text BEGIN</p>
-                <p> <bold>DOI:</bold> <ext-link ext-link-type="doi" xlink:href="10.77777.123456.001"
-                    >http://dx.doi.org/10.77777.123456.001</ext-link> </p>
+                <p> <bold>DOI:</bold>  <ext-link ext-link-type="doi" xlink:href="10.77777.123456.001" >http://dx.doi.org/10.77777.123456.001</ext-link> </p>
                 <p>article-meta Abstract text END</p>
                 <p>---------------------------------------------------------------------------------------------</p>
 
@@ -164,6 +152,18 @@
                     <p>---------------------------------------------------------------------------------------------</p>
 
                 </abstract>
+                <contrib-group content-type="section">
+                    <contrib contrib-type="editor">
+                        <name>
+                            <surname>Brunger</surname>
+                            <given-names>Axel T</given-names>
+                        </name>
+                        <role>Reviewing editor</role>
+                        <aff>
+                            <institution>Howard Hughes Medical Institute, Stanford
+                                University</institution>, <country>United States</country></aff>
+                    </contrib>
+                </contrib-group>
             </sec-meta>
 
             <p>Inner Structure text</p>
@@ -171,7 +171,77 @@
                 <title> title 1.1 </title>
 
 
-                <p>x1</p>
+                <p> This is a NON-SERIF text</p>
+                <p> <serif>This is a serif text</serif></p>
+                <p> This is a NON-SERIF text</p>
+
+
+
+
+                <list list-type="bullet">
+                <list-item>
+                    <p>Any quotation necessarily conserves the meaning of a quoted passage. This is usually
+                        reflected in the reproduction of its letters, numbers, symbols, punctuation marks,
+                        spacing, capitalisation, small capitals, bold print, italics, and line breaks.</p>
+                </list-item>
+                <list-item>
+                    <p>By contrast, a quotation does not usually conserve the font type. A text in Arial may
+                        be quoted in Times New Roman without the need to mention this change. Font type is
+                        thus regarded as part of the standard formal background of a text. However, if an
+                        original text were to use various fonts in order to transmit a message, e.g. in a
+                        (constructed) original sentence such as </p>
+                    <p><disp-quote id="dispquote8"><p>(10) Short passages are easier to read if typefaces without serifs are used (e.g. in
+                        <italic>This is a serif typeface</italic> as opposed to <italic>This is a sans serif
+                            typeface</italic>).</p></disp-quote></p>
+                    <p>one would expect a stricter observance of formal aspects in quoting than usual—at
+                        least for the self-referential text passage printed in the font type under consideration. </p>
+                </list-item>
+                </list>
+                <list>
+                    <list-item><p>Unordered List without Attribute list-type  1 </p></list-item>
+
+                    <list-item>
+                        <list>
+                            <list-item><p>Unordered List without Attribute list-type level 2.1 </p></list-item>
+                            <list-item>
+                                <list>
+                                    <list-item><p>Unordered List without Attribute list-type  level 2.2.1 </p></list-item>
+
+                                </list>
+                            </list-item>
+                            <list-item><p>Unordered List without Attribute list-type level 2 </p></list-item>
+                            <list-item>
+                                <list>
+                                    <list-item><p>Unordered List without Attribute list-type level 2.1 </p></list-item>
+                                    <list-item>
+                                        <list>
+                                            <list-item><p>Unordered List without Attribute list-type  level 2.2.1 </p></list-item>
+
+                                        </list>
+                                    </list-item>
+                                    <list-item><p>Unordered List without Attribute list-type level 2 </p></list-item>
+                                    <list-item>
+                                        <p>By contrast, a quotation does not usually conserve the font type. A text in Arial may
+                                            be quoted in Times New Roman without the need to mention this change. Font type is
+                                            thus regarded as part of the standard formal background of a text. However, if an
+                                            original text were to use various fonts in order to transmit a message, e.g. in a
+                                            (constructed) original sentence such as </p>
+                                        <p><disp-quote id="dispquote8"><p>(10) Short passages are easier to read if typefaces without serifs are used (e.g. in
+                                            <italic>This is a serif typeface</italic> as opposed to <italic>This is a sans serif
+                                                typeface</italic>).</p></disp-quote></p>
+                                        <p>one would expect a stricter observance of formal aspects in quoting than usual—at
+                                            least for the self-referential text passage printed in the font type under consideration. </p>
+                                    </list-item>
+
+                                </list>
+                            </list-item>
+                        </list>
+                    </list-item>
+                    <list-item><p>Unordered List without Attribute list-type  3 </p></list-item>
+
+
+                </list>
+
 
                 <sec>
                     <title> title 2 </title>
@@ -252,7 +322,8 @@
         </ack>
         <fn-group>
             <fn id="bibd2e50">
-                <p> For an explanation of the interview transcript abbreviations used throughout
+                <p> For an explanation of the interview transcript abbreviations used throughout <ext-link xlink:href="http://www.google.de">Google</ext-link> <xref ref-type="sec" rid="s1"
+                >106</xref>
                     this work, see Appendix A.</p>
             </fn>
         </fn-group>
