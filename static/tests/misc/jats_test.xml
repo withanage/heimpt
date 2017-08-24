@@ -24,7 +24,21 @@
                 <article-title>Title</article-title>
             </title-group>
             <contrib-group>
-                <contrib contrib-type="author" corresp="yes" id="author-4713">
+                <contrib contrib-type="author" corresp="yes" id="author-1">
+                    <name>
+                        <surname>Krabbes</surname>
+                        <given-names>Frank</given-names>
+                    </name>
+
+                </contrib>
+                <contrib contrib-type="author" corresp="yes" id="author-2">
+                    <name>
+                        <surname>Konopka</surname>
+                        <given-names>Anja</given-names>
+                    </name>
+
+                </contrib>
+                <contrib contrib-type="editor" corresp="yes" id="editor-1">
                     <name>
                         <surname>Groves</surname>
                         <given-names>Jay T</given-names>
@@ -34,13 +48,9 @@
                     <xref ref-type="other" rid="par-1"/>
                     <xref ref-type="fn" rid="con5"/>
                 </contrib>
-                <aff id="aff1"> <institution content-type="dept"
-                    >Department of Chemistry</institution>,
-                        <institution>Howard Hughes Medical Institute, University of California,
-                        Berkeley</institution>, <addr-line><named-content
-                    content-type="city"
-                    >Berkeley</named-content></addr-line>, <country>United
-                    States</country></aff>
+                <aff id="aff1">
+                    <institution content-type="dept">Department of Chemistry</institution>,  <institution>  Berkeley</institution>,
+                    <addr-line><named-content                    content-type="city"      >Berkeley</named-content></addr-line>, <country>United States</country></aff>
             </contrib-group>
 
             <!--author-notes>
@@ -153,12 +163,22 @@
 
                 </abstract>
                 <contrib-group content-type="section">
-                    <contrib contrib-type="editor">
+                    <contrib contrib-type="section-editor" id="sec-author-1">
                         <name>
                             <surname>Brunger</surname>
                             <given-names>Axel T</given-names>
                         </name>
-                        <role>Reviewing editor</role>
+                        <role>section-editor</role>
+                        <aff>
+                            <institution>Howard Hughes Medical Institute, Stanford
+                                University</institution>, <country>United States</country></aff>
+                    </contrib>
+                    <contrib contrib-type="section-editor"  id="sec-editor-2">
+                        <name>
+                            <surname>Withanage</surname>
+                            <given-names>Dulip </given-names>
+                        </name>
+                        <role>section-editor</role>
                         <aff>
                             <institution>Howard Hughes Medical Institute, Stanford
                                 University</institution>, <country>United States</country></aff>
