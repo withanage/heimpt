@@ -21,7 +21,6 @@ https://withanage.github.io/heimpt
 
 
 ## heiMPT Installation
-install java at least runtime in your system
  
 Check if you have persmissions  to intall in the BUILD_DIR
  
@@ -31,8 +30,13 @@ Check if you have persmissions  to intall in the BUILD_DIR
  cd $BUILD_DIR/heimpt
  git submodule update --init --recursive
  pip install -r requirements.txt
+ java -version 
+ ```
+ Optionally required
+  ```
  cd static/editors/metadata/
  bower install 
+ 
  ```
 
 ### FO Processors 
