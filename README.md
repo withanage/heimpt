@@ -21,6 +21,7 @@ https://withanage.github.io/heimpt
 
 
 ## heiMPT Installation
+install java at least runtime in your system
  
 Check if you have persmissions  to intall in the BUILD_DIR
  
