@@ -1,7 +1,7 @@
 {
   "createFull": {
     "example": {
-      "dir": "/home/wit/Arbeit/OMP/Stockheimer/xml/proof/",
+      "dir": "/home/wit/Arbeit/OMP/Stockheimer/proof/",
       "files": [
         {
           "195-69-78540-2-10-20170719.xml": {
@@ -95,7 +95,7 @@
         }
       ],
       "fullfile": {
-        "example.xml": {
+        "stockheimerfull.xml": {
         }
       },
       "enumeration": 1,
