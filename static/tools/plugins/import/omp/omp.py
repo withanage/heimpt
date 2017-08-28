@@ -8,19 +8,18 @@ Options:
   -p --project-template=<file>
 
 """
+import json
+import os.path
 import shutil
 
 from ImportInterface import Import
-from pydal.base import DAL
-
-from debug import Debuggable
-from omptables import define_tables
-import json
-import os.path
 from lxml import etree
 from lxml import html
 from lxml.builder import E
+from pydal.base import DAL
+
 from ompdal import OMPSettings, OMPDAL
+from omptables import define_tables
 
 LANG_ATTR = '{http://www.w3.org/XML/1998/namespace}lang'
 
@@ -249,12 +248,18 @@ class OMPImport(Import):
         for lang, abstract_text in submission_settings.getValues('abstract').items():
             if abstract_text:
                 book_meta_xml.append(E.abstract(etree.XML(abstract_text), {LANG_ATTR: lang}))
-        # TODO Where to find publisher location?
-        book_meta_xml.xpath('publisher/publisher-loc')[0].text = ''
+        # Inject publisher location and name
+        publisher_loc_xml = book_meta_xml.xpath('publisher/publisher-loc')[0]
+        if press_settings.getLocalizedValue('location', ''):
+            publisher_loc_xml.text = press_settings.getLocalizedValue('location', '')
+        elif press_settings.getLocalizedValue('mailingAddress', ''):
+            # Assume the city of the published is found in the second word in the last line of the address,
+            # e.g., 69120 Heidelberg
+            publisher_address = press_settings.getLocalizedValue('mailingAddress', '')
+            publisher_loc_xml.text = publisher_address.splitlines()[-1].split()[1]
         book_meta_xml.xpath('publisher/publisher-name')[0].text = press_settings.getLocalizedValue('name',
                                                                                                    locale)
         # Load isbn identifiers for all formats and doi from pdf
-        etree.strip_elements(book_meta_xml, 'isbn')
         doi = ''
         for pub_format in self.dal.getAllPublicationFormatsBySubmission(submission_id):
             format_settings = OMPSettings(self.dal.getPublicationFormatSettings(pub_format.publication_format_id))
@@ -262,18 +267,22 @@ class OMPImport(Import):
             if format_name == 'PDF':
                 doi = format_settings.getLocalizedValue('pub-id::doi', '')
             isbn = self.dal.getIdentificationCodesByPublicationFormat(pub_format.publication_format_id).first().value
-            book_meta_xml.append(E.isbn(isbn, {'publication-format': PUBLICATION_FORMAT_MAPPING[format_name]}))
+            existing_isbn_nodes = book_meta_xml.xpath(
+                'isbn[@publication-format = "{}"]'.format(PUBLICATION_FORMAT_MAPPING[format_name]))
+            if existing_isbn_nodes:
+                existing_isbn_nodes[0].text = isbn
+            else:
+                book_meta_xml.append(E.isbn(isbn, {'publication-format': PUBLICATION_FORMAT_MAPPING[format_name]}))
         # Add doi identifier
         book_meta_xml.xpath('custom-meta-group/custom-meta[meta-name = "doi"]/meta-value')[0].text = doi
 
         contrib_group_xml = book_meta_xml.xpath('contrib-group')[0]
         etree.strip_elements(contrib_group_xml, 'contrib')
-        etree.strip_elements(contrib_group_xml, 'aff')
-        affiliation_counter = 0
         # Add contributors
         for contrib in self.dal.getAuthorsBySubmission(submission_id, filter_browse=True):
             contrib_settings = OMPSettings(self.dal.getAuthorSettings(contrib.author_id))
             group_settings = self.dal.getUserGroupSettings(contrib.user_group_id)
+
             # Use the english name of the group for mapping to contrib-type attribute
             contrib_type = USER_GROUP_TO_CONTRIB_TYPE[group_settings.getLocalizedValue('name', 'en_US')]
             given_names = contrib.first_name
@@ -292,13 +301,36 @@ class OMPImport(Import):
             # Somehow there was a bug with german umlauts, so we have to use unicode string
             affiliation = unicode(contrib_settings.getLocalizedValue('affiliation', locale), 'utf8')
             if affiliation:
-                affiliation_id = 'aff' + format(affiliation_counter, '02d')
-                contrib_xml.append(E.xref({'ref-type': 'aff', 'rid': affiliation_id}))
-                contrib_group_xml.append(E.aff(affiliation, {'id': affiliation_id}))
+                aff_nodes = contrib_group_xml.xpath('aff')
+                if aff_nodes:
+                    # Find an existing aff tag with the same text
+                    aff_id = next((node.get('id') for node in aff_nodes if node.text == affiliation), None)
+                    if not aff_id:
+                        aff_ids = set(node.get('id') for node in aff_nodes)
+                        aff_id = max(aff_ids)
+                        # Try to convert last two characters to int and increase
+                        try:
+                            aff_id = 'aff' + format(int(aff_id[-2:]) + 1, '02d')
+                        except ValueError as e:
+                            print e
+                            pass
+                        else:
+                            aff_id = 'aff' + next(format(number, '02d') for number in range(1, 100)
+                                                  if 'aff' + format(number, '02d') not in aff_ids)
+                        existing_aff = False
+                    else:
+                        existing_aff = True
+                else:
+                    existing_aff = False
+                    aff_id = 'aff01'
+                if not existing_aff:
+                    contrib_group_xml.append(E.aff(affiliation, {'id': aff_id}))
+                contrib_xml.append(E.xref({'ref-type': 'aff', 'rid': aff_id}))
+
             contrib_group_xml.append(contrib_xml)
         book_meta_xml.xpath('permissions/copyright-year')[0].text = submission_settings.getLocalizedValue('copyrightYear', '')
-        book_meta_xml.xpath('permissions/copyright-holder')[0].text = submission_settings.getLocalizedValue(
-            'copyrightHolder', locale)
+        book_meta_xml.xpath('permissions/copyright-holder')[0].text = unicode(submission_settings.getLocalizedValue(
+            'copyrightHolder', locale))
         # Add collection meta data
         if submission.series_id:
             series_settings = OMPSettings(self.dal.getSeriesSettings(submission.series_id))
@@ -316,7 +348,6 @@ class OMPImport(Import):
             # TODO series editors
         # TODO add copyright-statement. which omp field to use or which value to generate?
         # TODO add license
-        # TODO add publisher location
         return book_xml
 
     def inject_chapter_metadata(self, bits_xml, chapter, submission, custom_meta = None):
