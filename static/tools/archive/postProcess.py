@@ -61,11 +61,12 @@ class PostProcess:
                 tr, count = self.set_enumeration(
                     tr, "xref", "ref-type", "fn", context, f, chapter, order, count)
         tr = self.remove_name_duplicates_speech(tr)
-        tr = self.set_numbering(tr, ['speech', 'disp-quote'])
+        tr = self.set_numbering(tr, ['speech', 'disp-quote',"abstract"])
         tr = self.get_unreferenced_footnotes(tr)
         tr = self.set_uuids(tr, 'fn')
         tr = self.merge_repeating_neighbours(tr, "disp-quote")
         if "references" in cfg.keys():
+
             if "duplicates" in cfg["references"].keys():
                 for i in cfg["references"]["duplicates"]:
                     tr = self.remove_duplicate_refs(tr, i)
@@ -138,6 +139,7 @@ class PostProcess:
 
         header_text, back_fns, body_secs, back_refs, elem_secs, elem_fns = self.modify_files(
             cfb["dir"], cfb["files"], context)
+
         self.create_merged_file(
             fullfile,
             body_secs,
@@ -401,36 +403,39 @@ class PostProcess:
     def remove_duplicate_refs(self, tr, tag_list):
         ''' removes duplicate references'''
         ref_list = tr.find('./back/ref-list')
-        data = []
-        drf = {}
-        for e in ref_list:
-            vl = []
-            for tag in tag_list:
-                vl.append(e.findtext(".//" + tag))
-            vl.append(e)
-            data.append(tuple(vl))
+        if ref_list:
+            data = []
+            drf = {}
+            for e in ref_list:
 
-        data.sort()
-        ref_list[:] = [item[-1] for item in data]
-        prev = ('', '', '', '')
-        last_id = 0
+                vl = []
+                for tag in tag_list:
+                    vl.append(e.findtext(".//" + tag))
+                vl.append(e)
+                data.append(tuple(vl))
 
-        for j, v in enumerate(data):
-            if v[0] is not None and v[1] is not None and v[2] is not None:
-                if prev[0] == v[0] and prev[1] == v[1] and prev[2] == v[2]:
-                    drf[last_id] = v[len(v) - 1].attrib['id']
-                else:
-                    prev = v
-                    last_id = v[len(v) - 1].attrib['id']
-        # replace refs
-        i = 0
-        for key in drf:
-            for xref in tr.findall(
-                    './/xref[@rid="' + drf[key] + '"]'):
-                xref.set('rid', key)
-            for ref in tr.findall('.//ref[@id="' + drf[key] + '"]'):
-                i += 1
-                ref.getparent().remove(ref)
+            data.sort()
+
+            ref_list[:] = [item[-1] for item in data]
+            prev = ('', '', '', '')
+            last_id = 0
+
+            for j, v in enumerate(data):
+                if v[0] is not None and v[1] is not None and v[2] is not None:
+                    if prev[0] == v[0] and prev[1] == v[1] and prev[2] == v[2]:
+                        drf[last_id] = v[len(v) - 1].attrib['id']
+                    else:
+                        prev = v
+                        last_id = v[len(v) - 1].attrib['id']
+            # replace refs
+            i = 0
+            for key in drf:
+                for xref in tr.findall(
+                        './/xref[@rid="' + drf[key] + '"]'):
+                    xref.set('rid', key)
+                for ref in tr.findall('.//ref[@id="' + drf[key] + '"]'):
+                    i += 1
+                    ref.getparent().remove(ref)
         return tr
 
     def remove_name_duplicates_speech(self, tr):
@@ -447,16 +452,21 @@ class PostProcess:
         body_refs = self.get_ref_ids_body(tr)
         back_refs = self.get_ref_ids_back(tr)
 
+
         for i in back_refs:
             if i in body_refs:
                 pass
             else:
-                elems = tr.getroot().findall(
-                    ''.join(['.//back/', tag, '/[@id="', str(i), '"]']))
+                elm = ''.join(['.//back/', tag, '/[@id="', str(i), '"]'])
+                elems = tr.getroot().findall(elm)
+
                 for e in elems:
                     if e.getparent() is not None:
                         e.getparent().remove(e)
-                        #logging.info(tag + e.tostring(e) + " removed")
+
+        for e in tr.getroot().xpath('.//back/ref-list/ref[not(@id)]'):
+            if e.getparent() is not None:
+                e.getparent().remove(e)
         return tr
 
     def remove_table_references(self, tree, name, attr, value):
