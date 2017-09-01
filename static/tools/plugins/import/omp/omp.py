@@ -1,26 +1,25 @@
 # coding=utf-8
 """
 Usage:
-  heimpt.py import omp [options] <submission_id>...
+  heimpt.py import omp [options] [<submission_id>...]
 
 Options:
   -h --help
   -p --project-template=<file>
 
 """
+import json
+import os.path
 import shutil
 
 from ImportInterface import Import
-from pydal.base import DAL
-
-from debug import Debuggable
-from omptables import define_tables
-import json
-import os.path
 from lxml import etree
 from lxml import html
 from lxml.builder import E
+from pydal.base import DAL
+
 from ompdal import OMPSettings, OMPDAL
+from omptables import define_tables
 
 LANG_ATTR = '{http://www.w3.org/XML/1998/namespace}lang'
 
@@ -97,6 +96,8 @@ class OMPImport(Import):
         if settings_override:
             self.settings.update(settings_override)
         print('Loaded settings: {}'.format(self.settings))
+        print('Using {} as current working directory'.format(self.settings['base-path']))
+        os.chdir(self.settings['base-path'])
         self.db = DAL(self.settings['db-uri'], migrate=False)
         define_tables(self.db)
         self.dal = OMPDAL(self.db, None)
@@ -107,17 +108,19 @@ class OMPImport(Import):
         if args.get('<submission_id>'):
             submission_ids = [int(id_arg) for id_arg in args.get('<submission_id>')]
         else:
-            # TODO Allow lists in settings.json
-            submission_ids = [self.settings['submission']]
-        print "Importing submissions:", submission_ids
+            if not isinstance(self.settings['submission'], list):
+                submission_ids = [self.settings['submission']]
+            else:
+                submission_ids = self.settings['submission']
+        print('Importing submissions: {}'.format(submission_ids))
         self.results = []
         for submission_id in submission_ids:
-            print "Loading submission files for submission", submission_id
-            files = self.get_files(submission_id)
+            print('Querying submission files for submission {}'.format(submission_id))
+            files = self.get_files_from_db(submission_id)
             if not files:
-                print("No files found with genre={genre} and file_stage={file-stage}".format(**self.settings))
-                continue
-            print "Loading metadata for submission"
+                print('No files found with genre={genre}, file_stage={file-stage} and file_types={file-types}'
+                      .format(**self.settings))
+            print('Loading metadata for submission')
             submission = self.db.submissions[submission_id]
             submission_metadata_path = path_to_submission_metadata(submission.submission_id, submission.context_id,
                                                              self.settings['files-output-dir'])
@@ -125,11 +128,15 @@ class OMPImport(Import):
             # generate metadata for the whole submission first and then for each chapter
             self.inject_submission_metadata(submission, book_bits_xml)
             chapters = self.dal.getChaptersBySubmission(submission_id)
-            print "Loading metadata for chapters"
+            print('Loading metadata for chapters')
             chapters_metadata_xml = []
             for chapter in chapters:
-                print "Loading chapter", chapter.chapter_seq
-                # TODO Generate filename from corresponding submission file
+                print('Loading chapter {}'.format(chapter.chapter_seq))
+                chapter_files = self.get_chapter_files_from_db(chapter.chapter_id)
+                if chapter_files:
+
+                    print('Found chapter file: {}'.format(chapter_files))
+
                 metadata_file_path = path_to_submission_metadata(submission.submission_id, submission.context_id,
                                                                  self.settings['files-output-dir'],
                                                                  'chapter' + str(chapter.chapter_seq + 1)
@@ -139,38 +146,35 @@ class OMPImport(Import):
                 chapters_metadata_xml.append((metadata_file_path, chapter_bits_xml))
             file_paths = []
             for submission_file in files:
+                print('Checking ' + str(submission_file))
                 path = path_to_omp_submission_file(submission_file, submission.context_id, self.settings['omp-files-dir'])
                 if os.path.exists(path):
-                    print "Found submission file:", path
+                    print('Found submission file:' + path)
                     file_paths.append(path)
             project_files_dir = path_to_submission_output(submission_id, submission.context_id,
                                                           self.settings['files-output-dir'])
-            # TODO Clarify if copying is really necessary?
             self.copy_submission_files(file_paths, project_files_dir)
-            print "Writing submission metadata xml", submission_metadata_path
+            print('Writing submission metadata xml to: ' + submission_metadata_path)
             self.write_xml_to_file(book_bits_xml, submission_metadata_path)
             for file_path, chapter_xml in chapters_metadata_xml:
-                print "Writing chapter metadata", file_path
+                print('Writing chapter metadata to: ' + file_path)
                 self.write_xml_to_file(chapter_xml, file_path)
             project_filename = str(submission_id) + '.json'
             project_config = self.read_project_config(project_filename)
             project = project_config['projects'][0]
-            # TODO Clarify the project name for imports
-            project['name'] = 'omp_import_' + str(submission_id)
+            project['name'] = str(submission_id)
             project['files'] = {str(i): os.path.basename(path) for i, path in enumerate(file_paths, start=1)}
             project['path'] = project_files_dir
             self.write_project_config(project_filename, project_config)
             self.results.append(project_config)
         # TODO Find chapter submission files from omp db
-        # TODO Write submission meta data xml file
-        # TODO Write chapter meta data xml files
         pass
 
     def copy_submission_files(self, file_paths, target_dir):
         if not os.path.exists(target_dir):
             os.makedirs(target_dir)
         for file_path in file_paths:
-            print "Copying {} to {} ...".format(file_path, target_dir)
+            print("Copying {} to {} ...".format(file_path, target_dir))
             shutil.copy(file_path, target_dir)
 
     def write_project_config(self, project_filename, project_config):
@@ -181,21 +185,37 @@ class OMPImport(Import):
             json.dump(project_config, f, indent=2, sort_keys=True)
 
     def read_project_config(self, project_filename, template_path=None):
-        project_file_path = os.path.join(self.settings['base-path'], self.settings['project-output'], project_filename)
-        if os.path.isfile(project_file_path):
-            path = project_file_path
+        project_output_path = os.path.join(self.settings['project-output'], project_filename)
+        if os.path.isfile(project_output_path):
+            path = project_output_path
         else:
-            path = os.path.join(self.settings['base-path'], template_path or self.settings['project-template'])
+            path = template_path or self.settings['project-template']
         with open(path) as f:
             return json.load(f)
 
-    def get_files(self, submission_id):
+    def get_files_from_db(self, submission_id):
         genre_id = self.settings['genre']
         file_stage = self.settings['file-stage']
+        file_types = self.settings['file-types']
         sf = self.db.submission_files
         q = ((sf.submission_id == submission_id)
              & (sf.genre_id == genre_id)
+             & (sf.file_type.belongs(file_types))
              & (sf.file_stage == file_stage)
+             )
+        res = self.db(q).select(sf.ALL, orderby=sf.revision)
+        return res
+
+    def get_chapter_files_from_db(self, chapter_id):
+        file_types = self.settings['file-types']
+        file_stage = self.settings['file-stage']
+        sfs = self.db.submission_file_settings
+        sf = self.db.submission_files
+        q = ((sfs.setting_name == 'chapterId')
+             & (sfs.setting_value == chapter_id)
+             & (sfs.file_id == sf.file_id)
+             & (sf.file_stage == file_stage)
+             & (sf.file_type.belongs(file_types))
              )
         res = self.db(q).select(sf.ALL, orderby=sf.revision)
         return res
@@ -206,7 +226,7 @@ class OMPImport(Import):
         :param metadata_file_path: Path to bits2 xml file with metadata.
         :return: ElementTree object with bits2 metadata elements.
         """
-        print "Try to load submission metadata from", metadata_file_path
+        print("Try to load submission metadata from: {}".format(metadata_file_path))
         if os.path.isfile(metadata_file_path):
             # load existing metadata
             book_xml = etree.parse(metadata_file_path)
@@ -234,27 +254,35 @@ class OMPImport(Import):
         # Set language of submission on book tag
         book_xml.xpath('/book')[0].set(LANG_ATTR, short_locale)
         book_meta_xml = book_xml.xpath('/book/book-meta')[0]
+        book_meta_xpatheval = etree.XPathEvaluator(book_meta_xml)
         submission_settings = OMPSettings(self.dal.getSubmissionSettings(submission_id))
         press_settings = OMPSettings(self.dal.getPressSettings(submission.context_id))
-        book_meta_xml.xpath('book-id')[0].text = unicode(submission_id)
+        book_meta_xpatheval('book-id')[0].text = str(submission_id)
 
-        book_title = unicode(submission_settings.getLocalizedValue('prefix', locale)) + \
-                     " " + unicode(submission_settings.getLocalizedValue('title', locale))
-        subtitle = unicode(submission_settings.getLocalizedValue('subtitle', locale))
-        book_meta_xml.xpath('book-title-group/book-title')[0].text = book_title
-        book_meta_xml.xpath('book-title-group/subtitle')[0].text = subtitle
+        book_title = '{} {}'.format(unicode(submission_settings.getLocalizedValue('prefix', locale), 'utf8'),
+                                    unicode(submission_settings.getLocalizedValue('title', locale), 'utf8'))
+        subtitle = unicode(submission_settings.getLocalizedValue('subtitle', locale), 'utf8')
+        book_meta_xpatheval('book-title-group/book-title')[0].text = book_title
+        book_meta_xpatheval('book-title-group/subtitle')[0].text = subtitle
 
         # Add abstracts for all languages
         etree.strip_elements(book_meta_xml, 'abstract')
-        for lang, abstract_text in submission_settings.getValues('abstract').items():
+        for abstract_locale, abstract_text in submission_settings.getValues('abstract').items():
             if abstract_text:
-                book_meta_xml.append(E.abstract(etree.XML(abstract_text), {LANG_ATTR: lang}))
-        # TODO Where to find publisher location?
-        book_meta_xml.xpath('publisher/publisher-loc')[0].text = ''
-        book_meta_xml.xpath('publisher/publisher-name')[0].text = press_settings.getLocalizedValue('name',
+                abstract_html = html.fragment_fromstring(unicode(abstract_text, 'utf8'), create_parent=True)
+                book_meta_xml.append(E.abstract(abstract_html, {LANG_ATTR: abstract_locale[:2]}))
+        # Inject publisher location and name
+        publisher_loc_xml = book_meta_xpatheval('publisher/publisher-loc')[0]
+        if press_settings.getLocalizedValue('location', ''):
+            publisher_loc_xml.text = press_settings.getLocalizedValue('location', '')
+        elif press_settings.getLocalizedValue('mailingAddress', ''):
+            # Assume the city of the published is found in the second word in the last line of the address,
+            # e.g., 69120 Heidelberg
+            publisher_address = press_settings.getLocalizedValue('mailingAddress', '')
+            publisher_loc_xml.text = publisher_address.splitlines()[-1].split()[1]
+        book_meta_xpatheval('publisher/publisher-name')[0].text = press_settings.getLocalizedValue('name',
                                                                                                    locale)
         # Load isbn identifiers for all formats and doi from pdf
-        etree.strip_elements(book_meta_xml, 'isbn')
         doi = ''
         for pub_format in self.dal.getAllPublicationFormatsBySubmission(submission_id):
             format_settings = OMPSettings(self.dal.getPublicationFormatSettings(pub_format.publication_format_id))
@@ -262,18 +290,22 @@ class OMPImport(Import):
             if format_name == 'PDF':
                 doi = format_settings.getLocalizedValue('pub-id::doi', '')
             isbn = self.dal.getIdentificationCodesByPublicationFormat(pub_format.publication_format_id).first().value
-            book_meta_xml.append(E.isbn(isbn, {'publication-format': PUBLICATION_FORMAT_MAPPING[format_name]}))
+            existing_isbn_nodes = book_meta_xpatheval(
+                'isbn[@publication-format = "{}"]'.format(PUBLICATION_FORMAT_MAPPING[format_name]))
+            if existing_isbn_nodes:
+                existing_isbn_nodes[0].text = isbn
+            else:
+                book_meta_xml.append(E.isbn(isbn, {'publication-format': PUBLICATION_FORMAT_MAPPING[format_name]}))
         # Add doi identifier
-        book_meta_xml.xpath('custom-meta-group/custom-meta[meta-name = "doi"]/meta-value')[0].text = doi
+        book_meta_xpatheval('custom-meta-group/custom-meta[meta-name = "doi"]/meta-value')[0].text = doi
 
-        contrib_group_xml = book_meta_xml.xpath('contrib-group')[0]
+        contrib_group_xml = book_meta_xpatheval('contrib-group')[0]
         etree.strip_elements(contrib_group_xml, 'contrib')
-        etree.strip_elements(contrib_group_xml, 'aff')
-        affiliation_counter = 0
         # Add contributors
         for contrib in self.dal.getAuthorsBySubmission(submission_id, filter_browse=True):
             contrib_settings = OMPSettings(self.dal.getAuthorSettings(contrib.author_id))
             group_settings = self.dal.getUserGroupSettings(contrib.user_group_id)
+
             # Use the english name of the group for mapping to contrib-type attribute
             contrib_type = USER_GROUP_TO_CONTRIB_TYPE[group_settings.getLocalizedValue('name', 'en_US')]
             given_names = contrib.first_name
@@ -283,22 +315,45 @@ class OMPImport(Import):
                 E.surname(contrib.last_name), getattr(E, 'given-names')(given_names), {'name-style': 'western'}),
                 {'contrib-type': contrib_type})
             # Add biography in all available languages
-            for lang, biography_text in contrib_settings.getValues('biography').items():
+            for abstract_locale, biography_text in contrib_settings.getValues('biography').items():
                 if biography_text:
                     # lxml cant parse html in the biographies if they contain multiple tags as root element.
                     # TODO check which html element should be used to encapsulate the html from biographies
-                    biography_html = html.fragment_fromstring(biography_text, create_parent=True)
-                    contrib_xml.append(getattr(E, 'author-comment')(biography_html, {LANG_ATTR: lang[:2]}))
+                    biography_html = html.fragment_fromstring(unicode(biography_text, 'utf8'), create_parent=True)
+                    contrib_xml.append(getattr(E, 'author-comment')(biography_html, {LANG_ATTR: abstract_locale[:2]}))
             # Somehow there was a bug with german umlauts, so we have to use unicode string
             affiliation = unicode(contrib_settings.getLocalizedValue('affiliation', locale), 'utf8')
             if affiliation:
-                affiliation_id = 'aff' + format(affiliation_counter, '02d')
-                contrib_xml.append(E.xref({'ref-type': 'aff', 'rid': affiliation_id}))
-                contrib_group_xml.append(E.aff(affiliation, {'id': affiliation_id}))
+                aff_nodes = contrib_group_xml.xpath('aff')
+                if aff_nodes:
+                    # Find an existing aff tag with the same text
+                    aff_id = next((node.get('id') for node in aff_nodes if node.text == affiliation), None)
+                    if not aff_id:
+                        aff_ids = set(node.get('id') for node in aff_nodes)
+                        aff_id = max(aff_ids)
+                        # Try to convert last two characters to int and increase
+                        try:
+                            aff_id = 'aff' + format(int(aff_id[-2:]) + 1, '02d')
+                        except ValueError as e:
+                            print(e)
+                            pass
+                        else:
+                            aff_id = 'aff' + next(format(number, '02d') for number in range(1, 100)
+                                                  if 'aff' + format(number, '02d') not in aff_ids)
+                        existing_aff = False
+                    else:
+                        existing_aff = True
+                else:
+                    existing_aff = False
+                    aff_id = 'aff01'
+                if not existing_aff:
+                    contrib_group_xml.append(E.aff(affiliation, {'id': aff_id}))
+                contrib_xml.append(E.xref({'ref-type': 'aff', 'rid': aff_id}))
+
             contrib_group_xml.append(contrib_xml)
-        book_meta_xml.xpath('permissions/copyright-year')[0].text = submission_settings.getLocalizedValue('copyrightYear', '')
-        book_meta_xml.xpath('permissions/copyright-holder')[0].text = submission_settings.getLocalizedValue(
-            'copyrightHolder', locale)
+        book_meta_xpatheval('permissions/copyright-year')[0].text = submission_settings.getLocalizedValue('copyrightYear', '')
+        book_meta_xpatheval('permissions/copyright-holder')[0].text = unicode(submission_settings.getLocalizedValue(
+            'copyrightHolder', locale), 'utf8')
         # Add collection meta data
         if submission.series_id:
             series_settings = OMPSettings(self.dal.getSeriesSettings(submission.series_id))
@@ -314,9 +369,10 @@ class OMPImport(Import):
             if series_electronic_issn:
                 collection_meta_xml.append(E.issn(series_print_issn, {'publication-format': 'online'}))
             # TODO series editors
+        else:
+            etree.strip_elements(book_xml, 'collection-meta')
         # TODO add copyright-statement. which omp field to use or which value to generate?
         # TODO add license
-        # TODO add publisher location
         return book_xml
 
     def inject_chapter_metadata(self, bits_xml, chapter, submission, custom_meta = None):
@@ -337,8 +393,8 @@ class OMPImport(Import):
         book_part_xml.set(LANG_ATTR, submission.locale[:2])
         # TODO How to distinguish other types?
         book_part_xml.set('book-part-type', 'chapter')
-        book_part_xml.xpath('book-part-meta/title-group/title')[0].text = chapter_settings.getLocalizedValue(
-            'title', submission.locale)
+        book_part_xml.xpath('book-part-meta/title-group/title')[0].text = unicode(chapter_settings.getLocalizedValue(
+            'title', submission.locale), 'utf8')
         # TODO Chapter authors
         authors = self.dal.getAuthorsByChapter(chapter.chapter_id)
 
@@ -353,7 +409,7 @@ class OMPImport(Import):
         return bits_xml
 
     def read_chapter_metadata(self, metadata_file_path):
-        print "Try to load chapter metadata from", metadata_file_path
+        print("Try to load chapter metadata from: {}".format(metadata_file_path))
         if os.path.isfile(metadata_file_path):
             bits_xml = etree.parse(metadata_file_path)
         else:

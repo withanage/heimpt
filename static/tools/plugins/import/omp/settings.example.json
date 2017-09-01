@@ -7,6 +7,10 @@
   "project-output": "configurations/import/omp",
   "press": 1,
   "file-stage": 2,
+  "file-types": [
+    "application/vnd.oasis.opendocument.text",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  ],
   "genre": 3,
   "submission": 234
 }
