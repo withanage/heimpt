@@ -45,23 +45,38 @@ def args(a):
 
 @auth.requires_login()
 def index():
-    ms = []
-    a = {
-
-        'Projects':["default","projects","ddeeee"],
-        'Typesetters':["default","typesetters","ddeeee"],
-         'Add Project':["configure","add_project","ddeeee"],
-         'Add Typesetter':["configure","add_typesetter","ddeeee"],
-        'home': ["default", "index", "ddeeee"]
+    conf_add, tools = [], []
+    b = {
+        'Add Project': ["configure", "add_project", "info"],
+        'Add Typesetter': ["configure", "add_typesetter", "info"],
+        'Projects': ["default", "projects", "primary"],
+        'Typesetters': ["default", "typesetters", "primary"]
          }
+
+    a = {
+        'Open Monograph Press': ["https://books.ub.uni-heidelberg.de/index.php/heiup/submissions", "", "default"],
+        'Open Jounal Systems': ["https://journals.ub.uni-heidelberg.de/index.php/ojs/login", "", "default"],
+    }
     for m in sorted(a):
-        ms.append(navigation(m,a[m][0],a[m][1],a[m][2]))
-    return dict(ms=ms)
+        conf_add.append(navigation(m,a[m][0],a[m][1],a[m][2]))
+
+    for m in sorted(b):
+        tools.append(navigation(m,b[m][0],b[m][1],b[m][2]))
+
+    return dict(conf_add=conf_add, tools= tools)
 
 
 
-def navigation(t,c,f,bg_color):
-    return
+def navigation(t,c,f,btn):
+    p = P()
+    if  c.startswith("http"):
+        url = c
+    else :
+        url = URL(request.application, c, f)
+    a = A(t,_href=url,_class="btn btn-"+btn+" btn-lg btn-block")
+    p.append(a)
+
+    return p
 
 def metro_block(t,c,f,bg_color):
     img_src= "{}{}{}{}".format("holder.js/200x200?size=20&bg=",bg_color,"&text=",t)
