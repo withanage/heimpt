@@ -17,13 +17,13 @@ Options:
     -d, --debug         Enable debug output
 
 Available module commands are:
-    import  Import project configuration, files and metadata via specified import modules, e.g. "omp" or "ojs"
+    import  Import files and metadata and write project configuration via specified import modules, e.g. "omp" or "ojs"
 
 Example
 --------
 
-python $BUILD_DIR/static/tools/heimpt.py  $BUILD_DIR/static/tools/configurations/example.json
-python $BUILD_DIR/static/tools/heimpt.py import  omp 48
+python $BUILD_DIR/static/tools/heimpt.py $BUILD_DIR/static/tools/configurations/example.json
+python $BUILD_DIR/static/tools/heimpt.py import omp 48
 Notes
 -------
 This program may be used to consolidate output files, generated from a certain tool.  But a consolidation tool should
@@ -703,7 +703,7 @@ class MPT(Debuggable):
         """
         # Run import modules
         if self.args.get('<module_command>') == 'import':
-            sys.path.insert(0, '{}/{}/'.format(self.script_folder, 'plugins/import'))
+            sys.path.insert(0, os.path.join(self.script_folder, 'plugins', 'import'))
             import ImportInterface
             for m in self.args.get('<modules>').split(','):
                 plugin_package = __import__(m, fromlist=['*'])
