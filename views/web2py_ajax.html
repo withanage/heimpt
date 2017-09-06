@@ -8,7 +8,9 @@
     //--></script>
 {{
 response.files.insert(0,URL('static','js/jquery.js'))
-#response.files.insert(1,URL('static','css/calendar.css'))
+response.files.insert(1,URL('static','js/bootstrap-treeview.min.js'))
+
+#response.files.insert(5,URL('static','css/calendar.css'))
 response.files.insert(2,URL('static','js/calendar.js'))
 response.files.insert(3,URL('static','js/web2py.js'))
 response.files.insert(4,URL('static','js/holder.min.js'))
