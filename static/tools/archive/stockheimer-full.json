@@ -1,0 +1,34 @@
+{
+  "createFull": {
+    "example": {
+      "dir": "/home/wit/Arbeit/OMP/Stockheimer/proof/",
+      "files": [
+
+        {
+          "195-68-78648-1-10-20170728.xml": {
+            "order": 0
+          }
+        }
+
+
+      ],
+      "fullfile": {
+        "full.xml": {
+        }
+      },
+      "enumeration": 1,
+      "chapter-begin-reset":1,
+      "citations-to-refererences":1
+    }
+  },
+  "errors": {
+    "FILE_NOT_FOUND": " File found or non-valid xml",
+    "FILE_NOT_WRITTEN": "No file written",
+    "FILE_NO_WRITE_ACCESS": "No permission to write file in the directory"
+  },
+  "zip": {
+    "enable": 0,
+    "name-prefix": "xml-back-"
+  }
+}
+

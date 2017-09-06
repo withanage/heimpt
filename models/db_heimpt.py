@@ -1,3 +1,8 @@
+db.define_table('t_files',
+    Field('f_filename'),
+    Field('f_file', 'upload', requires=IS_NOT_EMPTY(), uploadseparate=True)
+)
+
 db.define_table('typesetters',
                 Field('name', requires=IS_NOT_EMPTY()),
                 Field('executable', requires=IS_NOT_EMPTY()),

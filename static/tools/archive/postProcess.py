@@ -6,6 +6,7 @@
 # Author    : Dulip Withanage , University of Heidelberg
 
 import copy
+import collections
 import io
 from itertools import chain
 import json
@@ -16,6 +17,7 @@ import sys
 import time
 import uuid
 import zipfile
+import re
 try:
     from lxml import etree
     from lxml import objectify
@@ -48,11 +50,20 @@ class PostProcess:
 
         self.JATS_XML_HEADER = '<article xmlns:xlink="http://www.w3.org/1999/xlink">'
 
+    def print_unreferenced_figs(self,tr,f):
+            a = self.get_fig_refs_body(tr)
+            b = self.get_fig_ids_body(tr)
+            if len(a-b) > 0:
+                print f,a-b
+            return tr
+
+
     def apply_transformations(self, tr, context, f, chapter, order, count):
         ''' main method to apply transformations'''
         cfg = self.config["createFull"][context]
         tr = self.remove_not_used_in_back(tr, "ref-list/ref")
         tr = self.remove_not_used_in_back(tr, "fn-group/fn")
+        tr = self.set_uuid_figs(tr)
         if "enumeration" in cfg.keys():
             if cfg["enumeration"] == 1:
                 if "chapter-begin-reset" in cfg.keys():
@@ -63,7 +74,10 @@ class PostProcess:
         tr = self.remove_name_duplicates_speech(tr)
         tr = self.set_numbering(tr, ['speech', 'disp-quote',"abstract"])
         tr = self.get_unreferenced_footnotes(tr)
-        tr = self.set_uuids(tr, 'fn')
+        tr = self.set_uuid_fns(tr, 'fn')
+
+        tr = self.print_unreferenced_figs(tr,f)
+
         tr = self.merge_repeating_neighbours(tr, "disp-quote")
         if "references" in cfg.keys():
 
@@ -73,6 +87,8 @@ class PostProcess:
         if "citations-to-refererences" in cfg.keys():
             if cfg["citations-to-refererences"] ==1 :
                 tr = self.citations_to_references(tr)
+
+        tr = self.remove_duplicate_http_links(tr)
 
         return tr, count
 
@@ -279,6 +295,21 @@ class PostProcess:
                     back_fns.add(fn.attrib['id'])
         return back_fns
 
+    def get_fig_refs_body(self, tree):
+        body_figs = Set()
+        for body in tree.getroot().findall(".//body"):
+            for fn in body.findall(".//xref[@ref-type='fig']"):
+                if fn.keys():
+                    body_figs.add(fn.attrib['rid'])
+        return body_figs
+
+    def get_fig_ids_body(self, tree):
+        back_refs = Set()
+        for back in tree.getroot().findall(".//fig-group"):
+            for ref in back.findall(".fig"):
+                if ref.keys():
+                    back_refs.add(ref.attrib['id'])
+        return back_refs
     def get_footnotes_body(self, tree):
         '''returns footnotes in body '''
         body_fns = Set()
@@ -400,6 +431,19 @@ class PostProcess:
             p.remove(c)
         return tree
 
+
+
+    def remove_duplicate_http_links(self, tr):
+        #HYPERLINK          "http://upload.wikimedia.org/wikipedia/commons/4/4b/%C3%9Altima_Cena_-Da_Vinci_5.jpg"
+        #<ext-link xlink:href="http://upload.wikimedia.org/wikipedia/commons/4/4b/%C3%9Altima_Cena_-Da_Vinci_5.jpg"
+        # ext-link-type="uri" xlink:type="simple">http://upload.wikimedia.org/wikipedia/commons/4/4b/%C3%9Altima_Cena_-Da_Vinci_5.jpg</ext-link>
+        tr_str =  etree.tostring(tr, encoding='utf8', method='xml').replace('\n', ' ').replace('\r', '')
+        tr_str =  re.sub('HYPERLINK(\W)*(http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F])))(\S)*','',tr_str)
+        root = etree.fromstring(tr_str)
+        tr = etree.ElementTree(root)
+        return tr
+
+
     def remove_duplicate_refs(self, tr, tag_list):
         ''' removes duplicate references'''
         ref_list = tr.find('./back/ref-list')
@@ -461,13 +505,17 @@ class PostProcess:
                 elems = tr.getroot().findall(elm)
 
                 for e in elems:
-                    if e.getparent() is not None:
-                        e.getparent().remove(e)
-
-        for e in tr.getroot().xpath('.//back/ref-list/ref[not(@id)]'):
-            if e.getparent() is not None:
-                e.getparent().remove(e)
+                    self.remove_element(e)
+        #TODO remove without ids
+        for e in tr.getroot().xpath('.//back/'+tag+'[not(@id)]'):
+            self.remove_element(e)
         return tr
+
+
+
+    def remove_element(self, e):
+        if e.getparent() is not None:
+            e.getparent().remove(e)
 
     def remove_table_references(self, tree, name, attr, value):
         searchTag = './/' + name + '[@' + attr + '="' + value + '"]'
@@ -533,7 +581,7 @@ class PostProcess:
                     val = self.convert_int_to_roman(count).lower()
         return val, range_count
 
-    def set_uuids(self, tr, s):
+    def set_uuid_fns(self, tr, s):
         ''' removes name confilcts for references or footnotes'''
         f = {}
         fns = tr.getroot().findall(
@@ -549,6 +597,27 @@ class PostProcess:
                     n.set('id', f[m])
                 else:
                     logging.error('Element not found \t' + m)
+        return tr
+
+    def set_uuid_figs(self, tr):
+        ''' removes name confilcts for references or footnotes'''
+        f = {}
+        fns = tr.getroot().findall(
+            ''.join(['.//xref/[@ref-type="', "fig", '"]']))
+        for i in fns:
+
+            rid = ''.join(['fig', str(uuid.uuid4().int)])
+            f[i.attrib['rid']] = rid
+            i.set('rid', rid)
+        for m in f.keys():
+            n = tr.getroot().find(''.join(['.//fig/[@id="', m, '"]']))
+            if n is not None:
+                if len(n) > 0:
+                    n.set('id', f[m])
+                else:
+                    print "error,", m
+                    logging.error('Element not found \t' + m)
+
         return tr
 
     def sort_references(self, tr, parent, tag_list):
@@ -568,7 +637,7 @@ class PostProcess:
 
 
 def main():
-    if len(sys.argv) == 2:
+    if len(sys.argv) >= 2:
         p = PostProcess(sys.argv[1])
         context = "example"
         p.create_files(context)

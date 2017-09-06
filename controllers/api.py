@@ -70,5 +70,3 @@ def project():
             ts_name[ts["name"]]["arguments"][j + 1] = a
 
     return gluon.contrib.simplejson.dumps(c)
-
-

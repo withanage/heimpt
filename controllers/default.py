@@ -46,15 +46,22 @@ def args(a):
 @auth.requires_login()
 def index():
     ms = []
-    a = {'Projects':["default","projects","ddeeff"],
-         'Typesetters':["default","typesetters","ddeedd"],
-         'Add Project':["configure","add_project","ddeecc"],
-         'Add Typesetter':["configure","add_typesetter","ddeeee"]
+    a = {
 
+        'Projects':["default","projects","ddeeee"],
+        'Typesetters':["default","typesetters","ddeeee"],
+         'Add Project':["configure","add_project","ddeeee"],
+         'Add Typesetter':["configure","add_typesetter","ddeeee"],
+        'home': ["default", "index", "ddeeee"]
          }
     for m in sorted(a):
-        ms.append(metro_block(m,a[m][0],a[m][1],a[m][2]))
+        ms.append(navigation(m,a[m][0],a[m][1],a[m][2]))
     return dict(ms=ms)
+
+
+
+def navigation(t,c,f,bg_color):
+    return
 
 def metro_block(t,c,f,bg_color):
     img_src= "{}{}{}{}".format("holder.js/200x200?size=20&bg=",bg_color,"&text=",t)
@@ -176,6 +183,25 @@ def download():
     http://..../[app]/default/download/[filename]
     """
     return response.download(request, db)
+
+
+
+
+
+@auth.requires_login()
+def upload_files():
+    t = db.t_files
+    record = t(request.args(0)) or redirect(URL('index'))
+    url = URL('download')
+    form = SQLFORM(t, record, deletable=True,
+                   upload=url, fields=['name', 'image'])
+    if request.vars.image != None:
+        form.vars.image_filename = request.vars.image.filename
+    if form.process().accepted:
+        response.flash = 'form accepted'
+    elif form.errors:
+        response.flash = 'form has errors'
+    return dict(form=form)
 
 
 @auth.requires_login()

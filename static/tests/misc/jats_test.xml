@@ -1,56 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Archiving DTD v3.0 20080202//EN" "https://jats.nlm.nih.gov/archiving/1.1/JATS-archivearticle1-mathml3.dtd">
 <article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">
     <front>
         <journal-meta>
             <journal-id journal-id-type="publisher-id">Heidelberg University Publishing</journal-id>
-            <issn pub-type="epub">0000-000X</issn>
+            <issn pub-type="epub">1234-1234</issn>
             <publisher>
                 <publisher-name>Heidelberg University Publishing</publisher-name>
             </publisher>
         </journal-meta>
         <article-meta>
-            <article-id pub-id-type="publisher-id">00778</article-id>
+            <article-id pub-id-type="publisher-id">published-id</article-id>
             <article-id pub-id-type="doi">10.77777.123456</article-id>
             <article-categories>
                 <subj-group subj-group-type="display-channel">
-                    <subject>Research article</subject>
+                    <subject>Research Monogrraph</subject>
                 </subj-group>
                 <subj-group subj-group-type="heading">
-                    <subject>Biophysics and structural biology</subject>
+                    <subject>Sbject 1</subject>
                 </subj-group>
             </article-categories>
             <title-group>
                 <article-title>Title</article-title>
             </title-group>
             <contrib-group>
+            
                 <contrib contrib-type="author" corresp="yes" id="author-1">
                     <name>
-                        <surname>Krabbes</surname>
-                        <given-names>Frank</given-names>
-                    </name>
-
-                </contrib>
-                <contrib contrib-type="author" corresp="yes" id="author-2">
-                    <name>
-                        <surname>Konopka</surname>
-                        <given-names>Anja</given-names>
+                        <surname>Miller</surname>
+                        <given-names>David</given-names>
                     </name>
 
                 </contrib>
                 <contrib contrib-type="editor" corresp="yes" id="editor-1">
                     <name>
                         <surname>Groves</surname>
-                        <given-names>Jay T</given-names>
+                        <given-names>Jay </given-names>
                     </name>
                     <xref ref-type="aff" rid="aff1"/>
-                    <xref ref-type="corresp" rid="cor1">*</xref>
                     <xref ref-type="other" rid="par-1"/>
                     <xref ref-type="fn" rid="con5"/>
                 </contrib>
                 <aff id="aff1">
-                    <institution content-type="dept">Department of Chemistry</institution>,  <institution>  Berkeley</institution>,
-                    <addr-line><named-content                    content-type="city"      >Berkeley</named-content></addr-line>, <country>United States</country></aff>
+                    <institution content-type="dept">Department of Chemistry</institution>,  
+                    <institution>  Berkeley</institution>,
+                    <addr-line>
+                        <named-content   content-type="city" >Berkeley</named-content>
+                    </addr-line>, 
+                    <country>United States</country>
+                </aff>
             </contrib-group>
 
             <!--author-notes>
@@ -61,8 +59,10 @@
                     <p>These authors contributed equally to this work</p>
                 </fn>
             </author-notes-->
-            <pub-date pub-type="collection">
-                <year>2013</year>
+            <pub-date pub-type="epub">
+                <day>30</day>
+                <month>08</month>
+                <year>2017</year>
             </pub-date>
             <volume>2</volume>
             <elocation-id>e00778</elocation-id>
@@ -70,25 +70,24 @@
                 <date date-type="received">
                     <day>26</day>
                     <month>03</month>
-                    <year>2013</year>
+                    <year>2017</year>
                 </date>
                 <date date-type="accepted">
                     <day>17</day>
                     <month>05</month>
-                    <year>2013</year>
+                    <year>2017</year>
                 </date>
             </history>
             <permissions>
-                <copyright-statement>© 2013, O'Donoghue et al</copyright-statement>
-                <copyright-year>2013</copyright-year>
-                <copyright-holder>O'Donoghue et al</copyright-holder>
-                <license xlink:href="http://creativecommons.org/licenses/by/3.0/">
-                    <license-p>This article is distributed under the terms of the <ext-link
-                        ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/3.0/"
-                        >Creative
-                            Commons Attribution License</ext-link>, which permits unrestricted use
-                        and redistribution provided that the original author and source are
-                        credited.</license-p>
+                <copyright-statement>Text © 2017 by the authors.</copyright-statement>
+                <copyright-year>2017</copyright-year>
+                <license license-type="open-access" xlink:href="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="de">
+                    <license-p><inline-graphic xlink:href="http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-sa.svg"/>Dieses Werk ist unter der Creative-Commons-Lizenz 4.0 (CC BY-SA 4.0)
+                        veröffentlicht.</license-p>
+                </license>
+                <license license-type="open-access" xlink:href="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="en">
+                    <license-p><inline-graphic xlink:href="http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-sa.svg"/>This book is published under the Creative Commons License 4.0 (CC BY-SA
+                        4.0).</license-p>
                 </license>
             </permissions>
             <self-uri content-type="pdf" xlink:href="elife00778.pdf"/>
@@ -200,7 +199,12 @@
 
                 <list list-type="bullet">
                 <list-item>
-                    <p>Any quotation necessarily conserves the meaning of a quoted passage. This is usually
+                    <p>This is a <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">link</ext-link>
+                    </p>
+                    <p>This is a <italic><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">italic link</ext-link></italic>
+                        and a text</p>
+
+                    <p>Any <xref rid="mc1" ref-type="bibr" id="e1236218736">mixed-citation</xref>  necessarily conserves the <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">meaning</ext-link> of a quoted passage. This is usually
                         reflected in the reproduction of its letters, numbers, symbols, punctuation marks,
                         spacing, capitalisation, small capitals, bold print, italics, and line breaks.</p>
                 </list-item>
@@ -265,6 +269,8 @@
 
                 <sec>
                     <title> title 2 </title>
+
+
                     <p>x2</p>
                     <sec>
 
@@ -312,13 +318,25 @@
             <sec-meta>
 
                 <abstract id="abs_2">
-                    <title>Abstract 2</title>
+                    <title>Abstract xyz</title>
                     <p>---------------------------------------------------------------------------------------------</p>
 
                     <p>Abstract text in sec-mata</p>
                     <p>---------------------------------------------------------------------------------------------</p>
 
                 </abstract>
+                <contrib-group content-type="section">
+                <contrib contrib-type="section-editor" id="sec-author-3">
+                    <name>
+                        <surname>Brunger</surname>
+                        <given-names>Axel 2</given-names>
+                    </name>
+                    <role>section-editor</role>
+                    <aff>
+                        <institution>Howard Hughes Medical Institute, Stanford
+                            University</institution>, <country>United States</country></aff>
+                </contrib>
+                </contrib-group>
             </sec-meta>
 
             <sec id="s2-1">
@@ -345,6 +363,10 @@
                 <p> For an explanation of the interview transcript abbreviations used throughout <ext-link xlink:href="http://www.google.de">Google</ext-link> <xref ref-type="sec" rid="s1"
                 >106</xref>
                     this work, see Appendix A.</p>
+            </fn>
+            <fn>
+                <p>This is a <italic><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">italic link</ext-link></italic>
+                and a text</p>
             </fn>
         </fn-group>
         <sec sec-type="additional-information">
@@ -398,7 +420,17 @@
         </sec>
        
         <ref-list>
-            <title>References</title>
+
+            <ref id ="mc1">
+                <mixed-citation> This is a <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">link</ext-link>
+            </mixed-citation>
+            </ref>
+            <ref>
+                <mixed-citation>M&#252;ller, Johannes (1826). <italic>Zur vergleichenden Physiologie des Gesichtssinnes des <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">Menschen</ext-link> und der Thiere nebst einem Versuch &#252;ber die Bewegungen der Augen und &#252;ber den menschlichen Blick</italic>. Leipzig: C. Cnobloch.</mixed-citation>
+            </ref>
+            <ref>
+                <mixed-citation>M&#252;ller, <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">Ludwig</ext-link> (1913/1914). [Rezension:] Kleine Schriften von Wilhelm Wundt. Zweiter Band. <italic>Politisch-anthropologische Revue. Monatsschrift f&#252;r praktische Poolitik, f&#252;r politische Bildung und Erziehung auf biologischer Grundlage, 12</italic>, 334&#8211;335.</mixed-citation>
+            </ref>
             <ref id="bib1">
                 <element-citation publication-type="journal">
                     <person-group person-group-type="author">
