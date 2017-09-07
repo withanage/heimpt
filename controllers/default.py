@@ -12,6 +12,9 @@ from gluon.tools import Expose
 import shutil
 import gluon.contrib.simplejson
 
+import os
+
+
 """
 @auth.requires_login()
 def folder():
@@ -28,6 +31,8 @@ def create_modal(id, title, body, modal_body):
     a8 = P(body,**{"_id": modal_body})
     a7 = DIV(a8, _class="modal-body")
 
+
+
     a10 = BUTTON(T("close"), _type="button", _class="btn btn-default", **{"_data-dismiss": "modal"})
     a9 = DIV(a10, _class="modal-footer")
 
@@ -40,7 +45,8 @@ def create_modal(id, title, body, modal_body):
 def args(a):
     r = DIV(_class="btn-group btn-group-xs")
     for i in a:
-        r.append(DIV(i, _class="btn btn-default"))
+        r.append(DIV(i, _class="btn"))
+        r.append(BR())
     return r
 
 @auth.requires_login()
@@ -96,43 +102,61 @@ def metro_block(t,c,f,bg_color):
     return div
 
 
+def path_to_dict(path):
+    d = {'text': os.path.basename(path)}
+    if os.path.isdir(path):
+        d['nodes'] = [path_to_dict(os.path.join(path,x)) for x in os.listdir(path)]
+    else:
+        pass
+    return d
+
+
+
+
 
 @auth.requires_login()
 def projects():
 
     t = db.projects
     tbl = db (t.id >0).select().as_list()
-    bt = TABLE(_class="table table-bordered")
+    bt = TABLE(_class="table table-bordered" ,_name="tbl")
     th = THEAD()
-    th.append(TR(TH(T("Run")),TH(T("Project name")),TH(T("Project Path")),TH(T("File List")),TH(T("Typesetters")),TH(T("Download")),TH(T("Edit"))))
+    th.append(TR(TH(T("Run")),TH(T("Project name")),TH(T("File List")),TH(T("Typesetters")),TH(T("View Results")),TH(T("D.")),TH(T("E.")),TH(T("D."))))
     bt.append(th)
     tb = TBODY()
     # _href=URL('run','{}/{}'.format('project',row["id"])
     #
     modals = {}
+    result_dir = {}
     for row in tbl:
         ts = [db(db.typesetters.id==ts_id).select().first()["name"] for ts_id in row["typesetters"]]
+
+        result_path = os.path.join(row["project_path"], row["name"])
+        result_dir[row["id"]] = gluon.contrib.simplejson.dumps(path_to_dict(result_path))
+        download_view = TD(_id="result_directory_"+str(row["id"]),_class="col-md-4 col-lg-4")
 
         file_path = os.path.join(row["project_path"], row["name"], row["name"] + '.zip')
         if os.path.exists(file_path):
             download_td = TD(A(TAG.I(_class="icon icon-play glyphicon glyphicon-download align-middle "), _href=URL('default', '{}/{}'.format('get_results', row["id"]))))
         else:
             download_td = TD()
-        modals[row["id"]] = create_modal("runHeimpt"+str(row["id"]), T("Runnung"), "", "runHeimptBody"+str(row["id"]))
+
+        modals[row["id"]] = create_modal("runHeimpt"+str(row["id"]), T("Processing"), "", "runHeimptBody"+str(row["id"]))
         tb.append(TR(
             TD(BUTTON("Run", _class="btn btn-info btn-sm", **{"_data-toggle":"modal","_data-target":"#runHeimpt"+str(row["id"])})),
-            TD(row["name"]),
-            TD(row["project_path"]),
+            TD(DIV(row["name"])),
+            #TD(row["project_path"]),
             TD(args(row["files"])),
             TD(args(ts)),
+            download_view,
             download_td,
-            TD(A(T('EDIT'), _href=URL('configure', '{}/{}'.format('edit_project', row["id"])))),
-            TD(A(T('DELETE'), _href=URL('configure', '{}/{}'.format('delete_project', row["id"]))))
+            TD(A(TAG.I(_class="glyphicon glyphicon-edit"), _href=URL('configure', '{}/{}'.format('edit_project', row["id"])))),
+            TD(A(TAG.I(_class="glyphicon glyphicon-remove-sign"), _href=URL('configure', '{}/{}'.format('delete_project', row["id"]))))
 
         ))
     bt.append(tb)
 
-    return dict(bt=bt, modals=modals)
+    return dict(bt=bt, modals=modals, result_dir=result_dir)
 
 
 
