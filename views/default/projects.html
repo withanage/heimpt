@@ -62,11 +62,28 @@ var tree = [
     text: "Parent 4"
   },
   {
-    text: "Parent 5"
+    text: " Node 1",
+  icon: "glyphicon glyphicon-folder-close",
+  selectedIcon: "glyphicon glyphicon-folder-open",
+  color: "#000000",
+  backColor: "#FFFFFF",
+  href: "#node-1",
+  selectable: true,
+  state: {
+    checked: true,
+    disabled: false,
+    expanded: true,
+    selected: false
+  },
+  tags: ['available'],
+  nodes: [
+    {},
+
+  ]
   }
 ];
 
-$('#tree').treeview({data: tree});
+$('#tree').treeview({data: tree, silent: true });
 </script>
 
 

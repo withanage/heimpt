@@ -338,7 +338,7 @@ class MPT(Debuggable):
                 p_id,
                 prefix,
                 f_id,
-                uid)
+                uid, args)
 
             pf_type = p.get('typesetters')[p_id].get("out_type")
 
@@ -575,7 +575,7 @@ class MPT(Debuggable):
             p_id,
             prefix,
             f_id,
-            uid):
+            uid ,args):
         """
         Copy the temporary results into the  final project path
 
@@ -597,7 +597,8 @@ class MPT(Debuggable):
               sequence number of the current file
         uid: str
             unique id of the current current typesetter
-
+        args: bytearray
+            tool parameters , executable file is first element
         Returns
         --------
         project_path: str
@@ -610,8 +611,14 @@ class MPT(Debuggable):
 
         """
         p_name = p.get('typesetters')[p_id].get("name")
-        t_path = [p.get('path'), uid] + \
-            ['nlm'] if 'metypeset' in p_name.lower() else [p.get('path'), uid]
+
+        t_path = [p.get('path'), uid]
+        if args:
+            if 'metypeset/bin/metypeset.py' in args[0].lower():
+                t_path += ['nlm']
+        else:
+            t_path += [p.get('path'), uid]
+
         out_type = p['typesetters'][p_id].get('out_type')
 
         if out_type is None:
