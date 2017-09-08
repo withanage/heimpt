@@ -27,15 +27,10 @@ def create_modal(id, title, body, modal_body):
     a5 = BUTTON(_type="button", _class="close", **{"data-dismiss": "modal"})
     a6 = H4(title, _class="modal-title")
     a4 = DIV(a5, a6, _class="modal-header")
-
     a8 = P(body,**{"_id": modal_body})
     a7 = DIV(a8, _class="modal-body")
-
-
-
     a10 = BUTTON(T("close"), _type="button", _class="btn btn-default", **{"_data-dismiss": "modal"})
     a9 = DIV(a10, _class="modal-footer")
-
     a3 = DIV(a4, a7, a9, _class="modal-content")
     a2 = DIV(a3, _class="modal-dialog modal-sm")
     a1 = DIV(a2, _class="modal fade", **{"_id": id, "_role": "dialog"})
@@ -43,9 +38,9 @@ def create_modal(id, title, body, modal_body):
 
 
 def args(a):
-    r = DIV(_class="btn-group btn-group-xs")
+    r = DIV(_class="")
     for i in a:
-        r.append(DIV(i, _class="btn"))
+        r.append(SPAN(i, _class="label label-default"))
         r.append(BR())
     return r
 
@@ -84,29 +79,16 @@ def navigation(t,c,f,btn):
 
     return p
 
-def metro_block(t,c,f,bg_color):
-    img_src= "{}{}{}{}".format("holder.js/200x200?size=20&bg=",bg_color,"&text=",t)
-    div= DIV(_class="col-sm-2 col-xs-4")
-    a = DIV(_class="tile")
-    b = DIV(_class="carousel slide" ,**{"_data-ride":"carousel"})
-    d = DIV(_class="item active")
-    d.append(A(IMG(_src=img_src ,_class="img-responsive"),_href=URL(c,f)))
-    e = DIV(_class="item")
-    e.append(IMG(**{"data-src":img_src}))
-    c =DIV(d,e, _class="carousel-inner")
-    b.append(c)
-    a.append(b)
-
-    div.append(a)
-
-    return div
 
 
 def path_to_dict(path):
     d = {'text': os.path.basename(path)}
     if os.path.isdir(path):
         d['nodes'] = [path_to_dict(os.path.join(path,x)) for x in os.listdir(path)]
+        d["backColor"] = "#FFFFFF"
+
     else:
+        d["icon"] = "glyphicon glyphicon-file",
         pass
     return d
 
@@ -124,8 +106,7 @@ def projects():
     th.append(TR(TH(T("Run")),TH(T("Project name")),TH(T("File List")),TH(T("Typesetters")),TH(T("View Results")),TH(T("D.")),TH(T("E.")),TH(T("D."))))
     bt.append(th)
     tb = TBODY()
-    # _href=URL('run','{}/{}'.format('project',row["id"])
-    #
+
     modals = {}
     result_dir = {}
     for row in tbl:
@@ -137,7 +118,7 @@ def projects():
 
         file_path = os.path.join(row["project_path"], row["name"], row["name"] + '.zip')
         if os.path.exists(file_path):
-            download_td = TD(A(TAG.I(_class="icon icon-play glyphicon glyphicon-download align-middle "), _href=URL('default', '{}/{}'.format('get_results', row["id"]))))
+            download_td = TD(A(TAG.I(_class="icon icon-play glyphicon glyphicon-download align-middle "), _href=URL('default', '{}/{}'.format('get_results', row["id"]))),_id="download_zip_"+str(row["id"]))
         else:
             download_td = TD()
 
@@ -145,7 +126,6 @@ def projects():
         tb.append(TR(
             TD(BUTTON("Run", _class="btn btn-info btn-sm", **{"_data-toggle":"modal","_data-target":"#runHeimpt"+str(row["id"])})),
             TD(DIV(row["name"])),
-            #TD(row["project_path"]),
             TD(args(row["files"])),
             TD(args(ts)),
             download_view,
@@ -157,8 +137,6 @@ def projects():
     bt.append(tb)
 
     return dict(bt=bt, modals=modals, result_dir=result_dir)
-
-
 
 
 

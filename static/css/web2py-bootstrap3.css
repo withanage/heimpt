@@ -339,3 +339,19 @@ input[type=checkbox], input[type=radio] {
 
 
 
+.web2py-menu-first {
+background: #217dbb;
+}
+
+.navbar-inverse, .footer {
+background-color: #798d8f;
+}
+
+.a {
+ color: #900;
+}
+.footer > .container-fluid {
+	padding-left: 15px;
+	padding-right: 15px;
+	margin: 10px;
+}

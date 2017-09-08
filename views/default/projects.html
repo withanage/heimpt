@@ -23,7 +23,7 @@ $( "#runHeimpt"+id ).on('shown', function(){
   $(m_id).css('width', '0px');
   $(m_id).addClass('progress-bar progress-bar-success');
   timerId = setInterval(function() {
-    percent += 2;
+    percent += 1;
     $(m_id).css('width', percent + '%');
     $(m_id).html(percent + '%');
     if (percent >= 100) {
@@ -32,7 +32,7 @@ $( "#runHeimpt"+id ).on('shown', function(){
       $(m_id).html('processing complete');
       $("#runHeimpt"+id ).modal('hide');
     }
-  }, 300);
+  }, 400);
 
    $("#runHeimptBody"+id).html('<div class="progress" id="submit_progress" style="width:100%"> <div class="" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="'+'#runHeimpt'+id +'" style="width:0%">    0%</div></div>');
    var url= "{{=myconf.take("heimpt.url")}}";
@@ -45,8 +45,11 @@ $( "#runHeimpt"+id ).on('shown', function(){
     p.appendChild(document.createTextNode(d[key]));
     dta.appendChild(p);
    }
+
    $("#runHeimpt"+id ).modal('hide');
-   window.location.reload(true);
+   $("#download_zip_"+id ).addClass('danger');
+   //window.location.reload(true);
+
 
     });
 });
@@ -61,8 +64,10 @@ for m in modals:
 }}
 <script>
 var tree= [{{=XML(result_dir[m])}}];
-$('#result_directory_{{=m}}').treeview({data: tree, silent: true ,enableLinks: false});
-$('#result_directory_{{=m}}').treeview('collapseAll');
+var r = "#result_directory_{{=m}}";
+$(r).treeview({data: tree, silent: true ,enableLinks: false});
+$(r).treeview('collapseAll');
+
 </script>
 
 {{pass}}

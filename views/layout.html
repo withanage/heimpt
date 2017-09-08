@@ -62,7 +62,7 @@
           {{#=response.logo or ''}}
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse navbar-fixed-top">
-          <ul class="nav navbar-nav navbar-left">
+          <ul class="nav navbar-nav navbar-right">
             {{='auth' in globals() and auth.navbar('',mode='dropdown') or ''}}
           </ul>
           {{if response.menu:}}
@@ -103,16 +103,23 @@
 
     </div>
 
-    {{block footer}} <!-- this is default footer -->      
+    {{block footer}} <!-- this is default footer -->
+
     <footer class="footer">
       <div class="container-fluid">
-        <div class="copyright pull-left">{{#=T('')}}  {{#=request.now.year}}</div>
-          <div id="poweredBy" class="pull-right">
 
-            <a href="https://www.github.com/withanage/heimpt">&#169; heiMPT</a>
-          </div>
+
+
+
+
+        <div class="copyright pull-left">
+          <a href="https://www.github.com/withanage/heimpt"><img src="https://raw.githubusercontent.com/withanage/heimpt/master/static/images/heiMPT.jpg" height="40px;" /></div></a>&nbsp;
+          <a href="http://www.ub.uni-heidelberg.de/"><img src="http://www.ub.uni-heidelberg.de/nav4/grafik/layout/ub_logo2.gif" height="40px;" /></div></a>
+          <a href="https://pkp.sfu.ca/"><img src="http://books.ub.uni-heidelberg.de/lib/pkp/templates/images/pkp_brand.png" height="40px;" /></div></a>
+
       </div>
     </footer>
+    </nav>
     {{end}}
     <!-- The javascript =============================== -->
     <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
