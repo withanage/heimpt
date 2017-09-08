@@ -82,14 +82,16 @@ def navigation(t,c,f,btn):
 
 
 def path_to_dict(path):
-    d = {'text': os.path.basename(path)}
+    f = os.path.basename(path)
+
+    d = {'text': f}
+
     if os.path.isdir(path):
         d['nodes'] = [path_to_dict(os.path.join(path,x)) for x in os.listdir(path)]
         d["backColor"] = "#FFFFFF"
 
     else:
-        d["icon"] = "glyphicon glyphicon-file",
-        pass
+        d["icon"] = "glyphicon glyphicon-file"
     return d
 
 
