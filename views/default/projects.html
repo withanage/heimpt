@@ -29,10 +29,10 @@ $( "#runHeimpt"+id ).on('shown', function(){
     if (percent >= 100) {
       clearInterval(timerId);
       $(m_id).removeClass('progress-bar-striped active');
-      $(m_id).html('processing complete');
+      $(m_id).html('processing complete, please wait....');
 
     }
-  }, 400);
+  }, 2000);
 
    $("#runHeimptBody"+id).html('<div class="progress" id="submit_progress" style="width:100%"> <div class="" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="'+'#runHeimpt'+id +'" style="width:0%">    0%</div></div>');
    var url= "{{=myconf.take("heimpt.url")}}";

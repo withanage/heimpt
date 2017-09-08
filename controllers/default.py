@@ -32,7 +32,7 @@ def create_modal(id, title, body, modal_body):
     a10 = BUTTON(T("close"), _type="button", _class="btn btn-default", **{"_data-dismiss": "modal"})
     a9 = DIV(a10, _class="modal-footer")
     a3 = DIV(a4, a7, a9, _class="modal-content")
-    a2 = DIV(a3, _class="modal-dialog modal-sm")
+    a2 = DIV(a3, _class="modal-dialog modal-lg")
     a1 = DIV(a2, _class="modal fade", **{"_id": id, "_role": "dialog"})
     return a1
 
