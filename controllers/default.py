@@ -158,7 +158,7 @@ def typesetters():
     tbl = db(t.id>0).select().as_list()
     bt = TABLE(_class="table table-bordered")
     th = THEAD()
-    th.append(TR(TH(T('Projects')),TH(T('OUTPUT Type')),TH(T('Executable path'),TH(T('Arguments')),TH(T('Project Arguments')))))
+    th.append(TR(TH(T('Typesetters')),TH(T('Output Type')),TH(T('Executable path'),TH(T('Arguments')),TH(T('Project Arguments')))))
     bt.append(th)
     tb = TBODY()
     for row in tbl:

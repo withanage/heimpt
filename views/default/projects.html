@@ -64,9 +64,11 @@ for m in modals:
 }}
 <script>
 var tree= [{{=XML(result_dir[m])}}];
-var r = "#result_directory_{{=m}}";
-$(r).treeview({data: tree, silent: true ,enableLinks: false});
-$(r).treeview('collapseAll');
+if(tree[0].nodes!=undefined){
+    var r = "#result_directory_{{=m}}";
+    $(r).treeview({data: tree, silent: true ,enableLinks: false});
+    $(r).treeview('collapseAll');
+}
 
 </script>
 
