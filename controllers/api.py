@@ -9,7 +9,7 @@ def arg_0(a):
 
 startpath= "/home/wit/Arbeit/OMP/Stockheimer/xml/proof/my_project"
 
-@auth.requires_login()
+
 def set_leaf(tree, branches, leaf):
     if len(branches) == 1:
         tree[branches[0]] = leaf
@@ -28,7 +28,7 @@ def list_files():
         set_leaf(tree, branches, dict([(d,{}) for d in dirs]+  [(f,None) for f in files]))
     return tree
 
-@auth.requires_login()
+
 def project():
     def add_elem(cur, arg1, val1):
         cur[arg1] = p.get(val1)
