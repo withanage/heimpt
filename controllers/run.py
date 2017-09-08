@@ -25,14 +25,14 @@ def project():
     url = myconf.take("heimpt.url")+"/api/project/"+request.args[0]
     command = ["python", myconf.take("heimpt.exec"), url]
 
-    process = Popen(command,shell=False, stdout=PIPE)
+    process = Popen(command, stdout=PIPE)
     (output, err) = process.communicate()
     #exit_code = process.wait()
     #result  = exec_command(command)
     #while process.poll() is None:
     #    output = process.stdout.readline()
     #    return output
-    return output.decode('utf-8')
+    return output
 
 
 def stdout_thread(pipe):
