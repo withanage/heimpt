@@ -31,6 +31,7 @@ $( "#runHeimpt"+id ).on('shown', function(){
       $(m_id).removeClass('progress-bar-striped active');
       $(m_id).html('processing complete');
       $("#runHeimpt"+id ).modal('hide');
+       $("#download_zip_"+id ).addClass('danger');
     }
   }, 400);
 
@@ -48,7 +49,7 @@ $( "#runHeimpt"+id ).on('shown', function(){
 
    $("#runHeimpt"+id ).modal('hide');
    $("#download_zip_"+id ).addClass('danger');
-   //window.location.reload(true);
+   window.location.reload(true);
 
 
     });
