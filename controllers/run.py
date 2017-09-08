@@ -20,7 +20,7 @@ def path_to_dict(path):
 
     return json.dumps(path_to_dict('.'))
 
-
+@auth.requires_login()
 def project():
     url = myconf.take("heimpt.url")+"/api/project/"+request.args[0]
     command = ["python", myconf.take("heimpt.exec"), url]
