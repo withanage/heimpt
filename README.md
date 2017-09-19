@@ -14,6 +14,9 @@ The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-proces
 
 ![doc2pdf Pipeline](https://raw.githubusercontent.com/withanage/heimpt/master/static/images/mpt.png)
 
+## Presentations
+* PKP Conference, 2017 [Paper](https://pkp.sfu.ca/pkp2017/paper/view/565) [Slides](https://pkp.sfu.ca/pkp2017/paper/download/565/402) [:movie_camera: Video](https://www.youtube.com/watch?v=yOH1DS2EUck)
+
 
 ## API Documentation
 
