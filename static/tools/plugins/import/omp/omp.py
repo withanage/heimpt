@@ -5,8 +5,8 @@ Usage:
 
 Options:
   -h --help
-  -p --project-template=<file>
-
+  -t --project-template=<file>
+  -a --all-submissions          Import all submissions of a press
 """
 import json
 import os.path
@@ -29,7 +29,9 @@ FILE_STAGE_TO_PATH = {
 }
 
 USER_GROUP_TO_CONTRIB_TYPE = {
-    'Author': 'author'
+    'Author': 'author',
+    'Volume editor': 'editor',
+    'Chapter Author': 'author'
 }
 
 PUBLICATION_FORMAT_MAPPING = {
@@ -89,23 +91,29 @@ class OMPImport(Import):
         self.results = None
         self.module_path = os.path.dirname(os.path.realpath(__file__))
 
-    def initialize(self, settings_override=None, settings_path='settings.json'):
+    def initialize(self, args, settings_override=None, settings_path='settings.json'):
         path = os.path.join(self.module_path, settings_path)
         with open(path) as f:
             self.settings = json.load(f)
         if settings_override:
             self.settings.update(settings_override)
+        if args.get('--project-template'):
+            self.settings['project-template'] = args.get('--project-template')
         print('Loaded settings: {}'.format(self.settings))
-        print('Using {} as current working directory'.format(self.settings['base-path']))
         os.chdir(self.settings['base-path'])
+        print('Changed working directory to: {}'.format(self.settings['base-path']))
         self.db = DAL(self.settings['db-uri'], migrate=False)
         define_tables(self.db)
         self.dal = OMPDAL(self.db, None)
 
     def run(self, args, settings):
         print('Running plugin omp import')
-        self.initialize(settings)
-        if args.get('<submission_id>'):
+        self.initialize(args, settings)
+        if args.get('--all-submissions'):
+            rows = self.db(self.db.submissions.context_id == self.settings['press']).select(self.db.submissions.submission_id)
+            submission_ids = [row.submission_id for row in rows]
+            print('Importing all submissions for press {}'.format(self.settings['press']))
+        elif args.get('<submission_id>'):
             submission_ids = [int(id_arg) for id_arg in args.get('<submission_id>')]
         else:
             if not isinstance(self.settings['submission'], list):
@@ -120,6 +128,9 @@ class OMPImport(Import):
             if not files:
                 print('No files found with genre={genre}, file_stage={file-stage} and file_types={file-types}'
                       .format(**self.settings))
+                if self.settings.get('skip-submission-without-files'):
+                    print('Skipping import!')
+                    continue
             print('Loading metadata for submission')
             submission = self.db.submissions[submission_id]
             submission_metadata_path = path_to_submission_metadata(submission.submission_id, submission.context_id,
@@ -259,7 +270,7 @@ class OMPImport(Import):
         press_settings = OMPSettings(self.dal.getPressSettings(submission.context_id))
         book_meta_xpatheval('book-id')[0].text = str(submission_id)
 
-        book_title = '{} {}'.format(unicode(submission_settings.getLocalizedValue('prefix', locale), 'utf8'),
+        book_title = u'{} {}'.format(unicode(submission_settings.getLocalizedValue('prefix', locale), 'utf8'),
                                     unicode(submission_settings.getLocalizedValue('title', locale), 'utf8'))
         subtitle = unicode(submission_settings.getLocalizedValue('subtitle', locale), 'utf8')
         book_meta_xpatheval('book-title-group/book-title')[0].text = book_title
@@ -289,13 +300,15 @@ class OMPImport(Import):
             format_name = format_settings.getLocalizedValue('name', locale)
             if format_name == 'PDF':
                 doi = format_settings.getLocalizedValue('pub-id::doi', '')
-            isbn = self.dal.getIdentificationCodesByPublicationFormat(pub_format.publication_format_id).first().value
-            existing_isbn_nodes = book_meta_xpatheval(
-                'isbn[@publication-format = "{}"]'.format(PUBLICATION_FORMAT_MAPPING[format_name]))
-            if existing_isbn_nodes:
-                existing_isbn_nodes[0].text = isbn
-            else:
-                book_meta_xml.append(E.isbn(isbn, {'publication-format': PUBLICATION_FORMAT_MAPPING[format_name]}))
+            isbn_row = self.dal.getIdentificationCodesByPublicationFormat(pub_format.publication_format_id).first()
+            if isbn_row:
+                isbn = isbn_row.value
+                existing_isbn_nodes = book_meta_xpatheval(
+                    'isbn[@publication-format = "{}"]'.format(PUBLICATION_FORMAT_MAPPING[format_name]))
+                if existing_isbn_nodes:
+                    existing_isbn_nodes[0].text = isbn
+                else:
+                    book_meta_xml.append(E.isbn(isbn, {'publication-format': PUBLICATION_FORMAT_MAPPING[format_name]}))
         # Add doi identifier
         book_meta_xpatheval('custom-meta-group/custom-meta[meta-name = "doi"]/meta-value')[0].text = doi
 
@@ -307,13 +320,15 @@ class OMPImport(Import):
             group_settings = self.dal.getUserGroupSettings(contrib.user_group_id)
 
             # Use the english name of the group for mapping to contrib-type attribute
-            contrib_type = USER_GROUP_TO_CONTRIB_TYPE[group_settings.getLocalizedValue('name', 'en_US')]
-            given_names = contrib.first_name
+            contrib_type = USER_GROUP_TO_CONTRIB_TYPE.get(group_settings.getLocalizedValue('name', 'en_US'))
+            contrib_attrs = {'contrib-type': contrib_type} if contrib_type else {}
+            given_names = unicode(contrib.first_name, 'utf8')
             if contrib.middle_name:
-                given_names += " " + contrib.middle_name
+                given_names += " " + unicode(contrib.middle_name, 'utf8')
+
             contrib_xml = E.contrib(E.name(
-                E.surname(contrib.last_name), getattr(E, 'given-names')(given_names), {'name-style': 'western'}),
-                {'contrib-type': contrib_type})
+                E.surname(unicode(contrib.last_name, 'utf8')), getattr(E, 'given-names')(given_names), {'name-style': 'western'}),
+                contrib_attrs)
             # Add biography in all available languages
             for abstract_locale, biography_text in contrib_settings.getValues('biography').items():
                 if biography_text:
