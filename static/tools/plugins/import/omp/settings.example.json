@@ -6,11 +6,12 @@
   "project-template": "configurations/01_wintz.bits.json",
   "project-output": "configurations/import/omp",
   "press": 1,
-  "file-stage": 2,
+  "file-stage": 11,
   "file-types": [
     "application/vnd.oasis.opendocument.text",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
   ],
   "genre": 3,
-  "submission": 234
+  "submission": 234,
+  "skip-submission-without-files": false
 }
