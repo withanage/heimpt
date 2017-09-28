@@ -11,7 +11,12 @@
     "application/vnd.oasis.opendocument.text",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
   ],
-  "genre": 3,
+  "presses": {
+    "heibooks": {
+      "manuscript-genre": 3,
+      "chapter-genre": 4
+    }
+  },
   "submission": 234,
   "skip-submission-without-files": false
 }
