@@ -5,118 +5,22 @@
     <!-- @book-type: monograph, conference-proceedings, lexicon -->
     <collection-meta>
         <title-group>
-            <title>Heidelberg Studies of Transculturality</title>
-            <subtitle>Sub</subtitle>
+            <title>Series Title</title>
+            <subtitle>Series Subtitle</subtitle>
             <!-- subtitle -->
         </title-group>
         <contrib-group>
             <contrib contrib-type="series-editor">
                 <name name-style="western">
-                    <surname>Amitai</surname>
-                    <given-names>Reuven</given-names>
+                    <surname>Surname</surname>
+                    <given-names>Given Names</given-names>
                 </name>
                 <xref ref-type="aff" rid="aff02"/>
             </contrib>
-            <contrib contrib-type="series-editor">
-                <name name-style="western">
-                    <surname>Armitage</surname>
-                    <given-names>David</given-names>
-                </name>
-                <xref ref-type="aff" rid="aff03"/>
-            </contrib>
-            <contrib contrib-type="series-editor">
-                <name name-style="western">
-                    <surname>Brosius</surname>
-                    <given-names>Christiane</given-names>
-                </name>
-                <xref ref-type="aff" rid="aff04"/>
-            </contrib>
-            <contrib contrib-type="series-editor">
-                <name name-style="western">
-                    <surname>Busse</surname>
-                    <given-names>Beatrix</given-names>
-                </name>
-                <xref ref-type="aff" rid="aff05"/>
-            </contrib>
-            <contrib contrib-type="series-editor">
-                <name name-style="western">
-                    <surname>Duara</surname>
-                    <given-names>Prasenjit</given-names>
-                </name>
-                <xref ref-type="aff" rid="aff06"/>
-            </contrib>
-            <contrib contrib-type="series-editor">
-                <name name-style="western">
-                    <surname>Henriot</surname>
-                    <given-names>Christian</given-names>
-                </name>
-                <xref ref-type="aff" rid="aff07"/>
-            </contrib>
-            <contrib contrib-type="series-editor">
-                <name name-style="western">
-                    <surname>Herren</surname>
-                    <given-names>Madeleine</given-names>
-                </name>
-                <xref ref-type="aff" rid="aff08"/>
-            </contrib>
-            <contrib contrib-type="series-editor">
-                <name name-style="western">
-                    <surname>Kurtz</surname>
-                    <given-names>Joachim</given-names>
-                </name>
-                <xref ref-type="aff" rid="aff09"/>
-            </contrib>
-            <contrib contrib-type="series-editor">
-                <name name-style="western">
-                    <surname>Maran</surname>
-                    <given-names>Joseph</given-names>
-                </name>
-                <xref ref-type="aff" rid="aff10"/>
-            </contrib>
-            <contrib contrib-type="series-editor">
-                <name name-style="western">
-                    <surname>Michaels</surname>
-                    <given-names>Axel</given-names>
-                </name>
-                <xref ref-type="aff" rid="aff11"/>
-            </contrib>
-            <contrib contrib-type="series-editor">
-                <name name-style="western">
-                    <surname>Mittler</surname>
-                    <given-names>Barbara</given-names>
-                </name>
-                <xref ref-type="aff" rid="aff12"/>
-            </contrib>
-            <contrib contrib-type="series-editor">
-                <name name-style="western">
-                    <surname>Ramaswamy</surname>
-                    <given-names>Sumathi</given-names>
-                </name>
-                <xref ref-type="aff" rid="aff13"/>
-            </contrib>
-            <contrib contrib-type="series-editor">
-                <name name-style="western">
-                    <surname>Wenzlhuemer</surname>
-                    <given-names>Roland</given-names>
-                </name>
-                <xref ref-type="aff" rid="aff14"/>
-            </contrib>
             <aff id="aff02">Jerusalem</aff>
-            <aff id="aff03">Harvard</aff>
-            <aff id="aff04">Heidelberg</aff>
-            <aff id="aff05">Heidelberg</aff>
-            <aff id="aff06">Singapore</aff>
-            <aff id="aff07">Lyon</aff>
-            <aff id="aff08">Basel</aff>
-            <aff id="aff09">Heidelberg</aff>
-            <aff id="aff10">Heidelberg</aff>
-            <aff id="aff11">Heidelberg</aff>
-            <aff id="aff12">Heidelberg</aff>
-            <aff id="aff13">Durham</aff>
-            <aff id="aff14">Heidelberg</aff>
         </contrib-group>
-        <issn publication-format="print">2365-7987</issn>
-        <issn publication-format="electronic">2365-7995</issn>
+        <issn publication-format="print">0000-0000</issn>
+        <issn publication-format="electronic">0000-0000</issn>
     </collection-meta>
     <book-meta>
         <book-id>48</book-id>
@@ -124,53 +28,45 @@
         <subj-group/>
         <!-- Subjects needed for the Verzeichnis lieferbarer Bücher? -->
         <book-title-group>
-            <book-title>Passing Through Shanghai</book-title>
+            <book-title>Book Title</book-title>
             <!-- Main title of the book -->
-            <subtitle>Ethographic Insights into the Mobile Lives of Expatriate Youths</subtitle>
+            <subtitle>Book Subtitle</subtitle>
             <!-- Subtitle of the book -->
         </book-title-group>
         <contrib-group>
             <contrib contrib-type="author">
                 <name name-style="western">
-                    <surname>Marie</surname>
-                    <given-names>Sander</given-names>
+                    <surname>Author</surname>
+                    <given-names>Given</given-names>
                 </name>
                 <author-comment xml:lang="en">
-                    <p><bold>Marie Sander</bold> is an anthropologist who completed her doctoral
-                        degree at Heidelberg University in 2013. She previously read Cultural
-                        Studies with a focus on Cultural Anthropology as well as English Studies at
-                        Bremen University and the University of Tours. Her general research
-                        interests include questions of identity, migration, urban culture, and
-                        youth.</p>
+                    <p>English biography text</p>
                 </author-comment>
-                <!-- <author-comment xml:lang="de">
-                    <p>Die Ethnologin <bold>Marie Sander</bold> studierte Kulturwissenschaft mit Schwerpunkt
-                        Kulturanthropologie sowie Anglistik an den Universitäten Bremen und Tours.
-                        2013 promovierte sie an der Universität Heidelberg. Ihr Forschungsinteresse
-                        gilt Fragen der Identität, Migration, urbaner Kultur und Jugend.</p>
+                <author-comment xml:lang="de">
+                    <p>Deutsche Authoren Biographie</p>
                 </author-comment> -->
                 <xref ref-type="aff" rid="aff01"/>
             </contrib>
-            <aff id="aff01">Universität Bremen</aff>
+            <aff id="aff01">Author's Organisation</aff>
         </contrib-group>
         <!-- ISSN -->
-        <isbn publication-format="softcover">978-3-946054-03-0</isbn>
+        <isbn publication-format="softcover">000-0-000000-00-0</isbn>
         <!-- Softcover ISBN -->
-        <isbn publication-format="hardcover">978-3-946054-04-7</isbn>
+        <isbn publication-format="hardcover">000-0-000000-00-0</isbn>
         <!-- Hardcover ISBN -->
-        <isbn publication-format="epdf">978-3-946054-05-4</isbn>
+        <isbn publication-format="epdf">000-0-000000-00-0</isbn>
         <!-- ePDF ISBN -->
         <publisher>
-            <publisher-name xml:lang="en">Heidelberg University Publishing</publisher-name>
-            <!-- <publisher-name xml:lang="de">Heidelberg University Publishing</publisher-name> -->
+            <publisher-name xml:lang="en">Name of publisher</publisher-name>
+            <publisher-name xml:lang="de">Name des Verlags</publisher-name> -->
             <publisher-loc>Heidelberg</publisher-loc>
         </publisher>
         <!-- <edition xml:lang="de">Zweite, leicht ergänzte Auflage</edition> -->
         <permissions>
             <!-- Copyright and licensing information -->
-            <copyright-statement>Text (c) 2016 Marie Sander</copyright-statement>
-            <copyright-year>2016</copyright-year>
-            <copyright-holder>Marie Sander</copyright-holder>
+            <copyright-statement>Text (c) Year Author<copyright-statement>
+            <copyright-year>year</copyright-year>
+            <copyright-holder>Author name</copyright-holder>
             <!-- <license license-type="open-access"
                 xlink:href="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="en">
                 <license-p><inline-graphic
@@ -187,25 +83,7 @@
             </license>
         </permissions>
         <abstract xml:lang="en">
-            <p><italic>Passing Through Shanghai</italic> untersucht das Erleben internationaler
-                Mobilität aus der Sicht von Kindern und Jugendlichen. Im Fokus des Buches stehen
-                Kinder von Firmenentsandten – sogenannten Expats – die einen Teil ihrer Jugend im
-                gegenwärtigen Shanghai verbringen: Eine an sich heterogene Gruppe, deren Lebensstil
-                jedoch aufgrund der internationalen Karrieren der Eltern bestimmte gemeinsame
-                Privilegien, aber auch Herausforderungen aufweist. </p>
-            <p>Das Buch geht der Frage nach, wie Kinder und Jugendliche kulturelle Identität unter
-                den Bedingungen hoher Mobilität empfinden und aushandeln. Gestützt auf die
-                Ergebnisse ethnographischer Feldforschung aus den Jahren 2010 bis 2012 nimmt
-                    <italic>Passing Through Shanghai</italic> den Alltag der Expat-Teenager an
-                internationalen Schulen, ihr Erleben und Nutzen der Stadt, ihre Träume und
-                Hoffnungen sowie ihre Fragen nach Zugehörigkeit und Heimat in den Blick. Der
-                ethnographische Ansatz erfasst den permanenten Schwebezustand des häufigen
-                Umziehens, der diese Jugendlichen beim Aufwachsen begleitet, und erforscht ihre
-                persönlichen Sichtweisen auf den "Transitraum" Shanghai. Die Perspektiven der
-                Teenager und ihre Erfahrungen in einer Gemeinschaft aus Expats bieten Einblicke in
-                die Zusammenhänge und Widersprüche zwischen der erstrebten Flexibilität von
-                Identitäten im 21. Jahrhundert und der gleichzeitigen Starrheit kultureller Grenzen,
-                die auf Nationalität, Ethnizität, Geschlecht und sozialer Herkunft basieren.</p>
+            <p>English abstract text</p>
         </abstract>
         <custom-meta-group>
             <custom-meta>
@@ -216,7 +94,7 @@
             <custom-meta>
                 <!-- DOI -->
                 <meta-name>doi</meta-name>
-                <meta-value>10.17885/heiup.48.42</meta-value>
+                <meta-value>10.0000/000</meta-value>
             </custom-meta>
         </custom-meta-group>
     </book-meta>

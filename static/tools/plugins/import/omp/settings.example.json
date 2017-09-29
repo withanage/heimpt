@@ -5,7 +5,6 @@
   "chapter-metadata-suffix": ".book-part-meta.bits2.xml",
   "project-template": "configurations/01_wintz.bits.json",
   "project-output": "configurations/import/omp",
-  "press": 1,
   "file-stage": 11,
   "file-types": [
     "application/vnd.oasis.opendocument.text",
@@ -17,6 +16,5 @@
       "chapter-genre": 4
     }
   },
-  "submission": 234,
   "skip-submission-without-files": false
 }

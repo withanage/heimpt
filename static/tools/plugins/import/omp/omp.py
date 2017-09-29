@@ -331,13 +331,12 @@ class OMPImport(Import):
         subtitle = unicode(submission_settings.getLocalizedValue('subtitle', locale), 'utf8')
         book_meta_xpatheval('book-title-group/book-title')[0].text = book_title
         book_meta_xpatheval('book-title-group/subtitle')[0].text = subtitle
-
         # Add abstracts for all languages
         etree.strip_elements(book_meta_xml, 'abstract')
-        for abstract_locale, abstract_text in submission_settings.getValues('abstract').items():
+        for biography_locale, abstract_text in submission_settings.getValues('abstract').items():
             if abstract_text:
                 abstract_html = html.fragment_fromstring(unicode(abstract_text, 'utf8'), create_parent=True)
-                book_meta_xml.append(E.abstract(abstract_html, {LANG_ATTR: abstract_locale[:2]}))
+                book_meta_xml.append(E.abstract(abstract_html, {LANG_ATTR: biography_locale[:2]}))
         # Inject publisher location and name
         publisher_loc_xml = book_meta_xpatheval('publisher/publisher-loc')[0]
         if press_settings.getLocalizedValue('location', ''):
@@ -371,57 +370,8 @@ class OMPImport(Import):
         contrib_group_xml = book_meta_xpatheval('contrib-group')[0]
         etree.strip_elements(contrib_group_xml, 'contrib')
         # Add contributors
-        for contrib in self.dal.getAuthorsBySubmission(submission_id, filter_browse=True):
-            contrib_settings = OMPSettings(self.dal.getAuthorSettings(contrib.author_id))
-            group_settings = self.dal.getUserGroupSettings(contrib.user_group_id)
-
-            # Use the english name of the group for mapping to contrib-type attribute
-            contrib_type = USER_GROUP_TO_CONTRIB_TYPE.get(group_settings.getLocalizedValue('name', 'en_US'))
-            contrib_attrs = {'contrib-type': contrib_type} if contrib_type else {}
-            given_names = unicode(contrib.first_name, 'utf8')
-            if contrib.middle_name:
-                given_names += " " + unicode(contrib.middle_name, 'utf8')
-
-            contrib_xml = E.contrib(E.name(
-                E.surname(unicode(contrib.last_name, 'utf8')), getattr(E, 'given-names')(given_names), {'name-style': 'western'}),
-                contrib_attrs)
-            # Add biography in all available languages
-            for abstract_locale, biography_text in contrib_settings.getValues('biography').items():
-                if biography_text:
-                    # lxml cant parse html in the biographies if they contain multiple tags as root element.
-                    # TODO check which html element should be used to encapsulate the html from biographies
-                    biography_html = html.fragment_fromstring(unicode(biography_text, 'utf8'), create_parent=True)
-                    contrib_xml.append(getattr(E, 'author-comment')(biography_html, {LANG_ATTR: abstract_locale[:2]}))
-            # Somehow there was a bug with german umlauts, so we have to use unicode string
-            affiliation = unicode(contrib_settings.getLocalizedValue('affiliation', locale), 'utf8')
-            if affiliation:
-                aff_nodes = contrib_group_xml.xpath('aff')
-                if aff_nodes:
-                    # Find an existing aff tag with the same text
-                    aff_id = next((node.get('id') for node in aff_nodes if node.text == affiliation), None)
-                    if not aff_id:
-                        aff_ids = set(node.get('id') for node in aff_nodes)
-                        aff_id = max(aff_ids)
-                        # Try to convert last two characters to int and increase
-                        try:
-                            aff_id = 'aff' + format(int(aff_id[-2:]) + 1, '02d')
-                        except ValueError as e:
-                            print(e)
-                            pass
-                        else:
-                            aff_id = 'aff' + next(format(number, '02d') for number in range(1, 100)
-                                                  if 'aff' + format(number, '02d') not in aff_ids)
-                        existing_aff = False
-                    else:
-                        existing_aff = True
-                else:
-                    existing_aff = False
-                    aff_id = 'aff01'
-                if not existing_aff:
-                    contrib_group_xml.append(E.aff(affiliation, {'id': aff_id}))
-                contrib_xml.append(E.xref({'ref-type': 'aff', 'rid': aff_id}))
-
-            contrib_group_xml.append(contrib_xml)
+        for contrib in self.dal.getAuthorsBySubmission(submission_id):
+            contrib_group_xml.append(self.build_contrib_xml(contrib, contrib_group_xml, locale))
         book_meta_xpatheval('permissions/copyright-year')[0].text = submission_settings.getLocalizedValue('copyrightYear', '')
         book_meta_xpatheval('permissions/copyright-holder')[0].text = unicode(submission_settings.getLocalizedValue(
             'copyrightHolder', locale), 'utf8')
@@ -446,6 +396,56 @@ class OMPImport(Import):
         # TODO add license
         return book_xml
 
+    def build_contrib_xml(self, contrib, contrib_group_xml, locale):
+        contrib_settings = OMPSettings(self.dal.getAuthorSettings(contrib.author_id))
+        group_settings = self.dal.getUserGroupSettings(contrib.user_group_id)
+        # Use the english name of the group for mapping to contrib-type attribute
+        contrib_type = USER_GROUP_TO_CONTRIB_TYPE.get(group_settings.getLocalizedValue('name', 'en_US'))
+        contrib_attrs = {'contrib-type': contrib_type} if contrib_type else {}
+        given_names = unicode(contrib.first_name, 'utf8')
+        if contrib.middle_name:
+            given_names += " " + unicode(contrib.middle_name, 'utf8')
+        contrib_xml = E.contrib(
+            E.name(
+                E.surname(unicode(contrib.last_name, 'utf8')),
+                getattr(E, 'given-names')(given_names), {'name-style': 'western'}),
+            contrib_attrs)
+        # Add biography in all available languages
+        for biography_locale, biography_text in contrib_settings.getValues('biography').items():
+            if biography_text:
+                # lxml cant parse html in the biographies if they contain multiple tags as root element.
+                # TODO check which html element should be used to encapsulate the html from biographies
+                biography_html = html.fragment_fromstring(unicode(biography_text, 'utf8'), create_parent=True)
+                contrib_xml.append(getattr(E, 'author-comment')(biography_html, {LANG_ATTR: biography_locale[:2]}))
+        affiliation = unicode(contrib_settings.getLocalizedValue('affiliation', locale), 'utf8')
+        if affiliation:
+            aff_nodes = contrib_group_xml.xpath('aff')
+            if aff_nodes:
+                # Find an existing aff tag with the same text
+                aff_id = next((node.get('id') for node in aff_nodes if node.text == affiliation), None)
+                if not aff_id:
+                    aff_ids = set(node.get('id') for node in aff_nodes)
+                    aff_id = max(aff_ids)
+                    # Try to convert last two characters to int and increase
+                    try:
+                        aff_id = 'aff' + format(int(aff_id[-2:]) + 1, '02d')
+                    except ValueError as e:
+                        print(e)
+                        pass
+                    else:
+                        aff_id = 'aff' + next(format(number, '02d') for number in range(1, 100)
+                                              if 'aff' + format(number, '02d') not in aff_ids)
+                    existing_aff = False
+                else:
+                    existing_aff = True
+            else:
+                existing_aff = False
+                aff_id = 'aff01'
+            if not existing_aff:
+                contrib_group_xml.append(E.aff(affiliation, {'id': aff_id}))
+            contrib_xml.append(E.xref({'ref-type': 'aff', 'rid': aff_id}))
+        return contrib_xml
+
     def inject_chapter_metadata(self, bits_xml, chapter, chapter_settings, submission, custom_meta=None):
         """
         Generates the metadata for the chapter
@@ -464,13 +464,14 @@ class OMPImport(Import):
         book_part_xml.set(LANG_ATTR, submission.locale[:2])
         # TODO How to distinguish other types?
         book_part_xml.set('book-part-type', 'chapter')
-        book_part_xml.xpath('book-part-meta/title-group/title')[0].text = unicode(chapter_settings.getLocalizedValue(
+        book_part_meta_xml = book_part_xml.xpath('book-part-meta')[0]
+        book_part_meta_xml.xpath('title-group/title')[0].text = unicode(chapter_settings.getLocalizedValue(
             'title', submission.locale), 'utf8')
-        # TODO Chapter authors
-        authors = self.dal.getAuthorsByChapter(chapter.chapter_id)
-
+        contrib_group_xml = book_part_meta_xml.xpath('contrib-group')[0]
+        for contrib in self.dal.getAuthorsByChapter(chapter.chapter_id):
+            contrib_group_xml.append(self.build_contrib_xml(contrib, contrib_group_xml, submission.locale))
         if custom_meta:
-            custom_meta_group_xml = book_part_xml.xpath('book-part-meta/custom-meta-group')[0]
+            custom_meta_group_xml = book_part_meta_xml.xpath('custom-meta-group')[0]
             # Clear old custom-meta tags
             etree.strip_elements(custom_meta_group_xml, 'custom-meta')
             for meta_name, meta_value in custom_meta.items():
