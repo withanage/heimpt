@@ -56,7 +56,7 @@ def index():
 
     a = {
         'Open Monograph Press': ["https://books.ub.uni-heidelberg.de/index.php/heiup/submissions", "", "default"],
-        'Open Jounal Systems': ["https://journals.ub.uni-heidelberg.de/index.php/ojs/login", "", "default"],
+        'Open Journal Systems': ["https://journals.ub.uni-heidelberg.de/index.php/ojs/login", "", "default"],
     }
     for m in sorted(a):
         conf_add.append(navigation(m,a[m][0],a[m][1],a[m][2]))
