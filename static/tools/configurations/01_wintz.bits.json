@@ -12,8 +12,8 @@
         "6": "Wintz_06_Conclusion.docx",
         "7": "Wintz_07_Bibliographie.docx"
       },
-      "name": "wintz_xml",
-      "path": "/home/wit/Arbeit/OMP/wintz",
+      "name": "Processed_Data",
+      "path": "/home/wit/Arbeit/OMP/Heiup/Wintz",
       "typesetters": {
         "1": {
           "arguments": {

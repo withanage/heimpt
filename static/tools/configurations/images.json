@@ -1,0 +1,31 @@
+{
+  "typesetters": {
+    "image_convert_64_64": {
+      "executable": "/usr/bin/convert.im6",
+      "arguments": {}
+    }
+  },
+  "projects": [
+    {
+      "files": {
+        "1": "1.png",
+        "2": "2.png",
+        "3": "3.png"
+      },
+      "name": "Generate_Thumbnails",
+      "chain": false,
+      "typesetters": {
+        "1": {
+          "process": true,
+          "out_type": "png",
+          "name": "image_convert_64_64",
+          "arguments": {
+            "1": "--create-dir"
+          }
+        }
+      },
+      "active": true,
+      "path": "/home/wit/Pictures/OMP/"
+    }
+  ]
+}
