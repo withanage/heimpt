@@ -304,7 +304,9 @@ class Merge(Debuggable):
         journal.attrib['dtd-version'] = "3.0"
         journal.attrib[etree.QName('{http://www.w3.org/XML/1998/namespace}lang')] = "de"
 
+
         f, bd, bk = self.get_xml_parts()
+
         metadata = self.args.get('--metadata')
 
         if metadata:
@@ -339,7 +341,6 @@ class Merge(Debuggable):
         bp : elementtree
             Book part elementTree
         """
-
         f, bd, bk = self.get_xml_parts()
 
         bp = etree.Element("book-part")

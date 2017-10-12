@@ -778,7 +778,7 @@ def main():
     else:
         pi.config = pi.gv.read_json(pi.args['<config_file>'])
         pi.all_typesetters = pi.config.get('typesetters')
-        pi.check_applications()
+        #pi.check_applications()
         pi.run()
     ##print pi.gv.log
 
