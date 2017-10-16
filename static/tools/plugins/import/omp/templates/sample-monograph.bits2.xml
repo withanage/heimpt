@@ -47,7 +47,7 @@
                 </author-comment> -->
                 <xref ref-type="aff" rid="aff01"/>
             </contrib>
-            <aff id="aff01">Author's Organisation</aff>
+            <!-- <aff id="aff01">Author's Organisation</aff>-->
         </contrib-group>
         <!-- ISSN -->
         <isbn publication-format="softcover">000-0-000000-00-0</isbn>
@@ -58,17 +58,17 @@
         <!-- ePDF ISBN -->
         <publisher>
             <publisher-name xml:lang="en">Name of publisher</publisher-name>
-            <publisher-name xml:lang="de">Name des Verlags</publisher-name> -->
+            <publisher-name xml:lang="de">Name des Verlags</publisher-name>
             <publisher-loc>Heidelberg</publisher-loc>
         </publisher>
         <!-- <edition xml:lang="de">Zweite, leicht ergänzte Auflage</edition> -->
         <permissions>
             <!-- Copyright and licensing information -->
-            <copyright-statement>Text (c) Year Author<copyright-statement>
+            <copyright-statement>Text (c) Year Author</copyright-statement>
             <copyright-year>year</copyright-year>
             <copyright-holder>Author name</copyright-holder>
             <!-- <license license-type="open-access"
-                xlink:href="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="en">
+                xlink:href="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="de">
                 <license-p><inline-graphic
                         xlink:href="http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-sa.svg"
                     />Dieses Werk ist unter der Creative-Commons-Lizenz 4.0 (CC BY-SA 4.0)

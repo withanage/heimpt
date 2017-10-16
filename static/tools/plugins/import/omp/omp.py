@@ -9,9 +9,11 @@ Options:
   -a --all-submissions          Import all submissions of any configured presses
 """
 import json
+import logging
 import os.path
 import shutil
 
+import sys
 from ImportInterface import Import
 from lxml import etree
 from lxml import html
@@ -86,6 +88,8 @@ def path_to_submission_metadata(submission_id, press_id, output_dir, filename='m
 
 class OMPImport(Import):
     def __init__(self):
+        logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+        self.log = logging.getLogger('import.omp')
         self.db = None
         self.dal = None
         self.settings = {}
@@ -101,7 +105,7 @@ class OMPImport(Import):
             self.settings.update(settings_override)
         if args.get('--project-template'):
             self.settings['project-template'] = args.get('--project-template')
-        print('Loaded settings: {}'.format(self.settings))
+        self.log.info('Loaded settings: %s', self.settings)
         os.chdir(self.settings['base-path'])
         print('Changed working directory to: {}'.format(self.settings['base-path']))
         self.db = DAL(self.settings['db-uri'], migrate=False)
@@ -372,9 +376,15 @@ class OMPImport(Import):
         # Add contributors
         for contrib in self.dal.getAuthorsBySubmission(submission_id):
             contrib_group_xml.append(self.build_contrib_xml(contrib, contrib_group_xml, locale))
-        book_meta_xpatheval('permissions/copyright-year')[0].text = submission_settings.getLocalizedValue('copyrightYear', '')
+        copyright_year = submission_settings.getLocalizedValue('copyrightYear', '')
+        book_meta_xpatheval('permissions/copyright-year')[0].text = copyright_year
         book_meta_xpatheval('permissions/copyright-holder')[0].text = unicode(submission_settings.getLocalizedValue(
             'copyrightHolder', locale), 'utf8')
+        # Copyright statement only generated in english
+        copyright_statement_xml = book_meta_xpatheval('permissions/copyright-statement')[0]
+        copyright_statement_xml.set(LANG_ATTR, 'en')
+        copyright_statement_xml.text = u'Text © {} by the authors.'.format(copyright_year)
+
         # Add collection meta data
         if submission.series_id:
             series_settings = OMPSettings(self.dal.getSeriesSettings(submission.series_id))
@@ -392,7 +402,6 @@ class OMPImport(Import):
             # TODO series editors
         else:
             etree.strip_elements(book_xml, 'collection-meta')
-        # TODO add copyright-statement. which omp field to use or which value to generate?
         # TODO add license
         return book_xml
 
@@ -419,32 +428,36 @@ class OMPImport(Import):
                 contrib_xml.append(getattr(E, 'author-comment')(biography_html, {LANG_ATTR: biography_locale[:2]}))
         affiliation = unicode(contrib_settings.getLocalizedValue('affiliation', locale), 'utf8')
         if affiliation:
-            aff_nodes = contrib_group_xml.xpath('aff')
-            if aff_nodes:
-                # Find an existing aff tag with the same text
-                aff_id = next((node.get('id') for node in aff_nodes if node.text == affiliation), None)
-                if not aff_id:
-                    aff_ids = set(node.get('id') for node in aff_nodes)
-                    aff_id = max(aff_ids)
-                    # Try to convert last two characters to int and increase
-                    try:
-                        aff_id = 'aff' + format(int(aff_id[-2:]) + 1, '02d')
-                    except ValueError as e:
-                        print(e)
-                        pass
-                    else:
-                        aff_id = 'aff' + next(format(number, '02d') for number in range(1, 100)
-                                              if 'aff' + format(number, '02d') not in aff_ids)
-                    existing_aff = False
-                else:
-                    existing_aff = True
-            else:
-                existing_aff = False
-                aff_id = 'aff01'
-            if not existing_aff:
-                contrib_group_xml.append(E.aff(affiliation, {'id': aff_id}))
+            aff_id = self.find_or_create_aff_xml(affiliation, contrib_group_xml)
             contrib_xml.append(E.xref({'ref-type': 'aff', 'rid': aff_id}))
         return contrib_xml
+
+    def find_or_create_aff_xml(self, affiliation, contrib_group_xml):
+        aff_nodes = contrib_group_xml.xpath('aff')
+        if aff_nodes:
+            # Find an existing aff tag with the same text
+            aff_id = next((node.get('id') for node in aff_nodes if node.text == affiliation), None)
+            if not aff_id:
+                aff_ids = set(node.get('id') for node in aff_nodes)
+                aff_id = max(aff_ids)
+                # Try to convert last two characters to int and increase
+                try:
+                    aff_id = 'aff' + format(int(aff_id[-2:]) + 1, '02d')
+                except ValueError as e:
+                    print(e)
+                    pass
+                else:
+                    aff_id = 'aff' + next(format(number, '02d') for number in range(1, 100)
+                                          if 'aff' + format(number, '02d') not in aff_ids)
+                existing_aff = False
+            else:
+                existing_aff = True
+        else:
+            existing_aff = False
+            aff_id = 'aff01'
+        if not existing_aff:
+            contrib_group_xml.append(E.aff(affiliation, {'id': aff_id}))
+        return aff_id
 
     def inject_chapter_metadata(self, bits_xml, chapter, chapter_settings, submission, custom_meta=None):
         """
