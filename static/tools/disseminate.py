@@ -198,7 +198,7 @@ class Disseminate(Debuggable):
     def run_ah_fop(self, pth, formatter, medium):
         args=[pth]
         #args.append('-silent')
-        args.append('-d')
+        args.append('-silent -d')
         args.append('{}/{}.{}.{}.fo'.format(os.path.dirname(self.f), self.gv.uuid, formatter, medium))
         args.append('-o')
         args.append('{}/{}.{}.{}.pdf'.format(self.dr, self.gv.uuid, formatter, medium))
