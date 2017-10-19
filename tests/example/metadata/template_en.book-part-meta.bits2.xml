@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book-part book-part-type="chapter" id="b11_ch_1" seq="1" xml:lang="de">
+    <book-part-meta>
+        <title-group>
+            <title>headline</title>
+        </title-group>
+        <contrib-group>
+            <contrib contrib-type="author">
+                    <name>
+                        <surname>Withanage</surname>
+                        <given-names>Dulip</given-names>
+                    </name>
+                    <author-comment xml:lang="en">
+                        <p><italic>Dulip Withanage M.Sc,</italic>   Software Engineer, University of Heidelberg</p>
+                    </author-comment>
+                    <author-comment xml:lang="de">
+                        <p><italic>Dulip Withanage M.Sc,</italic> Wissenschaftliche
+                            Mitarbeiter an der Universität
+                            Heidelberg</p>
+                    </author-comment>
+                    <xref ref-type="aff" rid="aff01"/>
+                </contrib>
+
+        </contrib-group>
+        <custom-meta-group>
+            <custom-meta specific-use="urn">
+                <!-- URN -->
+                <meta-name>urn</meta-name>
+                <meta-value>urn:nbn:de:bsz:00-my-book-00-0</meta-value>
+            </custom-meta>
+            <custom-meta specific-use="doi">
+                <!-- DOI -->
+                <meta-name>doi</meta-name>
+                <meta-value>10.0000/mybookss.00.0</meta-value>
+            </custom-meta>
+        </custom-meta-group>
+    </book-part-meta>
+    <!-- content -->
+</book-part>

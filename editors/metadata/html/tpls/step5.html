@@ -1,0 +1,31 @@
+<div class="col-sm-3" ng-controller="jstreeCtrl">
+
+    <div class="tree-box">
+        <js-tree
+                tree-plugins="types,search,sort"
+                tree-types="typesConfig"
+                tree-data="scope"
+                tree-model="navmenu"
+                tree-events="changed:changedCB">
+        </js-tree>
+    </div>
+</div>
+
+<div class="col-sm-9">
+    <div class="row">
+
+    </div>
+
+    <div class="row next-btn">
+        <button class="btn btn-primary next-btn" onclick="location.href='step6.html'">
+            Next<i class="glyphicon glyphicon-chevron-right"></i>
+        </button>
+    </div>
+
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        Debug Area
+        <pre><code>{{tree['book']['body'] | json}}</code></pre>
+    </div>
+
+</div>

@@ -1,0 +1,42 @@
+<div class="col-sm-12">
+    <div ui-tree>
+        <ol ui-tree-nodes="" ng-model="tree['book']['body']['book-part']">
+            <li ng-if="typeOf(tree['book']['body']['book-part']) == 'Array'" ng-repeat="bookparttree in tree['book']['body']['book-part']" ng-model="isCollapsed" ng-init="isCollapsed = false" ui-tree-node>
+                <div ui-tree-handle>
+                    <a class="btn btn-success btn-xs" data-nodrag ng-click="isCollapsed = !isCollapsed">
+                        <span class="glyphicon" ng-class="{'glyphicon-chevron-right': isCollapsed, 'glyphicon-chevron-down': !isCollapsed}"></span>
+                    </a>
+                    {{bookparttree['@id'] || 'empty'}}
+                    <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="uiTreeRemove(this)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                    <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="uiTreeNewSubItem(this)" style="margin-right: 8px;">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
+                </div>
+                <ol ng-if="typeOf(tree['book']['body']['book-part']) == 'Array'" ui-tree-nodes="" ng-model="bookparttree['body']['book-part']" ng-show="!isCollapced" >
+                    <li ng-repeat="bookchaptertree in bookparttree['body']['book-part']" ui-tree-node collapse="isCollapsed">
+                        <div ui-tree-handle>
+                            <a class="btn btn-success btn-xs" data-nodrag ng-click="uiTreeToggle(this)">
+                                <span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span>
+                            </a>
+                            {{bookchaptertree['@id'] || 'empty'}}
+                            <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="uiTreeRemove(this)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                            <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="uiTreeNewSubItem(this)" style="margin-right: 8px;">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </a>
+                        </div>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+
+    <div class="row next-btn">
+        <button class="btn btn-primary next-btn" onclick="location.href='step5.html'">
+            Next<i class="glyphicon glyphicon-chevron-right"></i>
+        </button>
+    </div>
+</div>

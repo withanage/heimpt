@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Step 12 | HEIDI Editor</title>
+
+    <!-- Stylesheets -->
+    <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="css/jstree/style.min.css" type="text/css" rel="stylesheet">
+    <link href="css/custom.css" type="text/css" rel="stylesheet">
+
+
+    <!-- jQuery and plugins -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jstree.min.js"></script>
+    <script src="js/advanced.js"></script>
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script>
+        $(function(){
+            $("#header").load("header.html", null, function(){
+                $("a.disabled").click(function(){return false;});
+                $("li#nav-step12").addClass("active").nextAll().each(function(){
+                    $(this).find("a").addClass("disabled").attr({href:"javascript:void(0)", onClick:"return false"});
+                });
+            });
+        });
+    </script>
+
+</head>
+<body>
+
+
+<div id="content">
+    <div class="container">
+
+        <div id="header"></div>
+
+        <h2 class="title">Step 12: Author proof</h2>
+        <!-- /title -->
+
+        <div class="row download-btn">
+            <button class="btn btn-default btn-lg">Get HTML <i class="glyphicon glyphicon-download"></i></button>
+        </div>
+        <div class="row download-btn">
+            <button class="btn btn-default btn-lg">Get PDF <i class="glyphicon glyphicon-download"></i></button>
+        </div>
+        <div class="row download-btn">
+            <button class="btn btn-default btn-lg">Upload it to OMP <i class="glyphicon glyphicon-upload"></i></button>
+        </div>
+        <div class="row download-btn">
+            <button class="btn btn-default btn-lg">Get author to proof <i class="glyphicon glyphicon-upload"></i></button>
+        </div>
+
+
+        <div class="row next-btn">
+            <button class="btn btn-primary next-btn" onclick="location.href='step13.html'">Next<i class="glyphicon glyphicon-chevron-right"></i></button>
+        </div>
+
+
+
+
+
+    </div>
+    <!-- /container -->
+
+
+</div>
+<!-- /content -->
+
+
+<div id="footer" class="container">footer</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+
+        $(".treepane").jstree({
+            //"json_data": jsonData
+        });
+
+
+    });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+{
+  "name": "HEIDIEditor",
+  "version": "0.0.1",
+  "homepage": "https://github.com/withanage/HEIDIEditor",
+  "authors": [
+    "dulip withanage <withanage@ub.uni-heidelberg.de>",
+    "mayumi ohta <mayumi.ohta@asia-europe.uni-heidelberg.de>"
+  ],
+  "description": "HTML5 WYSIWYG Editor for NLM-XML (Standalone Application or as OMP Plugin)",
+  "main": "index.html",
+  "keywords": [
+    "HTML5",
+    "WYSIWYG",
+    "OMP"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1",
+    "bootstrap": "~3.2.0",
+    "angular": "~1.2.27",
+    "angular-bootstrap": "~0.11.2",
+    "jquery-file-upload": "~9.8.0",
+    "jquery-ui": "~1.11.2",
+    "json2": "*",
+    "textAngular": "~1.3.9",
+    "font-awesome": "~4.2.0",
+    "jstree-directive": "~0.1.2",
+    "jstree": "~3.0.4",
+    "angular-recursion": "~1.0.3",
+    "angular-xeditable": "~0.1.8",
+    "underscore": "~1.7.0",
+    "angular-underscore-module": "~1.0.1",
+    "angular-ui-tree": "~2.1.5",
+    "angular-ui-sortable": "~0.13.1",
+    "angular-ui-tree-filter": "~0.1.0",
+    "bootstrap-additions": "~0.2.3",
+    "tinymce": "~4.1.7",
+    "angular-ui-tinymce": "~0.0.5"
+  },
+  "resolutions": {
+    "angular": ">= 1.2.0",
+    "underscore": "~1.8",
+    "tinymce": "~4.4.3"
+  }
+}

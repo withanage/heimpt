@@ -1,0 +1,70 @@
+{
+  "createFull": {
+    "example": {
+      "dir": "/home/wit/Arbeit/OMP/Gundlach/proof/",
+      "files": [
+
+
+        {
+          "203-69-78642-1-10-20170727.xml": {
+            "order": 1
+          }
+        },
+        {
+          "203-69-78643-1-10-20170727.xml": {
+            "order": 2
+          }
+        },
+        {
+          "203-69-78644-1-10-20170728.xml": {
+            "order": 3
+          }
+        },
+        {
+          "203-69-78645-1-10-20170728.xml": {
+            "order": 4
+          }
+        },
+        {
+          "203-69-78663-1-10-20170728.xml": {
+            "order": 5
+          }
+        },
+        {
+           "203-69-78740-1-10-20170801.xml": {
+            "order": 6
+          }
+        },
+        {
+          "203-69-78811-1-10-20170824.xml": {
+            "order": 7
+          }
+        },
+        {
+          "203-69-78745-1-10-20170803.xml": {
+            "order": 8
+          }
+        }
+
+      ],
+      "fullfile": {
+        "fullfile.xml": {
+        }
+      },
+      "enumeration": 1,
+      "chapter-begin-reset":0,
+      "citations-to-refererences":0
+
+    }
+  },
+  "errors": {
+    "FILE_NOT_FOUND": " File found or non-valid xml",
+    "FILE_NOT_WRITTEN": "No file written",
+    "FILE_NO_WRITE_ACCESS": "No permission to write file in the directory"
+  },
+  "zip": {
+    "enable": 0,
+    "name-prefix": "xml-back-"
+  }
+}
+

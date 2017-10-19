@@ -1,0 +1,60 @@
+<h3>
+    <i class="glyphicon glyphicon-folder-open"></i>
+    &nbsp;{{tree['book']['book-meta']['book-id']['#text']}}
+</h3>
+
+<div class="row" class="back-matter">
+<tabset>
+    <tab ng-repeat="(header, contents) in tree['book']['back']" heading="{{backMatter[header]}}">
+        <!-- end notes -->
+        <div ng-if="header === 'fn-group' && typeOf(contents) !== 'Array'">
+            <footnotes fn-group="contents"></footnotes>
+        </div>
+        <div ng-if="header === 'fn-group' && typeOf(contents) === 'Array'" ng-repeat="content in contents">
+            <hr ng-if="!$first" />
+            <footnotes fn-group="content"></footnotes>
+        </div>
+        <!-- end of end notes -->
+
+
+        <!-- glossary -->
+        <div ng-if="header === 'glossary' && typeOf(contents['def-list']) !== 'Array'">
+            <glossary def-list="contents['def-list']"></glossary>
+        </div>
+        <div ng-if="header === 'glossary' && typeOf(contents['def-list']) === 'Array'" ng-repeat="content in contents['def-list']">
+            <hr ng-if="!$first"/>
+            <glossary def-list="content"></glossary>
+        </div>
+        <!-- end of glossary -->
+
+
+        <!-- bibliography -->
+        <div ng-if="header === 'ref-list' && typeOf(contents) !== 'Array'">
+            <bibliography ref-list="contents"></bibliography>
+        </div>
+        <div ng-if="header === 'ref-list' && typeOf(contents) === 'Array'" ng-repeat="content in contents">
+            <hr ng-if="!$first"/>
+            <bibliography ref-list="content"></bibliography>
+        </div>
+        <!-- end of bibliography -->
+
+
+        <!-- appendix -->
+        <div ng-if="header === 'app-group' && typeOf(contents['app-group']) !== 'Array'">
+            <appendix app="contents['app']"></appendix>
+        </div>
+        <div ng-if="header === 'app-group' && typeOf(contents['app']) === 'Array'" ng-repeat="content in contents['app']">
+            <hr ng-if="!$first"/>
+            <appendix app="content['app']"></appendix>
+        </div>
+        <!-- end of appendix -->
+    </tab>
+</tabset>
+
+</div>
+
+<div class="row">&nbsp;</div>
+<div class="row">
+    Debug Area
+    <pre><code>{{tree['book']['back'] | json}}</code></pre>
+</div>

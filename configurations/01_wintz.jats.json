@@ -1,0 +1,48 @@
+{
+  "projects": [
+    {
+      "active": true,
+      "chain": true,
+      "files": {
+        "1": "Wintz_01_Remerciements.xml",
+        "2": "Wintz_02_Introduction.xml",
+        "3": "Wintz_03_Chapitre_1.xml",
+        "4": "Wintz_04_Chapitre_2.xml",
+        "5": "Wintz_05_Chapitre_3.xml",
+        "6": "Wintz_06_Conclusion.xml",
+        "7": "Wintz_07_Bibliographie.xml"
+      },
+      "name": "wintz_xml",
+      "path": "/home/wit/Arbeit/OMP/wintz/wintz-jats/",
+      "typesetters": {
+        "1": {
+          "arguments": {
+            "1": "--create-dir",
+            "2": "--stand-alone"
+          },
+          "name": "xmlprepare",
+          "out_type": "xml",
+          "process": true
+        }
+
+
+      }
+    }
+  ],
+  "typesetters": {
+    "xmlprepare": {
+      "arguments": {
+        "1": "--metadata book-part-meta.jats",
+        "2": "--set-uuids=fn,ref",
+        "3": "--set-numbering-values=xref,ref-type,fn",
+        "4": "--citations-to-references"
+      },
+      "executable": "/home/wit/projects/heimpt/prepare.py"
+    },
+    "xmlmerge": {
+      "arguments": {
+      },
+      "executable": "/home/wit/projects/heimpt/merge.py"
+    }
+  }
+}

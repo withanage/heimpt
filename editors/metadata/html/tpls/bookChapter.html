@@ -1,0 +1,424 @@
+<h3>
+    <i class="glyphicon glyphicon-file"></i>
+    &nbsp;{{chapter['@id']}}
+</h3>
+<table class="table">
+    <tr class="no-border-top">
+        <td colspan="6">
+            <span class="pull-right">Copy Book Level Metadata: </span>
+        </td>
+        <td width="4%" class="cell-border-left">
+            <input type="checkbox" ng-model="copyAll" ng-change="copyMetadata(copyAll, chapter['@id'])"/>
+        </td>
+    </tr>
+    <tr class="even-row">
+        <th width="20%">Chapter Title</th>
+        <td colspan="4">
+            <a href="#" editable-text="chapter['book-part-meta']['title-group']['title']['#text']"
+               onbeforesave="isEmpty($data)">
+                {{chapter['book-part-meta']['title-group']['title']['#text'] || 'empty'}}
+            </a>
+        </td>
+        <td>
+            <button class="btn btn-default" ng-click="openTitle(chapter['book-part-meta']['title-group'])">
+                <i class="glyphicon glyphicon-cog"></i>
+            </button>
+        </td>
+        <td class="cell-border-left"></td>
+    </tr>
+    <tr ng-if="!!chapter['book-part-meta'].hasOwnProperty('contrib-group')">
+        <th rowspan="{{chapter['book-part-meta']['contrib-group']['contrib'].length + 1}}">
+            Contributor
+            <button class="btn btn-default pull-right"
+                    ng-click="chapter['book-part-meta']['contrib-group']['contrib'].push({'@contrib-type':'author', '@rid': '', name:{'surname':'', 'given-names':''}})">
+                Add
+            </button>
+        </th>
+        <th width="13%">Role</th>
+        <th width="17%">First Name</th>
+        <th width="17%">Last Name</th>
+        <th width="17%">Affiliation ID</th>
+        <th width="12%"></th>
+        <th  rowspan="{{chapter['book-part-meta']['contrib-group']['contrib'].length + 1}}" class="cell-border-left">
+            <span ng-if="!!tree['book']['book-meta'].hasOwnProperty('contrib-group')">
+            <input type="checkbox" class="copy {{chapter['@id']}}" ng-model="copyContrib" ng-init="copyContrib = true"
+                   ng-checked="isEqual(tree['book']['book-meta']['contrib-group']['contrib'], chapter['book-part-meta']['contrib-group']['contrib'])"
+                   ng-disabled="isEqual(tree['book']['book-meta']['contrib-group']['contrib'], chapter['book-part-meta']['contrib-group']['contrib'])"
+                   ng-click="copyContrib = !copyContrib; chapter['book-part-meta']['contrib-group']['contrib'] = (copyContrib)? chapter['book-part-meta']['contrib-group']['contrib'] : deepCopy(tree['book']['book-meta']['contrib-group']['contrib']);" />
+            </span>
+        </th>
+    </tr>
+    <tr ng-if="!chapter['book-part-meta'].hasOwnProperty('contrib-group')">
+        <th>
+            Contributor
+            <button class="btn btn-default pull-right"
+                    ng-click="chapter['book-part-meta']['contrib-group']['contrib'] = [{'@contrib-type':'author', '@rid': '', name:{'surname':'', 'given-names':''}}]">
+                Add
+            </button>
+        </th>
+        <td colspan="5"></td>
+        <td class="cell-border-left">
+            <span ng-if="!!tree['book']['book-meta'].hasOwnProperty('contrib-group')">
+            <input type="checkbox" class="copy {{chapter['@id']}}" ng-model="copyContrib" ng-init="copyContrib = true"
+                   ng-checked="isEqual(tree['book']['book-meta']['contrib-group']['contrib'], chapter['book-part-meta']['contrib-group']['contrib'])"
+                   ng-disabled="isEqual(tree['book']['book-meta']['contrib-group']['contrib'], chapter['book-part-meta']['contrib-group']['contrib'])"
+                   ng-click="copyContrib = !copyContrib; chapter['book-part-meta']['contrib-group']['contrib'] = (copyContrib)? chapter['book-part-meta']['contrib-group']['contrib'] : deepCopy(tree['book']['book-meta']['contrib-group']['contrib']);" />
+            </span>
+        </td>
+    </tr>
+    <tr ng-repeat="c in chapter['book-part-meta']['contrib-group']['contrib']">
+        <td>
+            <a editable-select="c['@contrib-type']" e-ng-options="type for type in contribType">
+                {{c['@contrib-type'] || 'empty'}}
+            </a>
+        </td>
+        <td>
+            <a href="#" editable-text="c['name']['given-names']" onbeforesave="isEmpty($data)">
+                {{c['name']['given-names'] || 'empty'}}
+            </a>
+        </td>
+        <td>
+            <a href="#" editable-text="c['name']['surname']" onbeforesave="isEmpty($data)">
+                {{c['name']['surname'] || 'empty'}}
+            </a>
+        </td>
+        <td>
+            <a href="#" editable-select="c['@rid']"
+               e-ng-options="t['@id'] as t['@id'] for t in chapter['book-part-meta']['aff']">
+                {{c['@rid'] || 'empty'}}
+            </a>
+        </td>
+        <td>
+            <button class="btn btn-default" ng-click="openContrib(c)"><i class="glyphicon glyphicon-cog"></i></button>
+            <span ng-show="chapter['book-part-meta']['contrib-group']['contrib'].length > 1">
+                <button class="btn btn-default"
+                        ng-click="chapter['book-part-meta']['contrib-group']['contrib'].splice($index,1)">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </button>
+            </span>
+        </td>
+    </tr>
+    <tr ng-if="!!chapter['book-part-meta'].hasOwnProperty('aff')" class="even-row">
+        <th rowspan="{{chapter['book-part-meta']['aff'].length + 1}}">
+            Affiliation
+            <button class="btn btn-default pull-right"
+                    ng-click="chapter['book-part-meta']['aff'].push({'@id':'', 'institution': '', 'addr-line': ''})">
+                Add
+            </button>
+        </th>
+        <th><span ng-show="chapter['book-part-meta']['aff'].length >= 1">ID</span></th>
+        <th colspan="2"><span ng-show="chapter['book-part-meta']['aff'].length >= 1">Institution</span></th>
+        <th><span ng-show="chapter['book-part-meta']['aff'].length >= 1">Address</span></th>
+        <th></th>
+        <th rowspan="{{chapter['book-part-meta']['aff'].length + 1}}" class="cell-border-left">
+            <span ng-if="!!tree['book']['book-meta'].hasOwnProperty('aff')">
+            <input type="checkbox" class="copy {{chapter['@id']}}" ng-model="copyAff" ng-init="copyAff = true"
+                   ng-checked="isEqual(tree['book']['book-meta']['aff'], chapter['book-part-meta']['aff'])"
+                   ng-disabled="isEqual(tree['book']['book-meta']['aff'], chapter['book-part-meta']['aff'])"
+                   ng-click="copyAff = !copyAff; chapter['book-part-meta']['aff'] = (copyAff)? chapter['book-part-meta']['aff'] : deepCopy(tree['book']['book-meta']['aff']);" />
+            </span>
+        </th>
+    </tr>
+    <tr ng-if="!chapter['book-part-meta'].hasOwnProperty('aff')" class="even-row">
+        <th>
+            Affiliation
+            <button class="btn btn-default pull-right"
+                    ng-click="chapter['book-part-meta']['aff'] = [{'@id':'', 'institution': '', 'addr-line': ''}]">
+                Add
+            </button>
+        </th>
+        <td colspan="5"></td>
+        <td class="cell-border-left">
+            <span ng-if="!!tree['book']['book-meta'].hasOwnProperty('aff')">
+            <input type="checkbox" class="copy {{chapter['@id']}}" ng-model="copyAff" ng-init="copyAff = true"
+                   ng-checked="isEqual(tree['book']['book-meta']['aff'], chapter['book-part-meta']['aff'])"
+                   ng-disabled="isEqual(tree['book']['book-meta']['aff'], chapter['book-part-meta']['aff'])"
+                   ng-click="copyAff = !copyAff; chapter['book-part-meta']['aff'] = (copyAff)? chapter['book-part-meta']['aff'] : deepCopy(tree['book']['book-meta']['aff']);" />
+            </span>
+        </td>
+    </tr>
+    <tr ng-repeat="a in chapter['book-part-meta']['aff']" class="even-row">
+        <td>
+            <a href="#" editable-text="a['@id']" onbeforesave="isEmpty($data)">
+                {{a['@id'] || 'empty'}}
+            </a>
+        </td>
+        <td colspan="2">
+            <a href="#" editable-text="a['institution']" onbeforesave="isEmpty($data)">
+                {{a['institution'] || 'empty'}}
+            </a>
+        </td>
+        <td>
+            <a href="#" editable-text="a['addr-line']">{{a['addr-line'] || 'empty'}}</a>
+        </td>
+        <td>
+            <button class="btn btn-default" ng-click="openAff(a)"><i class="glyphicon glyphicon-cog"></i></button>
+            <span ng-show="chapter['book-part-meta']['aff'].length >= 1">
+                <button class="btn btn-default"
+                        ng-click="chapter['book-part-meta']['aff'].splice($index,1)">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </button>
+            </span>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Volume
+            <span ng-if="!chapter['book-part-meta'].hasOwnProperty('volume')">
+                <button class="btn btn-default pull-right" ng-click="chapter['book-part-meta']['volume'] = '';triggerClick('td.volume.'+chapter['@id']+' a');">
+                    Add
+                </button>
+            </span>
+        </th>
+        <td colspan="5" class="volume {{chapter['@id']}}">
+            <span ng-if="!!chapter['book-part-meta'].hasOwnProperty('volume')">
+                <a href="#" editable-text="chapter['book-part-meta']['volume']">
+                    {{chapter['book-part-meta']['volume'] || 'empty'}}
+                </a>
+            </span>
+        </td>
+        <td class="cell-border-left">
+            <span ng-if="!!tree['book']['book-meta'].hasOwnProperty('volume')">
+            <input type="checkbox" class="copy {{chapter['@id']}}" ng-model="copyVolume" ng-init="copyVolume = true"
+                   ng-checked="isEqual(tree['book']['book-meta']['volume'], chapter['book-part-meta']['volume'])"
+                   ng-disabled="isEqual(tree['book']['book-meta']['volume'], chapter['book-part-meta']['volume'])"
+                   ng-click="copyVolume = !copyVolume; chapter['book-part-meta']['volume'] = (copyVolume)? chapter['book-part-meta']['volume'] : deepCopy(tree['book']['book-meta']['volume']);" />
+            </span>
+        </td>
+    </tr>
+    <tr class="even-row">
+        <th>
+            Edition
+            <span ng-if="!chapter['book-part-meta'].hasOwnProperty('edition')">
+                <button class="btn btn-default pull-right" ng-click="chapter['book-part-meta']['edition'] = '';triggerClick('td.edition.'+chapter['@id']+' a');">
+                    Add
+                </button>
+            </span>
+        </th>
+        <td colspan="5" class="edition {{chapter['@id']}}">
+            <span ng-if="!!chapter['book-part-meta'].hasOwnProperty('edition')">
+                <a href="#" editable-text="chapter['book-part-meta']['edition']">
+                    {{chapter['book-part-meta']['edition'] || 'empty'}}
+                </a>
+            </span>
+        </td>
+        <td class="cell-border-left">
+            <span ng-if="!!tree['book']['book-meta'].hasOwnProperty('edition')">
+            <input type="checkbox" class="copy {{chapter['@id']}}" ng-model="copyEdition" ng-init="copyEdition = true"
+                   ng-checked="isEqual(tree['book']['book-meta']['edition'], chapter['book-part-meta']['edition'])"
+                   ng-disabled="isEqual(tree['book']['book-meta']['edition'], chapter['book-part-meta']['edition'])"
+                   ng-click="copyEdition = !copyEdition; chapter['book-part-meta']['edition'] = (copyEdition)? chapter['book-part-meta']['edition'] : deepCopy(tree['book']['book-meta']['edition']);" />
+            </span>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Keywords
+            <span ng-if="!chapter['book-part-meta'].hasOwnProperty('kwd-group')">
+                <button class="btn btn-default pull-right"
+                    ng-click="chapter['book-part-meta']['kwd-group'] = {'kwd': [{'@id': '', '#text': ''}]};triggerClick('td.kwd.'+chapter['@id']+' span:last-child a');">
+                    Add
+                </button>
+            </span>
+            <span ng-if="!!chapter['book-part-meta'].hasOwnProperty('kwd-group')">
+                <button class="btn btn-default pull-right"
+                        ng-click="chapter['book-part-meta']['kwd-group']['kwd'].push({'@id': '', '#text': ''});triggerClick('td.kwd.'+chapter['@id']+' span:last-child > a');">
+                    Add
+                </button>
+            </span>
+        </th>
+        <td colspan="5" class="kwd {{chapter['@id']}}">
+                <span ng-repeat="k in chapter['book-part-meta']['kwd-group']['kwd']">
+                    <a href="#" editable-text="k['#text']">{{k['#text'] || 'empty'}}</a>
+                    <i class="glyphicon glyphicon-remove"
+                       ng-click="chapter['book-part-meta']['kwd-group']['kwd'].splice($index,1)"></i>
+                    <span ng-show="!$last">,&nbsp;&nbsp;</span>
+                </span>
+        </td>
+        <td class="cell-border-left">
+            <span ng-if="!!tree['book']['book-meta'].hasOwnProperty('kwd-group')">
+            <input type="checkbox" class="copy {{chapter['@id']}}" ng-model="copyKwd" ng-init="copyKwd = true"
+                   ng-checked="isEqual(tree['book']['book-meta']['kwd-group']['kwd'], chapter['book-part-meta']['kwd-group']['kwd'])"
+                   ng-disabled="isEqual(tree['book']['book-meta']['kwd-group']['kwd'], chapter['book-part-meta']['kwd-group']['kwd'])"
+                   ng-click="copyKwd = !copyKwd; chapter['book-part-meta']['kwd-group'] = (copyKwd)? chapter['book-part-meta']['kwd-group'] : deepCopy(tree['book']['book-meta']['kwd-group']);" />
+            </span>
+        </td>
+    </tr>
+    <tr class="even-row">
+        <th>Publication Date<br>
+            <input type="checkbox" ng-model="pub_dateformat" checked="checked"/> date
+            <span ng-if="!chapter['book-part-meta'].hasOwnProperty('pub-date')">
+                <button class="btn btn-default pull-right"
+                        ng-click="chapter['book-part-meta']['pub-date'] = [{'@pub-type':'', 'string-date':today}];triggerClick('td.pubDate.'+chapter['@id']+' > span:last-child > a');">
+                    Add
+                </button>
+            </span>
+            <span ng-if="!!chapter['book-part-meta'].hasOwnProperty('pub-date')">
+            <button class="btn btn-default pull-right"
+                    ng-click="chapter['book-part-meta']['pub-date'].push({'@pub-type': '', 'string-date': today});triggerClick('td.pubDate.'+chapter['@id']+' > span:last-child > a');">
+                Add
+            </button>
+            </span>
+        </th>
+        <td colspan="5" class="pubDate {{chapter['@id']}}">
+            <span ng-repeat="d in chapter['book-part-meta']['pub-date']">
+                <a href="#" editable-select="d['@pub-type']" e-ng-options="type for type in pubType">
+                    {{d['@pub-type'] || 'empty'}}:&nbsp;
+                </a>
+                <sapn ng-switch on="pub_dateformat">
+                    <span ng-switch-when="true">
+                        <a href="#" editable-date="d['string-date']">
+                            {{ (d['string-date'] | date:"dd MMMM, yyyy") || 'empty'}}
+                        </a>
+                    </span>
+                    <span ng-switch-when="false">
+                        <a href="#" editable-month="d['string-date']">
+                            {{ (makeDate(d['string-date']) | date:"MMMM, yyyy") || 'empty'}}
+                        </a>
+                    </span>
+                    <span ng-switch-default>
+                        <a href="#" editable-month="d['string-date']">
+                            {{ (d['string-date'] | date:"MMMM, yyyy") || 'empty'}}
+                        </a>
+                    </span>
+                </sapn>
+                <i class="glyphicon glyphicon-remove"
+                   ng-click="chapter['book-part-meta']['pub-date'].splice($index,1)"></i>
+                <span ng-show="!$last">,&nbsp;&nbsp;</span>
+            </span>
+        </td>
+        <td class="cell-border-left">
+            <span ng-if="!!tree['book']['book-meta'].hasOwnProperty('pub-date')">
+            <input type="checkbox" class="copy {{chapter['@id']}}" ng-model="copyPubDate" ng-init="copyPubDate = true"
+                   ng-checked="isEqual(tree['book']['book-meta']['pub-date'], chapter['book-part-meta']['pub-date'])"
+                   ng-disabled="isEqual(tree['book']['book-meta']['pub-date'], chapter['book-part-meta']['pub-date'])"
+                   ng-click="copyPubDate = !copyPubDate; chapter['book-part-meta']['pub-date'] = (copyPubDate)? chapter['book-part-meta']['pub-date'] : deepCopy(tree['book']['book-meta']['pub-date']);" />
+            </span>
+        </td>
+    </tr>
+    <tr>
+        <th>History<br>
+            <input type="checkbox" ng-model="histry_dateformat" checked="checked"/> date
+            <span ng-if="!chapter['book-part-meta'].hasOwnProperty('history')">
+                <button class="btn btn-default pull-right"
+                        ng-click="chapter['book-part-meta']['history']['date'] = [{'@pub-type':'', 'string-date':today}];triggerClick('td.history.'+chapter['@id']+' > span:last-child > a');">
+                    Add
+                </button>
+            </span>
+            <span ng-if="!!chapter['book-part-meta'].hasOwnProperty('history')">
+                <button class="btn btn-default pull-right"
+                        ng-click="chapter['book-part-meta']['history']['date'].push({'@date-type': '', 'string-date': today});triggerClick('td.history.'+chapter['@id']+' > span:last-child > a');">
+                    Add
+                </button>
+            </span>
+        </th>
+        <td colspan="5" class="history {{chapter['@id']}}">
+            <span ng-repeat="h in chapter['book-part-meta']['history']['date']">
+                <a href="#" editable-select="h['@date-type']" e-ng-options="type for type in dateType">
+                    {{h['@date-type'] || 'empty'}}:&nbsp;
+                </a>
+                <sapn ng-switch on="histry_dateformat">
+                    <span ng-switch-when="true">
+                        <a href="#" editable-date="h['string-date']">
+                            {{ (h['string-date'] | date:"dd MMMM, yyyy") || 'empty'}}
+                        </a>
+                    </span>
+                    <span ng-switch-when="false">
+                        <a href="#" editable-month="h['string-date']">
+                            {{ (makeDate(h['string-date']) | date:"MMMM, yyyy") || 'empty'}}
+                        </a>
+                    </span>
+                    <span ng-switch-default>
+                        <a href="#" editable-month="h['string-date']">
+                            {{ (h['string-date'] | date:"MMMM, yyyy") || 'empty'}}
+                        </a>
+                    </span>
+                </sapn>
+                <i class="glyphicon glyphicon-remove"
+                   ng-click="chapter['book-part-meta']['history']['date'].splice($index,1)"></i>
+                <span ng-show="!$last">,&nbsp;&nbsp;</span>
+            </span>
+        </td>
+        <td class="cell-border-left">
+            <span ng-if="!!tree['book']['book-meta'].hasOwnProperty('history')">
+            <input type="checkbox" class="copy {{chapter['@id']}}" ng-model="copyHistory" ng-init="copyHistory = true"
+                   ng-checked="isEqual(tree['book']['book-meta']['history']['date'], chapter['book-part-meta']['history']['date'])"
+                   ng-disabled="isEqual(tree['book']['book-meta']['history']['date'], chapter['book-part-meta']['history']['date'])"
+                   ng-click="copyHistory = !copyHistory; chapter['book-part-meta']['history']['date'] = (copyHistory)? chapter['book-part-meta']['history']['date'] : deepCopy(tree['book']['book-meta']['history']['date']);" />
+            </span>
+        </td>
+    </tr>
+    <tr ng-if="!chapter['book-part-meta'].hasOwnProperty('abstract')" class="even-row">
+        <th>Abstract
+            <button class="btn btn-default pull-right" ng-click="chapter['book-part-meta']['abstract'] = {'title': '', 'p': ''};triggerClick('td.abstract.'+chapter['@id']+' span > a');">
+                Add
+            </button>
+        </th>
+        <td colspan="5"></td>
+        <td class="cell-border-left">
+            <span ng-if="!!tree['book']['book-meta'].hasOwnProperty('abstract')">
+            <input type="checkbox" class="copy {{chapter['@id']}}" ng-model="copyAbstract" ng-init="copyAbstract = true"
+                   ng-checked="isEqual(tree['book']['book-meta']['abstract'], chapter['book-part-meta']['abstract'])"
+                   ng-disabled="isEqual(tree['book']['book-meta']['abstract'], chapter['book-part-meta']['abstract'])"
+                   ng-click="copyAbstract = !copyAbstract; chapter['book-part-meta']['abstract'] = (copyAbstract)? chapter['book-part-meta']['abstract'] : deepCopy(tree['book']['book-meta']['abstract']);" />
+            </span>
+        </td>
+    </tr>
+    <tr ng-if="!!chapter['book-part-meta'].hasOwnProperty('abstract')" class="even-row">
+        <th rowspan="2">Abstract</th>
+        <td colspan="5" class="abstract {{chapter['@id']}}">
+            <strong>Title: </strong>
+            <span>
+                <a href="#" editable-text="chapter['book-part-meta']['abstract']['title']">
+                    {{chapter['book-part-meta']['abstract']['title'] || 'empty'}}
+                </a>
+            </span>
+        </td>
+        <td rowspan="2" class="cell-border-left">
+            <span ng-if="!!tree['book']['book-meta'].hasOwnProperty('abstract')">
+            <input type="checkbox" class="copy {{chapter['@id']}}" ng-model="copyAbstract" ng-init="copyAbstract = true"
+                   ng-checked="isEqual(tree['book']['book-meta']['abstract'], chapter['book-part-meta']['abstract'])"
+                   ng-disabled="isEqual(tree['book']['book-meta']['abstract'], chapter['book-part-meta']['abstract'])"
+                   ng-click="copyAbstract = !copyAbstract; chapter['book-part-meta']['abstract'] = (copyAbstract)? chapter['book-part-meta']['abstract'] : deepCopy(tree['book']['book-meta']['abstract']);" />
+            </span>
+        </td>
+    </tr>
+    <tr ng-if="!!chapter['book-part-meta'].hasOwnProperty('abstract')" class="even-row">
+        <td colspan="5">
+            <a href="#" editable-textangular="chapter['book-part-meta']['abstract']['p']">
+                <span ng-bind-html="chapter['book-part-meta']['abstract']['p'] || 'empty'"></span>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <th>Permissions
+            <span ng-if="!chapter['book-part-meta'].hasOwnProperty('permissions')">
+                <button class="btn btn-default pull-right"
+                        ng-click="chapter['book-part-meta']['permissions'] = {'copyright-statement': '', 'license': {'@license-type': 'open-access'}};triggerClick('td.permissions.'+chapter['@id']+' a')">
+                    Add
+                </button>
+            </span>
+        </th>
+        <td colspan="4" class="permissions {{chapter['@id']}}">
+            <a ng-if="!!chapter['book-part-meta'].hasOwnProperty('permissions')"
+               href="#" editable-text="chapter['book-part-meta']['permissions']['copyright-statement']">
+                {{chapter['book-part-meta']['permissions']['copyright-statement'] || 'empty'}}
+            </a>
+        </td>
+        <td>
+            <span ng-if="!!chapter['book-part-meta'].hasOwnProperty('permissions')">
+                <button class="btn btn-default" ng-click="openPermissions(chapter['book-part-meta']['permissions'])">
+                    <i class="glyphicon glyphicon-cog"></i>
+                </button>
+            </span>
+        </td>
+        <td class="cell-border-left">
+            <span ng-if="!!tree['book']['book-meta'].hasOwnProperty('permissions')">
+            <input type="checkbox" class="copy {{chapter['@id']}}" ng-model="copyPermissions" ng-init="copyPermissions = true"
+                   ng-checked="isEqual(tree['book']['book-meta']['permissions'], chapter['book-part-meta']['permissions'])"
+                   ng-disabled="isEqual(tree['book']['book-meta']['permissions'], chapter['book-part-meta']['permissions'])"
+                   ng-click="copyPermissions = !copyPermissions; chapter['book-part-meta']['permissions'] = (copyPermissions)? chapter['book-part-meta']['permissions'] : deepCopy(tree['book']['book-meta']['permissions']);" />
+            </span>
+        </td>
+    </tr>
+</table>

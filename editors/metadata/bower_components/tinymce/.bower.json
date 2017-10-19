@@ -1,0 +1,31 @@
+{
+  "name": "tinymce",
+  "description": "Web based JavaScript HTML WYSIWYG editor control.",
+  "license": "LGPL-2.1",
+  "keywords": [
+    "editor",
+    "wysiwyg",
+    "tinymce",
+    "richtext",
+    "javascript",
+    "html"
+  ],
+  "homepage": "http://www.tinymce.com",
+  "ignore": [
+    "readme.md",
+    "composer.json",
+    "package.json",
+    ".npmignore",
+    "changelog.txt"
+  ],
+  "version": "4.5.7",
+  "_release": "4.5.7",
+  "_resolution": {
+    "type": "version",
+    "tag": "4.5.7",
+    "commit": "9f00447e1dd5b99d47810c84c66c39950663c129"
+  },
+  "_source": "https://github.com/tinymce/tinymce-dist.git",
+  "_target": "~4.5.1",
+  "_originalSource": "tinymce"
+}

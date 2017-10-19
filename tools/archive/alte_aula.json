@@ -1,0 +1,85 @@
+{
+  "createFull": {
+
+
+    "alte_aula": {
+      "dir": "/home/wit/Arbeit/OMP/AlteAula",
+      "files": [
+
+
+        {
+          "122-69-76622-2-10-20170126.xml": {
+            "order": 2
+          }
+        },
+        {
+          "122-69-76627-2-10-20170125.xml": {
+            "order": 3
+          }
+        },
+        {
+          "122-69-76628-2-10-20170125.xml": {
+            "order": 4
+          }
+        },
+        {
+          "122-69-76629-2-10-20170125.xml": {
+            "order": 5
+          }
+        },
+        {
+         "122-69-76630-2-10-20170125.xml": {
+            "order": 6
+          }
+        },
+        {
+          "122-69-76631-2-10-20170126.xml": {
+            "order": 7
+          }
+        },
+        {
+          "122-69-76632-2-10-20170125.xml": {
+            "order": 8
+          }
+        },
+        {
+          "122-69-76633-2-10-20170125.xml": {
+            "order": 9
+          }
+        },
+        {
+          "122-69-76634-2-10-20170126.xml": {
+            "order": 10
+          }
+        },
+        {
+          "122-69-76743-1-10-20170126.xml": {
+            "order": 11
+          }
+        }
+      ],
+      "fullfile": {
+        "alte_aula.xml": {
+
+
+        }
+      },
+      "enumeration": 1
+
+
+    }
+
+
+
+  },
+  "errors": {
+    "FILE_NOT_FOUND": " File found or non-valid xml",
+    "FILE_NOT_WRITTEN": "No file written",
+    "FILE_NO_WRITE_ACCESS": "No permission to write file in the directory"
+  },
+  "zip": {
+    "enable": 1,
+    "name-prefix": "xml-back-"
+  }
+}
+

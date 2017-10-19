@@ -1,0 +1,15 @@
+<h3>
+    <i class="glyphicon glyphicon-folder-open"></i>
+    &nbsp;{{part['@id']}}
+</h3>
+<table class="table">
+    <tr>
+        <th width="20%">Part Title</th>
+        <td>
+            <a href="#" editable-text="part['book-part-meta']['title-group']['title']['#text']" onbeforesave="isEmpty($data)">
+                {{part['book-part-meta']['title-group']['title']['#text'] || 'empty'}}
+            </a>
+        </td>
+    </tr>
+
+</table>

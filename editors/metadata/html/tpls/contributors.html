@@ -1,0 +1,178 @@
+<div class="modal-header">
+    <h3>Contributor</h3>
+</div>
+<div class="modal-body">
+    <table class="table">
+        <tr class="no-border-top">
+            <th width="20%">ID</th>
+            <td width="80%">
+                <a href="#" editable-text="contrib['@id']" onbeforesave="isEmpty($data)">
+                    {{contrib['@id'] || 'empty'}}
+                </a>
+            </td>
+        </tr>
+        <tr class="even-row">
+            <th>Role
+                <span ng-if="!contrib.hasOwnProperty('@contrib-type')">
+                    <button class="btn btn-default pull-right"
+                            ng-click="contrib['@contrib-type'] = '';triggerClick('td.contribType a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="contribType">
+                <span ng-if="!!contrib.hasOwnProperty('@contrib-type')">
+                    <a editable-select="contrib['@contrib-type']" e-ng-options="type for type in contribType">
+                        {{contrib['@contrib-type'] || 'empty'}}
+                    </a>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th>First Name
+                <span ng-if="!contrib['name'].hasOwnProperty('given-names')">
+                    <button class="btn btn-default pull-right"
+                            ng-click="contrib['name']['given-names'] = '';triggerClick('td.firstName a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="firstName">
+                <span ng-if="!!contrib['name'].hasOwnProperty('given-names')">
+                    <a href="#" editable-text="contrib['name']['given-names']" onbeforesave="isEmpty($data)">
+                        {{contrib['name']['given-names'] || 'empty'}}
+                    </a>
+                </span>
+            </td>
+        </tr>
+        <tr class="even-row">
+            <th>Last Name
+                <span ng-if="!contrib['name'].hasOwnProperty('surname')">
+                    <button class="btn btn-default pull-right"
+                            ng-click="contrib['name']['surname'] = '';triggerClick('td.lastName a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="lastName">
+                <span ng-if="!!contrib['name'].hasOwnProperty('surname')">
+                    <a href="#" editable-text="contrib['name']['surname']" onbeforesave="isEmpty($data)">
+                        {{contrib['name']['surname'] || 'empty'}}
+                    </a>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th>Affiliation
+                <span ng-if="!contrib.hasOwnProperty('@contrib-type')">
+                    <button class="btn btn-default pull-right"
+                            ng-click="contrib['@contrib-type'] = '';triggerClick('td.selectAff a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="selectAff">
+                <span ng-if="!!contrib.hasOwnProperty('@contrib-type')">
+                    <a href="#" editable-select="contrib['@rid']"
+                       e-ng-options="t['@id'] as t['@id'] for t in aff">
+                        {{contrib['@rid'] || 'empty'}}
+                    </a>
+                </span>
+            </td>
+        </tr>
+        <tr class="even-row">
+            <th>Degree
+                <span ng-if="!contrib.hasOwnProperty('degree')">
+                    <button class="btn btn-default pull-right" ng-click="contrib['degree'] = '';triggerClick('td.degree a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="degree">
+                <a ng-if="!!contrib.hasOwnProperty('degree')"
+                   editable-select="contrib['degree']" e-ng-options="degree for degree in degreeType">
+                    {{contrib['degree'] || 'empty'}}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <th>Address
+                <span ng-if="!contrib.hasOwnProperty('address')">
+                    <button class="btn btn-default pull-right"
+                            ng-click="contrib['address'] = {'addr-line': ''};triggerClick('td.address a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="address">
+                <span ng-if="!!contrib.hasOwnProperty('address')">
+                    <a href="#" editable-text="contrib['address']['addr-line']">
+                        {{contrib['address']['addr-line'] || 'empty'}}
+                    </a>
+                </span>
+            </td>
+        </tr>
+        <tr class="even-row">
+            <th>E-mail
+                <span ng-if="!contrib.hasOwnProperty('email')">
+                    <button class="btn btn-default pull-right"
+                            ng-click="contrib['email'] = '';triggerClick('td.email a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="email">
+                <span ng-if="!!contrib.hasOwnProperty('email')">
+                    <a href="#" editable-email="contrib['email']">
+                        {{contrib['email'] || 'empty'}}
+                    </a>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th>External Link
+                <span ng-if="!contrib.hasOwnProperty('ext-link')">
+                    <button class="btn btn-default pull-right"
+                            ng-click="contrib['ext-link'] = {'@ext-link-type': 'uri', '@xlink:href': '', '#text': ''};triggerClick('td.extLink a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="extLink">
+                <span ng-if="!!contrib.hasOwnProperty('ext-link')">
+                    <a href="#" editable-url="contrib['ext-link']['#text']"
+                       onaftersave="contrib['ext-link']['@xlink:href'] = $data; $data = null;">
+                        {{contrib['ext-link']['#text'] || 'empty'}}
+                    </a>
+                </span>
+            </td>
+        </tr>
+        <tr ng-if="!contrib.hasOwnProperty('bio')" class="even-row">
+            <th>Biography
+                <button class="btn btn-default pull-right" ng-click="contrib['bio'] = {'title': '', 'p': ''};triggerClick('td.bio.title a');">
+                    Add
+                </button>
+            </th>
+            <td></td>
+        </tr>
+        <tr ng-if="!!contrib.hasOwnProperty('bio')" class="even-row">
+            <th rowspan="2">Biography</th>
+            <td class="bio title">
+                <strong>Title: </strong>
+                <a href="#" editable-text="contrib['bio']['title']">
+                    {{contrib['bio']['title'] || 'empty'}}
+                </a>
+            </td>
+        </tr>
+        <tr ng-if="!!contrib.hasOwnProperty('bio')" class="even-row">
+            <td>
+                <a href="#" editable-textangular="contrib['bio']['p']">
+                    <span ng-bind-html="contrib['bio']['p'] || 'empty'"></span>
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="cancel()">Close</button>
+</div>

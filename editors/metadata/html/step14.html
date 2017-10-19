@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Step 14 | HEIDI Editor</title>
+
+    <!-- Stylesheets -->
+    <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="css/jstree/style.min.css" type="text/css" rel="stylesheet">
+    <link href="css/custom.css" type="text/css" rel="stylesheet">
+
+
+    <!-- jQuery and plugins -->
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jstree.min.js"></script>
+    <script src="js/advanced.js"></script>
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script>
+        $(function(){
+            $("#header").load("header.html", null, function(){
+                $("a.disabled").click(function(){return false;});
+                $("li#nav-step14").addClass("active").nextAll().each(function(){
+                    $(this).find("a").addClass("disabled").attr({href:"javascript:void(0)", onClick:"return false"});
+                });
+            });
+        });
+    </script>
+
+</head>
+<body>
+
+
+<div id="content">
+    <div class="container">
+
+        <div class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">HEIDI Editor</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="step6.html">Step 6</a></li>
+                        <li><a href="step7.html">Step 7</a></li>
+                        <li><a href="step8.html">Step 8</a></li>
+                        <li><a href="step9.html">Step 9</a></li>
+                        <li><a href="step10.html">Step 10</a></li>
+                        <li><a href="step11.html">Step 11</a></li>
+                        <li><a href="step12.html">Step 12</a></li>
+                        <li><a href="step13.html">Step 13</a></li>
+                        <li class="active"><a href="step14.html">Step 14</a></li>
+                        <li><a href="#">Step 15</a></li>
+                        <li><a href="#">Step 16</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-wrench"></i><span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Help <i class="glyphicon glyphicon-question-sign"></i></a></li>
+                                <li><a href="#">Settings <i class="glyphicon glyphicon-wrench"></i></a></li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">About us</li>
+                                <li><a href="#">Home <i class="glyphicon glyphicon-home"></i></a></li>
+                                <li><a href="#">Contact <i class="glyphicon glyphicon-envelope"></i></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div><!--/.container-fluid -->
+        </div>
+
+        <h2 class="title">Step 14: Author index</h2>
+        <!-- /title -->
+
+
+
+
+        <div class="row next-btn">
+            <button class="btn btn-primary next-btn" onclick="location.href='step15.html'">Next<i class="glyphicon glyphicon-chevron-right"></i></button>
+        </div>
+
+
+
+
+
+    </div>
+    <!-- /container -->
+
+
+</div>
+<!-- /content -->
+
+
+<div id="footer" class="container">footer</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+
+        $(".treepane").jstree({
+            //"json_data": jsonData
+        });
+
+
+    });
+
+</script>
+
+</body>
+</html>

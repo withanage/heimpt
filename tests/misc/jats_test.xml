@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Archiving DTD v3.0 20080202//EN" "https://jats.nlm.nih.gov/archiving/1.1/JATS-archivearticle1-mathml3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <front>
+        <journal-meta>
+            <journal-id journal-id-type="publisher-id">Heidelberg University Publishing</journal-id>
+            <issn pub-type="epub">1234-1234</issn>
+            <publisher>
+                <publisher-name>Heidelberg University Publishing</publisher-name>
+            </publisher>
+        </journal-meta>
+        <article-meta>
+            <article-id pub-id-type="publisher-id">published-id</article-id>
+            <article-id pub-id-type="doi">10.77777.123456</article-id>
+            <article-categories>
+                <subj-group subj-group-type="display-channel">
+                    <subject>Research Monogrraph</subject>
+                </subj-group>
+                <subj-group subj-group-type="heading">
+                    <subject>Sbject 1</subject>
+                </subj-group>
+            </article-categories>
+            <title-group>
+                <article-title>Title</article-title>
+            </title-group>
+            <contrib-group>
+            
+                <contrib contrib-type="author" corresp="yes" id="author-1">
+                    <name>
+                        <surname>Miller</surname>
+                        <given-names>David</given-names>
+                    </name>
+                <bio> <p>asdsadsassss</p></bio>
+                </contrib>
+                <contrib contrib-type="editor" corresp="yes" id="editor-1">
+                    <name>
+                        <surname>Groves</surname>
+                        <given-names>Jay </given-names>
+                    </name>
+                   
+                    <xref ref-type="aff" rid="aff1"/>
+                    <xref ref-type="other" rid="par-1"/>
+                    <xref ref-type="fn" rid="con5"/>
+                </contrib>
+                <aff id="aff1">
+                    <institution content-type="dept">Department of Chemistry</institution>,  
+                    <institution>  Berkeley</institution>,
+                    <addr-line>
+                        <named-content   content-type="city" >Berkeley</named-content>
+                    </addr-line>, 
+                    <country>United States</country>
+                </aff>
+            </contrib-group>
+
+            <!--author-notes>
+                <corresp id="cor1">
+                    <label>*</label>For correspondence: <email>JTGroves@lbl.gov</email></corresp>
+                <fn fn-type="con" id="equal-contrib">
+                    <label>†</label>
+                    <p>These authors contributed equally to this work</p>
+                </fn>
+            </author-notes-->
+            <pub-date pub-type="epub">
+                <day>30</day>
+                <month>08</month>
+                <year>2017</year>
+            </pub-date>
+            <volume>2</volume>
+            <elocation-id>e00778</elocation-id>
+            <history>
+                <date date-type="received">
+                    <day>26</day>
+                    <month>03</month>
+                    <year>2017</year>
+                </date>
+                <date date-type="accepted">
+                    <day>17</day>
+                    <month>05</month>
+                    <year>2017</year>
+                </date>
+            </history>
+            <permissions>
+                <copyright-statement>Text © 2017 by the authors.</copyright-statement>
+                <copyright-year>2017</copyright-year>
+                <license license-type="open-access" xlink:href="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="de">
+                    <license-p><inline-graphic xlink:href="http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-sa.svg"/>Dieses Werk ist unter der Creative-Commons-Lizenz 4.0 (CC BY-SA 4.0)
+                        veröffentlicht.</license-p>
+                </license>
+                <license license-type="open-access" xlink:href="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="en">
+                    <license-p><inline-graphic xlink:href="http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-sa.svg"/>This book is published under the Creative Commons License 4.0 (CC BY-SA
+                        4.0).</license-p>
+                </license>
+            </permissions>
+            <self-uri content-type="pdf" xlink:href="elife00778.pdf"/>
+            <abstract>
+                <title>Abstract Title</title>
+                <p>---------------------------------------------------------------------------------------------</p>
+                <p>article-meta Abstract text BEGIN</p>
+                <p> <bold>DOI:</bold>  <ext-link ext-link-type="doi" xlink:href="10.77777.123456.001" >http://dx.doi.org/10.77777.123456.001</ext-link> </p>
+                <p>article-meta Abstract text END</p>
+                <p>---------------------------------------------------------------------------------------------</p>
+
+            </abstract>
+            <kwd-group kwd-group-type="author-keywords">
+                <title>Author keywords</title>
+                <kwd>TCR triggering</kwd>
+                <kwd>single molecule kinetics</kwd>
+                <kwd>T cells</kwd>
+            </kwd-group>
+            <kwd-group kwd-group-type="research-organism">
+                <title>Research organism</title>
+                <kwd>Mouse</kwd>
+            </kwd-group>
+            <funding-group>
+                <award-group id="par-1">
+                    <funding-source> Funding source </funding-source>
+                    <award-id>PO1 AI091580</award-id>
+                    <principal-award-recipient> <name>
+                        <surname>O'Donoghue</surname>
+                        <given-names>Geoff P</given-names>
+                        </name> <name>
+                        <surname>Pielak</surname>
+                        <given-names>Rafal M</given-names>
+                        </name> <name>
+                        <surname>Smoligovets</surname>
+                        <given-names>Alexander A</given-names>
+                        </name> <name>
+                        <surname>Lin</surname>
+                        <given-names>Jenny J</given-names>
+                        </name> <name>
+                        <surname>Groves</surname>
+                        <given-names>Jay T</given-names>
+                        </name> </principal-award-recipient>
+                </award-group>
+                <funding-statement>The funders had no role in study design, data collection and
+                    interpretation, or the decision to submit the work for
+                    publication.</funding-statement>
+            </funding-group>
+            <custom-meta-group>
+                <custom-meta>
+                    <meta-name>elife-xml-version</meta-name>
+                    <meta-value>2</meta-value>
+                </custom-meta>
+                <custom-meta specific-use="meta-only">
+                    <meta-name>Author impact statement</meta-name>
+                    <meta-value>Quantitative.</meta-value>
+                </custom-meta>
+            </custom-meta-group>
+        </article-meta>
+    </front>
+    <body>
+        <sec id="sec1">
+            <label> (Section label)  </label>
+            <title> Inner Structure  </title>
+            <sec-meta>
+
+                <abstract id="abs_2">
+                    <title>Abstract 1</title>
+                    <p>---------------------------------------------------------------------------------------------</p>
+
+                    <p>Abstract text in sec-mata</p>
+                    <p>---------------------------------------------------------------------------------------------</p>
+
+                </abstract>
+                <contrib-group content-type="section">
+                    <contrib contrib-type="section-editor" id="sec-author-1">
+                        <name>
+                            <surname>Brunger</surname>
+                            <given-names>Axel T</given-names>
+                        </name>
+                        <role>section-editor</role>
+                        <aff>
+                            <institution>Howard Hughes Medical Institute, Stanford
+                                University</institution>, <country>United States</country></aff>
+                    </contrib>
+                    <contrib contrib-type="section-editor"  id="sec-editor-2">
+                        <name>
+                            <surname>Withanage</surname>
+                            <given-names>Dulip </given-names>
+                        </name>
+                        <role>section-editor</role>
+                        <aff>
+                            <institution>Howard Hughes Medical Institute, Stanford
+                                University</institution>, <country>United States</country></aff>
+                    </contrib>
+                </contrib-group>
+            </sec-meta>
+
+            <p>Inner Structure text</p>
+            <sec>
+                <title> title 1.1 </title>
+
+
+                <p> This is a NON-SERIF text</p>
+                <p> <serif>This is a serif text</serif></p>
+                <p> This is a NON-SERIF text</p>
+
+
+
+
+                <list list-type="bullet">
+                <list-item>
+                    <p>This is a <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">link</ext-link>
+                    </p>
+                    <p>This is a <italic><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">italic link</ext-link></italic>
+                        and a text</p>
+
+                    <p>Any <xref rid="mc1" ref-type="bibr" id="e1236218736">mixed-citation</xref>  necessarily conserves the <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">meaning</ext-link> of a quoted passage. This is usually
+                        reflected in the reproduction of its letters, numbers, symbols, punctuation marks,
+                        spacing, capitalisation, small capitals, bold print, italics, and line breaks.</p>
+                </list-item>
+                <list-item>
+                    <p>By contrast, a quotation does not usually conserve the font type. A text in Arial may
+                        be quoted in Times New Roman without the need to mention this change. Font type is
+                        thus regarded as part of the standard formal background of a text. However, if an
+                        original text were to use various fonts in order to transmit a message, e.g. in a
+                        (constructed) original sentence such as </p>
+                    <p><disp-quote id="dispquote8"><p>(10) Short passages are easier to read if typefaces without serifs are used (e.g. in
+                        <italic>This is a serif typeface</italic> as opposed to <italic>This is a sans serif
+                            typeface</italic>).</p></disp-quote></p>
+                    <p>one would expect a stricter observance of formal aspects in quoting than usual—at
+                        least for the self-referential text passage printed in the font type under consideration. </p>
+                </list-item>
+                </list>
+                <list>
+                    <list-item><p>Unordered List without Attribute list-type  1 </p></list-item>
+
+                    <list-item>
+                        <list>
+                            <list-item><p>Unordered List without Attribute list-type level 2.1 </p></list-item>
+                            <list-item>
+                                <list>
+                                    <list-item><p>Unordered List without Attribute list-type  level 2.2.1 </p></list-item>
+
+                                </list>
+                            </list-item>
+                            <list-item><p>Unordered List without Attribute list-type level 2 </p></list-item>
+                            <list-item>
+                                <list>
+                                    <list-item><p>Unordered List without Attribute list-type level 2.1 </p></list-item>
+                                    <list-item>
+                                        <list>
+                                            <list-item><p>Unordered List without Attribute list-type  level 2.2.1 </p></list-item>
+
+                                        </list>
+                                    </list-item>
+                                    <list-item><p>Unordered List without Attribute list-type level 2 </p></list-item>
+                                    <list-item>
+                                        <p>By contrast, a quotation does not usually conserve the font type. A text in Arial may
+                                            be quoted in Times New Roman without the need to mention this change. Font type is
+                                            thus regarded as part of the standard formal background of a text. However, if an
+                                            original text were to use various fonts in order to transmit a message, e.g. in a
+                                            (constructed) original sentence such as </p>
+                                        <p><disp-quote id="dispquote8"><p>(10) Short passages are easier to read if typefaces without serifs are used (e.g. in
+                                            <italic>This is a serif typeface</italic> as opposed to <italic>This is a sans serif
+                                                typeface</italic>).</p></disp-quote></p>
+                                        <p>one would expect a stricter observance of formal aspects in quoting than usual—at
+                                            least for the self-referential text passage printed in the font type under consideration. </p>
+                                    </list-item>
+
+                                </list>
+                            </list-item>
+                        </list>
+                    </list-item>
+                    <list-item><p>Unordered List without Attribute list-type  3 </p></list-item>
+
+
+                </list>
+
+
+                <sec>
+                    <title> title 2 </title>
+
+
+                    <p>x2</p>
+                    <sec>
+
+                        <title> title 3</title>
+
+                        <p>x3</p>
+                        <sec>
+
+                            <title> title 4</title>
+
+
+                            <table-wrap specific-use="rules"> <table> <tr> <td>Table</td> <td>(<xref rid="bib1" ref-type="bibr" id="IDedf8dd89-6236-4817-b6bf-0ff16e5d4c08">ἐπιστάμαν γὰρ καὶ λόγον [τὸν] προσείληϕε</xref>):</td> <td>&lt;BROTINUS&gt; Phil. [<xref rid="bib1a" ref-type="bibr" id="IDfb2e630e-46cd-4321-85b5-bf05f547addd">1230</xref>]</td> </tr> </table> </table-wrap>
+                            <sec>
+                                <title> title 5 </title>
+                                <p>x5</p>
+                                <sec>
+                                    <title> title 6 </title>
+                                    <p>x6</p>
+                                    <sec>
+                                        <title> title 7</title>
+                                        <p>x7</p>
+                                        <sec id="title8">
+                                            <title> title 8</title>
+                                            <p>I am a paragraph . Please link to me using #content/text_15</p>
+                                            <p> <speech id="s1">
+                                                <speaker>Paul</speaker>
+                                                <p> I sam text<italic>I am italic</italic></p>
+                                                </speech> </p>
+                                            <p> <speech id="s20">
+                                                <speaker> Speaker</speaker>
+                                                <p> I have a link &lt;L&gt;.<xref ref-type="fn"
+                                                  rid="bibd2e50">1</xref> </p>
+                                                </speech> </p>
+                                        </sec>
+                                    </sec>
+                                </sec>
+                            </sec>
+                        </sec>
+                    </sec>
+                </sec>
+            </sec>
+        </sec>
+        <sec id="sect1" sec-type="results">
+            <title>Titel level 1</title>
+            <sec-meta>
+
+                <abstract id="abs_2">
+                    <title>Abstract xyz</title>
+                    <p>---------------------------------------------------------------------------------------------</p>
+
+                    <p>Abstract text in sec-mata</p>
+                    <p>---------------------------------------------------------------------------------------------</p>
+
+                </abstract>
+                <contrib-group content-type="section">
+                <contrib contrib-type="section-editor" id="sec-author-3">
+                    <name>
+                        <surname>Brunger</surname>
+                        <given-names>Axel 2</given-names>
+                    </name>
+                    <role>section-editor</role>
+                    <aff>
+                        <institution>Howard Hughes Medical Institute, Stanford
+                            University</institution>, <country>United States</country></aff>
+                </contrib>
+                </contrib-group>
+            </sec-meta>
+
+            <sec id="s2-1">
+                <title>Title level 2</title>
+                <p><xref ref-type="sec" rid="title8">title1</xref> Paragraph</p>
+                <!--  this is a latex math element -->
+                <disp-formula content-type="math/tex">
+                    <tex-math>|h| \leqslant \frac {H}{2H^2+c-\max _\Sigma K_e}.</tex-math>
+                </disp-formula>
+            </sec>
+            <sec id="s2-4">
+                <title>Titel level 2</title>
+        <p>Inline Formular begin <!-- math mal intergration --> <inline-formula><mml:math id="inf15"> <mml:mrow> <mml:mrow> <mml:mo>〈</mml:mo> <mml:mrow> <mml:msub> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">off</mml:mi> </mml:msub> </mml:mrow> <mml:mo>〉</mml:mo> </mml:mrow> </mml:mrow> </mml:math></inline-formula> Inline Formular end <disp-formula id="equ2" ><mml:math id="m2"> <mml:mrow> <mml:msub> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">esc</mml:mi> </mml:msub> <mml:mo>=</mml:mo> <mml:mstyle displaystyle="true"> <mml:munderover> <mml:mo>∑</mml:mo> <mml:mrow> <mml:mi>i</mml:mi> <mml:mo>=</mml:mo> <mml:mn>0</mml:mn> </mml:mrow> <mml:mi>n</mml:mi> </mml:munderover> <mml:mrow> <mml:msubsup> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">off</mml:mi> <mml:mi>i</mml:mi> </mml:msubsup> </mml:mrow> </mml:mstyle> <mml:mo>+</mml:mo> <mml:mstyle displaystyle="true"> <mml:munderover> <mml:mo>∑</mml:mo> <mml:mrow> <mml:mi>i</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn> </mml:mrow> <mml:mi>n</mml:mi> </mml:munderover> <mml:mrow> <mml:msubsup> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">on</mml:mi> <mml:mi>i</mml:mi> </mml:msubsup> </mml:mrow> </mml:mstyle> <mml:mo>+</mml:mo> <mml:msub> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">exit</mml:mi> </mml:msub> </mml:mrow> </mml:math></disp-formula></p> <p>In this representation, and <inline-formula><mml:math id="inf17"> <mml:mrow> <mml:msubsup> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">on</mml:mi> <mml:mi>i</mml:mi> </mml:msubsup> </mml:mrow> </mml:math></inline-formula> are the individual dwell times in the bound and unbound configurations (<xref ref-type="fig" rid="fig6s1">Figure 6—figure supplement 1</xref>).<fig-group> <fig id="fig6s1" position="float" specific-use="child-fig"> <object-id pub-id-type="doi">10.77777.123456.014</object-id> <label>Figure 6—figure supplement 1.</label> <caption> <title>Stochastic reaction-diffusion simulation of time before MCC agonist pMHC escape from TCR clusters.</title> <p>Simulations of <inline-formula><mml:math id="inf56"> <mml:mrow> <mml:mfrac> <mml:mrow> <mml:msub> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">esc</mml:mi> </mml:msub> </mml:mrow> <mml:mrow> <mml:msub> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">off</mml:mi> </mml:msub> </mml:mrow> </mml:mfrac> </mml:mrow> </mml:math></inline-formula> as a function of TCR cluster size, <inline-formula><mml:math id="inf57"> <mml:mrow> <mml:msub> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">off</mml:mi> </mml:msub> </mml:mrow> </mml:math></inline-formula> , and <italic>k</italic><sub><italic>on</italic></sub>. The ratio <inline-formula><mml:math id="inf58"> <mml:mrow> <mml:mfrac> <mml:mrow> <mml:msub> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">esc</mml:mi> </mml:msub> </mml:mrow> <mml:mrow> <mml:msub> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">off</mml:mi> </mml:msub> </mml:mrow> </mml:mfrac> </mml:mrow> </mml:math></inline-formula>, which is an indicator of agonist pMHC entrapment, is a function of TCR cluster size and <italic>k</italic><sub><italic>on</italic></sub>, but not <italic>k</italic><sub><italic>off</italic></sub>. <italic>k</italic><sub><italic>on</italic></sub> = 0.51 µm<sup>2</sup>s<sup>−1</sup>molecule<sup>−1</sup> corresponds to the fastest average <italic>k</italic><sub><italic>on</italic></sub> that allows for rebinding to the same TCR. Only for unrealistically large TCR cluster sizes (approaching 1000 TCRs per cluster) and fast <italic>k</italic><sub><italic>on</italic></sub> is <inline-formula><mml:math id="inf59"> <mml:mrow> <mml:mfrac> <mml:mrow> <mml:msub> <mml:mi>τ</mml:mi> <mml:mrow> <mml:mi mathvariant="italic">esc</mml:mi> </mml:mrow> </mml:msub> </mml:mrow> <mml:mrow> <mml:msub> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">off</mml:mi> </mml:msub> </mml:mrow> </mml:mfrac> <mml:mo>≫</mml:mo> <mml:mn>1</mml:mn> </mml:mrow> </mml:math></inline-formula>, meaning that entrapment due to millisecond-scale unbinding and rebinding is unlikely to result in the minute-scale dwell times observed in our experiments.</p> <p><bold>DOI:</bold><ext-link ext-link-type="doi" xlink:href="10.77777.123456.014" >http://dx.doi.org/10.77777.123456.014</ext-link></p> </caption> <graphic xlink:href="elife00778fs003"/> </fig> </fig-group></p>
+            </sec>
+        </sec>
+    </body>
+    <back>
+        <ack id="ack">
+            <title>Acknowledgement</title>
+            <p> Ackonkowlegement test</p>
+        </ack>
+        <fn-group>
+            <fn id="bibd2e50">
+                <p> For an explanation of the interview transcript abbreviations used throughout <ext-link xlink:href="http://www.google.de">Google</ext-link> <xref ref-type="sec" rid="s1"
+                >106</xref>
+                    this work, see Appendix A.</p>
+            </fn>
+            <fn>
+                <p>This is a <italic><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">italic link</ext-link></italic>
+                and a text</p>
+            </fn>
+        </fn-group>
+        <sec sec-type="additional-information">
+            <title>Additional information</title>
+            <fn-group>
+                <fn id="bibd0fcc1d3f9560486086f578ef21918ba5">
+                    <p id="p451">	Eine <xref ref-type="sec" rid="s1"
+                        >106</xref>ausführliche Erläuterung findet sich bei Schubert (2012) 3–30 und Schubert / Weiß (2015) 447–471.</p>
+                </fn>
+                <fn id="bibdcc0c295188b146b09e28b75e803e98a7">
+                    <p id="p452">	Vgl. Lemke / Stulpe (2016) 43–54.</p>
+                </fn>
+                <fn id="bibdeb1dee9f8c084ba9871662cdf8c13e0f">
+                    <p id="p453">	F. Moretti, Graphs, Maps, Trees (2005).</p>
+                </fn>
+                <fn id="bibd82e1f97637f644d2b93e04d5b2bdd1de">
+                    <p id="p454">	Bywater (1869) 55ff.</p>
+                </fn>
+            </fn-group>
+            <fn-group content-type="author-contribution">
+                <title>Author contributions</title>
+                <fn fn-type="con" id="con1">
+                    <p>GPO, Conception and design, Acquisition of data, Analysis and interpretation
+                        of data, Drafting or revising the article</p>
+                </fn>
+                <fn fn-type="con" id="con2">
+                    <p>RMP, Conception and design, Acquisition of data, Analysis and interpretation
+                        of data, Drafting or revising the article</p>
+                </fn>
+                <fn fn-type="con" id="con3">
+                    <p>AAS, Acquisition of data, Drafting or revising the article</p>
+                </fn>
+                <fn fn-type="con" id="con4">
+                    <p>JJL, Acquisition of data, Drafting or revising the article</p>
+                </fn>
+                <fn fn-type="con" id="con5">
+                    <p>JTG, Conception and design, Analysis and interpretation of data, Drafting or
+                        revising the article</p>
+                </fn>
+            </fn-group>
+            <fn-group content-type="ethics-information">
+                <title>Ethics</title>
+                <fn fn-type="other">
+                    <p>Animal experimentation: CD4+ T-cell blasts were cultured from the lymph nodes
+                        and spleens of first generation AND x B10.BR and 5c.c7 TCR transgenic mice
+                        on day 1 of the T-cell protocol in accordance with Lawrence Berkeley
+                        National Laboratory Animal Welfare and Research Committee-approved protocol
+                        17702.</p>
+                </fn>
+            </fn-group>
+        </sec>
+       
+        <ref-list>
+
+            <ref id ="mc1">
+                <mixed-citation> This is a <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">link</ext-link>
+            </mixed-citation>
+            </ref>
+            <ref>
+                <mixed-citation>M&#252;ller, Johannes (1826). <italic>Zur vergleichenden Physiologie des Gesichtssinnes des <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">Menschen</ext-link> und der Thiere nebst einem Versuch &#252;ber die Bewegungen der Augen und &#252;ber den menschlichen Blick</italic>. Leipzig: C. Cnobloch.</mixed-citation>
+            </ref>
+            <ref>
+                <mixed-citation>M&#252;ller, <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">Ludwig</ext-link> (1913/1914). [Rezension:] Kleine Schriften von Wilhelm Wundt. Zweiter Band. <italic>Politisch-anthropologische Revue. Monatsschrift f&#252;r praktische Poolitik, f&#252;r politische Bildung und Erziehung auf biologischer Grundlage, 12</italic>, 334&#8211;335.</mixed-citation>
+            </ref>
+            <ref id="bib1">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Adams</surname>
+                            <given-names>JJ</given-names>
+                        </name>
+                        <name>
+                            <surname>Narayanan</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <name>
+                            <surname>Liu</surname>
+                            <given-names>B</given-names>
+                        </name>
+                        <name>
+                            <surname>Birnbaum</surname>
+                            <given-names>ME</given-names>
+                        </name>
+                        <name>
+                            <surname>Kruse</surname>
+                            <given-names>AC</given-names>
+                        </name>
+                        <name>
+                            <surname>Bowerman</surname>
+                            <given-names>NA</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2011</year>
+                    <article-title>T cell receptor signaling is limited by docking geometry to
+                        peptide-major histocompatibility complex</article-title>
+                    <source>Immunity</source>
+                    <volume>35</volume>
+                    <fpage>681</fpage>
+                    <lpage>93</lpage>
+                    <pub-id pub-id-type="doi">10.1016/j.immuni.2011.09.013</pub-id>
+                </element-citation>
+            </ref>
+            <ref id="bib1a">
+                <element-citation publication-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Altan-Bonnet</surname>
+                            <given-names>G</given-names>
+                        </name>
+                        <name>
+                            <surname>Germain</surname>
+                            <given-names>RN</given-names>
+                        </name>
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>Modeling T Cell antigen discrimination based on feedback control
+                        of digital ERK responses</article-title>
+                    <source>PLoS Biol</source>
+                    <volume>3</volume>
+                    <fpage>e356</fpage>
+                    <pub-id pub-id-type="doi">10.1371/journal.pbio.0030356</pub-id>
+                </element-citation>
+            </ref>
+        </ref-list>
+    </back>
+</article>

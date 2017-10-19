@@ -1,0 +1,117 @@
+<div class="modal-header">
+    <h3>Affiliation</h3>
+</div>
+<div class="modal-body">
+    <table class="table">
+        <tr class="no-border-top">
+            <th width="20%">ID</th>
+            <td width="80%">
+                <a href="#" editable-text="aff['@id']" onbeforesave="isEmpty($data)">
+                    {{aff['@id'] || 'empty'}}
+                </a>
+            </td>
+        </tr>
+        <tr class="even-row">
+            <th>Institution Name</th>
+            <td>
+                <a href="#" editable-text="aff['institution']" onbeforesave="isEmpty($data)">
+                    {{aff['institution'] || 'empty'}}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <th>Country
+                <span ng-if="!aff.hasOwnProperty('country')">
+                    <button class="btn btn-default pull-right"
+                            ng-click="aff['country'] = '';triggerClick('td.country > a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="country">
+                <a ng-if="!!aff.hasOwnProperty('country')" href="#" editable-text="aff['country']">
+                    {{aff['country'] || 'empty'}}
+                </a>
+            </td>
+        </tr>
+        <tr class="even-row">
+            <th>Address
+                <span ng-if="!aff.hasOwnProperty('addr-line')">
+                    <button class="btn btn-default pull-right"
+                            ng-click="aff['addr-line'] = '';triggerClick('td.addr > a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="addr">
+                <a ng-if="!!aff.hasOwnProperty('addr-line')" href="#" editable-text="aff['addr-line']">
+                    {{aff['addr-line'] || 'empty'}}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <th>Phone number
+                <span ng-if="!aff.hasOwnProperty('phone')">
+                    <button class="btn btn-default pull-right"
+                            ng-click="aff['phone'] = '';triggerClick('td.phone > a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="phone">
+                <a ng-if="!!aff.hasOwnProperty('phone')" href="#" editable-tel="aff['phone']"
+                   e-pattern="\d{5}-\d{2}-\d{4}" e-title="xxxxx-xx-xxxx">
+                    {{aff['phone'] || 'empty'}}
+                </a>
+            </td>
+        </tr>
+        <tr class="even-row">
+            <th>Fax number
+                <span ng-if="!aff.hasOwnProperty('fax')">
+                    <button class="btn btn-default pull-right" ng-click="aff['fax'] = '';triggerClick('td.fax > a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="fax">
+                <a ng-if="!!aff.hasOwnProperty('fax')" href="#" editable-tel="aff['fax']"
+                   e-pattern="\d{5}-\d{2}-\d{4}" e-title="xxxxx-xx-xxxx">
+                    {{aff['fax'] || 'empty'}}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <th>E-mail
+                <span ng-if="!aff.hasOwnProperty('email')">
+                    <button class="btn btn-default pull-right" ng-click="aff['email'] = '';triggerClick('td.email > a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="email">
+                <a ng-if="!!aff.hasOwnProperty('email')" href="#" editable-email="aff['email']">
+                    {{aff['email'] || 'empty'}}
+                </a>
+            </td>
+        </tr>
+        <tr class="even-row">
+            <th>External Link
+                <span ng-if="!aff.hasOwnProperty('ext-link')">
+                    <button class="btn btn-default pull-right"
+                            ng-click="aff['ext-link'] = {'@ext-link-type': 'uri', '@xlink:href': '', '#text': ''};triggerClick('td.extLink > a');">
+                        Add
+                    </button>
+                </span>
+            </th>
+            <td class="extLink">
+                <a ng-if="!!aff.hasOwnProperty('ext-link')" href="#" editable-url="aff['ext-link']['#text']"
+                   onaftersave="aff['ext-link']['@xlink:href'] = $data">
+                    {{aff['ext-link']['#text'] || 'empty'}}
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="cancel()">Close</button>
+</div>

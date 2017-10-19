@@ -1,0 +1,9 @@
+*~lock*
+*~
+*.pyc
+.idea/*
+tests/example/example_project/*
+tools/fop/*
+sessions/*
+editors/metadata/bower_components/*
+plugins/import/omp/settings.json

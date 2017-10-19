@@ -1,0 +1,199 @@
+/* --------------- Page setup ------------------------ */
+@page {
+  marks: crop;
+  size: 155mm 235mm;
+  @footnotes {
+    margin-top: 14pt;
+  }
+}
+
+@page :first {
+  margin-top: 5cm;
+  @top-right {
+    content: "";
+  }
+  @top-left {
+    content: "";
+  }
+}
+
+@page :left {
+  margin-left: 1.2cm;
+  margin-right: 2cm;
+  margin-top margin-bottom: 2.5cm;
+  @top-left {
+    content: string(sectitle);
+    font-size: 10pt;
+    text-transform: capitalize;
+  }
+  @bottom-left {
+    content: counter(page);
+    font-size: 10pt;
+  }
+}
+
+@page :right {
+  margin-right: 2cm;
+  margin-left: 1.2cm;
+  margin-top margin-bottom: 2.5cm;
+  @top-right {
+    content: string(maintitle);
+    font-size: 10pt;
+    text-transform: capitalize;
+  }
+  @bottom-right {
+    content: counter(page);
+    font-size: 10pt;
+  }
+}
+
+.body {
+  hyphens: auto;
+  counter-reset: chapter;
+  display: block;
+  text-align: justify;
+}
+
+.speech {
+  display: block;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.figure-float-left {
+  float: left;
+  width: 50%;
+  counter-increment: figure;
+  margin-right: 12px;
+}
+
+.figure-float-right {
+  float: right;
+  width: 25%;
+  counter-increment: figure;
+  margin-left: 12px;
+}
+
+.figure-top {
+  width: 100%;
+  float: column-top-corner;
+  column-span: 2;
+  counter-increment: figure;
+  margin-bottom: 10px;
+}
+
+.figure-bottom {
+  width: 100%;
+  float: column-bottom-corner;
+  column-span: 2;
+  counter-increment: figure;
+  margin-top: 10px;
+}
+
+.figure-column {
+  width: 100%;
+  float: column-bottom;
+  counter-increment: figure;
+  margin-top: 10px;
+}
+
+div.chapter {
+/*  page-break-before: always; */
+  columns: 3;
+  column-gap: .5cm;
+  text-align: justify;
+}
+
+div.multi-column {
+  columns: 3;
+  text-align: justify;
+  column-fill: auto;
+}
+
+.chapterContent {
+  text-align: justify;
+}
+
+img {
+  width: 100%;
+}
+
+span.caption:before {
+  content: "Fig. " counter(figure) " ";
+}
+
+span.caption {
+  font-size: 80%;
+}
+
+span.footnote {
+  float: footnote;
+  counter-increment: footnote;
+  footnote-style-position: outside;
+  page-break-inside: auto;
+  font-size: 80%;
+}
+
+h2.main-title {
+  font-family: sans-serif;
+  prince-bookmark-level: 1;
+  prince-bookmark-label: content();
+  prince-bookmark-state: open;
+  string-set: maintitle content();
+}
+
+h3.section-title {
+  font-family: sans-serif;
+  prince-bookmark-level: 2;
+  prince-bookmark-label: content();
+  prince-bookmark-state: open;
+  string-set: sectitle content();
+}
+
+.abstract {
+  font-style: italic;
+  margin-bottom: 5px;
+  text-indent: 25px;
+}
+
+h2.column {
+  column-span: 1;
+}
+
+p.cn, p.jp{
+  font-family: Droid Sans Fallback;
+}
+
+p.jp {
+  writing-mode: vertical-lr;
+}
+
+p.ar {
+  text-align: right;
+}
+
+.multicolumn {
+  columns: 2;
+  column-fill: auto;
+}
+
+.fancy1 {
+  font-family: Cheddar Jack;
+  font-size: 24pt;
+  color: rgb(123,34,53);
+}
+
+.fancy2 {
+  font-family: eufm10;
+  font-size: 24pt;
+}
+
+.fancy3 {
+  font-family: LittleBird;
+  font-size: 24pt;
+}
+
+.fancy4 {
+  font-family: Hanging Letters;
+  font-size: 24pt;
+}

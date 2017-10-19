@@ -1,0 +1,128 @@
+{
+  "projects": [
+    {
+      "active": true,
+      "chain": true,
+      "files": {
+        "1": "latex_example.tex"
+      },
+      "name": "tex2tei",
+      "path": "/usr/local/mpt/static/tests/latex2jats/",
+      "typesetters": {
+        "1": {
+          "arguments": {
+            "1": "-o",
+            "2": "create_output_file()"
+          },
+          "name": "pandoc",
+          "out_type": "xml",
+          "process": true
+        },
+        "2": {
+          "arguments": {
+            "1": "-o:",
+            "2": "create_output_file()"
+          },
+          "name": "tei2tei",
+          "out_type": "xml",
+          "process": true
+        }
+      }
+    },
+    {
+      "active": true,
+      "chain": true,
+      "files": {
+        "1": "metypeset_tei.xml"
+      },
+      "name": "tei2jats",
+      "path": "/usr/local/mpt/static/tests/latex2jats/",
+      "typesetters": {
+        "1": {
+          "name": "metypeset",
+          "arguments": {
+            "1": "--create-dir"
+          },
+          "out_type": "xml",
+          "process": true
+        }
+      }
+    },
+    {
+      "active": false,
+      "chain": true,
+      "files": {
+        "1": "latex_example.tex"
+      },
+      "name": "tex2tei2jats",
+      "path": "/usr/local/mpt/static/tests/latex2jats/",
+      "typesetters": {
+        "1": {
+          "arguments": {
+            "1": "-o",
+            "2": "create_output_file()"
+          },
+          "name": "pandoc",
+          "out_type": "xml",
+          "process": true
+        },
+        "2": {
+          "arguments": {
+            "1": "-o:",
+            "2": "create_output_file()"
+          },
+          "name": "tei2tei",
+          "out_type": "xml",
+          "process": true
+        },
+        "3": {
+          "name": "metypeset",
+          "arguments": {
+            "1": "--create-dir"
+          },
+          "out_type": "xml",
+          "process": true
+        }
+      }
+    }
+  ],
+  "typesetters": {
+    "tei2tei": {
+      "arguments": {
+        "1": "-jar",
+        "2": "/usr/local/mpt/static/tools/saxon-he/saxon9he.jar",
+        "3": "-xsl:/usr/local/mpt/static/tools/tei2tei/pandoc2metypeset.xsl",
+        "4": "-s:"
+      },
+      "executable": "java"
+    },
+    "metypeset": {
+      "arguments": {
+        "1": "tei",
+        "2": "--debug",
+        "3": "--nogit"
+      },
+      "executable": "/usr/local/mpt/static/tools/meTypeset/bin/meTypeset.py"
+    },
+    "pandoc": {
+      "arguments": {
+        "1": "-s",
+        "2": "-t tei"
+      },
+      "executable": "pandoc"
+    },
+    "xmlprocess": {
+      "arguments": {
+        "1": "--metadata book-part-meta.bits2",
+        "2": "--set-uuids=fn,ref",
+        "3": "--set-numbering-values=xref,ref-type,fn",
+        "4": "--clean-references"
+      },
+      "executable": "/usr/local/mpt/static/prepare.py"
+    },
+    "xmlmerge": {
+      "arguments": {},
+      "executable": "/usr/local/mpt/static/merge.py"
+    }
+  }
+}

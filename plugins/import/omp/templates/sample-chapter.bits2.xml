@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book-part book-part-type="acknowledgements" id="b178_ack" seq="1" xml:lang="fr">
+    <book-part-meta>
+        <title-group>
+            <title>Remerciments</title>
+        </title-group>
+        <contrib-group>
+        </contrib-group>
+        <custom-meta-group>
+            <custom-meta specific-use="urn">
+                <meta-name>urn</meta-name>
+                <meta-value>urn:nbn:de:bsz:16-heibooks-book-178-2</meta-value>
+            </custom-meta>
+            <custom-meta specific-use="doi">
+                <meta-name>doi</meta-name>
+                <meta-value>10.11588/heibooks.178.232</meta-value>
+            </custom-meta>
+        </custom-meta-group>
+    </book-part-meta>
+    <!-- content -->
+</book-part>

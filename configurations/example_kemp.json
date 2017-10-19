@@ -1,0 +1,117 @@
+{
+    "projects": [
+     { "active": true,
+            "chain": true,
+            "files": {
+                "1": "kemp_deutschland_01_vorwort.docx",
+                "2": "kemp_deutschland_02_teil_1.docx",
+                "3": "kemp_deutschland_03_teil_2.docx",
+                "4": "kemp_deutschland_04_teil_3.docx",
+                "5": "kemp_deutschland_05_danksagung.docx",
+                "6": "kemp_deutschland_06_bildnachweis.docx",
+                "7": "kemp_deutschland_07_bibliographie.docx"
+            },
+            "name": "kemp_deutschland",
+            "path": "/usr/local/mpt/static/tests/projects/kemp_deutschland/",
+            "typesetters": {
+                "1": {
+                    "arguments": {
+                        "1": "--create-dir"
+                    },
+                    "name": "metypeset",
+                    "out_type": "xml",
+                    "process":true
+                },
+                "2": {
+                   "arguments": {
+                        "1": "--create-dir"
+                    },
+                    "name": "xmlprocess",
+                    "out_type": "xml",
+                    "process":true
+                },
+                "3": {
+                   "arguments": {
+                        "1": "--create-dir",
+                        "2":"bits",
+                        "3":"--metadata book-meta.bits2",
+                        "4": "--set-numbering-tags=disp-quote,tr"
+                    },
+                    "name": "xmlmerge",
+                    "out_type": "xml",
+                    "out_file":"fullFile.xml",
+                    "merge":true
+
+                },
+                "4":{
+                  "name":"xml2fo",
+                  "out_type": "fo",
+                  "expand":true,
+                  "arguments": {
+                    "1": "--create-dir"
+                  }
+                },
+              "5":{
+                  "name":"fo2pdf",
+                  "out_type": "pdf",
+                  "expand":true,
+                  "arguments": {
+                    "1": "--create-dir"
+                  }
+                }
+
+
+            }
+        }
+    ],
+    "typesetters": {
+        "metypeset": {
+            "arguments": {
+                "1": "docx",
+                "2": "--debug",
+                "3": "--nogit"
+
+            },
+            "executable": "/usr/local/mpt/static/tools/meTypeset/bin/meTypeset.py"
+        },
+        "xmlprocess": {
+            "arguments": {
+                "1":"--metadata book-part-meta.bits2",
+                "2": "--set-uuids=fn,ref",
+                "3": "--set-numbering-values=xref,ref-type,fn",
+                "4":"--clean-references"
+
+
+            },
+            "executable": "/usr/local/mpt/static/prepare.py"
+        } ,
+        "xmlmerge": {
+            "arguments": {
+
+            },
+            "executable": "/usr/local/mpt/static/merge.py"
+        }
+      ,
+        "xml2fo": {
+            "arguments": {
+              "1":"--xsl=/formatter.xsl",
+              "2":"--medium=electronic,print",
+              "3":"--formatter=AH,FOP",
+              "4":"--out-type=FO"
+
+            },
+            "executable": "/usr/local/mpt/static/disseminate.py"
+        },
+      "fo2pdf": {
+            "arguments": {
+              "1":"--medium=electronic,print",
+              "2":"--formatter=AH,FOP",
+              "3":"--out-type=PDF"
+
+            },
+            "executable": "/usr/local/mpt/static/disseminate.py"
+        }
+
+
+    }
+}

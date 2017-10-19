@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Step 8 | HEIDI Editor</title>
+
+    <!-- Stylesheets -->
+    <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="css/bootstrap-wysihtml5-0.0.2.css" type="text/css" rel="stylesheet">
+    <link href="css/themes/default/style.css" type="text/css" rel="stylesheet">
+    <link href="css/custom.css" type="text/css" rel="stylesheet">
+
+
+    <!-- jQuery and plugins -->
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="js/jquery.hotkeys.js"></script>
+    <script src="js/jstree.min.js"></script>
+    <script src="js/advanced.js"></script>
+    <script src="js/wysihtml5-0.3.0.min.js"></script>
+    <script src="js/bootstrap-wysihtml5-0.0.2.min.js"></script>
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script>
+        $(function(){
+            $("#header").load("header.html", null, function(){
+                $("a.disabled").click(function(){return false;});
+                $("li#nav-step8").addClass("active").nextAll().each(function(){
+                    $(this).find("a").addClass("disabled").attr({href:"javascript:void(0)", onClick:"return false"});
+                });
+            });
+        });
+    </script>
+
+</head>
+<body>
+
+
+
+
+<div id="content">
+    <div class="container">
+
+        <div id="header"></div>
+
+
+        <h2 class="title">Step 8: Table captions</h2>
+        <!-- /title -->
+
+
+        <div class="row">
+
+            <div class="col-sm-3">
+                <div class="row">
+                    <input id="treepane_q" class="form-control" type="text" placeholder="search" />
+                </div>
+                <div class="row">
+                    &nbsp;
+                </div>
+                <div class="row">
+                    <div id="treepane" class="highlight">
+
+                    </div>
+                </div>
+            </div>
+            <!-- /treepane -->
+
+            <div class="col-sm-8 col-sm-offset-1">
+                <div class="row">
+
+                    <div class="col-sm-4 text-right">
+                        <span id="current_entry">1</span>/<span id="total_entries">3</span> Entries
+                    </div>
+
+                    <div class="col-sm-4 btn-group">
+                        <button class="btn btn-default">Prev</button>
+                        <button class="btn btn-default">Next</button>
+                    </div>
+
+                    <div class="col-sm-4">
+                    </div>
+                </div>
+
+                <div class="row">
+                    &nbsp;
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="preview">Preview</label>
+                        <textarea id="preview" class="form-control" placeholder="" rows="5">
+                            <table>
+                                <tr><td>A</td><td>B</td><td>C</td></tr>
+                                <tr><td>10</td><td>20</td><td>30</td></tr>
+                                <tr><td>40</td><td>50</td><td>60</td></tr>
+                            </table>
+                        </textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="caption">Caption</label>
+                        <input id="caption" class="form-control" type="text" placeholder="What's this" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row next-btn">
+            <button class="btn btn-primary next-btn" onclick="location.href='step9.html'">Next<i class="glyphicon glyphicon-chevron-right"></i></button>
+        </div>
+
+
+    </div>
+    <!-- /container -->
+
+
+</div>
+
+<!-- /content -->
+
+<div id="footer" class="container">footer</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+
+        $("#treepane").jstree({
+            'core' : {
+                'data' : [
+                    'Chapter 1',
+                    'Chapter 2',
+                    'Chapter 3',
+                    'Chapter 4',
+                    {
+                        'text' : 'Chapter 5',
+                        'state' : {
+                            'opened' : true
+                        },
+                        'children' : [
+                            {
+                                'text' : 'Table. 5.1',
+                                'state' : {
+                                    'selected': true
+                                }
+                            },
+                            'Table. 5.2'
+                        ]
+                    },
+                    'Chapter 6'
+                ]
+            },
+            "plugins" : [ "themes", "types", "search" ],
+            "types" : {
+                "max_depth" : -2,
+                "max_children" : -2,
+                "valid_children" : [ "folder" ],
+                "types" : {
+                    "default" : {
+                        "valid_children" : "all",
+                        "check_node" : false,
+                        "uncheck_node" : false
+                    },
+                    "file" : {
+                        "valid_children" : "none"
+                    },
+                    "product-category": {
+                        "valid_children" : "file",
+                        "check_node" : true,
+                        "uncheck_node" : true
+                    },
+                    "product-category-master": {
+                        "valid_children" : "file"
+                    }
+                }
+            },
+            "themes" : {
+                "theme" : "proton"
+            }
+        });
+        var to = false;
+        $("#treepane_q").keyup(function() {
+            if(to) { clearTimeout(to); }
+            to = setTimeout(function() {
+                var v = $("#treepane_q").val();
+                $("#treepane").jstree(true).search(v);
+            }, 250);
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

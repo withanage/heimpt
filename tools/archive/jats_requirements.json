@@ -1,0 +1,36 @@
+{
+  "book-part-meta": {
+    "children": {
+      "book-part-id": {
+        "omp": "yes",
+        "api": "no",
+        "remarks": "OJS: Section ID available"
+      },
+      "title-group": {
+        "children": {
+          "title": {
+            "omp": "yes",
+            "api": "yes"
+          },
+          "subtitle": {
+            "omp": "yes",
+            "api": "yes"
+          },
+          "trans-title-group": {
+            "omp": "no",
+            "api": "no",
+            "remarks": "https://pkp.sfu.ca/wiki/index.php?title=Tech_Committee_Meeting_Minutes_25_July_2017#Extending_metadata_schemes_.28Dulip.29",
+            "children": {
+              "trans-title": {
+                "omp": "no",
+                "api": "no",
+                "remarks":""
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
