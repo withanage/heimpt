@@ -71,7 +71,7 @@
         "4": "--noimageprocessing"
 
       },
-      "executable": "/home/wit/projects/heimpt/meTypeset/bin/meTypeset.py"
+      "executable": "/home/wit/projects/heimpt/tools/meTypeset/bin/meTypeset.py"
     },
     "xmlprocess": {
       "arguments": {
