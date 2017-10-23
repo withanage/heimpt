@@ -19,7 +19,7 @@ numeral_map = tuple(zip(
     ('M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I')
 ))
 ns_tei ='{http://www.tei-c.org/ns/1.0}'
-
+import lxml.html
 class TEIProcess:
     '''
      command line tool to clean, modify, delete, merge jats files
@@ -41,10 +41,12 @@ class TEIProcess:
         root = self.tr.getroot()
         st= etree.tostring(root, pretty_print=False)
         #print (st)
-        f = (re.findall(r'(\w+)(\s+)(\w+)(\s+)(\()(<hi(\s+)rend="italic">)(\S+)(</hi>)',st))
+        f = (re.findall(r'(\w+)(\s+)(\w+)(\s+)(\()(<hi(\s+)rend="italic">)(\S+)(</hi>)',str(st)))
         #rint (f)
         for found in f :
-            print (found[0],found[2], found[7].encode('utf-8').decode('utf-8'))
+            print (found[0],found[2],' = ', lxml.html.fromstring(found[7]).text.encode('utf-8').decode('utf-8'))
+
+
         #print re.findall(r'(\w+)',st)
         #items = self.tr.findall('.//{}{}'.format(ns_tei,'item'))
 
@@ -67,7 +69,7 @@ def main():
     if len(sys.argv) >= 2:
         p = TEIProcess(sys.argv[1])
         p.print_definitions()
-        p.create_files('output.xml')
+        #p.create_files('output.xml')
 
 
     else:
