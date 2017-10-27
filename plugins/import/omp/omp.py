@@ -133,20 +133,10 @@ class OMPImport(Import):
             return False
 
     def run(self, args, settings):
-        print('Running plugin omp import')
         self.initialize(args, settings)
-        if args.get('--all-submissions'):
-            print('Importing all submissions for presses: {}'.format(", ".join(p['path'] for p in self.presses.values())))
-            rows = self.db(self.db.submissions.context_id.belongs(self.presses.keys())).select(self.db.submissions.submission_id)
-            submission_ids = [row.submission_id for row in rows]
-        elif args.get('<submission_id>'):
-            submission_ids = [int(id_arg) for id_arg in args.get('<submission_id>')]
-        else:
-            if not isinstance(self.settings['submission'], list):
-                submission_ids = [self.settings['submission']]
-            else:
-                submission_ids = self.settings['submission']
-        print('Importing submissions: {}'.format(submission_ids))
+        # Figure out which submissions need to be imported
+        submission_ids = self.get_submission_to_import(args)
+        self.log.info('Importing submissions: {}'.format(submission_ids))
         self.results = []
         for submission_id in submission_ids:
             print('Loading submission {}'.format(submission_id))
@@ -228,6 +218,33 @@ class OMPImport(Import):
             self.results.append(project_config)
         pass
 
+    def get_submission_to_import(self, args):
+        if args.get('--all-submissions'):
+            print('Importing all submissions for presses: {}'
+                  .format(", ".join(p['path'] for p in self.presses.values())))
+            rows = self.db(self.db.submissions.context_id.belongs(self.presses.keys())).select(
+                self.db.submissions.submission_id)
+            submission_ids = [row.submission_id for row in rows]
+        elif args.get('<submission_id>'):
+            try:
+                submission_ids = [int(id_arg) for id_arg in args.get('<submission_id>')]
+            except ValueError as e:
+                self.log.error('<submission_id> arguments must be integers, but were: {}'
+                               .format(args.get('<submission_id>')))
+                print __doc__
+                sys.exit(-1)
+        elif 'submission' in self.settings:
+            if not isinstance(self.settings['submission'], list):
+                submission_ids = [self.settings['submission']]
+            else:
+                submission_ids = self.settings['submission']
+        else:
+            self.log.error('No submission to import specified.'
+                           ' Use --all-submissions, add "submission" parameter to settings.json'
+                           ' or pass <submission_id> argument')
+            sys.exit(__doc__)
+        return submission_ids
+
     def copy_submission_files(self, file_paths, target_dir):
         if not os.path.exists(target_dir) and file_paths:
             os.makedirs(target_dir)
@@ -236,14 +253,13 @@ class OMPImport(Import):
             shutil.copy(file_path, target_dir)
 
     def write_project_config(self, project_filename, project_config):
-        project_file_dir = os.path.join(self.settings['base-path'], self.settings['project-output'])
-        if not os.path.exists(project_file_dir):
-            os.makedirs(project_file_dir)
-        with open(os.path.join(project_file_dir, project_filename), "w") as f:
+        if not os.path.exists(self.settings['project-output-dir']):
+            os.makedirs(self.settings['project-output-dir'])
+        with open(os.path.join(self.settings['project-output-dir'], project_filename), "w") as f:
             json.dump(project_config, f, indent=2, sort_keys=True)
 
     def read_project_config(self, project_filename, template_path=None):
-        project_output_path = os.path.join(self.settings['project-output'], project_filename)
+        project_output_path = os.path.join(self.settings['project-output-dir'], project_filename)
         if os.path.isfile(project_output_path):
             path = project_output_path
         else:

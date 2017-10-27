@@ -2,9 +2,9 @@
   "db-uri": "mysql://omp-user:omp-password@172.17.0.2:3306/omp",
   "omp-files-dir": "/path/to/omp/files",
   "files-output-dir": "/path/to/mpt/input/files",
+  "project-output-dir": "configurations/import/omp",
   "chapter-metadata-suffix": ".book-part-meta.bits2.xml",
   "project-template": "configurations/01_wintz.bits.json",
-  "project-output": "configurations/import/omp",
   "file-stage": 11,
   "file-types": [
     "application/vnd.oasis.opendocument.text",
