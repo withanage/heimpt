@@ -4,7 +4,7 @@
   "files-output-dir": "/path/to/mpt/input/files",
   "project-output-dir": "configurations/import/omp",
   "chapter-metadata-suffix": ".book-part-meta.bits2.xml",
-  "project-template": "configurations/01_wintz.bits.json",
+  "project-template": "configurations/example.json",
   "file-stage": 11,
   "file-types": [
     "application/vnd.oasis.opendocument.text",
