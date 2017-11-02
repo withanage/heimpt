@@ -125,9 +125,9 @@ class Disseminate(Debuggable):
         subprocess.Popen()
 
         """
+        print args
 
         m = ' '.join(args).strip().split(' ')
-        #print ' '.join(args)
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
         exit_code = process.wait()
@@ -197,7 +197,6 @@ class Disseminate(Debuggable):
 
     def run_ah_fop(self, pth, formatter, medium):
         args=[pth]
-        #args.append('-silent')
         args.append('-silent -d')
         args.append('{}/{}.{}.{}.fo'.format(os.path.dirname(self.f), self.gv.uuid, formatter, medium))
         args.append('-o')
@@ -241,7 +240,7 @@ class Disseminate(Debuggable):
         """
         args = ["java", "-jar", saxon_path]
         if self.args.get('--xsl'):
-            xsl = self.script_path.split(os.sep)[:-1]
+            xsl = self.script_path.split(os.sep)
             xsl.append('stylesheets')
             xsl.append(self.args.get('--xsl'))
             args.append("-xsl:" + os.sep.join(xsl))
