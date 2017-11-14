@@ -62,7 +62,6 @@ class Merge(Debuggable):
         self.debug = Debug()
         self.settings = Settings(self.args)
         self.gv = GV(self.settings)
-        self.uid = self.gv.uuid
         self.dr = self.args.get('<path>')
         self.f = self.args.get('<input_file>')
         self.scheme = self.args.get('<scheme>')
@@ -96,8 +95,8 @@ class Merge(Debuggable):
         create_book_part_bits, create_book_bits, do_file_io
 
         """
-        fuf = os.path.join(self.dr, self.uid)
-        pt = os.path.join(self.dr, os.path.basename(self.uid))
+        fuf = os.path.join(self.dr, self.gv.uuid)
+        pt = os.path.join(self.dr, os.path.basename(self.gv.uuid))
 
         trf = None
         if os.path.isfile(fuf):
@@ -121,8 +120,8 @@ class Merge(Debuggable):
         create_book_part_bits, create_book_bits, do_file_io
 
         """
-        fuf = os.path.join(self.dr, self.uid)
-        pt = os.path.join(self.dr, os.path.basename(self.uid))
+        fuf = os.path.join(self.dr, self.gv.uuid)
+        pt = os.path.join(self.dr, os.path.basename(self.gv.uuid))
 
         trf = None
         if os.path.isfile(fuf):
@@ -219,7 +218,7 @@ class Merge(Debuggable):
         """
         p = os.path.dirname(self.f).split(os.sep)
         del p[-4:]
-        name, ext = os.path.splitext(os.path.basename(self.uid))
+        name, ext = os.path.splitext(os.path.basename(self.gv.uuid))
         file_name = [name, '.', metadata, '.', 'xml']
         p.append('metadata')
         p.append(''.join(file_name))
@@ -271,6 +270,7 @@ class Merge(Debuggable):
                 bp = etree.parse(pth).find('.//book-meta')
                 book.insert(0, bp)
             else:
+                self.debug.print_console(self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST+str(pth))
                 sys.exit(1)
 
         else:

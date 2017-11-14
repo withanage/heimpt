@@ -96,7 +96,7 @@ class Disseminate(Debuggable):
         name string
          Name of the Module
         """
-        name = 'OUTPUT Generation'
+        name = 'disseminate'
         return name
 
     def process(self, args):
@@ -125,7 +125,6 @@ class Disseminate(Debuggable):
         subprocess.Popen()
 
         """
-        print args
 
         m = ' '.join(args).strip().split(' ')
         process = Popen(m, stdout=PIPE)
@@ -178,7 +177,7 @@ class Disseminate(Debuggable):
                     self.debug.print_console(self, self.gv.RUNNING_PDF_CONVERSION)
                     args = self.run_fop_processor(f, m)
                 output, err, exit_code = self.process(args)
-                #print output
+
 
     def run_fop_processor(self,  formatter, medium):
 

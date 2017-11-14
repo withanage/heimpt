@@ -679,6 +679,9 @@ class MPT(Debuggable):
         """
         t_path.append(self.gv.uuid)
         p_path = self.gv.create_dirs_recursive(project_path)
+
+        print t_path, p_path
+
         f_path = '{}{}{}.xml'.format(p_path, SEP, self.gv.uuid)
         shutil.copy2(SEP.join(t_path), f_path)
         self.create_named_file(p, p_id, p_path, t_path)

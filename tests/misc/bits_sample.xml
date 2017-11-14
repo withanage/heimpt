@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    book-type="gov" dtd-version="2.0" indexed="yes" xml:lang="en">
+    <book-meta/>
+    <front-matter/>
+    <book-body/>
+    <book-back>
+        <ack id="bid.394">
+            <title>Acknowledgments title</title>
+            <p>Acknowledgments paragraph</p>
+        </ack>
+          <index-group>
+            <index>
+                <index-title-group>
+                    <titel>Index der Sachen</titel>
+                </index-title-group>
+                <index-div>
+                    <index-title-group>
+                        <title>Z</title>
+                    </index-title-group>
+                    <index-entry>
+                        <term>Zulassung</term>
+                        <nav-pointer-group>
+                            <nav-pointer rid="zulassung1" nav-pointer-type="point" specific-use="pagenum">160</nav-pointer>
+                            <nav-pointer rid="zulassung2" nav-pointer-type="point" specific-use="pagenum"> 610</nav-pointer>
+                        </nav-pointer-group>
+                        <index-entry>
+                            <term>Zulassungsordnung</term>
+                            <nav-pointer-group>
+                                <nav-pointer rid="zulassungsordnung1" nav-pointer-type="point" specific-use="pagenum">438</nav-pointer>
+                                <nav-pointer rid="zulassungsordnung2" nav-pointer-type="point" specific-use="pagenum">542</nav-pointer>
+                                <nav-pointer rid="zulassungsordnung3" nav-pointer-type="point" specific-use="pagenum">554</nav-pointer>
+                                <nav-pointer rid="zulassungsordnung4" nav-pointer-type="point" specific-use="pagenum"> 555</nav-pointer>
+                            </nav-pointer-group>
+                            
+                        </index-entry>
+                    </index-entry>
+                </index-div>
+            </index>
+            <index>
+                <index-title-group>
+                    <title>Author Index</title>
+                </index-title-group>
+                <index-div>
+                    <index-title-group>
+                        <title>K</title>
+                    </index-title-group>
+                    <index-entry>
+                        <term>Kay, Michael</term>
+                        <nav-pointer-group>
+                            <nav-pointer rid="k1" nav-pointer-type="point"/>
+                            <nav-pointer rid="k2" nav-pointer-type="point"/>
+                        </nav-pointer-group>
+                    </index-entry>
+                    <index-entry>
+                        <term>Kepper, Johannes</term>
+                        <nav-pointer rid="k3" nav-pointer-type="point"/>
+                    </index-entry>
+                </index-div>
+                <index-div>
+                    <index-title-group>
+                        <title>I</title>
+                    </index-title-group>
+                    <index-entry>
+                        <term>Interstate commerce</term>
+                        <index-entry>
+                            <term>State powers, taxation and regulation</term>
+                            <nav-pointer-group>
+                                <nav-pointer rid="idx1-1" nav-pointer-type="start-of-range"
+                                    >209</nav-pointer>
+                                <nav-pointer rid="idx1-2" nav-pointer-type="end-of-range"
+                                    >240</nav-pointer>
+                            </nav-pointer-group>
+                            <index-entry>
+                                <term>Balancing test, modern standard</term>
+                                <nav-pointer-group>
+                                    <nav-pointer rid="idx2-1" nav-pointer-type="start-of-range"
+                                        >233</nav-pointer>
+                                    <nav-pointer rid="idx2-2" nav-pointer-type="end-of-range"
+                                        >234</nav-pointer>
+                                </nav-pointer-group>
+                            </index-entry>
+                        </index-entry>
+                    </index-entry>
+                    <index-entry>
+                        <term>Interstate compacts</term>
+                        <x>.</x>
+                        <see-entry>States, Agreements with other States</see-entry>
+                        <x>.</x>
+                    </index-entry>
+                </index-div>
+            </index>
+            <index>
+                <index-title-group>
+                    <title>Topic Index</title>
+                </index-title-group>
+                <index-div>
+                    <index-title-group>
+                        <title>Concepts</title>
+                    </index-title-group>
+                    <index-entry>
+                        <term>Computational Linguistics</term>
+                        <nav-pointer rid="c1" nav-pointer-type="point"/>
+                    </index-entry>
+                    <index-entry>
+                        <term>Concurrent Markup/Overlap</term>
+                        <nav-pointer-group>
+                            <nav-pointer rid="c2" nav-pointer-type="point"/>
+                            <nav-pointer rid="c3" nav-pointer-type="point"/>
+                            <nav-pointer rid="c4" nav-pointer-type="point"/>
+                        </nav-pointer-group>
+                    </index-entry>
+                </index-div>
+            </index>
+        </index-group>
+        <ref-list/>
+    </book-back>
+</book>
