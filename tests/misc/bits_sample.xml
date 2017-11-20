@@ -95,22 +95,46 @@
                     </index-title-group>
                     <index-entry>
                         <term>Aachen, Johann von</term>
-                            <nav-pointer-group> 
-                                <nav-pointer rid="k1" nav-pointer-type="point" specific-use="VI/I" > <ext-link>https://doi.org/10.11588/diglit.30042#0247</ext-link> 215 </nav-pointer> 
-                            
-                            </nav-pointer-group>
+                        <nav-pointer-group> <nav-pointer rid="k1" nav-pointer-type="point"
+                            specific-use="VI/I">
+                            <ext-link>https://doi.org/10.11588/diglit.30042#0247</ext-link> 215 </nav-pointer>
+                        </nav-pointer-group>
                     </index-entry>
                     <index-entry>
-                        <term>Aaron</term>
-                            <nav-pointer-group> 
-                                <nav-pointer rid="k1" nav-pointer-type="point"  specific-use="VI/I" ><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>285</nav-pointer> 
-                                <nav-pointer rid="k2" nav-pointer-type="point" specific-use="VI/I"><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>652</nav-pointer>
-                                <nav-pointer rid="k3" nav-pointer-type="point" specific-use="VI/I"><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>655</nav-pointer>
-                                <nav-pointer rid="k4" nav-pointer-type="point" specific-use="VI/I"><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>656</nav-pointer>
-                                <nav-pointer rid="k1" nav-pointer-type="point"   specific-use="VII/I"><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>733</nav-pointer> 
-                                <nav-pointer rid="k2" nav-pointer-type="point"  specific-use="VII/I"><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>1057</nav-pointer>
+                        <term>Abel</term>
+                        <nav-pointer-group> <nav-pointer rid="k1" nav-pointer-type="point"
+                            specific-use="VI/I"
+                            ><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>285</nav-pointer>
+                            <nav-pointer rid="k2" nav-pointer-type="point" specific-use="VI/I"
+                            ><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>652</nav-pointer>
+                            <nav-pointer rid="k3" nav-pointer-type="point" specific-use="VI/I"
+                            ><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>655</nav-pointer>
+                            <nav-pointer rid="k4" nav-pointer-type="point" specific-use="VI/I"
+                            ><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>656</nav-pointer>
+                            <nav-pointer rid="k1" nav-pointer-type="point" specific-use="VII/I"
+                            ><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>733</nav-pointer>
+                            <nav-pointer rid="k2" nav-pointer-type="point" specific-use="VII/I"
+                            ><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>1057</nav-pointer> </nav-pointer-group>
+                        <index-entry>
+                            <term>Jost</term>
+                            <nav-pointer-group> <nav-pointer rid="k1" nav-pointer-type="point"
+                                specific-use="VI/I"
+                                ><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>285</nav-pointer>
+                                <nav-pointer rid="k2" nav-pointer-type="point" specific-use="VI/I"
+                                ><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>652</nav-pointer>
+                                
                             </nav-pointer-group>
-                        
+                        </index-entry>
+                        <index-entry>
+                        <term>Konrad</term>
+                        <nav-pointer-group> <nav-pointer rid="k1" nav-pointer-type="point"
+                            specific-use="VI/I"
+                            ><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>285</nav-pointer>
+                            <nav-pointer rid="k2" nav-pointer-type="point" specific-use="VI/I"
+                                ><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>652</nav-pointer>
+                            
+                        </nav-pointer-group>
+                    </index-entry>
                     </index-entry>
                     <index-entry>
                         <term>Kepper, Johannes</term>
