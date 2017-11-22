@@ -87,20 +87,20 @@
         <index-group>
             <index>
                 <index-title-group>
-                    <title>Index der Persone</title>
+                    <title>Index der Personen</title>
                 </index-title-group>
                 <index-div>
                     <index-title-group>
                         <title>A</title>
                     </index-title-group>
-                    <index-entry>
+                    <index-entry id="ie1">
                         <term>Aachen, Johann von</term>
                         <nav-pointer-group> <nav-pointer rid="k1" nav-pointer-type="point"
                             specific-use="VI/I">
                             <ext-link>https://doi.org/10.11588/diglit.30042#0247</ext-link> 215 </nav-pointer>
                         </nav-pointer-group>
                     </index-entry>
-                    <index-entry>
+                    <index-entry id="ie2">
                         <term>Abel</term>
                         <nav-pointer-group> <nav-pointer rid="k1" nav-pointer-type="point"
                             specific-use="VI/I"
@@ -115,7 +115,7 @@
                             ><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>733</nav-pointer>
                             <nav-pointer rid="k2" nav-pointer-type="point" specific-use="VII/I"
                             ><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>1057</nav-pointer> </nav-pointer-group>
-                        <index-entry>
+                        <index-entry id="ie2.1">
                             <term>Jost</term>
                             <nav-pointer-group> <nav-pointer rid="k1" nav-pointer-type="point"
                                 specific-use="VI/I"
@@ -125,21 +125,8 @@
                                 
                             </nav-pointer-group>
                         </index-entry>
-                        <index-entry>
-                        <term>Konrad</term>
-                        <nav-pointer-group> <nav-pointer rid="k1" nav-pointer-type="point"
-                            specific-use="VI/I"
-                            ><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>285</nav-pointer>
-                            <nav-pointer rid="k2" nav-pointer-type="point" specific-use="VI/I"
-                                ><ext-link>https://doi.org/10.11588/diglit.30040#0305</ext-link>652</nav-pointer>
-                            
-                        </nav-pointer-group>
                     </index-entry>
-                    </index-entry>
-                    <index-entry>
-                        <term>Kepper, Johannes</term>
-                        <nav-pointer rid="k3" nav-pointer-type="point"/>
-                    </index-entry>
+
                 </index-div>
                 <index-div>
                     <index-title-group>
