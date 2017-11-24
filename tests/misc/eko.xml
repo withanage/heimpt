@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book SYSTEM "DTD/BITS-XHTML-TABLES-DTD/BITS-book2.dtd">
+<book xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      book-type="monograph" dtd-version="2.0" indexed="yes" xml:lang="en">
+    <book-meta>
+          
+    </book-meta>
+    <front-matter>
+        <front-matter-part id="gl1" book-part-type="chapter" xml:lang="it">
+            <book-part-meta>
+                <title-group>
+                    <title>Introduction</title>
+                </title-group>
+            </book-part-meta>
+            <named-book-part-body>
+                <p></p>
+            </named-book-part-body>
+        </front-matter-part>
+    </front-matter>
+    <book-body>
+        <book-part id="A" book-part-type="chapter" xml:lang="it">
+            <book-part-meta>
+                <title-group>
+                    <title>A</title>
+                </title-group>
+            </book-part-meta>
+            <body>
+                <p>Der Philosoph <named-content content-type="index-target" rid="ie_1">Walter Benjamin</named-content> beginnt
+                    seine Untersuchung &#8222;Das Kunstwerk im Zeitalter seiner technischen Reproduzierbarkeit&#8220;
+                    mit der Feststellung, [...]
+                </p>
+            </body>
+        </book-part>
+    </book-body>
+    <book-back>
+        <ack id="bid.394">
+            <title>Acknowledgments title</title>
+            <p>Acknowledgments paragraph</p>
+        </ack>
+        <index-group>
+            <index>
+                <index-title-group>
+                    <title>Index der Personen</title>
+                </index-title-group>
+                <index-div>
+                    <index-title-group>
+                        <title>A</title>
+                    </index-title-group>
+                    <index-entry id="ie_1">
+                        <term>Abel </term>
+                        <nav-pointer-group>
+                            <nav-pointer nav-pointer-type="point" specific-use="VI/I">
+                                <ext-link ext-link-type="doi" xlink:href="https://doi.org/10.11588/diglit.30042#0247">
+                                    <bold>5</bold>
+                                </ext-link>
+                            </nav-pointer>
+                            <nav-pointer nav-pointer-type="point" specific-use="VI/I">
+                                <ext-link ext-link-type="doi" xlink:href="https://doi.org/10.11588/diglit.30042#0247">
+                                    <bold>20</bold>
+                                </ext-link>
+                            </nav-pointer>
+                        </nav-pointer-group>
+                    </index-entry>
+
+                    <index-entry id="ie_2">
+                        <term>Abel Jost </term>
+                        <nav-pointer-group>
+                            <nav-pointer nav-pointer-type="point" specific-use="VI/I">
+                                <ext-link ext-link-type="doi" xlink:href="https://doi.org/10.11588/diglit.30042#0247">
+                                    <bold>5</bold>
+                                </ext-link>
+                            </nav-pointer>
+                            <nav-pointer nav-pointer-type="point" specific-use="VI/I">
+                                <ext-link ext-link-type="doi" xlink:href="https://doi.org/10.11588/diglit.30042#0247">
+                                    <bold>20</bold>
+                                </ext-link>
+                            </nav-pointer>
+                        </nav-pointer-group>
+                    </index-entry>
+                    
+
+                </index-div>
+
+            </index>
+        </index-group>
+        <ref-list></ref-list>
+
+    </book-back>
+</book>
