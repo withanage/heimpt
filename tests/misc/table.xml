@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Archiving DTD v3.0 20080202//EN"
+        "https://jats.nlm.nih.gov/archiving/1.1/JATS-archivearticle1-mathml3.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+    <front>
+        <journal-meta>
+            <journal-id journal-id-type="publisher-id">Heidelberg University Publishing</journal-id>
+            <issn pub-type="epub">1234-1234</issn>
+            <publisher>
+                <publisher-name>Heidelberg University Publishing</publisher-name>
+            </publisher>
+        </journal-meta>
+        <article-meta>
+            <article-id pub-id-type="publisher-id">published-id</article-id>
+            <article-id pub-id-type="doi">10.77777.123456</article-id>
+            <article-categories>
+                <subj-group subj-group-type="display-channel">
+                    <subject>Research Monogrraph</subject>
+                </subj-group>
+                <subj-group subj-group-type="heading">
+                    <subject>Sbject 1</subject>
+                </subj-group>
+            </article-categories>
+            <title-group>
+                <article-title>Title</article-title>
+            </title-group>
+            <contrib-group>
+                <contrib contrib-type="author" corresp="yes" id="author-1">
+                    <name>
+                        <surname>Miller</surname>
+                        <given-names>David</given-names>
+                    </name>
+                    <bio>
+                        <p>Biographpy</p>
+                    </bio>
+                </contrib>
+                <contrib contrib-type="editor" corresp="yes" id="editor-1">
+                    <name>
+                        <surname>Groves</surname>
+                        <given-names>Jay</given-names>
+                    </name>
+                    <xref ref-type="aff" rid="aff1"/>
+                    <xref ref-type="other" rid="par-1"/>
+                    <xref ref-type="fn" rid="con5"/>
+                </contrib>
+                <aff id="aff1"><institution content-type="dept"
+                >Department of Chemistry</institution>,
+                    <institution>Berkeley</institution>,
+                    <addr-line>
+                        <named-content content-type="city">Berkeley</named-content>
+                    </addr-line>
+                    ,
+                    <country>United States</country>
+                </aff>
+            </contrib-group>
+            <!--author-notes>
+                <corresp id="cor1">
+                    <label>*</label>For correspondence: <email>JTGroves@lbl.gov</email></corresp>
+                <fn fn-type="con" id="equal-contrib">
+                    <label>†</label>
+                    <p>These authors contributed equally to this work</p>
+                </fn>
+            </author-notes-->
+            <pub-date pub-type="epub">
+                <day>30</day>
+                <month>08</month>
+                <year>2017</year>
+            </pub-date>
+            <volume>2</volume>
+            <elocation-id>e00778</elocation-id>
+            <history>
+                <date date-type="received">
+                    <day>26</day>
+                    <month>03</month>
+                    <year>2017</year>
+                </date>
+                <date date-type="accepted">
+                    <day>17</day>
+                    <month>05</month>
+                    <year>2017</year>
+                </date>
+            </history>
+            <permissions>
+                <copyright-statement>Text © 2017 by the authors.</copyright-statement>
+                <copyright-year>2017</copyright-year>
+                <license license-type="open-access"
+                         xlink:href="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="de">
+                    <license-p><inline-graphic
+                            xlink:href="http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-sa.svg"
+                    />Dieses Werk ist unter der Creative-Commons-Lizenz 4.0 (CC BY-SA 4.0)
+                        veröffentlicht.
+                    </license-p>
+                </license>
+                <license license-type="open-access"
+                         xlink:href="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="en">
+                    <license-p><inline-graphic
+                            xlink:href="http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-sa.svg"
+                    />This book is published under the Creative Commons License 4.0 (CC BY-SA
+                        4.0).
+                    </license-p>
+                </license>
+            </permissions>
+            <self-uri content-type="pdf" xlink:href="elife00778.pdf"/>
+            <abstract>
+                <title>Abstract Title</title>
+                <p>---------------------------------------------------------------------------------------------</p>
+                <p>article-meta Abstract text BEGIN</p>
+                <p>
+                    <bold>DOI:</bold>
+                    <ext-link ext-link-type="doi" xlink:href="10.77777.123456.001"
+                    >http://dx.doi.org/10.77777.123456.001
+                    </ext-link>
+                </p>
+                <p>article-meta Abstract text END</p>
+                <p>---------------------------------------------------------------------------------------------</p>
+            </abstract>
+            <kwd-group kwd-group-type="author-keywords">
+                <title>Author keywords</title>
+                <kwd>TCR triggering</kwd>
+                <kwd>single molecule kinetics</kwd>
+                <kwd>T cells</kwd>
+            </kwd-group>
+            <kwd-group kwd-group-type="research-organism">
+                <title>Research organism</title>
+                <kwd>Mouse</kwd>
+            </kwd-group>
+            <funding-group>
+                <award-group id="par-1">
+                    <funding-source>Funding source</funding-source>
+                    <award-id>PO1 AI091580</award-id>
+                    <principal-award-recipient>
+                        <name>
+                            <surname>O'Donoghue</surname>
+                            <given-names>Geoff P</given-names>
+                        </name>
+                        <name>
+                            <surname>Pielak</surname>
+                            <given-names>Rafal M</given-names>
+                        </name>
+                        <name>
+                            <surname>Smoligovets</surname>
+                            <given-names>Alexander A</given-names>
+                        </name>
+                        <name>
+                            <surname>Lin</surname>
+                            <given-names>Jenny J</given-names>
+                        </name>
+                        <name>
+                            <surname>Groves</surname>
+                            <given-names>Jay T</given-names>
+                        </name>
+                    </principal-award-recipient>
+                </award-group>
+                <funding-statement>The funders had no role in study design, data collection and
+                    interpretation, or the decision to submit the work for
+                    publication.
+                </funding-statement>
+            </funding-group>
+            <custom-meta-group>
+                <custom-meta>
+                    <meta-name>elife-xml-version</meta-name>
+                    <meta-value>2</meta-value>
+                </custom-meta>
+                <custom-meta specific-use="meta-only">
+                    <meta-name>Author impact statement</meta-name>
+                    <meta-value>Quantitative.</meta-value>
+                </custom-meta>
+            </custom-meta-group>
+        </article-meta>
+    </front>
+    <body>
+
+
+        <sec>
+            <title>table</title>
+            <table-wrap specific-use="rules">
+                <table>
+                    <tr>
+                        <td></td>
+                        <td>(<xref rid="bib1" ref-type="bibr"
+                                   id="IDedf8dd89-6236-4817-b6bf-0ff16e5d4c08"
+                        >ἐπιστάμαν</xref>):
+                        </td>
+                        <td>Test</td>
+                        <td>[<xref rid="bib1a"
+                                   ref-type="bibr"
+                                   id="IDfb2e630e-46cd-4321-85b5-bf05f547addd"
+                        >1230</xref>]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Line 2</td>
+                        <td>(<xref rid="bib1" ref-type="bibr"
+                                   id="IDddf8dd89-6236-4817-b6bf-0ff16e5d4c08"
+                        >ἐπιστάμαν</xref>):
+                        </td>
+                        <td>test</td>
+                        <td>[<xref rid="bib1a"
+                                   ref-type="bibr"
+                                   id="IDeb2e630e-46cd-4321-85b5-bf05f547addd"
+                        >1230</xref>]
+                        </td>
+                    </tr>
+                </table>
+            </table-wrap>
+
+        </sec>
+    </body>
+    <back>
+
+    </back>
+</article>

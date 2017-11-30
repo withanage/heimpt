@@ -24,34 +24,32 @@
                 <article-title>Title</article-title>
             </title-group>
             <contrib-group>
-            
                 <contrib contrib-type="author" corresp="yes" id="author-1">
                     <name>
                         <surname>Miller</surname>
                         <given-names>David</given-names>
                     </name>
-                <bio> <p>asdsadsassss</p></bio>
+                    <bio>
+                        <p>asdsadsassss</p>
+                    </bio>
                 </contrib>
                 <contrib contrib-type="editor" corresp="yes" id="editor-1">
                     <name>
                         <surname>Groves</surname>
                         <given-names>Jay </given-names>
                     </name>
-                   
                     <xref ref-type="aff" rid="aff1"/>
                     <xref ref-type="other" rid="par-1"/>
                     <xref ref-type="fn" rid="con5"/>
                 </contrib>
-                <aff id="aff1">
-                    <institution content-type="dept">Department of Chemistry</institution>,  
+                <aff id="aff1"> <institution content-type="dept"
+                    >Department of Chemistry</institution>,  
                     <institution>  Berkeley</institution>,
                     <addr-line>
-                        <named-content   content-type="city" >Berkeley</named-content>
+                    <named-content content-type="city">Berkeley</named-content>
                     </addr-line>, 
-                    <country>United States</country>
-                </aff>
+                    <country>United States</country> </aff>
             </contrib-group>
-
             <!--author-notes>
                 <corresp id="cor1">
                     <label>*</label>For correspondence: <email>JTGroves@lbl.gov</email></corresp>
@@ -67,27 +65,30 @@
             </pub-date>
             <volume>2</volume>
             <elocation-id>e00778</elocation-id>
-            <history>
-                <date date-type="received">
-                    <day>26</day>
-                    <month>03</month>
-                    <year>2017</year>
-                </date>
-                <date date-type="accepted">
-                    <day>17</day>
-                    <month>05</month>
-                    <year>2017</year>
-                </date>
-            </history>
+            <history> <date date-type="received">
+                <day>26</day>
+                <month>03</month>
+                <year>2017</year>
+                </date> <date date-type="accepted">
+                <day>17</day>
+                <month>05</month>
+                <year>2017</year>
+                </date> </history>
             <permissions>
                 <copyright-statement>Text © 2017 by the authors.</copyright-statement>
                 <copyright-year>2017</copyright-year>
-                <license license-type="open-access" xlink:href="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="de">
-                    <license-p><inline-graphic xlink:href="http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-sa.svg"/>Dieses Werk ist unter der Creative-Commons-Lizenz 4.0 (CC BY-SA 4.0)
+                <license license-type="open-access"
+                    xlink:href="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="de">
+                    <license-p><inline-graphic
+                        xlink:href="http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-sa.svg"
+                        />Dieses Werk ist unter der Creative-Commons-Lizenz 4.0 (CC BY-SA 4.0)
                         veröffentlicht.</license-p>
                 </license>
-                <license license-type="open-access" xlink:href="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="en">
-                    <license-p><inline-graphic xlink:href="http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-sa.svg"/>This book is published under the Creative Commons License 4.0 (CC BY-SA
+                <license license-type="open-access"
+                    xlink:href="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="en">
+                    <license-p><inline-graphic
+                        xlink:href="http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-sa.svg"
+                        />This book is published under the Creative Commons License 4.0 (CC BY-SA
                         4.0).</license-p>
                 </license>
             </permissions>
@@ -96,10 +97,10 @@
                 <title>Abstract Title</title>
                 <p>---------------------------------------------------------------------------------------------</p>
                 <p>article-meta Abstract text BEGIN</p>
-                <p> <bold>DOI:</bold>  <ext-link ext-link-type="doi" xlink:href="10.77777.123456.001" >http://dx.doi.org/10.77777.123456.001</ext-link> </p>
+                <p> <bold>DOI:</bold> <ext-link ext-link-type="doi" xlink:href="10.77777.123456.001"
+                    >http://dx.doi.org/10.77777.123456.001</ext-link> </p>
                 <p>article-meta Abstract text END</p>
                 <p>---------------------------------------------------------------------------------------------</p>
-
             </abstract>
             <kwd-group kwd-group-type="author-keywords">
                 <title>Author keywords</title>
@@ -153,14 +154,11 @@
             <label> (Section label)  </label>
             <title> Inner Structure  </title>
             <sec-meta>
-
                 <abstract id="abs_2">
                     <title>Abstract 1</title>
                     <p>---------------------------------------------------------------------------------------------</p>
-
                     <p>Abstract text in sec-mata</p>
                     <p>---------------------------------------------------------------------------------------------</p>
-
                 </abstract>
                 <contrib-group content-type="section">
                     <contrib contrib-type="section-editor" id="sec-author-1">
@@ -173,7 +171,7 @@
                             <institution>Howard Hughes Medical Institute, Stanford
                                 University</institution>, <country>United States</country></aff>
                     </contrib>
-                    <contrib contrib-type="section-editor"  id="sec-editor-2">
+                    <contrib contrib-type="section-editor" id="sec-editor-2">
                         <name>
                             <surname>Withanage</surname>
                             <given-names>Dulip </given-names>
@@ -185,105 +183,154 @@
                     </contrib>
                 </contrib-group>
             </sec-meta>
-
             <p>Inner Structure text</p>
+       
+            <p><xref   ref-type="other" ridoid="movie301">Video 1</xref></p>
+            <p>
+                <media content-type="play-in-place height-250 width-310" id="movie301"
+                       mime-subtype="mov" mimetype="video" xlink:href="http://heidicon.ub.uni-heidelberg.de/emsfile/asset?t=1&amp;i=unib-heidelberg&amp;c=1036&amp;o=609754&amp;v=original&amp;w=768&amp;h=416&amp;checksum=3df4b30b631abac19fbe1348a154a8f7&amp;asset=1">
+                    <object-id pub-id-type= specific-use="poster">10.1063/1.4807071.1</object-id>
+                    <label>Seq. 3.1</label>
+                    <caption>
+                        <title>Prousts Diktat (0:02:10–0:02:50)</title>
+                        <p>
+                            <!-- <bold> </bold> -->
+                            <ext-link ext-link-type="url" xlink:href="http://heidicon.ub.uni-heidelberg.de/id/609754">http://heidicon.ub.uni-heidelberg.de/id/609754</ext-link>
+                        </p>
+                    </caption>
+                </media>
+            </p>
+
+
             <sec>
                 <title> title 1.1 </title>
-
-
                 <p> This is a NON-SERIF text</p>
                 <p> <serif>This is a serif text</serif></p>
                 <p> This is a NON-SERIF text</p>
-
-
-
-
                 <list list-type="bullet">
-                <list-item>
-                    <p>This is a <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">link</ext-link>
-                    </p>
-                    <p>This is a <italic><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">italic link</ext-link></italic>
+                    <list-item>
+                        <p>This is a <ext-link xmlns:xlink="http://www.w3.org/1999/xlink"
+                            xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri"
+                            xlink:type="simple">link</ext-link> </p>
+                        <p>This is a <italic><ext-link xmlns:xlink="http://www.w3.org/1999/xlink"
+                            xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri"
+                            xlink:type="simple"
+                            >italic link</ext-link></italic>
                         and a text</p>
-
-                    <p>Any <xref rid="mc1" ref-type="bibr" id="e1236218736">mixed-citation</xref>  necessarily conserves the <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">meaning</ext-link> of a quoted passage. This is usually
+                        <p>Any <xref rid="mc1" ref-type="bibr" id="e1236218736"
+                            >mixed-citation</xref>  necessarily conserves the <ext-link
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri"
+                            xlink:type="simple"
+                            >meaning</ext-link> of a quoted passage. This is usually
                         reflected in the reproduction of its letters, numbers, symbols, punctuation marks,
                         spacing, capitalisation, small capitals, bold print, italics, and line breaks.</p>
-                </list-item>
-                <list-item>
-                    <p>By contrast, a quotation does not usually conserve the font type. A text in Arial may
+                    </list-item>
+                    <list-item>
+                        <p>By contrast, a quotation does not usually conserve the font type. A text in Arial may
                         be quoted in Times New Roman without the need to mention this change. Font type is
                         thus regarded as part of the standard formal background of a text. However, if an
                         original text were to use various fonts in order to transmit a message, e.g. in a
                         (constructed) original sentence such as </p>
-                    <p><disp-quote id="dispquote8"><p>(10) Short passages are easier to read if typefaces without serifs are used (e.g. in
+                        <p><disp-quote id="dispquote8">
+                            <p>(10) Short passages are easier to read if typefaces without serifs are used (e.g. in
                         <italic>This is a serif typeface</italic> as opposed to <italic>This is a sans serif
-                            typeface</italic>).</p></disp-quote></p>
-                    <p>one would expect a stricter observance of formal aspects in quoting than usual—at
+                            typeface</italic>).</p>
+                            </disp-quote></p>
+                        <p>one would expect a stricter observance of formal aspects in quoting than usual—at
                         least for the self-referential text passage printed in the font type under consideration. </p>
-                </list-item>
+                    </list-item>
                 </list>
                 <list>
-                    <list-item><p>Unordered List without Attribute list-type  1 </p></list-item>
-
+                    <list-item>
+                        <p>Unordered List without Attribute list-type  1 </p>
+                    </list-item>
                     <list-item>
                         <list>
-                            <list-item><p>Unordered List without Attribute list-type level 2.1 </p></list-item>
+                            <list-item>
+                                <p>Unordered List without Attribute list-type level 2.1 </p>
+                            </list-item>
                             <list-item>
                                 <list>
-                                    <list-item><p>Unordered List without Attribute list-type  level 2.2.1 </p></list-item>
-
+                                    <list-item>
+                                        <p>Unordered List without Attribute list-type  level 2.2.1 </p>
+                                    </list-item>
                                 </list>
                             </list-item>
-                            <list-item><p>Unordered List without Attribute list-type level 2 </p></list-item>
+                            <list-item>
+                                <p>Unordered List without Attribute list-type level 2 </p>
+                            </list-item>
                             <list-item>
                                 <list>
-                                    <list-item><p>Unordered List without Attribute list-type level 2.1 </p></list-item>
+                                    <list-item>
+                                        <p>Unordered List without Attribute list-type level 2.1 </p>
+                                    </list-item>
                                     <list-item>
                                         <list>
-                                            <list-item><p>Unordered List without Attribute list-type  level 2.2.1 </p></list-item>
-
+                                            <list-item>
+                                                <p>Unordered List without Attribute list-type  level 2.2.1 </p>
+                                            </list-item>
                                         </list>
                                     </list-item>
-                                    <list-item><p>Unordered List without Attribute list-type level 2 </p></list-item>
+                                    <list-item>
+                                        <p>Unordered List without Attribute list-type level 2 </p>
+                                    </list-item>
                                     <list-item>
                                         <p>By contrast, a quotation does not usually conserve the font type. A text in Arial may
                                             be quoted in Times New Roman without the need to mention this change. Font type is
                                             thus regarded as part of the standard formal background of a text. However, if an
                                             original text were to use various fonts in order to transmit a message, e.g. in a
                                             (constructed) original sentence such as </p>
-                                        <p><disp-quote id="dispquote8"><p>(10) Short passages are easier to read if typefaces without serifs are used (e.g. in
+                                        <p><disp-quote id="dispquote8">
+                                            <p>(10) Short passages are easier to read if typefaces without serifs are used (e.g. in
                                             <italic>This is a serif typeface</italic> as opposed to <italic>This is a sans serif
-                                                typeface</italic>).</p></disp-quote></p>
+                                                typeface</italic>).</p>
+                                            </disp-quote></p>
                                         <p>one would expect a stricter observance of formal aspects in quoting than usual—at
                                             least for the self-referential text passage printed in the font type under consideration. </p>
                                     </list-item>
-
                                 </list>
                             </list-item>
                         </list>
                     </list-item>
-                    <list-item><p>Unordered List without Attribute list-type  3 </p></list-item>
-
-
+                    <list-item>
+                        <p>Unordered List without Attribute list-type  3 </p>
+                    </list-item>
                 </list>
-
-
                 <sec>
                     <title> title 2 </title>
-
-
                     <p>x2</p>
                     <sec>
-
                         <title> title 3</title>
-
                         <p>x3</p>
                         <sec>
-
                             <title> title 4</title>
-
-
-                            <table-wrap specific-use="rules"> <table> <tr> <td>Table</td> <td>(<xref rid="bib1" ref-type="bibr" id="IDedf8dd89-6236-4817-b6bf-0ff16e5d4c08">ἐπιστάμαν γὰρ καὶ λόγον [τὸν] προσείληϕε</xref>):</td> <td>&lt;BROTINUS&gt; Phil. [<xref rid="bib1a" ref-type="bibr" id="IDfb2e630e-46cd-4321-85b5-bf05f547addd">1230</xref>]</td> </tr> </table> </table-wrap>
+                            <table-wrap specific-use="rules">
+                                <table>
+                                    <tr>
+                                        <td></td>
+                                        <td>(<xref rid="bib1" ref-type="bibr"
+                                            id="IDedf8dd89-6236-4817-b6bf-0ff16e5d4c08"
+                                            >ἐπιστάμαν</xref>):</td>
+                                        <td>Test</td>
+                                        <td>[<xref rid="bib1a"
+                                            ref-type="bibr"
+                                            id="IDfb2e630e-46cd-4321-85b5-bf05f547addd"
+                                            >1230</xref>]</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Line 2</td>
+                                        <td>(<xref rid="bib1" ref-type="bibr"
+                                                   id="IDddf8dd89-6236-4817-b6bf-0ff16e5d4c08"
+                                        >ἐπιστάμαν</xref>):</td>
+                                        <td>test</td>
+                                        <td>[<xref rid="bib1a"
+                                                   ref-type="bibr"
+                                                   id="IDeb2e630e-46cd-4321-85b5-bf05f547addd"
+                                        >1230</xref>]</td>
+                                    </tr>
+                                </table>
+                            </table-wrap>
                             <sec>
                                 <title> title 5 </title>
                                 <p>x5</p>
@@ -317,29 +364,25 @@
         <sec id="sect1" sec-type="results">
             <title>Titel level 1</title>
             <sec-meta>
-
                 <abstract id="abs_2">
                     <title>Abstract xyz</title>
                     <p>---------------------------------------------------------------------------------------------</p>
-
                     <p>Abstract text in sec-mata</p>
                     <p>---------------------------------------------------------------------------------------------</p>
-
                 </abstract>
                 <contrib-group content-type="section">
-                <contrib contrib-type="section-editor" id="sec-author-3">
-                    <name>
-                        <surname>Brunger</surname>
-                        <given-names>Axel 2</given-names>
-                    </name>
-                    <role>section-editor</role>
-                    <aff>
-                        <institution>Howard Hughes Medical Institute, Stanford
+                    <contrib contrib-type="section-editor" id="sec-author-3">
+                        <name>
+                            <surname>Brunger</surname>
+                            <given-names>Axel 2</given-names>
+                        </name>
+                        <role>section-editor</role>
+                        <aff>
+                            <institution>Howard Hughes Medical Institute, Stanford
                             University</institution>, <country>United States</country></aff>
-                </contrib>
+                    </contrib>
                 </contrib-group>
             </sec-meta>
-
             <sec id="s2-1">
                 <title>Title level 2</title>
                 <p><xref ref-type="sec" rid="title8">title1</xref> Paragraph</p>
@@ -350,7 +393,160 @@
             </sec>
             <sec id="s2-4">
                 <title>Titel level 2</title>
-        <p>Inline Formular begin <!-- math mal intergration --> <inline-formula><mml:math id="inf15"> <mml:mrow> <mml:mrow> <mml:mo>〈</mml:mo> <mml:mrow> <mml:msub> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">off</mml:mi> </mml:msub> </mml:mrow> <mml:mo>〉</mml:mo> </mml:mrow> </mml:mrow> </mml:math></inline-formula> Inline Formular end <disp-formula id="equ2" ><mml:math id="m2"> <mml:mrow> <mml:msub> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">esc</mml:mi> </mml:msub> <mml:mo>=</mml:mo> <mml:mstyle displaystyle="true"> <mml:munderover> <mml:mo>∑</mml:mo> <mml:mrow> <mml:mi>i</mml:mi> <mml:mo>=</mml:mo> <mml:mn>0</mml:mn> </mml:mrow> <mml:mi>n</mml:mi> </mml:munderover> <mml:mrow> <mml:msubsup> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">off</mml:mi> <mml:mi>i</mml:mi> </mml:msubsup> </mml:mrow> </mml:mstyle> <mml:mo>+</mml:mo> <mml:mstyle displaystyle="true"> <mml:munderover> <mml:mo>∑</mml:mo> <mml:mrow> <mml:mi>i</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn> </mml:mrow> <mml:mi>n</mml:mi> </mml:munderover> <mml:mrow> <mml:msubsup> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">on</mml:mi> <mml:mi>i</mml:mi> </mml:msubsup> </mml:mrow> </mml:mstyle> <mml:mo>+</mml:mo> <mml:msub> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">exit</mml:mi> </mml:msub> </mml:mrow> </mml:math></disp-formula></p> <p>In this representation, and <inline-formula><mml:math id="inf17"> <mml:mrow> <mml:msubsup> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">on</mml:mi> <mml:mi>i</mml:mi> </mml:msubsup> </mml:mrow> </mml:math></inline-formula> are the individual dwell times in the bound and unbound configurations (<xref ref-type="fig" rid="fig6s1">Figure 6—figure supplement 1</xref>).<fig-group> <fig id="fig6s1" position="float" specific-use="child-fig"> <object-id pub-id-type="doi">10.77777.123456.014</object-id> <label>Figure 6—figure supplement 1.</label> <caption> <title>Stochastic reaction-diffusion simulation of time before MCC agonist pMHC escape from TCR clusters.</title> <p>Simulations of <inline-formula><mml:math id="inf56"> <mml:mrow> <mml:mfrac> <mml:mrow> <mml:msub> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">esc</mml:mi> </mml:msub> </mml:mrow> <mml:mrow> <mml:msub> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">off</mml:mi> </mml:msub> </mml:mrow> </mml:mfrac> </mml:mrow> </mml:math></inline-formula> as a function of TCR cluster size, <inline-formula><mml:math id="inf57"> <mml:mrow> <mml:msub> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">off</mml:mi> </mml:msub> </mml:mrow> </mml:math></inline-formula> , and <italic>k</italic><sub><italic>on</italic></sub>. The ratio <inline-formula><mml:math id="inf58"> <mml:mrow> <mml:mfrac> <mml:mrow> <mml:msub> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">esc</mml:mi> </mml:msub> </mml:mrow> <mml:mrow> <mml:msub> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">off</mml:mi> </mml:msub> </mml:mrow> </mml:mfrac> </mml:mrow> </mml:math></inline-formula>, which is an indicator of agonist pMHC entrapment, is a function of TCR cluster size and <italic>k</italic><sub><italic>on</italic></sub>, but not <italic>k</italic><sub><italic>off</italic></sub>. <italic>k</italic><sub><italic>on</italic></sub> = 0.51 µm<sup>2</sup>s<sup>−1</sup>molecule<sup>−1</sup> corresponds to the fastest average <italic>k</italic><sub><italic>on</italic></sub> that allows for rebinding to the same TCR. Only for unrealistically large TCR cluster sizes (approaching 1000 TCRs per cluster) and fast <italic>k</italic><sub><italic>on</italic></sub> is <inline-formula><mml:math id="inf59"> <mml:mrow> <mml:mfrac> <mml:mrow> <mml:msub> <mml:mi>τ</mml:mi> <mml:mrow> <mml:mi mathvariant="italic">esc</mml:mi> </mml:mrow> </mml:msub> </mml:mrow> <mml:mrow> <mml:msub> <mml:mi>τ</mml:mi> <mml:mi mathvariant="italic">off</mml:mi> </mml:msub> </mml:mrow> </mml:mfrac> <mml:mo>≫</mml:mo> <mml:mn>1</mml:mn> </mml:mrow> </mml:math></inline-formula>, meaning that entrapment due to millisecond-scale unbinding and rebinding is unlikely to result in the minute-scale dwell times observed in our experiments.</p> <p><bold>DOI:</bold><ext-link ext-link-type="doi" xlink:href="10.77777.123456.014" >http://dx.doi.org/10.77777.123456.014</ext-link></p> </caption> <graphic xlink:href="elife00778fs003"/> </fig> </fig-group></p>
+                <p>Inline Formular begin <!-- math mal intergration --> <inline-formula><mml:math
+                    id="inf15">
+                    <mml:mrow>
+                        <mml:mrow>
+                            <mml:mo>〈</mml:mo>
+                            <mml:mrow>
+                                <mml:msub>
+                                    <mml:mi>τ</mml:mi>
+                                    <mml:mi mathvariant="italic">off</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                            <mml:mo>〉</mml:mo>
+                        </mml:mrow>
+                    </mml:mrow>
+                    </mml:math></inline-formula> Inline Formular end <disp-formula id="equ2"
+                    ><mml:math id="m2">
+                    <mml:mrow>
+                        <mml:msub>
+                            <mml:mi>τ</mml:mi>
+                            <mml:mi mathvariant="italic">esc</mml:mi>
+                        </mml:msub>
+                        <mml:mo>=</mml:mo>
+                        <mml:mstyle displaystyle="true">
+                            <mml:munderover>
+                                <mml:mo>∑</mml:mo>
+                                <mml:mrow>
+                                    <mml:mi>i</mml:mi>
+                                    <mml:mo>=</mml:mo>
+                                    <mml:mn>0</mml:mn>
+                                </mml:mrow>
+                                <mml:mi>n</mml:mi>
+                            </mml:munderover>
+                            <mml:mrow>
+                                <mml:msubsup>
+                                    <mml:mi>τ</mml:mi>
+                                    <mml:mi mathvariant="italic">off</mml:mi>
+                                    <mml:mi>i</mml:mi>
+                                </mml:msubsup>
+                            </mml:mrow>
+                        </mml:mstyle>
+                        <mml:mo>+</mml:mo>
+                        <mml:mstyle displaystyle="true">
+                            <mml:munderover>
+                                <mml:mo>∑</mml:mo>
+                                <mml:mrow>
+                                    <mml:mi>i</mml:mi>
+                                    <mml:mo>=</mml:mo>
+                                    <mml:mn>1</mml:mn>
+                                </mml:mrow>
+                                <mml:mi>n</mml:mi>
+                            </mml:munderover>
+                            <mml:mrow>
+                                <mml:msubsup>
+                                    <mml:mi>τ</mml:mi>
+                                    <mml:mi mathvariant="italic">on</mml:mi>
+                                    <mml:mi>i</mml:mi>
+                                </mml:msubsup>
+                            </mml:mrow>
+                        </mml:mstyle>
+                        <mml:mo>+</mml:mo>
+                        <mml:msub>
+                            <mml:mi>τ</mml:mi>
+                            <mml:mi mathvariant="italic">exit</mml:mi>
+                        </mml:msub>
+                    </mml:mrow>
+                    </mml:math></disp-formula></p>
+                <p>In this representation, and <inline-formula><mml:math id="inf17">
+                    <mml:mrow>
+                        <mml:msubsup>
+                            <mml:mi>τ</mml:mi>
+                            <mml:mi mathvariant="italic">on</mml:mi>
+                            <mml:mi>i</mml:mi>
+                        </mml:msubsup>
+                    </mml:mrow>
+                    </mml:math></inline-formula> are the individual dwell times in the bound and unbound configurations (<xref
+                    ref-type="fig" rid="fig6s1">Figure 6—figure supplement 1</xref>).<fig-group>
+                    <fig id="fig6s1" position="float" specific-use="child-fig">
+                        <object-id pub-id-type="doi">10.77777.123456.014</object-id>
+                        <label>Figure 6—figure supplement 1.</label>
+                        <caption>
+                            <title>Stochastic reaction-diffusion simulation of time before MCC agonist pMHC escape from TCR clusters.</title>
+                            <p>Simulations of <inline-formula><mml:math id="inf56">
+                                <mml:mrow>
+                                    <mml:mfrac>
+                                        <mml:mrow>
+                                            <mml:msub>
+                                                <mml:mi>τ</mml:mi>
+                                                <mml:mi mathvariant="italic">esc</mml:mi>
+                                            </mml:msub>
+                                        </mml:mrow>
+                                        <mml:mrow>
+                                            <mml:msub>
+                                                <mml:mi>τ</mml:mi>
+                                                <mml:mi mathvariant="italic">off</mml:mi>
+                                            </mml:msub>
+                                        </mml:mrow>
+                                    </mml:mfrac>
+                                </mml:mrow>
+                                </mml:math></inline-formula> as a function of TCR cluster size, <inline-formula><mml:math
+                                id="inf57">
+                                <mml:mrow>
+                                    <mml:msub>
+                                        <mml:mi>τ</mml:mi>
+                                        <mml:mi mathvariant="italic">off</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                                </mml:math></inline-formula> , and <italic>k</italic><sub><italic>on</italic></sub>. The ratio <inline-formula><mml:math
+                                id="inf58">
+                                <mml:mrow>
+                                    <mml:mfrac>
+                                        <mml:mrow>
+                                            <mml:msub>
+                                                <mml:mi>τ</mml:mi>
+                                                <mml:mi mathvariant="italic">esc</mml:mi>
+                                            </mml:msub>
+                                        </mml:mrow>
+                                        <mml:mrow>
+                                            <mml:msub>
+                                                <mml:mi>τ</mml:mi>
+                                                <mml:mi mathvariant="italic">off</mml:mi>
+                                            </mml:msub>
+                                        </mml:mrow>
+                                    </mml:mfrac>
+                                </mml:mrow>
+                                </mml:math></inline-formula>, which is an indicator of agonist pMHC entrapment, is a function of TCR cluster size and <italic>k</italic><sub><italic>on</italic></sub>, but not <italic>k</italic><sub><italic>off</italic></sub>. <italic>k</italic><sub><italic>on</italic></sub> = 0.51 µm<sup>2</sup>s<sup>−1</sup>molecule<sup>−1</sup> corresponds to the fastest average <italic>k</italic><sub><italic>on</italic></sub> that allows for rebinding to the same TCR. Only for unrealistically large TCR cluster sizes (approaching 1000 TCRs per cluster) and fast <italic>k</italic><sub><italic>on</italic></sub> is <inline-formula><mml:math
+                                id="inf59">
+                                <mml:mrow>
+                                    <mml:mfrac>
+                                        <mml:mrow>
+                                            <mml:msub>
+                                                <mml:mi>τ</mml:mi>
+                                                <mml:mrow>
+                                                  <mml:mi mathvariant="italic">esc</mml:mi>
+                                                </mml:mrow>
+                                            </mml:msub>
+                                        </mml:mrow>
+                                        <mml:mrow>
+                                            <mml:msub>
+                                                <mml:mi>τ</mml:mi>
+                                                <mml:mi mathvariant="italic">off</mml:mi>
+                                            </mml:msub>
+                                        </mml:mrow>
+                                    </mml:mfrac>
+                                    <mml:mo>≫</mml:mo>
+                                    <mml:mn>1</mml:mn>
+                                </mml:mrow>
+                                </mml:math></inline-formula>, meaning that entrapment due to millisecond-scale unbinding and rebinding is unlikely to result in the minute-scale dwell times observed in our experiments.</p>
+                            <p><bold>DOI:</bold><ext-link ext-link-type="doi"
+                                xlink:href="10.77777.123456.014"
+                                >http://dx.doi.org/10.77777.123456.014</ext-link></p>
+                        </caption>
+                        <graphic xlink:href="48-75-545-1-2-20160418.jpg"/>
+                    </fig>
+                    </fig-group></p>
             </sec>
         </sec>
     </body>
@@ -361,12 +557,16 @@
         </ack>
         <fn-group>
             <fn id="bibd2e50">
-                <p> For an explanation of the interview transcript abbreviations used throughout <ext-link xlink:href="http://www.google.de">Google</ext-link> <xref ref-type="sec" rid="s1"
-                >106</xref>
+                <p> For an explanation of the interview transcript abbreviations used throughout <ext-link
+                    xlink:href="http://www.google.de">Google</ext-link> <xref ref-type="sec"
+                    rid="s1">106</xref>
                     this work, see Appendix A.</p>
             </fn>
             <fn>
-                <p>This is a <italic><ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">italic link</ext-link></italic>
+                <p>This is a <italic><ext-link xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri"
+                    xlink:type="simple"
+                    >italic link</ext-link></italic>
                 and a text</p>
             </fn>
         </fn-group>
@@ -419,48 +619,46 @@
                 </fn>
             </fn-group>
         </sec>
-       
         <ref-list>
-
-            <ref id ="mc1">
-                <mixed-citation> This is a <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">link</ext-link>
-            </mixed-citation>
+            <ref id="mc1">
+                <mixed-citation> This is a <ext-link xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri"
+                    xlink:type="simple">link</ext-link> </mixed-citation>
             </ref>
             <ref>
-                <mixed-citation>M&#252;ller, Johannes (1826). <italic>Zur vergleichenden Physiologie des Gesichtssinnes des <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">Menschen</ext-link> und der Thiere nebst einem Versuch &#252;ber die Bewegungen der Augen und &#252;ber den menschlichen Blick</italic>. Leipzig: C. Cnobloch.</mixed-citation>
+                <mixed-citation>M&#252;ller, Johannes (1826). <italic>Zur vergleichenden Physiologie des Gesichtssinnes des <ext-link
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri"
+                    xlink:type="simple"
+                    >Menschen</ext-link> und der Thiere nebst einem Versuch &#252;ber die Bewegungen der Augen und &#252;ber den menschlichen Blick</italic>. Leipzig: C. Cnobloch.</mixed-citation>
             </ref>
             <ref>
-                <mixed-citation>M&#252;ller, <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri" xlink:type="simple">Ludwig</ext-link> (1913/1914). [Rezension:] Kleine Schriften von Wilhelm Wundt. Zweiter Band. <italic>Politisch-anthropologische Revue. Monatsschrift f&#252;r praktische Poolitik, f&#252;r politische Bildung und Erziehung auf biologischer Grundlage, 12</italic>, 334&#8211;335.</mixed-citation>
+                <mixed-citation>M&#252;ller, <ext-link xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="http://heiup.uni-heidelberg.de/" ext-link-type="uri"
+                    xlink:type="simple"
+                    >Ludwig</ext-link> (1913/1914). [Rezension:] Kleine Schriften von Wilhelm Wundt. Zweiter Band. <italic>Politisch-anthropologische Revue. Monatsschrift f&#252;r praktische Poolitik, f&#252;r politische Bildung und Erziehung auf biologischer Grundlage, 12</italic>, 334&#8211;335.</mixed-citation>
             </ref>
             <ref id="bib1">
                 <element-citation publication-type="journal">
-                    <person-group person-group-type="author">
-                        <name>
-                            <surname>Adams</surname>
-                            <given-names>JJ</given-names>
-                        </name>
-                        <name>
-                            <surname>Narayanan</surname>
-                            <given-names>S</given-names>
-                        </name>
-                        <name>
-                            <surname>Liu</surname>
-                            <given-names>B</given-names>
-                        </name>
-                        <name>
-                            <surname>Birnbaum</surname>
-                            <given-names>ME</given-names>
-                        </name>
-                        <name>
-                            <surname>Kruse</surname>
-                            <given-names>AC</given-names>
-                        </name>
-                        <name>
-                            <surname>Bowerman</surname>
-                            <given-names>NA</given-names>
-                        </name>
-                        <etal/>
-                    </person-group>
+                    <person-group person-group-type="author"> <name>
+                        <surname>Adams</surname>
+                        <given-names>JJ</given-names>
+                        </name> <name>
+                        <surname>Narayanan</surname>
+                        <given-names>S</given-names>
+                        </name> <name>
+                        <surname>Liu</surname>
+                        <given-names>B</given-names>
+                        </name> <name>
+                        <surname>Birnbaum</surname>
+                        <given-names>ME</given-names>
+                        </name> <name>
+                        <surname>Kruse</surname>
+                        <given-names>AC</given-names>
+                        </name> <name>
+                        <surname>Bowerman</surname>
+                        <given-names>NA</given-names>
+                        </name> <etal/> </person-group>
                     <year>2011</year>
                     <article-title>T cell receptor signaling is limited by docking geometry to
                         peptide-major histocompatibility complex</article-title>
@@ -473,16 +671,13 @@
             </ref>
             <ref id="bib1a">
                 <element-citation publication-type="journal">
-                    <person-group person-group-type="author">
-                        <name>
-                            <surname>Altan-Bonnet</surname>
-                            <given-names>G</given-names>
-                        </name>
-                        <name>
-                            <surname>Germain</surname>
-                            <given-names>RN</given-names>
-                        </name>
-                    </person-group>
+                    <person-group person-group-type="author"> <name>
+                        <surname>Altan-Bonnet</surname>
+                        <given-names>G</given-names>
+                        </name> <name>
+                        <surname>Germain</surname>
+                        <given-names>RN</given-names>
+                        </name> </person-group>
                     <year>2005</year>
                     <article-title>Modeling T Cell antigen discrimination based on feedback control
                         of digital ERK responses</article-title>
