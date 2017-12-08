@@ -1,5 +1,5 @@
 # coding: utf-8
-#!/usr/bin/env python
+# !/usr/bin/env python
 
 # Copyright 08-May-2016, 14:51:07
 #
@@ -18,19 +18,24 @@ import time
 import uuid
 import zipfile
 import re
+
+try:
+    from citation_parser import CitationParser
+except ImportError:
+    print('pip install citation-parser')
+    print('pip install http://www.antlr3.org/download/Python/antlr_python_runtime-3.1.3.tar.gz')
+
 try:
     from lxml import etree
     from lxml import objectify
 except ImportError:
     print("Failed to import ElementTree, plase install")
 
-
 LOG_FILE = 'jatsPostProcess.log'
 numeral_map = tuple(zip(
     (1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1),
     ('M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I')
 ))
-
 
 logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG)
 
@@ -49,19 +54,20 @@ class PostProcess:
             sys.exit(1)
 
         self.JATS_XML_HEADER = '<article xmlns:xlink="http://www.w3.org/1999/xlink">'
+        self.doc_type = '<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">'
+        self.xml = '<?xml version="1.0" encoding="UTF-8"?>'
 
-    def print_unreferenced_figs(self,tr,f):
-            a = self.get_fig_refs_body(tr)
-            b = self.get_fig_ids_body(tr)
-            if len(a-b) > 0:
-                print f,a-b
-            return tr
-
+    def print_unreferenced_figs(self, tr, f):
+        a = self.get_fig_refs_body(tr)
+        b = self.get_fig_ids_body(tr)
+        if len(a - b) > 0:
+            print f, a - b
+        return tr
 
     def apply_transformations(self, tr, context, f, chapter, order, count):
         ''' main method to apply transformations'''
         cfg = self.config["createFull"][context]
-        tr = self.remove_not_used_in_back(tr, "ref-list/ref")
+        # tr = self.remove_not_used_in_back(tr, "ref-list/ref")
         tr = self.remove_not_used_in_back(tr, "fn-group/fn")
         tr = self.set_uuid_figs(tr)
         if "enumeration" in cfg.keys():
@@ -72,11 +78,11 @@ class PostProcess:
                 tr, count = self.set_enumeration(
                     tr, "xref", "ref-type", "fn", context, f, chapter, order, count)
         tr = self.remove_name_duplicates_speech(tr)
-        tr = self.set_numbering(tr, ['speech', 'disp-quote',"abstract"])
+        tr = self.set_numbering(tr, ['speech', 'disp-quote', "abstract"])
         tr = self.get_unreferenced_footnotes(tr)
         tr = self.set_uuid_fns(tr, 'fn')
 
-        tr = self.print_unreferenced_figs(tr,f)
+        tr = self.print_unreferenced_figs(tr, f)
 
         tr = self.merge_repeating_neighbours(tr, "disp-quote")
         if "references" in cfg.keys():
@@ -84,13 +90,63 @@ class PostProcess:
             if "duplicates" in cfg["references"].keys():
                 for i in cfg["references"]["duplicates"]:
                     tr = self.remove_duplicate_refs(tr, i)
-        if "citations-to-refererences" in cfg.keys():
-            if cfg["citations-to-refererences"] ==1 :
+
+        if "citations-to-references" in cfg.keys():
+            if cfg["citations-to-references"] == 1:
                 tr = self.citations_to_references(tr)
+        if "references-to-citations" in cfg.keys():
+            if cfg["references-to-citations"] == 1:
+                tr = self.references_to_citations(tr)
+
+        if "create-references" in cfg.keys():
+            if cfg["create-references"] == 1:
+                tr = self.create_references(tr)
 
         tr = self.remove_duplicate_http_links(tr)
 
         return tr, count
+
+    def references_to_citations(self, tr):
+        """ Converts References Block to real citations
+
+        Returns
+         -------
+         tr : elementtree
+
+        """
+
+        root = tr.getroot()
+        titles = root.findall('.//body/sec/sec/sec/title')
+        rl = root.find('.//ref-list')
+        cp = CitationParser()
+
+        for t in titles:
+            if t.text == 'References':
+                children = t.getparent().getchildren()
+                for child in children:
+                    if child.tag == 'p':
+                        sc = etree.Element('ref')
+                        cit = copy.deepcopy(child)
+                        cit.tag = 'mixed-citation'
+                        if rl is not None:
+                            sc.append(cit)
+                            rl.append(sc)
+        return tr
+
+    def create_references(self, tr):
+        xrefs = tr.findall('.//xref')
+        cp = CitationParser()
+        rl = tr.findall('.//ref')
+        print(rl)
+        for xref in xrefs:
+            if xref.attrib['ref-type'] == 'bibr':
+
+                if xref.text is not None:
+                    print 100 * '-'
+
+                    print(xref.text)
+                    t = cp.parse(xref.text)
+        return tr
 
     def citations_to_references(self, tr):
         """ Removes  mixed-citation block, adds as a <sec> Section element
@@ -113,10 +169,13 @@ class PostProcess:
                 r.tag = 'p'
                 sc.append(r)
             bd.append(sc)
+            '''
+            # delete references 
             rlst = t.find('.//ref-list')
             rlst.getparent().remove(rlst)
             bck = t.find('.//back')
             bck.append(etree.Element('ref-list'))
+            '''
 
         return tr
 
@@ -149,7 +208,7 @@ class PostProcess:
         ''' main method : creates zip, merges and transforms xml files '''
         cfb = self.config['createFull'][context]
 
-        self.create_zip(cfb["dir"], cfb["files"])
+        # self.create_zip(cfb["dir"], cfb["files"])
 
         fullfile = cfb["fullfile"].keys()[0]
 
@@ -211,8 +270,8 @@ class PostProcess:
                 #  k = etree.XML('<p><bold>' + str(number) +' </bold>   ' +self.get_stringified_children(etree.fromstring(i).getchildren()[0]) + '</p>')
                 #  fns_p.append(etree.tostring(k))
 
-                out_fn = out = "%s%s<body><sec><title>%s</title>%s</sec></body><back></back></article>" % (
-                    self.JATS_XML_HEADER, header_text, 'Anmerkungen', ''.join(fns_p))
+                out_fn = out = "%s%s%%s%s<body><sec><title>%s</title>%s</sec></body><back></back></article>" % (
+                    self.xml, self.doc_type, self.JATS_XML_HEADER, header_text, 'Anmerkungen', ''.join(fns_p))
                 f = open(fpfn, 'w')
                 f.write(out_fn)
                 f.close()
@@ -225,12 +284,14 @@ class PostProcess:
         body_text = ''.join(body_secs)
         fns = ''.join(back_fns)
         refs = ''.join(back_refs)
-        out = "%s%s<body>%s</body><back><fn-group>%s</fn-group><ref-list>%s</ref-list></back></article>" % (
-            self.JATS_XML_HEADER, header_text, body_text, fns, refs)
-        f = open(fp, 'w')
-        f.write(out)
-        logging.info('Writing file\t{0}'.format(fp))
-        f.close()
+
+
+        out = "%s%s%s<body>%s</body><back><fn-group>%s</fn-group><ref-list>%s</ref-list></back></article>" % (
+            self.xml,  self.JATS_XML_HEADER, header_text, body_text, fns, refs)
+        #f = open(fp, 'w')
+        #f.write(out)
+        #logging.info('Writing file\t{0}'.format(fp))
+        #f.close()
         count = 1
         tr = self.apply_transformations(
             self.get_etree(fp), context, fullfile, False, 0, count)
@@ -242,12 +303,25 @@ class PostProcess:
         if isinstance(tree, etree._ElementTree):
             try:
                 etree.cleanup_namespaces(tree.getroot())
+                import xml.etree.cElementTree as ElementTree
+
                 tree.write(
                     f,
                     pretty_print=True,
                     xml_declaration=True,
                     encoding='UTF-8')
-                logging.info('File written {0}'.format(f))
+                with open(f, 'w') as ff:
+                    ff.write(self.xml+self.doc_type)
+                    ff.write(etree.tostring(tree))
+                #new_header = '<?xml version="1.0" encoding="UTF-8" ?>\n' \
+                #             '<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">\n'
+
+                #target_xml = re.sub(u"\<\?xml .+?>", new_header, etree.tostring(tree))
+                #with open(f, 'w') as out:
+                #    out.write(target_xml.encode('utf8'))
+                logging.debug('File written {0}'.format(f))
+
+
             except:
                 logging.info(self.config['errors']['FILE_NOT_WRITTEN'])
 
@@ -310,6 +384,7 @@ class PostProcess:
                 if ref.keys():
                     back_refs.add(ref.attrib['id'])
         return back_refs
+
     def get_footnotes_body(self, tree):
         '''returns footnotes in body '''
         body_fns = Set()
@@ -372,7 +447,7 @@ class PostProcess:
                 if i.getparent().getprevious() is not None:
                     if i.getparent().getprevious().getchildren():
                         if i.getparent().getprevious().getchildren()[
-                                0].tag == etype:
+                            0].tag == etype:
                             i.getparent().getprevious().getchildren()[
                                 0].append(copy.deepcopy(i.getchildren()[0]))
                             i.getparent().getparent().remove(i.getparent())
@@ -431,18 +506,17 @@ class PostProcess:
             p.remove(c)
         return tree
 
-
-
     def remove_duplicate_http_links(self, tr):
-        #HYPERLINK          "http://upload.wikimedia.org/wikipedia/commons/4/4b/%C3%9Altima_Cena_-Da_Vinci_5.jpg"
-        #<ext-link xlink:href="http://upload.wikimedia.org/wikipedia/commons/4/4b/%C3%9Altima_Cena_-Da_Vinci_5.jpg"
+        # HYPERLINK          "http://upload.wikimedia.org/wikipedia/commons/4/4b/%C3%9Altima_Cena_-Da_Vinci_5.jpg"
+        # <ext-link xlink:href="http://upload.wikimedia.org/wikipedia/commons/4/4b/%C3%9Altima_Cena_-Da_Vinci_5.jpg"
         # ext-link-type="uri" xlink:type="simple">http://upload.wikimedia.org/wikipedia/commons/4/4b/%C3%9Altima_Cena_-Da_Vinci_5.jpg</ext-link>
-        tr_str =  etree.tostring(tr, encoding='utf8', method='xml').replace('\n', ' ').replace('\r', '')
-        tr_str =  re.sub('HYPERLINK(\W)*(http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F])))(\S)*','',tr_str)
+        tr_str = etree.tostring(tr, encoding='utf8', method='xml').replace('\n', ' ').replace('\r', '')
+        tr_str = re.sub(
+            'HYPERLINK(\W)*(http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F])))(\S)*', '',
+            tr_str)
         root = etree.fromstring(tr_str)
         tr = etree.ElementTree(root)
         return tr
-
 
     def remove_duplicate_refs(self, tr, tag_list):
         ''' removes duplicate references'''
@@ -475,7 +549,7 @@ class PostProcess:
             i = 0
             for key in drf:
                 for xref in tr.findall(
-                        './/xref[@rid="' + drf[key] + '"]'):
+                                        './/xref[@rid="' + drf[key] + '"]'):
                     xref.set('rid', key)
                 for ref in tr.findall('.//ref[@id="' + drf[key] + '"]'):
                     i += 1
@@ -496,7 +570,6 @@ class PostProcess:
         body_refs = self.get_ref_ids_body(tr)
         back_refs = self.get_ref_ids_back(tr)
 
-
         for i in back_refs:
             if i in body_refs:
                 pass
@@ -506,12 +579,10 @@ class PostProcess:
 
                 for e in elems:
                     self.remove_element(e)
-        #TODO remove without ids
-        for e in tr.getroot().xpath('.//back/'+tag+'[not(@id)]'):
+        # TODO remove without ids
+        for e in tr.getroot().xpath('.//back/' + tag + '[not(@id)]'):
             self.remove_element(e)
         return tr
-
-
 
     def remove_element(self, e):
         if e.getparent() is not None:
@@ -545,7 +616,7 @@ class PostProcess:
         elems = tr.getroot().findall(searchTag)
         cfg = self.config["createFull"][context]
         if chapter:
-            cf = cfg['files'][order][f]
+            cf = cfg["files"][order][f]
         else:
             cf = cfg['fullfile'][f]
 
@@ -605,7 +676,6 @@ class PostProcess:
         fns = tr.getroot().findall(
             ''.join(['.//xref/[@ref-type="', "fig", '"]']))
         for i in fns:
-
             rid = ''.join(['fig', str(uuid.uuid4().int)])
             f[i.attrib['rid']] = rid
             i.set('rid', rid)
@@ -643,9 +713,10 @@ def main():
         p.create_files(context)
         with open(LOG_FILE) as f:
             print f.read()
-        os.remove(LOG_FILE)
+            # os.remove(LOG_FILE)
     else:
         print 'json file not defined, please define the path'
+
 
 if __name__ == "__main__":
     main()
