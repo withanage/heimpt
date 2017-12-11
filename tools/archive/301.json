@@ -96,9 +96,9 @@
       },
      "enumeration": 1,
      "chapter-begin-reset":1,
-      "citations-to-references":0,
+      "citations-to-references":1,
       "references-to-citations":0,
-      "create-references":1
+      "create-automated-references":0
 
 
     }

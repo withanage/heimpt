@@ -67,6 +67,7 @@ class PostProcess:
     def apply_transformations(self, tr, context, f, chapter, order, count):
         ''' main method to apply transformations'''
         cfg = self.config["createFull"][context]
+
         # tr = self.remove_not_used_in_back(tr, "ref-list/ref")
         tr = self.remove_not_used_in_back(tr, "fn-group/fn")
         tr = self.set_uuid_figs(tr)
@@ -98,9 +99,9 @@ class PostProcess:
             if cfg["references-to-citations"] == 1:
                 tr = self.references_to_citations(tr)
 
-        if "create-references" in cfg.keys():
-            if cfg["create-references"] == 1:
-                tr = self.create_references(tr)
+        if "create-automated-references" in cfg.keys():
+            if cfg["create-automated-references"] == 1:
+                tr = self.create_automated_references(tr)
 
         tr = self.remove_duplicate_http_links(tr)
 
@@ -118,7 +119,7 @@ class PostProcess:
         root = tr.getroot()
         titles = root.findall('.//body/sec/sec/sec/title')
         rl = root.find('.//ref-list')
-        cp = CitationParser()
+        # cp = CitationParser()
 
         for t in titles:
             if t.text == 'References':
@@ -133,19 +134,49 @@ class PostProcess:
                             rl.append(sc)
         return tr
 
-    def create_references(self, tr):
+    def create_automated_references(self, tr):
+        # front
         xrefs = tr.findall('.//xref')
-        cp = CitationParser()
+        #cp = CitationParser()
+
+        # back
+
         rl = tr.findall('.//ref')
-        print(rl)
         for xref in xrefs:
             if xref.attrib['ref-type'] == 'bibr':
-
                 if xref.text is not None:
-                    print 100 * '-'
+                    t = xref.text
+                    a_y = t.split(' ')
+                    if len(a_y) > 1:
+                        work = a_y[0]
+                        year = a_y[1].replace(',', '')
+                        for ref in rl:
+                            if ref[0].text:
+                                try:
+                                    cit = ref[0].text.split(',')
+                                    cit_year = cit[1].split('.')[1]
+                                    if int(cit_year) == int(year) and str(cit[0]) == str(work):
+                                        idx = 'refIDAuto' + work + '' + year
+                                        xref.set('rid', idx)
+                                        ref.set('id', idx)
+                                except:
+                                    pass
+        i, j = 0, 0
+        print '\n| RefID (rid) | id |'
+        print '| --- |  --- |'
+        for xref in xrefs:
+            if xref.attrib['ref-type'] == 'bibr':
+                if    xref.attrib['rid'].startswith('ID'):
+                    print '| {} | {} | '.format(xref.attrib['rid'],  xref.attrib['id'])
+                    i += 1
+                else:
+                    j += 1
 
-                    print(xref.text)
-                    t = cp.parse(xref.text)
+        print '\n'
+        print i, 'nicht automatisiert'
+        print j, ' automatisiert'
+
+
         return tr
 
     def citations_to_references(self, tr):
@@ -158,7 +189,7 @@ class PostProcess:
         """
 
         t = tr.getroot()
-        bd = t.find('.//body')
+        bd = t.find('.//body/sec')
         sc = etree.Element('sec')
         ttl = etree.Element('title')
         ttl.text = 'References'
@@ -166,16 +197,17 @@ class PostProcess:
         mc = t.findall('.//mixed-citation')
         if len(mc) > 0:
             for r in mc:
-                r.tag = 'p'
-                sc.append(r)
-            bd.append(sc)
-            '''
-            # delete references 
-            rlst = t.find('.//ref-list')
-            rlst.getparent().remove(rlst)
-            bck = t.find('.//back')
-            bck.append(etree.Element('ref-list'))
-            '''
+                cit = copy.deepcopy(r)
+                cit.tag = 'p'
+                sc.append(cit)
+        bd.append(sc)
+        '''
+        # delete references 
+                rlst = t.find('.//ref-list')
+                rlst.getparent().remove(rlst)
+                bck = t.find('.//back')
+                bck.append(etree.Element('ref-list'))
+        '''
 
         return tr
 
@@ -285,20 +317,24 @@ class PostProcess:
         fns = ''.join(back_fns)
         refs = ''.join(back_refs)
 
-
         out = "%s%s%s<body>%s</body><back><fn-group>%s</fn-group><ref-list>%s</ref-list></back></article>" % (
-            self.xml,  self.JATS_XML_HEADER, header_text, body_text, fns, refs)
-        #f = open(fp, 'w')
-        #f.write(out)
-        #logging.info('Writing file\t{0}'.format(fp))
-        #f.close()
+            self.xml, self.JATS_XML_HEADER, header_text, body_text, fns, refs)
+        f = open(fp, 'w')
+        f.write(out)
+        # logging.info('Writing file\t{0}'.format(fp))
+        f.close()
         count = 1
         tr = self.apply_transformations(
             self.get_etree(fp), context, fullfile, False, 0, count)
         self.create_output(tr, fp)
 
+        # with open(fp, 'w') as ff:
+        #    ff.write(self.xml + self.doc_type)
+        #    ff.write(etree.tostring(tr))
+
     def create_output(self, tree, f):
         ''' write element tree to f '''
+        print 100*'-'
 
         if isinstance(tree, etree._ElementTree):
             try:
@@ -311,14 +347,8 @@ class PostProcess:
                     xml_declaration=True,
                     encoding='UTF-8')
                 with open(f, 'w') as ff:
-                    ff.write(self.xml+self.doc_type)
+                    ff.write(self.xml + self.doc_type)
                     ff.write(etree.tostring(tree))
-                #new_header = '<?xml version="1.0" encoding="UTF-8" ?>\n' \
-                #             '<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">\n'
-
-                #target_xml = re.sub(u"\<\?xml .+?>", new_header, etree.tostring(tree))
-                #with open(f, 'w') as out:
-                #    out.write(target_xml.encode('utf8'))
                 logging.debug('File written {0}'.format(f))
 
 
@@ -464,6 +494,7 @@ class PostProcess:
         for f in files:
             f = f.keys()[0]
             logging.info("Parsing file\t" + f)
+            print(os.path.join(dr, f))
             tr = etree.parse(os.path.join(dr, f))
             tr, count = self.apply_transformations(
                 tr, context, f, True, order, count)
@@ -711,9 +742,9 @@ def main():
         p = PostProcess(sys.argv[1])
         context = "example"
         p.create_files(context)
-        with open(LOG_FILE) as f:
-            print f.read()
-            # os.remove(LOG_FILE)
+        # with open(LOG_FILE) as f:
+        #    print f.read()
+        # os.remove(LOG_FILE)
     else:
         print 'json file not defined, please define the path'
 
