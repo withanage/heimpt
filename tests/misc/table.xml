@@ -176,7 +176,7 @@
             <table-wrap specific-use="rules">
                 <table>
                     <tr>
-                        <td></td>
+                        <td colspan="9" rowspan="1"></td>
                         <td>(<xref rid="bib1" ref-type="bibr"
                                    id="IDedf8dd89-6236-4817-b6bf-0ff16e5d4c08"
                         >ἐπιστάμαν</xref>):
