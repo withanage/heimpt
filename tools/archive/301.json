@@ -3,7 +3,7 @@
 
 
     "example": {
-      "dir": "/home/wit/Arbeit/OMP/Heiup/301/",
+      "dir": "/usr/local/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/301/submission/proof/",
       "files": [
         {
           "301-69-79769-1-10-20171127.xml": {
@@ -89,14 +89,14 @@
 
       ],
       "fullfile": {
-        "full.xml": {
+        "301-68-79913-1-10-20171212.xml": {
 
 
         }
       },
      "enumeration": 1,
      "chapter-begin-reset":1,
-      "citations-to-references":1,
+      "citations-to-references":0,
       "references-to-citations":0,
       "create-automated-references":0
 

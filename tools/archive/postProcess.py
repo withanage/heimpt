@@ -346,9 +346,9 @@ class PostProcess:
                     pretty_print=True,
                     xml_declaration=True,
                     encoding='UTF-8')
-                with open(f, 'w') as ff:
-                    ff.write(self.xml + self.doc_type)
-                    ff.write(etree.tostring(tree))
+                #with open(f, 'w') as ff:
+                #    ff.write(self.xml + self.doc_type)
+                #    ff.write(etree.tostring(tree))
                 logging.debug('File written {0}'.format(f))
 
 
