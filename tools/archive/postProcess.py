@@ -37,7 +37,7 @@ numeral_map = tuple(zip(
     ('M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I')
 ))
 
-logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG)
+#logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG)
 
 
 class PostProcess:
