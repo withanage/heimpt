@@ -60,7 +60,7 @@ Only needed if you generate PDF files.
 If your `$BUILD_DIR` differs from the previous path, change project path in `example.json`
 
 ```
-python $BUILD_DIR/heimpt/heimpt.py  $BUILD_DIR/configurations/example.json --debug
+python $BUILD_DIR/heimpt/heimpt.py  $BUILD_DIR/heimpt/configurations/example.json --debug
 ```
 ## Tests
 ```
