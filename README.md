@@ -31,7 +31,7 @@ Check if you have persmissions  to intall in the BUILD_DIR
  git clone https://github.com/withanage/heimpt.git $BUILD_DIR/heimpt 
  cd $BUILD_DIR/heimpt
  git submodule update --init --recursive
- pip install -r requirements.txt
+ sudo pip install -r requirements.txt
  java -version 
  ```
  Optionally required
@@ -60,7 +60,7 @@ Only needed if you generate PDF files.
 If your `$BUILD_DIR` differs from the previous path, change project path in `example.json`
 
 ```
-python $BUILD_DIR//heimmpt.py  $BUILD_DIR/configurations/example.json --debug
+python $BUILD_DIR/heimpt/heimpt.py  $BUILD_DIR/configurations/example.json --debug
 ```
 ## Tests
 ```
