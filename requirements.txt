@@ -1,6 +1,6 @@
 pydal
-mysql-connector-python-rf
 requests
 lxml
 termcolor
 sh
+
