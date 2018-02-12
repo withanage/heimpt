@@ -57,10 +57,10 @@ Only needed if you generate PDF files.
 
 
 ### Test your  Installation
-If your `$BUILD_DIR` differs from the previous path, change project path in `example.json`
+If your `$BUILD_DIR` differs from the previous path, change project path in `minimum_example.json`
 
 ```
-python $BUILD_DIR/heimpt/heimpt.py  $BUILD_DIR/heimpt/configurations/example.json --debug
+python $BUILD_DIR/heimpt/heimpt.py  $BUILD_DIR/heimpt/configurations/minimum_example.json --debug
 ```
 ## Tests
 ```
