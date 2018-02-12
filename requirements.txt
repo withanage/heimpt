@@ -3,4 +3,4 @@ requests
 lxml
 termcolor
 sh
-
+mysql-connector-python-rf
