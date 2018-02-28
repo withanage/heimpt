@@ -1,0 +1,105 @@
+{
+  "createFull": {
+
+
+    "example": {
+      "dir": "/usr/local/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/355/submission/proof/",
+      "files": [
+        {
+          "355-69-80454-1-10-20180228.xml": {
+            "order": 1
+          }
+        },
+        {
+          "355-69-80455-1-10-20180228.xml": {
+            "order": 2
+          }
+        },
+        {
+          "355-69-80456-1-10-20180228.xml": {
+            "order": 3
+          }
+        },
+        {
+          "355-69-80457-1-10-20180228.xml": {
+            "order": 4
+          }
+        },
+        {
+          "355-69-80458-1-10-20180228.xml": {
+            "order": 5
+          }
+        },
+        {
+          "355-69-80459-1-10-20180228.xml": {
+            "order": 6
+          }
+        },
+        {
+          "355-69-80460-1-10-20180228.xml": {
+            "order": 7
+          }
+        },
+        {
+          "355-69-80461-1-10-20180228.xml": {
+            "order": 8
+          }
+        },
+        {
+          "355-69-80462-1-10-20180228.xml": {
+            "order": 9
+          }
+        },
+        {
+          "355-69-80463-1-10-20180228.xml": {
+            "order": 10
+          }
+        },
+        {
+          "355-69-80464-1-10-20180228.xml": {
+            "order": 11
+          }
+        },
+        {
+          "355-69-80465-1-10-20180228.xml": {
+            "order": 12
+          }
+        },
+        {
+          "355-69-80466-1-10-20180228.xml": {
+            "order": 13
+          }
+        }
+
+
+
+      ],
+      "fullfile": {
+        "301-68-79913-1-10-20171212.xml": {
+
+
+        }
+      },
+     "enumeration": 1,
+     "chapter-begin-reset":1,
+      "citations-to-references":0,
+      "references-to-citations":0,
+      "create-automated-references":0
+
+
+    }
+
+
+
+  },
+  "errors": {
+    "FILE_NOT_FOUND": " File found or non-valid xml",
+    "FILE_NOT_WRITTEN": "No file written",
+    "FILE_NO_WRITE_ACCESS": "No permission to write file in the directory"
+  },
+  "zip": {
+    "enable": 1,
+    "name-prefix": "xml-back-"
+  }
+}
+
