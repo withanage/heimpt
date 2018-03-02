@@ -90,7 +90,7 @@
     <xsl:variable name="en_us_eISSN"> (eISSN)</xsl:variable>
     <xsl:variable name="en_us_ISBN">ISBN </xsl:variable>
     <xsl:variable name="en_us_ISSN">ISSN </xsl:variable>
-    <xsl:variable name="en_us_doi">doi: </xsl:variable>
+    <xsl:variable name="en_us_doi">doi:</xsl:variable>
 
     <xsl:variable name="en_us_toc-title">Table of Contents</xsl:variable>
 
