@@ -1,7 +1,7 @@
 {
   "createFull": {
     "example": {
-      "dir": "/usr/local/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/301/submission/proof/",
+      "dir": "/usr/local/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/331/submission/proof/",
       "files": [
         {
           "331-69-80618-1-10-20180312.xml": {
@@ -117,7 +117,7 @@
       "chapter-begin-reset": 1,
       "citations-to-references": 0,
       "references-to-citations": 0,
-      "create-automated-references": 0
+      "create-automated-references": 1
     }
   },
   "errors": {
