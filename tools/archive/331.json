@@ -1,0 +1,133 @@
+{
+  "createFull": {
+    "example": {
+      "dir": "/usr/local/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/301/submission/proof/",
+      "files": [
+        {
+          "331-69-80618-1-10-20180312.xml": {
+            "order": 1
+          }
+        },
+        {
+          "331-69-80619-1-10-20180312.xml": {
+            "order": 2
+          }
+        },
+        {
+          "331-69-80620-1-10-20180312.xml": {
+            "order": 3
+          }
+        },
+        {
+          "331-69-80624-1-10-20180312.xml": {
+            "order": 4
+          }
+        },
+        {
+          "331-69-80625-1-10-20180312.xml": {
+            "order": 5
+          }
+        },
+        {
+          "331-69-80626-1-10-20180312.xml": {
+            "order": 6
+          }
+        },
+        {
+          "331-69-80627-1-10-20180312.xml": {
+            "order": 7
+          }
+        },
+        {
+          "331-69-80628-1-10-20180312.xml": {
+            "order": 8
+          }
+        },
+        {
+          "331-69-80629-1-10-20180312.xml": {
+            "order": 9
+          }
+        },
+        {
+          "331-69-80630-1-10-20180312.xml": {
+            "order": 10
+          }
+        },
+        {
+          "331-69-80631-1-10-20180312.xml": {
+            "order": 11
+          }
+        },
+        {
+          "331-69-80632-1-10-20180312.xml": {
+            "order": 12
+          }
+        },
+        {
+          "331-69-80633-1-10-20180312.xml": {
+            "order": 13
+          }
+        },
+        {
+          "331-69-80634-1-10-20180312.xml": {
+            "order": 14
+          }
+        },
+        {
+          "331-69-80635-1-10-20180312.xml": {
+            "order": 15
+          }
+        },
+        {
+          "331-69-80636-1-10-20180312.xml": {
+            "order": 16
+          }
+        },
+        {
+          "331-69-80637-1-10-20180312.xml": {
+            "order": 17
+          }
+        },
+        {
+          "331-69-80638-1-10-20180312.xml": {
+            "order": 18
+          }
+        },
+        {
+          "331-69-80639-1-10-20180312.xml": {
+            "order": 19
+          }
+        },
+        {
+          "331-69-80640-1-10-20180312.xml": {
+            "order": 20
+          }
+        },
+        {
+          "331-69-80641-1-10-20180312.xml": {
+            "order": 21
+          }
+        }
+      ],
+      "fullfile": {
+        "331-68-80643-1-10-20180314.xml": {
+        }
+      },
+      "enumeration": 1,
+      "chapter-begin-reset": 1,
+      "citations-to-references": 0,
+      "references-to-citations": 0,
+      "create-automated-references": 0
+    }
+  },
+  "errors": {
+    "FILE_NOT_FOUND": " File found or non-valid xml",
+    "FILE_NOT_WRITTEN": "No file written",
+    "FILE_NO_WRITE_ACCESS": "No permission to write file in the directory"
+  },
+  "zip": {
+    "enable": 1,
+    "name-prefix": "xml-back-"
+  }
+}
+
