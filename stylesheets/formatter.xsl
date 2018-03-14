@@ -1,2655 +1,3211 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fo="http://www.w3.org/1999/XSL/Format"
+<xsl:stylesheet
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:fo="http://www.w3.org/1999/XSL/Format"
     xmlns:axf="http://www.antennahouse.com/names/XSL/Extensions"
-    xmlns:rx="http://www.renderx.com/XSL/Extensions" xmlns:mml="http://www.w3.org/1998/Math/MathML"
-    xmlns:xlink="http://www.w3.org/1999/xlink" exclude-result-prefixes="xs" version="2.0">
+    xmlns:mml="http://www.w3.org/1998/Math/MathML"
+    exclude-result-prefixes="xs"
+    version="2.0">
 
-    <!-- ****************************************************************** -->
-    <!-- * HeiUP PDF Formatter for XSL FO 1.1                             * -->
-    <!-- *                                           Not for production!  * -->
-    <!-- ****************************************************************** -->
-    <!-- 
-           (Not yet) Published under Creative Commons License CC BY-NC-ND
+    <!-- ******************************************************************
+         * PDF Formatter for XSL FO 1.1             [Not for production!] *
+         * Formatter                                                      *
+         ******************************************************************
+           First release to be published under 
+           Creative Commons License CC BY-NC-ND 4.0
            (https://creativecommons.org/licenses/by-nc-nd/4.0/)
-     
+
+           See documentation for further information.
+
            Frank Krabbes
-           University Library Heidelberg, Publication Services
+           Heidelberg University Library, Dept. Publication Services
            Plöck 107-109, 69117 Heidelberg, Germany
-           Mail to: krabbes at ub.uni-heidelberg.de
-        
-           (Any other XSLT 2.0 compliant processor can be used)
+           Mail to: krabbes@ub.uni-heidelberg.de
     -->
 
-    <!-- ********************************************************** -->
-    <!-- * Preamble: Variable definitions and include files       * -->
-    <!-- ********************************************************** -->
+    <!-- Section I. Parameters and configuration -->
 
-    <!-- Definition of the output medium: Defines if PDF files optimized for print or electronic publishing are generated.
-            values: 
-                electronic : interactive version
-                print      : print optimized version -->
+    <!-- Output medium [mandatory]
+            Controls a set of parameters such as PDF Standard, interactive functions or
+            print optimizations. See style configurations file.
+            Values: 
+                interactive : interactive pdf
+                print       : print pdf -->
     <xsl:param name="medium" as="xs:string" required="yes"/>
 
-    <!-- Defines the renderer used: Defines if proprietary code will be generated.
-            values: 
-                FOP          : Fop 2.1 specific optimizations are included
-                AntennaHouse : AntennaHouse 6.3 specific optimizations are included
-                XEP          : XEP 4.25 specific optimizations are included -->
+    <!-- FO Formatter used [mandatory]
+            Controls the generation of formatter specific code, add-ons, extensions or optimizations.
+            Values:
+                plain : No formatter specific code or functions will be used,
+                fop   : Apache FOP 2.2   (Open Source, https://xmlgraphics.apache.org/fop/2.2/)
+                ah    : Antenna House 6.5 (Commercial, https://www.antennahouse.com/antenna1/formatter/)
+            Remarks:
+                RenderX XEP (http://www.renderx.com/tools/xep.html) and Altsoft XML2PDF Formatting Engine 
+                (https://www.alt-soft.com/products/xml2pdf-formatting-engine/) are not officially supported. -->
     <xsl:param name="formatter" as="xs:string" required="yes"/>
 
-    <!-- Include template containing configuration, static text and styles -->
-    <?include stylesheet?>
-    <xsl:include href="template_heiup_generic_m.xsl"/>
+    <!-- Include the style definitions and configurations file -->
+    <xsl:include href="style.xsl"/>
 
-    <!-- ********************************************************** -->
-    <!-- * Page formatting                                        * -->
-    <!-- ********************************************************** -->
+    <!-- Section II: Formatter -->
+
+    <!-- Language of the book taken from /book/@xml:lang -->
+    <xsl:variable name="_bookLanguage">
+        <xsl:choose>
+            <xsl:when test="(/book/@xml:lang) and (/book/@xml:lang != '')">
+                <xsl:value-of select="/book/@xml:lang"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$_defaultLanguage"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
     
     <xsl:template match="/">
-
-        <!-- XEP specific code: Define PDF standard and include color profile -->
-        <xsl:if test="$formatter = 'XEP'">
-            <xsl:if test="$medium = 'electronic'">
-                <!-- PDF Standard -->
-                <xsl:processing-instruction name="xep-pdf-pdf-a">
-                    <xsl:choose>
-                        <xsl:when test="$Electronic_PDF_Standard = 'PDF/A-1a:2005'">
-                            <xsl:text>pdf-a-1a</xsl:text>
-                        </xsl:when>
-                       <xsl:when test="$Electronic_PDF_Standard = 'PDF/A-1b:2005'">
-                            <xsl:text>pdf-a-1b</xsl:text>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:text>pdf-a-1b</xsl:text>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:processing-instruction>
-                <!-- ICC profile -->
-                <xsl:processing-instruction name="xep-pdf-icc-profile">
-                    <xsl:text>url('</xsl:text>
-                    <xsl:value-of select="$ICC-Profile"/>
-                    <xsl:text>')</xsl:text>
-                </xsl:processing-instruction>
-            </xsl:if>
-            <xsl:if test="$medium = 'print'">
-                <!-- PDF Standard -->
-                <xsl:processing-instruction name="xep-pdf-pdf-x">
-                    <xsl:choose>
-                        <xsl:when test="($Print_PDF_Standard = 'PDF/X-1a:2001') or ($Print_PDF_Standard = 'PDF/X-1a:2003')">
-                            <xsl:text>pdf-x-1a</xsl:text>
-                        </xsl:when>
-                        <xsl:when test="$Print_PDF_Standard = 'PDF/X-3:2002'">
-                            <xsl:text>pdf-x-3</xsl:text>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:text>pdf-x-1a</xsl:text>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:processing-instruction>
-                <!-- ICC profile -->
-                <xsl:processing-instruction name="xep-pdf-icc-profile">
-                    <xsl:text>url('</xsl:text>
-                    <xsl:value-of select="$ICC-Profile"/>
-                    <xsl:text>')</xsl:text>
-                </xsl:processing-instruction>
-            </xsl:if>
-        </xsl:if>
 
         <fo:root>
 
             <!-- ********************************************************** -->
-            <!-- * Page templates and page sequences                      * -->
+            <!-- * Page templates and page sequence masters               * -->
             <!-- ********************************************************** -->
 
             <fo:layout-master-set>
 
-                <!-- **********************************************************
-                     * Page templates                                         *
-                     ********************************************************** -->
+                <!-- Page templates -->
 
-                <!-- Cover pages -->
-
-                <fo:simple-page-master master-name="cover-page">
+                <!-- Blank page -->
+                <fo:simple-page-master master-name="page_template_blank">
                     <xsl:attribute name="page-height">
-                        <xsl:value-of select="$PageHeight"/>
+                        <xsl:value-of select="$_pageHeight"/>
                     </xsl:attribute>
                     <xsl:attribute name="page-width">
-                        <xsl:value-of select="$PageWidth"/>
-                    </xsl:attribute>
-                    <!-- no margins needed, cover images are inserted page filling -->
-                    <xsl:attribute name="margin-left">0mm</xsl:attribute>
-                    <xsl:attribute name="margin-right">0mm</xsl:attribute>
-                    <xsl:attribute name="margin-top">0mm</xsl:attribute>
-                    <xsl:attribute name="margin-bottom">0mm </xsl:attribute>
-                    <fo:region-body/>
-                </fo:simple-page-master>
-
-                <!-- Frontmatter pages -->
-
-                <fo:simple-page-master master-name="Frontmatter_Recto">
-                    <xsl:attribute name="page-height">
-                        <xsl:value-of select="$PageHeight"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="page-width">
-                        <xsl:value-of select="$PageWidth"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-left">
-                        <xsl:value-of select="$MarginInner"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-right">
-                        <xsl:value-of select="$MarginOuter"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-top">
-                        <xsl:value-of select="$MarginTop"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-bottom">
-                        <xsl:value-of select="$MarginBottom"/>
-                    </xsl:attribute>
-                    <fo:region-body margin-top="10mm" margin-bottom="10mm"/>
-                </fo:simple-page-master>
-
-                <fo:simple-page-master master-name="Frontmatter_Verso">
-                    <xsl:attribute name="page-height">
-                        <xsl:value-of select="$PageHeight"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="page-width">
-                        <xsl:value-of select="$PageWidth"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-left">
-                        <xsl:value-of select="$MarginOuter"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-right">
-                        <xsl:value-of select="$MarginInner"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-top">
-                        <xsl:value-of select="$MarginTop"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-bottom">
-                        <xsl:value-of select="$MarginBottom"/>
-                    </xsl:attribute>
-                    <fo:region-body margin-top="10mm" margin-bottom="10mm"/>
-                </fo:simple-page-master>
-
-                <!-- Table of contents pages -->
-
-                <fo:simple-page-master master-name="ToC_First_Recto">
-                    <xsl:attribute name="page-height">
-                        <xsl:value-of select="$PageHeight"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="page-width">
-                        <xsl:value-of select="$PageWidth"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-left">
-                        <xsl:value-of select="$MarginInner"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-right">
-                        <xsl:value-of select="$MarginOuter"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-top">
-                        <xsl:value-of select="$MarginTop"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-bottom">
-                        <xsl:value-of select="$MarginBottom"/>
-                    </xsl:attribute>
-                    <!-- no running titles on first page of a ToC -->
-                    <fo:region-body margin-top="10mm" margin-bottom="10mm"/>
-                </fo:simple-page-master>
-
-                <fo:simple-page-master master-name="ToC_First_Verso">
-                    <!-- not really used -->
-                    <xsl:attribute name="page-height">
-                        <xsl:value-of select="$PageHeight"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="page-width">
-                        <xsl:value-of select="$PageWidth"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-left">
-                        <xsl:value-of select="$MarginOuter"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-right">
-                        <xsl:value-of select="$MarginInner"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-top">
-                        <xsl:value-of select="$MarginTop"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-bottom">
-                        <xsl:value-of select="$MarginBottom"/>
-                    </xsl:attribute>
-                    <!-- no running titles on first page of a ToC -->
-                    <fo:region-body margin-top="10mm" margin-bottom="10mm"/>
-                </fo:simple-page-master>
-
-                <fo:simple-page-master master-name="ToC_Recto">
-                    <xsl:attribute name="page-height">
-                        <xsl:value-of select="$PageHeight"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="page-width">
-                        <xsl:value-of select="$PageWidth"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-left">
-                        <xsl:value-of select="$MarginInner"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-right">
-                        <xsl:value-of select="$MarginOuter"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-top">
-                        <xsl:value-of select="$MarginTop"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-bottom">
-                        <xsl:value-of select="$MarginBottom"/>
-                    </xsl:attribute>
-                    <fo:region-body margin-top="10mm" margin-bottom="10mm"/>
-                    <fo:region-before region-name="ToC_title_recto" extent="10mm"
-                        display-align="before"/>
-                    <fo:region-after extent="10mm" display-align="after"/>
-                </fo:simple-page-master>
-
-                <fo:simple-page-master master-name="ToC_Verso">
-                    <xsl:attribute name="page-height">
-                        <xsl:value-of select="$PageHeight"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="page-width">
-                        <xsl:value-of select="$PageWidth"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-left">
-                        <xsl:value-of select="$MarginOuter"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-right">
-                        <xsl:value-of select="$MarginInner"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-top">
-                        <xsl:value-of select="$MarginTop"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-bottom">
-                        <xsl:value-of select="$MarginBottom"/>
-                    </xsl:attribute>
-                    <fo:region-body margin-top="10mm" margin-bottom="10mm"/>
-                    <fo:region-before region-name="ToC_title_verso" extent="10mm"
-                        display-align="before"/>
-                    <fo:region-after extent="10mm" display-align="after"/>
-                </fo:simple-page-master>
-
-                <fo:simple-page-master master-name="ToC_Last_Recto">
-                    <xsl:attribute name="page-height">
-                        <xsl:value-of select="$PageHeight"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="page-width">
-                        <xsl:value-of select="$PageWidth"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-left">
-                        <xsl:value-of select="$MarginInner"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-right">
-                        <xsl:value-of select="$MarginOuter"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-top">
-                        <xsl:value-of select="$MarginTop"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-bottom">
-                        <xsl:value-of select="$MarginBottom"/>
-                    </xsl:attribute>
-                    <!-- no page number on foot on last page -->
-                    <fo:region-body margin-top="10mm" margin-bottom="10mm"/>
-                    <fo:region-before region-name="ToC_title_recto" extent="10mm"
-                        display-align="before"/>
-                </fo:simple-page-master>
-
-                <fo:simple-page-master master-name="ToC_Last_Verso">
-                    <xsl:attribute name="page-height">
-                        <xsl:value-of select="$PageHeight"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="page-width">
-                        <xsl:value-of select="$PageWidth"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-left">
-                        <xsl:value-of select="$MarginOuter"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-right">
-                        <xsl:value-of select="$MarginInner"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-top">
-                        <xsl:value-of select="$MarginTop"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-bottom">
-                        <xsl:value-of select="$MarginBottom"/>
-                    </xsl:attribute>
-                    <!-- no page number on foot on last page -->
-                    <fo:region-body margin-top="10mm" margin-bottom="10mm"/>
-                    <fo:region-before region-name="ToC_title_verso" extent="10mm"
-                        display-align="before"/>
-                </fo:simple-page-master>
-
-                <!-- Chapter title pages -->
-
-                <fo:simple-page-master master-name="Chapter_First_Recto">
-                    <xsl:attribute name="page-height">
-                        <xsl:value-of select="$PageHeight"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="page-width">
-                        <xsl:value-of select="$PageWidth"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-left">
-                        <xsl:value-of select="$MarginInner"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-right">
-                        <xsl:value-of select="$MarginOuter"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-top">
-                        <xsl:value-of select="$MarginTop"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-bottom">
-                        <xsl:value-of select="$MarginBottom"/>
-                    </xsl:attribute>
-                    <!-- no running titles on first page of a chapter -->
-                    <fo:region-body margin-top="10mm" margin-bottom="10mm"/>
-                    <fo:region-after extent="10mm" display-align="after"
-                        region-name="chapter_first_page_bottom"/>
-                </fo:simple-page-master>
-
-                <fo:simple-page-master master-name="Chapter_First_Verso">
-                    <xsl:attribute name="page-height">
-                        <xsl:value-of select="$PageHeight"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="page-width">
-                        <xsl:value-of select="$PageWidth"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-left">
-                        <xsl:value-of select="$MarginOuter"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-right">
-                        <xsl:value-of select="$MarginInner"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-top">
-                        <xsl:value-of select="$MarginTop"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-bottom">
-                        <xsl:value-of select="$MarginBottom"/>
-                    </xsl:attribute>
-                    <!-- no running titles on first page of a chapter -->
-                    <fo:region-body margin-top="10mm" margin-bottom="10mm"/>
-                    <fo:region-after extent="10mm" display-align="after"
-                        region-name="chapter_first_page_bottom"/>
-                </fo:simple-page-master>
-
-                <!-- Regular chapter pages -->
-                <fo:simple-page-master master-name="Chapter_Recto">
-                    <xsl:attribute name="page-height">
-                        <xsl:value-of select="$PageHeight"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="page-width">
-                        <xsl:value-of select="$PageWidth"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-left">
-                        <xsl:value-of select="$MarginInner"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-right">
-                        <xsl:value-of select="$MarginOuter"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-top">
-                        <xsl:value-of select="$MarginTop"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-bottom">
-                        <xsl:value-of select="$MarginBottom"/>
-                    </xsl:attribute>
-                    <fo:region-body margin-top="10mm" margin-bottom="10mm"/>
-                    <fo:region-before region-name="column_title_recto" extent="10mm"
-                        display-align="before"/>
-                    <fo:region-after extent="10mm" display-align="after"/>
-                </fo:simple-page-master>
-
-                <fo:simple-page-master master-name="Chapter_Verso">
-                    <xsl:attribute name="page-height">
-                        <xsl:value-of select="$PageHeight"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="page-width">
-                        <xsl:value-of select="$PageWidth"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-left">
-                        <xsl:value-of select="$MarginOuter"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-right">
-                        <xsl:value-of select="$MarginInner"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-top">
-                        <xsl:value-of select="$MarginTop"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-bottom">
-                        <xsl:value-of select="$MarginBottom"/>
-                    </xsl:attribute>
-                    <fo:region-body margin-top="10mm" margin-bottom="10mm"/>
-                    <fo:region-before region-name="column_title_verso" extent="10mm"
-                        display-align="before"/>
-                    <fo:region-after extent="10mm" display-align="after"/>
-                </fo:simple-page-master>
-
-                <!-- Chapter last pages -->
-                <fo:simple-page-master master-name="Chapter_Last_Recto">
-                    <xsl:attribute name="page-height">
-                        <xsl:value-of select="$PageHeight"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="page-width">
-                        <xsl:value-of select="$PageWidth"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-left">
-                        <xsl:value-of select="$MarginInner"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-right">
-                        <xsl:value-of select="$MarginOuter"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-top">
-                        <xsl:value-of select="$MarginTop"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-bottom">
-                        <xsl:value-of select="$MarginBottom"/>
-                    </xsl:attribute>
-                    <!-- no page number on foot on last page -->
-                    <fo:region-body margin-top="10mm" margin-bottom="10mm"/>
-                    <fo:region-before region-name="column_title_recto" extent="10mm"
-                        display-align="before"/>
-                </fo:simple-page-master>
-
-                <fo:simple-page-master master-name="Chapter_Last_Verso">
-                    <xsl:attribute name="page-height">
-                        <xsl:value-of select="$PageHeight"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="page-width">
-                        <xsl:value-of select="$PageWidth"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-left">
-                        <xsl:value-of select="$MarginOuter"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-right">
-                        <xsl:value-of select="$MarginInner"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-top">
-                        <xsl:value-of select="$MarginTop"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="margin-bottom">
-                        <xsl:value-of select="$MarginBottom"/>
-                    </xsl:attribute>
-                    <!-- no page number on foot on last page -->
-                    <fo:region-body margin-top="10mm" margin-bottom="10mm"/>
-                    <fo:region-before region-name="column_title_verso" extent="10mm"
-                        display-align="before"/>
-                </fo:simple-page-master>
-
-                <!-- Empty page -->
-                <fo:simple-page-master master-name="Empty_Page">
-                    <xsl:attribute name="page-height">
-                        <xsl:value-of select="$PageHeight"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="page-width">
-                        <xsl:value-of select="$PageWidth"/>
+                        <xsl:value-of select="$_pageWidth"/>
                     </xsl:attribute>
                     <fo:region-body/>
                 </fo:simple-page-master>
 
-                <!-- **********************************************************
-                     * Page sequences                                         *
-                     ********************************************************** -->
+                <!-- Simple pages (not containing header or footer)
+                        Used for: half title, series title, frontispice, title page, copyright page, dedication, epigraph, 
+                        second half title, part title and appendix title page -->
 
-                <!-- Cover -->
-                <fo:page-sequence-master master-name="cover-sequence">
-                    <fo:repeatable-page-master-alternatives maximum-repeats="1">
-                        <fo:conditional-page-master-reference master-reference="cover-page"
-                            odd-or-even="any" page-position="any" blank-or-not-blank="any"/>
-                    </fo:repeatable-page-master-alternatives>
-                </fo:page-sequence-master>
+                    <!-- Even page -->
+                    <fo:simple-page-master master-name="page_template_simple_even">
+                        <xsl:attribute name="page-height" select="$_pageHeight"/>
+                        <xsl:attribute name="page-width" select="$_pageWidth"/>
+                        <xsl:attribute name="margin-top" select="$_marginTop"/>
+                        <xsl:attribute name="margin-bottom" select="$_marginFoot"/>
+                        <xsl:attribute name="margin-left" select="$_marginOutside"/>
+                        <xsl:attribute name="margin-right" select="$_marginInside"/>
+                        <fo:region-body>
+                            <xsl:attribute name="margin-top" select="$_typeAreaMarginTop"/>
+                            <xsl:attribute name="margin-bottom" select="$_typeAreaMarginFoot"/>
+                            <xsl:attribute name="margin-left" select="$_typeAreaMarginOutside"/>
+                            <xsl:attribute name="margin-right" select="$_typeAreaMarginInside"/>
+                        </fo:region-body>
+                    </fo:simple-page-master>
 
-                <!-- Frontmatter -->
-                <fo:page-sequence-master master-name="Frontmatter">
-                    <fo:repeatable-page-master-alternatives>
-                        <fo:conditional-page-master-reference master-reference="Frontmatter_Recto"
-                            page-position="first" odd-or-even="odd"/>
-                        <fo:conditional-page-master-reference master-reference="Frontmatter_Verso"
-                            page-position="rest" odd-or-even="even"/>
-                        <fo:conditional-page-master-reference master-reference="Frontmatter_Recto"
-                            page-position="rest" odd-or-even="odd"/>
-                        <fo:conditional-page-master-reference master-reference="Frontmatter_Verso"
-                            page-position="last" odd-or-even="even"/>
-                        <fo:conditional-page-master-reference master-reference="Frontmatter_Recto"
-                            page-position="last" odd-or-even="odd"/>
-                    </fo:repeatable-page-master-alternatives>
-                </fo:page-sequence-master>
+                    <!-- Odd page -->
+                    <fo:simple-page-master master-name="page_template_simple_odd">
+                        <xsl:attribute name="page-height" select="$_pageHeight"/>
+                        <xsl:attribute name="page-width" select="$_pageWidth"/>
+                        <xsl:attribute name="margin-top" select="$_marginTop"/>
+                        <xsl:attribute name="margin-bottom" select="$_marginFoot"/>
+                        <xsl:attribute name="margin-left" select="$_marginInside"/>
+                        <xsl:attribute name="margin-right" select="$_marginOutside"/>
+                        <fo:region-body>
+                            <xsl:attribute name="margin-top" select="$_typeAreaMarginTop"/>
+                            <xsl:attribute name="margin-bottom" select="$_typeAreaMarginFoot"/>
+                            <xsl:attribute name="margin-left" select="$_typeAreaMarginOutside"/>
+                            <xsl:attribute name="margin-right" select="$_typeAreaMarginInside"/>
+                        </fo:region-body>
+                    </fo:simple-page-master>
 
-                <!-- Table of Contents -->
-                <fo:page-sequence-master master-name="ToC_Sequence">
-                    <fo:repeatable-page-master-alternatives>
-                        <!-- Firsts -->
-                        <fo:conditional-page-master-reference page-position="first"
-                            odd-or-even="odd" master-reference="ToC_First_Recto"/>
-                        <fo:conditional-page-master-reference page-position="first"
-                            odd-or-even="even" master-reference="ToC_First_Verso"/>
-                        <!-- Rest of pages -->
-                        <fo:conditional-page-master-reference page-position="rest" odd-or-even="odd"
-                            master-reference="ToC_Recto"/>
-                        <fo:conditional-page-master-reference page-position="rest"
-                            odd-or-even="even" master-reference="ToC_Verso"/>
-                        <!-- Last pages -->
-                        <fo:conditional-page-master-reference page-position="last"
-                            odd-or-even="even" blank-or-not-blank="blank"
-                            master-reference="Empty_Page"/>
-                        <fo:conditional-page-master-reference page-position="last" odd-or-even="odd"
-                            blank-or-not-blank="not-blank" master-reference="ToC_Last_Recto"/>
-                        <fo:conditional-page-master-reference page-position="last"
-                            odd-or-even="even" blank-or-not-blank="not-blank"
-                            master-reference="ToC_Last_Verso"/>
-                    </fo:repeatable-page-master-alternatives>
-                </fo:page-sequence-master>
+                <!-- Complex pages (containing header and footer, alternatives for first and last pages)
+                        Used for all book contents not mentioned under "Simple pages" -->
 
-                <!-- Chapter pages -->
-                <fo:page-sequence-master master-name="Chapter_Sequence">
-                    <fo:repeatable-page-master-alternatives>
-                        <!-- Firsts -->
-                        <fo:conditional-page-master-reference page-position="first"
-                            odd-or-even="odd" master-reference="Chapter_First_Recto"/>
-                        <fo:conditional-page-master-reference page-position="first"
-                            odd-or-even="even" master-reference="Chapter_First_Verso"/>
-                        <!-- Rest of pages -->
-                        <fo:conditional-page-master-reference page-position="rest" odd-or-even="odd"
-                            master-reference="Chapter_Recto"/>
-                        <fo:conditional-page-master-reference page-position="rest"
-                            odd-or-even="even" master-reference="Chapter_Verso"/>
-                        <!-- Last pages -->
-                        <fo:conditional-page-master-reference page-position="last"
-                            odd-or-even="even" blank-or-not-blank="blank"
-                            master-reference="Empty_Page"/>
-                        <fo:conditional-page-master-reference page-position="last" odd-or-even="odd"
-                            blank-or-not-blank="not-blank" master-reference="Chapter_Last_Recto"/>
-                        <fo:conditional-page-master-reference page-position="last"
-                            odd-or-even="even" blank-or-not-blank="not-blank"
-                            master-reference="Chapter_Last_Verso"/>
-                    </fo:repeatable-page-master-alternatives>
-                </fo:page-sequence-master>
+                    <!-- First even page -->
+                    <fo:simple-page-master master-name="page_template_first_even">
+                        <xsl:attribute name="page-height" select="$_pageHeight"/>
+                        <xsl:attribute name="page-width" select="$_pageWidth"/>
+                        <xsl:attribute name="margin-top" select="$_marginTop"/>
+                        <xsl:attribute name="margin-bottom" select="$_marginFoot"/>
+                        <xsl:attribute name="margin-left" select="$_marginOutside"/>
+                        <xsl:attribute name="margin-right" select="$_marginInside"/>
+                        <!-- No running titles on first page -->
+                        <fo:region-after region-name="page_template_first_even_footer">
+                            <xsl:attribute name="extent" select="$_footerExtent"/>
+                        </fo:region-after>
+                            <fo:region-body>
+                            <xsl:attribute name="margin-top" select="$_typeAreaMarginTop"/>
+                            <xsl:attribute name="margin-bottom" select="$_typeAreaMarginFoot"/>
+                            <xsl:attribute name="margin-left" select="$_typeAreaMarginOutside"/>
+                            <xsl:attribute name="margin-right" select="$_typeAreaMarginInside"/>
+                        </fo:region-body>
+                    </fo:simple-page-master>
+
+                    <!-- First odd page -->
+                    <fo:simple-page-master master-name="page_template_first_odd">
+                        <xsl:attribute name="page-height" select="$_pageHeight"/>
+                        <xsl:attribute name="page-width" select="$_pageWidth"/>
+                        <xsl:attribute name="margin-top" select="$_marginTop"/>
+                        <xsl:attribute name="margin-bottom" select="$_marginFoot"/>
+                        <xsl:attribute name="margin-left" select="$_marginInside"/>
+                        <xsl:attribute name="margin-right" select="$_marginOutside"/>
+                        <!-- No running titles on first page -->
+                        <fo:region-after region-name="page_template_first_odd_footer">
+                            <xsl:attribute name="extent" select="$_footerExtent"/>
+                        </fo:region-after>
+                        <fo:region-body>
+                            <xsl:attribute name="margin-top" select="$_typeAreaMarginTop"/>
+                            <xsl:attribute name="margin-bottom" select="$_typeAreaMarginFoot"/>
+                            <xsl:attribute name="margin-left" select="$_typeAreaMarginOutside"/>
+                            <xsl:attribute name="margin-right" select="$_typeAreaMarginInside"/>
+                        </fo:region-body>
+                    </fo:simple-page-master>
+
+                    <!-- Even page -->
+                    <fo:simple-page-master master-name="page_template_even">
+                        <xsl:attribute name="page-height" select="$_pageHeight"/>
+                        <xsl:attribute name="page-width" select="$_pageWidth"/>
+                        <xsl:attribute name="margin-top" select="$_marginTop"/>
+                        <xsl:attribute name="margin-bottom" select="$_marginFoot"/>
+                        <xsl:attribute name="margin-left" select="$_marginOutside"/>
+                        <xsl:attribute name="margin-right" select="$_marginInside"/>
+                        <fo:region-before region-name="page_template_even_header">
+                            <xsl:attribute name="extent" select="$_headerExtent"/>
+                        </fo:region-before>
+                        <fo:region-after region-name="page_template_even_footer">
+                            <xsl:attribute name="extent" select="$_footerExtent"/>
+                        </fo:region-after>
+                        <fo:region-body>
+                            <xsl:attribute name="margin-top" select="$_typeAreaMarginTop"/>
+                            <xsl:attribute name="margin-bottom" select="$_typeAreaMarginFoot"/>
+                            <xsl:attribute name="margin-left" select="$_typeAreaMarginOutside"/>
+                            <xsl:attribute name="margin-right" select="$_typeAreaMarginInside"/>
+                        </fo:region-body>
+                    </fo:simple-page-master>
+
+                    <!-- Odd page -->
+                    <fo:simple-page-master master-name="page_template_odd">
+                        <xsl:attribute name="page-height" select="$_pageHeight"/>
+                        <xsl:attribute name="page-width" select="$_pageWidth"/>
+                        <xsl:attribute name="margin-top" select="$_marginTop"/>
+                        <xsl:attribute name="margin-bottom" select="$_marginFoot"/>
+                        <xsl:attribute name="margin-left" select="$_marginInside"/>
+                        <xsl:attribute name="margin-right" select="$_marginOutside"/>
+                        <fo:region-before region-name="page_template_odd_header">
+                            <xsl:attribute name="extent" select="$_headerExtent"/>
+                        </fo:region-before>
+                        <fo:region-after region-name="page_template_odd_footer">
+                            <xsl:attribute name="extent" select="$_footerExtent"/>
+                        </fo:region-after>
+                        <fo:region-body>
+                            <xsl:attribute name="margin-top" select="$_typeAreaMarginTop"/>
+                            <xsl:attribute name="margin-bottom" select="$_typeAreaMarginFoot"/>
+                            <xsl:attribute name="margin-left" select="$_typeAreaMarginOutside"/>
+                            <xsl:attribute name="margin-right" select="$_typeAreaMarginInside"/>
+                        </fo:region-body>
+                    </fo:simple-page-master>
+
+                    <!-- Last even page -->
+                    <fo:simple-page-master master-name="page_template_last_even">
+                        <xsl:attribute name="page-height" select="$_pageHeight"/>
+                        <xsl:attribute name="page-width" select="$_pageWidth"/>
+                        <xsl:attribute name="margin-top" select="$_marginTop"/>
+                        <xsl:attribute name="margin-bottom" select="$_marginFoot"/>
+                        <xsl:attribute name="margin-left" select="$_marginOutside"/>
+                        <xsl:attribute name="margin-right" select="$_marginInside"/>
+                        <fo:region-before region-name="page_template_even_header">
+                            <xsl:attribute name="extent" select="$_headerExtent"/>
+                        </fo:region-before>
+                        <!-- No footer on a last page -->
+                        <fo:region-body>
+                            <xsl:attribute name="margin-top" select="$_typeAreaMarginTop"/>
+                            <xsl:attribute name="margin-bottom" select="$_typeAreaMarginFoot"/>
+                            <xsl:attribute name="margin-left" select="$_typeAreaMarginOutside"/>
+                            <xsl:attribute name="margin-right" select="$_typeAreaMarginInside"/>
+                        </fo:region-body>
+                    </fo:simple-page-master>
+
+                    <!-- Last odd page -->
+                    <fo:simple-page-master master-name="page_template_last_odd">
+                        <xsl:attribute name="page-height" select="$_pageHeight"/>
+                        <xsl:attribute name="page-width" select="$_pageWidth"/>
+                        <xsl:attribute name="margin-top" select="$_marginTop"/>
+                        <xsl:attribute name="margin-bottom" select="$_marginFoot"/>
+                        <xsl:attribute name="margin-left" select="$_marginInside"/>
+                        <xsl:attribute name="margin-right" select="$_marginOutside"/>
+                        <fo:region-before region-name="page_template_odd_header">
+                            <xsl:attribute name="extent" select="$_headerExtent"/>
+                        </fo:region-before>
+                        <!-- No footer on a last page -->
+                        <fo:region-body>
+                            <xsl:attribute name="margin-top" select="$_typeAreaMarginTop"/>
+                            <xsl:attribute name="margin-bottom" select="$_typeAreaMarginFoot"/>
+                            <xsl:attribute name="margin-left" select="$_typeAreaMarginOutside"/>
+                            <xsl:attribute name="margin-right" select="$_typeAreaMarginInside"/>
+                        </fo:region-body>
+                    </fo:simple-page-master>
+                
+                <!-- Page sequence definitions -->
+
+                    <!-- Simple page sequence -->
+
+                    <fo:page-sequence-master master-name="simple_page_sequence">
+                        <fo:repeatable-page-master-alternatives>
+                            <fo:conditional-page-master-reference odd-or-even="odd"  page-position="first" blank-or-not-blank="not-blank" master-reference="page_template_simple_odd"/>
+                            <fo:conditional-page-master-reference odd-or-even="even" page-position="first" blank-or-not-blank="not-blank" master-reference="page_template_simple_even"/>
+                            <fo:conditional-page-master-reference odd-or-even="odd"  page-position="rest"  blank-or-not-blank="not-blank" master-reference="page_template_simple_odd"/>
+                            <fo:conditional-page-master-reference odd-or-even="even" page-position="rest"  blank-or-not-blank="not-blank" master-reference="page_template_simple_even"/>
+                            <fo:conditional-page-master-reference odd-or-even="odd"  page-position="last"  blank-or-not-blank="not-blank" master-reference="page_template_simple_odd"/>
+                            <fo:conditional-page-master-reference odd-or-even="even" page-position="last"  blank-or-not-blank="not-blank" master-reference="page_template_simple_even"/>
+                            <fo:conditional-page-master-reference odd-or-even="even" page-position="last"  blank-or-not-blank="blank"     master-reference="page_template_blank"/>
+                        </fo:repeatable-page-master-alternatives>
+                    </fo:page-sequence-master>
+
+                    <!-- Complex page sequence -->
+
+                    <fo:page-sequence-master master-name="complex_page_sequence">
+                        <fo:repeatable-page-master-alternatives>
+                            <fo:conditional-page-master-reference odd-or-even="odd"  page-position="first" blank-or-not-blank="not-blank" master-reference="page_template_first_odd"/>
+                            <fo:conditional-page-master-reference odd-or-even="even" page-position="first" blank-or-not-blank="not-blank" master-reference="page_template_first_even"/>
+                            <fo:conditional-page-master-reference odd-or-even="odd"  page-position="rest"  blank-or-not-blank="not-blank" master-reference="page_template_odd"/>
+                            <fo:conditional-page-master-reference odd-or-even="even" page-position="rest"  blank-or-not-blank="not-blank" master-reference="page_template_even"/>
+                            <fo:conditional-page-master-reference odd-or-even="odd"  page-position="last"  blank-or-not-blank="not-blank" master-reference="page_template_last_odd"/>
+                            <fo:conditional-page-master-reference odd-or-even="even" page-position="last"  blank-or-not-blank="not-blank" master-reference="page_template_last_even"/>
+                            <fo:conditional-page-master-reference odd-or-even="even" page-position="last"  blank-or-not-blank="blank"     master-reference="page_template_blank"/>
+                        </fo:repeatable-page-master-alternatives>
+                    </fo:page-sequence-master>
 
             </fo:layout-master-set>
 
             <!-- ********************************************************** -->
-            <!-- * FO Declarations                                        * -->
-            <!-- ********************************************************** -->
-            
+            <!-- * Declarations                                           * -->
+            <!-- ********************************************************** -->            
+
             <fo:declarations>
 
-                <!-- AntennaHouse specific code: PDF configuration -->
-                <xsl:if test="$formatter = 'AntennaHouse'">
+                <xsl:if test="$formatter='ah'">
 
-                    <xsl:if test="$medium = 'electronic'">
-                        <!-- Embed color profiles -->
-                        <fo:color-profile>
-                            <xsl:attribute name="src">
-                                <xsl:value-of select="$ICC-Profile"/>
+                    <!-- For options refer to 
+                        https://www.antennahouse.com/product/ahf65/ahf-ext.html#axf.document-info -->
+
+                    <!-- PDF Metadata -->
+
+                    <!-- Document title -->
+                    <xsl:if test="/book/book-meta/book-title-group/book-title">
+                        <xsl:element name="axf:document-info">
+                            <xsl:attribute name="name">document-title</xsl:attribute>
+                            <xsl:attribute name="value">
+                                <xsl:value-of select="/book/book-meta/book-title-group/book-title"/>
+                                <xsl:if test="/book/book-meta/book-title-group/subtitle">
+                                    <xsl:text>. </xsl:text>
+                                    <xsl:value-of select="/book/book-meta/book-title-group/subtitle"/>
+                                </xsl:if>
                             </xsl:attribute>
-                            <xsl:attribute name="color-profile-name">#RGB</xsl:attribute>
-                        </fo:color-profile>
+                        </xsl:element>
                     </xsl:if>
 
-                    <axf:formatter-config xmlns:axs="http://www.antennahouse.com/names/XSL/Settings">
-                        <xsl:choose>
-                            <xsl:when test="$medium = 'electronic'">
-                                <axs:pdf-settings tagged-pdf="true">
-                                    <xsl:attribute name="tagged-pdf">true</xsl:attribute>
-                                    <xsl:attribute name="pdf-version">
-                                        <xsl:value-of select="$Electronic_PDF_Standard"/>
+                    <!-- Contributor names -->
+                    <xsl:choose>
+                        <xsl:when test="/book[@book-type='proceedings']">
+                            <xsl:if test="/book/book-meta/contrib-group/contrib[@contrib-type='pbd']">
+                                <xsl:element name="axf:document-info">
+                                    <xsl:attribute name="name">author</xsl:attribute>
+                                    <xsl:attribute name="value">
+                                        <xsl:call-template name="contributor_names">
+                                            <xsl:with-param name="_contrib-type">pbd</xsl:with-param>
+                                            <xsl:with-param name="_xpath-expression">/book/book-meta/contrib-group/</xsl:with-param>
+                                        </xsl:call-template>
                                     </xsl:attribute>
-                                </axs:pdf-settings>
-                            </xsl:when>
-                            <xsl:when test="$medium = 'print'">
+                                </xsl:element>
+                            </xsl:if>
+                        </xsl:when>
+                        <xsl:when test="/book[@book-type='monograph']">
+                        </xsl:when>
+                        <xsl:when test="/book[@book-type='lexicon']">
+                        </xsl:when>
+                        <xsl:otherwise>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    
+                    <axf:document-info name="subject" value="The document subject"/>
+                    <axf:document-info name="keywords" value="Comma separated keywords list"/>
+
+                    <!-- PDF display options -->
+
+                    <axf:document-info name="pagelayout" value="TwoPageRight"/>
+                    <axf:document-info name="displaydoctitle" value="true"/>
+                    <xsl:if test="$medium='interactive' and $_pdf_bookmarks='yes'">
+                        <axf:document-info name="pagemode" value="UseOutlines"/>
+                    </xsl:if>
+
+                    <!-- PDF output options -->
+                    
+                    <!-- PDF version -->
+                    <axf:formatter-config xmlns:axs="http://www.antennahouse.com/names/XSL/Settings">
+                         <xsl:choose>
+                            <xsl:when test="$medium='interactive'">
                                 <axs:pdf-settings tagged-pdf="true">
-                                    <xsl:attribute name="tagged-pdf">true</xsl:attribute>
                                     <xsl:attribute name="pdf-version">
-                                        <xsl:value-of select="$Print_PDF_Standard"/>
+                                        <xsl:value-of select="$_interactive-pdf-version"/>
+                                    </xsl:attribute>
+                                </axs:pdf-settings>                    
+                            </xsl:when>
+                            <xsl:when test="$medium='print'">
+                                <axs:pdf-settings tagged-pdf="true">
+                                    <xsl:attribute name="pdf-version">
+                                        <xsl:value-of select="$_non-interactive-pdf-version"/>
                                     </xsl:attribute>
                                 </axs:pdf-settings>
                             </xsl:when>
                         </xsl:choose>
+                        
+                        <axs:formatter-settings zwsp-mode="6"/>
+                        
                     </axf:formatter-config>
-                </xsl:if>
+                    
+                    <!-- Color profile embedding -->
+                    <xsl:choose>
+                        <xsl:when test="$medium='interactive' and $_interactive-pdf-color-profile!=''">
+                            <fo:color-profile>
+                                <xsl:attribute name="src">
+                                    <xsl:value-of select="$_interactive-pdf-color-profile"/>
+                                </xsl:attribute>
+                            </fo:color-profile>                            
+                        </xsl:when>
+                        <xsl:when test="$medium='print' and $_non-interactive-pdf-color-profile!=''">
+                            <fo:color-profile>
+                                <xsl:attribute name="src">
+                                    <xsl:value-of select="$_non-interactive-pdf-color-profile"/>
+                                </xsl:attribute>
+                            </fo:color-profile>
+                        </xsl:when>
+                    </xsl:choose>
+                    
+                    <!-- File name postfix for multi-file output -->
+                    <axf:output-volume-info initial-volume-number="1" format="-1" bookmark-include="separate"/>
 
-                <!-- FOP specific code: Metadata inclusion -->
-                <xsl:if test="$formatter = 'FOP'">
-                    <x:xmpmeta xmlns:x="adobe:ns:meta/">
-                        <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-                            <rdf:Description rdf:about=""
-                                xmlns:dc="http://purl.org/dc/elements/1.1/">
-                                <dc:title>
-                                    <xsl:value-of
-                                        select="/book/book-meta/book-title-group/book-title"/>
-                                    <xsl:if test="/book/book-meta/book-title-group/subtitle">
-                                        <xsl:text>. </xsl:text>
-                                        <xsl:value-of
-                                            select="/book/book-meta/book-title-group/subtitle"/>
-                                    </xsl:if>
-                                </dc:title>
-                                <dc:creator>Document author</dc:creator>
-                                <dc:description>Document subject</dc:description>
-                                <dc:rights xml:lang="en">Published under CC-License.</dc:rights>
-                            </rdf:Description>
-                            <rdf:Description rdf:about="" xmlns:xmp="http://ns.adobe.com/xap/1.0/">
-                                <!-- XMP properties go here -->
-                                <!-- XMP documentation: http://www.adobe.com/devnet/xmp.html -->
-                                <xmp:CreatorTool>mpt using FOP 2.1</xmp:CreatorTool>
-                            </rdf:Description>
-                            <rdf:Description rdf:about=""
-                                xmlns:xmpRights="http://ns.adobe.com/xap/1.0/rights/">
-                                <xmpRights:Marked>True</xmpRights:Marked>
-                                <xmpRights:UsageTerms xml:lang="de">Publiziert unter
-                                    CC-Lizenz.</xmpRights:UsageTerms>
-                                <xmpRights:UsageTerms xml:lang="en">Published under
-                                    CC-License.</xmpRights:UsageTerms>
-                                <xmpRights:Owner>John Smith</xmpRights:Owner>
-                                <xmpRights:WebStatement>https://creativecommons.org/licenses/</xmpRights:WebStatement>
-                            </rdf:Description>
-                        </rdf:RDF>
-                    </x:xmpmeta>
                 </xsl:if>
 
             </fo:declarations>
 
             <!-- ********************************************************** -->
-            <!-- * PDF bookmark tree                                      * -->
-            <!-- ********************************************************** -->
-            
-            <xsl:call-template name="pdf-bookmark-tree"/>
-            
-            <!-- ********************************************************** -->
-            <!-- * Formatting of the Book                                 * -->
+            <!-- * Bookmark Tree                                          * -->
             <!-- ********************************************************** -->
 
-            <!-- * Front cover ******************************************** -->
+            <xsl:call-template name="pdf_bookmarks"/>
+
+            <!-- ********************************************************** -->
+            <!-- * Formatting                                             * -->
+            <!-- ********************************************************** -->
+
+            <!-- Front cover -->
+
+            <!-- [...] -->
+
+            <!-- Preliminaries -->
             
-            <xsl:call-template name="front-cover"/>
+            <xsl:call-template name="prelimiaries"/>
 
-            <!-- * Frontmatter ******************************************** -->
+            <!-- Front matter -->
 
-            <!-- Frontmatter -->
-            <xsl:apply-templates select="/book/book-meta" mode="typesetting"/>
+            <xsl:apply-templates select="/book/front-matter" mode="typesetting"/>
 
-            <!-- Table of contents -->
-            <xsl:call-template name="ToC"/>
+            <!-- Text -->
 
-            <!-- * Book body ********************************************* -->
+            <xsl:apply-templates select="/book/book-body" mode="typesetting"/>            
 
-            <xsl:apply-templates select="/book/book-body" mode="typesetting"/>
+            <!-- Back matter -->
 
-            <!-- * Book backmatter *************************************** -->
+            <xsl:apply-templates select="/book/book-back" mode="typesetting"/>
 
-            <xsl:call-template name="book-backmatter"/>
+            <!-- Back cover -->
 
-            <!-- * Back cover ******************************************** -->
-
-            <xsl:call-template name="back-cover"/>
+            <!-- [...] -->
 
         </fo:root>
 
     </xsl:template>
 
     <!-- ********************************************************** -->
-    <!-- * Front and back cover in ePDF                           * -->
+    <!-- * Templates for typesetting                              * -->
     <!-- ********************************************************** -->
 
-    <!-- Front cover and front cover verso page -->
-    <xsl:template name="front-cover">
-        <xsl:if test="$medium='electronic' and $include-cover-images='true'">
+    <!-- * Generic book divisions ********************************* -->
 
-            <!-- Front cover (U1) -->
-            <fo:page-sequence master-reference="cover-sequence" initial-page-number="1" format="a">
-                <fo:flow flow-name="xsl-region-body">
-                    <xsl:element name="fo:block-container">
-                        <xsl:attribute name="absolute-position">fixed</xsl:attribute>
-                        <xsl:attribute name="top">0mm</xsl:attribute>
-                        <xsl:attribute name="left">0mm</xsl:attribute>
-                        <xsl:attribute name="width">
-                            <xsl:value-of select="$PageWidth"/>
-                        </xsl:attribute>
-                        <xsl:attribute name="height">
-                            <xsl:value-of select="$PageHeight"/>
-                        </xsl:attribute>
-                        <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text">
-                            <xsl:attribute name="id">cover_1</xsl:attribute>
-                            <xsl:element name="fo:external-graphic">
-                                <xsl:attribute name="src">
-                                    <!-- implement error handling if elements missing -->
-                                    <xsl:text>url(</xsl:text>
-                                    <xsl:value-of
-                                        select="/book/book-meta/supplementary-material/graphic[@content-type = 'cover-image-front-outer']/@xlink:href"/>
-                                    <xsl:text>)</xsl:text>
-                                </xsl:attribute>
-                                <xsl:attribute name="content-width">
-                                    <xsl:value-of select="$PageWidth"/>
-                                </xsl:attribute>
-                                <xsl:attribute name="content-height">
-                                    <xsl:value-of select="$PageHeight"/>
-                                </xsl:attribute>
-                                <xsl:if test="$formatter = 'XEP'">
-                                    <xsl:attribute name="rx:alt-description">Front cover
-                                        image</xsl:attribute>
-                                </xsl:if>
-                            </xsl:element>
-                        </xsl:element>
-                    </xsl:element>
-                </fo:flow>
-            </fo:page-sequence>
+    <!-- Book cover -->
+    <!-- [...] -->
 
-            <!-- Front cover back page (U2) -->
-            <fo:page-sequence master-reference="cover-page" initial-page-number="2" format="a">
-                <fo:flow flow-name="xsl-region-body">
-                    <xsl:element name="fo:block-container">
-                        <xsl:attribute name="absolute-position">fixed</xsl:attribute>
-                        <xsl:attribute name="top">0mm</xsl:attribute>
-                        <xsl:attribute name="left">0mm</xsl:attribute>
-                        <xsl:attribute name="width">
-                            <xsl:value-of select="$PageWidth"/>
-                        </xsl:attribute>
-                        <xsl:attribute name="height">
-                            <xsl:value-of select="$PageHeight"/>
-                        </xsl:attribute>
-                        <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text">
-                            <xsl:if
-                                test="/book/book-meta/supplementary-material/graphic[@content-type = 'cover-image-front-inner']">
-                                <xsl:element name="fo:external-graphic">
-                                    <xsl:attribute name="src">
-                                        <xsl:text>url(</xsl:text>
-                                        <xsl:value-of
-                                            select="/book/book-meta/supplementary-material/graphic[@content-type = 'cover-image-front-inner']/@xlink:href"
-                                        />
-                                        <xsl:text>)</xsl:text>
-                                    </xsl:attribute>
-                                    <xsl:attribute name="content-width">
-                                        <xsl:value-of select="$PageWidth"/>
-                                    </xsl:attribute>
-                                    <xsl:attribute name="content-height">
-                                        <xsl:value-of select="$PageHeight"/>
-                                    </xsl:attribute>
-                                    <xsl:if test="$formatter = 'XEP'">
-                                        <xsl:attribute name="rx:alt-description">Front cover
-                                            backside</xsl:attribute>
-                                    </xsl:if>
-                                </xsl:element>
-                            </xsl:if>
-                        </xsl:element>
-                    </xsl:element>
-                </fo:flow>
-            </fo:page-sequence>
-        </xsl:if>
-    </xsl:template>
-
-    <!-- Back cover and back cover inner page -->
-    <xsl:template name="back-cover">
-        <xsl:if test="$medium='electronic' and $include-cover-images='true'">
-
-            <!-- Back cover inner page (U3) -->
-            <fo:page-sequence master-reference="cover-sequence" initial-page-number="3" format="a">
-                <fo:flow flow-name="xsl-region-body">
-                    <xsl:element name="fo:block-container">
-                        <xsl:attribute name="absolute-position">fixed</xsl:attribute>
-                        <xsl:attribute name="top">0mm</xsl:attribute>
-                        <xsl:attribute name="left">0mm</xsl:attribute>
-                        <xsl:attribute name="width">
-                            <xsl:value-of select="$PageWidth"/>
-                        </xsl:attribute>
-                        <xsl:attribute name="height">
-                            <xsl:value-of select="$PageHeight"/>
-                        </xsl:attribute>
-                        <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text">
-                            <xsl:attribute name="color">white</xsl:attribute>
-                            <xsl:if
-                                test="/book/book-meta/supplementary-material/graphic[@content-type = 'cover-image-back-inner']">
-                                <xsl:element name="fo:external-graphic">
-                                    <xsl:attribute name="src">
-                                        <!-- implement error handling if elements missing -->
-                                        <xsl:text>url(</xsl:text>
-                                        <xsl:value-of
-                                            select="/book/book-meta/supplementary-material/graphic[@content-type = 'cover-image-back-inner']/@xlink:href"/>
-                                        <xsl:text>)</xsl:text>
-                                    </xsl:attribute>
-                                    <xsl:attribute name="content-width">
-                                        <xsl:value-of select="$PageWidth"/>
-                                    </xsl:attribute>
-                                    <xsl:attribute name="content-height">
-                                        <xsl:value-of select="$PageHeight"/>
-                                    </xsl:attribute>
-                                    <xsl:if test="$formatter = 'XEP'">
-                                        <xsl:attribute name="rx:alt-description">Back cover inner
-                                            side</xsl:attribute>
-                                    </xsl:if>
-                                </xsl:element>
-                            </xsl:if>
-                            <xsl:if
-                                test="(not(/book/book-meta/supplementary-material/graphic[@content-type = 'cover-image-back-inner'])) and ($formatter = 'XEP')">
-                                <xsl:text>Page intentionally left blank.</xsl:text>
-                            </xsl:if>
-                        </xsl:element>
-                    </xsl:element>
-                </fo:flow>
-            </fo:page-sequence>
-
-            <!-- Back cover outer page (U4) -->
-            <fo:page-sequence master-reference="cover-page" initial-page-number="4" format="a">
-                <fo:flow flow-name="xsl-region-body">
-                    <xsl:element name="fo:block-container">
-                        <xsl:attribute name="absolute-position">fixed</xsl:attribute>
-                        <xsl:attribute name="top">0mm</xsl:attribute>
-                        <xsl:attribute name="left">0mm</xsl:attribute>
-                        <xsl:attribute name="width">
-                            <xsl:value-of select="$PageWidth"/>
-                        </xsl:attribute>
-                        <xsl:attribute name="height">
-                            <xsl:value-of select="$PageHeight"/>
-                        </xsl:attribute>
-                        <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text">
-                            <xsl:attribute name="id">cover_4</xsl:attribute>
-                            <xsl:element name="fo:external-graphic">
-                                <xsl:attribute name="src">
-                                    <xsl:text>url(</xsl:text>
-                                    <xsl:value-of
-                                        select="/book/book-meta/supplementary-material/graphic[@content-type = 'cover-image-back-outer']/@xlink:href"
-                                    />
-                                    <xsl:text>)</xsl:text>
-                                </xsl:attribute>
-                                <xsl:attribute name="content-width">
-                                    <xsl:value-of select="$PageWidth"/>
-                                </xsl:attribute>
-                                <xsl:attribute name="content-height">
-                                    <xsl:value-of select="$PageHeight"/>
-                                </xsl:attribute>
-                                <xsl:if test="$formatter = 'XEP'">
-                                    <xsl:attribute name="rx:alt-description">Back cover
-                                        image</xsl:attribute>
-                                </xsl:if>
-                            </xsl:element>
-                        </xsl:element>
-                    </xsl:element>
-                </fo:flow>
-            </fo:page-sequence>
-        </xsl:if>
-    </xsl:template>
-
-    <!-- ********************************************************** -->
-    <!-- * Book frontmatter formatting                            * -->
-    <!-- ********************************************************** -->
-    
-    <xsl:template match="book-meta" mode="typesetting">
-        <fo:page-sequence master-reference="Frontmatter" initial-page-number="1" format="1">
-            <!-- roman page numbers not supported yet -->
-            <fo:flow flow-name="xsl-region-body">
-
-                <!-- Half title -->
-                <xsl:element name="fo:block" use-attribute-sets="half-title fonts_regular_text">
-                    <xsl:attribute name="page-break-after">always</xsl:attribute>
-                    <xsl:attribute name="id">half-title</xsl:attribute>
-                    <xsl:apply-templates select="book-title-group/book-title"/>
-                </xsl:element>
-
-                <!-- Series title / Half title verso page -->
+    <!-- Preliminaries: half title, series title, main title, copyright page (simple page model) -->
+    <xsl:template name="prelimiaries">
+        <fo:page-sequence master-reference="simple_page_sequence" force-page-count="even" initial-page-number="1">
+            <xsl:attribute name="format">
                 <xsl:choose>
-                    <xsl:when test="preceding-sibling::collection-meta and $series_title_page='yes'">
-                        <xsl:element name="fo:block-container" use-attribute-sets="fonts_regular_text">
-                            <xsl:attribute name="page-break-after">always</xsl:attribute>
-                            <xsl:attribute name="id">series-title</xsl:attribute>
-                            <!-- Main title -->
-                            <xsl:element name="fo:block" use-attribute-sets="series_title_main_title_format">
-                                <xsl:apply-templates select="../collection-meta/title-group/title" mode="series-title"/>
-                            </xsl:element>
-                            <!-- Subtitle -->
-                            <xsl:if test="../collection-meta/title-group/subtitle">
-                                <xsl:element name="fo:block" use-attribute-sets="series_title_subtitle_format">
-                                    <xsl:apply-templates select="../collection-meta/title-group/subtitle" mode="series-title"/>
-                                </xsl:element>
-                            </xsl:if>
-                            <!-- Series editors -->
-                            <xsl:choose>
-                                <xsl:when test="ancestor::book/@xml:lang='de'">
-                                    <xsl:if test="not($series_edited_by_de='')">
-                                        <xsl:element name="fo:block" use-attribute-sets="series_title_editors_format">
-                                            <xsl:value-of select="$series_edited_by_de"/>
-                                        </xsl:element>
-                                        <xsl:element name="fo:block" use-attribute-sets="series_title_editors_format">
-                                            <xsl:for-each select="../collection-meta/contrib-group/contrib[@contrib-type = 'series-editor']">
-                                                <xsl:if test="(position() != 1) and (position() &lt; last())">
-                                                    <xsl:value-of select="$series_edited_name_divider"/>
-                                                </xsl:if>
-                                                <xsl:if test="position() = last()">
-                                                    <xsl:value-of select="$series_edited_name_divider_last_de"/>
-                                                </xsl:if>
-                                                <xsl:value-of select="name/given-names"/>
-                                                <xsl:text> </xsl:text>
-                                                <xsl:value-of select="name/surname"/>
-                                            </xsl:for-each>
-                                        </xsl:element>                                        
-                                    </xsl:if>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:if test="not($series_edited_by_de='')">
-                                        <xsl:element name="fo:block" use-attribute-sets="series_title_editors_format">
-                                            <xsl:value-of select="$series_edited_by_en"/>
-                                        </xsl:element>
-                                        <xsl:element name="fo:block" use-attribute-sets="series_title_editors_format">
-                                            <xsl:for-each select="../collection-meta/contrib-group/contrib[@contrib-type = 'series-editor']">
-                                                <xsl:if test="(position() != 1) and (position() &lt; last())">
-                                                    <xsl:value-of select="$series_edited_name_divider"/>
-                                                </xsl:if>
-                                                <xsl:if test="position() = last()">
-                                                    <xsl:value-of select="$series_edited_name_divider_last_en"/>
-                                                </xsl:if>
-                                                <xsl:value-of select="name/given-names"/>
-                                                <xsl:text> </xsl:text>
-                                                <xsl:value-of select="name/surname"/>
-                                            </xsl:for-each>
-                                        </xsl:element>                                        
-                                    </xsl:if>                                    
-                                </xsl:otherwise>
-                            </xsl:choose>
-                            <!-- Volume number -->
-                            <xsl:element name="fo:block" use-attribute-sets="series_title_volume_number_format">
-                                <xsl:choose>
-                                    <xsl:when test="ancestor::book/@xml:lang='de'">
-                                        <xsl:value-of select="$series_title_volume_number_prefix_de"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:value-of select="$series_title_volume_number_prefix_en"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                                <xsl:apply-templates select="../collection-meta/volume-in-collection/volume-number" mode="typesetting"/>
-                            </xsl:element>
-                        </xsl:element>
+                    <xsl:when test="/book/@book-type='monograph'">
+                        <xsl:value-of select="$_front-matterMonographPagination"/>
+                    </xsl:when>
+                    <xsl:when test="/book/@book-type='proceedings'">
+                        <xsl:value-of select="$_front-matterProceedingsPagination"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text">
-                            <xsl:attribute name="page-break-after">always</xsl:attribute>
-                            <xsl:attribute name="id">series-title</xsl:attribute>
-                            <xsl:choose>
-                                <!-- Special treatment for XEP here. XEP does not create a blank page with no contents -->
-                                <xsl:when test="$formatter = 'XEP' or $formatter = 'FOP'">
-                                    <xsl:attribute name="color">#FFFFFF</xsl:attribute>
-                                    <xsl:text>This page is intentionally left blank</xsl:text>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:text> </xsl:text>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:element>
-                    </xsl:otherwise>
-                </xsl:choose>
-
-                <!-- Main title -->
-
-                <!-- Logo placement -->
-                <xsl:element name="fo:block-container">
-                    <xsl:attribute name="absolute-position">fixed</xsl:attribute>
-                    <xsl:attribute name="top">
-                        <xsl:value-of select="$pub-logo-main-title-ypos"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="left">
-                        <xsl:value-of select="$pub-logo-main-title-xpos"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="width">
-                        <xsl:value-of select="$pub-logo-main-title-width"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="height">
-                        <xsl:value-of select="$pub-logo-main-title-height"/>
-                    </xsl:attribute>
-                    <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text">
-                        <xsl:element name="fo:external-graphic">
-                            <xsl:attribute name="src">
-                                <xsl:text>url(</xsl:text>
-                                <xsl:value-of select="$pub-logo-main-title-fileref"/>
-                                <xsl:text>)</xsl:text>
-                            </xsl:attribute>
-                            <xsl:attribute name="content-width">
-                                <xsl:value-of select="$pub-logo-main-title-width"/>
-                            </xsl:attribute>
-                            <xsl:attribute name="content-height">
-                                <xsl:value-of select="$pub-logo-main-title-height"/>
-                            </xsl:attribute>
-                            <xsl:if test="$formatter = 'XEP'">
-                                <xsl:attribute name="rx:alt-description">Publisher
-                                    logo</xsl:attribute>
-                            </xsl:if>
-                        </xsl:element>
-                    </xsl:element>
-                </xsl:element>
-                <!-- content -->
-                <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text">
-                    <xsl:attribute name="page-break-after">always</xsl:attribute>
-                    <xsl:attribute name="id">main-title</xsl:attribute>
-                    <xsl:text>main title page</xsl:text>
-                </xsl:element>
-
-                <!-- Impressum / main title verso page -->
-                <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text">
-                    <xsl:attribute name="id">impressum</xsl:attribute>
-                    <xsl:text>Impressum</xsl:text>
-                </xsl:element>
-            </fo:flow>
-        </fo:page-sequence>
-    </xsl:template>
-
-    <!-- ********************************************************** -->
-    <!-- * Book backmatter formatting                             * -->
-    <!-- ********************************************************** -->
-    
-    <xsl:template name="book-backmatter">
-
-        <!-- Endnotes in book backmatter -->
-        <xsl:if test="$FootnoteHandling = 'endnote_book_backmatter'">
-            <xsl:call-template name="endnotes-book-backmatter"/>
-        </xsl:if>
-
-    </xsl:template>
-
-    <!-- ********************************************************** -->
-    <!-- * Part formatting                                        * -->
-    <!-- ********************************************************** -->
-        
-    <xsl:template match="book-body" mode="typesetting">
-        <xsl:apply-templates mode="typesetting"/>
-    </xsl:template>
-
-    <xsl:template match="book-part" mode="typesetting">
-
-        <!-- Book part -->
-        
-            <!-- Not implemented yet -->
-        
-        <!-- Book part: Chapters -->
-
-        <fo:page-sequence master-reference="Chapter_Sequence" id="{generate-id(.)}">
-            <!-- defines if chapters have an even page count or not -->
-            <xsl:attribute name="force-page-count">
-                <xsl:choose>
-                    <xsl:when test="following-sibling::book-part">
-                        <xsl:value-of select="$ChapterPageHandling"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:text>end-on-even</xsl:text>
+                        <xsl:text>i</xsl:text>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
-
-            <!-- Footnote separator -->
-            <xsl:if test="$footnote-separator = 'yes'">
-                <fo:static-content flow-name="xsl-footnote-separator">
-                    <fo:block text-align-last="justify">
-                        <xsl:element name="fo:leader" use-attribute-sets="footnote_sep"/>
-                    </fo:block>
-                </fo:static-content>
-            </xsl:if>
-
-            <!-- Running headers -->
-            <!-- Running header on left page -->
-            <fo:static-content flow-name="column_title_verso">
-                <xsl:element name="fo:block"
-                    use-attribute-sets="fonts_petit_text do_not_hyphenate keeps-paragraph running_title_verso">
-                    <fo:page-number/>
-                    <xsl:text> – </xsl:text>
-                    <fo:retrieve-marker retrieve-boundary="document"
-                        retrieve-class-name="running_head_left"/>
-                </xsl:element>
-            </fo:static-content>
-            <!-- Running header on right page -->
-            <fo:static-content flow-name="column_title_recto">
-                <xsl:element name="fo:block"
-                    use-attribute-sets="fonts_petit_text do_not_hyphenate keeps-paragraph running_title_recto">
-                    <fo:retrieve-marker retrieve-boundary="document"
-                        retrieve-class-name="running_head_right"/>
-                    <xsl:text> – </xsl:text>
-                    <fo:page-number/>
-                </xsl:element>
-            </fo:static-content>
-
-            <!-- DOI and URN on first page -->
-            <fo:static-content flow-name="chapter_first_page_bottom">
-                <xsl:element name="fo:block"
-                    use-attribute-sets="fonts_petit_text do_not_hyphenate keeps-headings">
-                    <fo:retrieve-marker retrieve-boundary="document" retrieve-class-name="doi"/>
-                </xsl:element>
-                <xsl:element name="fo:block"
-                    use-attribute-sets="fonts_petit_text do_not_hyphenate keeps-headings">
-                    <fo:retrieve-marker retrieve-boundary="document" retrieve-class-name="urn"/>
-                </xsl:element>
-            </fo:static-content>
-
             <fo:flow flow-name="xsl-region-body">
-                <xsl:apply-templates mode="typesetting"/>
-            </fo:flow>
+                
+                <!-- Half title -->
+                <xsl:element name="fo:block" use-attribute-sets="half_title">
+                    <xsl:attribute name="page-break-after">always</xsl:attribute>
+                    <xsl:attribute name="id">prelims</xsl:attribute>
+                    <xsl:choose>
+                        <xsl:when test="/book/book-meta/book-title-group/book-title">
+                            <xsl:apply-templates select="/book/book-meta/book-title-group/book-title" mode="typesetting"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:text>&#160;</xsl:text>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:element>
+                
+                <!-- Series title page -->
 
+                <xsl:if test="/book/collection-meta">
+                    
+                    <!-- Series title -->
+                    <xsl:if test="/book/collection-meta/title-group/title">
+                        <xsl:element name="fo:block" use-attribute-sets="series_title">
+                            <xsl:apply-templates select="/book/collection-meta/title-group/title" mode="typesetting"/>
+                        </xsl:element>
+                    </xsl:if>
+                    
+                    <!-- Series subtitle -->
+                    <xsl:if test="/book/collection-meta/title-group/subtitle">
+                        <xsl:element name="fo:block" use-attribute-sets="series_subtitle">
+                            <xsl:apply-templates select="/book/collection-meta/title-group/subtitle" mode="typesetting"/>
+                        </xsl:element>
+                    </xsl:if>
+                    
+                    <!-- Series editors -->
+                    <xsl:if test="/book/collection-meta/contrib-group/contrib[@contrib-type='pbd']">
+
+                        <xsl:element name="fo:block" use-attribute-sets="series_edited_by_phrase">
+                        
+                            <!-- "Series edited by" phrase -->
+                            <xsl:choose>
+                                <xsl:when test="$_localization/localization-group[@name='series_edited_by_phrase']/localization-item[@xml:lang=$_bookLanguage]">
+                                    <xsl:value-of select="$_localization/localization-group[@name='series_edited_by_phrase']/localization-item[@xml:lang=$_bookLanguage]"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>Series Editors:</xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            
+                        </xsl:element>
+                            
+                        <xsl:element name="fo:block" use-attribute-sets="series_editors">
+                                
+                            <!-- Series editors -->
+                            <xsl:for-each select="/book/collection-meta/contrib-group/contrib[@contrib-type='pbd']">
+
+                                <!-- Series editor name -->
+                                <xsl:if test="position() > 1">
+                                    <xsl:text>; </xsl:text>
+                                </xsl:if>
+                                <xsl:value-of select="name/given-names"/><xsl:text>&#160;</xsl:text><xsl:value-of select="name/surname"/>
+                            
+                                <!-- Affiliation -->
+                                <xsl:if test="aff">
+                                    <xsl:text>, </xsl:text>
+                                    <xsl:value-of select="aff"/>
+                                </xsl:if>
+                            </xsl:for-each>
+
+                        </xsl:element>
+
+                    </xsl:if>
+                    
+                </xsl:if>                
+
+                <xsl:element name="fo:block" use-attribute-sets="series_title">
+                    <xsl:attribute name="page-break-after">always</xsl:attribute>
+                    <xsl:text>&#160;</xsl:text>
+                </xsl:element>
+                
+                <!-- Main title -->
+                <fo:block page-break-after="always">main title</fo:block>
+                
+                <!-- Copyright page -->
+                <fo:block>copyright page</fo:block>
+                
+            </fo:flow>
         </fo:page-sequence>
+    </xsl:template>
+    
+    <xsl:template match="front-matter" mode="typesetting">
+        
+        <!-- Dedication and Epigraph -->
+        <xsl:apply-templates select="dedication | front-matter-part[@book-part-type='epigraph']" mode="#current"/>
+
+        <!-- Inhaltsübersicht -->
+        <!-- [...] --> 
+        
+        <!-- Inhaltsverzeichnis -->
+        <xsl:if test="parent::book">
+            <xsl:call-template name="table-of-contents"/>
+        </xsl:if>
+        
+        <!-- All other front matter sections -->
+        <xsl:apply-templates select="ack | bio | foreword | front-matter-part[not(@book-part-type='epigraph')] | glossary | notes | preface | ref-list" mode="#current"/>
+        
+    </xsl:template>
+
+    <xsl:template match="book-body" mode="typesetting">
+        <xsl:apply-templates mode="#current"/>
+    </xsl:template>
+
+    <xsl:template match="book-back" mode="typesetting">
+        <xsl:apply-templates select="ack | bio | book-app | book-app-group | book-part | dedication | fn-group | glossary | notes | ref-list" mode="#current"/>
+    </xsl:template>
+
+    <!-- Back cover -->
+    <!-- [...] -->
+
+    <!-- * Book divisions ***************************************** -->
+
+    <!-- Dedication and epigraph (simple page model) -->
+    <xsl:template match="dedication | front-matter-part[@book-part-type='epigraph']" mode="typesetting">
+
+        <fo:page-sequence master-reference="simple_page_sequence" force-page-count="even">
+            <xsl:call-template name="page_number"/>
+           
+            <!-- Insert ID for internal referencing -->
+            <xsl:if test="@id">
+                <xsl:attribute name="id">
+                    <xsl:value-of select="@id"/>
+                </xsl:attribute>
+            </xsl:if>
+           
+            <!-- Text flow -->
+           
+            <fo:flow flow-name="xsl-region-body">
+               
+                <!-- Title block -->
+                <xsl:apply-templates select="book-part-meta" mode="#current"/>
+               
+                <!-- Body -->                
+                <xsl:apply-templates select="named-book-part-body" mode="#current"/>
+              
+                <!-- Back matter -->
+                <xsl:apply-templates select="back" mode="#current"/>
+               
+            </fo:flow>
+                    
+        </fo:page-sequence>
+            
+    </xsl:template>
+
+    <!-- Forword, preface and front matter part -->
+    <xsl:template match="foreword | preface | front-matter-part" mode="typesetting">
+
+        <xsl:choose>
+            
+            <!-- Foreword, Preface and Front-Matter-Part are transformed in a fo:page-sequence if they are
+                 - a section in a group of appendices (parent::book-app-group)
+                 - a section in a book backmatter (parent::book-back)
+                 - a section in a group of chapters (parent::book-part-wrapper)
+                 - a section in the book front matter (parent::front-matter[parent::book])
+                 - a section in the front matter of a part (parent::front-matter[parent::book-part[@book-part-type='part']]) -->
+            <xsl:when test="parent::book-app-group or parent::book-back or parent::book-part-wrapper or parent::front-matter[parent::book] or parent::front-matter[parent::book-part[@book-part-type='part']]">
+                
+               <fo:page-sequence master-reference="complex_page_sequence" force-page-count="even">
+                    <xsl:call-template name="page_number"/>
+            
+                    <!-- Insert ID for internal referencing -->
+                    <xsl:if test="@id">
+                        <xsl:attribute name="id">
+                            <xsl:value-of select="@id"/>
+                        </xsl:attribute>
+                    </xsl:if>
+            
+                    <!-- Footnote separator line -->
+                    <xsl:call-template name="footnote_separator_line"/>
+            
+                    <!-- Static content -->
+                    <xsl:call-template name="static_content"/>
+            
+                    <!-- Text flow -->
+            
+                    <fo:flow flow-name="xsl-region-body">
+                    
+                        <!-- Title block -->
+                        <xsl:apply-templates select="book-part-meta" mode="#current"/>
+                
+                        <!-- Body -->                
+                        <xsl:apply-templates select="named-book-part-body" mode="#current"/>
+                
+                        <!-- Chapter level section backmatter -->
+                        <xsl:apply-templates select="back" mode="#current"/>
+                    
+                    </fo:flow>
+            
+                </fo:page-sequence>
+        
+            </xsl:when>
+            
+            <xsl:otherwise>
+
+                <!-- Title block -->
+                <xsl:apply-templates select="book-part-meta" mode="#current"/>
+                
+                <!-- Body -->                
+                <xsl:apply-templates select="named-book-part-body" mode="#current"/>
+                
+                <!-- Chapter level section backmatter -->
+                <xsl:apply-templates select="back" mode="#current"/>
+                
+            </xsl:otherwise>
+            
+        </xsl:choose>
+        
+    </xsl:template>
+
+    <!-- Acknowledgement, bio and notes -->
+    <xsl:template match="ack | bio | notes | app-group | app" mode="typesetting">
+
+        <xsl:choose>
+            
+            <!-- Acknowledgements and Notes are transformed in a fo:page-sequence if they are
+                 - a section in a group of appendices (parent::book-app-group)
+                 - a section in a book backmatter (parent::book-back)
+                 - a section in a group of chapters (parent::book-part-wrapper)
+                 - a section in the book front matter (parent::front-matter[parent::book])
+                 - a section in the front matter of a part (parent::front-matter[parent::book-part[@book-part-type='part']]) -->
+            <xsl:when test="parent::book-app-group or parent::book-back or parent::book-part-wrapper or parent::front-matter[parent::book] or parent::front-matter[parent::book-part[@book-part-type='part']]">
+                <fo:page-sequence master-reference="complex_page_sequence" force-page-count="even">
+                    <xsl:call-template name="page_number"/>
+                    
+                    <!-- Insert ID for internal referencing -->
+                    <xsl:if test="@id">
+                        <xsl:attribute name="id">
+                            <xsl:value-of select="@id"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    
+                    <!-- Footnote separator line -->
+                    <xsl:call-template name="footnote_separator_line"/>
+                    
+                    <!-- Static content -->
+                    <xsl:call-template name="static_content"/>
+                    
+                    <!-- Text flow -->
+                    
+                    <fo:flow flow-name="xsl-region-body">
+                        
+                        <!-- Title block -->
+                        <xsl:call-template name="chapter-heading"/>
+                        
+                        <!-- Body -->
+                        <xsl:apply-templates select="node() except label except title except subtitle except sec-meta" mode="#current"/>
+                        
+                    </fo:flow>
+                    
+                </fo:page-sequence>
+                
+            </xsl:when>
+            <xsl:otherwise>
+                
+                <!-- Title block -->
+                <xsl:call-template name="chapter-heading"/>
+                
+                <!-- Body -->
+                <xsl:apply-templates select="node() except label except title except subtitle except sec-meta" mode="#current"/>
+                
+            </xsl:otherwise>
+        </xsl:choose>
 
     </xsl:template>
+
+    <!-- Glossaries -->
+    <xsl:template match="glossary" mode="typesetting">
+
+        <xsl:choose>
+
+            <!-- Top level glossaries start a new section. Sub-glossaries do not -->
+            <xsl:when test="parent::book-back or parent::book-part-wrapper or parent::front-matter[parent::book] or parent::front-matter[parent::book-part[@book-part-type='part']]">
+
+                <fo:page-sequence master-reference="complex_page_sequence" force-page-count="even">
+                    <xsl:call-template name="page_number"/>
+                    
+                    <!-- Insert ID for internal referencing -->
+                    <xsl:if test="@id">
+                        <xsl:attribute name="id">
+                            <xsl:value-of select="@id"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    
+                    <!-- Footnote separator line -->
+                    <xsl:call-template name="footnote_separator_line"/>
+                    
+                    <!-- Footers -->
+                    
+                    <!-- First odd page -->
+                    <fo:static-content flow-name="page_template_first_odd_footer">
+                        <xsl:call-template name="static_footer_first_odd_page"/>
+                    </fo:static-content>
+                    
+                    <!-- First even page -->
+                    <fo:static-content flow-name="page_template_first_even_footer">
+                        <xsl:call-template name="static_footer_first_even_page"/>
+                    </fo:static-content>
+                    
+                    <!-- Odd page -->
+                    <fo:static-content flow-name="page_template_odd_footer">
+                        <xsl:call-template name="static_footer_odd_page"/>
+                    </fo:static-content>
+                    
+                    <!-- Even page -->
+                    <fo:static-content flow-name="page_template_even_footer">
+                        <xsl:call-template name="static_footer_even_page"/>
+                    </fo:static-content>
+                    
+                    <!-- Headers -->
+
+                    <!-- Odd page -->
+                    <fo:static-content flow-name="page_template_odd_header">
+                        <xsl:call-template name="static_header_odd_page"/>
+                    </fo:static-content>
+                    
+                    <!-- Even page -->
+                    <fo:static-content flow-name="page_template_even_header">
+                        <xsl:call-template name="static_header_even_page"/>
+                    </fo:static-content>
+                    
+                    <!-- Text flow -->
+
+                    <fo:flow flow-name="xsl-region-body">
+
+                        <!-- Title block -->
+                        <xsl:call-template name="chapter-heading"/>
+                        
+                        <!-- Body -->
+                        <xsl:apply-templates select="node() except label except title" mode="#current"/>
+
+                        <!-- Chapter level section backmatter -->
+                        <xsl:apply-templates select="back" mode="#current"/>
+                        
+                    </fo:flow>
+
+                </fo:page-sequence>
+
+            </xsl:when>
+
+            <!-- Sub glossaries -->
+            <xsl:otherwise>
+
+                <!-- Heading -->
+                <xsl:if test="label or title">
+                    <xsl:call-template name="chapter-heading"/>
+                </xsl:if>
+
+                <!-- Body -->
+                <xsl:apply-templates select="node() except label except title" mode="#current"/>
+
+            </xsl:otherwise>
+
+        </xsl:choose>
+
+    </xsl:template>
+
+    <!-- Book parts (simple page model), book chapters, and appendices -->
+    <xsl:template match="book-part | book-app | book-app-group" mode="typesetting">
+
+        <!-- Book part can contain three types of book parts:
+            (1) Book parts
+            (2) Chapters or appendices -->
+
+        <xsl:choose>
+            
+            <!-- Book parts and Grouped appendices get a starter page -->
+            <xsl:when test="@book-part-type='part' or self::book-app-group">
+                
+                <!-- Book part -->
+                
+                <!-- Create (1) a part starter page -->
+                <fo:page-sequence master-reference="simple_page_sequence" force-page-count="even">
+
+                    <!-- Distinctions relevant for pagination -->
+                    <xsl:if test="not(preceding-sibling::book-part) and not(ancestor::book-part) and not(ancestor::book-back)">
+                        <xsl:if test="(/book/@book-type='monograph' and $_front-matterMonographPagination!='1') or (/book/@book-type='proceedings' and $_front-matterProceedingsPagination!='1') or (not(/book/@book-type)) or (/book/@book-type!='monograph' and /book/@book-type!='proceedings')">
+                            <xsl:attribute name="initial-page-number">1</xsl:attribute>
+                            <xsl:attribute name="format">1</xsl:attribute>
+                        </xsl:if>
+                    </xsl:if>
+
+                    <!-- Multivolume output in AntennaHouse Formatter -->
+                    <xsl:if test="$formatter='ah'">
+                        <xsl:attribute name="axf:output-volume-break">true</xsl:attribute>
+                    </xsl:if>
+                    
+                    <!-- Insert ID for internal referencing -->
+                    <xsl:if test="@id">
+                        <xsl:attribute name="id">
+                            <xsl:value-of select="@id"/>
+                        </xsl:attribute>
+                    </xsl:if>
+
+                    <fo:flow flow-name="xsl-region-body">
+                        
+                        <xsl:apply-templates select="book-part-meta" mode="#current"/>
+                        
+                        <!-- Implement possible contents on part starter page -->
+                        
+                        <!-- [...] -->
+                        
+                    </fo:flow>
+                </fo:page-sequence>
+                
+                <!-- Select subsequent content or book parts -->
+                <xsl:apply-templates select="front-matter | body | book-app" mode="#current"/>
+                
+            </xsl:when>
+            
+            <!-- Chapters and appendices -->
+            <xsl:otherwise>
+                
+                <fo:page-sequence master-reference="complex_page_sequence" force-page-count="even">
+                    <xsl:if test="not(preceding-sibling::book-part) and not(ancestor::book-part) and not(ancestor::book-back)">
+                        <xsl:if test="(/book/@book-type='monograph' and $_front-matterMonographPagination!='1') or (/book/@book-type='proceedings' and $_front-matterProceedingsPagination!='1') or (not(/book/@book-type)) or (/book/@book-type!='monograph' and /book/@book-type!='proceedings')">
+                            <xsl:attribute name="initial-page-number">1</xsl:attribute>
+                            <xsl:attribute name="format">1</xsl:attribute>
+                        </xsl:if>
+                    </xsl:if>
+                    <xsl:if test="$formatter='ah'">
+                        <xsl:attribute name="axf:output-volume-break">true</xsl:attribute>
+                    </xsl:if>
+                    
+                    <!-- Insert ID for internal referencing -->
+                    <xsl:if test="@id">
+                        <xsl:attribute name="id">
+                            <xsl:value-of select="@id"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    
+                    <!-- Footnote separator line -->
+                    <xsl:call-template name="footnote_separator_line"/>
+                    
+                    <!-- Static content -->
+                    <xsl:call-template name="static_content"/>
+                    
+                    <!-- Text flow -->
+                    <fo:flow flow-name="xsl-region-body">
+                        
+                        <!-- Chapter level section title block -->
+                        <xsl:apply-templates select="book-part-meta" mode="#current"/>
+
+                        <!-- Front matter -->
+                        <xsl:apply-templates select="front-matter" mode="#current"/>
+
+                        <!-- Chapter level section body -->
+                        <xsl:apply-templates select="body" mode="#current"/>
+                        
+                        <!-- Chapter level section backmatter -->
+                        <xsl:apply-templates select="back" mode="#current"/>
+                        
+                    </fo:flow>
+                    
+                </fo:page-sequence>
+                
+            </xsl:otherwise>
+
+        </xsl:choose>
+
+    </xsl:template>
+    
+    <!-- List of bibliographic references for a document or document component -->
+    <xsl:template match="ref-list" mode="typesetting">
+        
+        <xsl:choose>
+            <xsl:when test="parent::book-app-group or parent::book-back or parent::book-part-wrapper or parent::front-matter[parent::book] or parent::front-matter[parent::book-part[@book-part-type='part']]">
+                
+            <!-- <xsl:when test="not(ancestor::abstract) and not(ancestor::ack) and not(ancestor::back) and not(ancestor::bio) and not(ancestor::boxed-text) and not(ancestor::explanation) and not(ancestor::notes) and not(ancestor::option) and not(ancestor::question) and not(ancestor::ref-list) and not(ancestor::sec) and not(ancestor::trans-abstract)"> -->
+
+                <fo:page-sequence master-reference="complex_page_sequence" force-page-count="even">
+                    <xsl:call-template name="page_number"/>
+
+                    <!-- Insert ID for internal referencing -->
+                    <xsl:if test="@id">
+                        <xsl:attribute name="id">
+                            <xsl:value-of select="@id"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    
+                    <!-- Footnote separator line -->
+                    <xsl:call-template name="footnote_separator_line"/>
+                    
+                    <!-- Footers -->
+                    
+                    <!-- First odd page -->
+                    <fo:static-content flow-name="page_template_first_odd_footer">
+                        <xsl:call-template name="static_footer_first_odd_page"/>
+                    </fo:static-content>
+                    
+                    <!-- First even page -->
+                    <fo:static-content flow-name="page_template_first_even_footer">
+                        <xsl:call-template name="static_footer_first_even_page"/>
+                    </fo:static-content>
+                    
+                    <!-- Odd page -->
+                    <fo:static-content flow-name="page_template_odd_footer">
+                        <xsl:call-template name="static_footer_odd_page"/>
+                    </fo:static-content>
+                    
+                    <!-- Even page -->
+                    <fo:static-content flow-name="page_template_even_footer">
+                        <xsl:call-template name="static_footer_even_page"/>
+                    </fo:static-content>
+                    
+                    <!-- Headers -->
+                    
+                    <!-- Odd page -->
+                    <fo:static-content flow-name="page_template_odd_header">
+                        <xsl:call-template name="static_header_odd_page"/>
+                    </fo:static-content>
+                    
+                    <!-- Even page -->
+                    <fo:static-content flow-name="page_template_even_header">
+                        <xsl:call-template name="static_header_even_page"/>
+                    </fo:static-content>
+                    
+                    <!-- Text flow -->
+                    
+                    <fo:flow flow-name="xsl-region-body">
+                                                
+                        <!-- Title block -->
+                        <xsl:call-template name="chapter-heading"/>
+                        
+                        <!-- Body -->
+                        <xsl:apply-templates select="node() except label except title" mode="#current"/>
+                        
+                    </fo:flow>
+                    
+                </fo:page-sequence>
+                
+            </xsl:when>
+            <xsl:otherwise>
+                
+                <!-- Heading -->
+                <xsl:if test="label or title">
+                    <xsl:call-template name="section-heading"/>
+                </xsl:if>
+                
+                <!-- Body -->                
+                <xsl:apply-templates select="node() except label except title" mode="#current"/>
+                
+            </xsl:otherwise>
+        </xsl:choose>
+        
+    </xsl:template>
+    
+    <!-- Endnotes in book back matter -->
+    <xsl:template match="fn-group" mode="typesetting">
+        <xsl:if test="$_footnote_handling='book-back-matter' and parent::book-back">
+            <fo:page-sequence master-reference="complex_page_sequence" force-page-count="even">
+                <xsl:if test="$formatter='ah'">
+                    <xsl:attribute name="axf:output-volume-break">true</xsl:attribute>
+                </xsl:if>
+            
+                <!-- Insert ID for internal referencing -->
+                <xsl:if test="@id">
+                    <xsl:attribute name="id">
+                        <xsl:value-of select="@id"/>
+                    </xsl:attribute>
+                </xsl:if>
+                
+                <!-- Footnote separator line -->
+                <xsl:call-template name="footnote_separator_line"/>
+                
+                <!-- Footers -->
+                
+                <!-- First odd page -->
+                <fo:static-content flow-name="page_template_first_odd_footer">
+                    <xsl:call-template name="static_footer_first_odd_page"/>
+                </fo:static-content>
+                
+                <!-- First even page -->
+                <fo:static-content flow-name="page_template_first_even_footer">
+                    <xsl:call-template name="static_footer_first_even_page"/>
+                </fo:static-content>
+                
+                <!-- Odd page -->
+                <fo:static-content flow-name="page_template_odd_footer">
+                    <xsl:call-template name="static_footer_odd_page"/>
+                </fo:static-content>
+                
+                <!-- Even page -->
+                <fo:static-content flow-name="page_template_even_footer">
+                    <xsl:call-template name="static_footer_even_page"/>
+                </fo:static-content>
+                
+                <!-- Headers -->
+                
+                <!-- Odd page -->
+                <fo:static-content flow-name="page_template_odd_header">
+                    <xsl:call-template name="static_header_odd_page"/>
+                </fo:static-content>
+                
+                <!-- Even page -->
+                <fo:static-content flow-name="page_template_even_header">
+                    <xsl:call-template name="static_header_even_page"/>
+                </fo:static-content>
+                
+                <!-- Text flow -->
+                <fo:flow flow-name="xsl-region-body">
+ 
+                    <!-- Title block -->
+                    <xsl:call-template name="chapter-heading"/>
+                    
+                    <!-- Body -->
+                    <xsl:for-each select="/descendant::xref[@ref-type='fn']">
+                        <xsl:variable name="_fn_id" select="@rid"/>
+                        <fo:block>
+                            <xsl:apply-templates select="/descendant::fn[@id = $_fn_id]" mode="#current"/>
+                        </fo:block>
+                    </xsl:for-each>
+                    
+                </fo:flow>
+            
+            </fo:page-sequence>
+            
+        </xsl:if>
+    </xsl:template>
+    
+    <!-- * Common structures *************************************** -->
 
     <xsl:template match="book-part-meta" mode="typesetting">
+        <xsl:apply-templates select="title-group" mode="#current"/>
+    </xsl:template>
+    
+    <xsl:template match="title-group" mode="typesetting">
+        
+        <xsl:variable name="_hierarchy_counter">
+            <xsl:value-of select="count(ancestor-or-self::ack)
+                + count(ancestor-or-self::app)
+                + count(ancestor-or-self::app-group)
+                + count(ancestor-or-self::bio)
+                + count(ancestor-or-self::book-part[@book-part-type='chapter'])
+                + count(ancestor-or-self::book-part[not(@book-part-type)])
+                + count(ancestor-or-self::def-list)
+                + count(ancestor-or-self::foreword)
+                + count(ancestor-or-self::front-matter-part)
+                + count(ancestor-or-self::glossary)
+                + count(ancestor-or-self::notes)
+                + count(ancestor-or-self::preface)
+                + count(ancestor-or-self::ref-list)
+                + count(ancestor-or-self::sec)
+                - 2"/>
+        </xsl:variable>
+        
         <xsl:choose>
-            <xsl:when test="/book[@book-type = 'monograph']">
-                <xsl:apply-templates select="title-group" mode="chapter-title"/>
+            <xsl:when test="parent::book-part-meta[parent::book-part[@book-part-type='part']] or
+                parent::book-part-meta[parent::book-app-group]">
+                <xsl:call-template name="part-heading"/>
             </xsl:when>
-            <xsl:when test="/book[@book-type = 'proceedings']">
-                <xsl:apply-templates select="contrib-group" mode="proceedings"/>
-                <xsl:apply-templates select="title-group" mode="chapter-title"/>
+            <xsl:when test="$_hierarchy_counter &lt; 0 and (parent::book-part-meta[parent::book-part[@book-part-type='chapter']] or 
+                parent::book-part-meta[parent::book-part[not(@book-part-type)]] or
+                parent::book-part-meta[parent::book-app] or
+                parent::book-part-meta[parent::dedication] or
+                parent::book-part-meta[parent::foreword] or
+                parent::book-part-meta[parent::preface] or
+                parent::book-part-meta[parent::front-matter-part])">
+                <xsl:call-template name="chapter-heading"/>
+            </xsl:when>
+            <xsl:when test="$_hierarchy_counter &gt;= 0">
+                <xsl:call-template name="section-heading"/>
             </xsl:when>
         </xsl:choose>
+
     </xsl:template>
 
-    <xsl:template match="body" mode="typesetting">
-        <xsl:apply-templates mode="typesetting"/>
+    <xsl:template match="body | named-book-part-body" mode="typesetting">
+        <xsl:apply-templates mode="#current"/>
     </xsl:template>
 
     <xsl:template match="back" mode="typesetting">
-        <xsl:apply-templates mode="typesetting"/>
-    </xsl:template>
-
-    <!-- ********************************************************** -->
-    <!-- * First Page of a book part                              * -->
-    <!-- ********************************************************** -->
-
-    <!-- First page of a chapter in a monograph -->
-    <xsl:template match="title-group" mode="chapter-title">
-
-        <xsl:element name="fo:block-container" use-attribute-sets="margin_under_title">
-            <xsl:if test="not(/book[@book-type = 'proceedings'])">
-                <xsl:attribute name="id">
-                    <xsl:value-of select="ancestor::book-part[1]/@id"/>
-                </xsl:attribute>
-            </xsl:if>
+        
+        <xsl:apply-templates select="ack | bio | app | app-group | dedication | glossary | notes" mode="#current"/>
             
-            <!-- DOI and URN -->
-            <xsl:if test="($medium = 'electronic' and $display_doi_monograph_first_page = 'electronic') or ($medium = 'print' and $display_doi_monograph_first_page = 'print') or ($display_doi_monograph_first_page = 'both')">
-                <xsl:if test="../custom-meta-group/custom-meta[@specific-use = 'doi']">
-                    <fo:marker marker-class-name="doi">
-                        <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'doi']/meta-name"/>
-                        <xsl:text>: </xsl:text>
-                        <xsl:choose>
-                            <xsl:when test="$medium = 'electronic'">
-                                <xsl:element name="fo:basic-link" use-attribute-sets="hyperlink">
-                                    <xsl:attribute name="external-destination">
-                                        <xsl:text>url(http://dx.doi.org/</xsl:text>
-                                            <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'doi']/meta-value"/>
-                                        <xsl:text>)</xsl:text>
-                                    </xsl:attribute>
-                                </xsl:element>
-                                <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'doi']/meta-value"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'doi']/meta-value"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </fo:marker>
-                </xsl:if>
-            </xsl:if>
-            <xsl:if test="($medium = 'electronic' and $display_urn_monograph_first_page = 'electronic') or ($medium = 'print' and $display_urn_monograph_first_page = 'print') or ($display_urn_monograph_first_page = 'both')">
-                <xsl:if test="../custom-meta-group/custom-meta[@specific-use = 'urn']">
-                    <fo:marker marker-class-name="urn">
-                        <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'urn']/meta-name"/>
-                        <xsl:text>: </xsl:text>
-                        <xsl:choose>
-                            <xsl:when test="$medium = 'electronic'">
-                                <xsl:element name="fo:basic-link" use-attribute-sets="hyperlink">
-                                    <xsl:attribute name="external-destination">
-                                        <xsl:text>url(https://nbn-resolving.org/resolver?identifier=</xsl:text>
-                                            <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'urn']/meta-value"/>
-                                        <xsl:text>)</xsl:text>
-                                    </xsl:attribute>
-                                </xsl:element>
-                                <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'urn']/meta-value"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="../custom-meta-group/custom-meta[@specific-use = 'urn']/meta-value"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </fo:marker>
-                </xsl:if>
-            </xsl:if>
-
-            <!-- Running Header Even Page: Title -->
-            <fo:marker marker-class-name="running_head_left">
-                <xsl:if test="label">
-                    <xsl:apply-templates select="label" mode="typesetting"/>
-                    <xsl:text>&#x2002;</xsl:text>
-                </xsl:if>
-                <xsl:apply-templates select="title" mode="typesetting"/>
-            </fo:marker>
-            <xsl:element name="fo:block" use-attribute-sets="fonts_chapter_title do_not_hyphenate keeps-headings">
-                <xsl:if test="label">
-                    <xsl:apply-templates select="label" mode="typesetting"/>
-                    <xsl:text>&#x2002;</xsl:text>
-                </xsl:if>
-                <xsl:apply-templates select="title" mode="monograph_chapter_title"/>
-                <xsl:apply-templates select="subtitle" mode="chapter_title"/>
+        <!-- Endnotes in chapter back matter -->
+        <xsl:if test="$_footnote_handling='chapter-back-matter' and descendant::xref[@ref-type='fn']">
+            <xsl:element name="fo:block" use-attribute-sets="section_heading_1">
+                <xsl:choose>
+                    <xsl:when test="$_localization/localization-group[@name='endnotes']/localization-item[@xml:lang=$_bookLanguage]">
+                        <xsl:value-of select="$_localization/localization-group[@name='endnotes']/localization-item[@xml:lang=$_bookLanguage]"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>Endnotes</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:element>
-        </xsl:element>
-    </xsl:template>
-
-    <!-- Display author names (proceedings only) -->
-    <xsl:template match="contrib-group" mode="proceedings">
-        <xsl:element name="fo:block"
-            use-attribute-sets="fonts_author_names_chapter_head keeps-headings">
-            <xsl:attribute name="id">
-                <xsl:value-of select="ancestor::book-part[1]/@id"/>
-            </xsl:attribute>
-            <!-- Running Header Left -->
-            <fo:marker marker-class-name="running_head_left">
-                <xsl:for-each select="contrib[@contrib-type = 'author']">
-                    <xsl:choose>
-                        <xsl:when test="position() &lt;= $Proceedings_Max_Authors_Running_Head_Left">
-                            <xsl:if test="position() != 1">
-                                <xsl:value-of
-                                    select="$Proceedings_Authors_Running_Head_Left_Divider"/>
-                            </xsl:if>
-                            <xsl:value-of select="name/given-names"/>
-                            <xsl:text> </xsl:text>
-                            <xsl:value-of select="name/surname"/>
-                        </xsl:when>
-                        <xsl:when
-                            test="position() = ($Proceedings_Max_Authors_Running_Head_Left + 1)">
-                            <xsl:value-of select="$Proceedings_Authors_Running_Head_Left_etal"/>
-                        </xsl:when>
-                    </xsl:choose>
-                </xsl:for-each>
-            </fo:marker>
-            <!-- Display as text -->
-            <xsl:for-each select="contrib[@contrib-type = 'author']">
-                <xsl:if test="position() != 1">
-                    <xsl:value-of select="$author-name-divider_chapter-head"/>
-                </xsl:if>
-                <xsl:value-of select="name/given-names"/>
-                <xsl:text>&#x00A0;</xsl:text>
-                <!-- Non breaking space to keep author names together -->
-                <xsl:value-of select="name/surname"/>
+            <xsl:for-each select="descendant::xref[@ref-type='fn']">
+                <xsl:variable name="_fn_id" select="@rid"/>
+                <fo:block>
+                    <xsl:apply-templates select="/descendant::fn[@id = $_fn_id]" mode="#current"/>
+                </fo:block>
             </xsl:for-each>
-        </xsl:element>
-    </xsl:template>
-
-    <!-- ********************************************************** -->
-    <!-- * Titles and Headings                                    * -->
-    <!-- ********************************************************** -->
-    
-    <!-- Series title on series title page -->
-    <xsl:template match="title" mode="series-title">
-        <xsl:apply-templates mode="typesetting"/>
-    </xsl:template>
-
-    <!-- Series subitle on series title page -->
-    <xsl:template match="subtitle" mode="series-title">
-        <xsl:apply-templates mode="typesetting"/>
-    </xsl:template>   
-
-    <!-- Chapter title -->
-    <xsl:template match="title" mode="monograph_chapter_title">
-         <xsl:apply-templates mode="typesetting"/>
-    </xsl:template>
-
-    <!-- Chapter subtitle -->
-    <xsl:template match="subtitle" mode="chapter_title">
-        <xsl:element name="fo:block" use-attribute-sets="fonts_chapter_subtitle keeps-headings">
-            <xsl:apply-templates mode="typesetting"/>
-        </xsl:element>
-    </xsl:template>
-
-    <!-- Headings -->
-    <xsl:template match="title" mode="typesetting">
-        <!-- Parent elements: app, boxed-text, sec -->
-        <!-- Retrieve the hierarchy level of the heading -->
-        <xsl:variable name="hierarchy_level">
-            <xsl:value-of select="count(ancestor::sec)"/>
-        </xsl:variable>
-
-        <xsl:if test="parent::title-group">
-            <xsl:apply-templates mode="typesetting"/>
         </xsl:if>
 
-        <xsl:if test="parent::sec">
-            <xsl:choose>
-                <xsl:when test="(($hierarchy_level = 1) and (/book[@book-type = 'monograph']))">
-                    <xsl:element name="fo:block" use-attribute-sets="fonts_heading_1 keeps-headings">
-                        <xsl:attribute name="id">
-                            <xsl:value-of select="../@id"/>
-                        </xsl:attribute>
-                        <!-- Right header: First section header -->
-                        <fo:marker marker-class-name="running_head_right">
-                            <xsl:if test="preceding-sibling::label">
-                                <xsl:apply-templates select="preceding-sibling::label"
-                                    mode="heading"/>
-                                <xsl:text>&#x2002;</xsl:text>
-                            </xsl:if>
-                            <xsl:apply-templates mode="typesetting"/>
-                        </fo:marker>
-                        <xsl:if test="preceding-sibling::label">
-                            <xsl:apply-templates select="preceding-sibling::label" mode="heading"/>
-                            <xsl:text>&#x2002;</xsl:text>
-                        </xsl:if>
-                        <xsl:apply-templates mode="typesetting"/>
-                    </xsl:element>
-                </xsl:when>
-                <xsl:when test="(($hierarchy_level = 1) and not(/book[@book-type = 'monograph']))">
-                    <xsl:element name="fo:block" use-attribute-sets="fonts_heading_1 keeps-headings">
-                        <xsl:attribute name="id">
-                            <xsl:value-of select="../@id"/>
-                        </xsl:attribute>
-                        <xsl:if test="preceding-sibling::label">
-                            <xsl:apply-templates select="preceding-sibling::label" mode="heading"/>
-                            <xsl:text>&#x2002;</xsl:text>
-                        </xsl:if>
-                        <xsl:apply-templates mode="typesetting"/>
-                    </xsl:element>
-                </xsl:when>
-                <xsl:when test="$hierarchy_level = 2">
-                    <xsl:element name="fo:block" use-attribute-sets="fonts_heading_2 keeps-headings">
-                        <xsl:attribute name="id">
-                            <xsl:value-of select="../@id"/>
-                        </xsl:attribute>
-                        <xsl:if test="preceding-sibling::label">
-                            <xsl:apply-templates select="preceding-sibling::label" mode="heading"/>
-                            <xsl:text>&#x2002;</xsl:text>
-                        </xsl:if>
-                        <xsl:apply-templates mode="typesetting"/>
-                    </xsl:element>
-                </xsl:when>
-                <xsl:when test="$hierarchy_level = 3">
-                    <xsl:element name="fo:block" use-attribute-sets="fonts_heading_3 keeps-headings">
-                        <xsl:attribute name="id">
-                            <xsl:value-of select="../@id"/>
-                        </xsl:attribute>
-                        <xsl:if test="preceding-sibling::label">
-                            <xsl:apply-templates select="preceding-sibling::label" mode="heading"/>
-                            <xsl:text>&#x2002;</xsl:text>
-                        </xsl:if>
-                        <xsl:apply-templates mode="typesetting"/>
-                    </xsl:element>
-                </xsl:when>
-                <xsl:when test="$hierarchy_level = 4">
-                    <xsl:element name="fo:block" use-attribute-sets="fonts_heading_4 keeps-headings">
-                        <xsl:attribute name="id">
-                            <xsl:value-of select="../@id"/>
-                        </xsl:attribute>
-                        <xsl:if test="preceding-sibling::label">
-                            <xsl:apply-templates select="preceding-sibling::label" mode="heading"/>
-                            <xsl:text>&#x2002;</xsl:text>
-                        </xsl:if>
-                        <xsl:apply-templates mode="typesetting"/>
-                    </xsl:element>
-                </xsl:when>
-                <xsl:when test="$hierarchy_level &gt; 4">
-                    <xsl:element name="fo:block" use-attribute-sets="fonts_heading_4 keeps-headings">
-                        <xsl:attribute name="id">
-                            <xsl:value-of select="../@id"/>
-                        </xsl:attribute>
-                        <xsl:if test="preceding-sibling::label">
-                            <xsl:apply-templates select="preceding-sibling::label" mode="heading"/>
-                            <xsl:text>&#x2002;</xsl:text>
-                        </xsl:if>
-                        <xsl:apply-templates mode="typesetting"/>
-                    </xsl:element>
-                </xsl:when>
-            </xsl:choose>
-        </xsl:if>
+        <xsl:apply-templates select="ref-list" mode="#current"/>
+        
     </xsl:template>
 
-    <!-- Labels and chapter numbering -->
-    <xsl:template match="label" mode="heading">
-        <xsl:apply-templates mode="typesetting"/>
+    <xsl:template match="sec" mode="typesetting">
+        <xsl:call-template name="section-heading"/>
+        <xsl:apply-templates select="node() except label except title except subtitle" mode="#current"/>
     </xsl:template>
 
-    <!-- Heading of the endnote section at the end of the book and bibliography -->
-    <xsl:template match="title" mode="endnote_heading">
-        <xsl:apply-templates mode="typesetting"/>
-    </xsl:template>
-    
-    <!-- ********************************************************** -->
-    <!-- * Paragraphs                                             * -->
-    <!-- ********************************************************** -->
-    
-    <xsl:template match="p" mode="typesetting">
-        <xsl:choose>
-            <xsl:when test="parent::fn">
-                <xsl:element name="fo:block"
-                    use-attribute-sets="fonts_petit_text paragraph_formats hyphenate keeps-paragraph no_indents-paragraph_first_line">
-                    <!-- Insert Footnote label into the first paragraph -->
-                    <xsl:if test="not(./preceding-sibling::p)">
-                        <xsl:variable name="footnote_id" select="ancestor::fn/@id"/>
-                        <xsl:choose>
-                            <!-- Hyperlink for electronic PDF -->
-                            <xsl:when test="$medium = 'electronic'">
-                                <xsl:element name="fo:inline" use-attribute-sets="hyperlink">
-                                    <xsl:attribute name="id">
-                                        <xsl:value-of select="ancestor::fn/@id"/>
-                                    </xsl:attribute>
-                                    <xsl:variable name="backlink">
-                                        <xsl:value-of select="$footnote_id"/>
-                                        <xsl:text>_backlink</xsl:text>
-                                    </xsl:variable>
-                                    <fo:basic-link internal-destination="{$backlink}">
-                                        <xsl:value-of
-                                            select="/descendant::xref[@rid = $footnote_id]"/>
-                                    </fo:basic-link>
-                                    <xsl:text>&#x2002;</xsl:text>
-                                </xsl:element>
-                            </xsl:when>
-                            <!-- Text only in the non electronic PDF -->
-                            <xsl:otherwise>
-                                <fo:inline>
-                                    <xsl:value-of select="/descendant::xref[@rid = $footnote_id]"/>
-                                    <xsl:text>&#x2002;</xsl:text>
-                                </fo:inline>
-                            </xsl:otherwise>
-                        </xsl:choose>
+    <!-- * Formats ************************************************* -->
+
+    <!-- Headings
+            1. Part headings and subsequent sub part headings
+            2. Chapter headings
+            3. Section headings
+            4. No headings (where headings are optional) -->
+
+    <xsl:template name="part-heading">
+        
+        <xsl:element name="fo:block-container">
+            
+            <!-- Author name(s) -->
+            <!-- […] -->
+            
+            <!-- Title block (label, title and subtitle) -->
+            
+            <!-- Label as separate paragraph -->
+            <xsl:if test="$_part_label_formatting='paragraph' and label">
+                <xsl:element name="fo:block" use-attribute-sets="part_label">
+                    <xsl:apply-templates select="label" mode="typesetting"/>
+                </xsl:element>
+            </xsl:if>
+
+            <!-- To do: Part title and label as hanging paragraphs -->
+            
+            <!-- Inline label -->
+            <xsl:if test="title or ($_part_label_formatting='inline' and label)">
+                <xsl:element name="fo:block" use-attribute-sets="part_heading">
+                    <xsl:if test="$_part_label_formatting='inline' and label">
+                        <xsl:apply-templates select="label" mode="typesetting"/><xsl:text> </xsl:text>
                     </xsl:if>
-                    <xsl:apply-templates mode="typesetting"/>
+                    <xsl:apply-templates select="title" mode="typesetting"/>
+                </xsl:element>            
+            </xsl:if>
+            
+            <!-- Subtitle -->
+            <xsl:if test="subtitle">
+                <xsl:element name="fo:block" use-attribute-sets="part_subheading">
+                    <xsl:apply-templates select="subtitle" mode="typesetting"/>
                 </xsl:element>
-            </xsl:when>
-            <xsl:when test="parent::disp-quote">
-                <!--<xsl:choose>
-                    <xsl:when test="preceding-sibling::*[1][self::p]">
-                        <xsl:element name="fo:block"
-                            use-attribute-sets="indents-disp-quote_first_line">
-                            <xsl:apply-templates mode="typesetting"/>
-                        </xsl:element>
-                    </xsl:when>
-                    <xsl:otherwise>-->
-                <xsl:element name="fo:block">
-                    <xsl:apply-templates mode="typesetting"/>
-                </xsl:element>
-                <!--   </xsl:otherwise>
-                </xsl:choose>-->
-            </xsl:when>
-            <xsl:when test="(ancestor::table-wrap) or (ancestor::fig)">
-                <xsl:choose>
-                    <xsl:when test="not(preceding-sibling::*[1][self::p])">
-                        <xsl:element name="fo:block"
-                            use-attribute-sets="fonts_petit_text paragraph_formats hyphenate keeps-paragraph">
-                            <xsl:element name="fo:inline" use-attribute-sets="caption_labels">
-                                <xsl:apply-templates select="../../label"/>
-                                <xsl:text>. </xsl:text>
-                            </xsl:element>
-                            <xsl:apply-templates mode="typesetting"/>
-                        </xsl:element>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:element name="fo:block"
-                            use-attribute-sets="fonts_petit_text paragraph_formats hyphenate keeps-paragraph">
-                            <xsl:apply-templates mode="typesetting"/>
-                        </xsl:element>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:choose>
-                    <xsl:when test="preceding-sibling::*[1][self::p]">
-                        <xsl:element name="fo:block"
-                            use-attribute-sets="fonts_regular_text paragraph_formats hyphenate keeps-paragraph indents-paragraph_first_line">
-                            <xsl:apply-templates mode="typesetting"/>
-                        </xsl:element>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:element name="fo:block"
-                            use-attribute-sets="fonts_regular_text paragraph_formats hyphenate keeps-paragraph no_indents-paragraph_first_line">
-                            <xsl:apply-templates mode="typesetting"/>
-                        </xsl:element>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:otherwise>
-        </xsl:choose>
+            </xsl:if>
+            
+        </xsl:element>                
+        
     </xsl:template>
 
-    <!-- ********************************************************** -->
-    <!-- * Cross references to footnotes, figures, tables etc.    * -->
-    <!-- ********************************************************** -->
-    
-    <xsl:template match="xref" mode="typesetting">
+    <xsl:template name="chapter-heading">
+        
+        <xsl:variable name="_chapter_language" select="ancestor-or-self::*[@xml:lang][1]/@xml:lang"/>
+        
+        <xsl:variable name="_hierarchy_counter">
+            <xsl:value-of select="count(ancestor-or-self::ack)
+                + count(ancestor-or-self::app)
+                + count(ancestor-or-self::app-group)
+                + count(ancestor-or-self::bio)
+                + count(ancestor-or-self::book-part[@book-part-type='chapter'])
+                + count(ancestor-or-self::book-part[not(@book-part-type)])
+                + count(ancestor-or-self::def-list)
+                + count(ancestor-or-self::foreword)
+                + count(ancestor-or-self::front-matter-part)
+                + count(ancestor-or-self::glossary)
+                + count(ancestor-or-self::notes)
+                + count(ancestor-or-self::preface)
+                + count(ancestor-or-self::ref-list)
+                + count(ancestor-or-self::sec)
+                - 2"/>
+        </xsl:variable>
+        
         <xsl:choose>
             
-            <!-- Footnotes -->
-            <xsl:when test="(@ref-type = 'fn')">
-                <!-- Check if footnotes should be treated as foot- or endnotes -->
-                <xsl:if test="$FootnoteHandling = 'footnote'">
-                    <xsl:variable name="fn_id" select="@rid"/>
-                    <fo:footnote>
+            <!-- Within e.g. a chapter, some book division appear as a section -->
+            <xsl:when test="$_hierarchy_counter &gt;= 0">
+                <xsl:call-template name="section-heading"/>
+            </xsl:when>
+            
+            <xsl:otherwise>
+                <xsl:element name="fo:block-container" use-attribute-sets="chapter_title_margins">
+
+                    <!-- Marker for running titles -->
+                    
+                    <fo:marker marker-class-name="chapter-title">
+                        <xsl:if test="label">
+                            <xsl:value-of select="label"/>
+                            <xsl:text> </xsl:text>
+                        </xsl:if>
                         <xsl:choose>
-                            <xsl:when test="$medium = 'electronic'">
-                                <xsl:element name="fo:inline"
-                                    use-attribute-sets="footnote_reference_number hyperlink">
-                                    <xsl:attribute name="id">
-                                        <xsl:variable name="backlink">
-                                            <xsl:value-of select="@rid"/>
-                                            <xsl:text>_backlink</xsl:text>
-                                        </xsl:variable>
-                                        <xsl:value-of select="$backlink"/>
-                                    </xsl:attribute>
-                                    <fo:basic-link internal-destination="{@rid}">
-                                        <xsl:apply-templates mode="typesetting"/>
-                                    </fo:basic-link>
-                                </xsl:element>
+                            <xsl:when test="alt-title">
+                                <xsl:apply-templates select="alt-title" mode="#current"/>
+                            </xsl:when>
+                            <xsl:when test="title">
+                                <xsl:apply-templates select="title" mode="#current"/>
+                            </xsl:when>
+                        </xsl:choose>
+                    </fo:marker>
+                    
+                    <fo:marker marker-class-name="heading-1">
+                        <xsl:if test="label">
+                            <xsl:value-of select="label"/>
+                            <xsl:text> </xsl:text>
+                        </xsl:if>
+                        <xsl:choose>
+                            <xsl:when test="alt-title">
+                                <xsl:apply-templates select="alt-title" mode="#current"/>
+                            </xsl:when>
+                            <xsl:when test="title">
+                                <xsl:apply-templates select="title" mode="#current"/>
+                            </xsl:when>
+                        </xsl:choose>
+                    </fo:marker>
+                    
+                    <fo:marker marker-class-name="authors">
+                        <xsl:choose>
+                            <xsl:when test="../contrib-group/contrib[@contrib-type='aut'] and count(../contrib-group/contrib[@contrib-type='aut']) &lt; 4">
+                                <xsl:for-each select="../contrib-group/contrib[@contrib-type='aut']">
+                                    <xsl:if test="position() > 1 and not(position() = last())">
+                                        <xsl:text>, </xsl:text>
+                                    </xsl:if>
+                                    <xsl:if test="position() > 1 and position() = last()">
+                                        <xsl:text> </xsl:text><xsl:value-of select="$_localization/localization-group[@name='and']/localization-item[@xml:lang=$_chapter_language]"/><xsl:text> </xsl:text>
+                                    </xsl:if>
+                                    <xsl:value-of select="name/given-names"/><xsl:text> </xsl:text><xsl:value-of select="name/surname"/>
+                                </xsl:for-each>
+                            </xsl:when>
+                            <xsl:when test="../contrib-group/contrib[@contrib-type='aut'] and count(../contrib-group/contrib[@contrib-type='aut']) &gt; 4">
+                                <xsl:for-each select="../contrib-group/contrib[@contrib-type='aut']">
+                                    <xsl:if test="position() = 1">
+                                        <xsl:value-of select="name/given-names"/><xsl:text> </xsl:text><xsl:value-of select="name/surname"/><xsl:text> </xsl:text><xsl:value-of select="$_localization/localization-group[@name='et_al']/localization-item[@xml:lang=$_chapter_language]"/>                               
+                                    </xsl:if>
+                                </xsl:for-each>
+                            </xsl:when>
+                            <xsl:when test="sec-meta/contrib-group/contrib[@contrib-type='aut'] and count(sec-meta/contrib-group/contrib[@contrib-type='aut']) &lt; 4">
+                                <xsl:for-each select="sec-meta/contrib-group/contrib[@contrib-type='aut']">
+                                    <xsl:if test="position() > 1 and not(position() = last())">
+                                        <xsl:text>, </xsl:text>
+                                    </xsl:if>
+                                    <xsl:if test="position() > 1 and position() = last()">
+                                        <xsl:text> </xsl:text><xsl:value-of select="$_localization/localization-group[@name='and']/localization-item[@xml:lang=$_chapter_language]"/><xsl:text> </xsl:text>
+                                    </xsl:if>
+                                    <xsl:value-of select="name/given-names"/><xsl:text> </xsl:text><xsl:value-of select="name/surname"/>
+                                </xsl:for-each>                                
+                            </xsl:when>
+                            <xsl:when test="sec-meta/contrib-group/contrib[@contrib-type='aut'] and count(sec-meta/contrib-group/contrib[@contrib-type='aut']) &gt; 4">
+                                <xsl:for-each select="sec-meta/contrib-group/contrib[@contrib-type='aut']">
+                                    <xsl:if test="position() = 1">
+                                        <xsl:value-of select="name/given-names"/><xsl:text> </xsl:text><xsl:value-of select="name/surname"/><xsl:text> </xsl:text><xsl:value-of select="$_localization/localization-group[@name='et_al']/localization-item[@xml:lang=$_chapter_language]"/>                               
+                                    </xsl:if>
+                                </xsl:for-each>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:element name="fo:inline"
-                                    use-attribute-sets="footnote_reference_number">
-                                    <xsl:apply-templates mode="typesetting"/>
-                                </xsl:element>
+                                <xsl:if test="label">
+                                    <xsl:value-of select="label"/>
+                                    <xsl:text> </xsl:text>
+                                </xsl:if>
+                                <xsl:choose>
+                                    <xsl:when test="alt-title">
+                                        <xsl:apply-templates select="alt-title" mode="#current"/>
+                                    </xsl:when>
+                                    <xsl:when test="title">
+                                        <xsl:apply-templates select="title" mode="#current"/>
+                                    </xsl:when>
+                                </xsl:choose>
                             </xsl:otherwise>
                         </xsl:choose>
-                        <fo:footnote-body start-indent="0em" end-indent="0em">
-                            <xsl:apply-templates
-                                select="//ancestor::book-part/back/fn-group/fn[@id = $fn_id]"
-                                mode="typesetting"/>
-                        </fo:footnote-body>
-                    </fo:footnote>
-                </xsl:if>
-                <!-- for endnotes only the reference number is printed in the text -->
-                <xsl:if
-                    test="($FootnoteHandling = 'endnote_chapter_backmatter') or ($FootnoteHandling = 'endnote_book_backmatter')">
-                    <xsl:choose>
-                        <xsl:when test="$medium = 'electronic'">
-                            <xsl:element name="fo:inline"
-                                use-attribute-sets="footnote_reference_number hyperlink">
-                                <xsl:attribute name="id">
-                                    <xsl:variable name="backlink">
-                                        <xsl:value-of select="@rid"/>
-                                        <xsl:text>_backlink</xsl:text>
-                                    </xsl:variable>
-                                    <xsl:value-of select="$backlink"/>
-                                </xsl:attribute>
-                                <fo:basic-link internal-destination="{@rid}">
-                                    <xsl:apply-templates mode="typesetting"/>
-                                </fo:basic-link>
-                            </xsl:element>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:element name="fo:inline"
-                                use-attribute-sets="footnote_reference_number">
-                                <xsl:apply-templates mode="typesetting"/>
-                            </xsl:element>
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    </fo:marker>
+                    
+                    <!-- Formatting -->
+                    
+                    <!-- Author name(s) -->
+                    <!-- […] -->
+                    
+                    <!-- Title block (label, title and subtitle) -->
+
+                    <!-- Label as paragraph -->
+                    <xsl:if test="$_chapter_label_formatting='paragraph' and label">
+                        <xsl:element name="fo:block" use-attribute-sets="chapter_label">
+                            <xsl:apply-templates select="label" mode="typesetting"/>
+                        </xsl:element>
+                    </xsl:if>
+                    
+                    <!-- Inline label and heading -->
+                    <xsl:if test="title or ($_chapter_label_formatting='inline' and label)">
+                        
+                        <xsl:choose>
+                            
+                            <!-- Inline formatting of label and title, subtitle -->
+                            <xsl:when test="$_chapter_label_formatting='inline' and label">
+                                <fo:table>
+                                    <fo:table-body>
+                                        <!-- Label and heading -->
+                                        <fo:table-row>
+                                            <fo:table-cell>
+                                                <xsl:element name="fo:block" use-attribute-sets="chapter_heading">
+                                                    <xsl:if test="$_chapter_label_formatting='inline' and label">
+                                                        <xsl:apply-templates select="label" mode="typesetting"/><xsl:text>&#160;&#160;</xsl:text>
+                                                    </xsl:if>
+                                                </xsl:element>
+                                            </fo:table-cell>
+                                            <fo:table-cell>
+                                                <xsl:element name="fo:block" use-attribute-sets="chapter_heading">
+                                                    <xsl:apply-templates select="title" mode="typesetting"/>
+                                                </xsl:element>
+                                            </fo:table-cell>
+                                        </fo:table-row>
+                                    </fo:table-body>
+                                </fo:table>
+                            </xsl:when>
+                            
+                            <!-- Title w/o label -->
+                            <xsl:otherwise>
+                                <xsl:element name="fo:block" use-attribute-sets="chapter_heading">
+                                    <xsl:apply-templates select="title" mode="typesetting"/>
+                                </xsl:element>
+                            </xsl:otherwise>
+                            
+                        </xsl:choose>
+                        
+                    </xsl:if>
+                    
+                    <!-- Subtitle -->
+                    <xsl:if test="subtitle">
+                        <xsl:element name="fo:block" use-attribute-sets="chapter_subheading">
+                            <xsl:apply-templates select="subtitle" mode="typesetting"/>
+                        </xsl:element>
+                    </xsl:if>
+                    
+                </xsl:element>
+            </xsl:otherwise>
+            
+        </xsl:choose>
+
+    </xsl:template>
+    
+    <xsl:template name="section-heading">
+        
+        <xsl:variable name="_hierarchy_counter">
+            <xsl:value-of select="count(ancestor-or-self::ack)
+                + count(ancestor-or-self::app)
+                + count(ancestor-or-self::app-group)
+                + count(ancestor-or-self::bio)
+                + count(ancestor-or-self::book-part[@book-part-type='chapter'])
+                + count(ancestor-or-self::book-part[not(@book-part-type)])
+                + count(ancestor-or-self::def-list)
+                + count(ancestor-or-self::foreword)
+                + count(ancestor-or-self::front-matter-part)
+                + count(ancestor-or-self::glossary)
+                + count(ancestor-or-self::notes)
+                + count(ancestor-or-self::preface)
+                + count(ancestor-or-self::ref-list)
+                + count(ancestor-or-self::sec)
+                - 2"/>
+        </xsl:variable>
+                
+        <xsl:choose>
+            <xsl:when test="$_hierarchy_counter = 0">
+                <xsl:element name="fo:block" use-attribute-sets="section_heading_1">
+                    <xsl:call-template name="section_heading_formatting"/>
+                </xsl:element>
+            </xsl:when>
+            <xsl:when test="$_hierarchy_counter = 1">
+                <xsl:element name="fo:block" use-attribute-sets="section_heading_2">
+                    <xsl:call-template name="section_heading_formatting"/>
+                </xsl:element>
+            </xsl:when>
+            <xsl:when test="$_hierarchy_counter = 2">
+                <xsl:element name="fo:block" use-attribute-sets="section_heading_3">
+                    <xsl:call-template name="section_heading_formatting"/>
+                </xsl:element>
+            </xsl:when>
+            <xsl:when test="$_hierarchy_counter > 2">
+                <xsl:element name="fo:block" use-attribute-sets="section_heading_4">
+                    <xsl:call-template name="section_heading_formatting"/>
+                </xsl:element>
+            </xsl:when>
+        </xsl:choose>
+
+    </xsl:template>
+    
+    <xsl:template name="section_heading_formatting">
+        
+        <xsl:choose>
+            <xsl:when test="parent::book-part-meta">
+                <xsl:if test="../../@id">
+                    <xsl:attribute name="id">
+                        <xsl:value-of select="../../@id"/>
+                    </xsl:attribute>
                 </xsl:if>
             </xsl:when>
- 
-            <!-- All other xref types -->
             <xsl:otherwise>
-                <xsl:choose>
-                    <xsl:when test="$medium = 'electronic'">
-                        <xsl:element name="fo:inline" use-attribute-sets="hyperlink">
-                            <fo:basic-link internal-destination="{@rid}">
-                                <xsl:apply-templates mode="typesetting"/>
-                            </fo:basic-link>
-                        </xsl:element>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:apply-templates mode="typesetting"/>
-                    </xsl:otherwise>
-                </xsl:choose>
+                <xsl:if test="@id">
+                    <xsl:attribute name="id">
+                        <xsl:value-of select="@id"/>
+                    </xsl:attribute>
+                </xsl:if>
             </xsl:otherwise>
         </xsl:choose>
-    </xsl:template>
+        
+        <!-- Marker for running titles -->
+        
+        <xsl:variable name="_hierarchy_counter">
+            <xsl:value-of select="count(ancestor-or-self::ack)
+                + count(ancestor-or-self::app)
+                + count(ancestor-or-self::app-group)
+                + count(ancestor-or-self::bio)
+                + count(ancestor-or-self::book-part[@book-part-type='chapter'])
+                + count(ancestor-or-self::book-part[not(@book-part-type)])
+                + count(ancestor-or-self::def-list)
+                + count(ancestor-or-self::foreword)
+                + count(ancestor-or-self::front-matter-part)
+                + count(ancestor-or-self::glossary)
+                + count(ancestor-or-self::notes)
+                + count(ancestor-or-self::preface)
+                + count(ancestor-or-self::ref-list)
+                + count(ancestor-or-self::sec)
+                - 2"/>
+        </xsl:variable>
+        
+        <xsl:if test="$_hierarchy_counter = 0">
+            <fo:marker marker-class-name="heading-1">
+                <xsl:if test="label">
+                    <xsl:value-of select="label"/>
+                    <xsl:text> </xsl:text>
+                </xsl:if>
+                <xsl:choose>
+                    <xsl:when test="alt-title">
+                        <xsl:apply-templates select="alt-title" mode="#current"/>
+                    </xsl:when>
+                    <xsl:when test="title">
+                        <xsl:apply-templates select="title" mode="#current"/>
+                    </xsl:when>
+                </xsl:choose>
+            </fo:marker>
+        </xsl:if>
+        
+        <!-- Formatting -->
+        
+        <xsl:choose>
+            <xsl:when test="label">
+                <fo:table>
+                    <fo:table-body>
+                        <fo:table-row>
+                            <fo:table-cell>
+                                <fo:block>
+                                    <xsl:if test="label">
+                                        <xsl:apply-templates select="label" mode="typesetting"/>
+                                        <xsl:text>&#160;&#160;</xsl:text>
+                                    </xsl:if>
+                                </fo:block>
+                            </fo:table-cell>
+                            <fo:table-cell>
+                                <fo:block>
+                                    <xsl:if test="title">
+                                        <xsl:apply-templates select="title" mode="typesetting"/>
+                                    </xsl:if>
+                                    <xsl:if test="subtitle">
+                                        <xsl:text>. </xsl:text>
+                                        <xsl:apply-templates select="subtitle" mode="typesetting"/>
+                                    </xsl:if>
+                                </fo:block>
+                            </fo:table-cell>
+                        </fo:table-row>
+                    </fo:table-body>
+                </fo:table>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:if test="title">
+                    <xsl:apply-templates select="title" mode="typesetting"/>
+                </xsl:if>
+                <xsl:if test="subtitle">
+                    <xsl:text>. </xsl:text>
+                    <xsl:apply-templates select="subtitle" mode="typesetting"/>
+                </xsl:if>
+            </xsl:otherwise>
+        </xsl:choose>
 
-    <!-- ********************************************************** -->
-    <!-- * Bibliography and references                            * -->
-    <!-- ********************************************************** -->
+    </xsl:template>
     
-    <xsl:template match="ref-list" mode="typesetting">
+    <xsl:template match="label | title | subtitle" mode="typesetting">
+        <xsl:apply-templates mode="#current"/>
+    </xsl:template>
+    
+    <!-- Definition lists -->
+
+    <xsl:template match="def-list" mode="typesetting">
         
         <!-- Heading -->
-        <xsl:variable name="hierarchy_level">
-            <xsl:value-of select="count(ancestor::ref-list)"/>
-        </xsl:variable>
-
-        <!-- If there is a title insert title -->
-        <xsl:if test="./title">
-            <xsl:if test="$hierarchy_level=0">
-                <xsl:element name="fo:block" use-attribute-sets="fonts_heading_1 keeps-headings">
-                    <xsl:attribute name="id">
-                        <xsl:value-of select="@id"/>
-                    </xsl:attribute>
-                    <xsl:if test="./label">
-                        <xsl:apply-templates select="./label" mode="heading"/>
-                        <xsl:text>&#x2002;</xsl:text>
-                    </xsl:if>
-                    <xsl:apply-templates select="./title" mode="endnote_heading"/>
-                </xsl:element>
-            </xsl:if>
-            <xsl:if test="$hierarchy_level=1">
-                <xsl:element name="fo:block" use-attribute-sets="fonts_heading_2 keeps-headings">
-                    <xsl:attribute name="id">
-                        <xsl:value-of select="@id"/>
-                    </xsl:attribute>
-                    <xsl:if test="./label">
-                        <xsl:apply-templates select="./label" mode="heading"/>
-                        <xsl:text>&#x2002;</xsl:text>
-                    </xsl:if>
-                    <xsl:apply-templates select="./title" mode="endnote_heading"/>
-                </xsl:element>                
-            </xsl:if>
+        <xsl:if test="label or title">
+            <xsl:call-template name="section-heading"/>
         </xsl:if>
         
-        <xsl:apply-templates select="ref | ref-list" mode="typesetting"/>
-    
-    </xsl:template>
-    
-    <xsl:template match="ref" mode="typesetting">
         <xsl:choose>
-            <xsl:when test="preceding-sibling::*[1][self::ref]">
-                <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text paragraph_formats hyphenate keeps-paragraph no_indents_bibliographic_entry">
-                    <xsl:attribute name="id">
-                        <xsl:value-of select="@id"/>
-                    </xsl:attribute>
-                    <xsl:if test="./label">
-                        <fo:inline>
-                            <xsl:apply-templates select="./label"/>
-                            <xsl:text>&#x2002;</xsl:text>
-                        </fo:inline>
+            
+            <!-- Lexicon styled definition lists -->
+            <xsl:when test="@list-type='lexicon'">
+                
+                <xsl:element name="fo:block-container">
+                    <xsl:attribute name="space-before" select="$_regularLineHeight"/>
+                    <xsl:if test="not(ancestor::def-list[@list-type='lexicon'])">
+                        <xsl:attribute name="column-count" select="$_columnsLexicon"/>
+                        <xsl:attribute name="column-gap" select="$_columnGap"/>
                     </xsl:if>
-                    <xsl:apply-templates select="mixed-citation" mode="typesetting"/>        
+
+                    <xsl:if test="term-head or def-head">
+                        <fo:block>
+                            <xsl:call-template name="language_attribute"/>
+                            <xsl:apply-templates select="term-head" mode="#current"/><xsl:text> </xsl:text><xsl:apply-templates select="def-head" mode="#current"/>
+                        </fo:block>
+                    </xsl:if>
+                    
+                    <xsl:apply-templates select="def-list | def-item" mode="#current"/>
+                    
+                </xsl:element>
+                
+            </xsl:when>
+            
+            <!-- Definition lists in table style -->
+            <xsl:otherwise>
+
+                <fo:block>
+                    <xsl:attribute name="space-before" select="$_regularLineHeight"/>
+                    
+                    <fo:table width="100%">
+                        <xsl:if test="not(label) and not(title) and @id">
+                            <xsl:attribute name="id" select="@id"/>
+                        </xsl:if>
+                        
+                        <fo:table-column column-width="30%"/>
+                        <fo:table-column column-width="70%"/>
+                        
+                        <xsl:if test="term-head or def-head">
+                            
+                            <fo:table-header>
+                                <fo:table-row>
+                                    <fo:table-cell>
+                                        <fo:block>
+                                            <xsl:apply-templates select="term-head" mode="#current"/>
+                                        </fo:block>
+                                    </fo:table-cell>
+                                    <fo:table-cell>
+                                        <fo:block>
+                                            <xsl:apply-templates select="def-head" mode="#current"/>
+                                        </fo:block>
+                                    </fo:table-cell>
+                                </fo:table-row>
+                            </fo:table-header>
+                        </xsl:if>
+                        
+                        <!-- Abfangen: def-list kann wiederum def-lists beinhalten! Hier wird das aber ignoriert -->
+                        
+                        <fo:table-body>
+                            <xsl:apply-templates select="def-item" mode="#current"/>
+                        </fo:table-body>
+                        
+                    </fo:table>
+                    
+                </fo:block>
+                
+            </xsl:otherwise>
+            
+        </xsl:choose>
+        
+    </xsl:template>
+
+    <xsl:template match="def-item" mode="typesetting">
+
+        <xsl:choose>
+            
+            <!-- Lexicon styled definition lists -->
+            <xsl:when test="ancestor::def-list[1][@list-type='lexicon']">
+                <xsl:element name="fo:block" use-attribute-sets="lexicon_first_paragraph_style">
+                    <xsl:call-template name="language_attribute"/>
+                    <xsl:if test="@id">
+                        <xsl:attribute name="id">
+                            <xsl:value-of select="@id"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    
+                    <xsl:apply-templates select="term" mode="#current"/>
+                    <xsl:text> </xsl:text>
+                    <xsl:apply-templates select="def" mode="#current"/>
+                </xsl:element>
+            </xsl:when>
+            
+            <!-- Definition lists in table style -->
+            <xsl:otherwise>
+                <fo:table-row>
+                    <fo:table-cell padding-right="1mm">
+                        <xsl:apply-templates select="term" mode="#current"/>
+                    </fo:table-cell>
+                    <fo:table-cell padding-left="1mm">
+                        <xsl:apply-templates select="def" mode="#current"/>
+                    </fo:table-cell>
+                </fo:table-row>
+            </xsl:otherwise>
+        </xsl:choose>
+        
+    </xsl:template>
+
+    <!-- Block level elements like block quotes or text boxes -->
+    
+    <!-- [...] -->
+
+    <!-- Paragraphs -->
+
+    <xsl:template match="p" mode="typesetting">
+        <xsl:choose>
+            <!-- Footnote paragraphs -->
+            <xsl:when test="ancestor::fn">
+                <xsl:variable name="_fn_id" select="ancestor::fn/@id"/>
+                <xsl:choose>
+                    <xsl:when test="not(./preceding-sibling::p)">
+                        <xsl:element name="fo:block" use-attribute-sets="font_family_regular font_petit paragraph_footnote_first hyphenate">
+                            <xsl:call-template name="language_attribute"/>
+                            <xsl:choose>
+                                <xsl:when test="$medium='interactive' and $_footnote_crossref='yes'">
+                                    <xsl:element name="fo:inline" use-attribute-sets="hyperlink">
+                                        <xsl:attribute name="id">
+                                            <xsl:value-of select="ancestor::fn/@id "/>
+                                        </xsl:attribute>
+                                        <xsl:variable name="backlink">
+                                            <xsl:value-of select="$_fn_id"/>
+                                            <xsl:text>_backlink</xsl:text>
+                                        </xsl:variable>
+                                        <fo:basic-link internal-destination="{$backlink}">
+                                            <xsl:value-of select="/descendant::xref[@rid = $_fn_id and @ref-type='fn']"/>
+                                        </fo:basic-link>
+                                    </xsl:element>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <fo:inline><xsl:value-of select="/descendant::xref[@rid = $_fn_id and @ref-type='fn']"/></fo:inline>                                    
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <xsl:text>&#x00A0;</xsl:text><xsl:apply-templates mode="#current"/>
+                        </xsl:element>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:element name="fo:block" use-attribute-sets="font_family_regular font_petit paragraph_footnote_subsequent hyphenate">
+                            <xsl:call-template name="language_attribute"/>
+                            <xsl:apply-templates mode="#current"/>
+                        </xsl:element>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <!-- Dedication -->
+            <xsl:when test="ancestor::dedication">
+                <xsl:element name="fo:block" use-attribute-sets="font_family_regular font_regular paragraph_dedication do_not_hyphenate">
+                    <xsl:call-template name="language_attribute"/>
+                    <xsl:apply-templates mode="#current"/>
+                </xsl:element>
+            </xsl:when>
+            <!-- Epigraph -->
+            <xsl:when test="ancestor::front-matter-part[@book-part-type='epigraph']">
+                <xsl:element name="fo:block" use-attribute-sets="font_family_regular font_regular paragraph_epigraph do_not_hyphenate">
+                    <xsl:call-template name="language_attribute"/>
+                    <xsl:apply-templates mode="#current"/>
+                </xsl:element>
+            </xsl:when>
+            <!-- Paragraphs in a lexicon section -->
+            <xsl:when test="ancestor::def-list[1][@list-type='lexicon']">
+                <xsl:choose>
+                    <xsl:when test="count(preceding-sibling::*) = 0">
+                        <xsl:apply-templates mode="#current"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:element name="fo:block" use-attribute-sets="lexicon_paragraph_style">
+                            <xsl:call-template name="language_attribute"/>
+                            <xsl:apply-templates mode="#current"/>
+                        </xsl:element>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <!-- Paragraphs in a table body -->
+            <xsl:when test="ancestor::td">
+                <xsl:call-template name="table_body_cell"/>
+            </xsl:when>
+            <!-- Paragraphs in a table head -->
+            <xsl:when test="ancestor::th">
+                <xsl:call-template name="table_head_cell"/>
+            </xsl:when>
+            <!-- Caption -->
+            <xsl:when test="parent::caption">
+                <xsl:element name="fo:block" use-attribute-sets="caption"> 
+                    <xsl:if test="not(preceding-sibling::*[1][self::p])">
+                        <xsl:if test="(../../label) and ($_caption_label_formatting='inline')">
+                            <xsl:element name="fo:inline" use-attribute-sets="caption-label-inline">
+                                <xsl:apply-templates select="../../label" mode="#current"/><xsl:text>. </xsl:text>
+                            </xsl:element>
+                        </xsl:if>
+                    </xsl:if>
+                    <xsl:apply-templates mode="#current"/>
+                </xsl:element>
+            </xsl:when>
+            <!-- Epigraphs and dedications in sections -->
+            <xsl:when test="@content-type='epigraph'">
+                <xsl:element name="fo:block" use-attribute-sets="paragraph_epigraph_section">
+                    <xsl:if test="not(preceding-sibling::p[@content-type='epigraph'])">
+                        <xsl:attribute name="space-before" select="$_regularLineHeight"/>
+                    </xsl:if>
+                    <xsl:if test="not(following-sibling::p[@content-type='epigraph'])">
+                        <xsl:attribute name="space-after" select="$_regularLineHeight"/>                        
+                    </xsl:if>
+                    <xsl:apply-templates mode="#current"/>
+                </xsl:element>
+            </xsl:when>
+            <xsl:when test="@content-type='dedication'">
+                <xsl:element name="fo:block" use-attribute-sets="paragraph_epigraph_section">
+                    <xsl:if test="not(preceding-sibling::p[@content-type='dedication'])">
+                        <xsl:attribute name="space-before" select="$_regularLineHeight"/>
+                    </xsl:if>
+                    <xsl:if test="not(following-sibling::p[@content-type='dedication'])">
+                        <xsl:attribute name="space-after" select="$_regularLineHeight"/>                        
+                    </xsl:if>
+                    <xsl:apply-templates mode="#current"/>
+                </xsl:element>
+            </xsl:when>
+            <!-- Regular paragraphs -->
+            <xsl:when test="(preceding-sibling::*[1][self::p] or preceding-sibling::*[@position='float']) and not(preceding-sibling::p[@content-type='epigraph'])">
+                <xsl:element name="fo:block" use-attribute-sets="font_family_regular font_regular paragraph_indent hyphenate">
+
+                    <!-- Insert ID for internal referencing -->
+                    <xsl:if test="@id">
+                        <xsl:attribute name="id">
+                            <xsl:value-of select="@id"/>
+                        </xsl:attribute>
+                    </xsl:if>
+
+                    <!-- Language -->
+                    <xsl:call-template name="language_attribute"/>
+
+                    <!-- Content -->
+                    <xsl:apply-templates mode="#current"/>
+                    
                 </xsl:element>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text paragraph_formats hyphenate keeps-paragraph indents_bibliographic_entry">
-                    <xsl:attribute name="id">
-                        <xsl:value-of select="@id"/>
-                    </xsl:attribute>
-                    <xsl:if test="./label">
-                        <fo:inline>
-                            <xsl:apply-templates select="./label"/>
-                            <xsl:text>&#x2002;</xsl:text>
-                        </fo:inline>
+                <xsl:element name="fo:block" use-attribute-sets="font_family_regular font_regular paragraph_no_indent hyphenate">
+
+                    <!-- Insert a blank line when a paragraph follows a def list directly -->
+                    <xsl:if test="preceding-sibling::*[1][self::def-list]">
+                        <xsl:attribute name="space-before">
+                            <xsl:value-of select="$_regularLineHeight"/>
+                        </xsl:attribute>
                     </xsl:if>
-                    <xsl:apply-templates select="mixed-citation" mode="typesetting"/>        
+
+                    <!-- Insert ID for internal referencing -->
+                    <xsl:if test="@id">
+                        <xsl:attribute name="id">
+                            <xsl:value-of select="@id"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    
+                    <!-- Language -->
+                    <xsl:call-template name="language_attribute"/>
+
+                    <!-- Content -->
+                    <xsl:apply-templates mode="#current"/>
+
                 </xsl:element>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="table_body_cell">
+        <xsl:element name="fo:block" use-attribute-sets="table_body_paragraph_style">
+            <xsl:call-template name="language_attribute"/>
+            <xsl:apply-templates mode="#current"/>
+        </xsl:element>
+    </xsl:template>
+
+    <xsl:template name="table_head_cell">
+        <xsl:element name="fo:block" use-attribute-sets="table_head_paragraph_style">
+            <xsl:call-template name="language_attribute"/>
+            <xsl:apply-templates mode="#current"/>
+        </xsl:element>
+    </xsl:template>
+    
+    <xsl:template match="term" mode="typesetting">
+        
+        <xsl:choose>
+            <!-- Inline term -->
+            <xsl:when test="ancestor::def-list[1][@list-type='lexicon']">
+                <xsl:element name="fo:inline" use-attribute-sets="lexicon-lemma">
+                    <xsl:call-template name="language_attribute"/>
+                    <xsl:apply-templates mode="#current"/>                    
+                </xsl:element>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:element name="fo:block" use-attribute-sets="font_family_regular font_regular paragraph_no_indent hyphenate">
+                    <xsl:call-template name="language_attribute"/>
+                    <xsl:apply-templates mode="#current"/>
+                </xsl:element>                
+            </xsl:otherwise>
+        </xsl:choose>
+        
     </xsl:template>
 
     <xsl:template match="mixed-citation" mode="typesetting">
-        <xsl:apply-templates mode="typesetting"/>
-    </xsl:template>
- 
-    <!-- ********************************************************** -->
-    <!-- * Endnotes                                               * -->
-    <!-- ********************************************************** -->
-
-    <!-- Endnotes in chapter backmatter -->
-    <xsl:template match="fn-group" mode="typesetting">
-        <xsl:if test="$FootnoteHandling = 'endnote_chapter_backmatter'">
-            <xsl:element name="fo:block" use-attribute-sets="fonts_heading_1 keeps-headings">
+        <xsl:element name="fo:block" use-attribute-sets="font_family_regular font_petit hyphenate paragraph_bib_entry">
+            <!-- ID -->
+            <xsl:if test="../@id">
                 <xsl:attribute name="id">
-                    <xsl:value-of select="ancestor::book-part[1]/@id"/>
-                    <xsl:text>_chap_endnotes</xsl:text>
+                    <xsl:value-of select="../@id"/>
                 </xsl:attribute>
-                <xsl:choose>
-                    <xsl:when test="ancestor::book-part[@xml:lang = 'de']">
-                        <xsl:value-of select="$heading_endnotes_chapter_backmatter_de"/>
-                    </xsl:when>
-                    <!-- Default: English -->
-                    <xsl:otherwise>
-                        <xsl:value-of select="$heading_endnotes_chapter_backmatter_en"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:element>
-            <xsl:for-each select="fn">
-                <xsl:apply-templates mode="typesetting"/>
-            </xsl:for-each>
-        </xsl:if>
-    </xsl:template>
-
-    <!-- Endnotes in book backmatter -->
-    <xsl:template name="endnotes-book-backmatter">
-
-        <fo:page-sequence master-reference="Chapter_Sequence" id="{generate-id(.)}">
-
-            <!-- defines if chapters have an even page count or not -->
-            <xsl:attribute name="force-page-count">
-                <xsl:choose>
-                    <xsl:when test="following-sibling::book-part">
-                        <xsl:value-of select="$ChapterPageHandling"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:text>end-on-even</xsl:text>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
-
-            <!-- Footnote separator -->
-            <xsl:if test="$footnote-separator = 'yes'">
-                <fo:static-content flow-name="xsl-footnote-separator">
-                    <fo:block text-align-last="justify">
-                        <xsl:element name="fo:leader" use-attribute-sets="footnote_sep"/>
-                    </fo:block>
-                </fo:static-content>
             </xsl:if>
-
-            <!-- Running headers -->
-            <fo:static-content flow-name="column_title_verso">
-                <xsl:element name="fo:block"
-                    use-attribute-sets="fonts_petit_text do_not_hyphenate keeps-paragraph running_title_verso">
-                    <fo:page-number/>
-                    <xsl:text> – </xsl:text>
-                    <fo:retrieve-marker retrieve-boundary="document"
-                        retrieve-class-name="running_head_left"/>
-                </xsl:element>
-            </fo:static-content>
-            <fo:static-content flow-name="column_title_recto">
-                <xsl:element name="fo:block"
-                    use-attribute-sets="fonts_petit_text do_not_hyphenate keeps-paragraph running_title_recto">
-                    <fo:retrieve-marker retrieve-boundary="document"
-                        retrieve-class-name="running_head_right"/>
-                    <xsl:text> – </xsl:text>
-                    <fo:page-number/>
-                </xsl:element>
-            </fo:static-content>
-
-            <fo:flow flow-name="xsl-region-body">
-
-                <!-- Heading -->
-                <xsl:element name="fo:block" use-attribute-sets="fonts_chapter_title keeps-headings">
-                    <xsl:attribute name="id">
-                        <xsl:text>book_endnotes</xsl:text>
-                    </xsl:attribute>
-                    
-                    <!-- fill running head -->
-                    <fo:marker marker-class-name="running_head_left">
-                        <xsl:choose>
-                            <xsl:when test="/book[@xml:lang = 'de']">
-                                <xsl:value-of select="$heading_endnotes_chapter_backmatter_de"/>
-                            </xsl:when>
-                            <!-- Default: English -->
-                            <xsl:otherwise>
-                                <xsl:value-of select="$heading_endnotes_chapter_backmatter_en"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </fo:marker>
-                    <fo:marker marker-class-name="running_head_right">
-                        <xsl:choose>
-                            <xsl:when test="/book[@xml:lang = 'de']">
-                                <xsl:value-of select="$heading_endnotes_chapter_backmatter_de"/>
-                            </xsl:when>
-                            <!-- Default: English -->
-                            <xsl:otherwise>
-                                <xsl:value-of select="$heading_endnotes_chapter_backmatter_en"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </fo:marker>
-
-                    <!-- Text in flow -->
-                    <xsl:choose>
-                        <xsl:when test="/book[@xml:lang = 'de']">
-                            <xsl:value-of select="$heading_endnotes_chapter_backmatter_de"/>
-                        </xsl:when>
-                        <!-- Default: English -->
-                        <xsl:otherwise>
-                            <xsl:value-of select="$heading_endnotes_chapter_backmatter_en"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:element>
-
-                <!-- Chapter footnotes -->
-                <xsl:for-each select="/book/book-body/book-part/back/fn-group">
-
-                    <!-- Insert heading -->
-                    <xsl:element name="fo:block" use-attribute-sets="fonts_heading_1 keeps-headings">
-                        <xsl:apply-templates
-                            select="ancestor::book-part//book-part-meta/title-group/title"
-                            mode="endnote_heading"/>
-                    </xsl:element>
-
-                    <!-- Insert endnotes -->
-                    <xsl:apply-templates select="fn" mode="typesetting"/>
-                </xsl:for-each>
-
-            </fo:flow>
-
-        </fo:page-sequence>
-
-    </xsl:template>
-
-    <!-- ********************************************************** -->
-    <!-- * Block quotes                                           * -->
-    <!-- ********************************************************** -->
-
-    <xsl:template match="disp-quote" mode="typesetting">
-        <xsl:element name="fo:block"
-            use-attribute-sets="fonts_petit_text hyphenate keeps-paragraph paragraph_formats indents-disp-quote">
-            <xsl:apply-templates mode="typesetting"/>
+            
+            <!-- Language -->
+            <xsl:call-template name="language_attribute"/>
+            
+            <xsl:if test="../preceding-sibling::*[1][self::title] or ../preceding-sibling::*[1][self::label] or ../preceding-sibling::*[1][self::p]">
+                <xsl:attribute name="space-before">
+                    <xsl:value-of select="$_regularLineHeight"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:apply-templates mode="#current"/>
         </xsl:element>
     </xsl:template>
 
-    <!-- ********************************************************** -->
-    <!-- * Verse (poem)                                           * -->
-    <!-- ********************************************************** -->
+    <!-- Tables -->
     
-    <xsl:template match="verse-group" mode="typesetting">
-        <xsl:element name="fo:block" use-attribute-sets="verse-group do_not_hyphenate">
-            <xsl:apply-templates mode="typesetting"/>
+    <xsl:template match="table-wrap-group" mode="typesetting">
+        <xsl:element name="fo:block-container">
+            <xsl:attribute name="space-before" select="$_regularLineHeight"/>
+            <xsl:apply-templates mode="#current"/>
         </xsl:element>
     </xsl:template>
 
-    <xsl:template match="verse-line" mode="typesetting">
-        <xsl:element name="fo:block">
-            <xsl:apply-templates mode="typesetting"/>
-        </xsl:element>
-    </xsl:template>
-
-    <!-- ********************************************************** -->
-    <!-- * Lists                                                  * -->
-    <!-- ********************************************************** -->
-    
-    <xsl:template match="list" mode="typesetting">
-        <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text">
-            <xsl:element name="fo:list-block" use-attribute-sets="ul_1_block-level">
-                <xsl:apply-templates select="list-item" mode="typesetting"/>
-            </xsl:element>
-        </xsl:element>
-    </xsl:template>
-
-    <xsl:template match="list-item" mode="typesetting">
-        <xsl:element name="fo:list-item">
-            <fo:list-item-label end-indent="label-end()">
-                <xsl:choose>
-                    <xsl:when test="../@list-type='bullet'">
-                        <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text">
-                            <xsl:value-of select="$ul_symbol"/>
-                        </xsl:element>                        
-                    </xsl:when>
-                    <xsl:when test="../@list-type='order'">
-                        <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text">
-                            <xsl:apply-templates select="label"/>
-                        </xsl:element>                        
-                    </xsl:when>
-                </xsl:choose>
-            </fo:list-item-label>
-            <fo:list-item-body start-indent="body-start()">
-                <xsl:apply-templates select="* except(label)" mode="typesetting"/>
-            </fo:list-item-body>
-        </xsl:element>
-    </xsl:template>
-
-    <!-- ********************************************************** -->
-    <!-- * Figures                                                * -->
-    <!-- ********************************************************** -->
-    
-    <xsl:template match="fig" mode="typesetting">
+    <xsl:template match="table-wrap" mode="typesetting">
         <xsl:choose>
-            <xsl:when test="@position='float'">
-                
-                <!-- FOP 2.1: use fo:block instead of fo:float -->
-                <xsl:choose>
-                    <xsl:when test="$formatter = 'FOP'">
-                        <!-- To do: Block container with height and width given -->
-                        <xsl:element name="fo:block" use-attribute-sets="fonts_petit_text">
-                            <xsl:attribute name="id">
-                                <xsl:value-of select="@id"/>
-                            </xsl:attribute>
-                            <xsl:attribute name="space-before">
-                                <xsl:value-of select="$LineGridPetit"/>
-                            </xsl:attribute>
-                            <xsl:attribute name="space-after">
-                                <xsl:value-of select="$LineGridPetit"/>
-                            </xsl:attribute>
-                            
-                            <xsl:choose>
-                                <xsl:when test="$medium = 'electronic'">
-                                    <xsl:apply-templates select="graphic[@specific-use='electronic']" mode="typesetting"/>
-                                </xsl:when>
-                                <xsl:when test="$medium = 'print'">
-                                    <xsl:apply-templates select="graphic[@specific-use='print']" mode="typesetting"/>
-                                </xsl:when>
-                            </xsl:choose>
-                            <xsl:apply-templates select="caption" mode="typesetting"/>                        
-                        </xsl:element>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <!-- XEP and AH code -->
-                        <xsl:element name="fo:float">
-                            <xsl:attribute name="id">
-                                <xsl:value-of select="@id"/>
-                            </xsl:attribute>
-                            <xsl:attribute name="float">before</xsl:attribute>
-                            
-                            <!-- formatter specific code 
-                            <xsl:if test="$formatter='AntennaHouse'">
-                                <xsl:attribute name="float">before</xsl:attribute>
-                                <xsl:attribute name="axf:float-wrap">wrap</xsl:attribute>
-                                <xsl:attribute name="axf:float-move">auto-next</xsl:attribute>
-                                <xsl:attribute name="axf:float-x">none</xsl:attribute>
-                                <xsl:attribute name="axf:float-y">top</xsl:attribute>
-                            </xsl:if>
-                            <xsl:if test="$formatter='XEP'">
-                                <xsl:attribute name="float">before</xsl:attribute>
-                            </xsl:if>-->
-                            
-                            <xsl:element name="fo:block-container">
-                                <xsl:attribute name="width">
-                                    <xsl:value-of select="$ColumnWidth"/>
-                                </xsl:attribute>
-                                <xsl:attribute name="height">
-                                    <xsl:value-of select="$ColumnHeight"/>
-                                </xsl:attribute>
-                                
-                                <xsl:choose>
-                                    <xsl:when test="$medium = 'electronic'">
-                                        <xsl:apply-templates select="graphic[@specific-use='electronic']" mode="typesetting"/>
-                                    </xsl:when>
-                                    <xsl:when test="$medium = 'print'">
-                                        <xsl:apply-templates select="graphic[@specific-use='print']" mode="typesetting"/>
-                                    </xsl:when>
-                                </xsl:choose>
-                                <xsl:apply-templates select="caption" mode="typesetting"/>                            
-                            
-                            </xsl:element>
-                            
-                        </xsl:element>
-                    </xsl:otherwise>               
-                </xsl:choose>                        
+            <xsl:when test="not(@position) or @position='float'">
+                <xsl:element name="fo:float">
+                    <xsl:attribute name="float">before</xsl:attribute>
+                    <xsl:attribute name="axf:float-margin-y">
+                        <xsl:value-of select="$_regularLineHeight"/>
+                    </xsl:attribute>
+                    <xsl:call-template name="table"/>                    
+                </xsl:element>
             </xsl:when>
             <xsl:otherwise>
-                <!-- .. -->
-            </xsl:otherwise>
+                <xsl:call-template name="table"/>
+            </xsl:otherwise>            
         </xsl:choose>
-
     </xsl:template>
-
-    <xsl:template match="graphic" mode="typesetting">
-        <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text">
-            <xsl:element name="fo:external-graphic">
-                <xsl:attribute name="src">
-                    <!-- implement error handling if elements missing -->
-                    <xsl:text>url(</xsl:text>
-                    <xsl:value-of select="@xlink:href"/>
-                    <xsl:text>)</xsl:text>
-                </xsl:attribute>
-                <xsl:if test="$formatter = 'XEP'">
-                    <xsl:attribute name="rx:alt-description">image</xsl:attribute>
-                </xsl:if>
-            </xsl:element>
-        </xsl:element>
-    </xsl:template>
-
-    <!-- ********************************************************** -->
-    <!-- * Tables                                                 * -->
-    <!-- ********************************************************** -->
     
-    <xsl:template match="table-wrap" mode="typesetting">
-        <xsl:element name="fo:table-and-caption" use-attribute-sets="table_margins">
-            <xsl:attribute name="id">
-                <xsl:value-of select="@id"/>
-            </xsl:attribute>
-            <xsl:apply-templates mode="typesetting"/>
+    <xsl:template name="table">
+        <xsl:element name="fo:block-container">
+            <xsl:attribute name="space-before" select="$_regularLineHeight"/>
+            <xsl:attribute name="space-after" select="$_regularLineHeight"/>
+            <xsl:if test="@orientation='landscape'">
+                <xsl:attribute name="reference-orientation">90</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@id">
+                <xsl:attribute name="id">
+                    <xsl:value-of select="@id"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:element name="fo:table-and-caption">
+                <!-- Caption -->
+                <xsl:if test="label or caption">
+                    <xsl:element name="fo:table-caption">
+                        <xsl:call-template name="label-and-caption"/>
+                    </xsl:element>
+                </xsl:if>
+                <!-- Table -->
+                <xsl:apply-templates select="* except label except caption" mode="#current"/>
+            </xsl:element>
         </xsl:element>
     </xsl:template>
     
     <xsl:template match="table" mode="typesetting">
-        <xsl:element name="fo:table">
-            <xsl:attribute name="border-style">solid</xsl:attribute>
-            <xsl:attribute name="border-width">0.75pt</xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="not(child::tbody)">
-                    <xsl:element name="fo:table-body">
-                        <xsl:apply-templates mode="typesetting"/>
-                    </xsl:element>                    
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:apply-templates mode="typesetting"/>                    
-                </xsl:otherwise>
-            </xsl:choose>
+        <xsl:element name="fo:table" use-attribute-sets="table_style">
+            <xsl:apply-templates mode="#current"/>
         </xsl:element>
     </xsl:template>
     
     <xsl:template match="thead" mode="typesetting">
-        <xsl:element name="fo:table-header">
-            <xsl:attribute name="border-style">solid</xsl:attribute>
-            <xsl:attribute name="border-width">0.75pt</xsl:attribute>
-            <xsl:apply-templates mode="typesetting"/>
+        <xsl:element name="fo:table-header" use-attribute-sets="table_style_head">
+            <xsl:if test="@id">
+                <xsl:attribute name="id">
+                    <xsl:value-of select="@id"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:apply-templates mode="#current"/>
         </xsl:element>
     </xsl:template>
-    
+
     <xsl:template match="tbody" mode="typesetting">
-        <xsl:element name="fo:table-body">
-            <xsl:apply-templates mode="typesetting"/>
+        <xsl:element name="fo:table-body" use-attribute-sets="table_style_body">
+            <xsl:if test="@id">
+                <xsl:attribute name="id">
+                    <xsl:value-of select="@id"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:apply-templates mode="#current"/>
         </xsl:element>
     </xsl:template>
-    
+
     <xsl:template match="tfoot" mode="typesetting">
-        <xsl:element name="fo:table-footer">
-            <xsl:apply-templates mode="typesetting"/>
+        <xsl:element name="fo:table-footer" use-attribute-sets="table_style_body">
+            <xsl:if test="@id">
+                <xsl:attribute name="id">
+                    <xsl:value-of select="@id"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:apply-templates mode="#current"/>
         </xsl:element>
     </xsl:template>
     
     <xsl:template match="tr" mode="typesetting">
-        <xsl:element name="fo:table-row">
-            <xsl:apply-templates mode="typesetting"/>
-        </xsl:element>
-    </xsl:template>
-    
-    <xsl:template match="th | td" mode="typesetting">
-        <xsl:element name="fo:table-cell">
-            <xsl:attribute name="border-style">solid</xsl:attribute>
-            <xsl:attribute name="border-width">0.5pt</xsl:attribute>
-            <xsl:attribute name="number-columns-spanned">
-                <xsl:value-of select="@colspan"/>
-            </xsl:attribute>
-            <xsl:attribute name="number-rows-spanned">
-                <xsl:value-of select="@rowspan"/>
-            </xsl:attribute>
-            <xsl:element name="fo:block"
-                use-attribute-sets="fonts_petit_text keeps-paragraph hyphenate">
-                <xsl:apply-templates mode="typesetting"/>
-            </xsl:element>
-        </xsl:element>
-    </xsl:template>
-    
-    <!-- ********************************************************** -->
-    <!-- * Captions                                               * -->
-    <!-- ********************************************************** -->
-    
-    <xsl:template match="caption" mode="typesetting">
         <xsl:choose>
-            <xsl:when test="parent::table-wrap">
-                <xsl:element name="fo:table-caption">
-                    <xsl:apply-templates mode="typesetting"/>
+            <xsl:when test="parent::thead">
+                <xsl:element name="fo:table-row" use-attribute-sets="table_style_head_row">
+                    <xsl:if test="@id">
+                        <xsl:attribute name="id">
+                            <xsl:value-of select="@id"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <xsl:apply-templates mode="#current"/>                    
                 </xsl:element>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:apply-templates mode="typesetting"/>
+                <xsl:element name="fo:table-row" use-attribute-sets="table_style_head_row">
+                    <xsl:if test="@id">
+                        <xsl:attribute name="id">
+                            <xsl:value-of select="@id"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <xsl:apply-templates mode="#current"/>                    
+                </xsl:element>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
     
-    <xsl:template match="label" mode="typesetting">
-        <xsl:if test="not(ancestor::table-wrap) and not(parent::sec)">
-            <xsl:apply-templates mode="typesetting"/>
-        </xsl:if>
-    </xsl:template>
-
-    <!-- ********************************************************** -->
-    <!-- * External hyperlinks                                    * -->
-    <!-- ********************************************************** -->
-    
-    <xsl:template match="ext-link" mode="typesetting">
+    <xsl:template match="td | th" mode="typesetting">
         <xsl:choose>
-            <xsl:when test="$medium = 'electronic'">
-                <xsl:element name="fo:basic-link" use-attribute-sets="hyperlink">
-                    <xsl:attribute name="external-destination">
-                        <xsl:text>url(</xsl:text>
-                        <xsl:value-of select="node()"/>
-                        <xsl:text>)</xsl:text>
+            <xsl:when test="ancestor::thead">
+                <xsl:element name="fo:table-cell" use-attribute-sets="table_style_head_cell">
+                    <xsl:if test="@id">
+                        <xsl:attribute name="id">
+                            <xsl:value-of select="@id"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <xsl:attribute name="number-columns-spanned">
+                        <xsl:value-of select="@colspan"/>
                     </xsl:attribute>
-                    <xsl:attribute name="show-destination">new</xsl:attribute>
-                    <xsl:apply-templates mode="typesetting"/>
+                    <xsl:attribute name="number-rows-spanned">
+                        <xsl:value-of select="@rowspan"/>
+                    </xsl:attribute>
+                    <xsl:choose>
+                        <xsl:when test="not(descendant::p)">
+                            <xsl:choose>
+                                <xsl:when test="self::th">
+                                    <xsl:call-template name="table_head_cell"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:call-template name="table_body_cell"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:apply-templates mode="#current"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:element>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:apply-templates mode="typesetting"/>
+                <xsl:element name="fo:table-cell" use-attribute-sets="table_style_body_cell">
+                    <xsl:if test="@id">
+                        <xsl:attribute name="id">
+                            <xsl:value-of select="@id"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <xsl:attribute name="number-columns-spanned">
+                        <xsl:value-of select="@colspan"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="number-rows-spanned">
+                        <xsl:value-of select="@rowspan"/>
+                    </xsl:attribute>
+                    <xsl:choose>
+                        <xsl:when test="not(descendant::p)">
+                            <xsl:choose>
+                                <xsl:when test="self::th">
+                                    <xsl:call-template name="table_head_cell"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:call-template name="table_body_cell"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:apply-templates mode="#current"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:element>                
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+    
+    <!-- Label and caption -->
 
-    <!-- ********************************************************** -->
-    <!-- * Basic Math                                             * -->
-    <!-- ********************************************************** -->
+    <xsl:template name="label-and-caption">
+        <xsl:choose>
+            <xsl:when test="$_caption_label_formatting='inline'">
+                <xsl:if test="not(caption)">
+                    <xsl:element name="fo:block" use-attribute-sets="caption">
+                        <xsl:element name="fo:inline">
+                            <xsl:apply-templates select="label" mode="#current"/>
+                        </xsl:element>
+                    </xsl:element>
+                </xsl:if>
+                <xsl:if test="caption">
+                    <xsl:apply-templates select="caption" mode="#current"/>
+                </xsl:if>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:if test="label">
+                    <xsl:element name="fo:block" use-attribute-sets="caption-label">
+                        <xsl:apply-templates select="label" mode="#current"/>
+                    </xsl:element>
+                </xsl:if>
+                <xsl:if test="caption">
+                    <xsl:element name="fo:block" use-attribute-sets="caption">
+                        <xsl:apply-templates select="caption" mode="#current"/>
+                    </xsl:element>
+                </xsl:if>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <!-- Formulae -->
+    
+    <xsl:template match="disp-formula-group" mode="typesetting">
+        <xsl:element name="fo:block-container">
+            <xsl:attribute name="space-before" select="$_regularLineHeight"/>
+            <xsl:attribute name="space-after" select="$_regularLineHeight"/>
+            <xsl:if test="@id">
+                <xsl:attribute name="id">
+                    <xsl:value-of select="@id"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:call-template name="label-and-caption"/>
+            <xsl:apply-templates select="* except label except caption" mode="#current"/>
+        </xsl:element>
+    </xsl:template>
     
     <xsl:template match="disp-formula" mode="typesetting">
-        <xsl:apply-templates mode="typesetting"/>
+        <xsl:choose>
+            <xsl:when test="label and not(caption)">
+                <fo:table width="100%">
+                    <xsl:attribute name="space-before" select="$_regularLineHeight"/>
+                    <xsl:attribute name="space-after" select="$_regularLineHeight"/>
+                    <fo:table-body>
+                        <fo:table-row>
+                            <fo:table-cell>
+                                <fo:block text-align="center">
+                                    <xsl:apply-templates select="* except label" mode="#current"/>
+                                </fo:block>
+                            </fo:table-cell>
+                            <fo:table-cell width="1cm" display-align="center" text-align="right">
+                                <fo:block>
+                                    <xsl:apply-templates select="label" mode="#current"/>
+                                </fo:block>
+                            </fo:table-cell>
+                        </fo:table-row>
+                    </fo:table-body>
+                </fo:table>
+            </xsl:when>
+            <xsl:when test="not(label) and not(caption)">
+                <fo:block text-align="center">
+                    <xsl:attribute name="space-before" select="$_regularLineHeight"/>
+                    <xsl:attribute name="space-after" select="$_regularLineHeight"/>
+                    <xsl:apply-templates mode="#current"/>
+                </fo:block>                
+            </xsl:when>
+            <xsl:when test="caption">
+                <xsl:call-template name="label-and-caption"/>
+                <fo:block text-align="center">
+                    <xsl:attribute name="space-before" select="$_regularLineHeight"/>
+                    <xsl:attribute name="space-after" select="$_regularLineHeight"/>
+                    <xsl:apply-templates select="* except label except caption" mode="#current"/>
+                </fo:block>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template match="inline-formula" mode="typesetting">
+        <xsl:apply-templates mode="#current"/>
     </xsl:template>
 
     <xsl:template match="mml:math" mode="typesetting">
-        <!-- Inline formulae -->
-        <xsl:choose>
-            <xsl:when test="(ancestor::table-wrap) | (ancestor::p)">
-                <xsl:element name="fo:inline">
-                    <fo:instream-foreign-object>
-                        <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML">
-                            <xsl:copy-of select="node()"/>
-                        </mml:math>
-                    </fo:instream-foreign-object>
-                </xsl:element>
-            </xsl:when>
-            <!-- Block level formulae -->
-            <xsl:otherwise>
-                <xsl:element name="fo:block" use-attribute-sets="table_margins">
-                    <fo:instream-foreign-object>
-                        <mml:math display="block" xmlns:mml="http://www.w3.org/1998/Math/MathML">
-                            <xsl:copy-of select="node()"/>
-                        </mml:math>
-                    </fo:instream-foreign-object>
-                </xsl:element>
-            </xsl:otherwise>
-        </xsl:choose>
+        <fo:instream-foreign-object>
+            <xsl:copy-of select="."/>
+        </fo:instream-foreign-object>        
     </xsl:template>
+    
+    <!-- Inline elements -->
 
-    <!-- ********************************************************** -->
-    <!-- * Inline formats                                         * -->
-    <!-- ********************************************************** -->
-
-    <!-- Italics -->
-    <xsl:template match="italic" mode="typesetting">
-        <fo:inline font-style="italic">
-            <xsl:apply-templates mode="typesetting"/>
-        </fo:inline>
-    </xsl:template>
-
-    <!-- Bold -->
     <xsl:template match="bold" mode="typesetting">
         <fo:inline font-weight="bold">
-            <xsl:apply-templates mode="typesetting"/>
+            <xsl:apply-templates mode="#current"/>
+        </fo:inline>  
+    </xsl:template>
+
+    <xsl:template match="italic" mode="typesetting">
+        <fo:inline font-style="italic">
+            <xsl:apply-templates mode="#current"/>
         </fo:inline>
     </xsl:template>
 
-    <!-- Small Caps -->
     <xsl:template match="sc" mode="typesetting">
         <fo:inline font-variant="small-caps">
-            <xsl:apply-templates mode="typesetting"/>
+            <xsl:apply-templates mode="#current"/>
         </fo:inline>
     </xsl:template>
-
-    <!-- Superscript -->
-    <xsl:template match="sup" mode="typesetting">
-        <xsl:element name="fo:inline" use-attribute-sets="footnote_reference_number">
-            <xsl:apply-templates mode="typesetting"/>
-        </xsl:element>
-    </xsl:template>
     
-    <!-- Subscript -->
+    <xsl:template match="sup" mode="typesetting">
+        <xsl:element name="fo:inline" use-attribute-sets="superscript">
+            <xsl:apply-templates mode="#current"/>
+        </xsl:element>
+    </xsl:template> 
+
     <xsl:template match="sub" mode="typesetting">
         <xsl:element name="fo:inline" use-attribute-sets="subscript">
-            <xsl:apply-templates mode="typesetting"/>
+            <xsl:apply-templates mode="#current"/>
         </xsl:element>
-    </xsl:template>
-
-    <!-- ********************************************************** -->
-    <!-- * Break                                                  * -->
-    <!-- ********************************************************** -->
+    </xsl:template> 
     
-    <xsl:template match="break" mode="typesetting">
-        <fo:block/>
-    </xsl:template>
-
-    <!-- ********************************************************** -->
-    <!-- * Table of Contents (ToC) generation                     * -->
-    <!-- ********************************************************** -->
-    
-    <xsl:template name="ToC">
-        <fo:page-sequence master-reference="ToC_Sequence">
-            <xsl:attribute name="force-page-count">end-on-even</xsl:attribute>
-
-            <!-- Retrieve Heading -->
-            <xsl:variable name="ToC-Heading">
-                <xsl:choose>
-                    <xsl:when test="/book[@xml:lang = 'de']">
-                        <xsl:value-of select="$heading-ToC-de"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="$heading-ToC-en"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:variable>
-
-            <!-- Running headers -->
-            <fo:static-content flow-name="ToC_title_verso">
-                <xsl:element name="fo:block"
-                    use-attribute-sets="fonts_petit_text do_not_hyphenate keeps-paragraph running_title_verso">
-                    <fo:page-number/>
-                    <xsl:text> – </xsl:text>
-                    <xsl:value-of select="$ToC-Heading"/>
-                </xsl:element>
-            </fo:static-content>
-            <fo:static-content flow-name="ToC_title_recto">
-                <xsl:element name="fo:block"
-                    use-attribute-sets="fonts_petit_text do_not_hyphenate keeps-paragraph running_title_recto">
-                    <xsl:value-of select="$ToC-Heading"/>
-                    <xsl:text> – </xsl:text>
-                    <fo:page-number/>
-                </xsl:element>
-            </fo:static-content>
-
-            <fo:flow flow-name="xsl-region-body">
-                <!-- Heading -->
-                <xsl:element name="fo:block"
-                    use-attribute-sets="fonts_chapter_title keeps-headings margin_under_title">
-                    <xsl:attribute name="id">toc</xsl:attribute>
-                    <xsl:value-of select="$ToC-Heading"/>
-                </xsl:element>
-
-                <!-- ToC for an edited book -->
-                <xsl:if test="/book/@book-type='proceedings'">
-                    
-                    <xsl:for-each select="/book/book-body/book-part">
-
-                        <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text">
-                            <xsl:attribute name="space-before" select="$LineGridNormal"/>
-                            <xsl:for-each
-                                select="book-part-meta/contrib-group/contrib[@contrib-type = 'author']">
-                                <xsl:if test="position() != 1">
-                                    <xsl:value-of select="$author-name-divider_chapter-head"/>
-                                </xsl:if>
-                                <xsl:value-of select="name/given-names"/>
-                                <xsl:text>&#x00A0;</xsl:text>
-                                <!-- Non breaking space to keep author names together -->
-                                <xsl:value-of select="name/surname"/>
-                            </xsl:for-each>
-                        </xsl:element>
-
-                        <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text">
-                            <xsl:attribute name="text-align-last">justify</xsl:attribute>
-                            <xsl:if test="$medium = 'electronic'">
-                                <xsl:element name="fo:basic-link" use-attribute-sets="hyperlink">
-                                    <xsl:attribute name="internal-destination">
-                                        <xsl:value-of select="generate-id(.)"/>
-                                    </xsl:attribute>
-                                    <xsl:apply-templates select="book-part-meta/title-group/title"/>
-                                    <fo:leader leader-pattern="space"/>
-                                    <fo:page-number-citation ref-id="{generate-id(.)}"/>
-                                </xsl:element>
-                            </xsl:if>
-                            <xsl:if test="$medium = 'print'">
-                                <xsl:apply-templates select="book-part-meta/title-group/title"/>
-                                <fo:leader leader-pattern="space"/>
-                                <fo:page-number-citation ref-id="{generate-id(.)}"/>
-                            </xsl:if>
-                        </xsl:element>
-                        <xsl:if test="book-part-meta/title-group/subtitle">
-                            <xsl:element name="fo:block" use-attribute-sets="fonts_regular_text">
-                                <xsl:apply-templates select="book-part-meta/title-group/subtitle"/>
-                            </xsl:element>
-                        </xsl:if>
-
-                    </xsl:for-each>
-
-                </xsl:if>
-                
-                <!-- ToC for a monograph -->
-                <xsl:if test="/book/@book-type='monograph'">
-                    
-                    <xsl:element name="fo:list-block">
-                        <!-- Generate toc entries for the book body -->
-                        <xsl:call-template name="toc-book-body"/>
-                        <!-- Generate toc entries for the book backmatter -->
-                        <xsl:call-template name="toc-book-backmatter"/>
-                    </xsl:element>
-                    
-                </xsl:if>
-                
-            </fo:flow>
-
-        </fo:page-sequence>
-    </xsl:template>
-
-    <xsl:template name="toc-book-body">
-        <xsl:apply-templates select="book/book-body" mode="toc"/>
-    </xsl:template>
-    
-    <xsl:template name="toc-book-backmatter"/>
-    
-    <xsl:template match="book-body" mode="toc">
-        <xsl:apply-templates select="book-part" mode="toc"/>
-    </xsl:template>
-    
-    <xsl:template match="book-part" mode="toc">
-        <!-- Create book part entry -->
-        <xsl:apply-templates select="book-part-meta" mode="toc"/>
-        <!-- look for more entries -->
-        <xsl:apply-templates select="body" mode="toc"/>
-    </xsl:template>
-    
-    <xsl:template match="book-part-meta" mode="toc">
-        <xsl:element name="fo:list-item">
-            <xsl:attribute name="margin-top">12pt</xsl:attribute>
-            <xsl:element name="fo:list-item-label">
-                <xsl:attribute name="end-indent"><!-- label-end() -->3em</xsl:attribute>
-                <xsl:if test="title-group/label">
-                    <xsl:choose>
-                        <xsl:when test="ancestor::book-part[1]/@book-part-type='part'">
-                            <xsl:element name="fo:block" use-attribute-sets="toc-format-part keeps-headings">
-                                <xsl:apply-templates select="title-group/label" mode="toc"/>
-                            </xsl:element>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:element name="fo:block" use-attribute-sets="toc-format-first-level keeps-headings">
-                                <xsl:apply-templates select="title-group/label" mode="toc"/>
-                            </xsl:element>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:if>
-            </xsl:element>
-            <xsl:element name="fo:list-item-body">
-                <xsl:attribute name="start-indent"><!-- body-start() -->4em</xsl:attribute>
-                <xsl:choose>
-                    <xsl:when test="ancestor::book-part[1]/@book-part-type='part'">
-                        <xsl:element name="fo:block" use-attribute-sets="toc-format-part keeps-headings">
-                            <xsl:attribute name="text-align-last">justify</xsl:attribute>
-                            <xsl:apply-templates select="title-group/title" mode="toc"/>
-                            <xsl:if test="title-group/subtitle">
-                                <xsl:text>. </xsl:text>
-                                <xsl:apply-templates select="title-group/subtitle" mode="toc"/>
-                            </xsl:if>
-                            <xsl:text> </xsl:text>
-                            <xsl:element name="fo:leader" use-attribute-sets="ToC-leader"/>
-                            <xsl:text> </xsl:text>
-                            <xsl:element name="fo:page-number-citation">
-                                <xsl:attribute name="ref-id">
-                                    <xsl:value-of select="ancestor::book-part[1]/@id"/>
-                                </xsl:attribute>
-                            </xsl:element>
-                        </xsl:element>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:element name="fo:block" use-attribute-sets="toc-format-first-level keeps-headings">
-                            <xsl:attribute name="text-align-last">justify</xsl:attribute>
-                            <xsl:apply-templates select="title-group/title" mode="toc"/>
-                            <xsl:if test="title-group/subtitle">
-                                <xsl:text>. </xsl:text>
-                                <xsl:apply-templates select="title-group/subtitle" mode="toc"/>
-                            </xsl:if>
-                            <xsl:element name="fo:inline">
-                                <xsl:attribute name="font-size">10.5pt</xsl:attribute>
-                            <xsl:text> </xsl:text>
-                            <xsl:element name="fo:leader" use-attribute-sets="ToC-leader"/>
-                            <xsl:text> </xsl:text>
-                            <xsl:element name="fo:page-number-citation">
-                                <xsl:attribute name="ref-id">
-                                    <xsl:value-of select="ancestor::book-part[1]/@id"/>
-                                </xsl:attribute>
-                            </xsl:element>
-                            </xsl:element>
-                        </xsl:element>                        
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:element>
-        </xsl:element>
-    </xsl:template>
-    
-    <xsl:template match="body" mode="toc">
-        <xsl:if test="(count(ancestor::book-part) + count(ancestor-or-self::sec)) &lt; $ToC-levels">
-            <xsl:apply-templates select="book-part | sec" mode="toc"/>
-        </xsl:if>
-    </xsl:template>
-    
-    <xsl:template match="sec" mode="toc">
-        <xsl:if test="not(@sec-type='hide_in_toc')">
-            <xsl:element name="fo:list-item">
-                 <xsl:element name="fo:list-item-label">
-                    <xsl:attribute name="end-indent"><!-- label-end() -->3em</xsl:attribute>
-                    <xsl:if test="label">
-                        <xsl:element name="fo:block" use-attribute-sets="toc-format-levels-after-first keeps-headings">
-                            <xsl:apply-templates select="label" mode="toc"/>
-                        </xsl:element>
-                    </xsl:if>
-                </xsl:element>
-                <xsl:element name="fo:list-item-body">
-                    <xsl:attribute name="start-indent"><!-- body-start() -->4em</xsl:attribute>
-                    <xsl:element name="fo:block" use-attribute-sets="toc-format-levels-after-first keeps-headings">
-                        <xsl:attribute name="text-align-last">justify</xsl:attribute>
-                        <xsl:apply-templates select="title" mode="toc"/>
-                        <xsl:if test="subtitle">
-                            <xsl:text>. </xsl:text>
-                            <xsl:apply-templates select="subtitle" mode="toc"/>
-                        </xsl:if>
-                        <xsl:text> </xsl:text>
-                        <xsl:element name="fo:leader" use-attribute-sets="ToC-leader"/>
-                        <xsl:text> </xsl:text>
-                        <fo:page-number-citation ref-id="{@id}"/>
-                    </xsl:element>
-                </xsl:element>
-            </xsl:element>
-        </xsl:if>
-        <xsl:if test="(count(ancestor::book-part) + count(ancestor-or-self::sec)) &lt; $ToC-levels">
-            <xsl:apply-templates select="sec" mode="toc"/>
-        </xsl:if>
-    </xsl:template>
-    
-    <xsl:template match="label | title | subtitle" mode="toc">
-        <xsl:apply-templates mode="typesetting"/>
-    </xsl:template>
-
-    <!-- ********************************************************** -->
-    <!-- * PDF bookmark tree                                      * -->
-    <!-- ********************************************************** -->
-    
-    <xsl:template name="pdf-bookmark-tree">
-        <xsl:if test="($medium='electronic' and (($pdf_bookmark='electronic') or ($pdf_bookmark='both'))) or ($medium='print' and (($pdf_bookmark='print') or ($pdf_bookmark='both')))">
-            <fo:bookmark-tree>
-                
-                <!-- Cover -->
-                <xsl:if test="$medium='electronic' and $include-cover-images='true' and $pdf_bookmark_cover_entries='yes'">
-                    <fo:bookmark internal-destination="cover_1">
-                        <fo:bookmark-title>
-                            <xsl:choose>
-                                <xsl:when test="/book/@xml:lang = 'de'">
-                                    <xsl:value-of select="$front_cover_de"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:value-of select="$front_cover_en"/>
-                                </xsl:otherwise>
-                            </xsl:choose>    
-                        </fo:bookmark-title>
-                    </fo:bookmark>
-                </xsl:if>
-                
-                <!-- Frontmatter -->
-                <xsl:if test="$pdf_bookmark_fm_entries='yes'">
-                    <fo:bookmark internal-destination="half-title" starting-state="hide">
-                        <fo:bookmark-title>
-                            <xsl:choose>
-                                <xsl:when test="/book/@xml:lang = 'de'">
-                                    <xsl:value-of select="$frontmatter_de"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:value-of select="$frontmatter_en"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </fo:bookmark-title>
-                            <!-- Half title -->
-                            <fo:bookmark internal-destination="half-title">
-                                <fo:bookmark-title>
-                                    <xsl:choose>
-                                        <xsl:when test="/book/@xml:lang = 'de'">
-                                            <xsl:value-of select="$half_title_de"/>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:value-of select="$half_title_en"/>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                </fo:bookmark-title>
-                            </fo:bookmark>
-                            <!-- Series title -->
-                            <xsl:if test="/book/collection-meta">
-                                <fo:bookmark internal-destination="series-title">
-                                    <fo:bookmark-title>
-                                        <xsl:choose>
-                                            <xsl:when test="/book/@xml:lang = 'de'">
-                                                <xsl:value-of select="$series_title_de"/>
-                                            </xsl:when>
-                                            <xsl:otherwise>
-                                                <xsl:value-of select="$series_title_en"/>
-                                            </xsl:otherwise>
-                                        </xsl:choose>
-                                    </fo:bookmark-title>
-                                </fo:bookmark>
-                            </xsl:if>
-                            <!-- Main title -->
-                            <fo:bookmark internal-destination="main-title">
-                                <fo:bookmark-title>
-                                    <xsl:choose>
-                                        <xsl:when test="/book/@xml:lang = 'de'">
-                                            <xsl:value-of select="$main_title_de"/>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:value-of select="$main_title_en"/>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                </fo:bookmark-title>
-                            </fo:bookmark>
-                            <!-- Impressum -->
-                            <fo:bookmark internal-destination="impressum">
-                                <fo:bookmark-title>
-                                    <xsl:choose>
-                                        <xsl:when test="/book/@xml:lang = 'de'">
-                                            <xsl:value-of select="$impressum_de"/>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:value-of select="$impressum_en"/>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                </fo:bookmark-title>
-                            </fo:bookmark>
-                    </fo:bookmark>
-                    <!-- Acknowledgements -->
-                        <!-- not yet implemented -->
-                    <!-- Table of Contents -->
-                    <fo:bookmark internal-destination="toc">
-                        <fo:bookmark-title>
-                            <xsl:choose>
-                                <xsl:when test="/book/@xml:lang = 'de'">
-                                    <xsl:value-of select="$heading-ToC-de"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:value-of select="$heading-ToC-en"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </fo:bookmark-title>
-                    </fo:bookmark>
-                </xsl:if>
-                
-                <!-- Main book -->
-                <xsl:apply-templates select="/book/book-body/book-part" mode="pdf-bookmark-tree"/>
-                
-                <!-- Backmatter -->
-                <xsl:if test="$FootnoteHandling = 'endnote_book_backmatter'">
-                    <xsl:element name="fo:bookmark">
-                        <xsl:attribute name="internal-destination">
-                            <xsl:text>book_endnotes</xsl:text>
-                        </xsl:attribute>
-                        <fo:bookmark-title>
-                            <xsl:choose>
-                                <xsl:when test="/book/@xml:lang = 'de'">
-                                    <xsl:value-of select="$heading_endnotes_chapter_backmatter_de"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:value-of select="$heading_endnotes_chapter_backmatter_en"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </fo:bookmark-title>
-                    </xsl:element>
-                </xsl:if>
-                
-                <!-- Back Cover -->
-                <xsl:if test="$medium='electronic' and $include-cover-images='true' and $pdf_bookmark_cover_entries='yes'">
-                    <fo:bookmark internal-destination="cover_4">
-                        <fo:bookmark-title>
-                            <xsl:choose>
-                                <xsl:when test="/book/@xml:lang = 'de'">
-                                    <xsl:value-of select="$back_cover_de"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:value-of select="$back_cover_en"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </fo:bookmark-title>
-                    </fo:bookmark>
-                </xsl:if>
-                
-            </fo:bookmark-tree>
-        </xsl:if>
-    </xsl:template>
-    
-    <xsl:template match="book-part" mode="pdf-bookmark-tree">
-        <xsl:element name="fo:bookmark">
-            <xsl:attribute name="internal-destination">
-                <xsl:value-of select="@id"/>
-            </xsl:attribute>
-            <xsl:attribute name="starting-state">hide</xsl:attribute>
-            <fo:bookmark-title>
-                <xsl:if test="book-part-meta/title-group/label">
-                    <xsl:value-of select="book-part-meta/title-group/label"/>
-                    <xsl:text>. </xsl:text>
-                </xsl:if>
-                <xsl:if test="/book/@book-type='proceedings'">
-                    <xsl:for-each select="book-part-meta/contrib-group/contrib[@contrib-type = 'author']">
-                        <xsl:if test="position() = 1">                            
-                            <xsl:value-of select="name/given-names"/>
-                            <xsl:text> </xsl:text>
-                            <xsl:value-of select="name/surname"/>
-                            <xsl:if test="position() = last()">
-                                <xsl:text>: </xsl:text>
-                            </xsl:if>
-                        </xsl:if>
-                        <xsl:if test="position() = 2">
-                            <xsl:text> et al.: </xsl:text>
-                        </xsl:if>
-                    </xsl:for-each>
-                </xsl:if>
-                <xsl:value-of select="book-part-meta/title-group/title"/>
-                <xsl:if test="book-part-meta/title-group/subtitle">
-                    <xsl:text>. </xsl:text>
-                    <xsl:value-of select="book-part-meta/title-group/subtitle"/>
-                </xsl:if>
-            </fo:bookmark-title>
-            <xsl:apply-templates select="body/book-part | body/sec | back" mode="pdf-bookmark-tree"/>
-        </xsl:element>
-    </xsl:template>
-
-    <xsl:template match="sec" mode="pdf-bookmark-tree">
+    <xsl:template match="xref" mode="typesetting">
         <xsl:choose>
-            <xsl:when test="child::title">
-                <xsl:element name="fo:bookmark">
-                    <xsl:attribute name="internal-destination">
-                        <xsl:value-of select="@id"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="starting-state">hide</xsl:attribute>
-                    <fo:bookmark-title>
-                        <xsl:if test="label">
-                            <xsl:value-of select="label"/>
-                            <xsl:text>. </xsl:text>
-                        </xsl:if>
-                        <xsl:value-of select="title"/>
-                        <xsl:if test="subtitle">
-                            <xsl:text>. </xsl:text>
-                            <xsl:value-of select="subtitle"/>
-                        </xsl:if>                
-                    </fo:bookmark-title>
-                    <xsl:apply-templates select="sec" mode="pdf-bookmark-tree"/>
-                </xsl:element>                
+            <!-- Footnotes -->
+            <xsl:when test="@ref-type='fn'">
+                <xsl:variable name="_fn_id" select="@rid"/>
+                <xsl:choose>
+                    <xsl:when test="$_footnote_handling='footnotes' or ancestor::dedication or ancestor::front-matter-part[@book-part-type='epigraph']">
+                        <fo:footnote>
+                            <xsl:call-template name="footnote_reference_number_in_text_flow"/>
+                            <xsl:if test="$_footnote_handling != 'book-back-matter'">
+                                <fo:footnote-body>
+                                    <xsl:apply-templates select="/descendant::fn[@id = $_fn_id]" mode="#current"/>
+                                </fo:footnote-body>
+                            </xsl:if>
+                        </fo:footnote>
+                    </xsl:when>
+                    <xsl:when test="($_footnote_handling='chapter-back-matter' or $_footnote_handling='book-back-matter') and (not(ancestor::dedication) and not(ancestor::front-matter-part[@book-part-type='epigraph']))">
+                        <xsl:call-template name="footnote_reference_number_in_text_flow"/>
+                    </xsl:when>
+                </xsl:choose>
             </xsl:when>
+            <!-- Section, table or figure references -->
             <xsl:otherwise>
-                <xsl:apply-templates select="sec" mode="pdf-bookmark-tree"/>                
+                <xsl:choose>
+                    <xsl:when test="$medium='interactive' and $_crossref='yes'">
+                        <xsl:element name="fo:inline" use-attribute-sets="hyperlink">
+                            <fo:basic-link internal-destination="{@rid}">
+                                <xsl:apply-templates mode="#current"/>
+                            </fo:basic-link>
+                        </xsl:element>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:apply-templates mode="#current"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="back" mode="pdf-bookmark-tree">
-        <!-- Endnotes (if applicable) -->
-        <xsl:if test="$FootnoteHandling='endnote_chapter_backmatter'">
-            <xsl:element name="fo:bookmark">
-               <xsl:attribute name="internal-destination">
-                   <xsl:value-of select="ancestor::book-part[1]/@id"/>
-                   <xsl:text>_chap_endnotes</xsl:text>
-               </xsl:attribute>
-                <fo:bookmark-title>
-                    <xsl:choose>
-                        <xsl:when test="/book/@xml:lang = 'de'">
-                            <xsl:value-of select="$heading_endnotes_chapter_backmatter_de"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="$heading_endnotes_chapter_backmatter_en"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </fo:bookmark-title>
-            </xsl:element>
-        </xsl:if>
-        <!-- Bibliography -->
-        <xsl:apply-templates select="ref-list" mode="pdf-bookmark-tree"/>
+    <xsl:template match="ext-link" mode="typesetting">
+        <xsl:choose>
+            <xsl:when test="$_external_hyperlinks='yes'">
+                <xsl:element name="fo:inline" use-attribute-sets="hyperlink do_not_hyphenate">
+                    <fo:basic-link>
+                        <xsl:attribute name="external-destination">
+                            <xsl:value-of select="@xlink:href"/>
+                        </xsl:attribute>
+                        <xsl:apply-templates mode="#current"/>
+                    </fo:basic-link>
+                </xsl:element>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates mode="#current"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template name="footnote_reference_number_in_text_flow">
+        <xsl:choose>
+            <xsl:when test="$medium='interactive' and $_footnote_crossref='yes'">
+                <xsl:element name="fo:inline" use-attribute-sets="superscript hyperlink">
+                    <xsl:attribute name="id">
+                        <xsl:variable name="backlink">
+                            <xsl:value-of select="@rid"/>
+                            <xsl:text>_backlink</xsl:text>
+                        </xsl:variable>
+                        <xsl:value-of select="$backlink"/>
+                    </xsl:attribute>
+                    <fo:basic-link internal-destination="{@rid}">
+                        <xsl:apply-templates mode="#current"/>
+                    </fo:basic-link>
+                </xsl:element>                                    
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:element name="fo:inline" use-attribute-sets="superscript">
+                    <xsl:apply-templates mode="#current"/>
+                </xsl:element>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     
-    <xsl:template match="ref-list" mode="pdf-bookmark-tree">
+    <!-- Header and footer -->
+    
+    <xsl:template name="static_header_odd_page">
+        <xsl:element name="fo:block" use-attribute-sets="font_family_regular font_regular paragraph_header_odd_page do_not_hyphenate">
+            <xsl:if test="$running_headers='yes'">
+                
+                <xsl:choose>
+                    <xsl:when test="/book/@book-type='monograph'">
+                        <fo:retrieve-marker retrieve-class-name="heading-1" retrieve-position="last-ending-within-page" retrieve-boundary="page-sequence"/>
+                    </xsl:when>
+                    <xsl:when test="/book/@book-type='proceedings'">
+                        <fo:retrieve-marker retrieve-class-name="chapter-title" retrieve-position="first-including-carryover" retrieve-boundary="page-sequence"/>
+                    </xsl:when>
+                    <xsl:when test="/book/@book-type='lexicon'">
+                        <fo:retrieve-marker retrieve-class-name="lemma" retrieve-position="last-ending-within-page" retrieve-boundary="page-sequence"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <fo:retrieve-marker retrieve-class-name="heading-1" retrieve-position="last-ending-within-page" retrieve-boundary="page-sequence"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+                
+            </xsl:if>
+            <xsl:if test="$page_number='header'">
+                <xsl:if test="$running_headers='yes'"><xsl:text> – </xsl:text></xsl:if><fo:page-number/>
+            </xsl:if>
+        </xsl:element>
+    </xsl:template>
+
+    <xsl:template name="static_header_even_page">
+        <xsl:element name="fo:block" use-attribute-sets="font_family_regular font_regular paragraph_header_even_page do_not_hyphenate">
+            <xsl:if test="$page_number">
+                <fo:page-number/><xsl:if test="$running_headers='yes'"><xsl:text> – </xsl:text></xsl:if>
+            </xsl:if>
+            <xsl:if test="$running_headers='yes'">
+
+                <xsl:choose>
+                    <xsl:when test="/book/@book-type='monograph'">
+                        <fo:retrieve-marker retrieve-class-name="chapter-title" retrieve-position="last-ending-within-page" retrieve-boundary="page-sequence"/>
+                    </xsl:when>
+                    <xsl:when test="/book/@book-type='proceedings'">
+                        <fo:retrieve-marker retrieve-class-name="authors" retrieve-position="last-ending-within-page" retrieve-boundary="page-sequence"/>
+                    </xsl:when>
+                    <xsl:when test="/book/@book-type='lexicon'">
+                        <fo:retrieve-marker retrieve-class-name="lemma" retrieve-position="first-within-page" retrieve-boundary="page-sequence"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <fo:retrieve-marker retrieve-class-name="heading-1" retrieve-position="first-within-page" retrieve-boundary="page-sequence"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+
+            </xsl:if>
+        </xsl:element>
+    </xsl:template>
+
+    <xsl:template name="static_footer_first_odd_page">
+        <xsl:element name="fo:block" use-attribute-sets="font_family_regular font_regular do_not_hyphenate">
+            <xsl:attribute name="text-align">center</xsl:attribute>
+            <fo:page-number/>
+        </xsl:element>
+    </xsl:template>
+    
+    <xsl:template name="static_footer_first_even_page">
+        <xsl:element name="fo:block" use-attribute-sets="font_family_regular font_regular do_not_hyphenate">
+            <xsl:attribute name="text-align">center</xsl:attribute>
+            <fo:page-number/>
+        </xsl:element>
+    </xsl:template>
+    
+    <xsl:template name="static_footer_odd_page">
+        <xsl:if test="$page_number='footer'">
+            <xsl:element name="fo:block" use-attribute-sets="font_family_regular font_regular do_not_hyphenate">
+                <xsl:attribute name="text-align">center</xsl:attribute>
+                <fo:page-number/>
+            </xsl:element>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template name="static_footer_even_page">
+        <xsl:if test="$page_number='footer'">
+            <xsl:element name="fo:block" use-attribute-sets="font_family_regular font_regular do_not_hyphenate">
+                <xsl:attribute name="text-align">center</xsl:attribute>
+                <fo:page-number/>
+            </xsl:element>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template name="footnote_separator_line">
+        <!-- Footnote separator -->
+        <fo:static-content flow-name="xsl-footnote-separator">
+            <fo:block text-align-last="justify">
+                <xsl:attribute name="margin-top">
+                    <xsl:value-of select="$_regularLineHeight"/>
+                </xsl:attribute>
+                <xsl:if test="$_footnote_separator_line = 'yes'">
+                    <xsl:element name="fo:leader" use-attribute-sets="footnote_separator_line_definition"/>
+                </xsl:if>
+            </fo:block>
+        </fo:static-content>
+    </xsl:template>
+    
+    <xsl:template name="page_number">
+        <xsl:if test="ancestor::front-matter[parent::book]">
+            <xsl:attribute name="format">
+                <xsl:choose>
+                    <xsl:when test="/book/@book-type='monograph'">
+                        <xsl:value-of select="$_front-matterMonographPagination"/>
+                    </xsl:when>
+                    <xsl:when test="/book/@book-type='proceedings'">
+                        <xsl:value-of select="$_front-matterProceedingsPagination"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>i</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+        </xsl:if>
+        <xsl:if test="$formatter='ah'">
+            <xsl:attribute name="axf:output-volume-break">true</xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="static_content">
+        
+        <!-- Footers -->
+        
+        <!-- First odd page -->
+        <fo:static-content flow-name="page_template_first_odd_footer">
+            <xsl:call-template name="static_footer_first_odd_page"/>
+        </fo:static-content>
+        
+        <!-- First even page -->
+        <fo:static-content flow-name="page_template_first_even_footer">
+            <xsl:call-template name="static_footer_first_even_page"/>
+        </fo:static-content>
+        
+        <!-- Odd page -->
+        <fo:static-content flow-name="page_template_odd_footer">
+            <xsl:call-template name="static_footer_odd_page"/>
+        </fo:static-content>
+        
+        <!-- Even page -->
+        <fo:static-content flow-name="page_template_even_footer">
+            <xsl:call-template name="static_footer_even_page"/>
+        </fo:static-content>
+        
+        <!-- Headers -->
+        
+        <!-- Odd page -->
+        <fo:static-content flow-name="page_template_odd_header">
+            <xsl:call-template name="static_header_odd_page"/>
+        </fo:static-content>
+        
+        <!-- Even page -->
+        <fo:static-content flow-name="page_template_even_header">
+            <xsl:call-template name="static_header_even_page"/>
+        </fo:static-content>
+        
+    </xsl:template>
+    
+    <!-- Text based processing -->
+    
+    <xsl:template match="text()" mode="typesetting">
+        <xsl:choose>
+            <xsl:when test="count($_patterns/pattern) > 0">
+                <xsl:call-template name="search-and-replace">
+                    <xsl:with-param name="_content" select="."/>
+                    <xsl:with-param name="_searchpattern" select="$_patterns/pattern[1]/search/text()"/>
+                    <xsl:with-param name="_replacepattern" select="$_patterns/pattern[1]/replace/text()"/>
+                    <xsl:with-param name="_pattern_ancestor" select="$_patterns/pattern[1]/@ancestor"/>
+                    <xsl:with-param name="_pattern_language" select="$_patterns/pattern[1]/@xml:lang"/>
+                    <xsl:with-param name="_counter" select="1"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="."/>           
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <!-- Other functions -->
+    
+    <xsl:template name="language_attribute">
+        <xsl:attribute name="xml:lang">
+            <xsl:choose>
+                <xsl:when test="ancestor-or-self::*[@xml:lang][1]/@xml:lang">
+                    <xsl:value-of select="ancestor-or-self::*[@xml:lang][1]/@xml:lang"/>                                
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$_defaultLanguage"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:attribute>
+    </xsl:template>
+
+    <xsl:template name="search-and-replace">
+        <xsl:param name="_content"/>
+        <xsl:param name="_searchpattern"/>
+        <xsl:param name="_replacepattern"/>
+        <xsl:param name="_pattern_ancestor"/>
+        <xsl:param name="_pattern_language"/>
+        <xsl:param name="_counter"/>
+        
+        <!-- Replace-Befehl -->
+        
+        <xsl:choose>
+            <!-- Fall 1: Weder @ancestor, noch @xml:lang angegeben, d. h. Regel gilt für alles -->
+            <xsl:when test="$_pattern_ancestor='' and $_pattern_language=''">
+                
+                <!-- Search and replace -->
+                
+                
+                <!-- Rekursiver Aufruf -->
+                
+                <xsl:choose>
+                    
+                    <!-- Exit rule -->
+                    
+                    <xsl:when test="$_counter = count($_patterns/pattern)">
+                        <xsl:value-of select="$_content"/>
+                    </xsl:when>
+                    
+                    <!-- Process rule -->
+                    
+                    <xsl:otherwise>
+                        <xsl:call-template name="search-and-replace">
+                            <xsl:with-param name="_content" select="$_content"/>
+                            <xsl:with-param name="_searchpattern" select="$_patterns/pattern[$_counter+1]/search/text()"/>
+                            <xsl:with-param name="_replacepattern" select="$_patterns/pattern[$_counter+1]/replace/text()"/>
+                            <xsl:with-param name="_pattern_ancestor" select="$_patterns/pattern[$_counter+1]/@ancestor"/>
+                            <xsl:with-param name="_pattern_language" select="$_patterns/pattern[$_counter+1]/@xml:lang"/>
+                            <xsl:with-param name="_counter" select="$_counter+1"/>
+                        </xsl:call-template>
+                    </xsl:otherwise>
+                    
+                </xsl:choose>
+                
+            </xsl:when>
+            <!-- Fall 2: @ancestor ist vorhanden, aber @xml:lang ist leer -->
+            <xsl:when test="$_pattern_ancestor != '' and $_pattern_language = ''">
+                <xsl:choose>
+                    <xsl:when test="ancestor-or-self::*/name() = $_pattern_ancestor">
+                        
+                        <xsl:variable name="_content">
+                            <xsl:value-of select="replace($_content, $_searchpattern, $_replacepattern)"/>
+                        </xsl:variable>
+                        
+                        <!-- Rekursiver Aufruf -->
+                        
+                        <xsl:choose>
+                            <!-- Exit rule -->
+                            <xsl:when test="$_counter = count($_patterns/pattern)">
+                                <xsl:value-of select="$_content"/>
+                            </xsl:when>
+                            <!-- Process rule -->
+                            <xsl:otherwise>
+                                <xsl:call-template name="search-and-replace">
+                                    <xsl:with-param name="_content" select="$_content"/>
+                                    <xsl:with-param name="_searchpattern" select="$_patterns/pattern[$_counter+1]/search/text()"/>
+                                    <xsl:with-param name="_replacepattern" select="$_patterns/pattern[$_counter+1]/replace/text()"/>
+                                    <xsl:with-param name="_pattern_ancestor" select="$_patterns/pattern[$_counter+1]/@ancestor"/>
+                                    <xsl:with-param name="_pattern_language" select="$_patterns/pattern[$_counter+1]/@xml:lang"/>
+                                    <xsl:with-param name="_counter" select="$_counter+1"/>
+                                </xsl:call-template>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:variable name="_content" select="$_content"/>
+                        
+                        <!-- Rekursiver Aufruf -->
+                        
+                        <xsl:choose>
+                            <!-- Exit rule -->
+                            <xsl:when test="$_counter = count($_patterns/pattern)">
+                                <xsl:value-of select="$_content"/>
+                            </xsl:when>
+                            <!-- Process rule -->
+                            <xsl:otherwise>
+                                <xsl:call-template name="search-and-replace">
+                                    <xsl:with-param name="_content" select="$_content"/>
+                                    <xsl:with-param name="_searchpattern" select="$_patterns/pattern[$_counter+1]/search/text()"/>
+                                    <xsl:with-param name="_replacepattern" select="$_patterns/pattern[$_counter+1]/replace/text()"/>
+                                    <xsl:with-param name="_pattern_ancestor" select="$_patterns/pattern[$_counter+1]/@ancestor"/>
+                                    <xsl:with-param name="_pattern_language" select="$_patterns/pattern[$_counter+1]/@xml:lang"/>
+                                    <xsl:with-param name="_counter" select="$_counter+1"/>
+                                </xsl:call-template>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <!-- Fall 3: Kein @ancestor, aber @xml:lang gegeben -->
+            <xsl:when test="$_pattern_ancestor = '' and $_pattern_language != ''">
+                <xsl:choose>
+                    <xsl:when test="ancestor-or-self::*[@xml:lang][1]/@xml:lang = $_pattern_language">
+                        <xsl:variable name="_content">
+                            <xsl:value-of select="replace($_content, $_searchpattern, $_replacepattern)"/>
+                        </xsl:variable>
+                        
+                        <!-- Rekursiver Aufruf -->
+                        
+                        <xsl:choose>
+                            <!-- Exit rule -->
+                            <xsl:when test="$_counter = count($_patterns/pattern)">
+                                <xsl:value-of select="$_content"/>
+                            </xsl:when>
+                            <!-- Process rule -->
+                            <xsl:otherwise>
+                                <xsl:call-template name="search-and-replace">
+                                    <xsl:with-param name="_content" select="$_content"/>
+                                    <xsl:with-param name="_searchpattern" select="$_patterns/pattern[$_counter+1]/search/text()"/>
+                                    <xsl:with-param name="_replacepattern" select="$_patterns/pattern[$_counter+1]/replace/text()"/>
+                                    <xsl:with-param name="_pattern_ancestor" select="$_patterns/pattern[$_counter+1]/@ancestor"/>
+                                    <xsl:with-param name="_pattern_language" select="$_patterns/pattern[$_counter+1]/@xml:lang"/>
+                                    <xsl:with-param name="_counter" select="$_counter+1"/>
+                                </xsl:call-template>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:variable name="_content" select="$_content"/>
+                        
+                        <!-- Rekursiver Aufruf -->
+                        
+                        <xsl:choose>
+                            <!-- Exit rule -->
+                            <xsl:when test="$_counter = count($_patterns/pattern)">
+                                <xsl:value-of select="$_content"/>
+                            </xsl:when>
+                            <!-- Process rule -->
+                            <xsl:otherwise>
+                                <xsl:call-template name="search-and-replace">
+                                    <xsl:with-param name="_content" select="$_content"/>
+                                    <xsl:with-param name="_searchpattern" select="$_patterns/pattern[$_counter+1]/search/text()"/>
+                                    <xsl:with-param name="_replacepattern" select="$_patterns/pattern[$_counter+1]/replace/text()"/>
+                                    <xsl:with-param name="_pattern_ancestor" select="$_patterns/pattern[$_counter+1]/@ancestor"/>
+                                    <xsl:with-param name="_pattern_language" select="$_patterns/pattern[$_counter+1]/@xml:lang"/>
+                                    <xsl:with-param name="_counter" select="$_counter+1"/>
+                                </xsl:call-template>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <!-- Fall 4: Sowohl @ancestor als auch @xml:lang sind gegeben -->
+            <xsl:when test="$_pattern_ancestor != '' and $_pattern_language != ''">
+                <xsl:choose>
+                    <xsl:when test="ancestor-or-self::*/name() = $_pattern_ancestor and ancestor-or-self::*[@xml:lang][1]/@xml:lang = $_pattern_language">
+                        <xsl:variable name="_content">
+                            <xsl:value-of select="replace($_content, $_searchpattern, $_replacepattern)"/>
+                        </xsl:variable>
+                        
+                        <!-- Rekursiver Aufruf -->
+                        
+                        <xsl:choose>
+                            <!-- Exit rule -->
+                            <xsl:when test="$_counter = count($_patterns/pattern)">
+                                <xsl:value-of select="$_content"/>
+                            </xsl:when>
+                            <!-- Process rule -->
+                            <xsl:otherwise>
+                                <xsl:call-template name="search-and-replace">
+                                    <xsl:with-param name="_content" select="$_content"/>
+                                    <xsl:with-param name="_searchpattern" select="$_patterns/pattern[$_counter+1]/search/text()"/>
+                                    <xsl:with-param name="_replacepattern" select="$_patterns/pattern[$_counter+1]/replace/text()"/>
+                                    <xsl:with-param name="_pattern_ancestor" select="$_patterns/pattern[$_counter+1]/@ancestor"/>
+                                    <xsl:with-param name="_pattern_language" select="$_patterns/pattern[$_counter+1]/@xml:lang"/>
+                                    <xsl:with-param name="_counter" select="$_counter+1"/>
+                                </xsl:call-template>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:variable name="_content" select="$_content"/>
+                        
+                        <!-- Rekursiver Aufruf -->
+                        
+                        <xsl:choose>
+                            <!-- Exit rule -->
+                            <xsl:when test="$_counter = count($_patterns/pattern)">
+                                <xsl:value-of select="$_content"/>
+                            </xsl:when>
+                            <!-- Process rule -->
+                            <xsl:otherwise>
+                                <xsl:call-template name="search-and-replace">
+                                    <xsl:with-param name="_content" select="$_content"/>
+                                    <xsl:with-param name="_searchpattern" select="$_patterns/pattern[$_counter+1]/search/text()"/>
+                                    <xsl:with-param name="_replacepattern" select="$_patterns/pattern[$_counter+1]/replace/text()"/>
+                                    <xsl:with-param name="_pattern_ancestor" select="$_patterns/pattern[$_counter+1]/@ancestor"/>
+                                    <xsl:with-param name="_pattern_language" select="$_patterns/pattern[$_counter+1]/@xml:lang"/>
+                                    <xsl:with-param name="_counter" select="$_counter+1"/>
+                                </xsl:call-template>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:variable name="_content" select="$_content"/>
+                
+                <!-- Rekursiver Aufruf -->
+                
+                <xsl:choose>
+                    <!-- Exit rule -->
+                    <xsl:when test="$_counter = count($_patterns/pattern)">
+                        <xsl:value-of select="$_content"/>
+                    </xsl:when>
+                    <!-- Process rule -->
+                    <xsl:otherwise>
+                        <xsl:call-template name="search-and-replace">
+                            <xsl:with-param name="_content" select="$_content"/>
+                            <xsl:with-param name="_searchpattern" select="$_patterns/pattern[$_counter+1]/search/text()"/>
+                            <xsl:with-param name="_replacepattern" select="$_patterns/pattern[$_counter+1]/replace/text()"/>
+                            <xsl:with-param name="_pattern_ancestor" select="$_patterns/pattern[$_counter+1]/@ancestor"/>
+                            <xsl:with-param name="_pattern_language" select="$_patterns/pattern[$_counter+1]/@xml:lang"/>
+                            <xsl:with-param name="_counter" select="$_counter+1"/>
+                        </xsl:call-template>
+                    </xsl:otherwise>
+                </xsl:choose>
+                
+            </xsl:otherwise>
+        </xsl:choose>
+        
+    </xsl:template>
+    
+    <xsl:template name="contributor_names">
+        <xsl:param name="_contrib-type"/>
+        <xsl:param name="_xpath-expression"/>
+        <xsl:for-each select="($_xpath-expression)/contrib[@contrib-type=$_contrib-type]">
+            <xsl:if test="position()>1">
+                <xsl:text>, </xsl:text>
+            </xsl:if>
+            <xsl:value-of select="name/given-names"/>
+            <xsl:text> </xsl:text>
+            <xsl:value-of select="name/surname"/>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <!-- Table of Contents -->
+    
+    <xsl:template name="table-of-contents">
+        
+        <fo:page-sequence master-reference="complex_page_sequence" force-page-count="even">
+            
+            <!-- Page number format -->
+            <xsl:attribute name="format">
+                <xsl:choose>
+                    <xsl:when test="/book/@book-type='monograph'">
+                        <xsl:value-of select="$_front-matterMonographPagination"/>
+                    </xsl:when>
+                    <xsl:when test="/book/@book-type='proceedings'">
+                        <xsl:value-of select="$_front-matterProceedingsPagination"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>i</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+            
+            <!-- Multivolume output -->
+            <xsl:if test="$formatter='ah'">
+                <xsl:attribute name="axf:output-volume-break">true</xsl:attribute>
+            </xsl:if>
+
+            <!-- Footnote separator line -->
+            <xsl:call-template name="footnote_separator_line"/>
+            
+            <!-- Static content -->
+            <xsl:call-template name="static_content"/>
+            
+            <!-- Text flow -->
+            <fo:flow flow-name="xsl-region-body">
+                
+                <fo:marker marker-class-name="chapter-title">
+                    <xsl:choose>
+                        <xsl:when test="$_localization/localization-group[@name='table-of-contents']/localization-item[@xml:lang=$_bookLanguage]">
+                            <xsl:value-of select="$_localization/localization-group[@name='table-of-contents']/localization-item[@xml:lang=$_bookLanguage]"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:text>Table of Contents</xsl:text>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </fo:marker>
+                
+                <fo:marker marker-class-name="heading-1">
+                    <xsl:choose>
+                        <xsl:when test="$_localization/localization-group[@name='table-of-contents']/localization-item[@xml:lang=$_bookLanguage]">
+                            <xsl:value-of select="$_localization/localization-group[@name='table-of-contents']/localization-item[@xml:lang=$_bookLanguage]"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:text>Table of Contents</xsl:text>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </fo:marker>
+                
+                <fo:marker marker-class-name="authors">
+                    <xsl:choose>
+                        <xsl:when test="$_localization/localization-group[@name='table-of-contents']/localization-item[@xml:lang=$_bookLanguage]">
+                            <xsl:value-of select="$_localization/localization-group[@name='table-of-contents']/localization-item[@xml:lang=$_bookLanguage]"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:text>Table of Contents</xsl:text>
+                        </xsl:otherwise>
+                    </xsl:choose>
+               </fo:marker> 
+                      
+                <xsl:element name="fo:block-container" use-attribute-sets="chapter_title_margins">
+                    <xsl:element name="fo:block" use-attribute-sets="chapter_heading">
+                        <!-- ID -->
+                        <xsl:attribute name="id">ToC</xsl:attribute>
+                        
+                        <!-- Heading -->
+                        <xsl:choose>
+                            <xsl:when test="$_localization/localization-group[@name='table-of-contents']/localization-item[@xml:lang=$_bookLanguage]">
+                                <xsl:value-of select="$_localization/localization-group[@name='table-of-contents']/localization-item[@xml:lang=$_bookLanguage]"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>Table of Contents</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:element>
+                </xsl:element>
+            
+                <!-- ToC block -->
+                
+                <xsl:element name="fo:list-block">
+                
+                    <!-- Front matter -->
+                    <xsl:apply-templates select="/book/front-matter" mode="ToC"/>
+                
+                    <!-- Text -->
+                    <xsl:apply-templates select="/book/book-body" mode="ToC"/>
+                
+                    <!-- Back matter -->
+                    <xsl:apply-templates select="/book/book-back" mode="ToC"/>
+                
+                </xsl:element>
+                
+            </fo:flow>
+            
+        </fo:page-sequence>
+        
+    </xsl:template>
+
+    <xsl:template match="book-app | book-app-group | book-part | dedication | foreword | front-matter-part | preface" mode="ToC">
+
+        <xsl:choose>
+            <xsl:when test="book-part-meta/title-group">
+                
+                <xsl:element name="fo:list-item">
+                    <xsl:choose>
+                        <!-- Insert Spaces before and after parts -->
+                        <xsl:when test="self::book-part and @book-part-type='part'">
+                            <xsl:attribute name="space-before" select="$_regularLineHeight"/>
+                            <xsl:attribute name="space-after" select="$_regularLineHeight"/>
+                        </xsl:when>
+                        <!-- Insert a space after the front matter -->
+                        <xsl:when test="parent::book-body and not(preceding-sibling::*) and parent::book-body[preceding-sibling::front-matter]">
+                            <xsl:attribute name="space-before" select="$_regularLineHeight"/>
+                        </xsl:when>
+                        <!-- Insert a space after the text body -->
+                        <xsl:when test="parent::book-back and not(preceding-sibling::*) and (parent::book-back[preceding-sibling::front-matter] or parent::book-back[preceding-sibling::book-body])">
+                            <xsl:attribute name="space-before" select="$_regularLineHeight"/>
+                        </xsl:when>
+                    </xsl:choose>
+                    
+                    <xsl:element name="fo:list-item-label">
+                            <!--<xsl:attribute name="end-indent">label-end()</xsl:attribute>-->
+                        <xsl:choose>
+                            <xsl:when test="book-part-meta/title-group/label and not(contains(book-part-meta/title-group/label,' '))">
+                                <xsl:attribute name="end-indent">label-end()</xsl:attribute>
+                                <xsl:element name="fo:block">
+                                    <xsl:value-of select="book-part-meta/title-group/label"/>
+                                </xsl:element>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <fo:block/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:element>
+                    
+                    <xsl:element name="fo:list-item-body">
+                            <!-- <xsl:attribute name="start-indent">body-start()</xsl:attribute> -->
+                            <xsl:if test="book-part-meta/title-group/label and not(contains(book-part-meta/title-group/label,' '))">
+                                <xsl:attribute name="start-indent">body-start()</xsl:attribute>
+                            </xsl:if>
+                        
+                            <fo:block>
+                                <xsl:attribute name="text-align">left</xsl:attribute>
+                                <xsl:attribute name="text-align-last">justify</xsl:attribute>
+                                <xsl:attribute name="end-indent">1.5cm</xsl:attribute>
+                                <xsl:attribute name="last-line-end-indent">-1.5cm</xsl:attribute>
+                                
+                                <xsl:if test="book-part-meta/title-group/label and contains(book-part-meta/title-group/label,' ')">
+                                    <xsl:value-of select="book-part-meta/title-group/label"/>
+                                    <xsl:text> </xsl:text>
+                                </xsl:if>
+                                
+                                <!-- Title -->
+                                <xsl:if test="book-part-meta/title-group/title">
+                                    <xsl:value-of select="book-part-meta/title-group/title"/>
+                                    <xsl:if test="book-part-meta/title-group/subtitle">
+                                        <xsl:text>. </xsl:text>
+                                    </xsl:if>
+                                </xsl:if>
+                                
+                                <!-- Sub title -->
+                                <xsl:if test="book-part-meta/title-group/subtitle">
+                                    <xsl:value-of select="book-part-meta/title-group/subtitle"/>
+                                </xsl:if>
+                                
+                                <!-- Leader -->
+                                <xsl:call-template name="toc_leader"/>
+                                
+                                <!-- Page number -->
+                                <xsl:call-template name="toc_page_number"/>
+                            
+                                <!-- Check for relevant subsequent parts -->
+                                <xsl:if test="child::front-matter
+                                   or child::body
+                                   or child::back
+                                   or child::sec[child::label or child::title or child::subtitle]
+                                   or child::book-app
+                                   or child::named-book-part-body[child::sec[child::label or child::title or child::subtitle] or child::def-list[child::label or child::title]]">
+                                     
+                                   <xsl:element name="fo:list-block">
+                                       <xsl:apply-templates mode="#current"/>
+                                   </xsl:element>
+                                </xsl:if>
+                            </fo:block>
+                    </xsl:element>
+                    
+                </xsl:element>
+                
+            </xsl:when>
+            
+            <xsl:otherwise>
+                <!-- Check for relevant subsequent parts -->
+                <xsl:if test="child::front-matter
+                    or child::body
+                    or child::back
+                    or child::sec[child::label or child::title or child::subtitle]
+                    or child::book-app
+                    or child::named-book-part-body[child::sec[child::label or child::title or child::subtitle] or child::def-list[child::label or child::title]]">
+                    
+                    <xsl:element name="fo:list-block">
+                        <xsl:apply-templates mode="#current"/>
+                    </xsl:element>
+                </xsl:if>
+            </xsl:otherwise>
+
+        </xsl:choose>
+
+    </xsl:template>
+
+    <xsl:template match="ack | app | app-group | bio | def-list | fn-group | glossary | index-title-group | notes | ref-list | sec | toc-title-group" mode="ToC">
+
+        <xsl:if test="(self::fn-group and not($_footnote_handling='footnotes')) or (not(self::fn-group) and (label or title or subtitle))">
+
+          <xsl:element name="fo:list-item">
+              <xsl:choose>
+                  <!-- Insert Spaces before and after parts -->
+                  <xsl:when test="self::book-part and @book-part-type='part'">
+                      <xsl:attribute name="space-before" select="$_regularLineHeight"/>
+                      <xsl:attribute name="space-after" select="$_regularLineHeight"/>
+                  </xsl:when>
+                  <xsl:when test="parent::book-body and not(preceding-sibling::*) and parent::book-body[preceding-sibling::front-matter]">
+                      <xsl:attribute name="space-before" select="$_regularLineHeight"/>
+                  </xsl:when>
+                  <!-- Insert a space after the text body -->
+                  <xsl:when test="parent::book-back and not(preceding-sibling::*) and (parent::book-back[preceding-sibling::front-matter] or parent::book-back[preceding-sibling::book-body])">
+                      <xsl:attribute name="space-before" select="$_regularLineHeight"/>
+                  </xsl:when>
+              </xsl:choose>
+              
+              <xsl:element name="fo:list-item-label">
+                  <!-- <xsl:attribute name="end-indent">label-end()</xsl:attribute> -->
+                 <xsl:choose>   
+                      <xsl:when test="label and not(contains(label,' '))">
+                          <xsl:attribute name="end-indent">label-end()</xsl:attribute>
+                          <xsl:element name="fo:block">
+                            <xsl:value-of select="label"/>
+                          </xsl:element>
+                      </xsl:when>
+                    <xsl:otherwise>
+                        <fo:block/>
+                    </xsl:otherwise>
+                 </xsl:choose>
+              </xsl:element>
+              
+              <xsl:element name="fo:list-item-body">
+                  <!-- <xsl:attribute name="start-indent">body-start()</xsl:attribute> -->
+                  <xsl:if test="label and not(contains(label,' '))">
+                      <xsl:attribute name="start-indent">body-start()</xsl:attribute>
+                  </xsl:if>
+                  <xsl:element name="fo:block">
+                      <xsl:attribute name="text-align">left</xsl:attribute>
+                      <xsl:attribute name="text-align-last">justify</xsl:attribute>
+                      <xsl:attribute name="end-indent">1.5cm</xsl:attribute>
+                      <xsl:attribute name="last-line-end-indent">-1.5cm</xsl:attribute>
+
+                      <xsl:if test="label and contains(label,' ')">
+                          <xsl:apply-templates select="label" mode="#current"/>
+                          <xsl:text> </xsl:text>
+                      </xsl:if>
+                      
+                      <!-- Title -->
+                      <xsl:if test="title">
+                          <xsl:value-of select="title"/>
+                          <xsl:if test="subtitle">
+                              <xsl:text>. </xsl:text>
+                          </xsl:if>
+                      </xsl:if>
+                      
+                      <!-- Sub title -->
+                      <xsl:if test="subtitle">
+                          <xsl:value-of select="subtitle"/>
+                      </xsl:if>
+                      
+                      <!-- Leader -->
+                      <xsl:call-template name="toc_leader"/>
+                      
+                      <!-- Page number -->
+                      <xsl:call-template name="toc_page_number"/>
+                  </xsl:element>
+                  
+                  <!-- Check for relevant subsequent parts -->
+                  <xsl:if test="child::notes[child::label or child::title or child::subtitle]
+                      or child::ref-list[child::label or child::title or child::subtitle]
+                      or child::sec[child::label or child::title or child::subtitle]
+                      or child::def-list[child::label or child::title]
+                      or child::glossary[child::label or child::title or child::subtitle]">
+                      
+                      <xsl:element name="fo:list-block">
+                          <xsl:apply-templates mode="#current"/>
+                      </xsl:element>
+                  </xsl:if>
+                  
+              </xsl:element>
+              
+          </xsl:element>
+            
+        </xsl:if>
+
+    </xsl:template>
+
+    <xsl:template name="toc_leader">
+        <xsl:text>&#160;</xsl:text>
+        <fo:leader leader-pattern="dots"/>
+        <xsl:text>&#160;</xsl:text>
+    </xsl:template>
+
+    <xsl:template name="toc_page_number">
+        <xsl:element name="fo:page-number-citation">
+            <xsl:attribute name="ref-id">
+                 <xsl:value-of select="@id"/>
+            </xsl:attribute>
+        </xsl:element>
+    </xsl:template>
+
+    <xsl:template match="text()" mode="ToC"/>
+    
+    <xsl:template match="*" mode="ToC">
+        <xsl:apply-templates mode="#current"/>        
+    </xsl:template>
+    
+    <!-- PDF Bookmarks -->
+    
+    <xsl:template name="pdf_bookmarks">
+        <xsl:if test="$medium='interactive' and $_pdf_bookmarks='yes'">
+
+            <fo:bookmark-tree>
+            
+                <!-- Front cover and front cover verso page -->
+                
+                    <!-- [...] -->
+                
+                <!-- Front matter -->
+            
+                    <!-- Prelims -->
+                    <xsl:element name="fo:bookmark">
+                        <xsl:attribute name="internal-destination">prelims</xsl:attribute>
+                        <fo:bookmark-title>
+                            <xsl:choose>
+                                <xsl:when test="$_localization/localization-group[@name='preliminaries']/localization-item[@xml:lang=$_bookLanguage]">
+                                    <xsl:value-of select="$_localization/localization-group[@name='preliminaries']/localization-item[@xml:lang=$_bookLanguage]"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>Preliminaries</xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </fo:bookmark-title>
+                    </xsl:element>
+                    
+                    <!-- Auto generated divisions:
+                            - Outline / Inhaltsübersicht
+                            - Table of Contents
+                            - List of Figures
+                            - List of Tables -->
+    
+                    <!-- Front matter divisions -->
+                
+                    <!-- Dedication and Epigraph before the ToC -->
+                    <xsl:apply-templates select="/book/front-matter/dedication | /book/front-matter/front-matter-part[@book-part-type='epigraph']" mode="pdf-bookmarks"/>
+
+                    <!-- Table of Contents -->
+                    <xsl:element name="fo:bookmark">
+                        <xsl:attribute name="internal-destination">ToC</xsl:attribute>
+                        <fo:bookmark-title>
+                            <xsl:choose>
+                                <xsl:when test="$_localization/localization-group[@name='table-of-contents']/localization-item[@xml:lang=$_bookLanguage]">
+                                    <xsl:value-of select="$_localization/localization-group[@name='table-of-contents']/localization-item[@xml:lang=$_bookLanguage]"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>Dedication</xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </fo:bookmark-title>
+                    </xsl:element>
+
+                    <!-- All other front matter parts -->
+                    <xsl:apply-templates select="/book/front-matter/node() except /book/front-matter/dedication except /book/front-matter/front-matter-part[@book-part-type='epigraph']" mode="pdf-bookmarks"/>
+
+                    <!-- Text -->
+
+                    <xsl:apply-templates select="/book/book-body/node()" mode="pdf-bookmarks"/>
+                
+                    <!-- Back matter -->
+
+                    <xsl:apply-templates select="/book/book-back/node()" mode="pdf-bookmarks"/>
+                                
+                   <!-- Back cover verso page and back cover -->
+            
+            </fo:bookmark-tree>
+            
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template match="book-app | book-app-group | book-part | dedication | foreword | front-matter-part | preface" mode="pdf-bookmarks">
         <xsl:element name="fo:bookmark">
             <xsl:attribute name="internal-destination">
-                <xsl:value-of select="@id"/>
+                <xsl:value-of select="ancestor-or-self::*[@id][1]/@id"/>
             </xsl:attribute>
-            <xsl:attribute name="starting-state">hide</xsl:attribute>
+            <xsl:choose>
+                <xsl:when test="book-part-meta/title-group">
+                    <xsl:apply-templates select="book-part-meta/title-group" mode="pdf-bookmarks_subgroup"/>                    
+                </xsl:when>
+                <xsl:when test="self::dedication">
+                    <fo:bookmark-title>
+                        <xsl:choose>
+                            <xsl:when test="$_localization/localization-group[@name='dedication']/localization-item[@xml:lang=$_bookLanguage]">
+                                <xsl:value-of select="$_localization/localization-group[@name='dedication']/localization-item[@xml:lang=$_bookLanguage]"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>Dedication</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </fo:bookmark-title>
+                </xsl:when>
+                <xsl:when test="self::front-matter-part[@book-part-type='epigraph']">
+                    <fo:bookmark-title>
+                        <xsl:choose>
+                            <xsl:when test="$_localization/localization-group[@name='epigraph']/localization-item[@xml:lang=$_bookLanguage]">
+                                <xsl:value-of select="$_localization/localization-group[@name='epigraph']/localization-item[@xml:lang=$_bookLanguage]"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>Epigraph</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </fo:bookmark-title>
+                </xsl:when>
+            </xsl:choose>
+            <xsl:apply-templates mode="#current"/>
+        </xsl:element>
+        
+    </xsl:template>
+
+    <xsl:template match="ack | app | app-group | bio | def-list | fn-group | glossary | index-title-group | notes | ref-list | sec | toc-title-group" mode="pdf-bookmarks">
+        <xsl:choose>
+            <xsl:when test="label or title or subtitle">
+                <xsl:if test="(self::fn-group and $_footnote_handling='book-back-matter') or not(self::fn-group)">
+                    <xsl:element name="fo:bookmark">
+                        <xsl:attribute name="internal-destination">
+                            <xsl:value-of select="ancestor-or-self::*[@id][1]/@id"/>
+                        </xsl:attribute>
+                        <xsl:call-template name="pdf-bookmark-title"/>
+                        <xsl:apply-templates mode="#current"/>
+                    </xsl:element>
+                </xsl:if>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates mode="#current"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template match="title-group" mode="pdf-bookmarks_subgroup">
+        <xsl:call-template name="pdf-bookmark-title"/>
+    </xsl:template>
+
+    <xsl:template name="pdf-bookmark-title">
+        <xsl:if test="label or title or subtitle">
             <fo:bookmark-title>
                 <xsl:if test="label">
                     <xsl:value-of select="label"/>
-                    <xsl:text>. </xsl:text>
                 </xsl:if>
-                <xsl:value-of select="title"/>
+                <xsl:if test="title">
+                    <xsl:if test="label">
+                        <xsl:text>&#160;</xsl:text>
+                    </xsl:if>
+                    <xsl:value-of select="title"/>
+                    <xsl:if test="subtitle">
+                        <xsl:text>. </xsl:text>
+                    </xsl:if>
+                </xsl:if>
+                <xsl:if test="subtitle">
+                    <xsl:value-of select="subtitle"/>
+                </xsl:if>
             </fo:bookmark-title>
-            <xsl:apply-templates select="ref-list" mode="pdf-bookmark-tree"/>
-        </xsl:element>        
+        </xsl:if>
     </xsl:template>
 
+    <xsl:template match="*" mode="pdf-bookmarks">
+        <xsl:apply-templates mode="#current"/>        
+    </xsl:template>
+
+    <xsl:template match="text()" mode="pdf-bookmarks"/>
+    
 </xsl:stylesheet>
