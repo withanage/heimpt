@@ -1,0 +1,83 @@
+{
+  "createFull": {
+    "example": {
+      "dir": "/usr/local/web2py/applications/UBHD_OMPPortal/static/files/presses/4/monographs/177/submission/proof/",
+      "files": [
+        {
+          "177-43-80605-3-10-20180313. xml ,": {
+            "order": 1
+          }
+        },
+        {
+          "177-43-80597-3-10-20180313. xml ,": {
+            "order": 2
+          }
+        },
+        {
+          "177-43-80599-4-10-20180313. xml ,": {
+            "order": 3
+          }
+        },
+        {
+          "177-43-80606-3-10-20180313. xml ,": {
+            "order": 4
+          }
+        },
+        {
+          "177-43-80607-5-10-20180313. xml ,": {
+            "order": 5
+          }
+        },
+        {
+          "177-43-80608-6-10-20180313. xml ,": {
+            "order": 6
+          }
+        },
+        {
+          "177-43-80609-3-10-20180313. xml ,": {
+            "order": 7
+          }
+        },
+        {
+          "177-43-80610-6-10-20180313. xml ,": {
+            "order": 8
+          }
+        },
+        {
+          "177-43-80611-3-10-20180313. xml ,": {
+            "order": 9
+          }
+        },
+        {
+          "177-43-80612-4-10-20180313. xml ,": {
+            "order": 10
+          }
+        },
+        {
+          "177-43-80613-4-10-20180313. xml ,": {
+            "order": 11
+          }
+        }
+      ],
+      "fullfile": {
+        "177-42-80645-1-10-20180314.xml": {
+        }
+      },
+      "enumeration": 1,
+      "chapter-begin-reset": 0,
+      "citations-to-references": 0,
+      "references-to-citations": 0,
+      "create-automated-references": 1
+    }
+  },
+  "errors": {
+    "FILE_NOT_FOUND": " File found or non-valid xml",
+    "FILE_NOT_WRITTEN": "No file written",
+    "FILE_NO_WRITE_ACCESS": "No permission to write file in the directory"
+  },
+  "zip": {
+    "enable": 1,
+    "name-prefix": "xml-back-"
+  }
+}
+
