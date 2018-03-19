@@ -695,7 +695,7 @@ class PostProcess:
             for xref in xrefs:
                 xref.set('rid', f[f_id])
         return tr
-        return tr
+
 
 
     def set_uuid_figs(self, tr):
