@@ -684,42 +684,34 @@ class PostProcess:
         return val, range_count
 
     def set_uuid_fns(self, tr, s):
-        ''' removes name confilcts for references or footnotes'''
         f = {}
-        fns = tr.getroot().findall(
-            ''.join(['.//xref/[@ref-type="', s, '"]']))
-        for i in fns:
-            rid = ''.join(['bibd', str(uuid.uuid4().int)])
-            f[i.attrib['rid']] = rid
-            i.set('rid', rid)
-        for m in f.keys():
-            n = tr.getroot().find(''.join(['.//fn/[@id="', m, '"]']))
-            if n is not None:
-                if len(n) > 0:
-                    n.set('id', f[m])
-                else:
-                    logging.error('Element not found \t' + m)
+        fns = tr.getroot().findall('.//fn')
+        for fn in fns:
+            f_id = ''.join(['fn', str(uuid.uuid4().int)[0:20]])
+            f[fn.attrib['id']] = f_id
+            fn.set('id', f_id)
+        for f_id in f.keys():
+            xrefs = tr.getroot().findall('.//xref/[@rid="' + f_id + '"][@ref-type="fn"]')
+            for xref in xrefs:
+                xref.set('rid', f[f_id])
         return tr
+        return tr
+
 
     def set_uuid_figs(self, tr):
-        ''' removes name confilcts for references or footnotes'''
         f = {}
-        fns = tr.getroot().findall(
-            ''.join(['.//xref/[@ref-type="', "fig", '"]']))
-        for i in fns:
-            rid = ''.join(['fig', str(uuid.uuid4().int)])
-            f[i.attrib['rid']] = rid
-            i.set('rid', rid)
-        for m in f.keys():
-            n = tr.getroot().find(''.join(['.//fig/[@id="', m, '"]']))
-            if n is not None:
-                if len(n) > 0:
-                    n.set('id', f[m])
-                else:
-                    print "error,", m
-                    logging.error('Element not found \t' + m)
-
+        figs = tr.getroot().findall('.//fig')
+        for fig in figs:
+            f_id = ''.join(['fig', str(uuid.uuid4().int)])
+            f[fig.attrib['id']] = f_id
+            fig.set('id', f_id)
+        for f_id in f.keys():
+            xrefs = tr.getroot().findall('.//xref/[@rid="'+f_id+'"][@ref-type="fig"]')
+            for xref in xrefs:
+                xref.set('rid',f[f_id])
         return tr
+
+
 
     def sort_references(self, tr, parent, tag_list):
         ''' sort all the references  '''
