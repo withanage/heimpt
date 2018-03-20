@@ -37,7 +37,8 @@ numeral_map = tuple(zip(
     ('M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I')
 ))
 
-#logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG)
+
+# logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG)
 
 
 class PostProcess:
@@ -50,7 +51,8 @@ class PostProcess:
             with open(cf) as json_data_file:
                 self.config = json.load(json_data_file)
         except:
-            print 'Please define', cf
+            print
+            'Please define', cf
             sys.exit(1)
 
         self.JATS_XML_HEADER = '<article xmlns:xlink="http://www.w3.org/1999/xlink">'
@@ -61,7 +63,8 @@ class PostProcess:
         a = self.get_fig_refs_body(tr)
         b = self.get_fig_ids_body(tr)
         if len(a - b) > 0:
-            print f, a - b
+            print
+            f, a - b
         return tr
 
     def apply_transformations(self, tr, context, f, chapter, order, count):
@@ -137,7 +140,7 @@ class PostProcess:
     def create_automated_references(self, tr):
         # front
         xrefs = tr.findall('.//xref')
-        #cp = CitationParser()
+        # cp = CitationParser()
 
         # back
 
@@ -162,20 +165,25 @@ class PostProcess:
                                 except:
                                     pass
         i, j = 0, 0
-        print '\n| RefID (rid) | id |'
-        print '| --- |  --- |'
+        print
+        '\n| RefID (rid) | id |'
+        print
+        '| --- |  --- |'
         for xref in xrefs:
             if xref.attrib['ref-type'] == 'bibr':
-                if    xref.attrib['rid'].startswith('ID'):
-                    print '| {} | {} | '.format(xref.attrib['rid'],  xref.attrib['id'])
+                if xref.attrib['rid'].startswith('ID'):
+                    print
+                    '| {} | {} | '.format(xref.attrib['rid'], xref.attrib['id'])
                     i += 1
                 else:
                     j += 1
 
-        print '\n'
-        print i, 'nicht automatisiert'
-        print j, ' automatisiert'
-
+        print
+        '\n'
+        print
+        i, 'nicht automatisiert'
+        print
+        j, ' automatisiert'
 
         return tr
 
@@ -334,7 +342,8 @@ class PostProcess:
 
     def create_output(self, tree, f):
         ''' write element tree to f '''
-        print 100*'-'
+        print
+        100 * '-'
 
         if isinstance(tree, etree._ElementTree):
             try:
@@ -346,7 +355,7 @@ class PostProcess:
                     pretty_print=True,
                     xml_declaration=True,
                     encoding='UTF-8')
-                #with open(f, 'w') as ff:
+                # with open(f, 'w') as ff:
                 #    ff.write(self.xml + self.doc_type)
                 #    ff.write(etree.tostring(tree))
                 logging.debug('File written {0}'.format(f))
@@ -386,7 +395,8 @@ class PostProcess:
         try:
             tree = etree.parse(infile)
         except:
-            print self.config['errors']['FILE_NOT_FOUND']
+            print
+            self.config['errors']['FILE_NOT_FOUND']
             sys.exit(2)
         return tree
 
@@ -580,7 +590,7 @@ class PostProcess:
             i = 0
             for key in drf:
                 for xref in tr.findall(
-                                        './/xref[@rid="' + drf[key] + '"]'):
+                        './/xref[@rid="' + drf[key] + '"]'):
                     xref.set('rid', key)
                 for ref in tr.findall('.//ref[@id="' + drf[key] + '"]'):
                     i += 1
@@ -681,37 +691,29 @@ class PostProcess:
                         val = str(count - range_count + 1)
                 else:
                     val = self.convert_int_to_roman(count).lower()
+
         return val, range_count
 
     def set_uuid_fns(self, tr, s):
-        f = {}
-        fns = tr.getroot().findall('.//fn')
-        for fn in fns:
-            f_id = ''.join(['fn', str(uuid.uuid4().int)[0:20]])
-            f[fn.attrib['id']] = f_id
-            fn.set('id', f_id)
-        for f_id in f.keys():
-            xrefs = tr.getroot().findall('.//xref/[@rid="' + f_id + '"][@ref-type="fn"]')
-            for xref in xrefs:
-                xref.set('rid', f[f_id])
+
+        for fn in tr.getroot().findall('.//fn'):
+            uid = ''.join(['fn_', str(uuid.uuid4())[0:8]])
+            fn_id = fn.attrib['id']
+            fn.set('id', uid)
+            for xref in tr.getroot().findall('.//xref/[@rid="' + fn_id + '"][@ref-type="fn"]'):
+                xref.set('rid', uid)
+
         return tr
-
-
 
     def set_uuid_figs(self, tr):
-        f = {}
-        figs = tr.getroot().findall('.//fig')
-        for fig in figs:
-            f_id = ''.join(['fig', str(uuid.uuid4().int)])
-            f[fig.attrib['id']] = f_id
-            fig.set('id', f_id)
-        for f_id in f.keys():
-            xrefs = tr.getroot().findall('.//xref/[@rid="'+f_id+'"][@ref-type="fig"]')
-            for xref in xrefs:
-                xref.set('rid',f[f_id])
+        for fig in tr.getroot().findall('.//fig'):
+            uid = ''.join(['fig_', str(uuid.uuid4())[0:8]])
+            fig_id = fig.attrib['id']
+            fig.set('id', uid)
+            for xref in tr.getroot().findall('.//xref/[@rid="' + fig_id + '"][@ref-type="fig"]'):
+                xref.set('rid', uid)
+
         return tr
-
-
 
     def sort_references(self, tr, parent, tag_list):
         ''' sort all the references  '''
@@ -738,7 +740,8 @@ def main():
         #    print f.read()
         # os.remove(LOG_FILE)
     else:
-        print 'json file not defined, please define the path'
+        print
+        'json file not defined, please define the path'
 
 
 if __name__ == "__main__":
