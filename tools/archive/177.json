@@ -64,10 +64,8 @@
         }
       },
       "enumeration": 1,
-      "chapter-begin-reset": 0,
-      "citations-to-references": 0,
-      "references-to-citations": 0,
-      "create-automated-references": 1
+      "chapter-begin-reset": 1
+
     }
   },
   "errors": {
