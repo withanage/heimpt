@@ -1,7 +1,7 @@
 {
   "createFull": {
     "example": {
-      "dir": "/home/wit/software/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/331/submission/proof/",
+      "dir": "/usr/local/web2py/applications/UBHD_OMPPortal/static/files/presses/6/monographs/331/submission/proof/",
       "files": [
         {
           "331-69-80618-1-10-20180312.xml": {
