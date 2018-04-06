@@ -30,6 +30,7 @@ This program may be used to consolidate output files, generated from a certain t
 be set as the last tool in a process chain.
 
 
+
 References
 ----------
 * Web : https://github.com/withanage/heimpt
@@ -83,8 +84,9 @@ class MPT(Debuggable):
         self.config = None
         self.all_typesetters = None
         self.script_folder = os.path.dirname(os.path.realpath(__file__))
-        if self.args['--interactive']:
-            self.run_prompt(True)
+        # TODO: interactive
+        #if self.args['--interactive']:
+        #    self.run_prompt(True)
 
     def run_prompt(self, interactive):
         """

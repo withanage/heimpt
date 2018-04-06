@@ -13,7 +13,7 @@ class OMPSettings:
             self._settings.setdefault(row.setting_name, {})[row.locale] = row.setting_value
             
     def getLocalizedValue(self, setting_name, locale, fallback="en_US"):
-        if self._settings.has_key(setting_name):
+        if setting_name in self._settings:
             value = self._settings[setting_name].get(locale, "")
             if not value:
                 value = self._settings[setting_name].get(fallback, "")
