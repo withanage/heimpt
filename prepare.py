@@ -38,15 +38,15 @@ References
 
 __author__ = "Dulip Withanage"
 
-PYTHON_IMPORT_FAILED_LXML_MODULE = u'Failed to import python lxml module'
+PYTHON_IMPORT_FAILED_LXML_MODULE = 'Failed to import python lxml module'
 
 import os
 import sys
 import uuid
-from debug import Debuggable, Debug
-from docopt import docopt
-from globals import GV
-from settingsconfiguration import Settings
+from .debug import Debuggable, Debug
+from .docopt import docopt
+from .globals import GV
+from .settingsconfiguration import Settings
 
 
 try:
@@ -211,7 +211,7 @@ class Prepare(Debuggable):
                 rid = ''.join(['bibd', uuid.uuid4().get_hex()])
                 f[i.attrib['rid']] = rid
                 i.set('rid', rid)
-            for m in f.keys():
+            for m in list(f.keys()):
                 n = self.tr.getroot().find(
                     ''.join(['.//' + s + '/[@id="', m, '"]']))
                 if n is not None:
@@ -545,9 +545,9 @@ class Prepare(Debuggable):
                 pretty_print=False,
                 xml_declaration=True
             )
-            print
+            print()
         except IOError as e:
-            print e
+            print(e)
             self.debug.print_debug(self, self.XML_FILE_NOT_CREATED)
 
     def run(self):

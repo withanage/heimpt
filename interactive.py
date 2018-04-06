@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from __future__ import print_function
+
 
 __author__ = "Dulip Withanage"
 
@@ -90,7 +90,7 @@ class Interactive(Debuggable):
 
             # Mark the option's shortcut letter for display.
             if not require and ((default is None and not numrange and first) or
-                    (isinstance(default, basestring) and
+                    (isinstance(default, str) and
                      found_letter.lower() == default.lower())):
                 # The first option is the default; mark it.
                 show_letter = '[%s]' % found_letter.upper()
@@ -210,12 +210,12 @@ class Interactive(Debuggable):
         # use print() explicitly to display prompts.
         # http://bugs.python.org/issue1927
         if prompt:
-            if isinstance(prompt, unicode):
+            if isinstance(prompt, str):
                 prompt = prompt.encode(self._encoding(), 'replace')
             print(prompt, end=' ')
 
         try:
-            resp = raw_input()
+            resp = input()
         except EOFError:
             self.debug.print_debug('stdin stream ended while input required')
 
@@ -260,10 +260,10 @@ class Interactive(Debuggable):
         highlighted intelligently to show differences; other values are
         stringified and highlighted in their entirety.
         """
-        if not isinstance(a, basestring) or not isinstance(b, basestring):
+        if not isinstance(a, str) or not isinstance(b, str):
             # Non-strings: use ordinary equality.
-            a = unicode(a)
-            b = unicode(b)
+            a = str(a)
+            b = str(b)
             if a == b:
                 return a, b
             else:
@@ -301,20 +301,20 @@ class Interactive(Debuggable):
             else:
                 assert(False)
 
-        return u''.join(a_out), u''.join(b_out)
+        return ''.join(a_out), ''.join(b_out)
 
-    def displayable_path(self, path, separator=u'; '):
+    def displayable_path(self, path, separator='; '):
         """Attempts to decode a bytestring path to a unicode object for the
         purpose of displaying it to the user. If the `path` argument is a
         list or a tuple, the elements are joined with `separator`.
         """
         if isinstance(path, (list, tuple)):
             return separator.join(self.displayable_path(p) for p in path)
-        elif isinstance(path, unicode):
+        elif isinstance(path, str):
             return path
         elif not isinstance(path, str):
             # A non-string object: just get its unicode representation.
-            return unicode(path)
+            return str(path)
 
         try:
             return path.decode(self._fsencoding(), 'ignore')
@@ -343,7 +343,7 @@ class Interactive(Debuggable):
         if self.gv.settings.get_setting('color', self) == 'True':
             return self._colordiff(a, b, highlight)
         else:
-            return unicode(a), unicode(b)
+            return str(a), str(b)
 
     def print_(self, *strings):
         """Like print, but rather than raising an error when a character
@@ -351,19 +351,19 @@ class Interactive(Debuggable):
         replaces it.
         """
         if strings:
-            if isinstance(strings[0], unicode):
-                txt = u' '.join(strings)
+            if isinstance(strings[0], str):
+                txt = ' '.join(strings)
             else:
                 txt = ' '.join(strings)
         else:
-            txt = u''
-        if isinstance(txt, unicode):
+            txt = ''
+        if isinstance(txt, str):
             txt = txt.encode(self._encoding(), 'replace')
         print(txt)
 
     def color_diff_suffix(self, a, b, highlight='red'):
         """Colorize the differing suffix between two strings."""
-        a, b = unicode(a), unicode(b)
+        a, b = str(a), str(b)
         if not self.gv.settings.get_setting('color', self) == 'True':
             return a, b
 
@@ -385,13 +385,13 @@ class Interactive(Debuggable):
                b[:first_diff] + self.colorize(highlight, b[first_diff:])
 
     def choose_candidate(self, candidates, manipulate, opts, item=None, itemcount=None):
-            self.print_(u'Candidates:')
+            self.print_('Candidates:')
 
             for i, match in enumerate(candidates):
                 # Index, metadata, and distance.
                 line = [
-                    u'{0}.'.format(i + 1),
-                    u'{0}'.format(manipulate.get_stripped_text(match.reference_to_link)
+                    '{0}.'.format(i + 1),
+                    '{0}'.format(manipulate.get_stripped_text(match.reference_to_link)
                     )
                 ]
 
