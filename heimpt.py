@@ -15,21 +15,19 @@ Usage:
 General Options:
     --interactive      Enable step-by-step interactive mode
     -d --debug         Enable debug output
-    -h --help
+    -h --help          Display help and quit
 
-Import Options:
+import omp Options:
     -t --template=<template_file>
     -a --all-submissions          Import all submissions of any configured presses
-
-Available <module> are:
-    omp  Import configuration and project files from an OMP database
-    ojs  Import configuration and project files from an OJS database
 
 Example
 --------
 
 python $BUILD_DIR/static/tools/heimpt.py $BUILD_DIR/static/tools/configurations/example.json
 python $BUILD_DIR/static/tools/heimpt.py import omp 48
+python $BUILD_DIR/static/tools/heimpt.py import omp -a
+
 Notes
 -------
 This program may be used to consolidate output files, generated from a certain tool.  But a consolidation tool should
