@@ -10,20 +10,24 @@ generate the output.
 
 Usage:
     heimpt.py <config_file> [options]
-    heimpt.py [options] <module_command> <modules> [<args>...]
+    heimpt.py import omp [-t <template_file>] (<submission_id> ... | -a)
 
-Options:
-    --interactive       Enable step-by-step interactive mode
-    -d, --debug         Enable debug output
+General Options:
+    --interactive      Enable step-by-step interactive mode
+    -d --debug         Enable debug output
+    -h --help          Display help and quit
 
-Available module commands are:
-    import  Import files and metadata and write project configuration via specified import modules, e.g. "omp" or "ojs"
+import omp Options:
+    -t --template=<template_file>
+    -a --all-submissions          Import all submissions of any configured presses
 
 Example
 --------
 
 python $BUILD_DIR/static/tools/heimpt.py $BUILD_DIR/static/tools/configurations/example.json
 python $BUILD_DIR/static/tools/heimpt.py import omp 48
+python $BUILD_DIR/static/tools/heimpt.py import omp -a
+
 Notes
 -------
 This program may be used to consolidate output files, generated from a certain tool.  But a consolidation tool should
@@ -125,7 +129,7 @@ class MPT(Debuggable):
           A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
           elements.
         """
-        return docopt(__doc__, version='heiMPT 0.0.1', options_first=True)
+        return docopt(__doc__, version='heiMPT 0.0.1')
 
 
     def get_module_name(self):
@@ -714,10 +718,11 @@ class MPT(Debuggable):
 
         """
         # Run import modules
-        if self.args.get('<module_command>') == 'import':
+        if self.args.get('import'):
             sys.path.insert(0, os.path.join(self.script_folder, 'plugins', 'import'))
             import ImportInterface
-            for m in self.args.get('<modules>').split(','):
+            if self.args.get('omp'):
+                m = "omp"
                 plugin_package = __import__(m, fromlist=['*'])
                 plugin_module = getattr(plugin_package, m)
                 # Find class inheriting form Import abstract class in the module
@@ -728,10 +733,9 @@ class MPT(Debuggable):
                             and candidate is not ImportInterface.Import:
                         plugin_class = candidate
                         print(("Found import plugin", name, plugin_class))
-                        plugin = plugin_class()
-                        argv = [self.args['<module_command>'], m] + self.args['<args>']
-                        self.debug.print_console(self, str(argv))
-                        plugin.run(docopt(plugin_module.__doc__, argv=argv), {'base-path': self.script_folder})
+                        plugin = plugin_class()                        
+                        self.debug.print_console(self, str(self.args))
+                        plugin.run(self.args, {'base-path': self.script_folder})
 
                 # try:
                 #    plugin_module = __import__(m)
@@ -740,7 +744,7 @@ class MPT(Debuggable):
                 #    print('{} {}: {}'.format(m, 'method  import failed', e))
                 #    sys.exit(0)
         else:
-            self.debug.fatal_error(self, "Unsupported module command: " + self.args.get('<module_command>'))
+            self.debug.fatal_error(self, "Unsupported arguments: " + self.args)
         return
 
     def check_applications(self):
@@ -777,7 +781,7 @@ def main():
 
     """
     pi = MPT()
-    if pi.args['<module_command>']:
+    if pi.args['import']:
         pi.run_modules()
 
     else:

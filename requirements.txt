@@ -4,3 +4,4 @@ lxml
 termcolor
 sh
 mysql-connector-python-rf
+docopt

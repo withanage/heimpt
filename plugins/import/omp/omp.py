@@ -49,7 +49,7 @@ def get_omp_filename(submission_file, revision=None, with_extension=True):
     Based on pkp-lib/classes/submission/SubmissionFile.inc.php#_generateFilename
     :param revision: If specified will be used as revision part in filename
     :param submission_file: Row object of submission_file Table
-    :return: unique filename according to _generateFilename 
+    :return: unique filename according to _generateFilename
     """
     if not revision:
         revision = submission_file.revision
@@ -60,8 +60,7 @@ def get_omp_filename(submission_file, revision=None, with_extension=True):
                          date_uploaded])
     if with_extension:
         return filename + extension
-    else:
-        return filename
+    return filename
 
 
 def path_to_omp_submission_file(submission_file, press_id, files_dir):
@@ -103,8 +102,8 @@ class OMPImport(Import):
             self.settings = json.load(f)
         if settings_override:
             self.settings.update(settings_override)
-        if args.get('--project-template'):
-            self.settings['project-template'] = args.get('--project-template')
+        if args.get('--template'):
+            self.settings['project-template'] = args.get('--template')
         self.log.info('Loaded settings: %s', self.settings)
         os.chdir(self.settings['base-path'])
         print(('Changed working directory to: {}'.format(self.settings['base-path'])))
@@ -278,6 +277,7 @@ class OMPImport(Import):
              & (sf.file_type.belongs(file_types))
              & (sf.file_stage == file_stage)
              )
+        self.log.debug("query %s", q)
         return not self.db(q).isempty()
 
     def get_files_from_db(self, submission_id, genre_id):
