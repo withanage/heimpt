@@ -30,55 +30,56 @@ class GV(object):
 
 
         #application paths
-        self.apps = {'fop':u'fop/fop/fop',
-                     'saxon': u'tools/saxon-he/saxon9he.jar',
-                     'ah':u'/usr/AHFormatterV65_64/run.sh',
-                     'xep':u'/usr/local/xep/bin/xep/xep'
+        self.apps = {'fop':'fop/fop/fop',
+                     'saxon': 'tools/saxon-he/saxon9he.jar',
+                     'ah':'/usr/AHFormatterV61_64/run.sh',
+                     'xep':'/usr/local/xep/bin/xep/xep'
+
                      }
 
 
         # projects
-        self.PROJECT_INPUT_FILE_JSON_IS_NOT_VALID = u'project input file json is not valid'
-        self.PROJECT_INPUT_FILE_TYPE_IS_NOT_SPECIFIED = u'project input file type is not specified'
-        self.PROJECT_INPUT_FILE_HAS_MORE_THAN_TWO_DOTS = u'project input file has more than two dots'
-        self.PROJECT_INPUT_FILE_DOES_NOT_EXIST = u'project input_file does not exist'
-        self.PROJECT_IS_NOT_ACTIVE = u'project is not active'
-        self.PROJECT_OUTPUT_FILE_IS_NOT_DEFINED = u'project output file is not defined'
-        self.PROJECT_OUTPUT_FILE_TYPE_IS_NOT_SPECIFIED = u'project output file type is not defined'
-        self.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED = u'project output file was not created'
-        self.PROJECT_TYPESETTER_IS_NOT_AVAILABLE = u'project typesetter is not available'
-        self.PROJECT_TYPESETTER_IS_NOT_SPECIFIED = u'project typesetter is not specified'
-        self.PROJECT_TYPESETTER_NAME_IS_NOT_SPECIFIED = u'project typesetter name is not specified'
-        self.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED = u'project typesetter varaible is not specified'
-        self.PROJECT_TYPESETTERS_ARE_NOT_SPECIFIED = u'project typesetters are not specified'
-        self.PROJECTS_VAR_IS_NOT_SPECIFIED = u'project variable is not  specified'
-        self.PROJECT_TYPESETTER_PROCESS_METHOD_NOT_SPECIFIED=u'project typesetter process method not specified'
-        self.PROJECTS_TYPESETTER_RUNS_WITH_NO_ARGUMENTS = u'projects typesetter runs with no arguments'
+        self.PROJECT_INPUT_FILE_JSON_IS_NOT_VALID = 'project input file json is not valid'
+        self.PROJECT_INPUT_FILE_TYPE_IS_NOT_SPECIFIED = 'project input file type is not specified'
+        self.PROJECT_INPUT_FILE_HAS_MORE_THAN_TWO_DOTS = 'project input file has more than two dots'
+        self.PROJECT_INPUT_FILE_DOES_NOT_EXIST = 'project input_file does not exist'
+        self.PROJECT_IS_NOT_ACTIVE = 'project is not active'
+        self.PROJECT_OUTPUT_FILE_IS_NOT_DEFINED = 'project output file is not defined'
+        self.PROJECT_OUTPUT_FILE_TYPE_IS_NOT_SPECIFIED = 'project output file type is not defined'
+        self.PROJECT_OUTPUT_FILE_WAS_NOT_CREATED = 'project output file was not created'
+        self.PROJECT_TYPESETTER_IS_NOT_AVAILABLE = 'project typesetter is not available'
+        self.PROJECT_TYPESETTER_IS_NOT_SPECIFIED = 'project typesetter is not specified'
+        self.PROJECT_TYPESETTER_NAME_IS_NOT_SPECIFIED = 'project typesetter name is not specified'
+        self.PROJECT_TYPESETTER_VAR_IS_NOT_SPECIFIED = 'project typesetter varaible is not specified'
+        self.PROJECT_TYPESETTERS_ARE_NOT_SPECIFIED = 'project typesetters are not specified'
+        self.PROJECTS_VAR_IS_NOT_SPECIFIED = 'project variable is not  specified'
+        self.PROJECT_TYPESETTER_PROCESS_METHOD_NOT_SPECIFIED='project typesetter process method not specified'
+        self.PROJECTS_TYPESETTER_RUNS_WITH_NO_ARGUMENTS = 'projects typesetter runs with no arguments'
 
 
         # typesetter errors
-        self.TYPESETTER_ARGUMENTS_NOT_DEFINED = u"typesetter arguments not defined"
-        self.TYPESETTER_EXECUTABLE_VARIABLE_IS_UNDEFINED = u'typesetter executable variable is undefined'
-        self.TYPESETTER_FILE_OUTPUT_TYPE_IS_UNDEFINED = u'typesetter file output type is undefined'
-        self.TYPESETTER_METADATA_FILE_WAS_NOT_SPECIFIED = u'Metadata file wasn\'t specified '
-        self.TYPESETTER_METYPESET_RUNS_WITH_DEFAULT_METADATA_FILE = u'typesetter metypeset runs with default metadata file'
-        self.TYPESETTER_IS_NOT_SPECIFIED = u'typesetter is not specified '
-        self.TYPESETTER_PATH_IS_NOT_SPECIFIED = u'typesetter path is not specified '
-        self.TYPESETTER_BINARY_IS_UNAVAILABLE = u'typesetter binary is unavailable '
-        self.TYPESETTER_RUNS_WITH_NO_ARGUMENTS = u'typesetter runs with no arguments'
+        self.TYPESETTER_ARGUMENTS_NOT_DEFINED = "typesetter arguments not defined"
+        self.TYPESETTER_EXECUTABLE_VARIABLE_IS_UNDEFINED = 'typesetter executable variable is undefined'
+        self.TYPESETTER_FILE_OUTPUT_TYPE_IS_UNDEFINED = 'typesetter file output type is undefined'
+        self.TYPESETTER_METADATA_FILE_WAS_NOT_SPECIFIED = 'Metadata file wasn\'t specified '
+        self.TYPESETTER_METYPESET_RUNS_WITH_DEFAULT_METADATA_FILE = 'typesetter metypeset runs with default metadata file'
+        self.TYPESETTER_IS_NOT_SPECIFIED = 'typesetter is not specified '
+        self.TYPESETTER_PATH_IS_NOT_SPECIFIED = 'typesetter path is not specified '
+        self.TYPESETTER_BINARY_IS_UNAVAILABLE = 'typesetter binary is unavailable '
+        self.TYPESETTER_RUNS_WITH_NO_ARGUMENTS = 'typesetter runs with no arguments'
 
         # xml
-        self.RUNNING_FO_CONVERSION = u'running FO conversion'
-        self.RUNNING_PDF_CONVERSION = u'running PDF conversion'
-        self.XML_ELEMENT_NOT_FOUND = u'xml element not found'
-        self.XML_FILE_NOT_CREATED = u'xml file not created'
-        self.XML_INPUT_FILE_IS_NOT_FOUND = u'xml input file is not found'
-        self.XML_INPUT_FILE_IS_NOT_VALID = u'xml input file is not valid'
-        self.SAXON_IS_NOT_AVAILABLE = u'saxon is not available'
-        self.FOP_PATH_IS_NOT_AVAILABLE=u'fop path is not available'
+        self.RUNNING_FO_CONVERSION = 'running FO conversion'
+        self.RUNNING_PDF_CONVERSION = 'running PDF conversion'
+        self.XML_ELEMENT_NOT_FOUND = 'xml element not found'
+        self.XML_FILE_NOT_CREATED = 'xml file not created'
+        self.XML_INPUT_FILE_IS_NOT_FOUND = 'xml input file is not found'
+        self.XML_INPUT_FILE_IS_NOT_VALID = 'xml input file is not valid'
+        self.SAXON_IS_NOT_AVAILABLE = 'saxon is not available'
+        self.FOP_PATH_IS_NOT_AVAILABLE='fop path is not available'
 
         # WORDS
-        self.OUTPUT = u'Output'
+        self.OUTPUT = 'Output'
 
         self.debug = Debug()
         self.numeral_map = numeral_map
@@ -107,8 +108,8 @@ class GV(object):
         module.get_module_name()
 
         """
-        print(u'[FATAL ERROR] [{0}] {1}'.format(
-            module.get_module_name(), message))
+        print(('[FATAL ERROR] [{0}] {1}'.format(
+            module.get_module_name(), message)))
         sys.exit(1)
 
     def is_json(self, s):
@@ -161,7 +162,7 @@ class GV(object):
                     self.debug.print_debug(self, self.PROJECT_INPUT_FILE_JSON_IS_NOT_VALID)
                     sys.exit(1)
             except requests.exceptions.ConnectionError as ce:
-                self.debug.print_debug(self, unicode(ce.message))
+                self.debug.print_debug(self, str(ce.message))
                 sys.exit(1)
 
 
@@ -183,7 +184,7 @@ class GV(object):
                 try:
                     os.makedirs(p)
                 except OSError as o:
-                    print o
+                    print(o)
                     sys.exit(1)
         return p
 

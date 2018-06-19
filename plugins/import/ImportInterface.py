@@ -1,9 +1,7 @@
 import abc
 
 
-class Import(object):
-    __metaclass__ = abc.ABCMeta
-
+class Import(object, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def run(self):
         raise NotImplementedError(

@@ -10,24 +10,29 @@ generate the output.
 
 Usage:
     heimpt.py <config_file> [options]
-    heimpt.py [options] <module_command> <modules> [<args>...]
+    heimpt.py import omp [-t <template_file>] (<submission_id> ... | -a)
 
-Options:
-    --interactive       Enable step-by-step interactive mode
-    -d, --debug         Enable debug output
+General Options:
+    --interactive      Enable step-by-step interactive mode
+    -d --debug         Enable debug output
+    -h --help          Display help and quit
 
-Available module commands are:
-    import  Import files and metadata and write project configuration via specified import modules, e.g. "omp" or "ojs"
+import omp Options:
+    -t --template=<template_file>
+    -a --all-submissions          Import all submissions of any configured presses
 
 Example
 --------
 
 python $BUILD_DIR/static/tools/heimpt.py $BUILD_DIR/static/tools/configurations/example.json
 python $BUILD_DIR/static/tools/heimpt.py import omp 48
+python $BUILD_DIR/static/tools/heimpt.py import omp -a
+
 Notes
 -------
 This program may be used to consolidate output files, generated from a certain tool.  But a consolidation tool should
 be set as the last tool in a process chain.
+
 
 
 References
@@ -83,8 +88,9 @@ class MPT(Debuggable):
         self.config = None
         self.all_typesetters = None
         self.script_folder = os.path.dirname(os.path.realpath(__file__))
-        if self.args['--interactive']:
-            self.run_prompt(True)
+        # TODO: interactive
+        #if self.args['--interactive']:
+        #    self.run_prompt(True)
 
     def run_prompt(self, interactive):
         """
@@ -123,7 +129,7 @@ class MPT(Debuggable):
           A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
           elements.
         """
-        return docopt(__doc__, version='heiMPT 0.0.1', options_first=True)
+        return docopt(__doc__, version='heiMPT 0.0.1')
 
 
     def get_module_name(self):
@@ -171,7 +177,7 @@ class MPT(Debuggable):
 
             args_str = args_str.replace(': ', ':')
             self.debug.print_debug(
-                self, u"Merging command: file into command:file, can be a problem for some applications")
+                self, "Merging command: file into command:file, can be a problem for some applications")
         #TODO delete
         #self.debug.print_console(self, args_str)
         m = args_str.strip().split(' ')
@@ -267,7 +273,7 @@ class MPT(Debuggable):
             else:
                 args.append(arg)
         self.debug.print_debug(
-            self, u'{} {}'.format('Execute', ' '.join(args)))
+            self, '{} {}'.format('Execute', ' '.join(args)))
         return True
 
     def run_typesetter(
@@ -327,7 +333,7 @@ class MPT(Debuggable):
             f_path = os.path.join(pre_path, prefix + '.' + pre_out_type)
 
         if os.path.isfile(f_path) or p['typesetters'].get(p_id).get('expand'):
-            self.debug.print_console(self, u'\t{}:\t {} '.format('Processing', prefix))
+            self.debug.print_console(self, '\t{}:\t {} '.format('Processing', prefix))
             self.gv.log.append(prefix)
             args.append(f_path)
             self.create_output_path(p, p_id,  args, prefix, uid)
@@ -458,7 +464,7 @@ class MPT(Debuggable):
         uid = str(uuid.uuid4())
 
         project_files = collections.OrderedDict(
-            sorted((int(key), value) for key, value in p.get('files').items()))
+            sorted((int(key), value) for key, value in list(p.get('files').items())))
         if p.get('typesetters')[pre_id].get("expand"):
             f_name = self.gv.uuid
             p_path, pf_type = self.typeset_file(
@@ -511,7 +517,7 @@ class MPT(Debuggable):
         prev_out_type = ''
 
         if p.get('active'):
-            self.debug.print_console(self, u'PROJECT : ' + p.get('name'))
+            self.debug.print_console(self, 'PROJECT : ' + p.get('name'))
             self.gv.log.append(p.get("name"))
             ts = p.get('typesetters')
             if ts:
@@ -632,7 +638,7 @@ class MPT(Debuggable):
 
         if p['typesetters'][p_id].get('merge'):
             self.create_merged_file(p, p_id, project_path, t_path)
-            if len(p.get('files').items()) == f_id:
+            if len(list(p.get('files').items())) == f_id:
                 shutil.rmtree(temp_dir)
         elif p['typesetters'][p_id].get('expand'):
             for filename in os.listdir(temp_dir):
@@ -649,7 +655,7 @@ class MPT(Debuggable):
         else:
             self.debug.print_debug(
                 self, self.gv.PROJECT_TYPESETTER_PROCESS_METHOD_NOT_SPECIFIED)
-        if len(p.get('typesetters').items()) == int(p_id) and int(f_id) == len(p.get('files').items()):
+        if len(list(p.get('typesetters').items())) == int(p_id) and int(f_id) == len(list(p.get('files').items())):
             zip_path = ''.join([p.get('path'),SEP, p['name']])
             shutil.make_archive('{}/{}'.format(zip_path, p.get("name")),'zip', zip_path)
 
@@ -680,7 +686,7 @@ class MPT(Debuggable):
         t_path.append(self.gv.uuid)
         p_path = self.gv.create_dirs_recursive(project_path)
 
-        print t_path, p_path
+        print((t_path, p_path))
 
         f_path = '{}{}{}.xml'.format(p_path, SEP, self.gv.uuid)
         shutil.copy2(SEP.join(t_path), f_path)
@@ -712,10 +718,11 @@ class MPT(Debuggable):
 
         """
         # Run import modules
-        if self.args.get('<module_command>') == 'import':
+        if self.args.get('import'):
             sys.path.insert(0, os.path.join(self.script_folder, 'plugins', 'import'))
             import ImportInterface
-            for m in self.args.get('<modules>').split(','):
+            if self.args.get('omp'):
+                m = "omp"
                 plugin_package = __import__(m, fromlist=['*'])
                 plugin_module = getattr(plugin_package, m)
                 # Find class inheriting form Import abstract class in the module
@@ -725,11 +732,10 @@ class MPT(Debuggable):
                             and issubclass(candidate, ImportInterface.Import)\
                             and candidate is not ImportInterface.Import:
                         plugin_class = candidate
-                        print "Found import plugin", name, plugin_class
-                        plugin = plugin_class()
-                        argv = [self.args['<module_command>'], m] + self.args['<args>']
-                        self.debug.print_console(self, str(argv))
-                        plugin.run(docopt(plugin_module.__doc__, argv=argv), {'base-path': self.script_folder})
+                        print(("Found import plugin", name, plugin_class))
+                        plugin = plugin_class()                        
+                        self.debug.print_console(self, str(self.args))
+                        plugin.run(self.args, {'base-path': self.script_folder})
 
                 # try:
                 #    plugin_module = __import__(m)
@@ -738,7 +744,7 @@ class MPT(Debuggable):
                 #    print('{} {}: {}'.format(m, 'method  import failed', e))
                 #    sys.exit(0)
         else:
-            self.debug.fatal_error(self, "Unsupported module command: " + self.args.get('<module_command>'))
+            self.debug.fatal_error(self, "Unsupported arguments: " + self.args)
         return
 
     def check_applications(self):
@@ -747,20 +753,20 @@ class MPT(Debuggable):
 
         """
         ps = self.config.get('projects')
-        psf = filter(lambda s: s.get(u'active') == True, ps)
+        psf = [s for s in ps if s.get('active') == True]
         ts = self.config.get('typesetters')
 
-        for p in map(lambda i: ts[i]['arguments'], ts):
-            for k in filter(lambda j: j.find('--formatter') == 0, p.values()):
+        for p in [ts[i]['arguments'] for i in ts]:
+            for k in [j for j in list(p.values()) if j.find('--formatter') == 0]:
                 for l in k.split('=')[1].split(','):
                     if not self.gv.check_program(self.gv.apps.get(l.lower())):
-                        self.debug.fatal_error(self, u'{} {}'.format(self.gv.apps.get(
+                        self.debug.fatal_error(self, '{} {}'.format(self.gv.apps.get(
                             l.lower()), self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE))
                         sys.exit(1)
 
-        for p in map(lambda i: ts[i]['executable'], ts):
+        for p in [ts[i]['executable'] for i in ts]:
             if not self.gv.check_program(p):
-                self.debug.fatal_error(self, u'{} {}'.format(
+                self.debug.fatal_error(self, '{} {}'.format(
                     p, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE))
                 sys.exit(1)
 
@@ -775,7 +781,7 @@ def main():
 
     """
     pi = MPT()
-    if pi.args['<module_command>']:
+    if pi.args['import']:
         pi.run_modules()
 
     else:

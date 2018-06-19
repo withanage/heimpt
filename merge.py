@@ -32,15 +32,15 @@ References
 
 __author__ = "Dulip Withanage"
 
-PYTHON_IMPORT_FAILED_LXML_MODULE = u'Failed to import python lxml module'
+PYTHON_IMPORT_FAILED_LXML_MODULE = 'Failed to import python lxml module'
 
 import os
 import sys
 import uuid
-from debug import Debuggable, Debug
-from docopt import docopt
-from globals import GV
-from settingsconfiguration import Settings
+from .debug import Debuggable, Debug
+from .docopt import docopt
+from .globals import GV
+from .settingsconfiguration import Settings
 
 try:
     from lxml import etree
@@ -224,7 +224,7 @@ class Merge(Debuggable):
         p.append(''.join(file_name))
 
         pth = os.sep.join(p)
-        self.debug.print_debug(self, u'merging headers' + str(pth))
+        self.debug.print_debug(self, 'merging headers' + str(pth))
         return pth
 
     def get_module_name(self):
@@ -265,7 +265,7 @@ class Merge(Debuggable):
 
         if metadata:
             pth = self.create_metadata_path(metadata)
-            self.debug.print_console(self, u'merging headers' + str(pth))
+            self.debug.print_console(self, 'merging headers' + str(pth))
             if os.path.isfile(pth):
                 bp = etree.parse(pth).find('.//book-meta')
                 book.insert(0, bp)

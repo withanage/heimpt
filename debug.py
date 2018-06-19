@@ -43,9 +43,9 @@ class Debug(object):
         """
 
         if self.debug:
-            if not isinstance(message, unicode):
+            if not isinstance(message, str):
                 self.fatal_error(
-                    self, u'A non unicode string was passed to the debugger')
+                    self, 'A non unicode string was passed to the debugger')
             self.print_(module, message)
 
     def print_console(self, module, message):
@@ -64,7 +64,7 @@ class Debug(object):
         print_()
 
         """
-        print(u'[{0}] {1}'.format(colored(module.get_module_name(), 'green'), unicode(message)))
+        print(('[{0}] {1}'.format(colored(module.get_module_name(), 'green'), str(message))))
 
     def print_(self, module, message):
         """
@@ -86,7 +86,7 @@ class Debug(object):
         --------
         module.get_module_name()
         """
-        print(u'[{0}] {1}'.format(module.get_module_name(), unicode(message)))
+        print(('[{0}] {1}'.format(module.get_module_name(), str(message))))
 
     def get_module_name(self):
         """
@@ -119,5 +119,5 @@ class Debug(object):
 
         """
 
-        print(u'[{0}] {1} {2}'.format(colored(module.get_module_name(), 'red'),'[FATAL ERROR]', unicode(message)))
+        print(('[{0}] {1} {2}'.format(colored(module.get_module_name(), 'red'),'[FATAL ERROR]', str(message))))
         sys.exit(1)
