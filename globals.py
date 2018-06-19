@@ -32,7 +32,7 @@ class GV(object):
         #application paths
         self.apps = {'fop':u'fop/fop/fop',
                      'saxon': u'tools/saxon-he/saxon9he.jar',
-                     'ah':u'/usr/AHFormatterV61_64/run.sh',
+                     'ah':u'/usr/AHFormatterV65_64/run.sh',
                      'xep':u'/usr/local/xep/bin/xep/xep'
                      }
 

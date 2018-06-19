@@ -325,20 +325,17 @@ class PostProcess:
         fns = ''.join(back_fns)
         refs = ''.join(back_refs)
 
-        out = "%s%s%s<body>%s</body><back><fn-group>%s</fn-group><ref-list>%s</ref-list></back></article>" % (
-            self.xml, self.JATS_XML_HEADER, header_text, body_text, fns, refs)
+        out = "%s%s%s%s<body>%s</body><back><fn-group>%s</fn-group><ref-list>%s</ref-list></back></article>" % (
+            self.xml, self.doc_type, self.JATS_XML_HEADER, header_text, body_text, fns, refs)
         f = open(fp, 'w')
         f.write(out)
-        # logging.info('Writing file\t{0}'.format(fp))
+
         f.close()
         count = 1
         tr = self.apply_transformations(
             self.get_etree(fp), context, fullfile, False, 0, count)
         self.create_output(tr, fp)
 
-        # with open(fp, 'w') as ff:
-        #    ff.write(self.xml + self.doc_type)
-        #    ff.write(etree.tostring(tr))
 
     def create_output(self, tree, f):
         ''' write element tree to f '''
@@ -355,9 +352,6 @@ class PostProcess:
                     pretty_print=True,
                     xml_declaration=True,
                     encoding='UTF-8')
-                # with open(f, 'w') as ff:
-                #    ff.write(self.xml + self.doc_type)
-                #    ff.write(etree.tostring(tree))
                 logging.debug('File written {0}'.format(f))
 
 
@@ -464,8 +458,7 @@ class PostProcess:
         for back in tree.getroot().findall(".//back/ref-list/ref"):
             for ref in back.findall(".//mixed-citation"):
                 logging.info(
-                    "Mixed reference found", etree.tostring(
-                        back, pretty_print=True))
+                    "Mixed reference found", self.stringify(back))
         return back_refs
 
     def get_unreferenced_footnotes(self, tr):
@@ -512,16 +505,15 @@ class PostProcess:
             root = tr.getroot()
             if not header:
                 for header_text in root.findall(".//front"):
-                    header_text = ''.join(etree.tostring(
-                        header_text, pretty_print=False))
+                    header_text = ''.join(self.stringify(header_text))
                     header = True
             for sec in root.findall(".//body/sec"):
-                body_secs.append(etree.tostring(sec, pretty_print=False))
+                body_secs.append(self.stringify(sec))
             for fn in root.findall(".//back/fn-group/fn"):
-                back_fns.append(etree.tostring(fn, pretty_print=False))
+                back_fns.append(self.stringify(fn))
 
             for ref in root.findall(".//back/ref-list/ref"):
-                back_refs.append(etree.tostring(ref, pretty_print=False))
+                back_refs.append(self.stringify(ref))
 
             for sec in root.findall(".//body/sec"):
                 elem_secs.append(sec)
@@ -531,6 +523,9 @@ class PostProcess:
             order += 1
 
         return header_text, back_fns, body_secs, back_refs, elem_secs, elem_fns
+
+    def stringify(self, tree):
+        return etree.tostring(tree, pretty_print=True)
 
     def remove_all_elements_of_type(self, tree, names):
         ''' removes all the elements of a certain type in a element tree '''
@@ -599,8 +594,7 @@ class PostProcess:
 
     def remove_name_duplicates_speech(self, tr):
         ''' removes name duplication  in  speech tag '''
-        elems = tr.getroot().findall('.//speech/p')
-        for elem in elems:
+        for elem in tr.getroot().findall('.//speech/p'):
             for l in list(elem):
                 if l is not None:
                     elem.text = ""
@@ -641,25 +635,12 @@ class PostProcess:
         transform = etree.XSLT(xslt_doc)
         return transform(tree)
 
-    def set_enumeration(
-            self,
-            tr,
-            name,
-            attr,
-            value,
-            context,
-            f,
-            chapter,
-            order,
-            count):
+    def set_enumeration(self,tr,name,attr,value,context,f,chapter,order,count):
         ''' set the count id for an attribute in a tag type '''
         searchTag = './/' + name + '[@' + attr + '="' + value + '"]'
         elems = tr.getroot().findall(searchTag)
         cfg = self.config["createFull"][context]
-        if chapter:
-            cf = cfg["files"][order][f]
-        else:
-            cf = cfg['fullfile'][f]
+        cf = cfg["files"][order][f] if chapter else cfg['fullfile'][f]
 
         range_count = 1
         for elem in elems:
@@ -669,11 +650,10 @@ class PostProcess:
         return tr, count
 
     def set_numbering(self, tree, tags):
-        ''' automatic numbering of certain tags '''
+        ''' tags auto-numbering'''
         for tag in tags:
-            sh = tree.findall('.//' + tag)
             sid = 1
-            for i in sh:
+            for i in tree.findall('.//' + tag):
                 i.set('id', tag.replace('-', '') + str(sid))
                 sid += 1
         return tree
