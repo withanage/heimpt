@@ -1,6 +1,3 @@
 [submodule "tools/saxon-he"]
 	path = tools/saxon-he
 	url = https://github.com/pressbooks/saxon-he
-[submodule "tools/meTypeset"]
-	path = tools/meTypeset
-	url = https://github.com/UB-Heidelberg/meTypeset.git
