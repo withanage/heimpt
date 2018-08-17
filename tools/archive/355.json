@@ -98,7 +98,7 @@
     "FILE_NO_WRITE_ACCESS": "No permission to write file in the directory"
   },
   "zip": {
-    "enable": 1,
+    "enable": 0,
     "name-prefix": "xml-back-"
   }
 }

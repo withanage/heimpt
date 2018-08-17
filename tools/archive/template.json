@@ -1,0 +1,30 @@
+ "createFull": {
+    "example": {
+      "dir": "/usr/local/web2py/applications/heiup/static/files/presses/6/monographs/<submission_id>/submission/proof/",
+      "files": [
+        {
+          "submission-chapter-1.xml": {"order": 1 },
+          "submission-chapter-2.xml": {"order": 2 }
+        },
+         "fullfile": {
+                "fullfile.xml": {
+                }
+              },
+      
+      "enumeration": 1,
+      "chapter-begin-reset": 1,
+      "citations-to-references": 0,
+      "references-to-citations": 0,
+   }
+  },
+  "errors": {
+    "FILE_NOT_FOUND": " File found or non-valid xml",
+    "FILE_NOT_WRITTEN": "No file written",
+    "FILE_NO_WRITE_ACCESS": "No permission to write file"
+  },
+  "zip": {
+    "enable": 0,
+    "name-prefix": "xml-back-"
+  }
+}
+
