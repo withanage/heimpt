@@ -4,7 +4,7 @@
 The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-processor,  (3) an output generation engine and (4) a WYSIWYG editor.
 
 
-(1) To covert from a Microsoft Word .docx format to NLM/JATS-XML for scholarly/scientific article typesetting, we utilize meTypeset, which we developed in collaboration with Dr. Martin Eve and the Public Knowledge Project (PKP). meTypeset is an extension/wrapper of OxGarage and uses TEI as an intermediary format to facilitate interchange. meTypeset allows for intelligent size processing of input documents and section grouping algorithms. It automatically detects figure and table lists, footnotes, heading structure, bibliographies, and metadata.
+(1) To convert from a Microsoft Word .docx format to NLM/JATS-XML for scholarly/scientific article typesetting, we utilize meTypeset, which we developed in collaboration with Dr. Martin Eve and the Public Knowledge Project (PKP). meTypeset is an extension/wrapper of OxGarage and uses TEI as an intermediary format to facilitate interchange. meTypeset allows for intelligent size processing of input documents and section grouping algorithms. It automatically detects figure and table lists, footnotes, heading structure, bibliographies, and metadata.
 
 (2)  A Set of utilities to process the  XML files  and functions to manipulate the content. Some of the functions are numbering, sorting references, deleting unreferenced references etc.
 
@@ -24,7 +24,7 @@ https://withanage.github.io/heimpt
 
 ## heiMPT Installation
  
-Check if you have persmissions  to intall in the BUILD_DIR
+Check if you have permissions to install in the `BUILD_DIR`
  
  ```
  BUILD_DIR=/usr/local
@@ -44,14 +44,14 @@ Check if you have persmissions  to intall in the BUILD_DIR
 ### FO Processors 
 Only needed if you generate PDF files.
 
-* Apache FOP (free): Download from [Apache FOP processor](https://xmlgraphics.apache.org/fop/download.html) (Binary version) into  $BUILD_DIR/heimpt/tools
+* Apache FOP (free): Download from [Apache FOP processor](https://xmlgraphics.apache.org/fop/download.html) (Binary version) into `$BUILD_DIR/heimpt/tools`
   ```
   cd $BUILD_DIR/heimpt/tools
   tar -xvzf fop-2.2-bin.tar.gz;
   mv fop-2.2 fop
   chmod u+x fop/fop/fop
   ```
-  If you changed the default $BUILD_DIR in the installation step, set the path in fop.print.xml and fop.electronic.xml in tools/configurations/fop/conf/ folder.
+  If you changed the default `$BUILD_DIR` in the installation step, set the path in fop.print.xml and fop.electronic.xml in `tools/configurations/fop/conf/` folder.
 
 * Antenna- House(Commercial) : See the [distributor's](https://www.antennahouse.com) instructions
 
@@ -71,13 +71,13 @@ pip install  -U pytest pytest-xdist pytest-json
 
 ## Credits
 
-The lead developer is Dulip Withanage,  Heidelberg  University Library
+The lead developer is Dulip Withanage, Heidelberg University Library
 
 Additional contributions were made, in (alphabetical order) by:
 
 * Frank Krabbes, Heidelberg  University Library 
-* Mayumi Ohta (Jun.2014 - Feb.2015), Cluster of Excellence,  University Heidelberg
-* Katharina Wäschle (Nov.2015- Oct.2016), Heidelberg  University Library 
-* Nils Weiher, Heidelberg  University Library
+* Mayumi Ohta (Jun.2014 - Feb.2015), Cluster of Excellence, University Heidelberg
+* Katharina Wäschle (Nov.2015- Oct.2016), Heidelberg University Library 
+* Nils Weiher, Heidelberg University Library
 
 
