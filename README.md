@@ -80,4 +80,6 @@ Additional contributions were made, in (alphabetical order) by:
 * Katharina Wäschle (Nov.2015- Oct.2016), Heidelberg University Library 
 * Nils Weiher, Heidelberg University Library
 
+Software development tools
+* PyCharm Python IDE  ![](https://raw.githubusercontent.com/withanage/heimpt/master/images/pycharm_logo.png)
 
