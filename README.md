@@ -81,5 +81,6 @@ Additional contributions were made, in (alphabetical order) by:
 * Nils Weiher, Heidelberg University Library
 
 Software development tools
-* PyCharm Python IDE  ![](https://raw.githubusercontent.com/withanage/heimpt/master/images/pycharm_logo.png)
+
+  ![](https://raw.githubusercontent.com/withanage/heimpt/master/images/pycharm_logo.png) PyCharm Python IDE
 
