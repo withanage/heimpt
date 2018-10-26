@@ -24,9 +24,9 @@ import omp Options:
 Example
 --------
 
-python $BUILD_DIR/static/tools/heimpt.py $BUILD_DIR/static/tools/configurations/example.json
-python $BUILD_DIR/static/tools/heimpt.py import omp 48
-python $BUILD_DIR/static/tools/heimpt.py import omp -a
+python $BUILD_DIR/heimpt.py $BUILD_DIR/configurations/example.json
+python $BUILD_DIR/heimpt.py import omp 48
+python $BUILD_DIR/heimpt.py import omp -a
 
 Notes
 -------
@@ -52,7 +52,6 @@ import datetime
 from debug import Debuggable, Debug
 from docopt import docopt
 from globals import GV
-from interactive import Interactive
 import os
 from settingsconfiguration import Settings
 from subprocess import Popen, PIPE
@@ -83,40 +82,12 @@ class MPT(Debuggable):
 
         self.current_result = datetime.datetime.now().strftime(
             "%Y_%m_%d-%H-%M-%S-") + str(uuid.uuid4())[:4]
-        # TODO: Remove
-        #self.current_result = 'test'
         self.config = None
         self.all_typesetters = None
         self.script_folder = os.path.dirname(os.path.realpath(__file__))
-        # TODO: interactive
-        #if self.args['--interactive']:
-        #    self.run_prompt(True)
 
-    def run_prompt(self, interactive):
-        """
-        Runs the interactive modus
 
-        """
-        prompt = Interactive(self.gv)
-        opts = ('Confirm', 'Unconfirm')
-        sel = prompt.input_options(opts)
 
-    def run(self):
-        """
-        Runs the MPT  Module, which typesets all the projects defined in the json input file
-
-        Returns
-        --------
-        True: boolean
-            Returns True if all the projects are typeset
-
-        See Also
-        --------
-        typeset_all_projects
-
-        """
-        self.typeset_all_projects()
-        return True
 
     @staticmethod
     def read_command_line():
@@ -178,8 +149,6 @@ class MPT(Debuggable):
             args_str = args_str.replace(': ', ':')
             self.debug.print_debug(
                 self, "Merging command: file into command:file, can be a problem for some applications")
-        #TODO delete
-        #self.debug.print_console(self, args_str)
         m = args_str.strip().split(' ')
         process = Popen(m, stdout=PIPE)
         output, err = process.communicate()
@@ -420,7 +389,7 @@ class MPT(Debuggable):
 
             else:
                 self.debug.print_debug(
-                    self, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
+                    self, t_props.get('executable')+self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
         else:
             self.debug.print_debug(
                 self, self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
@@ -761,13 +730,13 @@ class MPT(Debuggable):
                 for l in k.split('=')[1].split(','):
                     if not self.gv.check_program(self.gv.apps.get(l.lower())):
                         self.debug.fatal_error(self, '{} {}'.format(self.gv.apps.get(
-                            l.lower()), self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE))
+                            l.lower()), self.gv.apps.get(l.lower())+self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE))
                         sys.exit(1)
 
         for p in [ts[i]['executable'] for i in ts]:
             if not self.gv.check_program(p):
                 self.debug.fatal_error(self, '{} {}'.format(
-                    p, self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE))
+                    p, self.gv.apps.get(l.lower())+self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE))
                 sys.exit(1)
 
 
@@ -787,8 +756,7 @@ def main():
     else:
         pi.config = pi.gv.read_json(pi.args['<config_file>'])
         pi.all_typesetters = pi.config.get('typesetters')
-        #pi.check_applications()
-        pi.run()
+        pi.typeset_all_projects()
 
 
 if __name__ == '__main__':
