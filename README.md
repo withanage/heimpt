@@ -82,5 +82,5 @@ Additional contributions were made, in (alphabetical order) by:
 
 Software development tools
 
-  ![](https://raw.githubusercontent.com/withanage/heimpt/master/images/pycharm_logo.png) PyCharm Python IDE
+  [![](https://raw.githubusercontent.com/withanage/heimpt/master/images/pycharm_logo.png)]( https://www.jetbrains.com/pycharm/) PyCharm Python IDE
 
