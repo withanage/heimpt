@@ -1,72 +1,75 @@
 
 
-**Heidelberg Monograph Publication Tool (heiMPT)** is a stand-alone platform, as well as a plug-in application for OMP, developed by staff of **Heidelberg University Library** in cooperation with external partners, with  fundings of  German Research Foundation ([DFG](http://www.dfg.de/)). It enables a high degree of automation in the digital publication process.
-The platform consists of 4  modules: (1) typesetting (meTypeset), (2) xml-processor,  (3) an output generation engine and (4) a WYSIWYG editor.
+Heidelberg Monograph Publication Tool (heiMPT) is a stand-alone platform, as well as a plug-in application for OMP, developed by staff of Heidelberg University Library in cooperation with external partners, with  fundings of  German Research Foundation (DFG). 
+It enables a high degree of automation in **XML-first publication processes**.
+heiMPT platform consists of independently executable modules for typesetting, xml-processing and output generation.
+A  central module provides support for project specific configuration, tool setup and API integration.
+Documentation uses **JATS** and **BITS** XML formats from National Library of Medicine, but this tool suite can be used for any publishing automation process.
+heiMPT interfaces with both Open Monograph Press **(OMP)** and Open Journal Systems **(OJS)** from Public Knowledge Project. 
+
+* heimpt.py     : main tool for module integration 
+* Typesetting   : (Input document into XML): any command-line compatible XML typesettings/conversion tool.   
+* prepare.py    : post-processing JATS XML files for print and electronic publication. Supports functions such as auto numbering, sorting references, deleting unreferenced references etc.
+* merge.py      : merges  several JATS/BITS XML Files together in a pre-defined order. 
+* disseminate.py: XML documents are converted to desired output formats such as HTML, PDF, and ePub. Stylesheets are also available for further customizations.
 
 
-(1) To convert from a Microsoft Word .docx format to NLM/JATS-XML for scholarly/scientific article typesetting, we utilize meTypeset, which we developed in collaboration with Dr. Martin Eve and the Public Knowledge Project (PKP). meTypeset is an extension/wrapper of OxGarage and uses TEI as an intermediary format to facilitate interchange. meTypeset allows for intelligent size processing of input documents and section grouping algorithms. It automatically detects figure and table lists, footnotes, heading structure, bibliographies, and metadata.
-
-(2)  A Set of utilities to process the  XML files  and functions to manipulate the content. Some of the functions are numbering, sorting references, deleting unreferenced references etc.
-
-(3) XML documents are converted to desired output formats that can then be offered to users, including HTML, PDF, and ePub.
-
-(4)  The WYSIWYG editor, provides an interactive interface to confirm the information detected by meTypeset and to generate a suitable layout for the desired output format. The editor is written in both HTML and JavaScript, and handles data in XML format, so that each monograph is efficiently standardized and can be re-used. The editor is designed in a WYSIWYG (what you see is what you get) format that enables users to work with both text and images as they envision them.
 
 ![doc2pdf Pipeline](https://raw.githubusercontent.com/withanage/heimpt/master/images/mpt.png)
 
-## Presentations
-* PKP Conference, 2017 [Paper](https://pkp.sfu.ca/pkp2017/paper/view/565) [Slides](https://pkp.sfu.ca/pkp2017/paper/download/565/402) [:movie_camera: Video](https://www.youtube.com/watch?v=yOH1DS2EUck)
 
 
 ## Documentation
 https://withanage.github.io/heimpt
 
 
-## heiMPT Installation
- 
-Check if you have permissions to install in the `BUILD_DIR`
+##  Installation
  
  ```
- BUILD_DIR=/usr/local
+ BUILD_DIR=/usr/local # or any directory
  git clone https://github.com/withanage/heimpt.git $BUILD_DIR/heimpt 
  cd $BUILD_DIR/heimpt
  git submodule update --init --recursive
  sudo pip install -r requirements.txt
- java -version 
  ```
- Optionally required
-  ```
- cd editors/metadata/
- bower install 
- 
- ```
+
+### Test your  Installation
+If your `$BUILD_DIR` differs from the previous path, change project path in `example.json`
+
+```
+python $BUILD_DIR/heimpt/heimpt.py  $BUILD_DIR/heimpt/configurations/example.json --debug
+```
 
 ### FO Processors 
 Only needed if you generate PDF files.
 
 * Apache FOP (free): Download from [Apache FOP processor](https://xmlgraphics.apache.org/fop/download.html) (Binary version) into `$BUILD_DIR/heimpt/tools`
-  ```
-  cd $BUILD_DIR/heimpt/tools
-  tar -xvzf fop-2.2-bin.tar.gz;
-  mv fop-2.2 fop
-  chmod u+x fop/fop/fop
-  ```
-  If you changed the default `$BUILD_DIR` in the installation step, set the path in fop.print.xml and fop.electronic.xml in `tools/configurations/fop/conf/` folder.
+
+```
+cd $BUILD_DIR/heimpt/tools
+tar -xvzf fop-2.2-bin.tar.gz;
+mv fop-2.2 fop
+chmod u+x fop/fop/fop
+```
+
+If you changed the default `$BUILD_DIR` in the installation step, set the path in fop.print.xml and fop.electronic.xml in `tools/configurations/fop/conf/` folder.
 
 * Antenna- House(Commercial) : See the [distributor's](https://www.antennahouse.com) instructions
-
-
-### Test your  Installation
-If your `$BUILD_DIR` differs from the previous path, change project path in `minimum_example.json`
-
-```
-python $BUILD_DIR/heimpt/heimpt.py  $BUILD_DIR/heimpt/configurations/minimum_example.json --debug
-```
 ## Tests
 ```
 pip install  -U pytest pytest-xdist pytest-json
-
 ```
+## Presentations
+* PKP Conference, 2017 [Paper](https://pkp.sfu.ca/pkp2017/paper/view/565) [Slides](https://pkp.sfu.ca/pkp2017/paper/download/565/402) [:movie_camera: Video](https://www.youtube.com/watch?v=yOH1DS2EUck)
+
+# Technology
+* [PDF rendering tools evaluation](docs/PDF-rendering-tools.md)
+* [Tools list](docs/pdf-tools.md) 
+* [Longtime archiving support](docs/PDF-longtime-archiving.md)
+* [Stylesheet-based conversion ](docs/saxon.md)
+* [Experimental: latex ->TEI-XML -> JATS](docs/latex2tei2jats.md)
+ 
+
 
 
 ## Credits
