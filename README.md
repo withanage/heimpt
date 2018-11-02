@@ -9,7 +9,7 @@ Documentation refers explicitly to **JATS** and **BITS** XML formats from Nation
 heiMPT interfaces with both Open Monograph Press **(OMP)** and Open Journal Systems **(OJS)** from Public Knowledge Project. 
 
 * **heimpt.py**     : main tool for module integration 
-* **Typesetting**   : (Input document into XML): any command-line compatible XML typesettings/conversion tool.   
+* **Typesetting**   : (Input document into XML): any command-line compatible XML typesettings/conversion tool e.g. oxgarage, pandoc 
 * **prepare.py**    : post-processing JATS XML files for print and electronic publication. Supports functions such as auto numbering, sorting references, deleting unreferenced references etc.
 * **merge.py**      : merges  several JATS/BITS XML Files together in a pre-defined order. 
 * **disseminate.py**: XML documents are converted to desired output formats such as HTML, PDF, and ePub. Stylesheets are also available for further customizations.
