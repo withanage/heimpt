@@ -50,7 +50,6 @@
 
 * :grey_exclamation: use an [OTL](http://mpdf1.com/manual/index.php?tid=502) font to display complex scripts
 
-https://github.com/withanage/mpt/blob/master/static/tests/misc/pdf/rightToLeftFonts.pdf
 
 ### Footnote placement  :heavy_multiplication_x:
 
