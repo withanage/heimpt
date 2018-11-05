@@ -5,7 +5,7 @@
 |||||
 |**Links**|
 |||||
-| PDF bookmarks | :white_check_mark:[:page_facing_up:](http://mpdf1.com/manual/index.php?tid=118) |  :white_check_mark: [:page_facing_up:](http://www.princexml.com/doc/pdf-bookmarks/) |  :white_check_mark: |  :white_check_mark: [:page_facing_up:]() |
+| PDF bookmarks | :white_check_mark:[:page_facing_up:](http://mpdf1.com/manual/index.php?tid=118) |  :white_check_mark: [:page_facing_up:](http://www.princexml.com/doc/pdf-bookmarks/) |  :white_check_mark: |  :white_check_mark: |
 | cross references |    | :white_check_mark: [:page_facing_up:](http://www.princexml.com/doc/7.1/cross-references/)   |  :white_check_mark: |  :white_check_mark: |
 |||||
 | **Foot- and endnotes** ||||
@@ -18,8 +18,8 @@
 |||||
 | **PDF versions** ||||
 |||||
-| PDF/A |  :white_check_mark: |  :white_check_mark:[:page_facing_up:](https://github.com/withanage/mpt/wiki/doc2pdf:-Reference-Excerpts#prince) |  :white_check_mark: |  :white_check_mark: |
-| PDF/X | | :white_check_mark:[:page_facing_up:](https://github.com/withanage/mpt/wiki/doc2pdf:-Reference-Excerpts#prince) | partially, PDF/X-3:2003 only | :white_check_mark: (acc. to documentation) |
+| PDF/A |  :white_check_mark: |  :white_check_mark:|  :white_check_mark: |  :white_check_mark: |
+| PDF/X | | :white_check_mark:| partially, PDF/X-3:2003 only | :white_check_mark: (acc. to documentation) |
 | PDF metadata ||:white_check_mark:[:page_facing_up:](http://www.princexml.com/doc/pdf-metadata/)|  :white_check_mark: (XMP) | :white_check_mark: (XMP) |
 |||||
 | **Columns**||||
