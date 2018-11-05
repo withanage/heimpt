@@ -3,7 +3,7 @@
 | *test* | mPDF | Prince | FOP | AHF |
 | :--- | :--- | :--- | :--- | :--- |
 |||||
-|**Links**||||
+|**Links**|
 |||||
 | PDF bookmarks | :white_check_mark:[:page_facing_up:](http://mpdf1.com/manual/index.php?tid=118) |  :white_check_mark: [:page_facing_up:](http://www.princexml.com/doc/pdf-bookmarks/) |  :white_check_mark: |  :white_check_mark: [:page_facing_up:](https://github.com/withanage/mpt/blob/master/static/tests/misc/pdf/bookmarks.ahf.pdf) |
 | cross references |    | :white_check_mark: [:page_facing_up:](http://www.princexml.com/doc/7.1/cross-references/)   |  :white_check_mark: |  :white_check_mark: |
@@ -57,27 +57,6 @@ https://github.com/withanage/mpt/blob/master/static/tests/misc/pdf/rightToLeftFo
 * neither mPDF nor Weasyprint currently support CSS footnotes
 * instead, footnotes are handled as references and placed in the back of the document
 * AHF implements additional footnote layout features that are not part of the XSL standard
-
-https://github.com/withanage/mpt/blob/master/static/tests/misc/pdf/footnotes.pdf
-
-## Habenstein Tests
-
-[src (docx, xml)](https://github.com/withanage/mpt/tree/master/static/tests/habenstein/src)
-[pdf](https://github.com/withanage/mpt/tree/master/static/tests/habenstein/pdf)
-
-### Out Of The Box
-
-* python vs PHP
-* .orig.xml vs xml
-* one .fo (Chapter 4)
-
-https://github.com/withanage/mpt/tree/master/static/tests/habenstein/pdf/html2pdfOOTB
-
-### PDF/A
-
-* full document only (references)
-
-https://github.com/withanage/mpt/blob/master/static/tests/habenstein/pdf/html2pdfA/hst.full.pdf
 
 ### Floating elements
 
