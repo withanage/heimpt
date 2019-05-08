@@ -10,6 +10,14 @@ Latex to TEI: Vorgehen
 * Dateien lokal (serv21): `/home/fit/latex2tei`
 
 
+1. Latex -> TEI XML  ```pandoc -f latex -t tei -o samplefile.xml  samplefile.tex ```
+2. TEI XML -> TEI XML  (preparing for metyepset) ```  Tool can be a XSLT stylesheet or a command line tool ```
+3.  TEI  XML -> JATS XML ```   meTypeset.py tei samplefile.xml <output_folder> [options]``` 
+
+#### [Development status](https://github.com/withanage/mpt/milestone/1)
+#### [Documentation - tei2jats](https://github.com/withanage/mpt/blob/master/static/docs/tei2jats.md) 
+
+
 ### Pandoc installation in Ubuntu 
 ```
 sudo apt-get install slack
