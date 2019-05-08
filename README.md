@@ -25,7 +25,6 @@ Documentation refers explicitly to **JATS** and **BITS** XML formats from Nation
 ## Presentations
 * [:movie_camera: Video](https://www.youtube.com/watch?v=yOH1DS2EUck)
 
-
  
 
 
