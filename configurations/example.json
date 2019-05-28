@@ -4,9 +4,8 @@
             "active": true,
             "chain": true,
             "files": {
-                "1": "01_headline.docx",
-                "2": "02_boxed_text.docx"
-
+                "1": "01_chapter.docx",
+                "2": "02_chapter.docx"
 
             },
             "name": "example_project",
@@ -65,12 +64,13 @@
     "typesetters": {
         "metypeset": {
             "arguments": {
-                "1": "docx",
-                "2": "--debug",
-                "3": "--nogit"
+                "1": "/home/wit/projects/heimpt/tools/meTypeset/bin/meTypeset.py",
+                "2": "docx",
+                "3": "--debug",
+                "4": "--nogit"
 
             },
-            "executable": "/home/wit/projects/heimpt/tools/meTypeset/bin/meTypeset.py"
+            "executable": "python3"
         },
         "pandoc": {
             "arguments": {

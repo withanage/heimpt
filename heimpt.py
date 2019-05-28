@@ -616,6 +616,7 @@ class MPT(Debuggable):
                 os.rename(os.path.join(temp_dir, filename), f_path)
             shutil.rmtree(temp_dir)
         elif p['typesetters'][p_id].get('process'):
+            if p_name.lower() == 'metypeset': t_path.append('nlm')
             t_path.append(prefix + '.' + out_type)
             p_path = self.gv.create_dirs_recursive(project_path)
             f_path = '{}{}{}.{}'.format(p_path, SEP, prefix, out_type)
