@@ -43,10 +43,10 @@ PYTHON_IMPORT_FAILED_LXML_MODULE = 'Failed to import python lxml module'
 import os
 import sys
 import uuid
-from .debug import Debuggable, Debug
-from .docopt import docopt
-from .globals import GV
-from .settingsconfiguration import Settings
+from debug import Debuggable, Debug
+from docopt import docopt
+from globals import GV
+from settingsconfiguration import Settings
 
 
 try:

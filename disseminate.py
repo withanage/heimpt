@@ -25,14 +25,14 @@ python $BUILD_DIR/static/tools/disseminate.py
 
 __author__ = "Dulip Withanage"
 
-from .debug import Debuggable, Debug
-from .globals import GV
+from debug import Debuggable, Debug
+from globals import GV
 import sys
 import os
 import inspect
-from .docopt import docopt
+from docopt import docopt
 from subprocess import Popen, PIPE
-from .settingsconfiguration import Settings
+from settingsconfiguration import Settings
 
 
 class Disseminate(Debuggable):
@@ -258,7 +258,6 @@ class Disseminate(Debuggable):
         args.append("-o:" + os.path.join(self.args.get('<path>'), file_name))
         args.append('formatter=' + formatter.lower())
         args.append('medium=' + medium.lower())
-
         return args
 
 

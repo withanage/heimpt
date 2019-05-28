@@ -655,8 +655,6 @@ class MPT(Debuggable):
         t_path.append(self.gv.uuid)
         p_path = self.gv.create_dirs_recursive(project_path)
 
-        print((t_path, p_path))
-
         f_path = '{}{}{}.xml'.format(p_path, SEP, self.gv.uuid)
         shutil.copy2(SEP.join(t_path), f_path)
         self.create_named_file(p, p_id, p_path, t_path)
@@ -754,7 +752,12 @@ def main():
         pi.run_modules()
 
     else:
-        pi.config = pi.gv.read_json(pi.args['<config_file>'])
+        try :
+            pi.config = pi.gv.read_json(pi.args['<config_file>'])
+        except:
+            print ('JSONError')
+            sys.exit(1)
+
         pi.all_typesetters = pi.config.get('typesetters')
         pi.typeset_all_projects()
 
