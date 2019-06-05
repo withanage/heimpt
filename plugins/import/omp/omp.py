@@ -248,8 +248,9 @@ class OMPImport(Import):
         if not os.path.exists(target_dir) and file_paths:
             os.makedirs(target_dir)
         for file_path in file_paths:
-            print(("Copying {} to {} ...".format(file_path, target_dir)))
-            shutil.copy(file_path, target_dir)
+            if os.path.exists(file_path):
+                print(("Copying {} to {} ...".format(file_path, target_dir)))
+                shutil.copy(file_path, target_dir)
 
     def write_project_config(self, project_filename, project_config):
         if not os.path.exists(self.settings['project-output-dir']):
