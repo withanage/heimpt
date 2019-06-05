@@ -153,7 +153,7 @@ class OMPImport(Import):
                       .format(genre=manuscript_genre, **self.settings)))
             elif len(submission_files) > 1:
                 print(('WARNING: Found more than one matching manuscript file: {}'
-                      .format(', '.join(f.file_id for f in submission_files))))
+                      .format(', '.join(str(f.file_id) for f in submission_files))))
             else:
                 full_file_path = path_to_omp_submission_file(submission_files[0], submission.context_id,
                                                    self.settings['omp-files-dir'])
@@ -180,7 +180,7 @@ class OMPImport(Import):
                     continue
                 elif len(chapter_files) > 1:
                     print(('WARNING: Found more than one matching chapter file: {}'
-                          .format(', '.join(f.file_id for f in chapter_files))))
+                          .format(', '.join(str(f.file_id) for f in chapter_files))))
                     continue
                 else:
                     chapter_file_path = path_to_omp_submission_file(chapter_files[0], submission.context_id,
@@ -422,7 +422,7 @@ class OMPImport(Import):
 
     def build_contrib_xml(self, contrib, contrib_group_xml, locale):
         contrib_settings = OMPSettings(self.dal.getAuthorSettings(contrib.author_id))
-        group_settings = self.dal.getUserGroupSettings(contrib.user_group_id)
+        group_settings = OMPSettings(self.dal.getUserGroupSettings(contrib.user_group_id))
         # Use the english name of the group for mapping to contrib-type attribute
         contrib_type = USER_GROUP_TO_CONTRIB_TYPE.get(group_settings.getLocalizedValue('name', 'en_US'))
         contrib_attrs = {'contrib-type': contrib_type} if contrib_type else {}

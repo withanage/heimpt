@@ -13,7 +13,7 @@ class OMPSettings:
             self._settings.setdefault(row.setting_name, {})[row.locale] = row.setting_value
 
     def getLocalizedValue(self, setting_name, locale, fallback="en_US"):
-        if self._settings[setting_name]:
+        if setting_name in self._settings:
             value = self._settings[setting_name].get(locale, "")
             if not value:
                 value = self._settings[setting_name].get(fallback, "")
@@ -273,6 +273,10 @@ class OMPDAL:
         q = (us.user_id == user_id)
 
         return self.db(q).select(us.ALL)
+
+    def getUserGroupSettings(self, user_group_id):
+        ugs = self.db.user_group_settings
+        return self.db(ugs.user_group_id == user_group_id).select(ugs.user_group_id, ugs.locale, ugs.setting_name,ugs.setting_type, ugs.setting_value)
 
     def getSeriesByPress(self, press_id):
         """

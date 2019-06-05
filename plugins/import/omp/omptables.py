@@ -6,6 +6,14 @@ LICENSE.md
 '''
 
 ########################################
+# -*- coding: utf-8 -*-
+'''
+Copyright (c) 2015 Heidelberg University Library
+Distributed under the GNU GPL v3. For full terms see the file
+LICENSE.md
+'''
+
+########################################
 from pydal import Field
 
 
@@ -211,7 +219,8 @@ def define_tables(db):
                     Field("submission_id", "integer"),
                     Field(
                         "date_published",
-                        "datetime"),
+                        "datetime",
+                       ),
                     Field("audience", "string"),
                     Field("audience_range_qualifier", "string"),
                     Field("audience_range_from", "string"),
@@ -327,8 +336,8 @@ def define_tables(db):
                     Field("language", "string"),
                     #Field("comments_to_ed", "string"),
                     Field("date_submitted", "string"),
-                    Field("last_modified","datetime"),
-                    Field("date_status_modified","datetime"),
+                    Field("last_modified","datetime",),
+                    Field("date_status_modified","datetime",),
                     Field("status", "integer"),
                     Field("submission_progress", "integer"),
                     Field("pages", "string"),
@@ -426,10 +435,10 @@ def define_tables(db):
                     Field("billing_address", "string"),
                     Field("country", "string"),
                     Field("locales", "string"),
-                    Field("date_last_email","datetime"),
-                    Field("date_registered","datetime"),
-                    Field("date_validated","datetime"),
-                    Field("date_last_login","datetime"),
+                    Field("date_last_email","datetime",),
+                    Field("date_registered","datetime",),
+                    Field("date_validated","datetime",),
+                    Field("date_last_login","datetime",),
                     Field("must_change_password", "integer"),
                     Field("auth_id", "integer"),
                     Field("auth_str", "string"),
