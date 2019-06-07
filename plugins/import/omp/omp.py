@@ -187,8 +187,8 @@ class OMPImport(Import):
                     chapter_file_paths.append(chapter_file_path)
                     self.log.info(('Found chapter file\t {}'.format(chapter_file_path)))
                     chapter_metadata_path = path_to_submission_metadata(submission.submission_id, submission.context_id,
-                                                                        self.settings['files-output-dir'],
-                                                                        'chapter' + str(chapter.chapter_seq + 1)
+                                                                        self.settings['files-output-dir'],get_omp_filename(chapter_files[0],with_extension=False)
+                                                                        #'chapter' + str(chapter.chapter_seq + 1)
                                                                         + self.settings['chapter-metadata-suffix'])
                     chapter_bits_xml = self.read_chapter_metadata(chapter_metadata_path)
                     self.inject_chapter_metadata(chapter_bits_xml, chapter, chapter_settings, submission,
@@ -248,7 +248,7 @@ class OMPImport(Import):
             os.makedirs(target_dir)
         for file_path in file_paths:
             if os.path.exists(file_path):
-                self.log.info(("Copying {} to {} ...".format(file_path, target_dir)))
+                self.log.info(("Copying OMP file\t {}".format(file_path)))
                 shutil.copy(file_path, target_dir)
 
     def write_project_config(self, project_filename, project_config):

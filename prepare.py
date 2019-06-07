@@ -375,8 +375,8 @@ class Prepare(Debuggable):
         We assume that  metadata files are stored in a sub-folder named metadata
         """
         p = os.path.dirname(self.f).split(os.sep)
-        if not self.stand_alone:
-            del p[-4:]
+        #if not self.stand_alone:
+        #    del p[-4:]
         f = os.path.basename(self.f)
         name, ext = os.path.splitext(f)
         file_name = [name, '.', metadata, ext]

@@ -620,8 +620,13 @@ class MPT(Debuggable):
             t_path.append(prefix + '.' + out_type)
             p_path = self.gv.create_dirs_recursive(project_path)
             f_path = '{}{}{}.{}'.format(p_path, SEP, prefix, out_type)
-            os.rename(SEP.join(t_path), f_path)
-            shutil.rmtree(temp_dir)
+            try:
+                os.rename(SEP.join(t_path), f_path)
+                shutil.rmtree(temp_dir)
+            except FileNotFoundError:
+                print('File not found\t{}',SEP.join(t_path))
+                sys.exit(1)
+
         else:
             self.debug.print_debug(
                 self, self.gv.PROJECT_TYPESETTER_PROCESS_METHOD_NOT_SPECIFIED)

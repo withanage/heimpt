@@ -1,0 +1,119 @@
+{
+    "projects": [
+     {
+            "active": true,
+            "chain": true,
+            "files": {
+                "1": "01_chapter.docx",
+                "2": "02_chapter.docx"
+
+            },
+            "name": "example_project",
+            "path": "/web/htdocs-books/files/presses/6/monographs/43/",
+            "typesetters": {
+
+                "1": {
+                   "arguments": {
+                        "1": "--create-dir"
+                    },
+                    "name": "xmlprocess",
+                    "out_type": "xml",
+                    "process":true
+                },
+                "2": {
+                   "arguments": {
+                        "1": "--create-dir",
+                        "2":"bits",
+                        "3":"--metadata book-meta.bits2",
+                        "4": "--set-numbering-tags=disp-quote,tr"
+                    },
+                    "name": "xmlmerge",
+                    "out_type": "xml",
+                    "out_file":"fullFile.xml",
+                    "merge":true
+
+                },
+                "3":{
+                  "name":"xml2fo",
+                  "out_type": "fo",
+                  "expand":true,
+                  "arguments": {
+                    "1": "--create-dir"
+                  }
+                }
+            }
+        }
+    ],
+    "typesetters": {
+        "metypeset": {
+            "arguments": {
+                "1": "/home/wit/projects/heimpt/tools/meTypeset/bin/meTypeset.py",
+                "2": "docx",
+                "3": "--debug",
+                "4": "--nogit"
+
+            },
+            "executable": "python3"
+        },
+        "pandoc": {
+            "arguments": {
+                "1": "-t html"
+            },
+            "executable": "pandoc"
+        },
+        "pandoc_md": {
+            "arguments": {
+                "1": "-t html"
+            },
+            "executable": "pandoc"
+        },
+        "xmlprocess_with_roman": {
+            "arguments": {
+                "1":"--metadata book-part-meta.bits2",
+                "2": "--set-uuids=fn,ref",
+                "3": "--set-numbering-values=xref,ref-type,fn,{1:2}"
+
+            },
+            "executable": "/home/wit/projects/heimpt/prepare.py"
+        } ,
+        "xmlprocess": {
+            "arguments": {
+                "1":"--metadata book-part-meta.bits2",
+                "2": "--set-uuids=fn,ref",
+                "3": "--set-numbering-values=xref,ref-type,fn",
+                "4":"--clean-references"
+
+
+            },
+            "executable": "//home/wit/projects/heimpt/prepare.py"
+        } ,
+        "xmlmerge": {
+            "arguments": {
+
+            },
+            "executable": "/home/wit/projects/heimpt/merge.py"
+        }
+      ,
+        "xml2fo": {
+            "arguments": {
+              "1":"--xsl=/formatter.xsl",
+              "2":"--medium=electronic,print",
+              "3":"--formatter=AH,FOP",
+              "4":"--out-type=FO"
+
+            },
+            "executable": "/home/wit/projects/heimpt/disseminate.py"
+        },
+      "fo2pdf": {
+            "arguments": {
+              "1":"--medium=electronic,print",
+              "2":"--formatter=AH",
+              "3":"--out-type=PDF"
+
+            },
+            "executable": "/home/wit/projects/heimpt/disseminate.py"
+        }
+
+
+    }
+}
