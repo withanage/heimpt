@@ -175,7 +175,7 @@ class OMPImport(Import):
                 self.log.debug('Loading chapter \t{}, "{}"'.format(chapter.chapter_seq, chapter_title))
                 chapter_files = self.get_chapter_files_from_db(chapter.chapter_id, chapter_genre)
                 if not chapter_files:
-                    self.log.info(('Chapter without files\t chaṕter_id={} and genre={}'.format(chapter.chapter_id, chapter_genre)))
+                    self.log.info(('Empty chapter found \t chapter_id={} and genre={}'.format(chapter.chapter_id, chapter_genre)))
                     continue
                 elif len(chapter_files) > 1:
                     self.log.warning((' Found more than one matching chapter file: {}'
