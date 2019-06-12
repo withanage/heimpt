@@ -19,47 +19,14 @@
       "typesetters": {
         "1": {
           "arguments": {
-            "1": "--create-dir"
-          },
-          "name": "metypeset",
-          "out_type": "xml",
-          "process": true
-        },
-        "2": {
-          "arguments": {
-            "1": "--create-dir"
-          },
-          "name": "xmlprocess",
-          "out_type": "xml",
-          "process": true
-        },
-        "3": {
-          "arguments": {
             "1": "--create-dir",
-            "2": "bits",
-            "3": "--metadata book-meta.bits2",
-            "4": "--set-numbering-tags=disp-quote,tr"
+            "2": "jats",
+            "3": "--set-numbering-tags=disp-quote,tr"
           },
           "merge": true,
           "name": "xmlmerge",
           "out_file": "fullFile.xml",
           "out_type": "xml"
-        },
-        "4": {
-          "arguments": {
-            "1": "--create-dir"
-          },
-          "expand": true,
-          "name": "xml2fo",
-          "out_type": "fo"
-        },
-        "5": {
-          "arguments": {
-            "1": "--create-dir"
-          },
-          "expand": true,
-          "name": "fo2pdf",
-          "out_type": "pdf"
         }
       }
     }
@@ -75,12 +42,11 @@
     },
     "metypeset": {
       "arguments": {
-        "1": "/home/wit/projects/heimpt/tools/meTypeset/bin/meTypeset.py",
-        "2": "docx",
-        "3": "--debug",
-        "4": "--nogit"
+        "1": "docx",
+        "2": "--debug",
+        "3": "--nogit"
       },
-      "executable": "python3"
+      "executable": "/home/wit/projects/heimpt/tools/meTypeset/bin/meTypeset.py"
     },
     "pandoc": {
       "arguments": {
@@ -98,7 +64,7 @@
       "arguments": {
         "1": "--xsl=/formatter.xsl",
         "2": "--medium=electronic,print",
-        "3": "--formatter=ah,fop",
+        "3": "--formatter=AH,FOP",
         "4": "--out-type=FO"
       },
       "executable": "/home/wit/projects/heimpt/disseminate.py"
