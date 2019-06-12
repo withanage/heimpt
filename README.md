@@ -28,7 +28,6 @@ Documentation refers explicitly to **JATS** and **BITS** XML formats from Nation
  
 
 
-
 ## Credits
 
 The lead developer is Dulip Withanage, Heidelberg University Library

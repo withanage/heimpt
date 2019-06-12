@@ -271,7 +271,7 @@ class Merge(Debuggable):
                 book.insert(0, bp)
             else:
                 self.debug.print_console(self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST+str(pth))
-                sys.exit(1)
+                #sys.exit(1)
 
         else:
             sys.exit('Metadata argument undefined')

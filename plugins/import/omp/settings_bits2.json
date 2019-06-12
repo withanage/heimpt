@@ -1,0 +1,23 @@
+{
+  "db-uri": "mysql://root:SP1SQL-cb@127.0.0.1:3306/omp3_1",
+  "omp-files-dir": "/web/htdocs-books/files",
+  "files-output-dir": "/home/wit/projects/heimpt/tests/input/",
+  "project-output-dir": "configurations",
+  "chapter-metadata-suffix": ".book-part-meta.bits2.xml",
+  "project-template": "configurations/example.json",
+  "file-stage": 10,
+  "file-types": [
+    "application/xml",
+    "text/xml",
+    "text/html",
+    "application/vnd.oasis.opendocument.text",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  ],
+  "presses": {
+    "heiup": {
+      "manuscript-genre": 68,
+      "chapter-genre": 69
+    }
+  },
+  "skip-submission-without-files": true
+}

@@ -187,7 +187,8 @@ class OMPImport(Import):
                     chapter_file_paths.append(chapter_file_path)
                     self.log.info(('Found chapter file\t {}'.format(chapter_file_path)))
                     chapter_metadata_path = path_to_submission_metadata(submission.submission_id, submission.context_id,
-                                                                        self.settings['files-output-dir'],get_omp_filename(chapter_files[0],with_extension=False)
+                                                                        self.settings['files-output-dir'],
+                                                                        get_omp_filename(chapter_files[0],with_extension=False)
                                                                         #'chapter' + str(chapter.chapter_seq + 1)
                                                                         + self.settings['chapter-metadata-suffix'])
                     chapter_bits_xml = self.read_chapter_metadata(chapter_metadata_path)
