@@ -2,7 +2,7 @@
 *~
 *.pyc
 .idea/*
-tests/example/example_project/*
+tests/*
 tools/fop/*
 sessions/*
 editors/metadata/bower_components/*

@@ -123,7 +123,7 @@
                 Path to icc file or
                 blank if no color profile is to be embedded -->
     <!-- <xsl:variable name="_non-interactive-pdf-color-profile">/Volumes/DATENSTICK/14 XSL-FO/Quellen/resources/color_profiles/CoatedFOGRA39.icc</xsl:variable> -->
-    <xsl:variable name="_non-interactive-pdf-color-profile">/home/fk/xsl-fo/resources/color-profiles/CoatedFOGRA39.icc</xsl:variable>
+    <xsl:variable name="_non-interactive-pdf-color-profile">/home/wit/xsl-fo/resources/color-profiles/CoatedFOGRA39.icc</xsl:variable>
     
     <!-- Interactive PDF features -->
 
@@ -160,7 +160,7 @@
                 Path to icc file or
                 blank if no color profile is to be embedded -->
     <!-- <xsl:variable name="_interactive-pdf-color-profile">/Volumes/DATENSTICK/14 XSL-FO/Quellen/resources/color_profiles/AdobeRGB1998.icc</xsl:variable>-->
-    <xsl:variable name="_interactive-pdf-color-profile">/home/fk/xsl-fo/resources/color-profiles/AdobeRGB1998.icc</xsl:variable>
+    <xsl:variable name="_interactive-pdf-color-profile">/home/wit/xsl-fo/resources/color-profiles/AdobeRGB1998.icc</xsl:variable>
     
     <!-- PDF bookmarks
             Values:

@@ -1,13 +1,65 @@
-"""
+# -*- coding: utf-8 -*-
+'''
 Copyright (c) 2015 Heidelberg University Library
 Distributed under the GNU GPL v3. For full terms see the file
 LICENSE.md
-"""
+'''
 
+########################################
+# -*- coding: utf-8 -*-
+'''
+Copyright (c) 2015 Heidelberg University Library
+Distributed under the GNU GPL v3. For full terms see the file
+LICENSE.md
+'''
+
+########################################
 from pydal import Field
 
 
 def define_tables(db):
+
+    db.define_table("announcements",
+                    Field("announcement_id", "integer"),
+                    Field("assoc_type", "integer"),
+                    Field("assoc_id", "integer"),
+                    Field("type_id", "integer"),
+                    Field("date_expire", "datetime"),
+                    Field("date_posted", "datetime"),
+                    primarykey=['announcement_id'],
+                    migrate=False
+                    )
+
+    db.define_table("announcement_settings",
+                    Field("announcement_id", "integer"),
+                    Field("locale", "string"),
+                    Field("setting_name", "string"),
+                    Field("setting_value", "string"),
+                    Field("setting_type", "string"),
+                    primarykey=['announcement_id', 'locale', 'setting_name'],
+                    migrate=False
+                    )
+
+
+    db.define_table("announcement_types",
+                    Field("type_id", "integer"),
+                    Field("assoc_type", "integer"),
+                    Field("assoc_id", "integer"),
+                    primarykey=["type_id"],
+                    migrate=False
+                    )
+
+
+    db.define_table("announcement_type_settings",
+                    Field("type_id", "integer"),
+                    Field("locale", "string"),
+                    Field("setting_name", "string"),
+                    Field("setting_value", "string"),
+                    Field("setting_type", "string"),
+                    primarykey=['type_id', 'locale', 'setting_name'],
+                    migrate=False
+                    )
+
     db.define_table("authors",
                     Field("author_id", "integer"),
                     Field("submission_id", "integer"),
@@ -57,6 +109,7 @@ def define_tables(db):
                     migrate=False
                     )
 
+
     db.define_table("event_log",
                     Field("log_id", "integer"),
                     Field("assoc_type", "integer"),
@@ -71,6 +124,7 @@ def define_tables(db):
                     migrate=False
                     )
 
+
     db.define_table("event_log_settings",
                     Field("log_id", "integer"),
                     Field("setting_name", "string"),
@@ -79,6 +133,7 @@ def define_tables(db):
                     primarykey=['log_id', 'setting_name'],
                     migrate=False
                     )
+
 
     db.define_table("submission_chapters",
                     Field("chapter_id", "integer"),
@@ -105,6 +160,27 @@ def define_tables(db):
                     Field("setting_value", "string"),
                     Field("setting_type", "string"),
                     primarykey=['chapter_id', 'locale', 'setting_name'],
+                    migrate=False
+                    )
+
+    db.define_table("markets",
+                    Field("market_id", "integer"),
+                    Field("publication_format_id", "integer"),
+                    Field("countries_included", "string"),
+                    Field("countries_excluded", "string"),
+                    Field("regions_included", "string"),
+                    Field("regions_excluded", "string"),
+                    Field("market_date_role", "string"),
+                    Field("market_date_format", "string"),
+                    Field("market_date", "string"),
+                    Field("price", "string"),
+                    Field("discount", "string"),
+                    Field("price_type_code", "string"),
+                    Field("currency_code", "string"),
+                    Field("tax_rate_code", "string"),
+                    Field("tax_type_code", "string"),
+                    Field("agent_id", "integer"),
+                    Field("supplier_id", "integer"),
                     migrate=False
                     )
 
@@ -141,7 +217,10 @@ def define_tables(db):
     db.define_table("published_submissions",
                     Field("pub_id", "integer"),
                     Field("submission_id", "integer"),
-                    Field("date_published", "datetime"),
+                    Field(
+                        "date_published",
+                        "datetime",
+                       ),
                     Field("audience", "string"),
                     Field("audience_range_qualifier", "string"),
                     Field("audience_range_from", "string"),
@@ -176,6 +255,7 @@ def define_tables(db):
                     Field("product_availability_code", "string"),
                     Field("technical_protection_code", "string"),
                     Field("returnable_indicator_code", "string"),
+                    Field("remote_url", "string"),
                     Field("is_approved", "integer"),
                     Field("is_available", "integer"),
                     primarykey=['publication_format_id'],
@@ -204,6 +284,13 @@ def define_tables(db):
                     migrate=False
                     )
 
+
+    db.define_table("series_categories",
+                    Field("series_id", "integer"),
+                    Field("category_id", "integer"),
+                    primarykey=['series_id'],
+                    migrate=False
+                    )
     db.define_table("series_editors",
                     Field("press_id", "integer"),
                     Field("series_id", "integer"),
@@ -247,11 +334,10 @@ def define_tables(db):
                     Field("series_position", "string"),
                     Field("edited_volume", "integer"),
                     Field("language", "string"),
-                    # removed in OMP 3.1
-                    # Field("comments_to_ed", "string"),
+                    #Field("comments_to_ed", "string"),
                     Field("date_submitted", "string"),
-                    Field("last_modified", "datetime"),
-                    Field("date_status_modified", "datetime"),
+                    Field("last_modified","datetime",),
+                    Field("date_status_modified","datetime",),
                     Field("status", "integer"),
                     Field("submission_progress", "integer"),
                     Field("pages", "string"),
@@ -305,7 +391,7 @@ def define_tables(db):
                     Field('viewable', 'integer'),
                     Field('date_uploaded', 'datetime'),
                     Field('date_modified', 'datetime'),
-                    Field('user_group_id', 'integer'),
+                    #Field('user_group_id', 'integer'),
                     Field('uploader_user_id', 'integer'),
                     Field('assoc_type', 'integer'),
                     Field('assoc_id', 'integer'),
@@ -328,7 +414,6 @@ def define_tables(db):
                     Field("setting_name", "string"),
                     Field("setting_value", "string"),
                     Field("setting_type", "string"),
-                    primarykey=['user_group_id'],
                     migrate=False
                     )
 
@@ -341,7 +426,7 @@ def define_tables(db):
                     Field("middle_name", "string"),
                     Field("last_name", "string"),
                     Field("suffix", "string"),
-                    Field("gender", "string"),
+                    #Field("gender", "string"),
                     Field("initials", "string"),
                     Field("email", "string"),
                     Field("url", "string"),
@@ -350,10 +435,10 @@ def define_tables(db):
                     Field("billing_address", "string"),
                     Field("country", "string"),
                     Field("locales", "string"),
-                    Field("date_last_email", "datetime"),
-                    Field("date_registered", "datetime"),
-                    Field("date_validated", "datetime"),
-                    Field("date_last_login", "datetime"),
+                    Field("date_last_email","datetime",),
+                    Field("date_registered","datetime",),
+                    Field("date_validated","datetime",),
+                    Field("date_last_login","datetime",),
                     Field("must_change_password", "integer"),
                     Field("auth_id", "integer"),
                     Field("auth_str", "string"),
@@ -375,3 +460,49 @@ def define_tables(db):
                     primarykey=["user_id", "locale", "setting_name"],
                     migrate=False
                     )
+
+
+
+    db.define_table('t_license_settings',
+                    Field( "license_id", "integer"),
+                    Field("locale", "string", length=6),
+                    Field("setting_name", "string",length=48),
+                    Field("setting_value", "string"),
+                    migrate = False,
+                    primarykey=["license_id" ,"locale", "setting_name"],
+                    )
+
+
+    #
+    # request_client = ''
+    # if request.client:
+    #     rcs = request.client.split('.')
+    #     if len(rcs) == 4:
+    #         request_client = rcs[0] + '.' + rcs[1] + '.' + rcs[2] + '.xxx'
+    #
+    # db.define_table('t_usage_statistics',
+    #                 Field('time_stamp', 'datetime', default=request.now),
+    #                 Field('client_ip', 'string', default=request_client),
+    #                 Field(
+    #                     'request_controller',
+    #                     'string',
+    #                     default=request.controller),
+    #                 Field('request_function', 'string', default=request.function),
+    #                 Field(
+    #                     'request_extension',
+    #                     'string',
+    #                     default=request.extension),
+    #                 Field('request_ajax', 'string', default=request.ajax),
+    #                 Field('request_args', 'string', default=request.args),
+    #                 Field('request_vars', 'string', default=request.vars),
+    #                 Field('request_view', 'string', default=request.view),
+    #                 Field('request_http_user_agent', 'string',
+    #                       default=request.env.http_user_agent),
+    #                 Field(
+    #                     'request_language',
+    #                     'string',
+    #                     default=request.env.http_accept_language),
+    #                 Field('description', 'text'),
+    #                 migrate=False,
+    #                 )
+    #

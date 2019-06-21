@@ -3,4 +3,4 @@
 	url = https://github.com/pressbooks/saxon-he
 [submodule "tools/meTypeset"]
 	path = tools/meTypeset
-	url = https://github.com/withanage/meTypeset
+	url = https://github.com/MartinPaulEve/meTypeset.git

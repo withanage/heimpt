@@ -37,10 +37,10 @@ PYTHON_IMPORT_FAILED_LXML_MODULE = 'Failed to import python lxml module'
 import os
 import sys
 import uuid
-from .debug import Debuggable, Debug
-from .docopt import docopt
-from .globals import GV
-from .settingsconfiguration import Settings
+from debug import Debuggable, Debug
+from docopt import docopt
+from globals import GV
+from settingsconfiguration import Settings
 
 try:
     from lxml import etree
@@ -271,7 +271,7 @@ class Merge(Debuggable):
                 book.insert(0, bp)
             else:
                 self.debug.print_console(self, self.gv.PROJECT_INPUT_FILE_DOES_NOT_EXIST+str(pth))
-                sys.exit(1)
+                #sys.exit(1)
 
         else:
             sys.exit('Metadata argument undefined')

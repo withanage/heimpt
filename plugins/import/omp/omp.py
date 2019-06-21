@@ -87,8 +87,8 @@ def path_to_submission_metadata(submission_id, press_id, output_dir, filename='m
 
 class OMPImport(Import):
     def __init__(self):
-        logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
-        self.log = logging.getLogger('import.omp')
+        logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+        self.log = logging.getLogger('OMP')
         self.db = None
         self.dal = None
         self.settings = {}
@@ -104,9 +104,9 @@ class OMPImport(Import):
             self.settings.update(settings_override)
         if args.get('--template'):
             self.settings['project-template'] = args.get('--template')
-        self.log.info('Loaded settings: %s', self.settings)
+        self.log.info('Loaded settings \t %s', self.settings)
         os.chdir(self.settings['base-path'])
-        print(('Changed working directory to: {}'.format(self.settings['base-path'])))
+        self.log.info(('Changed working directory\t{}'.format(self.settings['base-path'])))
         self.db = DAL(self.settings['db-uri'], migrate=False)
         define_tables(self.db)
         self.dal = OMPDAL(self.db, None)
@@ -120,76 +120,76 @@ class OMPImport(Import):
             self.presses = {p['press_id']: p for p in presses_list}
             loaded_press_paths = {p['path'] for p in presses_list}
             if configured_press_paths.difference(loaded_press_paths):
-                print(('ERROR: Configured presses with paths={} not found in DB'
+                self.log.error(('Press not found \t{}'
                       .format(", ".join(configured_press_paths.difference(loaded_press_paths)))))
                 return False
             for press in list(self.presses.values()):
                 press.update(self.settings['presses'][press['path']])
-                print(('Configured press: {}'.format(press)))
+                self.log.info(('Configured press\t{}'.format(press)))
 
         else:
-            print('ERROR: No presses configured in settings!')
+            self.log.error(' No presses configured in settings!')
             return False
 
     def run(self, args, settings):
         self.initialize(args, settings)
         # Figure out which submissions need to be imported
         submission_ids = self.get_submission_to_import(args)
-        self.log.info('Importing submissions: {}'.format(submission_ids))
+        self.log.info('Importing submissions\t {}'.format(submission_ids))
         self.results = []
         for submission_id in submission_ids:
-            print(('Loading submission {}'.format(submission_id)))
+            self.log.info(('Loading submission\t {}'.format(submission_id)))
             submission = self.db.submissions[submission_id]
-            print('Querying submission files ...')
+            self.log.info('Querying submission files ...')
             manuscript_genre = self.presses[submission.context_id]['manuscript-genre']
             chapter_genre = self.presses[submission.context_id]['chapter-genre']
             if not self.submission_files_exists(submission) and self.settings['skip-submission-without-files']:
-                print('No matching submission or chapter files, skipping import')
+                self.log.debug('No matching submission or chapter files, skipping import')
                 continue
             submission_files = self.get_files_from_db(submission_id, manuscript_genre)
             full_file_path = None
             if not submission_files:
-                print(('ERROR: No submission file found with genre={genre}, file_stage={file-stage} and file_types={file-types}'
-                      .format(genre=manuscript_genre, **self.settings)))
+                self.log.debug(' No submission file found with genre={genre}, file_stage={file-stage} and file_types={file-types}'
+                      .format(genre=manuscript_genre, **self.settings))
             elif len(submission_files) > 1:
-                print(('WARNING: Found more than one matching manuscript file: {}'
-                      .format(', '.join(f.file_id for f in submission_files))))
+                self.log.warning((' Found more than one matching manuscript file: {}'
+                      .format(', '.join(str(f.file_id) for f in submission_files))))
             else:
                 full_file_path = path_to_omp_submission_file(submission_files[0], submission.context_id,
                                                    self.settings['omp-files-dir'])
-                print(('Found full book file:' + full_file_path))
+                self.log.info(('Found full book\t' + full_file_path))
 
-            print('Loading metadata for submission')
+            self.log.info('Loading metadata for submission')
             submission_metadata_path = path_to_submission_metadata(submission.submission_id, submission.context_id,
                                                              self.settings['files-output-dir'])
             book_bits_xml = self.read_submission_metadata(submission_metadata_path)
             # generate metadata for the whole submission first and then for each chapter
             self.inject_submission_metadata(submission, book_bits_xml)
             chapters = self.dal.getChaptersBySubmission(submission_id)
-            print('Loading metadata for chapters')
+            self.log.info('Loading metadata for chapters')
             chapters_metadata_xml = []
             chapter_file_paths = []
             for chapter in chapters:
                 chapter_settings = OMPSettings(self.dal.getChapterSettings(chapter.chapter_id))
                 chapter_title = chapter_settings.getLocalizedValue('title', submission.locale)
-                print(('Loading chapter {}, "{}"'.format(chapter.chapter_seq, chapter_title)))
+                self.log.debug('Loading chapter \t{}, "{}"'.format(chapter.chapter_seq, chapter_title))
                 chapter_files = self.get_chapter_files_from_db(chapter.chapter_id, chapter_genre)
                 if not chapter_files:
-                    print(('ERROR: No files found for chapter_id={} and genre={}'
-                          .format(chapter.chapter_id, chapter_genre)))
+                    self.log.info(('Empty chapter found \t chapter_id={} and genre={}'.format(chapter.chapter_id, chapter_genre)))
                     continue
                 elif len(chapter_files) > 1:
-                    print(('WARNING: Found more than one matching chapter file: {}'
-                          .format(', '.join(f.file_id for f in chapter_files))))
+                    self.log.warning((' Found more than one matching chapter file: {}'
+                          .format(', '.join(str(f.file_id) for f in chapter_files))))
                     continue
                 else:
                     chapter_file_path = path_to_omp_submission_file(chapter_files[0], submission.context_id,
                                                                     self.settings['omp-files-dir'])
                     chapter_file_paths.append(chapter_file_path)
-                    print(('Found chapter file: {}'.format(chapter_file_path)))
+                    self.log.info(('Found chapter file\t {}'.format(chapter_file_path)))
                     chapter_metadata_path = path_to_submission_metadata(submission.submission_id, submission.context_id,
                                                                         self.settings['files-output-dir'],
-                                                                        'chapter' + str(chapter.chapter_seq + 1)
+                                                                        get_omp_filename(chapter_files[0],with_extension=False)
+                                                                        #'chapter' + str(chapter.chapter_seq + 1)
                                                                         + self.settings['chapter-metadata-suffix'])
                     chapter_bits_xml = self.read_chapter_metadata(chapter_metadata_path)
                     self.inject_chapter_metadata(chapter_bits_xml, chapter, chapter_settings, submission,
@@ -200,10 +200,10 @@ class OMPImport(Import):
             self.copy_submission_files(chapter_file_paths, project_files_dir)
             if full_file_path:
                 self.copy_submission_files([full_file_path], project_files_dir)
-            print(('Writing submission metadata xml to: ' + submission_metadata_path))
+            self.log.info(('Write submission BITS\t ' + submission_metadata_path))
             self.write_xml_to_file(book_bits_xml, submission_metadata_path)
             for file_path, chapter_xml in chapters_metadata_xml:
-                print(('Writing chapter metadata to: ' + file_path))
+                self.log.info(('Write chapter BITS\t' + file_path))
                 self.write_xml_to_file(chapter_xml, file_path)
             project_filename = str(submission_id) + '.json'
             project_config = self.read_project_config(project_filename)
@@ -219,7 +219,7 @@ class OMPImport(Import):
 
     def get_submission_to_import(self, args):
         if args.get('--all-submissions'):
-            print(('Importing all submissions for presses: {}'
+            self.log.info(('Importing all submissions for presses: {}'
                   .format(", ".join(p['path'] for p in list(self.presses.values())))))
             rows = self.db(self.db.submissions.context_id.belongs(list(self.presses.keys()))).select(
                 self.db.submissions.submission_id)
@@ -230,7 +230,7 @@ class OMPImport(Import):
             except ValueError as e:
                 self.log.error('<submission_id> arguments must be integers, but were: {}'
                                .format(args.get('<submission_id>')))
-                print(__doc__)
+                self.log.error(__doc__)
                 sys.exit(-1)
         elif 'submission' in self.settings:
             if not isinstance(self.settings['submission'], list):
@@ -248,8 +248,9 @@ class OMPImport(Import):
         if not os.path.exists(target_dir) and file_paths:
             os.makedirs(target_dir)
         for file_path in file_paths:
-            print(("Copying {} to {} ...".format(file_path, target_dir)))
-            shutil.copy(file_path, target_dir)
+            if os.path.exists(file_path):
+                self.log.info(("Copying OMP file\t {}".format(file_path)))
+                shutil.copy(file_path, target_dir)
 
     def write_project_config(self, project_filename, project_config):
         if not os.path.exists(self.settings['project-output-dir']):
@@ -313,7 +314,7 @@ class OMPImport(Import):
         :param metadata_file_path: Path to bits2 xml file with metadata.
         :return: ElementTree object with bits2 metadata elements.
         """
-        print(("Try to load submission metadata from: {}".format(metadata_file_path)))
+        self.log.info(("Load chapter metadata\t{}".format(metadata_file_path)))
         if os.path.isfile(metadata_file_path):
             # load existing metadata
             book_xml = etree.parse(metadata_file_path)
@@ -422,7 +423,7 @@ class OMPImport(Import):
 
     def build_contrib_xml(self, contrib, contrib_group_xml, locale):
         contrib_settings = OMPSettings(self.dal.getAuthorSettings(contrib.author_id))
-        group_settings = self.dal.getUserGroupSettings(contrib.user_group_id)
+        group_settings = OMPSettings(self.dal.getUserGroupSettings(contrib.user_group_id))
         # Use the english name of the group for mapping to contrib-type attribute
         contrib_type = USER_GROUP_TO_CONTRIB_TYPE.get(group_settings.getLocalizedValue('name', 'en_US'))
         contrib_attrs = {'contrib-type': contrib_type} if contrib_type else {}
@@ -459,7 +460,7 @@ class OMPImport(Import):
                 try:
                     aff_id = 'aff' + format(int(aff_id[-2:]) + 1, '02d')
                 except ValueError as e:
-                    print(e)
+                    self.log.error(e)
                     pass
                 else:
                     aff_id = 'aff' + next(format(number, '02d') for number in range(1, 100)
@@ -509,7 +510,7 @@ class OMPImport(Import):
         return bits_xml
 
     def read_chapter_metadata(self, metadata_file_path):
-        print(("Try to load chapter metadata from: {}".format(metadata_file_path)))
+        self.log.info(("Read chapter metadata\t {}".format(metadata_file_path)))
         if os.path.isfile(metadata_file_path):
             bits_xml = etree.parse(metadata_file_path)
         else:

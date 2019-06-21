@@ -616,11 +616,17 @@ class MPT(Debuggable):
                 os.rename(os.path.join(temp_dir, filename), f_path)
             shutil.rmtree(temp_dir)
         elif p['typesetters'][p_id].get('process'):
+            if p_name.lower() == 'metypeset': t_path.append('nlm')
             t_path.append(prefix + '.' + out_type)
             p_path = self.gv.create_dirs_recursive(project_path)
             f_path = '{}{}{}.{}'.format(p_path, SEP, prefix, out_type)
-            os.rename(SEP.join(t_path), f_path)
-            shutil.rmtree(temp_dir)
+            try:
+                os.rename(SEP.join(t_path), f_path)
+                shutil.rmtree(temp_dir)
+            except FileNotFoundError:
+                print('File not found\t{}',SEP.join(t_path))
+                sys.exit(1)
+
         else:
             self.debug.print_debug(
                 self, self.gv.PROJECT_TYPESETTER_PROCESS_METHOD_NOT_SPECIFIED)
@@ -654,8 +660,6 @@ class MPT(Debuggable):
         """
         t_path.append(self.gv.uuid)
         p_path = self.gv.create_dirs_recursive(project_path)
-
-        print((t_path, p_path))
 
         f_path = '{}{}{}.xml'.format(p_path, SEP, self.gv.uuid)
         shutil.copy2(SEP.join(t_path), f_path)
@@ -754,7 +758,12 @@ def main():
         pi.run_modules()
 
     else:
-        pi.config = pi.gv.read_json(pi.args['<config_file>'])
+        try :
+            pi.config = pi.gv.read_json(pi.args['<config_file>'])
+        except:
+            print ('JSONError')
+            sys.exit(1)
+
         pi.all_typesetters = pi.config.get('typesetters')
         pi.typeset_all_projects()
 
