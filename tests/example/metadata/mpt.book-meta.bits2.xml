@@ -1,0 +1,63 @@
+<!DOCTYPE book PUBLIC "-//NLM//DTD BITS Book Interchange DTD v2.0 20151225//EN" "BITS-book2.dtd">
+<book xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mml="http://www.w3.org/1998/Math/MathML" xml:lang="en">
+
+    <book-meta>
+        <book-id>43</book-id>
+        <!-- OMP ID -->
+        <!--subj-group/-->
+        <!-- Subjects needed for the Verzeichnis lieferbarer Bücher? -->
+        <book-title-group>
+            <book-title> Abwesenheit von Rom</book-title>
+            <!-- Main title of the book -->
+            <subtitle>Aristokratische Interaktion in der späten römischen Republik und in der frühen Kaiserzeit</subtitle>
+            <!-- Subtitle of the book -->
+        </book-title-group>
+        <contrib-group>
+            <!-- <aff id="aff01">Author's Organisation</aff>-->
+        <contrib contrib-type="author"><name name-style="western"><surname>Habenstein</surname><given-names>Astrid</given-names></name><author-comment xml:lang="en"><div><p>Dr. phil. Astrid Habenstein is a research assistant at the department of Classical History &amp; Reception History of Classical Antiquity at the Historical Institute of the University of Bern.</p></div></author-comment><author-comment xml:lang="de"><div><p>Dr. phil. Astrid Habenstein ist wissenschaftliche Assistentin in der Abteilung für Alte Geschichte &amp; Rezeptionsgeschichte der Antike am Historischen Institut der Universität Bern.</p>&#13;
+<p> </p>&#13;
+<p> </p></div></author-comment></contrib></contrib-group>
+        <!-- ISSN -->
+        <isbn publication-format="softcover">9783946054023</isbn>
+        <!-- Softcover ISBN -->
+        <isbn publication-format="hardcover">9783946054009</isbn>
+        <!-- Hardcover ISBN -->
+        <isbn publication-format="epdf">9783946054016</isbn>
+        <!-- ePDF ISBN -->
+        <publisher>
+            <publisher-name xml:lang="en">Heidelberg University Publishing</publisher-name>
+            <publisher-name xml:lang="de">Name des Verlags</publisher-name>
+            <publisher-loc>Heidelberg</publisher-loc>
+        </publisher>
+        <!-- <edition xml:lang="de">Zweite, leicht ergänzte Auflage</edition> -->
+        <permissions>
+            <!-- Copyright and licensing information -->
+            <copyright-statement xml:lang="en">Text ©  by the authors.</copyright-statement>
+            <copyright-year></copyright-year>
+            <copyright-holder></copyright-holder>
+            <!-- <license license-type="open-access"
+                xlink:href="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="de">
+                <license-p><inline-graphic
+                        xlink:href="http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-sa.svg"
+                    />Dieses Werk ist unter der Creative-Commons-Lizenz 4.0 (CC BY-SA 4.0)
+                    veröffentlicht.</license-p>
+            </license> -->
+            <license license-type="open-access" xlink:href="http://creativecommons.org/licenses/by-sa/4.0/" xml:lang="en">
+                <license-p><inline-graphic xlink:href="http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-sa.svg"/>This book is published under the Creative Commons License 4.0 (CC BY-SA
+                    4.0).</license-p>
+            </license>
+        </permissions>
+        <custom-meta-group>
+            <custom-meta>
+                <!-- URN -->
+                <meta-name>urn</meta-name>
+                <meta-value>urn:xxx:xxx:xxx:xxx</meta-value>
+            </custom-meta>
+            <custom-meta>
+                <!-- DOI -->
+                <meta-name>doi</meta-name>
+                <meta-value>10.17885/heiup.43.32</meta-value>
+            </custom-meta>
+        </custom-meta-group>
+    <abstract xml:lang="en"><div><p>The immense ideological significance that the city of Rome held since the times of the late republic corresponded until the 2<sup>nd </sup>century AD with the actual supremacy of the u<em>rbs </em>within the <em>Imperium Romanum:</em> Rome was the place where socially and politically influential players and groups met; it was where they tried to create an atmosphere of mutual understanding and agreement through complex ways of interaction. Until well into the imperial era the senatorial aristocracy considered the interacting presence of Rome as a major constant of their lifestyle. At least until the 1<sup>st</sup> century AD the emperors could not disengage themselves from the reference framework that the city was. Therefore, the forms and the reasons for aristocratic and imperial absence are of particular interest. Which role the absence of Rome played in the system of aristocratic interaction and which implications it had for politics and the society of the late republic and the early imperial era is the subject of the present study. <br/> <br/>Astrid Habenstein's work was awarded by the Historical Institute at the University of Bern with the prize for the best PhD-thesis in 2012.</p></div></abstract><abstract xml:lang="de"><div><p>Der immensen ideellen Bedeutung, die der Stadt Rom seit der späten Republik zugemessen wurde, entsprach bis in das 2. Jhd. n. Chr. die reale Vorrangstellung der <em>urbs</em> im <em>Imperium Romanum</em>: In Rom trafen die gesellschaftlich und politisch maßgebenden Akteure und Gruppen aufeinander, hier versuchten sie in Form komplexer Interaktionen gegenseitiges Verständnis und Einvernehmen herzustellen. Bis in die Kaiserzeit betrachtete die Senatsaristokratie die interagierende Präsenz in Rom als wesentliche Größe ihrer Lebensführung. Zumindest im 1. Jhd. n. Chr. konnten sich auch die Kaiser nicht vom Referenzrahmen der Stadt lösen. Umso interessanter sind Formen und Anlässe aristokratischer oder kaiserlicher Absenz. Welche Funktionen die Abwesenheit von Rom im System der aristokratischen Interaktion hatte und welche Implikationen dies für Politik und Gesellschaft der späten Republik und frühen Kaiserzeit mit sich brachte, ist Gegenstand der vorliegenden Studie. <br/><br/>Die Arbeit wurde 2012 mit dem Preis des Historischen Instituts der Universität Bern für die beste Dissertation des Jahres 2012 ausgezeichnet.</p></div></abstract></book-meta>
+</book>
