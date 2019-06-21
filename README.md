@@ -21,6 +21,13 @@ Documentation refers explicitly to **JATS** and **BITS** XML formats from Nation
 ![doc2pdf Pipeline](https://raw.githubusercontent.com/withanage/heimpt/master/images/mpt.png)
 
 
+## Installation
+```bash
+git clone https://github.com/withanage/heimpt
+git submodule update --init --recursive --remote
+sudo pip3 install -r requirements.txt 
+
+```
 
 ## Presentations
 * [:movie_camera: Video](https://www.youtube.com/watch?v=yOH1DS2EUck)

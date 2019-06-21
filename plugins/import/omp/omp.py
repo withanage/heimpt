@@ -107,10 +107,17 @@ class OMPImport(Import):
         self.log.info('Loaded settings \t %s', self.settings)
         os.chdir(self.settings['base-path'])
         self.log.info(('Changed working directory\t{}'.format(self.settings['base-path'])))
-        self.db = DAL(self.settings['db-uri'], migrate=False)
-        define_tables(self.db)
-        self.dal = OMPDAL(self.db, None)
-        self.load_configured_presses()
+        try:
+            self.db = DAL(self.settings['db-uri'], migrate=False)
+            define_tables(self.db)
+            self.dal = OMPDAL(self.db, None)
+            self.load_configured_presses()
+        except RuntimeError as  e:
+
+            print(str(e))
+            #print(sys.exc_info())
+            sys.exit(1)
+
 
     def load_configured_presses(self):
         if self.settings['presses']:
