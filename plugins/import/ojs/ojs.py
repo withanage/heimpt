@@ -1,6 +1,6 @@
 from ImportInterface import Import
 from pydal.base import DAL
-from ojsdal import *
+from  ojsdal import *
 
 
 class OJSImport(Import):

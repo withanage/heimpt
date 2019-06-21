@@ -4,22 +4,39 @@
       "active": true,
       "chain": true,
       "files": {
-        "1": "01_headline.docx",
-        "2": "02_boxed_text.docx"
+        "2": "chapter2.docx",
+        "1": "chapter1.docx"
       },
       "name": "example_project",
       "path": "/home/wit/projects/heimpt/tests/example/",
       "typesetters": {
         "1": {
           "arguments": {
-            "1": "--create-dir",
-            "2": "jats",
-            "3": "--set-numbering-tags=disp-quote,tr"
+            "1": "--create-dir"
           },
-          "name": "xmlmerge",
+          "name": "metypeset",
           "out_type": "xml",
+          "process": true
+        },
+        "2": {
+          "arguments": {
+            "1": "--create-dir"
+          },
+          "name": "xmlprocess",
+          "out_type": "xml",
+          "process": true
+        },
+        "3": {
+          "arguments": {
+            "1": "--create-dir",
+            "2": "bits",
+            "3": "--metadata book-meta.bits2",
+            "4": "--set-numbering-tags=disp-quote,tr"
+          },
+          "merge": true,
+          "name": "xmlmerge",
           "out_file": "fullFile.xml",
-          "merge": true
+          "out_type": "xml"
         }
       }
     }
@@ -60,7 +77,7 @@
         "3": "--set-numbering-values=xref,ref-type,fn",
         "4": "--clean-references"
       },
-      "executable": "//home/wit/projects/heimpt/prepare.py"
+      "executable": "/home/wit/projects/heimpt/prepare.py"
     },
     "xmlmerge": {
       "arguments": {

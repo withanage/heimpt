@@ -22,12 +22,22 @@ Documentation refers explicitly to **JATS** and **BITS** XML formats from Nation
 
 
 ## Installation
+
 ```bash
 git clone https://github.com/withanage/heimpt
 git submodule update --init --recursive --remote
 sudo pip3 install -r requirements.txt 
 
 ```
+
+### Run
+```bash
+python3 heimpt.py import omp submission_id
+python3 heimpt.py  configurations/word_to_bits.json --debug
+
+
+ 
+``` 
 
 ## Presentations
 * [:movie_camera: Video](https://www.youtube.com/watch?v=yOH1DS2EUck)
