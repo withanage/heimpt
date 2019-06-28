@@ -245,16 +245,7 @@ class MPT(Debuggable):
             self, '{} {}'.format('Execute', ' '.join(args)))
         return True
 
-    def run_typesetter(
-            self,
-            p,
-            pre_path,
-            pre_out_type,
-            p_id,
-            uid,
-            f_id,
-            f_name,
-            args):
+    def run_typesetter(self, p, pre_path, pre_out_type, p_id, uid, f_id, f_name, args):
         """
         Creates the temporary output path, calls the typesetter and writes the outtput to the correct path for a
         certain file
@@ -325,16 +316,7 @@ class MPT(Debuggable):
 
         return p_path, pf_type
 
-    def typeset_file(
-            self,
-            p,
-            pre_path,
-            pre_out_type,
-            p_id,
-            uid,
-            f_id,
-            f_name
-    ):
+    def typeset_file(self, p, pre_path, pre_out_type, p_id, uid, f_id, f_name):
         """
         Typesets the current file
 
@@ -395,12 +377,7 @@ class MPT(Debuggable):
                 self, self.gv.PROJECT_TYPESETTER_IS_NOT_AVAILABLE)
         return p_path, pf_type
 
-    def typeset_files(
-            self,
-            p,
-            pre_path,
-            pre_out_type,
-            pre_id):
+    def typeset_files(self, p, pre_path, pre_out_type, pre_id):
         """
         Typeset all files of a  certain project
 
@@ -544,13 +521,7 @@ class MPT(Debuggable):
             self.debug.print_debug(self, self.gv.PROJECTS_VAR_IS_NOT_SPECIFIED)
         return True
 
-    def organize_output(
-            self,
-            p,
-            p_id,
-            prefix,
-            f_id,
-            uid ,args):
+    def organize_output(self, p, p_id, prefix, f_id, uid ,args):
         """
         Copy the temporary results into the  final project path
 
