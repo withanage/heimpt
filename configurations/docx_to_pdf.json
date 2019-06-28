@@ -4,17 +4,12 @@
       "active": true,
       "chain": true,
       "files": {
-        "1": "43-69-217-1-10-20150721.docx",
-        "2": "43-69-215-1-10-20150721.docx",
-        "3": "43-69-201-1-10-20150716.docx",
-        "4": "43-69-203-1-10-20150717.docx",
-        "5": "43-69-206-1-10-20150717.docx",
-        "6": "43-69-209-1-10-20150717.docx"
-
+        "2": "chapter2.docx",
+        "1": "chapter1.docx"
       },
       "full_file": "/web/htdocs-books/files/presses/6/monographs/43/submission/proof/43-68-231-1-10-20151008.xml",
-      "name": "omp-43",
-      "path": "/home/wit/projects/heimpt/tests/input/presses/6/monographs/43",
+      "name": "example_project",
+      "path": "/home/wit/projects/heimpt/tests/example/",
       "typesetters": {
         "1": {
           "arguments": {

@@ -589,7 +589,7 @@ class MPT(Debuggable):
 
         t_path = [p.get('path'), uid]
         if args:
-            if 'metypeset/bin/metypeset.py' in args[0].lower():
+            if len([arg for arg in args if 'meTypeset.py' in arg]) > 0:
                 t_path += ['nlm']
         else:
             t_path += [p.get('path'), uid]
