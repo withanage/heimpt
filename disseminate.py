@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3.5
 # -*- coding: utf-8 -*-
 """
 Reads a xml file , transforms it to a intermediate format (e.g. formatting objects: FO ) and converts  to PDF subsequently
@@ -125,7 +125,6 @@ class Disseminate(Debuggable):
         subprocess.Popen()
 
         """
-
         m = ' '.join(args).strip().split(' ')
         print(' '.join(args))
         process = Popen(m, stdout=PIPE)

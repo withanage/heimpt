@@ -377,16 +377,7 @@ class MPT(Debuggable):
         if t_props:
             mt = self.arguments_parse(t_props)
             if self.gv.check_program(t_props.get('executable')):
-                p_path, pf_type = self.run_typesetter(
-                    p,
-                    pre_path,
-                    pre_out_type,
-                    p_id,
-                    uid,
-                    f_id,
-                    f_name,
-                    mt)
-
+                p_path, pf_type = self.run_typesetter(p, pre_path, pre_out_type, p_id, uid, f_id, f_name, mt)
             else:
                 self.debug.print_debug(
                     self, t_props.get('executable')+self.gv.TYPESETTER_BINARY_IS_UNAVAILABLE)
@@ -436,15 +427,7 @@ class MPT(Debuggable):
             sorted((int(key), value) for key, value in list(p.get('files').items())))
         if p.get('typesetters')[pre_id].get("expand"):
             f_name = self.gv.uuid
-            p_path, pf_type = self.typeset_file(
-                p,
-                pre_path,
-                pre_out_type,
-                pre_id,
-                uid,
-                0,
-                f_name
-            )
+            p_path, pf_type = self.typeset_file(p, pre_path, pre_out_type, pre_id, uid, 0, f_name)
 
         else:
             for f_id in project_files:
