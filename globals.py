@@ -30,12 +30,11 @@ class GV(object):
 
 
         #application paths
-        self.apps = {'fop':'fop/fop/fop',
-                     'saxon': 'tools/saxon-he/saxon9he.jar',
-                     'ah':'/usr/AHFormatterV65_64/run.sh',
-                     'xep':'/usr/local/xep/bin/xep/xep'
-
-                     }
+        self.apps = {'fop': 'fop/fop/fop',
+                     'saxon': 'tools/meTypeset/runtime/saxon9.jar',
+                     'ah': '/usr/AHFormatterV65_64/run.sh',
+                     'xep': '/usr/local/xep/bin/xep/xep'
+                    }
 
 
         # projects
