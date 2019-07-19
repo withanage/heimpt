@@ -496,8 +496,10 @@ class OMPImport(Import):
         # TODO How to distinguish other types?
         book_part_xml.set('book-part-type', 'chapter')
         book_part_meta_xml = book_part_xml.xpath('book-part-meta')[0]
-        book_part_meta_xml.xpath('title-group/title')[0].text = chapter_settings.getLocalizedValue(
-            'title', submission.locale)
+        book_part_meta_xml.xpath('title-group/title')[0].text = chapter_settings.getLocalizedValue('title', submission.locale)
+        book_part_meta_xml.xpath('title-group/subtitle')[0].text = chapter_settings.getLocalizedValue('subtitle', submission.locale)
+        book_part_meta_xml.xpath('pub-date/day')[0].text = chapter_settings.getLocalizedValue('datePublished', submission.locale)
+        book_part_meta_xml.xpath('abstract')[0].text = chapter_settings.getLocalizedValue('abstract', submission.locale)
         contrib_group_xml = book_part_meta_xml.xpath('contrib-group')[0]
         for contrib in self.dal.getAuthorsByChapter(chapter.chapter_id):
             contrib_group_xml.append(self.build_contrib_xml(contrib, contrib_group_xml, submission.locale))
@@ -509,6 +511,8 @@ class OMPImport(Import):
                 custom_meta_xml = etree.SubElement(custom_meta_group_xml, 'custom-meta', {'specific-use': meta_name})
                 etree.SubElement(custom_meta_xml, 'meta-name').text = meta_name
                 etree.SubElement(custom_meta_xml, 'meta-value').text = meta_value
+        a1 = etree.tostring(bits_xml)
+
         return bits_xml
 
     def read_chapter_metadata(self, metadata_file_path):

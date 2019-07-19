@@ -3,7 +3,14 @@
     <book-part-meta>
         <title-group>
             <title>Remerciments</title>
+            <subtitle>Remerciments</subtitle>
         </title-group>
+        <abstract></abstract>
+        <pub-date date-type="pub"  iso-8601-date="">
+            <day></day>
+            <month></month>
+            <year></year>
+        </pub-date>
         <contrib-group>
         </contrib-group>
         <custom-meta-group>
