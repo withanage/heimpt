@@ -196,7 +196,7 @@ class OMPImport(Import):
                     chapter_metadata_path = path_to_submission_metadata(submission.submission_id, submission.context_id,
                                                                         self.settings['files-output-dir'],
                                                                         get_omp_filename(chapter_files[0],with_extension=False)
-                                                                        #'chapter' + str(chapter.chapter_seq + 1)
+                                                                        #'chapter' + str(chapter.seq + 1)
                                                                         + self.settings['chapter-metadata-suffix'])
                     chapter_bits_xml = self.read_chapter_metadata(chapter_metadata_path)
                     self.inject_chapter_metadata(chapter_bits_xml, chapter, chapter_settings, submission,
@@ -488,7 +488,7 @@ class OMPImport(Import):
         :param submission: Submission row object, to which the chapter belongs.
         :return: Updated ElementTree object with new metadata from OMP db.
         """
-        chapter_no = chapter.chapter_seq + 1
+        chapter_no = chapter.seq + 1
         book_part_xml = bits_xml.xpath('/book-part')[0]
         book_part_xml.set('id', 'b{}_ch_{}'.format(submission.submission_id, chapter_no))
         book_part_xml.set('seq', str(chapter_no))
