@@ -5,15 +5,7 @@ Distributed under the GNU GPL v3. For full terms see the file
 LICENSE.md
 '''
 
-########################################
-# -*- coding: utf-8 -*-
-'''
-Copyright (c) 2015 Heidelberg University Library
-Distributed under the GNU GPL v3. For full terms see the file
-LICENSE.md
-'''
 
-########################################
 from pydal import Field
 
 
@@ -65,10 +57,10 @@ def define_tables(db):
                     Field("submission_id", "integer"),
                     Field("primary_contact", "integer"),
                     Field("seq", "integer"),
-                    Field("first_name", "string"),
-                    Field("middle_name", "string"),
-                    Field("last_name", "string"),
-                    Field("suffix", "string"),
+                    #Field("first_name", "string"),
+                    #Field("middle_name", "string"),
+                    #Field("last_name", "string"),
+                    #Field("suffix", "string"),
                     Field("country", "string"),
                     Field("email", "string"),
                     Field("url", "string"),
@@ -90,7 +82,7 @@ def define_tables(db):
 
     db.define_table("categories",
                     Field("category_id", "integer"),
-                    Field("press_id", "integer"),
+                    Field("context_id", "integer"),
                     Field("parent_id", "integer"),
                     Field("path","string"),
                     Field("image","text"),
@@ -138,7 +130,7 @@ def define_tables(db):
     db.define_table("submission_chapters",
                     Field("chapter_id", "integer"),
                     Field("submission_id", 'integer'),
-                    Field("chapter_seq", 'integer'),
+                    Field("seq", 'integer'),
                     primarykey=['chapter_id'],
                     migrate=False
                     )
@@ -421,13 +413,14 @@ def define_tables(db):
                     Field("user_id", "integer"),
                     Field("username", "string"),
                     Field("password", "string"),
-                    Field("salutation", "string"),
-                    Field("first_name", "string"),
-                    Field("middle_name", "string"),
-                    Field("last_name", "string"),
-                    Field("suffix", "string"),
+                # All the following fields moved to user_settings for translated names since OMP 3.1.2-1
+                #Field("salutation", "string"),
+                #Field("first_name", "string"),
+                #Field("middle_name", "string"),
+                #Field("last_name", "string"),
+                #Field("suffix", "string"),
                     #Field("gender", "string"),
-                    Field("initials", "string"),
+                #Field("initials", "string"),
                     Field("email", "string"),
                     Field("url", "string"),
                     Field("phone", "string"),

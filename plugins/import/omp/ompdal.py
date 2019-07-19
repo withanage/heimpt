@@ -4,7 +4,7 @@ Copyright (c) 2015 Heidelberg University Library
 Distributed under the GNU GPL v3. For full terms see the file
 LICENSE.md
 '''
-
+import logging
 
 class OMPSettings:
     def __init__(self, rows=[]):
@@ -40,6 +40,7 @@ class OMPDAL:
     def __init__(self, db, conf):
         self.db = db
         self.conf = conf
+        self.logger = logging.getLogger('heimpt')
 
     def getAnnouncementsByPress(self, press_id):
         """
@@ -196,18 +197,35 @@ class OMPDAL:
                 orderby=a.seq
                 )
 
-    def getAuthorsByPress(self, press_id, filter_browse=True, status=3):
+    def getAuthorsByPress(self, press_id, filter_browse=True, status=3, locale='de_DE'):
         """
         Get all authors associated with the specified press regardless of their role.
         """
-        a = self.db.authors
-        s = self.db.submissions
-        q = ((s.context_id == press_id) & (s.status == status) & (a.submission_id == s.submission_id))
-
+        # TODO This functionality could be covered by the search service
+        select_sql = 'SELECT au_given_names.setting_value as first_name, au_family_names.setting_value as last_name, a.submission_id'
+        from_sql = 'FROM author_settings au_given_names, author_settings au_family_names, authors a, submissions s'
+        conditions = [
+            's.context_id = {}'.format(press_id),
+            's.status = {}'.format(status),
+            'au_given_names.locale = "{}"'.format(locale),
+            'au_family_names.locale = "{}"'.format(locale),
+            'a.submission_id = s.submission_id',
+            'a.author_id = au_given_names.author_id',
+            'a.author_id = au_family_names.author_id',
+            'au_given_names.setting_name = "givenName"',
+            'au_family_names.setting_name = "familyName"']
         if filter_browse:
-            q &= (a.include_in_browse == True)
+            conditions.append('a.include_in_browse = 1')
 
-        return self.db(q).iterselect(a.first_name, a.last_name, a.submission_id, orderby=a.last_name)
+        where_sql = 'WHERE ' + '\n AND '.join(conditions)
+        order_sql = 'ORDER BY last_name'
+        sql = '\n'.join([
+            select_sql,
+            from_sql,
+            where_sql,
+            order_sql
+            ])
+        return self.db.executesql(sql, as_dict=True)
 
     def getActualAuthorsBySubmission(self, submission_id, filter_browse=True):
         """
@@ -275,8 +293,10 @@ class OMPDAL:
         return self.db(q).select(us.ALL)
 
     def getUserGroupSettings(self, user_group_id):
-        ugs = self.db.user_group_settings
-        return self.db(ugs.user_group_id == user_group_id).select(ugs.user_group_id, ugs.locale, ugs.setting_name,ugs.setting_type, ugs.setting_value)
+        usg = self.db.user_group_settings
+        q = (usg.user_group_id == user_group_id)
+
+        return self.db(q).select(usg.user_group_id, usg.locale,usg.setting_name,usg.setting_value,usg.setting_type)
 
     def getSeriesByPress(self, press_id):
         """
@@ -313,27 +333,25 @@ class OMPDAL:
         if res:
             return res.first()
 
-    def getCategoryByPathAndPress(self, category_path, press_id):
+    def getCategoryByPathAndPress(self, category_path, context_id):
         """
         Get the category by path in the given press (unique).
         """
         c = self.db.categories
-        q = ((c.path == category_path) & (c.press_id == press_id))
+        q = ((c.path == category_path) & (c.context_id == context_id))
 
         res = self.db(q).select(c.ALL)
         if res:
             return res.first()
 
-    def getCategoriesByPress(self, press_id):
+    def getCategoriesByPress(self, context_id):
         """
         Get all categories in  press.
         """
         c = self.db.categories
-        q = (c.press_id == press_id)
+        q = (c.context_id == context_id)
 
-        return self.db(q).select(
-                c.ALL
-                )
+        return self.db(q).select(c.ALL)
 
     def getCategoriesBySeries(self, series_id):
         """
@@ -426,7 +444,7 @@ class OMPDAL:
 
         return self.db(q).select(
                 sc.ALL,
-                orderby=sc.chapter_seq
+                orderby=sc.seq
                 )
 
     def getChapter(self, chapter_id):

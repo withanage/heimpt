@@ -179,7 +179,7 @@ class OMPImport(Import):
             for chapter in chapters:
                 chapter_settings = OMPSettings(self.dal.getChapterSettings(chapter.chapter_id))
                 chapter_title = chapter_settings.getLocalizedValue('title', submission.locale)
-                self.log.debug('Loading chapter \t{}, "{}"'.format(chapter.chapter_seq, chapter_title))
+                self.log.debug('Loading chapter \t{}, "{}"'.format(chapter.chapter_id, chapter_title))
                 chapter_files = self.get_chapter_files_from_db(chapter.chapter_id, chapter_genre)
                 if not chapter_files:
                     self.log.info(('Empty chapter found \t chapter_id={} and genre={}'.format(chapter.chapter_id, chapter_genre)))
@@ -434,14 +434,9 @@ class OMPImport(Import):
         # Use the english name of the group for mapping to contrib-type attribute
         contrib_type = USER_GROUP_TO_CONTRIB_TYPE.get(group_settings.getLocalizedValue('name', 'en_US'))
         contrib_attrs = {'contrib-type': contrib_type} if contrib_type else {}
-        given_names = contrib.first_name
-        if contrib.middle_name:
-            given_names += " " + contrib.middle_name
-        contrib_xml = E.contrib(
-            E.name(
-                E.surname(contrib.last_name),
-                getattr(E, 'given-names')(given_names), {'name-style': 'western'}),
-            contrib_attrs)
+        given_name =  contrib_settings.getLocalizedValue('givenName',locale)
+        family_name =  contrib_settings.getLocalizedValue('familyName',locale)
+        contrib_xml = E.contrib(E.name(E.surname(family_name), getattr(E, 'given-names')(given_name), {'name-style': 'western'}), contrib_attrs)
         # Add biography in all available languages
         for biography_locale, biography_text in list(contrib_settings.getValues('biography').items()):
             if biography_text:
