@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.debug &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.debug</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<div class="viewcode-block" id="__author__"><a class="viewcode-back" href="../../autoapi/bin/debug/index.html#bin.debug.__author__">[docs]</a><span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Martin Paul Eve&#39;</span></div>
+<div class="viewcode-block" id="__email__"><a class="viewcode-back" href="../../autoapi/bin/debug/index.html#bin.debug.__email__">[docs]</a><span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;martin@martineve.com&quot;</span></div>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<div class="viewcode-block" id="Debug"><a class="viewcode-back" href="../../autoapi/bin/debug/index.html#bin.debug.Debug">[docs]</a><span class="k">class</span> <span class="nc">Debug</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialise this debug instance</span>
+<span class="sd">        @param gv: a reference to an instance of the meTypeset global configuration class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_run</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">git</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prompt</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">git_objects</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="Debug.enable_debug"><a class="viewcode-back" href="../../autoapi/bin/debug/index.html#bin.debug.Debug.enable_debug">[docs]</a>    <span class="k">def</span> <span class="nf">enable_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nogit</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">git</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">nogit</span></div>
+
+<div class="viewcode-block" id="Debug.enable_prompt"><a class="viewcode-back" href="../../autoapi/bin/debug/index.html#bin.debug.Debug.enable_prompt">[docs]</a>    <span class="k">def</span> <span class="nf">enable_prompt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prompt</span> <span class="o">=</span> <span class="n">prompt</span></div>
+
+<div class="viewcode-block" id="Debug.print_"><a class="viewcode-back" href="../../autoapi/bin/debug/index.html#bin.debug.Debug.print_">[docs]</a>    <span class="k">def</span> <span class="nf">print_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;[</span><span class="si">{0}</span><span class="s1">] </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">get_module_name</span><span class="p">(),</span> <span class="n">message</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prompt</span><span class="o">.</span><span class="n">print_</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;[</span><span class="si">{0}</span><span class="s1">] </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prompt</span><span class="o">.</span><span class="n">colorize</span><span class="p">(</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">get_module_name</span><span class="p">()),</span>
+                                                   <span class="n">message</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Debug.get_module_name"><a class="viewcode-back" href="../../autoapi/bin/debug/index.html#bin.debug.Debug.get_module_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_module_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;Debugger&#39;</span></div>
+
+<div class="viewcode-block" id="Debug.mkdir"><a class="viewcode-back" href="../../autoapi/bin/debug/index.html#bin.debug.Debug.mkdir">[docs]</a>    <span class="k">def</span> <span class="nf">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">print_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Initializing git repo at </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+                <span class="kn">from</span> <span class="nn">git</span> <span class="k">import</span> <span class="n">repo</span>
+                <span class="kn">from</span> <span class="nn">git</span> <span class="k">import</span> <span class="n">Git</span>
+                <span class="n">repo</span> <span class="o">=</span> <span class="n">Git</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                <span class="n">repo</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">git_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fatal_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Output directory </span><span class="si">{0}</span><span class="s1"> already exists or could not init git. If you are running with --debug, try installing GitPython.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Debug.print_debug"><a class="viewcode-back" href="../../autoapi/bin/debug/index.html#bin.debug.Debug.print_debug">[docs]</a>    <span class="k">def</span> <span class="nf">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method prints debug information to stdout when the global debug flag is set</span>
+<span class="sd">        @param module: the calling module</span>
+<span class="sd">        @param message: the debug message to print</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">print_</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+
+            <span class="c1"># optionally, if the calling module has a &quot;gv&quot; object within it, we will try to take a git snapshot</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">git</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">repo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">git_objects</span><span class="p">:</span>
+                    <span class="n">repo</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">with_exceptions</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+                    <span class="c1"># remove all characters above 128 as the git module does not handle unicode commits well</span>
+                    <span class="n">repo</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;-m&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">message</span> <span class="k">if</span> <span class="nb">ord</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">128</span><span class="p">)),</span> <span class="n">with_exceptions</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Debug.write_error"><a class="viewcode-back" href="../../autoapi/bin/debug/index.html#bin.debug.Debug.write_error">[docs]</a>    <span class="k">def</span> <span class="nf">write_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">error_number</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method writes parsing information to the error log</span>
+<span class="sd">        @param module: the calling module</span>
+<span class="sd">        @param message: the error message to print</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_run</span><span class="p">:</span>
+            <span class="n">module</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">mk_dir</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">error_folder_path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">has_run</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">error_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">error_file_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;[</span><span class="si">{0}</span><span class="s1">] </span><span class="si">{1}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">error_number</span><span class="p">,</span> <span class="n">message</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="n">error_file</span><span class="p">)</span>
+        <span class="n">error_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Debug.fatal_error"><a class="viewcode-back" href="../../autoapi/bin/debug/index.html#bin.debug.Debug.fatal_error">[docs]</a>    <span class="k">def</span> <span class="nf">fatal_error</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;[FATAL ERROR] [</span><span class="si">{0}</span><span class="s1">] </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">get_module_name</span><span class="p">(),</span> <span class="n">message</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Debuggable"><a class="viewcode-back" href="../../autoapi/bin/debug/index.html#bin.debug.Debuggable">[docs]</a><span class="k">class</span> <span class="nc">Debuggable</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module_name</span> <span class="o">=</span> <span class="n">module_name</span>
+
+<div class="viewcode-block" id="Debuggable.get_module_name"><a class="viewcode-back" href="../../autoapi/bin/debug/index.html#bin.debug.Debuggable.get_module_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_module_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_name</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

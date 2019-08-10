@@ -1,0 +1,346 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>heimpt.merge &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-heimpt.merge">
+<span id="heimpt-merge"></span><h1><a class="reference internal" href="#module-heimpt.merge" title="heimpt.merge"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heimpt.merge</span></code></a><a class="headerlink" href="#module-heimpt.merge" title="Permalink to this headline">¶</a></h1>
+<p><p>This  program is a utility file to merge a JATS/BITS XML  section into a BIS-XML files</p>
+<p>The current functions are limited to JATS and BITS XML Scheme of the Library of Congress. However the methods defined in
+this program can be used to modify any element tree.</p>
+<dl>
+<dt>Usage:</dt><dd><p>merge.py  &lt;input_file&gt;  &lt;path&gt;  &lt;scheme&gt;  [options]</p>
+<p>merge.py -h –help</p>
+</dd>
+<dt>Options:</dt><dd><p>-o –out-file=&lt;output_file_name_without_escapes&gt;
+-d –debug   Enable debug output
+-m –metadata=&lt;file__name_schema.xml&gt;
+-n –set-numbering-tags=&lt;elemennt types as comma seperated lists&gt;</p>
+</dd>
+</dl>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Web : <a class="reference external" href="https://github.com/withanage/mpt">https://github.com/withanage/mpt</a></p></li>
+<li><p>Repository and issue-tracker: <a class="reference external" href="https://github.com/withanage/mpt/issues">https://github.com/withanage/mpt/issues</a></p></li>
+<li><p>Licensed under terms of GPL 3  license (LICENSE.md)</p></li>
+</ul>
+</div>
+</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="heimpt.merge.__author__">
+<code class="sig-prename descclassname">heimpt.merge.</code><code class="sig-name descname">__author__</code><em class="property"> = Dulip Withanage</em><a class="reference internal" href="../../../_modules/heimpt/merge.html#__author__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.merge.__author__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="heimpt.merge.PYTHON_IMPORT_FAILED_LXML_MODULE">
+<code class="sig-prename descclassname">heimpt.merge.</code><code class="sig-name descname">PYTHON_IMPORT_FAILED_LXML_MODULE</code><em class="property"> = Failed to import python lxml module</em><a class="reference internal" href="../../../_modules/heimpt/merge.html#PYTHON_IMPORT_FAILED_LXML_MODULE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.merge.PYTHON_IMPORT_FAILED_LXML_MODULE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="heimpt.merge.Merge">
+<em class="property">class </em><code class="sig-prename descclassname">heimpt.merge.</code><code class="sig-name descname">Merge</code><a class="reference internal" href="../../../_modules/heimpt/merge.html#Merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.merge.Merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">debug.Debuggable</span></code></p>
+<p>Standalone Processing object which merges current  JATS/BITS XML file in to the Body of a BITS-XML document.</p>
+<dl class="method">
+<dt id="heimpt.merge.Merge.read_command_line">
+<em class="property">static </em><code class="sig-name descname">read_command_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/merge.html#Merge.read_command_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.merge.Merge.read_command_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads and  generates a docopt dictionary from the command line parameters.</p>
+<dl class="simple">
+<dt>docopt<span class="classifier">dictionary</span></dt><dd><p>A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
+elements.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.merge.Merge.create_output_bits">
+<code class="sig-name descname">create_output_bits</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/merge.html#Merge.create_output_bits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.merge.Merge.create_output_bits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create bits output file, generates a new file, if no file is found.
+Otherwise the current file is appended to the book body as a book-part.</p>
+<p>create_book_part_bits, create_book_bits, do_file_io</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.merge.Merge.create_output_jats">
+<code class="sig-name descname">create_output_jats</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/merge.html#Merge.create_output_jats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.merge.Merge.create_output_jats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create jats output file, generates a new file,</p>
+<p>create_book_part_bits, create_book_bits, do_file_io</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.merge.Merge.process">
+<code class="sig-name descname">process</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tr</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/merge.html#Merge.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.merge.Merge.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process  BITS-XML file and do all transformations into the elementtree</p>
+<dl class="simple">
+<dt>tr<span class="classifier">elementtree</span></dt><dd><p>element tree as input</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>tr<span class="classifier">elementtree</span></dt><dd><p>transformed element tree</p>
+</dd>
+</dl>
+<p>globals.set_numbering_tags(), set_book_part_attributes()</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.merge.Merge.set_book_part_attributes">
+<code class="sig-name descname">set_book_part_attributes</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tr</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/merge.html#Merge.set_book_part_attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.merge.Merge.set_book_part_attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add  specific attributes to book-part</p>
+<dl class="simple">
+<dt>tr<span class="classifier">elementtree</span></dt><dd><p>element tree as input</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>tr<span class="classifier">elementtree</span></dt><dd><p>transformed element tree</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.merge.Merge.create_metadata_path">
+<code class="sig-name descname">create_metadata_path</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">metadata</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/merge.html#Merge.create_metadata_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.merge.Merge.create_metadata_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>creates the correct folder path for the metadata file. Metadata files should be in a folder : metadata</p>
+<dl class="simple">
+<dt>metadata<span class="classifier">str</span></dt><dd><p>Suffix of the metadata  files</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>pth<span class="classifier">str</span></dt><dd><p>Correct path of the metadata file in the folder structure</p>
+</dd>
+</dl>
+<p>We assume that  metadata files are stored in a sub-folder named metadata</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.merge.Merge.get_module_name">
+<code class="sig-name descname">get_module_name</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/merge.html#Merge.get_module_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.merge.Merge.get_module_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the name of the module for debugging and logging</p>
+<dl class="simple">
+<dt>name string</dt><dd><p>Name of the Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.merge.Merge.create_book_bits">
+<code class="sig-name descname">create_book_bits</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/merge.html#Merge.create_book_bits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.merge.Merge.create_book_bits" title="Permalink to this definition">¶</a></dt>
+<dd><p>creates a  full BITS XML book and optionally adds metadata</p>
+<dl class="simple">
+<dt>book<span class="classifier">elementtree</span></dt><dd><p>Elementtree which complies to BITS XML Scheme.</p>
+</dd>
+</dl>
+<p>create_metadata_path, create_book_part_bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.merge.Merge.create_journal_jats">
+<code class="sig-name descname">create_journal_jats</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/merge.html#Merge.create_journal_jats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.merge.Merge.create_journal_jats" title="Permalink to this definition">¶</a></dt>
+<dd><p>creates a  full JATS XML book and optionally adds metadata</p>
+<dl class="simple">
+<dt>book<span class="classifier">elementtree</span></dt><dd><p>Elementtree which complies to BITS XML Scheme.</p>
+</dd>
+</dl>
+<p>create_metadata_path, create_book_part_bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.merge.Merge.create_book_part_bits">
+<code class="sig-name descname">create_book_part_bits</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/merge.html#Merge.create_book_part_bits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.merge.Merge.create_book_part_bits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a JATS XMl File and creates a book-part element tree according to BITS-XML.</p>
+<dl class="simple">
+<dt>bp<span class="classifier">elementtree</span></dt><dd><p>Book part elementTree</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.merge.Merge.get_xml_parts">
+<code class="sig-name descname">get_xml_parts</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/merge.html#Merge.get_xml_parts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.merge.Merge.get_xml_parts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns  the front-matter , body and back-matter of a JATS XML file in the above order</p>
+<dl class="simple">
+<dt>f<span class="classifier">elementtree</span></dt><dd><p>Front-matter of JATS elementTree</p>
+</dd>
+<dt>bd<span class="classifier">elementtree</span></dt><dd><p>Body of JATS elementTree</p>
+</dd>
+<dt>bk<span class="classifier">elementtree</span></dt><dd><p>Back-matter of JATS elementTree</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.merge.Merge.do_file_io">
+<code class="sig-name descname">do_file_io</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">s</em>, <em class="sig-param">mode</em>, <em class="sig-param">pth</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/merge.html#Merge.do_file_io"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.merge.Merge.do_file_io" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes read or write operations on a path</p>
+<dl class="simple">
+<dt>s: str</dt><dd><p>Content to be written or None for read</p>
+</dd>
+<dt>mode: str</dt><dd><p>w for write , r for r</p>
+</dd>
+<dt>pth<span class="classifier">str</span></dt><dd><p>Path to the file to be read or written</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>IOError</dt><dd><p>I/O operation fails</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.merge.Merge.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/merge.html#Merge.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.merge.Merge.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the configuration on the processing object. Process  JATS-XML file and merges it into the full BITS-XML file</p>
+<p>create_output_bits</p>
+<p>function create_output_jats not yet used</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="heimpt.merge.main">
+<code class="sig-prename descclassname">heimpt.merge.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/merge.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.merge.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes a processing object from  a xml file and   and runs it.</p>
+<p>run</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heimpt.merge</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#heimpt.merge.__author__">__author__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.merge.PYTHON_IMPORT_FAILED_LXML_MODULE">PYTHON_IMPORT_FAILED_LXML_MODULE</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.merge.Merge">Merge</a><ul>
+<li><a class="reference internal" href="#heimpt.merge.Merge.read_command_line">read_command_line</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.merge.Merge.create_output_bits">create_output_bits</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.merge.Merge.create_output_jats">create_output_jats</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.merge.Merge.process">process</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.merge.Merge.set_book_part_attributes">set_book_part_attributes</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.merge.Merge.create_metadata_path">create_metadata_path</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.merge.Merge.get_module_name">get_module_name</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.merge.Merge.create_book_bits">create_book_bits</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.merge.Merge.create_journal_jats">create_journal_jats</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.merge.Merge.create_book_part_bits">create_book_part_bits</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.merge.Merge.get_xml_parts">get_xml_parts</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.merge.Merge.do_file_io">do_file_io</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.merge.Merge.run">run</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.merge.main">main</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/autoapi/heimpt/merge/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.bibliographyclassifier &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.bibliographyclassifier</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;bibliographyclassfier.py: a tool to manipulate reference lists</span>
+
+<span class="sd">Usage:</span>
+<span class="sd">    bibliographyclassifier.py confirm &lt;input&gt; [options]</span>
+
+<span class="sd">Options:</span>
+<span class="sd">    -d, --debug                                     Enable debug output</span>
+<span class="sd">    --interactive                                   Prompt the user to assist in interactive tagging</span>
+<span class="sd">    -h, --help                                      Show this screen.</span>
+<span class="sd">    -v, --version                                   Show version.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">teimanipulate</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">nlmmanipulate</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">docopt</span> <span class="k">import</span> <span class="n">docopt</span>
+<span class="kn">from</span> <span class="nn">bare_globals</span> <span class="k">import</span> <span class="n">GV</span>
+<span class="kn">from</span> <span class="nn">interactive</span> <span class="k">import</span> <span class="n">Interactive</span>
+
+<div class="viewcode-block" id="__author__"><a class="viewcode-back" href="../../autoapi/bin/bibliographyclassifier/index.html#bin.bibliographyclassifier.__author__">[docs]</a><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Martin Paul Eve&quot;</span></div>
+<div class="viewcode-block" id="__email__"><a class="viewcode-back" href="../../autoapi/bin/bibliographyclassifier/index.html#bin.bibliographyclassifier.__email__">[docs]</a><span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;martin@martineve.com&quot;</span></div>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A class that assists with bibliography classification.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">debug</span> <span class="k">import</span> <span class="n">Debuggable</span>
+<span class="kn">import</span> <span class="nn">codecs</span>
+
+
+<div class="viewcode-block" id="BibliographyClassifier"><a class="viewcode-back" href="../../autoapi/bin/bibliographyclassifier/index.html#bin.bibliographyclassifier.BibliographyClassifier">[docs]</a><span class="k">class</span> <span class="nc">BibliographyClassifier</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_variables</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">global_variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="n">Debuggable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Bibliography Classifier&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BibliographyClassifier.linguistic_cues"><a class="viewcode-back" href="../../autoapi/bin/bibliographyclassifier/index.html#bin.bibliographyclassifier.BibliographyClassifier.linguistic_cues">[docs]</a>    <span class="k">def</span> <span class="nf">linguistic_cues</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Using linguistic cue method to classify bibliography&#39;</span><span class="p">)</span>
+        <span class="n">language_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;reference-languages&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">language</span> <span class="ow">in</span> <span class="n">language_list</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/language/ref_marker_</span><span class="si">{1}</span><span class="s1">.txt&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">script_dir</span><span class="p">,</span> <span class="n">language</span><span class="p">),</span>
+                             <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">lang_file</span><span class="p">:</span>
+                <span class="n">lines</span> <span class="o">=</span> <span class="n">lang_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">find_references_from_cue</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+                            <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="BibliographyClassifier.run"><a class="viewcode-back" href="../../autoapi/bin/bibliographyclassifier/index.html#bin.bibliographyclassifier.BibliographyClassifier.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--aggression&#39;</span><span class="p">])</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;bibliographyclassifier&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span>
+                                                                                         <span class="n">domain</span><span class="o">=</span><span class="s1">&#39;aggression&#39;</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Aggression level less than 4: exiting module.&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">tei_manipulator</span> <span class="o">=</span> <span class="n">TeiManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="n">found</span> <span class="o">=</span> <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">find_reference_list_in_word_list</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linguistic_cues</span><span class="p">(</span><span class="n">tei_manipulator</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+
+        <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">enclose_bibliography_tags</span><span class="p">(</span><span class="s1">&#39;//tei:p[@rend=&quot;Bibliography&quot;]&#39;</span><span class="p">,</span> <span class="s1">&#39;back&#39;</span><span class="p">,</span> <span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;bibliogr&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BibliographyClassifier.unconfirm"><a class="viewcode-back" href="../../autoapi/bin/bibliographyclassifier/index.html#bin.bibliographyclassifier.BibliographyClassifier.unconfirm">[docs]</a>    <span class="k">def</span> <span class="nf">unconfirm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="c1"># find a potential reference point</span>
+
+        <span class="n">old_reference_points</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//*[@meTypesetRender]&#39;</span><span class="p">)</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">old_reference_point</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">old_reference_points</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">old_reference_point</span> <span class="o">=</span> <span class="n">old_reference_points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># determine if ref-list-before or ref-list-parent</span>
+
+            <span class="k">if</span> <span class="n">old_reference_point</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;meTypesetRender&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;ref-list-parent&#39;</span><span class="p">:</span>
+                <span class="n">parent</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># get parent (ref-list)&#39;s parent (back)&#39;s previous sibling (sec)</span>
+            <span class="n">old_reference_point</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//sec[last()]&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="n">old_reference_point</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span>
+            <span class="k">if</span> <span class="n">parent</span><span class="p">:</span>
+                <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">old_reference_point</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">old_reference_point</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BibliographyClassifier.handle_input"><a class="viewcode-back" href="../../autoapi/bin/bibliographyclassifier/index.html#bin.bibliographyclassifier.BibliographyClassifier.handle_input">[docs]</a>    <span class="k">def</span> <span class="nf">handle_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">prompt</span><span class="p">,</span> <span class="n">sel</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">sel</span> <span class="o">==</span> <span class="s1">&#39;a&#39;</span><span class="p">:</span>
+            <span class="n">prompt</span><span class="o">.</span><span class="n">print_</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;Leaving interactive mode on user command&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s2">&quot;abort&quot;</span>
+        <span class="k">elif</span> <span class="n">sel</span> <span class="o">==</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span>
+            <span class="c1"># confirm</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">sel</span> <span class="o">==</span> <span class="s1">&#39;o&#39;</span><span class="p">:</span>
+            <span class="c1"># confirm all</span>
+            <span class="k">return</span> <span class="s2">&quot;confirmall&quot;</span>
+        <span class="k">elif</span> <span class="n">sel</span> <span class="o">==</span> <span class="s1">&#39;u&#39;</span><span class="p">:</span>
+            <span class="c1"># delete the surrounding xref</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Unconfirming reference </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unconfirm</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">sel</span> <span class="o">==</span> <span class="s1">&#39;n&#39;</span><span class="p">:</span>
+            <span class="c1"># delete all</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Unconfirming reference </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unconfirm</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s2">&quot;delall&quot;</span></div>
+
+<div class="viewcode-block" id="BibliographyClassifier.run_prompt"><a class="viewcode-back" href="../../autoapi/bin/bibliographyclassifier/index.html#bin.bibliographyclassifier.BibliographyClassifier.run_prompt">[docs]</a>    <span class="k">def</span> <span class="nf">run_prompt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interactive</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">interactive</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">fatal_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Cannot enter confirmation mode without interactive flag&#39;</span><span class="p">)</span>
+
+        <span class="n">prompt</span> <span class="o">=</span> <span class="n">Interactive</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="n">opts</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Confirm&#39;</span><span class="p">,</span> <span class="s1">&#39;Unconfirm&#39;</span><span class="p">,</span> <span class="s1">&#39;cOnfirm all&#39;</span><span class="p">,</span> <span class="s1">&#39;uNconfirm all&#39;</span><span class="p">,</span> <span class="s1">&#39;Abort&#39;</span><span class="p">)</span>
+
+        <span class="n">manipulate</span> <span class="o">=</span> <span class="n">NlmManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="n">ref_items</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//back/ref-list/ref&#39;</span><span class="p">)</span>
+
+        <span class="c1"># note that we don&#39;t want to exit even if there are no references to link because the user may want to delete</span>
+        <span class="c1"># some</span>
+
+        <span class="n">delete_all</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">confirm_all</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//ref&#39;</span><span class="p">):</span>
+
+            <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+            <span class="n">sel</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+            <span class="k">if</span> <span class="n">delete_all</span><span class="p">:</span>
+                <span class="n">sel</span> <span class="o">=</span> <span class="s1">&#39;u&#39;</span>
+            <span class="k">elif</span> <span class="n">confirm_all</span><span class="p">:</span>
+                <span class="n">sel</span> <span class="o">=</span> <span class="s1">&#39;c&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prompt</span><span class="o">.</span><span class="n">print_</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;Please confirm whether the following is a bibliographic reference: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+                <span class="n">sel</span> <span class="o">=</span> <span class="n">prompt</span><span class="o">.</span><span class="n">input_options</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>
+
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_input</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">prompt</span><span class="p">,</span> <span class="n">sel</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="s1">&#39;abort&#39;</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="k">elif</span> <span class="n">result</span> <span class="o">==</span> <span class="s1">&#39;delall&#39;</span><span class="p">:</span>
+                <span class="n">delete_all</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">result</span> <span class="o">==</span> <span class="s1">&#39;confirmall&#39;</span><span class="p">:</span>
+                <span class="n">confirm_all</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../autoapi/bin/bibliographyclassifier/index.html#bin.bibliographyclassifier.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">docopt</span><span class="p">(</span><span class="vm">__doc__</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;meTypeset 0.1&#39;</span><span class="p">)</span>
+    <span class="n">bare_gv</span> <span class="o">=</span> <span class="n">GV</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;--debug&#39;</span><span class="p">]:</span>
+        <span class="n">bare_gv</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">enable_debug</span><span class="p">()</span>
+
+    <span class="n">bc_instance</span> <span class="o">=</span> <span class="n">BibliographyClassifier</span><span class="p">(</span><span class="n">bare_gv</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;confirm&#39;</span><span class="p">]:</span>
+        <span class="n">bc_instance</span><span class="o">.</span><span class="n">run_prompt</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--interactive&#39;</span><span class="p">])</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

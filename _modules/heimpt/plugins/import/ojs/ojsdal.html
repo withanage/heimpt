@@ -1,0 +1,633 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>heimpt.plugins.import.ojs.ojsdal &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for heimpt.plugins.import.ojs.ojsdal</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright (c) 2015 Heidelberg University Library</span>
+<span class="sd">Distributed under the GNU GPL v3. For full terms see the file</span>
+<span class="sd">LICENSE.md</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+
+<div class="viewcode-block" id="OMPSettings"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPSettings">[docs]</a><span class="k">class</span> <span class="nc">OMPSettings</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">setting_name</span><span class="p">,</span> <span class="p">{})[</span><span class="n">row</span><span class="o">.</span><span class="n">locale</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">setting_value</span>
+            
+<div class="viewcode-block" id="OMPSettings.getLocalizedValue"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPSettings.getLocalizedValue">[docs]</a>    <span class="k">def</span> <span class="nf">getLocalizedValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">setting_name</span><span class="p">,</span> <span class="n">locale</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="s2">&quot;en_US&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">setting_name</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="p">[</span><span class="n">setting_name</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">locale</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">value</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="p">[</span><span class="n">setting_name</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fallback</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;&quot;</span></div>
+        
+<div class="viewcode-block" id="OMPSettings.getValues"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPSettings.getValues">[docs]</a>    <span class="k">def</span> <span class="nf">getValues</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">setting_name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">setting_name</span><span class="p">,</span> <span class="p">{})</span></div></div>
+
+
+<div class="viewcode-block" id="OMPItem"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPItem">[docs]</a><span class="k">class</span> <span class="nc">OMPItem</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="n">OMPSettings</span><span class="p">(),</span> <span class="n">associated_items</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="n">row</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="n">settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">associated_items</span> <span class="o">=</span> <span class="n">associated_items</span></div>
+
+
+<div class="viewcode-block" id="OMPDAL"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL">[docs]</a><span class="k">class</span> <span class="nc">OMPDAL</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A rudimentary database abstraction layer for the OMP database.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">conf</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="n">conf</span>
+        
+
+<div class="viewcode-block" id="OMPDAL.getPresses"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPresses">[docs]</a>    <span class="k">def</span> <span class="nf">getPresses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all  enabled presses</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">presses</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">ps</span><span class="o">.</span><span class="n">enabled</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">ps</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OMPDAL.getPress"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPress">[docs]</a>    <span class="k">def</span> <span class="nf">getPress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">press_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get row for a given press id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">presses</span><span class="p">[</span><span class="n">press_id</span><span class="p">]</span></div>
+    
+<div class="viewcode-block" id="OMPDAL.getPressSettings"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPressSettings">[docs]</a>    <span class="k">def</span> <span class="nf">getPressSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">press_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get settings for a given press.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">press_settings</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">ps</span><span class="o">.</span><span class="n">press_id</span> <span class="o">==</span> <span class="n">press_id</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">ps</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OMPDAL.getSubmission"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmission">[docs]</a>    <span class="k">def</span> <span class="nf">getSubmission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get row for a given submission id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submissions</span><span class="p">[</span><span class="n">submission_id</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="OMPDAL.getSubmissionsByPress"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionsByPress">[docs]</a>    <span class="k">def</span> <span class="nf">getSubmissionsByPress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">press_id</span><span class="p">,</span> <span class="n">ignored_submission_id</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all submissions in press with the given status (default: 3=published).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submissions</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">s</span><span class="o">.</span><span class="n">context_id</span> <span class="o">==</span> <span class="n">press_id</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">!=</span> <span class="n">ignored_submission_id</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">status</span><span class="p">)</span>
+        <span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">ALL</span><span class="p">,</span> <span class="n">orderby</span><span class="o">=~</span><span class="n">s</span><span class="o">.</span><span class="n">date_submitted</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OMPDAL.getSubmissionsByCategory"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionsByCategory">[docs]</a>    <span class="k">def</span> <span class="nf">getSubmissionsByCategory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_id</span><span class="p">,</span> <span class="n">ignored_submission_id</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all submissions in a category with the given status (default: 3=published).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submissions</span>
+        <span class="n">sc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submission_categories</span>
+
+        <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">sc</span><span class="o">.</span><span class="n">category_id</span> <span class="o">==</span> <span class="n">category_id</span><span class="p">)</span>
+             <span class="o">&amp;</span> <span class="p">(</span><span class="n">sc</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">==</span> <span class="n">s</span><span class="o">.</span><span class="n">submission_id</span><span class="p">)</span>
+             <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">!=</span> <span class="n">ignored_submission_id</span><span class="p">)</span>
+             <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">status</span><span class="p">)</span>
+             <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OMPDAL.getSubmissionsBySeries"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionsBySeries">[docs]</a>    <span class="k">def</span> <span class="nf">getSubmissionsBySeries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series_id</span><span class="p">,</span> <span class="n">ignored_submission_id</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all submissions in a series with the given status (default: 3=published).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submissions</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">s</span><span class="o">.</span><span class="n">series_id</span> <span class="o">==</span> <span class="n">series_id</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">!=</span> <span class="n">ignored_submission_id</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">status</span><span class="p">)</span>
+        <span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">ALL</span><span class="p">,</span> <span class="n">orderby</span><span class="o">=~</span><span class="n">s</span><span class="o">.</span><span class="n">series_position</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OMPDAL.getPublishedSubmission"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublishedSubmission">[docs]</a>    <span class="k">def</span> <span class="nf">getPublishedSubmission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission_id</span><span class="p">,</span> <span class="n">press_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get submission info for a given submission id, but only return, if the </span>
+<span class="sd">        submission has been published and is associated with a certain press. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submissions</span>
+        
+        <span class="k">if</span> <span class="n">press_id</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">s</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">==</span> <span class="n">submission_id</span><span class="p">)</span>
+                <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span><span class="p">)</span>
+                <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">context_id</span> <span class="o">==</span> <span class="n">press_id</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">s</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">==</span> <span class="n">submission_id</span><span class="p">)</span>
+                <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="OMPDAL.getSubmissionSettings"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionSettings">[docs]</a>    <span class="k">def</span> <span class="nf">getSubmissionSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get settings for a given submission.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submission_settings</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">==</span> <span class="n">submission_id</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submission_settings</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OMPDAL.getAuthorsBySubmission"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAuthorsBySubmission">[docs]</a>    <span class="k">def</span> <span class="nf">getAuthorsBySubmission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission_id</span><span class="p">,</span> <span class="n">filter_browse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all authors associated with the specified submission regardless of their role.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">authors</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">==</span> <span class="n">submission_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">filter_browse</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">include_in_browse</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+            <span class="n">a</span><span class="o">.</span><span class="n">ALL</span><span class="p">,</span>
+            <span class="n">orderby</span><span class="o">=</span><span class="n">a</span><span class="o">.</span><span class="n">seq</span></div>
+        <span class="p">)</span>
+        
+<div class="viewcode-block" id="OMPDAL.getActualAuthorsBySubmission"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getActualAuthorsBySubmission">[docs]</a>    <span class="k">def</span> <span class="nf">getActualAuthorsBySubmission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission_id</span><span class="p">,</span> <span class="n">filter_browse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all authors associated with the specified submission with chapter author role.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Try to extract a list</span>
+            <span class="n">author_group_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="s1">&#39;omp.author_ids&#39;</span><span class="p">,</span> <span class="n">cast</span><span class="o">=</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">authors</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">==</span> <span class="n">submission_id</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">a</span><span class="o">.</span><span class="n">user_group_id</span><span class="o">.</span><span class="n">belongs</span><span class="p">(</span><span class="n">author_group_ids</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">filter_browse</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">&amp;=</span> <span class="n">a</span><span class="o">.</span><span class="n">include_in_browse</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">authors</span><span class="o">.</span><span class="n">ALL</span><span class="p">,</span> <span class="n">orderby</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">authors</span><span class="o">.</span><span class="n">seq</span><span class="p">)</span></div>
+            
+<div class="viewcode-block" id="OMPDAL.getEditorsBySubmission"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getEditorsBySubmission">[docs]</a>    <span class="k">def</span> <span class="nf">getEditorsBySubmission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission_id</span><span class="p">,</span> <span class="n">filter_browse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all authors associated with the specified submission with editor role.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">editor_group_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="s1">&#39;omp.editor_id&#39;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">authors</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">==</span> <span class="n">submission_id</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">user_group_id</span> <span class="o">==</span> <span class="n">editor_group_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">filter_browse</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">&amp;=</span> <span class="n">a</span><span class="o">.</span><span class="n">include_in_browse</span> <span class="o">==</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">authors</span><span class="o">.</span><span class="n">ALL</span><span class="p">,</span> <span class="n">orderby</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">authors</span><span class="o">.</span><span class="n">seq</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="OMPDAL.getAuthorsByChapter"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAuthorsByChapter">[docs]</a>    <span class="k">def</span> <span class="nf">getAuthorsByChapter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chapter_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get authors associated with a given chapter.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sca</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submission_chapter_authors</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">authors</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">sca</span><span class="o">.</span><span class="n">chapter_id</span> <span class="o">==</span> <span class="n">chapter_id</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">author_id</span> <span class="o">==</span> <span class="n">sca</span><span class="o">.</span><span class="n">author_id</span><span class="p">)</span>
+        <span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="OMPDAL.getAuthor"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAuthor">[docs]</a>    <span class="k">def</span> <span class="nf">getAuthor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">author_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get row for a given author id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">authors</span><span class="p">[</span><span class="n">author_id</span><span class="p">]</span></div>
+        
+<div class="viewcode-block" id="OMPDAL.getAuthorSettings"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAuthorSettings">[docs]</a>    <span class="k">def</span> <span class="nf">getAuthorSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">author_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get settings for a given author.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">aus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">author_settings</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">aus</span><span class="o">.</span><span class="n">author_id</span> <span class="o">==</span> <span class="n">author_id</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">aus</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OMPDAL.getUserSettings"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getUserSettings">[docs]</a>    <span class="k">def</span> <span class="nf">getUserSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+        <span class="n">us</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">user_settings</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">us</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">us</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OMPDAL.getSeriesByPress"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesByPress">[docs]</a>    <span class="k">def</span> <span class="nf">getSeriesByPress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">press_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all series published in the given press.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">series</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">press_id</span> <span class="o">==</span> <span class="n">press_id</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">ALL</span></div>
+        <span class="p">)</span>
+        
+<div class="viewcode-block" id="OMPDAL.getSeriesByPathAndPress"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesByPathAndPress">[docs]</a>    <span class="k">def</span> <span class="nf">getSeriesByPathAndPress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series_path</span><span class="p">,</span> <span class="n">press_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the series with the given pass in the given press (unique).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">series</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">s</span><span class="o">.</span><span class="n">path</span> <span class="o">==</span> <span class="n">series_path</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">press_id</span> <span class="o">==</span> <span class="n">press_id</span><span class="p">))</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">first</span><span class="p">()</span></div>
+        
+<div class="viewcode-block" id="OMPDAL.getSeriesBySubmissionId"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesBySubmissionId">[docs]</a>    <span class="k">def</span> <span class="nf">getSeriesBySubmissionId</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the series the given submission is assigned to.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submissions</span>
+        <span class="n">ser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">series</span>
+        
+        <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">sub</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">==</span> <span class="n">submission_id</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ser</span><span class="o">.</span><span class="n">series_id</span> <span class="o">==</span> <span class="n">sub</span><span class="o">.</span><span class="n">series_id</span><span class="p">))</span>
+        
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">ser</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">first</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="OMPDAL.getCategoryByPathAndPress"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategoryByPathAndPress">[docs]</a>    <span class="k">def</span> <span class="nf">getCategoryByPathAndPress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_path</span><span class="p">,</span> <span class="n">press_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the category by path in the given press (unique).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">categories</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">c</span><span class="o">.</span><span class="n">path</span> <span class="o">==</span> <span class="n">category_path</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">press_id</span> <span class="o">==</span> <span class="n">press_id</span><span class="p">))</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">first</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="OMPDAL.getCategoriesByPress"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategoriesByPress">[docs]</a>    <span class="k">def</span> <span class="nf">getCategoriesByPress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">press_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all categories in  press.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">categories</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">press_id</span> <span class="o">==</span> <span class="n">press_id</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">ALL</span></div>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="OMPDAL.getCategoryBySubmissionId"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategoryBySubmissionId">[docs]</a>    <span class="k">def</span> <span class="nf">getCategoryBySubmissionId</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the assigned Category of submission</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submission_categories</span>
+
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">cat</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">==</span> <span class="n">submission_id</span><span class="p">)</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">cat</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">first</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="OMPDAL.getCategorySettings"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategorySettings">[docs]</a>    <span class="k">def</span> <span class="nf">getCategorySettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get settings for a given category</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">category_settings</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">cs</span><span class="o">.</span><span class="n">category_id</span> <span class="o">==</span> <span class="n">category_id</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">cs</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OMPDAL.getCategory"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategory">[docs]</a>    <span class="k">def</span> <span class="nf">getCategory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get row for a given series id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">categories</span><span class="p">[</span><span class="n">category_id</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="OMPDAL.getSeries"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeries">[docs]</a>    <span class="k">def</span> <span class="nf">getSeries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get row for a given series id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">series</span><span class="p">[</span><span class="n">series_id</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="OMPDAL.getSeriesEditors"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesEditors">[docs]</a>    <span class="k">def</span> <span class="nf">getSeriesEditors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">press_id</span><span class="p">,</span> <span class="n">series_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get editors for the given series.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">se</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">series_editors</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">users</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">se</span><span class="o">.</span><span class="n">press_id</span> <span class="o">==</span> <span class="n">press_id</span><span class="p">)</span> 
+             <span class="o">&amp;</span> <span class="p">(</span><span class="n">se</span><span class="o">.</span><span class="n">series_id</span> <span class="o">==</span> <span class="n">series_id</span><span class="p">)</span> 
+			 <span class="o">&amp;</span> <span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">se</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OMPDAL.getLocalizedCategorySettings"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getLocalizedCategorySettings">[docs]</a>    <span class="k">def</span> <span class="nf">getLocalizedCategorySettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_id</span><span class="p">,</span> <span class="n">setting_name</span><span class="p">,</span> <span class="n">locale</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get row for a given category</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">category_settings</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">cs</span><span class="o">.</span><span class="n">locale</span> <span class="o">==</span> <span class="n">locale</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">cs</span><span class="o">.</span><span class="n">category_id</span> <span class="o">==</span> <span class="n">category_id</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">cs</span><span class="o">.</span><span class="n">setting_name</span> <span class="o">==</span> <span class="n">setting_name</span><span class="p">)</span>
+             <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">cs</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="OMPDAL.getLocalizedSeriesSettings"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getLocalizedSeriesSettings">[docs]</a>    <span class="k">def</span> <span class="nf">getLocalizedSeriesSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series_id</span><span class="p">,</span> <span class="n">locale</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get row for a given series id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">series</span><span class="p">[</span><span class="n">series_id</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="OMPDAL.getSeriesSettings"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesSettings">[docs]</a>    <span class="k">def</span> <span class="nf">getSeriesSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get settings for a given series.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">series_settings</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">series_id</span> <span class="o">==</span> <span class="n">series_id</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OMPDAL.getChaptersBySubmission"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getChaptersBySubmission">[docs]</a>    <span class="k">def</span> <span class="nf">getChaptersBySubmission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all chapters associated with the given submission.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submission_chapters</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">sc</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">==</span> <span class="n">submission_id</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+            <span class="n">sc</span><span class="o">.</span><span class="n">ALL</span><span class="p">,</span>
+            <span class="n">orderby</span><span class="o">=</span><span class="n">sc</span><span class="o">.</span><span class="n">chapter_seq</span></div>
+        <span class="p">)</span>
+        
+<div class="viewcode-block" id="OMPDAL.getChapter"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getChapter">[docs]</a>    <span class="k">def</span> <span class="nf">getChapter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chapter_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get row for a given chapter id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submission_chapters</span><span class="p">[</span><span class="n">chapter_id</span><span class="p">]</span></div>
+        
+<div class="viewcode-block" id="OMPDAL.getChapterSettings"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getChapterSettings">[docs]</a>    <span class="k">def</span> <span class="nf">getChapterSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chapter_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get settings for a given chapter id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">scs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submission_chapter_settings</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">scs</span><span class="o">.</span><span class="n">chapter_id</span> <span class="o">==</span> <span class="n">chapter_id</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">scs</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OMPDAL.getPublicationFormatsBySubmission"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationFormatsBySubmission">[docs]</a>    <span class="k">def</span> <span class="nf">getPublicationFormatsBySubmission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission_id</span><span class="p">,</span> <span class="n">available</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">approved</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all approved and available publication formats for the given submission.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">publication_formats</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">pf</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">==</span> <span class="n">submission_id</span><span class="p">)</span> 
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">pf</span><span class="o">.</span><span class="n">is_available</span> <span class="o">==</span> <span class="n">available</span><span class="p">)</span> 
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">pf</span><span class="o">.</span><span class="n">is_approved</span> <span class="o">==</span> <span class="n">approved</span><span class="p">)</span>
+        <span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">pf</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="OMPDAL.getAllPublicationFormatsBySubmission"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAllPublicationFormatsBySubmission">[docs]</a>    <span class="k">def</span> <span class="nf">getAllPublicationFormatsBySubmission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission_id</span><span class="p">,</span> <span class="n">available</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">approved</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all approved and available publication formats for the given submission.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">publication_formats</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">pf</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">==</span> <span class="n">submission_id</span><span class="p">)</span>
+               
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">pf</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OMPDAL.getPhysicalPublicationFormats"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPhysicalPublicationFormats">[docs]</a>    <span class="k">def</span> <span class="nf">getPhysicalPublicationFormats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission_id</span><span class="p">,</span> <span class="n">available</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">approved</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all publication formats marked as physical format for the given submission.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">publication_formats</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">pf</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">==</span> <span class="n">submission_id</span><span class="p">)</span> 
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">pf</span><span class="o">.</span><span class="n">is_available</span> <span class="o">==</span> <span class="n">available</span><span class="p">)</span> 
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">pf</span><span class="o">.</span><span class="n">is_approved</span> <span class="o">==</span> <span class="n">approved</span><span class="p">)</span> 
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">pf</span><span class="o">.</span><span class="n">physical_format</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">pf</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OMPDAL.getDigitalPublicationFormats"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getDigitalPublicationFormats">[docs]</a>    <span class="k">def</span> <span class="nf">getDigitalPublicationFormats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission_id</span><span class="p">,</span> <span class="n">available</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">approved</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all publication formats not marked as physical format for the given submission.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">publication_formats</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">pf</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">==</span> <span class="n">submission_id</span><span class="p">)</span> 
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">pf</span><span class="o">.</span><span class="n">is_available</span> <span class="o">==</span> <span class="n">available</span><span class="p">)</span> 
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">pf</span><span class="o">.</span><span class="n">is_approved</span> <span class="o">==</span> <span class="n">approved</span><span class="p">)</span> 
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">pf</span><span class="o">.</span><span class="n">physical_format</span> <span class="o">==</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">pf</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OMPDAL.getPublicationFormat"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationFormat">[docs]</a>    <span class="k">def</span> <span class="nf">getPublicationFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">publication_format_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get row for a given publication format id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">publication_formats</span><span class="p">[</span><span class="n">publication_format_id</span><span class="p">]</span></div>
+    
+<div class="viewcode-block" id="OMPDAL.getPublicationFormatByName"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationFormatByName">[docs]</a>    <span class="k">def</span> <span class="nf">getPublicationFormatByName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">available</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">approved</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get publication format for the given submission where any of the settings for &#39;name&#39; matches the given string name. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">publication_formats</span>
+        <span class="n">pfs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">publication_format_settings</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">pf</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">==</span> <span class="n">submission_id</span><span class="p">)</span> 
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">pf</span><span class="o">.</span><span class="n">is_available</span> <span class="o">==</span> <span class="n">available</span><span class="p">)</span> 
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">pf</span><span class="o">.</span><span class="n">is_approved</span> <span class="o">==</span> <span class="n">approved</span><span class="p">)</span> 
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">pfs</span><span class="o">.</span><span class="n">publication_format_id</span> <span class="o">==</span> <span class="n">pf</span><span class="o">.</span><span class="n">publication_format_id</span><span class="p">)</span> 
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">pfs</span><span class="o">.</span><span class="n">setting_name</span> <span class="o">==</span> <span class="s2">&quot;name&quot;</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">pfs</span><span class="o">.</span><span class="n">setting_value</span> <span class="o">==</span> <span class="n">name</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">pf</span><span class="o">.</span><span class="n">ALL</span><span class="p">,</span> <span class="n">groupby</span><span class="o">=</span><span class="n">pf</span><span class="o">.</span><span class="n">submission_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OMPDAL.getPublicationFormatSettings"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationFormatSettings">[docs]</a>    <span class="k">def</span> <span class="nf">getPublicationFormatSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">publication_format_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get settings for a given publication format id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pfs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">publication_format_settings</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">pfs</span><span class="o">.</span><span class="n">publication_format_id</span> <span class="o">==</span> <span class="n">publication_format_id</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">pfs</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OMPDAL.getLatestRevisionOfChapterFileByPublicationFormat"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getLatestRevisionOfChapterFileByPublicationFormat">[docs]</a>    <span class="k">def</span> <span class="nf">getLatestRevisionOfChapterFileByPublicationFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chapter_id</span><span class="p">,</span> <span class="n">publication_format_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the latest revision of the file associated with a given chapter and publication format.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sfs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submission_file_settings</span>
+        <span class="n">sf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submission_files</span>
+        
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span><span class="n">sfs</span><span class="o">.</span><span class="n">setting_name</span> <span class="o">==</span> <span class="s2">&quot;chapterID&quot;</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">sfs</span><span class="o">.</span><span class="n">setting_value</span> <span class="o">==</span> <span class="n">chapter_id</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">file_id</span> <span class="o">==</span> <span class="n">sfs</span><span class="o">.</span><span class="n">file_id</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">assoc_id</span> <span class="o">==</span> <span class="n">publication_format_id</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">file_stage</span> <span class="o">==</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="p">)</span>
+        
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">ALL</span><span class="p">,</span> <span class="n">orderby</span><span class="o">=</span><span class="n">sf</span><span class="o">.</span><span class="n">revision</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">last</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="OMPDAL.getLatestRevisionOfFullBookFileByPublicationFormat"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getLatestRevisionOfFullBookFileByPublicationFormat">[docs]</a>    <span class="k">def</span> <span class="nf">getLatestRevisionOfFullBookFileByPublicationFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission_id</span><span class="p">,</span> <span class="n">publication_format_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the latest revision of a file of genre &quot;Book&quot; for a given publication format.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">monograph_type_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="s1">&#39;omp.monograph_type_id&#39;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">sf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submission_files</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">sf</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">==</span> <span class="n">submission_id</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">genre_id</span> <span class="o">==</span> <span class="n">monograph_type_id</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">file_stage</span> <span class="o">==</span> <span class="mi">10</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">assoc_id</span> <span class="o">==</span> <span class="n">publication_format_id</span><span class="p">)</span>
+        <span class="p">)</span>
+        
+        <span class="n">res</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">ALL</span><span class="p">,</span> <span class="n">orderby</span><span class="o">=</span><span class="n">sf</span><span class="o">.</span><span class="n">revision</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">last</span><span class="p">()</span></div>
+<div class="viewcode-block" id="OMPDAL.getReviewFilesByPublicationFormat"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getReviewFilesByPublicationFormat">[docs]</a>    <span class="k">def</span> <span class="nf">getReviewFilesByPublicationFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission_id</span><span class="p">,</span> <span class="n">publication_format_id</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Get the latest revision of a file of a review for a given publication format.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">monograph_type_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="s1">&#39;omp.review_type_id&#39;</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[]</span>
+            <span class="n">sf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submission_files</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">sf</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">==</span> <span class="n">submission_id</span><span class="p">)</span>
+                <span class="o">&amp;</span> <span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">genre_id</span> <span class="o">==</span> <span class="n">monograph_type_id</span><span class="p">)</span>
+                <span class="o">&amp;</span> <span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">file_stage</span> <span class="o">==</span> <span class="mi">10</span><span class="p">)</span>
+                <span class="o">&amp;</span> <span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">assoc_id</span> <span class="o">==</span> <span class="n">publication_format_id</span><span class="p">)</span>
+            <span class="p">)</span>
+            
+            <span class="n">res</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">ALL</span><span class="p">,</span> <span class="n">orderby</span><span class="o">=</span><span class="n">sf</span><span class="o">.</span><span class="n">revision</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">res</span>        </div>
+<div class="viewcode-block" id="OMPDAL.getSubmissionFileSettings"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionFileSettings">[docs]</a>    <span class="k">def</span> <span class="nf">getSubmissionFileSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get settings for a given submission file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sfs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">submission_file_settings</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">sfs</span><span class="o">.</span><span class="n">file_id</span> <span class="o">==</span> <span class="n">file_id</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">sfs</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OMPDAL.getPublicationDatesByPublicationFormat"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationDatesByPublicationFormat">[docs]</a>    <span class="k">def</span> <span class="nf">getPublicationDatesByPublicationFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">publication_format_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all publication dates associated with a given publication format.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">publication_dates</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">publication_format_id</span> <span class="o">==</span> <span class="n">publication_format_id</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OMPDAL.getIdentificationCodesByPublicationFormat"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getIdentificationCodesByPublicationFormat">[docs]</a>    <span class="k">def</span> <span class="nf">getIdentificationCodesByPublicationFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">publication_format_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the identification codes (ISBN) associated with a given publication format.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">identification_codes</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">ic</span><span class="o">.</span><span class="n">publication_format_id</span> <span class="o">==</span> <span class="n">publication_format_id</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">ic</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OMPDAL.getRepresentativesBySubmission"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getRepresentativesBySubmission">[docs]</a>    <span class="k">def</span> <span class="nf">getRepresentativesBySubmission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission_id</span><span class="p">,</span> <span class="n">representative_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all representatives of a certain id for the given submission.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">representatives</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">r</span><span class="o">.</span><span class="n">submission_id</span> <span class="o">==</span> <span class="n">submission_id</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">representative_id_type</span> <span class="o">==</span> <span class="n">representative_id</span><span class="p">)</span>
+        <span class="p">)</span>        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">ALL</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OMPDAL.getMetaDataPublishedDates"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/ojs/ojsdal/index.html#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getMetaDataPublishedDates">[docs]</a>    <span class="k">def</span> <span class="nf">getMetaDataPublishedDates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission_id</span><span class="p">):</span>
+        <span class="n">el</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">event_log</span>
+        <span class="n">assoc_type_monograph</span> <span class="o">=</span> <span class="mi">1048585</span>
+        
+        <span class="n">q</span> <span class="o">=</span> <span class="p">((</span><span class="n">el</span><span class="o">.</span><span class="n">assoc_id</span> <span class="o">==</span> <span class="n">submission_id</span><span class="p">)</span>
+             <span class="o">&amp;</span> <span class="p">(</span><span class="n">el</span><span class="o">.</span><span class="n">assoc_type</span> <span class="o">==</span> <span class="n">assoc_type_monograph</span><span class="p">)</span>
+             <span class="o">&amp;</span> <span class="p">(</span><span class="n">el</span><span class="o">.</span><span class="n">message</span> <span class="o">==</span> <span class="s1">&#39;submission.event.metadataPublished&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">el</span><span class="o">.</span><span class="n">date_logged</span><span class="p">,</span> <span class="n">orderby</span><span class="o">=</span><span class="n">el</span><span class="o">.</span><span class="n">date_logged</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

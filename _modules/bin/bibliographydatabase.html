@@ -1,0 +1,545 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.bibliographydatabase &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.bibliographydatabase</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># coding=utf-8</span>
+<span class="sd">&quot;&quot;&quot;bibliographydatabase: a tool to match plaintext values inside NLM ref tags against a known database</span>
+
+<span class="sd">Usage:</span>
+<span class="sd">    bibliographydatabase.py &lt;input&gt; [options]</span>
+<span class="sd">    bibliographydatabase.py zotero &lt;query&gt; [options]</span>
+
+<span class="sd">Options:</span>
+<span class="sd">    -d, --debug                                     Enable debug output.</span>
+<span class="sd">    -h, --help                                      Show this screen.</span>
+<span class="sd">    -v, --version                                   Show version.</span>
+<span class="sd">    -z, --zotero                                    Enable Zotero integration for references.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="__author__"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.__author__">[docs]</a><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Martin Paul Eve&quot;</span></div>
+<div class="viewcode-block" id="__email__"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.__email__">[docs]</a><span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;martin@martineve.com&quot;</span></div>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A class that scans for, stores and retrieves NLM citations</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">debug</span> <span class="k">import</span> <span class="n">Debuggable</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">from</span> <span class="nn">nlmmanipulate</span> <span class="k">import</span> <span class="n">NlmManipulate</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">etree</span>
+<span class="kn">from</span> <span class="nn">docopt</span> <span class="k">import</span> <span class="n">docopt</span>
+<span class="kn">from</span> <span class="nn">bare_globals</span> <span class="k">import</span> <span class="n">GV</span>
+<span class="kn">from</span> <span class="nn">interactive</span> <span class="k">import</span> <span class="n">Interactive</span>
+
+
+<div class="viewcode-block" id="Person"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.Person">[docs]</a><span class="k">class</span> <span class="nc">Person</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">firstname</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">lastname</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">firstname</span> <span class="o">=</span> <span class="n">firstname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lastname</span> <span class="o">=</span> <span class="n">lastname</span>
+
+<div class="viewcode-block" id="Person.get_citation"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.Person.get_citation">[docs]</a>    <span class="k">def</span> <span class="nf">get_citation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">u</span><span class="s1">&#39;&lt;name&gt;&#39;</span> \
+                    <span class="sa">u</span><span class="s1">&#39;&lt;surname&gt;</span><span class="si">{0}</span><span class="s1">&lt;/surname&gt;&#39;</span> \
+                    <span class="sa">u</span><span class="s1">&#39;&lt;given-names&gt;</span><span class="si">{1}</span><span class="s1">&lt;/given-names&gt;&#39;</span> \
+                <span class="sa">u</span><span class="s1">&#39;&lt;/name&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lastname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">firstname</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Website"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.Website">[docs]</a><span class="k">class</span> <span class="nc">Website</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">authors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">website_title</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">authors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">authors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">authors</span> <span class="o">=</span> <span class="n">authors</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">website_title</span> <span class="o">=</span> <span class="n">website_title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">book_title</span> <span class="o">=</span> <span class="n">website_title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">year</span> <span class="o">=</span> <span class="n">year</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Website.object_type"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.Website.object_type">[docs]</a>    <span class="k">def</span> <span class="nf">object_type</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s2">&quot;website&quot;</span></div>
+
+<div class="viewcode-block" id="Website.get_citation"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.Website.get_citation">[docs]</a>    <span class="k">def</span> <span class="nf">get_citation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">author_block</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">author</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">authors</span><span class="p">:</span>
+            <span class="n">author_block</span> <span class="o">+=</span> <span class="n">author</span><span class="o">.</span><span class="n">get_citation</span><span class="p">()</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;&lt;ref&gt;&#39;</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;element-citation publication-type=&quot;journal&quot;&gt;&#39;</span>
+
+        <span class="k">if</span> <span class="n">author_block</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;person-group person-group-type=&quot;author&quot;&gt;</span><span class="si">{0}</span><span class="s1">&lt;/person-group&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">author_block</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;article-title&gt;</span><span class="si">{0}</span><span class="s1">&lt;/article-title&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">book_title</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;source&gt;</span><span class="si">{0}</span><span class="s1">&lt;/source&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">website_title</span><span class="p">)</span>
+
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;date&gt;&lt;year&gt;</span><span class="si">{0}</span><span class="s1">&lt;/year&gt;&lt;/date&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;uri&gt;</span><span class="si">{0}</span><span class="s1">&lt;/uri&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+
+
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;/element-citation&gt;&#39;</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;/ref&gt;&#39;</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&amp;&#39;</span><span class="p">,</span> <span class="s1">&#39;&amp;amp;&#39;</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;i&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;italic&gt;&#39;</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;/i&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/italic&gt;&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ret</span></div></div>
+
+
+<div class="viewcode-block" id="BookChapter"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.BookChapter">[docs]</a><span class="k">class</span> <span class="nc">BookChapter</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">authors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">book_title</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">publisher</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">place</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">fpage</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">lpage</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                 <span class="n">editors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">translators</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doi</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">authors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">authors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">authors</span> <span class="o">=</span> <span class="n">authors</span>
+
+        <span class="k">if</span> <span class="n">editors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">editors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">editors</span> <span class="o">=</span> <span class="n">editors</span>
+
+        <span class="k">if</span> <span class="n">translators</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">translators</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">translators</span> <span class="o">=</span> <span class="n">translators</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">book_title</span> <span class="o">=</span> <span class="n">book_title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">year</span> <span class="o">=</span> <span class="n">year</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span> <span class="o">=</span> <span class="n">publisher</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">place</span> <span class="o">=</span> <span class="n">place</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fpage</span> <span class="o">=</span> <span class="n">fpage</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lpage</span> <span class="o">=</span> <span class="n">lpage</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">doi</span> <span class="o">=</span> <span class="n">doi</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="BookChapter.object_type"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.BookChapter.object_type">[docs]</a>    <span class="k">def</span> <span class="nf">object_type</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s2">&quot;book chapter&quot;</span></div>
+
+<div class="viewcode-block" id="BookChapter.get_citation"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.BookChapter.get_citation">[docs]</a>    <span class="k">def</span> <span class="nf">get_citation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">author_block</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">author</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">authors</span><span class="p">:</span>
+            <span class="n">author_block</span> <span class="o">+=</span> <span class="n">author</span><span class="o">.</span><span class="n">get_citation</span><span class="p">()</span>
+
+        <span class="n">translator_block</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">translator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">translators</span><span class="p">:</span>
+            <span class="n">translator_block</span> <span class="o">+=</span> <span class="n">translator</span><span class="o">.</span><span class="n">get_citation</span><span class="p">()</span>
+
+        <span class="n">editor_block</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">editor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">editors</span><span class="p">:</span>
+            <span class="n">editor_block</span> <span class="o">+=</span> <span class="n">editor</span><span class="o">.</span><span class="n">get_citation</span><span class="p">()</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;&lt;ref&gt;&#39;</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;element-citation publication-type=&quot;bookchapter&quot;&gt;&#39;</span>
+
+        <span class="k">if</span> <span class="n">author_block</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;person-group person-group-type=&quot;author&quot;&gt;</span><span class="si">{0}</span><span class="s1">&lt;/person-group&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">author_block</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;article-title&gt;</span><span class="si">{0}</span><span class="s1">&lt;/article-title&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">book_title</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;source&gt;</span><span class="si">{0}</span><span class="s1">&lt;/source&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">book_title</span><span class="p">)</span>
+
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;date&gt;&lt;year&gt;</span><span class="si">{0}</span><span class="s1">&lt;/year&gt;&lt;/date&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">editor_block</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;person-group person-group-type=&quot;editor&quot;&gt;</span><span class="si">{0}</span><span class="s1">&lt;/person-group&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">editor_block</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">translator_block</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;person-group person-group-type=&quot;translator&quot;&gt;</span><span class="si">{0}</span><span class="s1">&lt;/person-group&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">translator_block</span><span class="p">)</span>
+
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;publisher-loc&gt;</span><span class="si">{0}</span><span class="s1">&lt;/publisher-loc&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="p">)</span>
+
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;publisher-name&gt;</span><span class="si">{0}</span><span class="s1">&lt;/publisher-name&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">publisher</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fpage</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">fpage</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;fpage&gt;</span><span class="si">{0}</span><span class="s1">&lt;/fpage&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fpage</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lpage</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">lpage</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;lpage&gt;</span><span class="si">{0}</span><span class="s1">&lt;/lpage&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lpage</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">doi</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">doi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;pub-id pub-id-type=&quot;doi&quot;&gt;</span><span class="si">{0}</span><span class="s1">&lt;/pub-id&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doi</span><span class="p">)</span>
+
+
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;/element-citation&gt;&#39;</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;/ref&gt;&#39;</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&amp;&#39;</span><span class="p">,</span> <span class="s1">&#39;&amp;amp;&#39;</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;i&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;italic&gt;&#39;</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;/i&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/italic&gt;&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ret</span></div></div>
+
+
+<div class="viewcode-block" id="Book"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.Book">[docs]</a><span class="k">class</span> <span class="nc">Book</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">authors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">publisher</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">place</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">editors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doi</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">translators</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">authors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">authors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">authors</span> <span class="o">=</span> <span class="n">authors</span>
+
+        <span class="k">if</span> <span class="n">editors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">editors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">editors</span> <span class="o">=</span> <span class="n">editors</span>
+
+        <span class="k">if</span> <span class="n">translators</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">translators</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">translators</span> <span class="o">=</span> <span class="n">translators</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">year</span> <span class="o">=</span> <span class="n">year</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span> <span class="o">=</span> <span class="n">publisher</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">place</span> <span class="o">=</span> <span class="n">place</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">doi</span> <span class="o">=</span> <span class="n">doi</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Book.object_type"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.Book.object_type">[docs]</a>    <span class="k">def</span> <span class="nf">object_type</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s2">&quot;book&quot;</span></div>
+
+<div class="viewcode-block" id="Book.get_citation"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.Book.get_citation">[docs]</a>    <span class="k">def</span> <span class="nf">get_citation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">author_block</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">author</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">authors</span><span class="p">:</span>
+            <span class="n">author_block</span> <span class="o">+=</span> <span class="n">author</span><span class="o">.</span><span class="n">get_citation</span><span class="p">()</span>
+
+        <span class="n">translator_block</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">translator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">translators</span><span class="p">:</span>
+            <span class="n">translator_block</span> <span class="o">+=</span> <span class="n">translator</span><span class="o">.</span><span class="n">get_citation</span><span class="p">()</span>
+
+        <span class="n">editor_block</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">editor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">editors</span><span class="p">:</span>
+            <span class="n">editor_block</span> <span class="o">+=</span> <span class="n">editor</span><span class="o">.</span><span class="n">get_citation</span><span class="p">()</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;&lt;ref&gt;&#39;</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;element-citation publication-type=&quot;book&quot;&gt;&#39;</span>
+
+        <span class="k">if</span> <span class="n">author_block</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;person-group person-group-type=&quot;author&quot;&gt;</span><span class="si">{0}</span><span class="s1">&lt;/person-group&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">author_block</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;source&gt;</span><span class="si">{0}</span><span class="s1">&lt;/source&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;date&gt;&lt;year&gt;</span><span class="si">{0}</span><span class="s1">&lt;/year&gt;&lt;/date&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">editor_block</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;person-group person-group-type=&quot;editor&quot;&gt;</span><span class="si">{0}</span><span class="s1">&lt;/person-group&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">editor_block</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">translator_block</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;person-group person-group-type=&quot;translator&quot;&gt;</span><span class="si">{0}</span><span class="s1">&lt;/person-group&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">translator_block</span><span class="p">)</span>
+
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;publisher-loc&gt;</span><span class="si">{0}</span><span class="s1">&lt;/publisher-loc&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="p">)</span>
+
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;publisher-name&gt;</span><span class="si">{0}</span><span class="s1">&lt;/publisher-name&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">publisher</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">doi</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">doi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;pub-id pub-id-type=&quot;doi&quot;&gt;</span><span class="si">{0}</span><span class="s1">&lt;/pub-id&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doi</span><span class="p">)</span>
+
+
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;/element-citation&gt;&#39;</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;/ref&gt;&#39;</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&amp;&#39;</span><span class="p">,</span> <span class="s1">&#39;&amp;amp;&#39;</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;i&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;italic&gt;&#39;</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;/i&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/italic&gt;&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ret</span></div></div>
+
+
+<div class="viewcode-block" id="JournalArticle"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.JournalArticle">[docs]</a><span class="k">class</span> <span class="nc">JournalArticle</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">authors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">journal</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">issue</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">volume</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">fpage</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">lpage</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">doi</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                 <span class="n">translators</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">authors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">authors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">authors</span> <span class="o">=</span> <span class="n">authors</span>
+
+        <span class="k">if</span> <span class="n">translators</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">translators</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">translators</span> <span class="o">=</span> <span class="n">translators</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">journal</span> <span class="o">=</span> <span class="n">journal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">issue</span> <span class="o">=</span> <span class="n">issue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="n">volume</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fpage</span> <span class="o">=</span> <span class="n">fpage</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lpage</span> <span class="o">=</span> <span class="n">lpage</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">year</span> <span class="o">=</span> <span class="n">year</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">doi</span> <span class="o">=</span> <span class="n">doi</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="JournalArticle.object_type"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.JournalArticle.object_type">[docs]</a>    <span class="k">def</span> <span class="nf">object_type</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s2">&quot;journal article&quot;</span></div>
+
+<div class="viewcode-block" id="JournalArticle.get_citation"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.JournalArticle.get_citation">[docs]</a>    <span class="k">def</span> <span class="nf">get_citation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">author_block</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">author</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">authors</span><span class="p">:</span>
+            <span class="n">author_block</span> <span class="o">+=</span> <span class="n">author</span><span class="o">.</span><span class="n">get_citation</span><span class="p">()</span>
+
+        <span class="n">translator_block</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">translator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">translators</span><span class="p">:</span>
+            <span class="n">translator_block</span> <span class="o">+=</span> <span class="n">translator</span><span class="o">.</span><span class="n">get_citation</span><span class="p">()</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;&lt;ref&gt;&#39;</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;element-citation publication-type=&quot;journal&quot;&gt;&#39;</span>
+
+        <span class="k">if</span> <span class="n">author_block</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;person-group person-group-type=&quot;author&quot;&gt;</span><span class="si">{0}</span><span class="s1">&lt;/person-group&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">author_block</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;article-title&gt;</span><span class="si">{0}</span><span class="s1">&lt;/article-title&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">journal</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;source&gt;</span><span class="si">{0}</span><span class="s1">&lt;/source&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">journal</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">translator_block</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;person-group person-group-type=&quot;translator&quot;&gt;</span><span class="si">{0}</span><span class="s1">&lt;/person-group&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">translator_block</span><span class="p">)</span>
+
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;date&gt;&lt;year&gt;</span><span class="si">{0}</span><span class="s1">&lt;/year&gt;&lt;/date&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;volume&gt;</span><span class="si">{0}</span><span class="s1">&lt;/volume&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">issue</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;issue&gt;</span><span class="si">{0}</span><span class="s1">&lt;/issue&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">issue</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fpage</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">fpage</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;fpage&gt;</span><span class="si">{0}</span><span class="s1">&lt;/fpage&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fpage</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lpage</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">lpage</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;lpage&gt;</span><span class="si">{0}</span><span class="s1">&lt;/lpage&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lpage</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">doi</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">doi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;pub-id pub-id-type=&quot;doi&quot;&gt;</span><span class="si">{0}</span><span class="s1">&lt;/pub-id&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doi</span><span class="p">)</span>
+
+
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;/element-citation&gt;&#39;</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="sa">u</span><span class="s1">&#39;&lt;/ref&gt;&#39;</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&amp;&#39;</span><span class="p">,</span> <span class="s1">&#39;&amp;amp;&#39;</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;i&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;italic&gt;&#39;</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;/i&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/italic&gt;&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ret</span></div></div>
+
+<div class="viewcode-block" id="BibliographyDatabase"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.BibliographyDatabase">[docs]</a><span class="k">class</span> <span class="nc">BibliographyDatabase</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_variables</span><span class="p">):</span>
+        <span class="n">Debuggable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Bibliography Database&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">global_variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size_cutoff</span> <span class="o">=</span> <span class="mi">16</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aggression</span> <span class="o">=</span> <span class="mi">8</span>
+
+<div class="viewcode-block" id="BibliographyDatabase.process_zotero"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.BibliographyDatabase.process_zotero">[docs]</a>    <span class="k">def</span> <span class="nf">process_zotero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">zotero</span> <span class="k">import</span> <span class="n">libzotero</span>
+        <span class="n">zotero</span> <span class="o">=</span> <span class="n">libzotero</span><span class="o">.</span><span class="n">LibZotero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;zotero&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="n">manipulate</span> <span class="o">=</span> <span class="n">NlmManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+        <span class="n">master_tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">master_tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//back/ref-list/ref&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">tree</span><span class="p">:</span>
+            <span class="n">original_term</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">original_term</span>
+
+            <span class="c1">#term = re.sub(r&#39;(.+?)(\(.+?\))(.*)&#39;, r&#39;\1\3&#39;, term)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?&lt;![0-9])[1-9][0-9]{0,2}(?![0-9])&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\-,\.\&lt;\&gt;\(\)\;\:\@</span><span class="se">\&#39;</span><span class="s1">\#\~\}\{\[\]\&quot;\!</span><span class="se">\\</span><span class="s1">/]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;[^\s]+?\s[Ee]dition&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;\s.\s&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;(?&lt;=[A-Z])\.&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;“&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">s&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;’s&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;’&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39; Ed. &#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39; Ed &#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39; Trans. &#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39; Trans &#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39; trans &#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39; trans. &#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39; by. &#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39; by &#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39; ed. &#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39; ed &#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39; In &#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39; in &#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39; print &#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39; Print &#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39; and &#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;”&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[Aa]ccessed&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;meTypesetbr&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+
+            <span class="n">results</span> <span class="o">=</span> <span class="n">zotero</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="c1"># no results found.</span>
+                <span class="c1"># begin iterating backwards</span>
+                <span class="n">term</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="n">zotero</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">JATS_format</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">res</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">ref</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+                        <span class="n">ref</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+
+                    <span class="n">element</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+
+                    <span class="n">original_term</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">original_term</span><span class="p">)</span>
+
+                    <span class="n">comment</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Comment</span><span class="p">(</span><span class="n">original_term</span><span class="p">)</span>
+                    <span class="n">ref</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
+
+                    <span class="n">element</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+
+        <span class="n">etree</span><span class="o">.</span><span class="n">strip_elements</span><span class="p">(</span><span class="n">master_tree</span><span class="p">,</span> <span class="s1">&#39;REMOVE&#39;</span><span class="p">)</span>
+
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">master_tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BibliographyDatabase.run"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.BibliographyDatabase.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">use_zotero</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process_zotero</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../autoapi/bin/bibliographydatabase/index.html#bin.bibliographydatabase.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">docopt</span><span class="p">(</span><span class="vm">__doc__</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;meTypeset 0.1&#39;</span><span class="p">)</span>
+
+    <span class="n">bare_gv</span> <span class="o">=</span> <span class="n">GV</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;--debug&#39;</span><span class="p">]:</span>
+        <span class="n">bare_gv</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">enable_debug</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">bare_gv</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">enable_prompt</span><span class="p">(</span><span class="n">Interactive</span><span class="p">(</span><span class="n">bare_gv</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;zotero&#39;</span><span class="p">]:</span>
+        <span class="kn">from</span> <span class="nn">zotero</span> <span class="k">import</span> <span class="n">libzotero</span>
+        <span class="n">zotero</span> <span class="o">=</span> <span class="n">libzotero</span><span class="o">.</span><span class="n">LibZotero</span><span class="p">(</span><span class="n">bare_gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;zotero&#39;</span><span class="p">,</span> <span class="n">bare_gv</span><span class="p">),</span> <span class="n">bare_gv</span><span class="p">)</span>
+
+        <span class="n">term</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;&lt;query&gt;&#39;</span><span class="p">]</span>
+
+        <span class="n">term</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\-,\.\&lt;\&gt;\(\)\;\:\@</span><span class="se">\&#39;</span><span class="s1">\#\~\}\{\[\]\&quot;\!</span><span class="se">\\</span><span class="s1">/]&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+        <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;“&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">term</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;[^\s]+?\s[Ee]dition&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+        <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">s&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;’s&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;’&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">term</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;”&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">term</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[Aa]ccessed&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+        <span class="n">term</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;meTypesetbr&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+        <span class="n">term</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="n">zotero</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+        <span class="n">bare_gv</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="n">bare_gv</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> results for </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">),</span> <span class="n">term</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+            <span class="n">interactive</span> <span class="o">=</span> <span class="n">Interactive</span><span class="p">(</span><span class="n">bare_gv</span><span class="p">)</span>
+            <span class="n">interactive</span><span class="o">.</span><span class="n">print_</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">JATS_format</span><span class="p">())</span>
+
+        <span class="k">return</span>
+
+    <span class="n">bibliography_database_instance</span> <span class="o">=</span> <span class="n">BibliographyDatabase</span><span class="p">(</span><span class="n">bare_gv</span><span class="p">)</span>
+    <span class="n">bibliography_database_instance</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

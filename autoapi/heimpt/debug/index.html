@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>heimpt.debug &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-heimpt.debug">
+<span id="heimpt-debug"></span><h1><a class="reference internal" href="#module-heimpt.debug" title="heimpt.debug"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heimpt.debug</span></code></a><a class="headerlink" href="#module-heimpt.debug" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="heimpt.debug.Debuggable">
+<em class="property">class </em><code class="sig-prename descclassname">heimpt.debug.</code><code class="sig-name descname">Debuggable</code><span class="sig-paren">(</span><em class="sig-param">module_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/debug.html#Debuggable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.debug.Debuggable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="heimpt.debug.Debug">
+<em class="property">class </em><code class="sig-prename descclassname">heimpt.debug.</code><code class="sig-name descname">Debug</code><a class="reference internal" href="../../../_modules/heimpt/debug.html#Debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.debug.Debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="heimpt.debug.Debug.enable_debug">
+<code class="sig-name descname">enable_debug</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/debug.html#Debug.enable_debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.debug.Debug.enable_debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables debugging. Is generally  set by Module initialisation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.debug.Debug.print_debug">
+<code class="sig-name descname">print_debug</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">module</em>, <em class="sig-param">message</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/debug.html#Debug.print_debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.debug.Debug.print_debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print debug message</p>
+<dl class="simple">
+<dt>module: python module</dt><dd><p>Returns the name of the module</p>
+</dd>
+<dt>message: str</dt><dd><p>message as a string</p>
+</dd>
+</dl>
+<p>print_()</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.debug.Debug.print_console">
+<code class="sig-name descname">print_console</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">module</em>, <em class="sig-param">message</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/debug.html#Debug.print_console"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.debug.Debug.print_console" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print debug message</p>
+<dl class="simple">
+<dt>module: python module</dt><dd><p>Returns the name of the module</p>
+</dd>
+<dt>message: str</dt><dd><p>message as a string</p>
+</dd>
+</dl>
+<p>print_()</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.debug.Debug.print_">
+<code class="sig-name descname">print_</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">module</em>, <em class="sig-param">message</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/debug.html#Debug.print_"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.debug.Debug.print_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints a formatted message</p>
+<dl class="simple">
+<dt>module: python module</dt><dd><p>Returns the name of the module</p>
+</dd>
+<dt>message: str</dt><dd><p>message as a string</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>message :str</dt><dd><p>Formatted Message , [Module name] message</p>
+</dd>
+</dl>
+<p>module.get_module_name()</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.debug.Debug.get_module_name">
+<code class="sig-name descname">get_module_name</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/debug.html#Debug.get_module_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.debug.Debug.get_module_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the name of the module for debugging and logging</p>
+<dl class="simple">
+<dt>name :string</dt><dd><p>Name of the Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.debug.Debug.fatal_error">
+<em class="property">static </em><code class="sig-name descname">fatal_error</code><span class="sig-paren">(</span><em class="sig-param">module</em>, <em class="sig-param">message</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/debug.html#Debug.fatal_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.debug.Debug.fatal_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints a formatted error message and exits</p>
+<dl class="simple">
+<dt>module: python module</dt><dd><p>Returns the name of the module</p>
+</dd>
+<dt>message: str</dt><dd><p>Error message</p>
+</dd>
+</dl>
+<p>module.get_module_name()</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heimpt.debug</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#heimpt.debug.Debuggable">Debuggable</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.debug.Debug">Debug</a><ul>
+<li><a class="reference internal" href="#heimpt.debug.Debug.enable_debug">enable_debug</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.debug.Debug.print_debug">print_debug</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.debug.Debug.print_console">print_console</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.debug.Debug.print_">print_</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.debug.Debug.get_module_name">get_module_name</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.debug.Debug.fatal_error">fatal_error</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/autoapi/heimpt/debug/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+:mod:`bin.settingsconfiguration`
+================================
+
+.. py:module:: bin.settingsconfiguration
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve, Dulip Withnage
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   
+
+.. py:class:: Settings(set_file, args)
+
+   
+   .. staticmethod:: setup_settings_file(args)
+
+
+
+   
+   .. staticmethod:: clean_path(path)
+
+
+
+   
+   .. staticmethod:: concat_path(parent, child)
+
+
+
+   
+   .. method:: get_setting(self, tag_name, caller, domain=None)
+
+
+
+   
+   .. staticmethod:: check_settings_file_exists(caller, set_file)
+
+
+
+   
+   .. staticmethod:: get_settings_file(caller, settings_file_path)
+
+
+
+

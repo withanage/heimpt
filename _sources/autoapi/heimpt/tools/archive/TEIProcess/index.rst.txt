@@ -1,0 +1,44 @@
+:mod:`heimpt.tools.archive.TEIProcess`
+======================================
+
+.. py:module:: heimpt.tools.archive.TEIProcess
+
+
+Module Contents
+---------------
+
+.. data:: numeral_map
+   
+
+   
+
+.. data:: ns_tei
+   :annotation: = {http://www.tei-c.org/ns/1.0}
+
+   
+
+.. py:class:: TEIProcess(cf)
+
+   command line tool to clean, modify, delete, merge jats files
+
+   
+   .. method:: print_definitions(self)
+
+
+
+   
+   .. method:: apply_transformations(self)
+
+      main method to apply transformations
+
+
+
+   
+   .. method:: create_files(self, f_name)
+
+
+
+
+.. function:: main()
+
+

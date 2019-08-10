@@ -1,0 +1,961 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.teimanipulate &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.teimanipulate</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">etree</span>
+<span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">objectify</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">manipulate</span> <span class="k">import</span> <span class="n">Manipulate</span>
+
+<div class="viewcode-block" id="__author__"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.__author__">[docs]</a><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Martin Paul Eve, Dulip Withanage&quot;</span></div>
+<div class="viewcode-block" id="__email__"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.__email__">[docs]</a><span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;martin@martineve.com&quot;</span></div>
+
+
+<div class="viewcode-block" id="TeiManipulate"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate">[docs]</a><span class="k">class</span> <span class="nc">TeiManipulate</span><span class="p">(</span><span class="n">Manipulate</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gv</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">gv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dom_to_load</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">tei_file_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dom_temp_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">tei_temp_file_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mod_name</span> <span class="o">=</span> <span class="s1">&#39;TEI&#39;</span>
+        <span class="n">Manipulate</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gv</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TeiManipulate.save_tree"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.save_tree">[docs]</a>    <span class="k">def</span> <span class="nf">save_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dom_temp_file</span><span class="p">,</span> <span class="n">pretty_print</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--prettytei&#39;</span><span class="p">])</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dom_to_load</span><span class="p">,</span> <span class="n">pretty_print</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--prettytei&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.get_object_list"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.get_object_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_object_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">,</span> <span class="n">start_text</span><span class="p">,</span> <span class="n">wrap_tag</span><span class="p">):</span>
+        <span class="c1"># load the DOM</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="n">object_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># search the tree and grab the parent</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">start_text</span><span class="p">):</span>
+                    <span class="n">object_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">objectify</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;&lt;</span><span class="si">{1}</span><span class="s1">&gt;&lt;entry&gt;</span><span class="si">{0}</span><span class="s1">&#39;</span>
+                                                            <span class="sa">u</span><span class="s1">&#39;&lt;/entry&gt;&lt;/</span><span class="si">{1}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">child</span><span class="p">),</span>
+                                                                                     <span class="n">wrap_tag</span><span class="p">)))</span>
+
+        <span class="k">return</span> <span class="n">object_list</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.drop_addin_json"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.drop_addin_json">[docs]</a>    <span class="k">def</span> <span class="nf">drop_addin_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">,</span> <span class="n">start_text</span><span class="p">,</span> <span class="n">replace_tag</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">caller</span><span class="p">):</span>
+        <span class="c1"># load the DOM</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="c1"># search the tree and grab the parent</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="c1"># check that this is a known addin</span>
+                <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">start_text</span><span class="p">):</span>
+                    <span class="n">tag_to_parse</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;.+}\s?&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">child</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+                    <span class="n">new_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="n">replace_tag</span><span class="p">,</span> <span class="n">rel</span><span class="o">=</span><span class="n">attribute</span><span class="p">)</span>
+                    <span class="n">new_element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">tag_to_parse</span>
+
+                    <span class="n">child</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
+
+                    <span class="k">for</span> <span class="n">subchild</span> <span class="ow">in</span> <span class="n">child</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">subchild</span><span class="p">)</span> <span class="ow">is</span> <span class="n">etree</span><span class="o">.</span><span class="n">_Element</span><span class="p">:</span>
+                            <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">new_element</span><span class="p">,</span> <span class="n">subchild</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+                    <span class="n">child</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.do_list_bibliography"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.do_list_bibliography">[docs]</a>    <span class="k">def</span> <span class="nf">do_list_bibliography</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">):</span>
+        <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">year_test</span> <span class="o">=</span>  <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;((1|2)\d</span><span class="si">{3}</span><span class="s1">[a-z]?)|(n\.d\.)&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">last_list</span> <span class="ow">in</span> <span class="n">xpath</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">last_list</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;list&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">last_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+
+                    <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">last_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="n">match</span> <span class="o">=</span> <span class="n">year_test</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+                        <span class="c1"># it is a list, so change to reference list</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Found a list as last element. Treating as bibliography.&#39;</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">used_list_method</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">last_list</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}div&#39;</span>
+                        <span class="n">last_list</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;Bibliography&#39;</span>
+
+                        <span class="n">parent_element</span> <span class="o">=</span> <span class="kc">None</span>
+
+                        <span class="c1"># now convert each line</span>
+                        <span class="k">for</span> <span class="n">list_item</span> <span class="ow">in</span> <span class="n">last_list</span><span class="p">:</span>
+                            <span class="n">new_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)</span>
+                            <span class="n">new_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;Bibliography&#39;</span>
+
+                            <span class="n">list_item</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
+                            <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">new_element</span><span class="p">,</span> <span class="n">list_item</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                            <span class="n">list_item</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}ref&#39;</span>
+                            <span class="n">list_item</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span>
+            <span class="k">elif</span> <span class="n">last_list</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">):</span>
+
+                <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">last_list</span><span class="p">)</span>
+                <span class="n">match</span> <span class="o">=</span> <span class="n">year_test</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+                    <span class="c1"># it is a list, so change to reference list</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Found a list as last element via item. Treating as bibliography.&#39;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">used_list_method</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">last_list</span> <span class="o">=</span> <span class="n">last_list</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+                    <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">last_list</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}div&#39;</span>
+                    <span class="n">last_list</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;Bibliography&#39;</span>
+
+                    <span class="n">parent_element</span> <span class="o">=</span> <span class="kc">None</span>
+
+                    <span class="c1"># now convert each line</span>
+                    <span class="k">for</span> <span class="n">list_item</span> <span class="ow">in</span> <span class="n">last_list</span><span class="p">:</span>
+                        <span class="n">new_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)</span>
+                        <span class="n">new_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;Bibliography&#39;</span>
+
+                        <span class="n">list_item</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
+                        <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">new_element</span><span class="p">,</span> <span class="n">list_item</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                        <span class="n">list_item</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}ref&#39;</span>
+                        <span class="n">list_item</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Last element in document was </span><span class="si">{0}</span><span class="s1">. Not treating as &#39;</span>
+                                             <span class="sa">u</span><span class="s1">&#39;bibliography.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xpath</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tag</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">found</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.do_cit_bibliography"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.do_cit_bibliography">[docs]</a>    <span class="k">def</span> <span class="nf">do_cit_bibliography</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">):</span>
+        <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">for</span> <span class="n">last_list</span> <span class="ow">in</span> <span class="n">xpath</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">last_list</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}cit&#39;</span><span class="p">:</span>
+                <span class="c1"># it is a list, so change to reference list</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Found a cit as last element. Treating as bibliography.&#39;</span><span class="p">)</span>
+                <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="n">sibling_tag</span> <span class="o">=</span> <span class="n">last_list</span><span class="o">.</span><span class="n">tag</span>
+
+                <span class="n">sibling</span> <span class="o">=</span> <span class="n">last_list</span><span class="o">.</span><span class="n">getprevious</span><span class="p">()</span>
+
+                <span class="k">while</span> <span class="n">sibling</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="n">sibling_tag</span><span class="p">:</span>
+                    <span class="n">next_sibling</span> <span class="o">=</span> <span class="n">sibling</span><span class="o">.</span><span class="n">getprevious</span><span class="p">()</span>
+
+                    <span class="n">new_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)</span>
+                    <span class="n">new_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;Bibliography&#39;</span>
+
+                    <span class="n">sibling</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
+                    <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">new_element</span><span class="p">,</span> <span class="n">sibling</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                    <span class="n">sibling</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}ref&#39;</span>
+                    <span class="n">sibling</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span>
+
+                    <span class="n">sibling</span> <span class="o">=</span> <span class="n">next_sibling</span>
+
+
+                <span class="n">new_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)</span>
+                <span class="n">new_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;Bibliography&#39;</span>
+
+                <span class="n">last_list</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
+                <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">new_element</span><span class="p">,</span> <span class="n">last_list</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                <span class="n">last_list</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}ref&#39;</span>
+                <span class="n">last_list</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span>
+
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Last element in document was </span><span class="si">{0}</span><span class="s1">. Not treating as &#39;</span>
+                                             <span class="sa">u</span><span class="s1">&#39;bibliography.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xpath</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tag</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">found</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.find_reference_list_in_word_list"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.find_reference_list_in_word_list">[docs]</a>    <span class="k">def</span> <span class="nf">find_reference_list_in_word_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="c1"># determine if the last element in the document is a list</span>
+        <span class="n">select</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;(//tei:div/*[not(self::tei:div)])[last()]&#39;</span>
+
+        <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># remove any empty lists</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:list&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+
+        <span class="n">etree</span><span class="o">.</span><span class="n">strip_elements</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s1">&#39;REMOVE&#39;</span><span class="p">)</span>
+
+        <span class="n">xpath</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">select</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+
+        <span class="n">found</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_list_bibliography</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
+            <span class="c1"># iterate up one more paragraph</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">last_para</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">select</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})[</span><span class="mi">0</span><span class="p">]</span>
+
+                <span class="n">second_last</span> <span class="o">=</span> <span class="n">last_para</span><span class="o">.</span><span class="n">getprevious</span><span class="p">()</span>
+
+                <span class="n">found</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_list_bibliography</span><span class="p">(</span><span class="n">second_last</span><span class="p">)</span>
+
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">do_cit_bibliography</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Ascertaining if last element is a bibliographic list&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">found</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.find_or_create_element"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.find_or_create_element">[docs]</a>    <span class="k">def</span> <span class="nf">find_or_create_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">element_tag</span><span class="p">,</span> <span class="n">add_xpath</span><span class="p">,</span> <span class="n">is_sibling</span><span class="p">):</span>
+        <span class="c1"># find_or_create_elements(tree, &#39;back&#39;, &#39;//body&#39;, true)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;//tei:&#39;</span> <span class="o">+</span> <span class="n">element_tag</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Found existing </span><span class="si">{0}</span><span class="s1">. Using it.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element_tag</span><span class="p">))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Unable to find an existing </span><span class="si">{0}</span><span class="s1"> element.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element_tag</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Creating new </span><span class="si">{0}</span><span class="s1"> element.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element_tag</span><span class="p">))</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">add_xpath</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">new_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="n">element_tag</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">is_sibling</span><span class="p">:</span>
+                <span class="n">ret</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">new_element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">new_element</span>
+
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.enclose_bibliography_tags"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.enclose_bibliography_tags">[docs]</a>    <span class="k">def</span> <span class="nf">enclose_bibliography_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">,</span> <span class="n">top_tag</span><span class="p">,</span> <span class="n">sub_tag</span><span class="p">,</span> <span class="n">attrib</span><span class="p">,</span> <span class="n">attribvalue</span><span class="p">):</span>
+        <span class="c1">#tei_manipulator.enclose_bibliography_tags(&#39;//tei:p[@rend=&quot;Bibliography&quot;]&#39;, &#39;back&#39;, &#39;div&#39;, &#39;type&#39;, &#39;bibliogr&#39;)</span>
+
+        <span class="c1"># load the DOM</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># find the parent</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_or_create_element</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s1">&#39;back&#39;</span><span class="p">,</span> <span class="s1">&#39;//tei:body&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="n">top_tag</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}&#39;</span> <span class="o">+</span> <span class="n">top_tag</span><span class="p">):</span>
+            <span class="n">new_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="n">top_tag</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Mismatch </span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span> <span class="n">top_tag</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_element</span> <span class="o">=</span> <span class="n">parent</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sub_element</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:back/tei:div[@type=&quot;bibliogr&quot;]&#39;</span><span class="p">,</span>
+                                     <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Found existing bibliography block. Using it.&#39;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Creating bibliography block.&#39;</span><span class="p">)</span>
+            <span class="n">sub_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="n">sub_tag</span><span class="p">)</span>
+            <span class="n">sub_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="n">attrib</span><span class="p">]</span> <span class="o">=</span> <span class="n">attribvalue</span>
+            <span class="n">new_element</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sub_element</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parent</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="n">top_tag</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">parent</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}&#39;</span> <span class="o">+</span> <span class="n">top_tag</span><span class="p">:</span>
+            <span class="n">parent</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">sub_element</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># remove all refs within</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">xpath</span> <span class="o">+</span> <span class="sa">u</span><span class="s1">&#39;/tei:ref&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">xpath</span> <span class="o">+</span> <span class="sa">u</span><span class="s1">&#39;/tei:ref&#39;</span><span class="p">,</span>
+                                  <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+
+                <span class="c1"># ensure that the ref is just a dud and not a valid link to a protocol schema</span>
+                <span class="k">if</span> <span class="s1">&#39;target&#39;</span> <span class="ow">in</span> <span class="n">ref</span><span class="o">.</span><span class="n">attrib</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s1">&#39;:&#39;</span> <span class="ow">in</span> <span class="n">ref</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]:</span>
+                    <span class="n">ref</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span>
+                    <span class="n">ref</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Bibliography&#39;</span>
+                    <span class="k">if</span> <span class="s1">&#39;target&#39;</span> <span class="ow">in</span> <span class="n">ref</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+                        <span class="k">del</span> <span class="n">ref</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+
+                    <span class="n">ref_parent</span> <span class="o">=</span> <span class="n">ref</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+
+                    <span class="n">ref_parent</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">ref_parent</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  
+                      <span class="n">ref_parent</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">ref_parent</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+                <span class="n">ref</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span>
+                <span class="n">ref</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Bibliography&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Processed bibliography&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.contains_graphic"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.contains_graphic">[docs]</a>    <span class="k">def</span> <span class="nf">contains_graphic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">element</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;graphic&#39;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+            <span class="n">sub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">contains_graphic</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">sub</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.check_for_continued_references"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.check_for_continued_references">[docs]</a>    <span class="k">def</span> <span class="nf">check_for_continued_references</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">found_element</span><span class="p">,</span> <span class="n">numeric_start_test</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">elements_to_parse</span><span class="p">,</span> <span class="n">year_test</span><span class="p">,</span>
+                                       <span class="n">blank_text</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Enumerating next section for references&#39;</span><span class="p">)</span>
+        <span class="n">next_div</span> <span class="o">=</span> <span class="n">found_element</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span>
+
+        <span class="n">a_child</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">stop</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">next_div</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">next_div</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+
+            <span class="n">child</span> <span class="o">=</span> <span class="n">next_div</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">a_child</span> <span class="o">=</span> <span class="n">child</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+
+            <span class="n">numeric_start</span> <span class="o">=</span> <span class="n">numeric_start_test</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">numeric_start</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Halting parsing of references after break as numeric start found &#39;</span>
+                                             <span class="sa">u</span><span class="s1">&#39;(triggered by </span><span class="si">{0}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="n">match</span> <span class="o">=</span> <span class="n">year_test</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">inner_match</span> <span class="o">=</span> <span class="n">blank_text</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">match</span> <span class="ow">or</span> <span class="n">inner_match</span><span class="p">:</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">elements_to_parse</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;[REF</span><span class="si">{0}</span><span class="s1">] Adding </span><span class="si">{1}</span><span class="s1"> from next section&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+
+                <span class="k">for</span> <span class="n">sibling</span> <span class="ow">in</span> <span class="n">child</span><span class="o">.</span><span class="n">itersiblings</span><span class="p">():</span>
+                    <span class="c1"># once we&#39;ve got a definite section that is references, we will add all of it</span>
+
+                    <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">sibling</span><span class="p">)</span>
+                    <span class="n">numeric_start</span> <span class="o">=</span> <span class="n">numeric_start_test</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">numeric_start</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Halting parsing of references after break as numeric start found&#39;</span>
+                                                     <span class="sa">u</span><span class="s1">&#39; (triggered by </span><span class="si">{0}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+                        <span class="k">return</span> <span class="kc">False</span>
+
+                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">elements_to_parse</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sibling</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;[REF</span><span class="si">{0}</span><span class="s1">] Adding </span><span class="si">{1}</span><span class="s1"> from next section&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">a_child</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">should_fail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_for_continued_references</span><span class="p">(</span><span class="n">a_child</span><span class="p">,</span> <span class="n">numeric_start_test</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">elements_to_parse</span><span class="p">,</span>
+                                                              <span class="n">year_test</span><span class="p">,</span> <span class="n">blank_text</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">should_fail</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.find_references_from_cue"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.find_references_from_cue">[docs]</a>    <span class="k">def</span> <span class="nf">find_references_from_cue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cue</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="c1"># load the DOM</span>
+
+        <span class="n">found_element</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">remove</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cit&#39;</span><span class="p">,</span> <span class="s1">&#39;quote&#39;</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:p | //tei:head&#39;</span><span class="p">,</span>
+                                <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+
+            <span class="n">skip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">contains_graphic</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">skip</span><span class="p">:</span>
+                <span class="n">stripped_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">child</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;:.&#39;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">stripped_text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="n">cue</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+                    <span class="n">found_element</span> <span class="o">=</span> <span class="n">child</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Found linguistic cue: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stripped_text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span>
+                    <span class="k">break</span>
+
+        <span class="c1"># the endgame switch is set when we&#39;re handling the last two lines (which are sometimes acknowledgements etc)</span>
+        <span class="n">endgame</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">last</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># pre-compile all needed regular expressions</span>
+        <span class="n">year_test</span> <span class="o">=</span>  <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;((1|2)\d</span><span class="si">{3}</span><span class="s1">[a-z]?)|(n\.d\.)&#39;</span><span class="p">)</span>
+        <span class="n">blank_text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;XXXX&#39;</span><span class="p">)</span>
+        <span class="n">numeric_start_test</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^(?P&lt;start&gt;[\[{(]*?[\d\.]+[\]})]*?\s*?).+&#39;</span><span class="p">)</span>
+        <span class="n">break_index</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">elements_to_parse</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="n">found_element</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">found_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="k">for</span> <span class="n">sibling</span> <span class="ow">in</span> <span class="n">found_element</span><span class="o">.</span><span class="n">itersiblings</span><span class="p">():</span>
+
+                <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">sibling</span><span class="p">)</span>
+
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">elements_to_parse</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sibling</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;[REF</span><span class="si">{0}</span><span class="s1">] Adding </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+
+            <span class="n">break_index</span> <span class="o">=</span> <span class="n">count</span> <span class="o">-</span> <span class="mi">1</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_for_continued_references</span><span class="p">(</span><span class="n">found_element</span><span class="p">,</span> <span class="n">numeric_start_test</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">elements_to_parse</span><span class="p">,</span> <span class="n">year_test</span><span class="p">,</span>
+                                                <span class="n">blank_text</span><span class="p">)</span>
+
+            <span class="c1"># at this point we have a list with all potential reference elements in it</span>
+            <span class="c1"># we also have an index to that list after which references have spanned section breaks</span>
+            <span class="c1"># after this point, we want to be more cautious in joining references together</span>
+
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">failcount</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">elements_to_parse</span><span class="p">:</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                <span class="n">match</span> <span class="o">=</span> <span class="n">year_test</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+                <span class="n">inner_match</span> <span class="o">=</span> <span class="n">blank_text</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">match</span> <span class="ow">or</span> <span class="n">inner_match</span><span class="p">:</span>
+                    <span class="c1"># this is straightforward: the reference looks like a reference</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;[REF</span><span class="si">{0}</span><span class="s1">] Adding bibliography element from linguistic &#39;</span>
+                                                 <span class="sa">u</span><span class="s1">&#39;cue&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+                    <span class="n">item</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Bibliography&#39;</span>
+                    <span class="n">item</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span>
+                    <span class="n">last</span> <span class="o">=</span> <span class="n">item</span>
+
+                    <span class="n">failcount</span> <span class="o">=</span> <span class="mi">0</span>
+
+                    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">remove_tag</span> <span class="ow">in</span> <span class="n">remove</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">remove_tag</span><span class="p">):</span>
+                                <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+
+                <span class="k">elif</span> <span class="n">elements_to_parse</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">&gt;</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">elements_to_parse</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span> <span class="ow">and</span> <span class="n">last</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1"># this is the last two lines of a reference block when it doesn&#39;t look like a reference</span>
+                    <span class="c1"># it could easily be some stranded acknowledgements, so we leave it unless it&#39;s just a link</span>
+                    <span class="n">parsed</span> <span class="o">=</span> <span class="kc">False</span>
+
+                    <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">item</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;ref&#39;</span><span class="p">)</span> \
+                                    <span class="ow">and</span> <span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">tail</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span> <span class="ow">or</span> <span class="n">child</span><span class="o">.</span><span class="n">tail</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+                                <span class="n">item</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;hi&#39;</span>
+                                <span class="n">last</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                                <span class="n">parsed</span> <span class="o">=</span> <span class="kc">True</span>
+
+                                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;[REF</span><span class="si">{0}</span><span class="s1">] Appending to previous element &#39;</span>
+                                                             <span class="sa">u</span><span class="s1">&#39;despite endgame condition&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">parsed</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;[REF</span><span class="si">{0}</span><span class="s1">] Left item in situ&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+
+                <span class="k">elif</span> <span class="n">count</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="n">break_index</span> <span class="ow">and</span> <span class="n">last</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1"># we treat this portion more sensitively because it is spanning sections and bail if more than</span>
+                    <span class="c1"># two references in a row do not match</span>
+                    <span class="n">failcount</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                    <span class="k">if</span> <span class="n">failcount</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Bailing from linguistic cue parsing on fail count condition&#39;</span><span class="p">)</span>
+                        <span class="k">break</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;[REF</span><span class="si">{0}</span><span class="s1">] Appending to previous element&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+                        <span class="n">item</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;hi&#39;</span>
+                        <span class="n">last</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+                <span class="k">elif</span> <span class="n">last</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1"># otherwise, we will add this reference to the last block used</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;[REF</span><span class="si">{0}</span><span class="s1">] Appending to previous element&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+                    <span class="n">item</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;hi&#39;</span>
+                    <span class="n">last</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;[REF</span><span class="si">{0}</span><span class="s1">] Left item in situ&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+
+            <span class="n">etree</span><span class="o">.</span><span class="n">strip_tags</span><span class="p">(</span><span class="n">found_element</span><span class="o">.</span><span class="n">getparent</span><span class="p">(),</span> <span class="s1">&#39;REMOVE&#39;</span><span class="p">)</span>
+
+            <span class="n">found_element</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">found_element</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.tag_bibliography"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.tag_bibliography">[docs]</a>    <span class="k">def</span> <span class="nf">tag_bibliography</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">,</span> <span class="n">start_text</span><span class="p">,</span> <span class="n">caller</span><span class="p">,</span> <span class="n">parent_tag</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;{http://www.tei-c.org/ns/1.0}sec&#39;</span><span class="p">,</span>
+                         <span class="n">classify_siblings</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sibling_tag</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;{http://www.tei-c.org/ns/1.0}cit&#39;</span><span class="p">,</span>
+                         <span class="n">sub_xpath</span><span class="o">=</span><span class="s1">&#39;//tei:quote/tei:p | //tei:quote/tei:head&#39;</span><span class="p">):</span>
+        <span class="c1"># load the DOM</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">child</span><span class="p">)</span> <span class="ow">is</span> <span class="n">etree</span><span class="o">.</span><span class="n">_Element</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">start_text</span><span class="p">):</span>
+                    <span class="n">child</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">start_text</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                    <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">child</span><span class="o">.</span><span class="n">text</span> <span class="ow">and</span> <span class="n">child</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">start_text</span><span class="p">):</span>
+                <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">child</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">start_text</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">getchildren</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;{http://www.tei-c.org/ns/1.0}hi&quot;</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">child</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">start_text</span><span class="p">):</span>
+                                <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+                                <span class="n">child</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">start_text</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
+                <span class="k">return</span>
+
+            <span class="n">parent</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+
+            <span class="k">while</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+                <span class="k">if</span> <span class="n">parent</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="n">parent_tag</span><span class="p">:</span>
+                    <span class="n">parent</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Bibliography&#39;</span>
+                    <span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">classify_siblings</span><span class="p">:</span>
+                <span class="n">parent</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+
+                <span class="n">sibling</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="k">while</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">parent</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="n">sibling_tag</span><span class="p">:</span>
+                        <span class="n">sibling</span> <span class="o">=</span> <span class="n">parent</span>
+                        <span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">sibling</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">sibling</span><span class="o">.</span><span class="n">itersiblings</span><span class="p">():</span>
+                        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">child</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">sub_xpath</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+                            <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+                            <span class="n">element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Bibliography&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Failed to find sibling in bibliographic addin classification&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.tag_bibliography_non_csl"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.tag_bibliography_non_csl">[docs]</a>    <span class="k">def</span> <span class="nf">tag_bibliography_non_csl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">,</span> <span class="n">start_text</span><span class="p">,</span> <span class="n">caller</span><span class="p">):</span>
+        <span class="c1"># load the DOM</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+        <span class="n">change_element</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">start_text</span><span class="p">):</span>
+                    <span class="n">child</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">start_text</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                    <span class="n">change_element</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">change_element</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># change the &quot;sec&quot; above to &quot;p&quot;</span>
+            <span class="n">change_element</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;div&#39;</span>
+
+            <span class="n">new_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">)</span>
+            <span class="n">change_element</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
+            <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">new_element</span><span class="p">,</span> <span class="n">change_element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+            <span class="c1"># change all sub-elements to ref</span>
+            <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">change_element</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}head&#39;</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Dropping head element: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;unicode&quot;</span><span class="p">)))</span>
+                    <span class="n">change_element</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">element</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}p&#39;</span><span class="p">:</span>
+                    <span class="n">outer</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)</span>
+                    <span class="n">outer</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Bibliography&#39;</span>
+                    <span class="n">element</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;ref&#39;</span>
+                    <span class="n">element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span>
+
+                    <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">outer</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                    <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">new_element</span><span class="p">,</span> <span class="n">outer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+            <span class="n">new_element</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">change_element</span><span class="p">)</span>
+
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.drop_addin"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.drop_addin">[docs]</a>    <span class="k">def</span> <span class="nf">drop_addin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">,</span> <span class="n">start_text</span><span class="p">,</span> <span class="n">sub_tag</span><span class="p">,</span> <span class="n">replace_tag</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">caller</span><span class="p">,</span> <span class="n">wrap_tag</span><span class="p">,</span> <span class="n">delete_original</span><span class="p">):</span>
+        <span class="c1"># load the DOM</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="c1"># search the tree and grab the parent</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="c1"># check that this is a known addin</span>
+                <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">start_text</span><span class="p">):</span>
+                    <span class="c1"># parse the (encoded) text of this element into a new tree</span>
+                    <span class="n">tag_to_parse</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&amp;&#39;</span><span class="p">,</span> <span class="s1">&#39;&amp;amp;&#39;</span><span class="p">,</span> <span class="n">child</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                    <span class="n">sub_tree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;&lt;</span><span class="si">{1}</span><span class="s1">&gt;&lt;entry&gt;</span><span class="si">{0}</span><span class="s1">&lt;/entry&gt;&lt;/</span><span class="si">{1}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag_to_parse</span><span class="p">,</span> <span class="n">wrap_tag</span><span class="p">))</span>
+
+                    <span class="c1"># extract the sub element from this new tree and preserve the tail text</span>
+                    <span class="n">sub_element</span> <span class="o">=</span> <span class="n">sub_tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//entry/</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sub_tag</span><span class="p">),</span>
+                                                 <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub_element</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">sub_element</span> <span class="o">=</span> <span class="n">sub_element</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Preserving tail of &#39;</span>
+                                                     <span class="sa">u</span><span class="s1">&#39;dropped </span><span class="si">{0}</span><span class="s1"> element: </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">caller</span><span class="o">.</span><span class="n">get_module_name</span><span class="p">(),</span>
+                                                                                        <span class="n">sub_element</span><span class="o">.</span><span class="n">tail</span><span class="p">))</span>
+
+                        <span class="c1"># add the preserved tail text within the specified replacement tag type</span>
+                        <span class="n">new_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="n">replace_tag</span><span class="p">,</span> <span class="n">rel</span> <span class="o">=</span> <span class="n">attribute</span><span class="p">)</span>
+                        <span class="n">new_element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">sub_element</span><span class="o">.</span><span class="n">tail</span>
+                        <span class="n">child</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">delete_original</span><span class="p">:</span>
+                        <span class="n">child</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.tag_headings"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.tag_headings">[docs]</a>    <span class="k">def</span> <span class="nf">tag_headings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># load the DOM</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="n">iterator</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># search the tree and grab the parent</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;//tei:head&quot;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;meTypesetHeadingID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">iterator</span><span class="p">)</span>
+            <span class="n">iterator</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Assigned IDs to all headings&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">iterator</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.check_for_disallowed_elements"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.check_for_disallowed_elements">[docs]</a>    <span class="k">def</span> <span class="nf">check_for_disallowed_elements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">allowed_elements</span><span class="p">,</span> <span class="n">sub_element</span><span class="p">,</span> <span class="n">exception_elements</span><span class="p">):</span>
+        <span class="n">add</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="n">sub_element</span><span class="o">.</span><span class="n">tag</span> \
+            <span class="ow">and</span> <span class="ow">not</span> <span class="n">sub_element</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;{http://www.tei-c.org/ns/1.0}&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="n">allowed_elements</span><span class="p">:</span>
+            <span class="n">add</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Guessed title contained a disallowed &#39;</span>
+                                         <span class="sa">u</span><span class="s1">&#39;element (</span><span class="si">{0}</span><span class="s1">). Skipping.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sub_element</span><span class="o">.</span><span class="n">tag</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">add</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.change_outer"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.change_outer">[docs]</a>    <span class="k">def</span> <span class="nf">change_outer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outer_xpath</span><span class="p">,</span> <span class="n">new_value</span><span class="p">,</span> <span class="n">size_attribute</span><span class="p">):</span>
+        <span class="c1"># changes the parent element of the outer_xpath expression to the new_value</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="n">allowed_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="s1">&#39;italic&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;hi&#39;</span><span class="p">,</span> <span class="s1">&#39;seg&#39;</span><span class="p">,</span> <span class="s1">&#39;lb&#39;</span><span class="p">,</span> <span class="s1">&#39;ref&#39;</span><span class="p">]</span>
+        <span class="n">exception_elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;lb&#39;</span><span class="p">]</span>
+
+        <span class="c1"># search the tree and grab the parent</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">outer_xpath</span> <span class="o">+</span> <span class="s2">&quot;/..&quot;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="n">add</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">for</span> <span class="n">sub_element</span> <span class="ow">in</span> <span class="n">child</span><span class="p">:</span>
+                <span class="n">add</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_for_disallowed_elements</span><span class="p">(</span><span class="n">allowed_elements</span><span class="p">,</span> <span class="n">sub_element</span><span class="p">,</span> <span class="n">exception_elements</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">add</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+                <span class="k">for</span> <span class="n">sub_child</span> <span class="ow">in</span> <span class="n">sub_element</span><span class="p">:</span>
+                    <span class="n">add</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_for_disallowed_elements</span><span class="p">(</span><span class="n">allowed_elements</span><span class="p">,</span> <span class="n">sub_child</span><span class="p">,</span> <span class="n">exception_elements</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">add</span><span class="p">:</span>
+                        <span class="k">break</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">add</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+            <span class="k">if</span> <span class="n">add</span><span class="p">:</span>
+                <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">new_value</span>
+                <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;meTypesetSize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">size_attribute</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+    <span class="c1"># changes the parent element of the outer_xpath expression to the new_value</span>
+<div class="viewcode-block" id="TeiManipulate.change_self_size"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.change_self_size">[docs]</a>    <span class="k">def</span> <span class="nf">change_self_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outer_xpath</span><span class="p">,</span> <span class="n">size_attribute</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="c1"># search the tree and grab the parent</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">outer_xpath</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="sa">u</span><span class="s1">&#39;meTypesetSize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">size_attribute</span>
+            <span class="k">if</span> <span class="s1">&#39;rend&#39;</span> <span class="ow">in</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="k">if</span> <span class="sa">u</span><span class="s1">&#39;bold&#39;</span> <span class="ow">in</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="sa">u</span><span class="s1">&#39;rend&#39;</span><span class="p">]:</span>
+                    <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="sa">u</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="sa">u</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+    <span class="c1"># changes the parent element of the outer_xpath expression to the new_value</span>
+<div class="viewcode-block" id="TeiManipulate.enclose_and_change_self_size"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.enclose_and_change_self_size">[docs]</a>    <span class="k">def</span> <span class="nf">enclose_and_change_self_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outer_xpath</span><span class="p">,</span> <span class="n">size_attribute</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">change_tag</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="c1"># search the tree and grab the parent</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">outer_xpath</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Enclosing and changing size: </span><span class="si">{0}</span><span class="s1"> to </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span> <span class="n">change_tag</span><span class="p">))</span>
+            <span class="n">new_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="sa">u</span><span class="s1">&#39;meTypesetSize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">size_attribute</span>
+            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}&#39;</span> <span class="o">+</span> <span class="n">change_tag</span><span class="p">:</span>
+                <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">sub_element</span> <span class="ow">in</span> <span class="n">child</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">sub_element</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}&#39;</span> <span class="o">+</span> <span class="n">change_tag</span><span class="p">:</span>
+                        <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+
+            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">!=</span> <span class="s1">&#39;REMOVE&#39;</span><span class="p">:</span>
+                <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">change_tag</span>
+
+            <span class="n">child</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
+            <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">new_element</span><span class="p">,</span> <span class="n">child</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;REMOVE&#39;</span><span class="p">:</span>
+                <span class="n">etree</span><span class="o">.</span><span class="n">strip_tags</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">getparent</span><span class="p">(),</span> <span class="s1">&#39;REMOVE&#39;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="k">if</span> <span class="sa">u</span><span class="s1">&#39;bold&#39;</span> <span class="ow">in</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="sa">u</span><span class="s1">&#39;rend&#39;</span><span class="p">]:</span>
+                    <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="sa">u</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="sa">u</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.move_size_div"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.move_size_div">[docs]</a>    <span class="k">def</span> <span class="nf">move_size_div</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">heading_id</span><span class="p">,</span> <span class="n">sibling_id</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="n">source_node</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;//tei:head[@meTypesetHeadingID=</span><span class="se">\&#39;</span><span class="si">{0}</span><span class="se">\&#39;</span><span class="s1">]/..&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">heading_id</span><span class="p">)),</span>
+                                 <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">while</span> <span class="n">source_node</span><span class="o">.</span><span class="n">tag</span> <span class="o">!=</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}div&#39;</span><span class="p">:</span>
+            <span class="n">source_node</span> <span class="o">=</span> <span class="n">source_node</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">source_node</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Encountered no div traversing up tree. Bailing.&#39;</span><span class="p">)</span>
+                <span class="k">return</span>
+
+        <span class="n">destination_node</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;//tei:head[@meTypesetHeadingID=</span><span class="se">\&#39;</span><span class="si">{0}</span><span class="se">\&#39;</span><span class="s1">]/..&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sibling_id</span><span class="p">)),</span>
+                                      <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">while</span> <span class="n">destination_node</span><span class="o">.</span><span class="n">tag</span> <span class="o">!=</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}div&#39;</span><span class="p">:</span>
+            <span class="n">destination_node</span> <span class="o">=</span> <span class="n">destination_node</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">destination_node</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Encountered no div traversing up tree. Bailing.&#39;</span><span class="p">)</span>
+                <span class="k">return</span>
+
+        <span class="n">destination_node</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">source_node</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.resize_headings"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.resize_headings">[docs]</a>    <span class="k">def</span> <span class="nf">resize_headings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old_size</span><span class="p">,</span> <span class="n">new_size</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="n">nodes_to_downsize</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;//tei:head[@meTypesetSize=</span><span class="se">\&#39;</span><span class="si">{0}</span><span class="se">\&#39;</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">old_size</span><span class="p">)),</span>
+                                       <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+        <span class="k">for</span> <span class="n">node_to_downsize</span> <span class="ow">in</span> <span class="n">nodes_to_downsize</span><span class="p">:</span>
+            <span class="n">node_to_downsize</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;meTypesetSize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_size</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Resizing node from: </span><span class="si">{0}</span><span class="s1"> to </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">old_size</span><span class="p">,</span> <span class="n">new_size</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.enclose"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.enclose">[docs]</a>    <span class="k">def</span> <span class="nf">enclose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_xpath</span><span class="p">,</span> <span class="n">select_xpath</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="n">node</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">start_xpath</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">div</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">addprevious</span><span class="p">(</span><span class="n">div</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Selecting for enclosure: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">select_xpath</span><span class="p">))</span>
+
+        <span class="c1"># search the tree and grab the elements</span>
+        <span class="n">child</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">select_xpath</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+
+        <span class="c1"># move the elements</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">child</span><span class="p">:</span>
+            <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.enclose_all"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.enclose_all">[docs]</a>    <span class="k">def</span> <span class="nf">enclose_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_xpath</span><span class="p">,</span> <span class="n">new_enclose</span><span class="p">,</span> <span class="n">start_index</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Selecting for enclosure: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">start_xpath</span><span class="p">))</span>
+
+        <span class="c1"># search the tree and grab the elements</span>
+        <span class="n">child</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">start_xpath</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+
+        <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">added</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">div</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="n">new_enclose</span><span class="p">)</span>
+
+        <span class="c1"># move the elements</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">child</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">added</span><span class="p">:</span>
+                <span class="n">element</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">addprevious</span><span class="p">(</span><span class="n">div</span><span class="p">)</span>
+                <span class="n">added</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.change_wmf_image_links"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.change_wmf_image_links">[docs]</a>    <span class="k">def</span> <span class="nf">change_wmf_image_links</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">image_link</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:graphic&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">converted_image_link</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\.(w|e)mf&#39;</span><span class="p">,</span> <span class="s1">&#39;.png&#39;</span><span class="p">,</span> <span class="n">image_link</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;@url&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">image_link</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">converted_image_link</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Replaced </span><span class="si">{0}</span><span class="s1"> WMF images with open equivalents&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.cleanup"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.cleanup">[docs]</a>    <span class="k">def</span> <span class="nf">cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:ref[@target=&quot;None&quot;] | //tei:p[not(node())]&#39;</span><span class="p">,</span>
+                                  <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Removing element </span><span class="si">{0}</span><span class="s1"> in cleanup&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">tag</span><span class="p">))</span>
+                <span class="n">element</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># find and remove sections where there is a single title and it is the /only/ element therein</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:div[not(node())]&#39;</span><span class="p">,</span>
+                                  <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Removing element </span><span class="si">{0}</span><span class="s1"> in cleanup&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">tag</span><span class="p">))</span>
+                <span class="n">element</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Removed </span><span class="si">{0}</span><span class="s1"> nodes during cleanup&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># normalize dud lists at end of document</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:back/tei:div[@type=&quot;bibliogr&quot;]/&#39;</span>
+                                  <span class="s1">&#39;tei:p[@type=&quot;ordered&quot; and @rend=&quot;Bibliography&quot;]/tei:item&#39;</span><span class="p">,</span>
+                                  <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Bibliography&#39;</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">etree</span><span class="o">.</span><span class="n">strip_tags</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s1">&#39;REMOVE&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Cleaned </span><span class="si">{0}</span><span class="s1"> nested item bibliographic tags during cleanup&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.handle_metypesetdeleted"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.handle_metypesetdeleted">[docs]</a>    <span class="k">def</span> <span class="nf">handle_metypesetdeleted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keep</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">keep</span><span class="p">:</span>
+            <span class="n">etree</span><span class="o">.</span><span class="n">strip_tags</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}meTypesetDeleted&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">etree</span><span class="o">.</span><span class="n">strip_elements</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}meTypesetDeleted&#39;</span><span class="p">,</span> <span class="n">with_tail</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Handled deleted text&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TeiManipulate.run"><a class="viewcode-back" href="../../autoapi/bin/teimanipulate/index.html#bin.teimanipulate.TeiManipulate.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_metypesetdeleted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--includedeleted&#39;</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--aggression&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;wmfimagereplace&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span>
+                                                                                         <span class="n">domain</span><span class="o">=</span><span class="s1">&#39;aggression&#39;</span><span class="p">)):</span>
+            <span class="c1"># convert .wmf image links to png</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--noimageprocessing&#39;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">change_wmf_image_links</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--aggression&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;teicleanup&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span>
+                                                                                         <span class="n">domain</span><span class="o">=</span><span class="s1">&#39;aggression&#39;</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
+
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dom_temp_file</span><span class="p">)</span></div></div>
+
+
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+:mod:`heimpt.tools`
+===================
+
+.. py:module:: heimpt.tools
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   archive/index.rst
+   scripts/index.rst
+
+

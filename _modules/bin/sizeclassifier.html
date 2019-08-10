@@ -1,0 +1,648 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.sizeclassifier &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.sizeclassifier</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">from</span> <span class="nn">teimanipulate</span> <span class="k">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="__author__"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.__author__">[docs]</a><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Martin Paul Eve&quot;</span></div>
+<div class="viewcode-block" id="__email__"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.__email__">[docs]</a><span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;martin@martineve.com&quot;</span></div>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A class that scans for meTypeset size fields in a TEI file.</span>
+
+<span class="sd">1.) Identifies a list of sizes</span>
+<span class="sd">2.) Ascertains the density and likelihood of the size being a heading</span>
+<span class="sd">3.) Returns a manipulator ready to implement all the changes to the TEI file</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">debug</span> <span class="k">import</span> <span class="n">Debuggable</span>
+
+
+<div class="viewcode-block" id="SizeClassifier"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier">[docs]</a><span class="k">class</span> <span class="nc">SizeClassifier</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_variables</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">global_variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size_cutoff</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;minimum-heading-size&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_headings</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;maximum-headings&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">Debuggable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Size Classifier&#39;</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="SizeClassifier.get_values"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.get_values">[docs]</a>    <span class="k">def</span> <span class="nf">get_values</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">search_attribute</span><span class="p">):</span>
+        <span class="c1"># this function searches the DOM tree for TEI &quot;hi&quot; elements with the specified search_attribute</span>
+        <span class="n">sizes</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:hi[@&#39;</span> <span class="o">+</span> <span class="n">search_attribute</span> <span class="o">+</span> <span class="s1">&#39;=not(&quot;&quot;)]&#39;</span><span class="p">,</span>
+                                <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">search_attribute</span><span class="p">)</span> <span class="ow">in</span> <span class="n">sizes</span><span class="p">:</span>
+                <span class="n">sizes</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">search_attribute</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sizes</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">search_attribute</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">sizes</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="SizeClassifier.get_sizes_ordered"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.get_sizes_ordered">[docs]</a>    <span class="k">def</span> <span class="nf">get_sizes_ordered</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+        <span class="c1"># this function searches the DOM tree for TEI &quot;head&quot; elements with the specified search_attribute</span>
+        <span class="n">sizes_ordered</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;//tei:head[@meTypesetSize=not(&#39;&#39;)]&quot;</span><span class="p">,</span>
+                                <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="n">sizes_ordered</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;meTypesetSize&quot;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">sizes_ordered</span></div>
+
+<div class="viewcode-block" id="SizeClassifier.set_dom_tree"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.set_dom_tree">[docs]</a>    <span class="k">def</span> <span class="nf">set_dom_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">XMLParser</span><span class="p">(</span><span class="n">remove_blank_text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">resolve_entities</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="SizeClassifier.handle_bold_only_paragraph"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.handle_bold_only_paragraph">[docs]</a>    <span class="k">def</span> <span class="nf">handle_bold_only_paragraph</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="n">root_size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method looks for paragraphs that contain only bold text. It then transforms them to titles.</span>
+<span class="sd">        @param manipulate: a TeiManipulator object</span>
+<span class="sd">        @param root_size: the size styling to apply to these elements</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">expression</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;//tei:p[(contains(@rend, &quot;bold&quot;) or count(tei:hi) = count(tei:hi[contains(@rend, &quot;bold&quot;)])) &#39;</span> \
+                     <span class="sa">u</span><span class="s1">&#39;and not(text()[normalize-space()!=&quot;&quot;])]/tei:hi&#39;</span>
+
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">change_self_size</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">root_size</span><span class="p">))</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="SizeClassifier.handle_heading"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.handle_heading">[docs]</a>    <span class="k">def</span> <span class="nf">handle_heading</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">root_size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method looks for paragraphs that contain the specified attribute in their rend tag.</span>
+<span class="sd">        It then transforms them to titles.</span>
+<span class="sd">        @param manipulate: a TeiManipulator object</span>
+<span class="sd">        @param attribute: a string to search for in the rend attribute</span>
+<span class="sd">        @param root_size: the size styling to apply to these elements</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">expression</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;//tei:p[contains(@rend, &quot;</span><span class="si">{0}</span><span class="s1">&quot;)]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
+
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">enclose_and_change_self_size</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">root_size</span><span class="p">),</span> <span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;hi&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SizeClassifier.get_sizes"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.get_sizes">[docs]</a>    <span class="k">def</span> <span class="nf">get_sizes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="n">sizes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_values</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s2">&quot;meTypesetSize&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sizes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                   <span class="sa">u</span><span class="s1">&#39;Explicitly specified size variations and their frequency of &#39;</span>
+                                   <span class="sa">u</span><span class="s1">&#39;occurrence: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sizes</span><span class="p">)))</span>
+        <span class="n">new_sizes</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">size</span><span class="p">,</span> <span class="n">frequency</span> <span class="ow">in</span> <span class="n">sizes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">frequency</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_headings</span><span class="p">):</span>
+                <span class="n">new_sizes</span><span class="p">[</span><span class="n">size</span><span class="p">]</span> <span class="o">=</span> <span class="n">frequency</span>
+        <span class="n">sizes</span> <span class="o">=</span> <span class="n">new_sizes</span>
+        <span class="k">return</span> <span class="n">sizes</span></div>
+
+<div class="viewcode-block" id="SizeClassifier.correlate_styled_headings"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.correlate_styled_headings">[docs]</a>    <span class="k">def</span> <span class="nf">correlate_styled_headings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">):</span>
+        <span class="c1"># reload the DOM</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_dom_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">tei_file_path</span><span class="p">)</span>
+        <span class="c1"># get a numerical list of explicit size values inside meTypesetSize attributes</span>
+        <span class="n">sizes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sizes</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+        <span class="n">sorted_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">headings</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># correlate tag sizes specified by true word headings (&quot;heading 1&quot;, &quot;heading 2&quot; etc.) to our index</span>
+        <span class="k">for</span> <span class="n">size</span><span class="p">,</span> <span class="n">frequency</span> <span class="ow">in</span> <span class="n">sizes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">frequency</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_headings</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size_cutoff</span><span class="p">):</span>
+                <span class="n">sorted_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+
+        <span class="n">sorted_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">sorted_list</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sorted_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sorted_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;heading </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">headings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">sorted_list</span><span class="p">[</span><span class="n">count</span><span class="p">]</span>
+
+                <span class="n">key</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;Heading </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">headings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">sorted_list</span><span class="p">[</span><span class="n">count</span><span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sorted_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;heading </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">headings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">-</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">count</span>
+
+                <span class="n">key</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;Heading </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">headings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">-</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">count</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">headings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;heading 1&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;heading 2&#39;</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span> <span class="s1">&#39;heading 3&#39;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span> <span class="s1">&#39;heading 4&#39;</span><span class="p">:</span> <span class="mi">70</span><span class="p">,</span>
+                        <span class="s1">&#39;heading 5&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span> <span class="s1">&#39;heading 6&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;heading 7&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s1">&#39;heading 8&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s1">&#39;heading 9&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
+
+            <span class="n">headings</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;Title&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;Heading 1&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;Heading 2&#39;</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span> <span class="s1">&#39;Heading 3&#39;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
+                                                <span class="s1">&#39;Heading 4&#39;</span><span class="p">:</span> <span class="mi">70</span><span class="p">,</span> <span class="s1">&#39;Heading 5&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span> <span class="s1">&#39;Heading 6&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;Heading 7&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+                                                <span class="s1">&#39;Heading 8&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s1">&#39;Heading 9&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">})</span>
+
+            <span class="n">headings</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;H1&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;H2&#39;</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span> <span class="s1">&#39;H3&#39;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span> <span class="s1">&#39;H4&#39;</span><span class="p">:</span> <span class="mi">70</span><span class="p">,</span> <span class="s1">&#39;H5&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span> <span class="s1">&#39;H6&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;H7&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+                                                <span class="s1">&#39;H8&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s1">&#39;H9&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">})</span>
+
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">headings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Changing </span><span class="si">{0}</span><span class="s1"> to size </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle_heading</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+        <span class="c1"># reload the DOM</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_dom_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">tei_file_path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tree</span></div>
+
+
+<div class="viewcode-block" id="SizeClassifier.convert_to_headings"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.convert_to_headings">[docs]</a>    <span class="k">def</span> <span class="nf">convert_to_headings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">sizes</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">sizes</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size_cutoff</span><span class="p">):</span>
+                <span class="c1"># if the size is greater than or equal to 16, treat it as a heading</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                       <span class="sa">u</span><span class="s1">&#39;Size (</span><span class="si">{0}</span><span class="s1">) greater &#39;</span>
+                                       <span class="sa">u</span><span class="s1">&#39;than or equal to </span><span class="si">{1}</span><span class="s1">. &#39;</span>
+                                       <span class="sa">u</span><span class="s1">&#39;Treating as a heading.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
+                                                                        <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size_cutoff</span><span class="p">)))</span>
+
+                <span class="c1"># instruct the manipulator to change the parent tag of every tag it finds containing</span>
+                <span class="c1"># a &quot;hi&quot; tag with meTypesetSize set to the value found to &quot;title&quot;</span>
+                <span class="c1"># so, for example &lt;p&gt;&lt;hi meTypesetSize=&quot;18&quot;&gt;some text&lt;/hi&gt;&lt;/p&gt;</span>
+                <span class="c1"># will be transformed to</span>
+                <span class="c1"># &lt;title&gt;&lt;hi meTypesetSize=&quot;18&quot;&gt;some text&lt;/hi&gt;&lt;/title&gt;</span>
+                <span class="n">manipulate</span><span class="o">.</span><span class="n">change_outer</span><span class="p">(</span><span class="s1">&#39;//tei:hi[@meTypesetSize=</span><span class="se">\&#39;</span><span class="si">{0}</span><span class="se">\&#39;</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">size</span><span class="p">),</span> <span class="s1">&#39;head&#39;</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+
+                <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_dom_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">tei_file_path</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">normalize</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:cit/tei:quote/tei:head&#39;</span><span class="p">,</span>
+                                            <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+                    <span class="n">normalize</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+                    <span class="n">normalize</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+
+                <span class="n">etree</span><span class="o">.</span><span class="n">strip_tags</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s1">&#39;REMOVE&#39;</span><span class="p">)</span>
+                <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Normalizing nested headings inside cit/quote blocks&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">tree</span></div>
+
+<div class="viewcode-block" id="SizeClassifier.encapsulate_headings"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.encapsulate_headings">[docs]</a>    <span class="k">def</span> <span class="nf">encapsulate_headings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="n">titles</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:head[preceding-sibling::node()]&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+        <span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">titles</span><span class="p">:</span>
+            <span class="n">existing_section</span> <span class="o">=</span> <span class="n">title</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+
+            <span class="n">new_section</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">)</span>
+
+            <span class="n">sibling</span> <span class="o">=</span> <span class="n">title</span>
+            <span class="n">to_move</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">while</span> <span class="n">sibling</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">to_move</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sibling</span><span class="p">)</span>
+                <span class="n">sibling</span> <span class="o">=</span> <span class="n">sibling</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span>
+
+            <span class="k">for</span> <span class="n">sibling</span> <span class="ow">in</span> <span class="n">to_move</span><span class="p">:</span>
+                <span class="n">new_section</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sibling</span><span class="p">)</span>
+
+            <span class="n">existing_section</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">new_section</span><span class="p">)</span>
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Handling unnested title: &#39;</span>
+                                         <span class="sa">u</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span>
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SizeClassifier.nest_headings"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.nest_headings">[docs]</a>    <span class="k">def</span> <span class="nf">nest_headings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:div&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">div</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;tei:head&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">size</span> <span class="o">=</span> <span class="mi">100</span>
+                <span class="n">message</span><span class="p">[</span><span class="n">div</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;No title found in this block&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">size</span> <span class="o">=</span> <span class="n">title</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;meTypesetSize&#39;</span><span class="p">]</span>
+                <span class="n">message</span><span class="p">[</span><span class="n">div</span><span class="p">]</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">title</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">size</span><span class="p">,</span> <span class="n">div</span><span class="p">))</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">root_size</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">root_div</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">dict_thresholds</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">stack</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">first</span><span class="p">:</span>
+                <span class="n">first</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">root_size</span><span class="p">,</span> <span class="n">root_div</span> <span class="o">=</span> <span class="n">element</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Set root size as </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">root_size</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">size</span><span class="p">,</span> <span class="n">div</span> <span class="o">=</span> <span class="n">element</span>
+
+                <span class="n">previous</span><span class="p">,</span> <span class="n">previous_div</span> <span class="o">=</span> <span class="n">stack</span><span class="p">[</span><span class="n">position</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">float</span><span class="p">(</span><span class="n">root_size</span><span class="p">):</span>
+                    <span class="n">size</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">root_size</span><span class="p">)</span>
+
+                <span class="c1"># handle an element that is the root size</span>
+                <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="n">root_size</span><span class="p">):</span>
+                    <span class="n">root_div</span> <span class="o">=</span> <span class="n">div</span>
+                    <span class="n">dict_thresholds</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">root_size</span><span class="p">)]</span> <span class="o">=</span> <span class="n">position</span>
+
+                    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">dict_thresholds</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="n">dict_thresholds</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="n">position</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Heading </span><span class="si">{0}</span><span class="s1"> (&quot;</span><span class="si">{1}</span><span class="s1">&quot;) was same size as root. &#39;</span>
+                                                 <span class="sa">u</span><span class="s1">&#39;Resetting stack.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">position</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                                                                            <span class="n">message</span><span class="p">[</span><span class="n">div</span><span class="p">]))</span>
+
+                <span class="c1"># handle an element that is smaller than its predecessor</span>
+                <span class="k">elif</span> <span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">float</span><span class="p">(</span><span class="n">previous</span><span class="p">):</span>
+                    <span class="n">addnext</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="c1"># traverse up the tree to see if there is an equal size element</span>
+                    <span class="n">iteration</span> <span class="o">=</span> <span class="n">position</span> <span class="o">-</span> <span class="mi">1</span>
+
+                    <span class="k">if</span> <span class="ow">not</span> <span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="ow">in</span> <span class="n">dict_thresholds</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="n">dict_thresholds</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">)]</span> <span class="o">=</span> <span class="n">position</span>
+
+                    <span class="k">while</span> <span class="n">iteration</span> <span class="o">&gt;=</span> <span class="n">dict_thresholds</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">)]:</span>
+                        <span class="n">iterpos</span><span class="p">,</span> <span class="n">iterdiv</span> <span class="o">=</span> <span class="n">stack</span><span class="p">[</span><span class="n">iteration</span><span class="p">]</span>
+
+                        <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">iterpos</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+                            <span class="n">previous_div</span> <span class="o">=</span> <span class="n">iterdiv</span>
+                            <span class="n">addnext</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="k">break</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">iteration</span> <span class="o">-=</span> <span class="mi">1</span>
+
+                    <span class="k">if</span> <span class="n">addnext</span><span class="p">:</span>
+                        <span class="n">previous_div</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">div</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">previous_div</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">div</span><span class="p">)</span>
+
+                    <span class="n">dict_thresholds</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">)]</span> <span class="o">=</span> <span class="n">position</span>
+
+                    <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Moved heading </span><span class="si">{0}</span><span class="s1"> (&quot;</span><span class="si">{1}</span><span class="s1">&quot;) into previous because &#39;</span>
+                                                 <span class="sa">u</span><span class="s1">&#39;it is smaller&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">position</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                                                                         <span class="n">message</span><span class="p">[</span><span class="n">div</span><span class="p">]))</span>
+
+                <span class="c1"># handle an element that is bigger than its predecessor</span>
+                <span class="k">elif</span> <span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">float</span><span class="p">(</span><span class="n">previous</span><span class="p">):</span>
+                    <span class="c1"># traverse up the tree to see if there is an equal size element</span>
+                    <span class="n">iteration</span> <span class="o">=</span> <span class="n">position</span> <span class="o">-</span> <span class="mi">1</span>
+
+                    <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+
+                    <span class="k">if</span> <span class="ow">not</span> <span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="ow">in</span> <span class="n">dict_thresholds</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="n">dict_thresholds</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">)]</span> <span class="o">=</span> <span class="n">position</span>
+
+                    <span class="k">while</span> <span class="n">iteration</span> <span class="o">&gt;=</span> <span class="n">dict_thresholds</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">)]:</span>
+                        <span class="n">iterpos</span><span class="p">,</span> <span class="n">iterdiv</span> <span class="o">=</span> <span class="n">stack</span><span class="p">[</span><span class="n">iteration</span><span class="p">]</span>
+
+                        <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">iterpos</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+                            <span class="n">previous_div</span> <span class="o">=</span> <span class="n">iterdiv</span>
+                            <span class="k">break</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">iteration</span> <span class="o">-=</span> <span class="mi">1</span>
+
+                    <span class="n">previous_div</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">div</span><span class="p">)</span>
+
+                    <span class="n">dict_thresholds</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">)]</span> <span class="o">=</span> <span class="n">position</span>
+                    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">dict_thresholds</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">dict_thresholds</span><span class="p">[</span><span class="n">item</span><span class="p">])</span> <span class="o">&lt;</span> <span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+                            <span class="n">dict_thresholds</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="n">position</span>
+
+                    <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Moved heading </span><span class="si">{0}</span><span class="s1"> (&quot;</span><span class="si">{1}</span><span class="s1">&quot;) into previous &#39;</span>
+                                                 <span class="sa">u</span><span class="s1">&#39;because it is bigger&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">position</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                                                                                <span class="n">message</span><span class="p">[</span><span class="n">div</span><span class="p">]))</span>
+
+                <span class="c1"># handle an element that is the same size as its predecessor</span>
+                <span class="k">elif</span> <span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="n">previous</span><span class="p">):</span>
+                    <span class="n">previous_div</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">div</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Added heading </span><span class="si">{0}</span><span class="s1"> (&quot;</span><span class="si">{1}</span><span class="s1">&quot;) adjacent to previous because &#39;</span>
+                                                 <span class="sa">u</span><span class="s1">&#39;it is the same size&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">position</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                                                                               <span class="n">message</span><span class="p">[</span><span class="n">div</span><span class="p">]))</span>
+
+            <span class="n">position</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">stack</span><span class="p">,</span> <span class="n">tree</span></div>
+
+<div class="viewcode-block" id="SizeClassifier.verify_headings"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.verify_headings">[docs]</a>    <span class="k">def</span> <span class="nf">verify_headings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stack</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="c1"># verify that the stack has not been disordered</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:div&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="n">size</span><span class="p">,</span> <span class="n">verify</span> <span class="o">=</span> <span class="n">stack</span><span class="p">[</span><span class="n">position</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">verify</span> <span class="o">!=</span> <span class="n">div</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">write_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Size elements were disordered&#39;</span><span class="p">,</span> <span class="s1">&#39;002&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;WARNING: size elements were disordered&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="n">position</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="SizeClassifier.remove_empty_headings"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.remove_empty_headings">[docs]</a>    <span class="k">def</span> <span class="nf">remove_empty_headings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:head&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+            <span class="n">skip</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">contains_graphic</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="n">title</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">etree</span><span class="o">.</span><span class="n">strip_elements</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s1">&#39;REMOVE&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Removed </span><span class="si">{0}</span><span class="s1"> empty titles&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SizeClassifier.downgrade_oversize_headings"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.downgrade_oversize_headings">[docs]</a>    <span class="k">def</span> <span class="nf">downgrade_oversize_headings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:head&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+
+            <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">200</span><span class="p">:</span>
+                <span class="n">title</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span>
+                <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Over-length heading downgraded&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SizeClassifier.handle_capital_only_paragraph"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.handle_capital_only_paragraph">[docs]</a>    <span class="k">def</span> <span class="nf">handle_capital_only_paragraph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">new_size</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:p&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">child</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+            <span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^[A-Z]+\:$&#39;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">regex</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;rend&#39;</span> <span class="ow">in</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span> <span class="ow">and</span> <span class="s1">&#39;capsall&#39;</span> <span class="ow">in</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]):</span>
+                <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;meTypesetSize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">new_size</span><span class="p">)</span>
+                <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;head&#39;</span>
+                <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Changed item </span><span class="si">{0}</span><span class="s1"> to a heading size </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">new_size</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SizeClassifier.handle_single_item_list"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.handle_single_item_list">[docs]</a>    <span class="k">def</span> <span class="nf">handle_single_item_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">new_size</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:list[count(tei:item)=1]&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">child</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;meTypesetSize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">new_size</span><span class="p">)</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;head&#39;</span>
+                <span class="n">etree</span><span class="o">.</span><span class="n">strip_tags</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s1">&#39;REMOVE&#39;</span><span class="p">)</span>
+                <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Changed item </span><span class="si">{0}</span><span class="s1"> to a heading size </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">new_size</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SizeClassifier.clean_introduction_headings"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.clean_introduction_headings">[docs]</a>    <span class="k">def</span> <span class="nf">clean_introduction_headings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="n">titles</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:p[following-sibling::*[1][self::tei:cit]]/tei:hi[@meTypesetSize]&#39;</span><span class="p">,</span>
+                            <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">titles</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">getparent</span><span class="p">())</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">):</span>
+                <span class="k">del</span> <span class="n">element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;meTypesetSize&#39;</span><span class="p">]</span>
+
+                <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Removed heading attribute from </span><span class="si">{0}</span><span class="s1"> as it looks &#39;</span>
+                                             <span class="sa">u</span><span class="s1">&#39;like a quote introduction&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">tree</span></div>
+
+<div class="viewcode-block" id="SizeClassifier.clean_line_breaks"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.clean_line_breaks">[docs]</a>    <span class="k">def</span> <span class="nf">clean_line_breaks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="n">titles</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:head/tei:hi[@meTypesetSize][tei:lb] | //tei:head[tei:lb]&#39;</span><span class="p">,</span>
+                            <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">titles</span><span class="p">:</span>
+            <span class="n">total_text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">text</span>
+
+            <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+            <span class="n">last_element</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">element</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;lb&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                    <span class="n">prev</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">getprevious</span><span class="p">()</span>
+
+                    <span class="k">if</span> <span class="n">prev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">prev</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">tail</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">tail</span>
+
+                    <span class="n">item</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                    <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Removed unneeded lb from </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">total_text</span><span class="p">))</span>
+
+                <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">text</span> <span class="o">+=</span> <span class="n">item</span><span class="o">.</span><span class="n">text</span>
+
+                <span class="k">if</span> <span class="n">last_element</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">last_element</span><span class="o">.</span><span class="n">tail</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span> <span class="o">+</span> <span class="n">last_element</span><span class="o">.</span><span class="n">tail</span>
+
+                <span class="n">last_element</span> <span class="o">=</span> <span class="n">item</span>
+
+        <span class="k">return</span> <span class="n">tree</span></div>
+
+<div class="viewcode-block" id="SizeClassifier.renest_headings"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.renest_headings">[docs]</a>    <span class="k">def</span> <span class="nf">renest_headings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="n">titles</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:div[count(*) = 1][tei:head]&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">titles</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">element</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">next_element</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span>
+
+            <span class="k">while</span> <span class="n">next_element</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">next_element</span> <span class="ow">in</span> <span class="n">titles</span><span class="p">:</span>
+                <span class="n">next_to_add_element</span> <span class="o">=</span> <span class="n">next_element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span>
+                <span class="n">element</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">next_element</span><span class="p">)</span>
+
+                <span class="n">next_element</span> <span class="o">=</span> <span class="n">next_to_add_element</span>
+
+                <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Re-nested element under </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">tree</span></div>
+
+<div class="viewcode-block" id="SizeClassifier.final_headings"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.final_headings">[docs]</a>    <span class="k">def</span> <span class="nf">final_headings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="n">sections</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:div[not(tei:head)]&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">sections</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">title</span> <span class="o">=</span> <span class="n">element</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">next_element</span> <span class="o">=</span> <span class="n">title</span>
+
+                    <span class="n">bolded</span> <span class="o">=</span> <span class="kc">True</span>
+
+                    <span class="k">if</span> <span class="n">next_element</span><span class="o">.</span><span class="n">text</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="s1">&#39;rend&#39;</span> <span class="ow">in</span> <span class="n">next_element</span><span class="o">.</span><span class="n">attrib</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s1">&#39;bold&#39;</span> <span class="ow">in</span> <span class="n">next_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]:</span>
+                        <span class="n">bolded</span> <span class="o">=</span> <span class="kc">False</span>
+
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">next_element</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">bolded</span><span class="p">:</span>
+
+                        <span class="k">for</span> <span class="n">pelement</span> <span class="ow">in</span> <span class="n">next_element</span><span class="p">:</span>
+
+                            <span class="k">if</span> <span class="n">pelement</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;fig&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">pelement</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;graphic&#39;</span><span class="p">):</span>
+                                <span class="n">bolded</span> <span class="o">=</span> <span class="kc">False</span>
+                                <span class="k">break</span>
+
+                            <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">pelement</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+                            <span class="k">if</span> <span class="p">(</span><span class="n">text</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="s1">&#39;rend&#39;</span> <span class="ow">in</span> <span class="n">pelement</span><span class="o">.</span><span class="n">attrib</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s1">&#39;bold&#39;</span> <span class="ow">in</span> <span class="n">pelement</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">])</span> \
+                                    <span class="ow">or</span> <span class="p">(</span><span class="n">text</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s1">&#39;rend&#39;</span> <span class="ow">in</span> <span class="n">pelement</span><span class="o">.</span><span class="n">attrib</span><span class="p">):</span>
+
+                                <span class="n">bolded</span> <span class="o">=</span> <span class="kc">False</span>
+                                <span class="k">break</span>
+
+                        <span class="k">if</span> <span class="n">bolded</span><span class="p">:</span>
+                            <span class="n">next_element</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;head&#39;</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Replaced empty title with bolded sibling&#39;</span><span class="p">)</span>
+
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SizeClassifier.run"><a class="viewcode-back" href="../../autoapi/bin/sizeclassifier/index.html#bin.sizeclassifier.SizeClassifier.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--aggression&#39;</span><span class="p">])</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;sizeclassifier&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span>
+                                                                                         <span class="n">domain</span><span class="o">=</span><span class="s1">&#39;aggression&#39;</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Aggression level too low: exiting module.&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">manipulate</span> <span class="o">=</span> <span class="n">TeiManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="c1"># transform bolded paragraphs into size-attributes with an extremely high threshold (so will be thought of as</span>
+        <span class="c1"># root nodes)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_bold_only_paragraph</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+        <span class="c1"># if a paragraph only contains capitals followed by a colon, make it a heading (root node size)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_capital_only_paragraph</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+        <span class="c1"># if a list contains only a single item, make it a heading (root node size)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_single_item_list</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">correlate_styled_headings</span><span class="p">(</span><span class="n">manipulate</span><span class="p">)</span>
+
+        <span class="c1"># this deals with cases where the user has given a styled heading ending with a colon</span>
+        <span class="c1"># immediately before a disp-quote</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_introduction_headings</span><span class="p">(</span><span class="n">manipulate</span><span class="p">)</span>
+
+        <span class="c1"># refresh the size list</span>
+        <span class="n">sizes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sizes</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_to_headings</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="n">sizes</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+
+        <span class="c1"># assign IDs to every single heading tag for easy manipulation</span>
+        <span class="n">heading_count</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">tag_headings</span><span class="p">()</span>
+
+        <span class="c1"># this deals with cases where line breaks exist within &lt;head&gt; tags but there is no text before; we remove them</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clean_line_breaks</span><span class="p">(</span><span class="n">manipulate</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">downgrade_oversize_headings</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_empty_headings</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">encapsulate_headings</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+
+        <span class="n">backup_tree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;unicode&quot;</span><span class="p">)</span>
+
+        <span class="n">stack</span><span class="p">,</span> <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nest_headings</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify_headings</span><span class="p">(</span><span class="n">stack</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+            <span class="c1"># something went very wrong in the stacking of elements</span>
+            <span class="c1"># revert to the backup tree</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Reverting to backup tree as size classification failed&#39;</span><span class="p">)</span>
+            <span class="n">tree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">backup_tree</span><span class="p">)</span>
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+
+        <span class="c1"># re-nest headings where a single heading and nothing else is found within a section</span>
+        <span class="n">backup_tree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;unicode&quot;</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">renest_headings</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify_headings</span><span class="p">(</span><span class="n">stack</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+            <span class="c1"># something went very wrong in the stacking of elements</span>
+            <span class="c1"># revert to the backup tree</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Reverting to backup tree as size classification failed&#39;</span><span class="p">)</span>
+            <span class="n">tree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">backup_tree</span><span class="p">)</span>
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">final_headings</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

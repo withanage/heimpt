@@ -1,0 +1,380 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>heimpt.tools.archive.runTest &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for heimpt.tools.archive.runTest</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">ConfigParser</span>
+<span class="kn">import</span> <span class="nn">getopt</span>
+<span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">etree</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Pipeline"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/runTest/index.html#heimpt.tools.archive.runTest.Pipeline">[docs]</a><span class="k">class</span> <span class="nc">Pipeline</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_dir</span><span class="p">,</span> <span class="n">test_collection</span><span class="p">,</span> <span class="n">test_name</span><span class="p">,</span> <span class="n">cit</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">base_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_collection</span> <span class="o">=</span> <span class="n">test_collection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_name</span> <span class="o">=</span> <span class="n">test_name</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">doc_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span><span class="p">,</span>
+            <span class="s2">&quot;static&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tests&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">test_collection</span><span class="p">,</span>
+            <span class="s2">&quot;src&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;docx&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">doc_fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">doc_path</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_name</span> <span class="o">+</span> <span class="s2">&quot;.docx&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">xml_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span><span class="p">,</span>
+            <span class="s2">&quot;static&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tests&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">test_collection</span><span class="p">,</span>
+            <span class="s2">&quot;src&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;xml&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">test_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xml_fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_path</span> <span class="o">+</span> <span class="s2">&quot;.xml&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cit</span> <span class="o">=</span> <span class="n">cit</span>
+        <span class="k">if</span> <span class="n">cit</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">xml_cit_fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_path</span> <span class="o">+</span> <span class="s2">&quot;.cit.xml&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fo_fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span><span class="p">,</span>
+            <span class="s2">&quot;static&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tests&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">test_collection</span><span class="p">,</span>
+            <span class="s2">&quot;src&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;fo&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">test_name</span> <span class="o">+</span>
+            <span class="s2">&quot;.fo&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">html_fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span><span class="p">,</span>
+            <span class="s2">&quot;static&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tests&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">test_collection</span><span class="p">,</span>
+            <span class="s2">&quot;src&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;html&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">test_name</span> <span class="o">+</span>
+            <span class="s2">&quot;.html&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pdf_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span><span class="p">,</span>
+            <span class="s2">&quot;static&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tests&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">test_collection</span><span class="p">,</span>
+            <span class="s2">&quot;pdf&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Pipeline.validate_paths"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/runTest/index.html#heimpt.tools.archive.runTest.Pipeline.validate_paths">[docs]</a>    <span class="k">def</span> <span class="nf">validate_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doc_path</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doc_path</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pdf_path</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pdf_path</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="Pipeline.doc2xml"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/runTest/index.html#heimpt.tools.archive.runTest.Pipeline.doc2xml">[docs]</a>    <span class="k">def</span> <span class="nf">doc2xml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;DOCX -&gt; XML&quot;</span><span class="p">)</span>
+
+        <span class="n">cmd</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Call meTypeset</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span><span class="p">,</span>
+                                          <span class="s2">&quot;static/tools/meTypeset/bin/meTypeset.py&quot;</span><span class="p">),</span>
+                             <span class="s2">&quot;docx&quot;</span><span class="p">,</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">doc_fn</span><span class="p">,</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">xml_path</span><span class="p">]))</span>
+        <span class="c1"># Move output to XML dir</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;mv&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xml_path</span><span class="p">,</span> <span class="s2">&quot;nlm&quot;</span><span class="p">,</span> <span class="s2">&quot;out.xml&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_fn</span><span class="p">]))</span>
+        <span class="c1"># Clean output dir</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;rm&quot;</span><span class="p">,</span> <span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_path</span><span class="p">]))</span>
+
+        <span class="c1"># Execute commands</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cmd</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;... done&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Pipeline.xml2cit"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/runTest/index.html#heimpt.tools.archive.runTest.Pipeline.xml2cit">[docs]</a>    <span class="k">def</span> <span class="nf">xml2cit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xsl_fn</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;XML -&gt; XML (format citations)&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Load stylesheet</span>
+        <span class="n">xsl</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">xsl_fn</span><span class="p">)</span>
+        <span class="n">transformer</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">XSLT</span><span class="p">(</span><span class="n">xsl</span><span class="p">)</span>
+
+        <span class="c1"># Transform XML</span>
+        <span class="n">xml</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xml_fn</span><span class="p">)</span>
+        <span class="n">xml_cit</span> <span class="o">=</span> <span class="n">transformer</span><span class="p">(</span><span class="n">xml</span><span class="p">)</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;... done&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Save XML with formatted citations</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Writing to </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_cit_fn</span><span class="p">)</span>
+        <span class="n">xml_cit</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xml_cit_fn</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Pipeline.xml2fo"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/runTest/index.html#heimpt.tools.archive.runTest.Pipeline.xml2fo">[docs]</a>    <span class="k">def</span> <span class="nf">xml2fo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xsl_fn</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;XML -&gt; FO&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Load stylesheet</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">xsl</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">xsl_fn</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;xsl_fn </span><span class="si">%s</span><span class="s2"> does not exist&quot;</span> <span class="o">%</span> <span class="n">xsl_fn</span><span class="p">)</span>
+
+        <span class="n">transformer</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">XSLT</span><span class="p">(</span><span class="n">xsl</span><span class="p">)</span>
+
+        <span class="c1"># |  - extensions: a dict mapping ``(namespace, name)`` pairs to</span>
+        <span class="c1"># extension functions or extension elements</span>
+        <span class="c1">#(http://www.antennahouse.com/names/XSL/Extensions)</span>
+
+        <span class="c1"># Transform XML</span>
+        <span class="n">xml</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xml_fn</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cit</span><span class="p">:</span>
+            <span class="n">xml</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xml_cit_fn</span><span class="p">)</span>
+        <span class="n">fo</span> <span class="o">=</span> <span class="n">transformer</span><span class="p">(</span><span class="n">xml</span><span class="p">)</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;... done&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Save FO</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Writing to </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">fo_fn</span><span class="p">)</span>
+        <span class="n">fo</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fo_fn</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Pipeline.xml2html"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/runTest/index.html#heimpt.tools.archive.runTest.Pipeline.xml2html">[docs]</a>    <span class="k">def</span> <span class="nf">xml2html</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xsl_fn</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;XML -&gt; HTML&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Load stylesheet</span>
+        <span class="n">xsl</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">xsl_fn</span><span class="p">)</span>
+        <span class="n">transformer</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">XSLT</span><span class="p">(</span><span class="n">xsl</span><span class="p">)</span>
+
+        <span class="c1"># Transform XML</span>
+        <span class="n">xml</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xml_fn</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cit</span><span class="p">:</span>
+            <span class="n">xml</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xml_cit_fn</span><span class="p">)</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="n">transformer</span><span class="p">(</span><span class="n">xml</span><span class="p">)</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;... done&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Save HTML</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Writing to </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">html_fn</span><span class="p">)</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">html_fn</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Pipeline.pdf"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/runTest/index.html#heimpt.tools.archive.runTest.Pipeline.pdf">[docs]</a>    <span class="k">def</span> <span class="nf">pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">css_fn</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pdf_path</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_name</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">tool</span> <span class="o">+</span> <span class="s2">&quot;.pdf&quot;</span>
+
+        <span class="k">if</span> <span class="n">tool</span> <span class="o">==</span> <span class="s2">&quot;mpdf&quot;</span><span class="p">:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;php&quot;</span><span class="p">,</span>
+                            <span class="n">path</span><span class="p">,</span>
+                            <span class="s2">&quot;--css&quot;</span><span class="p">,</span>
+                            <span class="n">css_fn</span><span class="p">,</span>
+                            <span class="s2">&quot;--html&quot;</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">html_fn</span><span class="p">,</span>
+                            <span class="s2">&quot;-o&quot;</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">pdf_path</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_name</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="s2">&quot;mpdf&quot;</span> <span class="o">+</span> <span class="s2">&quot;.pdf&quot;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">tool</span> <span class="o">==</span> <span class="s2">&quot;prince&quot;</span><span class="p">:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">html_fn</span><span class="p">,</span> <span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="n">css_fn</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">pdf_path</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_name</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="s2">&quot;prince&quot;</span> <span class="o">+</span> <span class="s2">&quot;.pdf&quot;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">tool</span> <span class="o">==</span> <span class="s2">&quot;fop&quot;</span><span class="p">:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fo_fn</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pdf_path</span> <span class="o">+</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">test_name</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="s2">&quot;fop&quot;</span> <span class="o">+</span> <span class="s2">&quot;.pdf&quot;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">tool</span> <span class="o">==</span> <span class="s2">&quot;ahf&quot;</span><span class="p">:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fo_fn</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">pdf_path</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_name</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="s2">&quot;ahf&quot;</span> <span class="o">+</span> <span class="s2">&quot;.pdf&quot;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="s2">&quot;Unknown tool </span><span class="si">%s</span><span class="se">\n</span><span class="s2"> Tool options are &#39;mpdf&#39;, &#39;prince&#39;, &#39;fop&#39; and &#39;ahf&#39;.</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span>
+                <span class="n">tool</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="usage"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/runTest/index.html#heimpt.tools.archive.runTest.usage">[docs]</a><span class="k">def</span> <span class="nf">usage</span><span class="p">():</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;./test.py -c config</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="runTest"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/runTest/index.html#heimpt.tools.archive.runTest.runTest">[docs]</a><span class="k">def</span> <span class="nf">runTest</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">test_collection</span><span class="p">,</span> <span class="n">test_name</span><span class="p">,</span> <span class="n">cit</span><span class="p">,</span>
+            <span class="n">cfg</span><span class="p">,</span> <span class="n">cfg_fn</span><span class="p">,</span> <span class="n">css</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">xslt_fo</span><span class="p">,</span> <span class="n">xslt_html</span><span class="p">):</span>
+  <span class="c1"># Run pipeline</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">test_collection</span><span class="p">,</span> <span class="n">test_name</span><span class="p">,</span> <span class="n">cit</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">P</span><span class="o">.</span><span class="n">validate_paths</span><span class="p">()</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Invalid file paths specified in </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">cfg_fn</span><span class="p">)</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">start</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">P</span><span class="o">.</span><span class="n">doc_fn</span><span class="p">):</span>
+            <span class="c1"># Step 1: DOCX to XML</span>
+            <span class="n">P</span><span class="o">.</span><span class="n">doc2xml</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;DOCX file </span><span class="si">%s</span><span class="s2"> not found&quot;</span> <span class="o">%</span> <span class="n">P</span><span class="o">.</span><span class="n">doc_fn</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">start</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span> <span class="ow">or</span> <span class="n">start</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">cit</span><span class="p">:</span>
+            <span class="n">P</span><span class="o">.</span><span class="n">xml2cit</span><span class="p">(</span><span class="n">cit</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">P</span><span class="o">.</span><span class="n">xml_fn</span><span class="p">):</span>
+            <span class="c1"># Step 2: XML to FO/HTML</span>
+            <span class="n">P</span><span class="o">.</span><span class="n">xml2fo</span><span class="p">(</span><span class="n">xslt_fo</span><span class="p">)</span>
+            <span class="n">P</span><span class="o">.</span><span class="n">xml2html</span><span class="p">(</span><span class="n">xslt_html</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;XML file </span><span class="si">%s</span><span class="s2"> not found&quot;</span> <span class="o">%</span> <span class="n">P</span><span class="o">.</span><span class="n">xml_fn</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">P</span><span class="o">.</span><span class="n">fo_fn</span><span class="p">):</span>
+        <span class="c1"># Step 3: FO to PDF</span>
+        <span class="k">for</span> <span class="n">tool</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="s2">&quot;fo_tools&quot;</span><span class="p">):</span>
+            <span class="n">P</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">css</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;FO file </span><span class="si">%s</span><span class="s2"> not found&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">P</span><span class="o">.</span><span class="n">fo_fn</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">P</span><span class="o">.</span><span class="n">html_fn</span><span class="p">):</span>
+        <span class="c1"># Step 3: HTML to PDF</span>
+        <span class="k">for</span> <span class="n">tool</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="s2">&quot;html_tools&quot;</span><span class="p">):</span>
+            <span class="n">P</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">css</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;HTML file </span><span class="si">%s</span><span class="s2"> not found&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">P</span><span class="o">.</span><span class="n">html_fn</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/runTest/index.html#heimpt.tools.archive.runTest.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># Process config and command line options</span>
+    <span class="n">options</span><span class="p">,</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">getopt</span><span class="o">.</span><span class="n">getopt</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="s2">&quot;c:&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;config=&quot;</span><span class="p">])</span>
+
+    <span class="n">cfg_fn</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">opt</span><span class="p">,</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">opt</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;--config&quot;</span><span class="p">):</span>
+            <span class="n">cfg_fn</span> <span class="o">=</span> <span class="n">arg</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Unknown option </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">opt</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">cfg_fn</span><span class="p">:</span>
+        <span class="n">usage</span><span class="p">()</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">cfg_fn</span><span class="p">)):</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Config file </span><span class="si">%s</span><span class="s2"> not found&quot;</span> <span class="o">%</span> <span class="n">cfg_fn</span><span class="p">)</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+    <span class="n">cfg</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">cfg_fn</span><span class="p">)</span>
+
+    <span class="n">base_dir</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="s2">&quot;base_dir&quot;</span><span class="p">)</span>
+    <span class="n">test_collection</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="s2">&quot;test_collection&quot;</span><span class="p">)</span>
+    <span class="n">xslt_html</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;stylesheets&quot;</span><span class="p">,</span> <span class="s2">&quot;xslt_html&quot;</span><span class="p">)</span>
+    <span class="n">xslt_fo</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;stylesheets&quot;</span><span class="p">,</span> <span class="s2">&quot;xslt_fo&quot;</span><span class="p">)</span>
+    <span class="n">css</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;stylesheets&quot;</span><span class="p">,</span> <span class="s2">&quot;css&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cit</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;stylesheets&quot;</span><span class="p">,</span> <span class="s2">&quot;xslt_cit&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">NoOptionError</span><span class="p">:</span>
+        <span class="n">cit</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">test_name</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="s2">&quot;test_name&quot;</span><span class="p">)</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pipeline&quot;</span><span class="p">,</span> <span class="s2">&quot;start&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">start</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">]:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="s2">&quot;Invalid value </span><span class="si">%s</span><span class="s2"> for start. Allowed values are 1, 2 or 3.&quot;</span> <span class="o">%</span>
+            <span class="n">start</span><span class="p">)</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">test_name</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="s2">&quot;test_name&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">test_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">):</span>
+      <span class="n">runTest</span><span class="p">(</span>
+          <span class="n">base_dir</span><span class="p">,</span>
+          <span class="n">test_collection</span><span class="p">,</span>
+          <span class="n">i</span><span class="p">,</span>
+          <span class="n">cit</span><span class="p">,</span>
+          <span class="n">cfg</span><span class="p">,</span>
+          <span class="n">cfg_fn</span><span class="p">,</span>
+          <span class="n">css</span><span class="p">,</span>
+          <span class="n">start</span><span class="p">,</span>
+          <span class="n">xslt_fo</span><span class="p">,</span>
+          <span class="n">xslt_html</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

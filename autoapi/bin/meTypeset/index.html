@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.meTypeset &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bin.meTypeset">
+<span id="bin-metypeset"></span><h1><a class="reference internal" href="#module-bin.meTypeset" title="bin.meTypeset"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.meTypeset</span></code></a><a class="headerlink" href="#module-bin.meTypeset" title="Permalink to this headline">¶</a></h1>
+<p><p>meTypeset: text parsing library to convert word documents to the JATS XML format</p>
+<dl>
+<dt>Usage:</dt><dd><p>meTypeset.py doc &lt;input&gt; &lt;output_folder&gt; [options]
+meTypeset.py docx &lt;input&gt; &lt;output_folder&gt; [options]
+meTypeset.py docxextracted &lt;input&gt; &lt;output_folder&gt; [options]
+meTypeset.py odt &lt;input&gt; &lt;output_folder&gt; [options]
+meTypeset.py other &lt;input&gt; &lt;output_folder&gt; [options]
+meTypeset.py tei &lt;input&gt; &lt;output_folder&gt; [options]
+meTypeset.py bibscan &lt;input&gt; [options]</p>
+</dd>
+<dt>Options:</dt><dd><dl class="option-list">
+<dt><kbd><span class="option">-a</span>, <span class="option">--aggression <var>&lt;aggression_level&gt;</var></span></kbd></dt>
+<dd><p>Parser aggression level 0-10 [default: 10]</p>
+</dd>
+<dt><kbd><span class="option">--chain <var>&lt;xslt&gt;</var></span></kbd></dt>
+<dd><p>Specify a subsequent XSL transform to pass the NLM to</p>
+</dd>
+<dt><kbd><span class="option">-c</span>, <span class="option">--clean</span></kbd></dt>
+<dd><p>Produce final XML, not intermediate markup with additional metadata</p>
+</dd>
+<dt><kbd><span class="option">-d</span>, <span class="option">--debug</span></kbd></dt>
+<dd><p>Enable debug output</p>
+</dd>
+<dt><kbd><span class="option">-i</span>, <span class="option">--identifiers</span></kbd></dt>
+<dd><p>Generate unique identifiers for all supported NLM elements</p>
+</dd>
+<dt><kbd><span class="option">--includedeleted</span></kbd></dt>
+<dd><p>Keep deleted text (track changes)</p>
+</dd>
+<dt><kbd><span class="option">--interactive</span></kbd></dt>
+<dd><p>Enable step-by-step interactive mode</p>
+</dd>
+<dt><kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></dt>
+<dd><p>Show this screen.</p>
+</dd>
+<dt><kbd><span class="option">-m</span>, <span class="option">--metadata <var>&lt;metadata_file&gt;</var></span></kbd></dt>
+<dd><p>Metadata file</p>
+</dd>
+<dt><kbd><span class="option">--nogit</span></kbd></dt>
+<dd><p>Disable git debug filesystem (only of use with –debug)</p>
+</dd>
+<dt><kbd><span class="option">--noimageprocessing</span></kbd></dt>
+<dd><p>Disable unoconv image processing</p>
+</dd>
+<dt><kbd><span class="option">--nolink</span></kbd></dt>
+<dd><p>Do not run reference linker</p>
+</dd>
+<dt><kbd><span class="option">--nometa</span></kbd></dt>
+<dd><p>Do not merge front matter</p>
+</dd>
+<dt><kbd><span class="option">--purenlm</span></kbd></dt>
+<dd><p>Die after performing NLM XSLT step</p>
+</dd>
+<dt><kbd><span class="option">--puretei</span></kbd></dt>
+<dd><p>Die after performing TEI XSLT step</p>
+</dd>
+<dt><kbd><span class="option">--prettytei</span></kbd></dt>
+<dd><p>Indent and format intermediary TEI</p>
+</dd>
+<dt><kbd><span class="option">-p</span>, <span class="option">--proprietary</span></kbd></dt>
+<dd><p>Enables proprietary math parsing. Requires omml2mml.xsl</p>
+</dd>
+<dt><kbd><span class="option">-s</span>, <span class="option">--settings <var>&lt;settings_file&gt;</var></span></kbd></dt>
+<dd><p>Settings file</p>
+</dd>
+<dt><kbd><span class="option">-v</span>, <span class="option">--version</span></kbd></dt>
+<dd><p>Show version.</p>
+</dd>
+<dt><kbd><span class="option">-z</span>, <span class="option">--zotero</span></kbd></dt>
+<dd><p>Enable Zotero integration for references.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="bin.meTypeset.__author__">
+<code class="sig-prename descclassname">bin.meTypeset.</code><code class="sig-name descname">__author__</code><em class="property"> = Martin Paul Eve, Dulip Withnage</em><a class="reference internal" href="../../../_modules/bin/meTypeset.html#__author__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.meTypeset.__author__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="bin.meTypeset.__email__">
+<code class="sig-prename descclassname">bin.meTypeset.</code><code class="sig-name descname">__email__</code><em class="property"> = martin&#64;martineve.com</em><a class="reference internal" href="../../../_modules/bin/meTypeset.html#__email__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.meTypeset.__email__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bin.meTypeset.MeTypeset">
+<em class="property">class </em><code class="sig-prename descclassname">bin.meTypeset.</code><code class="sig-name descname">MeTypeset</code><a class="reference internal" href="../../../_modules/bin/meTypeset.html#MeTypeset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.meTypeset.MeTypeset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">debug.Debuggable</span></code></p>
+<dl class="method">
+<dt id="bin.meTypeset.MeTypeset.read_command_line">
+<em class="property">static </em><code class="sig-name descname">read_command_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/meTypeset.html#MeTypeset.read_command_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.meTypeset.MeTypeset.read_command_line" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.meTypeset.MeTypeset.set_metadata_file">
+<code class="sig-name descname">set_metadata_file</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/meTypeset.html#MeTypeset.set_metadata_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.meTypeset.MeTypeset.set_metadata_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.meTypeset.MeTypeset.run_modules">
+<code class="sig-name descname">run_modules</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/meTypeset.html#MeTypeset.run_modules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.meTypeset.MeTypeset.run_modules" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.meTypeset.MeTypeset.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/meTypeset.html#MeTypeset.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.meTypeset.MeTypeset.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="bin.meTypeset.main">
+<code class="sig-prename descclassname">bin.meTypeset.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/meTypeset.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.meTypeset.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.meTypeset</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#bin.meTypeset.__author__">__author__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.meTypeset.__email__">__email__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.meTypeset.MeTypeset">MeTypeset</a><ul>
+<li><a class="reference internal" href="#bin.meTypeset.MeTypeset.read_command_line">read_command_line</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.meTypeset.MeTypeset.set_metadata_file">set_metadata_file</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.meTypeset.MeTypeset.run_modules">run_modules</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.meTypeset.MeTypeset.run">run</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.meTypeset.main">main</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/autoapi/bin/meTypeset/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

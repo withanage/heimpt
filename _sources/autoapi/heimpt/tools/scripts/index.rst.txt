@@ -1,0 +1,16 @@
+:mod:`heimpt.tools.scripts`
+===========================
+
+.. py:module:: heimpt.tools.scripts
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   endnotes2footnotes/index.rst
+   stripTitleNumbering/index.rst
+
+

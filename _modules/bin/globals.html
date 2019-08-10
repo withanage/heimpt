@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.globals &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.globals</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># @Author Dulip Withanage</span>
+
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">debug</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">ntpath</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+
+<span class="c1"># class Global Variables</span>
+<div class="viewcode-block" id="GV"><a class="viewcode-back" href="../../autoapi/bin/globals/index.html#bin.globals.GV">[docs]</a><span class="k">class</span> <span class="nc">GV</span> <span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">,</span> <span class="n">debug</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">debug</span>
+        <span class="n">Debuggable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Globals&#39;</span><span class="p">)</span>
+
+        <span class="c1"># todo: clean this up -- it&#39;s a mess</span>
+
+        <span class="n">docx</span> <span class="o">=</span> <span class="s1">&#39;docx&#39;</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="s1">&#39;doc&#39;</span>
+        <span class="n">common2</span> <span class="o">=</span> <span class="s1">&#39;common2&#39;</span>
+        <span class="n">nlm</span> <span class="o">=</span> <span class="s1">&#39;nlm&#39;</span>
+        <span class="n">chain</span> <span class="o">=</span> <span class="s1">&#39;xsl&#39;</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="s1">&#39;databasefile&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="n">settings</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">script_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;METYPESET&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">used_list_method</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">used_square_reference_method</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;bibscan&#39;</span><span class="p">]:</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">input_file_path</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;&lt;input&gt;&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">input_metadata_file_path</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--metadata&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span>
+                <span class="s1">&#39;--metadata&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">script_dir</span><span class="p">,</span>
+                                                <span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;default-metadata-file-path&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
+
+            <span class="n">filename_sep</span> <span class="o">=</span> <span class="n">ntpath</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_file_path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">output_folder_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;&lt;output_folder&gt;&#39;</span><span class="p">])</span>
+
+            <span class="c1">#general directory paths</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">runtime_folder_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_path</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s1">&#39;runtime&#39;</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">script_dir</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">common2_lib_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_path</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="n">common2</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">script_dir</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">binary_folder_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_path</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s1">&#39;binaries&#39;</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">script_dir</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">runtime_catalog_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_path</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s1">&#39;runtime-catalog&#39;</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">script_dir</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">common2_temp_folder_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_path</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="n">common2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_folder_path</span><span class="p">)</span>
+
+            <span class="c1"># docx document paths</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">docx_folder_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_path</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="n">docx</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">script_dir</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">docx_temp_folder_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_path</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="n">docx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_folder_path</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">docx_word_temp_folder_path</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span>
+                <span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">docx_temp_folder_path</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;word&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">unoconv_folder_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_path</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="n">doc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_folder_path</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">word_document_xml</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">docx_temp_folder_path</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;word-document-xml&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">docx_style_sheet_dir</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">script_dir</span><span class="p">,</span>
+                                                             <span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;docs-style-sheet-path&#39;</span><span class="p">,</span>
+                                                                                    <span class="bp">self</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">proprietary_style_sheet</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">script_dir</span><span class="p">,</span>
+                                                                <span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;proprietary-math-stylesheet&#39;</span><span class="p">,</span>
+                                                                                       <span class="bp">self</span><span class="p">))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">docx_to_tei_stylesheet</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">docx_temp_folder_path</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;doc-to-tei-stylesheet&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">docx_media_path</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span>
+                <span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">docx_word_temp_folder_path</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">output_media_path</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span>
+                <span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_folder_path</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;outputmedia&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)))</span>
+
+            <span class="c1">#OUTPUT FILE</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_file_path</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span> <span class="o">=</span> <span class="s1">&#39;tei.xml&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">fileName</span><span class="p">,</span> <span class="n">fileExtension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename_sep</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span> <span class="o">=</span> <span class="n">fileName</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">extsep</span> <span class="o">+</span> <span class="s1">&#39;xml&#39;</span>
+
+            <span class="c1">#TEI paths</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tei_folder_path</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_folder_path</span><span class="p">,</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;tei&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tei_file_path</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tei_folder_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tei_temp_file_path</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tei_folder_path</span><span class="p">,</span> <span class="s2">&quot;out.xml&quot;</span><span class="p">))</span>
+
+            <span class="c1">#NLM paths</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nlm_folder_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_path</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="n">nlm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_folder_path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nlm_file_path</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nlm_folder_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nlm_temp_file_path</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nlm_folder_path</span><span class="p">,</span> <span class="s2">&quot;out.xml&quot;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nlm_style_sheet_dir</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">script_dir</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;tei-to-nlm-stylesheet&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)))</span>
+
+            <span class="c1"># XSL chain paths</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">xsl_folder_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_path</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="n">chain</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_folder_path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">xsl_file_path</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xsl_folder_path</span><span class="p">,</span> <span class="s2">&quot;out.html&quot;</span><span class="p">))</span>
+
+
+            <span class="c1"># error log chain paths</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error_folder_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_path</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_folder_path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error_file_path</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">error_folder_path</span><span class="p">,</span> <span class="s2">&quot;errors.txt&quot;</span><span class="p">))</span>
+
+            <span class="c1">#Metadata paths</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metadata_style_sheet_path</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span>
+                <span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">script_dir</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;metadata-stylesheet&#39;</span><span class="p">,</span>
+                                                                               <span class="bp">self</span><span class="p">)))</span>
+
+            <span class="c1">#java classes for saxon</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">java_class_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_java_classpath</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">use_zotero</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--zotero&#39;</span><span class="p">]</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle_platform</span><span class="p">()</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nlm_file_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nlm_temp_file_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="c1"># database paths</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">database_file_path</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">script_dir</span><span class="p">,</span> <span class="s1">&#39;database&#39;</span><span class="p">),</span>
+                                                                   <span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;databasefile&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)))</span>
+
+<div class="viewcode-block" id="GV.handle_platform"><a class="viewcode-back" href="../../autoapi/bin/globals/index.html#bin.globals.GV.handle_platform">[docs]</a>    <span class="k">def</span> <span class="nf">handle_platform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;windows&#39;</span> <span class="ow">in</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">input_metadata_file_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_metadata_file_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;//&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GV.check_file_exists"><a class="viewcode-back" href="../../autoapi/bin/globals/index.html#bin.globals.GV.check_file_exists">[docs]</a>    <span class="k">def</span> <span class="nf">check_file_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;An empty file path was passed&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">fatal_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Unable to locate </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file_path</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="GV.generate_path"><a class="viewcode-back" href="../../autoapi/bin/globals/index.html#bin.globals.GV.generate_path">[docs]</a>    <span class="k">def</span> <span class="nf">generate_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="bp">self</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="GV.mk_dir"><a class="viewcode-back" href="../../autoapi/bin/globals/index.html#bin.globals.GV.mk_dir">[docs]</a>    <span class="k">def</span> <span class="nf">mk_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="GV.copy_folder"><a class="viewcode-back" href="../../autoapi/bin/globals/index.html#bin.globals.GV.copy_folder">[docs]</a>    <span class="k">def</span> <span class="nf">copy_folder</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">symlinks</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ignore</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">item</span><span class="p">))</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">item</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">symlinks</span><span class="p">,</span> <span class="n">ignore</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1">#print s ,d</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GV.set_java_classpath"><a class="viewcode-back" href="../../autoapi/bin/globals/index.html#bin.globals.GV.set_java_classpath">[docs]</a>    <span class="k">def</span> <span class="nf">set_java_classpath</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">java_class_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="c1">#runtime_dir = concat_path(script_dir,value_for_tag(settings,&#39;runtime&#39;))</span>
+        <span class="k">for</span> <span class="n">lib</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;saxon-libs&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_file_exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">runtime_folder_path</span><span class="p">,</span> <span class="n">lib</span><span class="p">))</span>
+            <span class="n">java_class_path</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">runtime_folder_path</span><span class="p">,</span> <span class="n">lib</span><span class="p">)</span>
+            <span class="n">java_class_path</span> <span class="o">+=</span> <span class="n">os</span><span class="o">.</span><span class="n">pathsep</span>
+        <span class="k">return</span> <span class="s1">&#39;&quot;&#39;</span> <span class="o">+</span> <span class="n">java_class_path</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="GV.is_number"><a class="viewcode-back" href="../../autoapi/bin/globals/index.html#bin.globals.GV.is_number">[docs]</a>    <span class="k">def</span> <span class="nf">is_number</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">float</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

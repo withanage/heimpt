@@ -1,0 +1,41 @@
+:mod:`heimpt.cmos2jats_citations`
+=================================
+
+.. py:module:: heimpt.cmos2jats_citations
+
+
+Module Contents
+---------------
+
+.. data:: cmos1
+   :annotation: = Heilman, James M., and Andrew G. West "Wikipedia and Medicine: Quantifying Readership, Editors, and the Significance of Natural Language." Journal of Medical Internet Research 17 no. 3 (2015) e62 doi:10.2196/jmir.4069
+
+   
+
+.. data:: cmos2
+   :annotation: = Knaller, Susanne. 2012. &#8220;The Ambiguousness of the Authentic:          Authenticity Between Reference, Fictionality, and Fake in Modern and Contemporary         Art.&#8221; In <italic>Authenticity: Contemporary Perspectives on a Critical            Concept</italic>, edited by Julia Straub, 51&#8211;75. Bielefeld:          transcript.
+
+   
+
+.. data:: cmos3
+   :annotation: = Susanne Knaller studied Romance and German Philology at the University of Graz. 2002 Habilitation (Romance Philology and General and Comparative Literature) at Johann-Wolfgang-Goethe-University Frankfurt. In 1999/2000 Fellow and in 2002/2003 Visiting Professor at Columbia University. Since 2002 Associate Professor at the University of Graz. Founder and Speaker of the Research Department General and Comparative Literature in Graz. Since 2013 Director of the Center of Cultural Studies at the University of Graz. A selection of recent publications includes: <italic>Ein Wort aus der Fremde. Geschichte und Theorie des Begriffs Authentizit&#228;t</italic> (2007); <italic>Realit&#228;tsbegriffe in der Moderne. Beitr&#228;ge zu Literatur, Kunst, Philosophie und Wissenschaft</italic>. (2011), edited with Harro M&#252;ller; <italic>Literaturwissenschaft heute &#8211; Gegenstand, Positionen, Relevanz </italic>(2013), edited with Doris Pichler; <italic>Realit&#228;t und Wirklichkeit in der Moderne. Texte zu Literatur, Kunst, Film und Fotografie </italic>(2013); and <italic>Die Realit&#228;t der Kunst. Programme und Theorien zu Literatur, Kunst und Fotografie seit 1700</italic> (2015); <italic>&#196;sthetische Emotion. Formen und Figurationen zur Zeit des Umbruchs der Medien und Gattungen (1880 &#8211; 1939)</italic> (2016), edited with Rita Rieger.
+
+   
+
+.. function:: clean(s)
+
+
+.. function:: cre(s)
+
+
+.. function:: set_element_citations(t)
+
+
+.. data:: t
+   
+
+   
+
+.. function:: convert_citation2reference(t)
+
+

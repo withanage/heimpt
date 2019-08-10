@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.docxtotei &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bin.docxtotei">
+<span id="bin-docxtotei"></span><h1><a class="reference internal" href="#module-bin.docxtotei" title="bin.docxtotei"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.docxtotei</span></code></a><a class="headerlink" href="#module-bin.docxtotei" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="bin.docxtotei.__author__">
+<code class="sig-prename descclassname">bin.docxtotei.</code><code class="sig-name descname">__author__</code><em class="property"> = Dulip Withanage</em><a class="reference internal" href="../../../_modules/bin/docxtotei.html#__author__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.docxtotei.__author__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="bin.docxtotei.__email__">
+<code class="sig-prename descclassname">bin.docxtotei.</code><code class="sig-name descname">__email__</code><em class="property"> = dulip.withanage&#64;gmail.com</em><a class="reference internal" href="../../../_modules/bin/docxtotei.html#__email__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.docxtotei.__email__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bin.docxtotei.DocxToTei">
+<em class="property">class </em><code class="sig-prename descclassname">bin.docxtotei.</code><code class="sig-name descname">DocxToTei</code><span class="sig-paren">(</span><em class="sig-param">gv</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/docxtotei.html#DocxToTei"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.docxtotei.DocxToTei" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">debug.Debuggable</span></code></p>
+<dl class="method">
+<dt id="bin.docxtotei.DocxToTei.saxon_doc_to_tei">
+<code class="sig-name descname">saxon_doc_to_tei</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/docxtotei.html#DocxToTei.saxon_doc_to_tei"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.docxtotei.DocxToTei.saxon_doc_to_tei" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the appropriate java command to run Saxon
+&#64;return: a string to run on the command line</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bin.docxtotei.DocxToTei.saxon_omml_to_mml">
+<code class="sig-name descname">saxon_omml_to_mml</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/docxtotei.html#DocxToTei.saxon_omml_to_mml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.docxtotei.DocxToTei.saxon_omml_to_mml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the appropriate java command to run Saxon
+&#64;return: a string to run on the command line</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bin.docxtotei.DocxToTei.handle_wmf">
+<code class="sig-name descname">handle_wmf</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/docxtotei.html#DocxToTei.handle_wmf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.docxtotei.DocxToTei.handle_wmf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls unoconv to convert wmf images into png format. This method has a hard limit of 30 images.</p>
+<p>&#64;return: False if fails (more than 30 images), True otherwise</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bin.docxtotei.DocxToTei.clean_proprietary">
+<code class="sig-name descname">clean_proprietary</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/docxtotei.html#DocxToTei.clean_proprietary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.docxtotei.DocxToTei.clean_proprietary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.docxtotei.DocxToTei.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">extract</em>, <em class="sig-param">run_proprietary</em>, <em class="sig-param">tei=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/docxtotei.html#DocxToTei.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.docxtotei.DocxToTei.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method converts from docx to TEI. It creates the necessary output folders, optionally extracts the file and
+runs the Saxon process necessary to conduct the transform
+&#64;param extract: whether or not to extract a docx file. True to extract, False to work on a pre-extracted folder
+&#64;param run_proprietary: whether or not to run proprietary math transforms</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.docxtotei</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#bin.docxtotei.__author__">__author__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.docxtotei.__email__">__email__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.docxtotei.DocxToTei">DocxToTei</a><ul>
+<li><a class="reference internal" href="#bin.docxtotei.DocxToTei.saxon_doc_to_tei">saxon_doc_to_tei</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.docxtotei.DocxToTei.saxon_omml_to_mml">saxon_omml_to_mml</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.docxtotei.DocxToTei.handle_wmf">handle_wmf</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.docxtotei.DocxToTei.clean_proprietary">clean_proprietary</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.docxtotei.DocxToTei.run">run</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/autoapi/bin/docxtotei/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.metadata &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.metadata</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">manipulate</span> <span class="k">import</span> <span class="n">Manipulate</span>
+<span class="kn">from</span> <span class="nn">teimanipulate</span> <span class="k">import</span> <span class="n">TeiManipulate</span>
+
+<div class="viewcode-block" id="__author__"><a class="viewcode-back" href="../../autoapi/bin/metadata/index.html#bin.metadata.__author__">[docs]</a><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Martin Paul Eve, Dulip Withanage&quot;</span></div>
+<div class="viewcode-block" id="__email__"><a class="viewcode-back" href="../../autoapi/bin/metadata/index.html#bin.metadata.__email__">[docs]</a><span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;martin@martineve.com&quot;</span></div>
+
+
+<div class="viewcode-block" id="Metadata"><a class="viewcode-back" href="../../autoapi/bin/metadata/index.html#bin.metadata.Metadata">[docs]</a><span class="k">class</span> <span class="nc">Metadata</span><span class="p">(</span><span class="n">Manipulate</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gv</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">gv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_items</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">authors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dom_to_load</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">input_metadata_file_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dom_temp_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">input_metadata_file_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mod_name</span> <span class="o">=</span> <span class="s1">&#39;Metadata&#39;</span>
+        <span class="n">Manipulate</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gv</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Metadata.attach_metadata"><a class="viewcode-back" href="../../autoapi/bin/metadata/index.html#bin.metadata.Metadata.attach_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">attach_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;-classpath&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">java_class_path</span><span class="p">,</span>
+               <span class="s2">&quot;-Dxml.catalog.files=&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">runtime_catalog_path</span><span class="p">,</span>
+               <span class="s2">&quot;net.sf.saxon.Transform&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;-x&quot;</span><span class="p">,</span> <span class="s2">&quot;org.apache.xml.resolver.tools.ResolvingXMLReader&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;-y&quot;</span><span class="p">,</span> <span class="s2">&quot;org.apache.xml.resolver.tools.ResolvingXMLReader&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;org.apache.xml.resolver.tools.CatalogResolver&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_file_path</span><span class="p">,</span>
+               <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_temp_file_path</span><span class="p">,</span>
+               <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">metadata_style_sheet_path</span><span class="p">,</span>
+               <span class="s1">&#39;metadataFile=&quot;&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">input_metadata_file_path</span> <span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Metadata.run"><a class="viewcode-back" href="../../autoapi/bin/metadata/index.html#bin.metadata.Metadata.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">java_command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attach_metadata</span><span class="p">()</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">java_command</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># copy back to the temp file for debug purposes</span>
+        <span class="n">Manipulate</span><span class="o">.</span><span class="n">update_tmp_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_file_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_temp_file_path</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Running metadata transform&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Metadata.extract_metadata_fields"><a class="viewcode-back" href="../../autoapi/bin/metadata/index.html#bin.metadata.Metadata.extract_metadata_fields">[docs]</a>    <span class="k">def</span> <span class="nf">extract_metadata_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># load the metadata file for reading</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dom_read</span><span class="p">()</span>
+
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># attempt to find identifiers</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">ids</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//article-id | //tei:article-id&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+        <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metadata_items</span><span class="p">[</span><span class="s1">&#39;ID</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">)]</span> <span class="o">=</span> <span class="n">text</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Extracted an article ID: &quot;</span><span class="si">{0}</span><span class="s1">&quot; from metadata&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_items</span><span class="p">[</span><span class="s1">&#39;IDs_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+
+        <span class="c1"># attempt to find article titles</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">titles</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//article-title | //tei:article-title&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+        <span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">titles</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metadata_items</span><span class="p">[</span><span class="s1">&#39;title</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">)]</span> <span class="o">=</span> <span class="n">text</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Extracted an article title: &quot;</span><span class="si">{0}</span><span class="s1">&quot; from metadata&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_items</span><span class="p">[</span><span class="s1">&#39;titles_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+
+        <span class="c1"># attempt to find journal titles</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">titles</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//journal-id | //tei:journal-title&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+        <span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">titles</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metadata_items</span><span class="p">[</span><span class="s1">&#39;journal_title</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">)]</span> <span class="o">=</span> <span class="n">text</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Extracted a journal title: &quot;</span><span class="si">{0}</span><span class="s1">&quot; from metadata&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_items</span><span class="p">[</span><span class="s1">&#39;journal_titles_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+
+        <span class="c1"># attempt to find authors</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">titles</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//contrib/name | //tei:contrib/tei:name&#39;</span><span class="p">,</span>
+                            <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+
+        <span class="n">authors</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">titles</span><span class="p">:</span>
+            <span class="n">components</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">title</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Extracted a name component: &quot;</span><span class="si">{0}</span><span class="s1">&quot; from metadata&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+                <span class="n">components</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">metadata_items</span><span class="p">[</span><span class="s1">&#39;contrib_name</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">)]</span> <span class="o">=</span> <span class="n">components</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">authors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">metadata_items</span><span class="p">[</span><span class="s1">&#39;contrib_names_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+
+
+        <span class="c1"># attempt to find affiliations</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">titles</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//aff | //tei:aff&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+        <span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">titles</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metadata_items</span><span class="p">[</span><span class="s1">&#39;aff</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">)]</span> <span class="o">=</span> <span class="n">text</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Extracted an affiliation: &quot;</span><span class="si">{0}</span><span class="s1">&quot; from metadata&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata_items</span><span class="p">[</span><span class="s1">&#39;affs_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span></div>
+
+<div class="viewcode-block" id="Metadata.pre_clean"><a class="viewcode-back" href="../../autoapi/bin/metadata/index.html#bin.metadata.Metadata.pre_clean">[docs]</a>    <span class="k">def</span> <span class="nf">pre_clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extract_metadata_fields</span><span class="p">()</span>
+
+        <span class="n">manipulate</span> <span class="o">=</span> <span class="n">TeiManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="c1"># get all elements in the body</span>
+        <span class="n">section</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:body//*&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+
+        <span class="n">items_to_match</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;{http://www.tei-c.org/ns/1.0}head&#39;</span><span class="p">,</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}p&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}cit&#39;</span><span class="p">]</span>
+
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">matched_authors</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">section</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">break</span>
+
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">items_to_match</span><span class="p">:</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+                <span class="n">processed</span> <span class="o">=</span> <span class="kc">False</span>
+
+                <span class="k">for</span> <span class="n">author</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">authors</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">author</span> <span class="ow">in</span> <span class="n">matched_authors</span><span class="p">:</span>
+                        <span class="n">has_all</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">author</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="ow">not</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+                                <span class="n">has_all</span> <span class="o">=</span> <span class="kc">False</span>
+                                <span class="k">break</span>
+
+                        <span class="k">if</span> <span class="n">has_all</span><span class="p">:</span>
+                            <span class="c1"># found a metadata line</span>
+                            <span class="n">matched_authors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">author</span><span class="p">)</span>
+                            <span class="n">count</span> <span class="o">-=</span> <span class="mi">1</span>
+                            <span class="n">item</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Removed line &quot;</span><span class="si">{0}</span><span class="s1">&quot; &#39;</span>
+                                                         <span class="sa">u</span><span class="s1">&#39;because it appears to be author metadata&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+                            <span class="n">processed</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="k">break</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">processed</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">metadata</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">metadata</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+                            <span class="c1"># found a metadata line</span>
+                            <span class="n">count</span> <span class="o">-=</span> <span class="mi">1</span>
+                            <span class="n">item</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Removed line &quot;</span><span class="si">{0}</span><span class="s1">&quot; &#39;</span>
+                                                         <span class="sa">u</span><span class="s1">&#39;because it appears to be duplicated metadata&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div></div>
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

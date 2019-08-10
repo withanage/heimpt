@@ -1,0 +1,288 @@
+:mod:`heimpt.tools.archive.postProcess`
+=======================================
+
+.. py:module:: heimpt.tools.archive.postProcess
+
+
+Module Contents
+---------------
+
+.. data:: LOG_FILE
+   :annotation: = jatsPostProcess.log
+
+   
+
+.. data:: numeral_map
+   
+
+   
+
+.. py:class:: PostProcess(cf)
+
+   command line tool to clean, modify, delete, merge jats files
+
+   
+   .. method:: print_unreferenced_figs(self, tr, f)
+
+
+
+   
+   .. method:: apply_transformations(self, tr, context, f, chapter, order, count)
+
+      main method to apply transformations
+
+
+
+   
+   .. method:: references_to_citations(self, tr)
+
+      Converts References Block to real citations
+
+      Returns
+       -------
+       tr : elementtree
+
+
+
+   
+   .. method:: create_automated_references(self, tr)
+
+
+
+   
+   .. method:: citations_to_references(self, tr)
+
+      Removes  mixed-citation block, adds as a <sec> Section element
+
+      Returns
+       -------
+       tr : elementtree
+
+
+
+   
+   .. method:: contains(self, a, v)
+
+      help method to compare references 
+
+
+
+   
+   .. method:: convert_int_to_roman(self, i)
+
+
+
+   
+   .. method:: convert_roman_to_int(self, n)
+
+
+
+   
+   .. method:: create_files(self, context)
+
+      main method : creates zip, merges and transforms xml files 
+
+
+
+   
+   .. method:: create_footnote_file(self, cfb, back_fns, header_text, body_secs, elem_secs, elem_fns)
+
+
+
+   
+   .. method:: create_merged_file(self, fullfile, body_secs, back_fns, back_refs, header_text, cfb, context)
+
+
+
+   
+   .. method:: create_output(self, tree, f)
+
+      write element tree to f 
+
+
+
+   
+   .. method:: create_refs_csv(self, dr, infile, outfile, types)
+
+      write a csv f from the references 
+
+
+
+   
+   .. method:: create_zip(self, dr, files)
+
+      create a zip file from a set of files and a directory path 
+
+
+
+   
+   .. method:: get_etree(self, infile)
+
+      reads a file and get the element tree 
+
+
+
+   
+   .. method:: get_footnotes_back(self, tree)
+
+      returns footnotes in back 
+
+
+
+   
+   .. method:: get_fig_refs_body(self, tree)
+
+
+
+   
+   .. method:: get_fig_ids_body(self, tree)
+
+
+
+   
+   .. method:: get_footnotes_body(self, tree)
+
+      returns footnotes in body 
+
+
+
+   
+   .. method:: get_ref_ids_back(self, tree)
+
+      returns references in back 
+
+
+
+   
+   .. method:: get_ref_ids_body(self, tree)
+
+      returns references in body 
+
+
+
+   
+   .. method:: get_stringified_children(self, node)
+
+
+
+   
+   .. method:: get_refs_mixed_back(self, tree)
+
+      returns mixed citations in back 
+
+
+
+   
+   .. method:: get_unreferenced_footnotes(self, tr)
+
+      returns a list of footnotes, which are not in body 
+
+
+
+   
+   .. method:: merge_repeating_neighbours(self, tr, etype)
+
+
+
+   
+   .. method:: modify_files(self, dr, files, context)
+
+      merge  a set of xml files in a directory
+
+
+
+   
+   .. method:: stringify(self, tree)
+
+
+
+   
+   .. method:: remove_all_elements_of_type(self, tree, names)
+
+      removes all the elements of a certain type in a element tree 
+
+
+
+   
+   .. method:: remove_comments(self, tree)
+
+      removes all the comments  in a element tree 
+
+
+
+   
+   .. method:: remove_duplicate_http_links(self, tr)
+
+
+
+   
+   .. method:: remove_duplicate_refs(self, tr, tag_list)
+
+      removes duplicate references
+
+
+
+   
+   .. method:: remove_name_duplicates_speech(self, tr)
+
+      removes name duplication  in  speech tag 
+
+
+
+   
+   .. method:: remove_not_used_in_back(self, tr, tag)
+
+      removes  footnotes, references, which are not linked. 
+
+
+
+   
+   .. method:: remove_element(self, e)
+
+
+
+   
+   .. method:: remove_table_references(self, tree, name, attr, value)
+
+
+
+   
+   .. method:: set_enumeration(self, tr, name, attr, value, context, f, chapter, order, count)
+
+      set the count id for an attribute in a tag type 
+
+
+
+   
+   .. method:: set_numbering(self, tree, tags)
+
+      tags auto-numbering
+
+
+
+   
+   .. method:: set_roman_numbers(self, count, range_count, cf)
+
+
+
+   
+   .. method:: set_uuid_fns(self, tr, s)
+
+
+
+   
+   .. method:: set_uuid_figs(self, tr)
+
+
+
+   
+   .. method:: sort_references(self, tr, parent, tag_list)
+
+      sort all the references  
+
+
+
+
+.. function:: main()
+
+

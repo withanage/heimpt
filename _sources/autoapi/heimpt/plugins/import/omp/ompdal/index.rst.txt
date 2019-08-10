@@ -1,0 +1,437 @@
+:mod:`heimpt.plugins.import.omp.ompdal`
+=======================================
+
+.. py:module:: heimpt.plugins.import.omp.ompdal
+
+.. autoapi-nested-parse::
+
+   Copyright (c) 2015 Heidelberg University Library
+   Distributed under the GNU GPL v3. For full terms see the file
+   LICENSE.md
+
+
+
+Module Contents
+---------------
+
+.. py:class:: OMPSettings(rows=[])
+
+   
+   .. method:: getLocalizedValue(self, setting_name, locale, fallback='en_US')
+
+
+
+   
+   .. method:: getValues(self, setting_name)
+
+
+
+
+.. py:class:: OMPItem(row, settings=OMPSettings(), associated_items={})
+
+
+.. py:class:: OMPDAL(db, conf)
+
+   A rudimentary database abstraction layer for the OMP database.
+
+   
+   .. method:: getAnnouncementsByPress(self, press_id)
+
+      Get announcement by press
+
+
+
+   
+   .. method:: getAnnouncementsByType(self, t)
+
+      Get Announcements by type
+
+
+
+   
+   .. method:: getAnnouncementSettings(self, announcement_id)
+
+      Get Announcement settings
+
+
+
+   
+   .. method:: getAnnouncementType(self, type_id)
+
+      get Announcement type
+
+
+
+   
+   .. method:: getAnnouncementTypeSettings(self, type_id)
+
+      Get Announcement type settings
+
+
+
+   
+   .. method:: getPresses(self)
+
+      Get all  enabled presses
+
+
+
+   
+   .. method:: getPress(self, press_id)
+
+      Get row for a given press id.
+
+
+
+   
+   .. method:: getPressSettings(self, press_id)
+
+      Get settings for a given press.
+
+
+
+   
+   .. method:: getSubmission(self, submission_id)
+
+      Get row for a given submission id.
+
+
+
+   
+   .. method:: getSubmissionsByPress(self, press_id, ignored_submission_id=-1, status=3)
+
+      Get all submissions in press with the given status (default: 3=published).
+
+
+
+   
+   .. method:: getSubmissionsByCategory(self, category_id, ignored_submission_id=-1, status=3)
+
+      Get all submissions in a category with the given status (default: 3=published).
+
+
+
+   
+   .. method:: getSubmissionsBySeries(self, series_id, ignored_submission_id=-1, status=3)
+
+      Get all submissions in a series with the given status (default: 3=published).
+
+
+
+   
+   .. method:: getPublishedSubmission(self, submission_id, press_id=None)
+
+      Get submission info for a given submission id, but only return, if the 
+      submission has been published and is associated with a certain press. 
+
+
+
+   
+   .. method:: getSubmissionSettings(self, submission_id)
+
+      Get settings for a given submission.
+
+
+
+   
+   .. method:: getAuthorsBySubmission(self, submission_id, filter_browse=False)
+
+      Get all authors associated with the specified submission regardless of their role.
+
+
+
+   
+   .. method:: getAuthorsByPress(self, press_id, filter_browse=True, status=3)
+
+      Get all authors associated with the specified press regardless of their role.
+
+
+
+   
+   .. method:: getActualAuthorsBySubmission(self, submission_id, filter_browse=True)
+
+      Get all authors associated with the specified submission with chapter author role.
+
+
+
+   
+   .. method:: getEditorsBySubmission(self, submission_id, filter_browse=True)
+
+      Get all authors associated with the specified submission with editor role.
+
+
+
+   
+   .. method:: getAuthorsByChapter(self, chapter_id)
+
+      Get authors associated with a given chapter.
+
+
+
+   
+   .. method:: getAuthor(self, author_id)
+
+      Get row for a given author id.
+
+
+
+   
+   .. method:: getAuthorSettings(self, author_id)
+
+      Get settings for a given author.
+
+
+
+   
+   .. method:: getUserSettings(self, user_id)
+
+
+
+   
+   .. method:: getUserGroupSettings(self, user_group_id)
+
+
+
+   
+   .. method:: getSeriesByPress(self, press_id)
+
+      Get all series published in the given press.
+
+
+
+   
+   .. method:: getSeriesByPathAndPress(self, series_path, press_id)
+
+      Get the series with the given pass in the given press (unique).
+
+
+
+   
+   .. method:: getSeriesBySubmissionId(self, submission_id)
+
+      Get the series the given submission is assigned to.
+
+
+
+   
+   .. method:: getCategoryByPathAndPress(self, category_path, press_id)
+
+      Get the category by path in the given press (unique).
+
+
+
+   
+   .. method:: getCategoriesByPress(self, press_id)
+
+      Get all categories in  press.
+
+
+
+   
+   .. method:: getCategoriesBySeries(self, series_id)
+
+      Get the assigned Category of series
+
+
+
+   
+   .. method:: getCategoryBySubmissionId(self, submission_id)
+
+      Get the assigned Category of submission
+
+
+
+   
+   .. method:: getCategorySettings(self, category_id)
+
+      Get settings for a given category
+
+
+
+   
+   .. method:: getCategory(self, category_id)
+
+      Get row for a given series id.
+
+
+
+   
+   .. method:: getSeries(self, series_id)
+
+      Get row for a given series id.
+
+
+
+   
+   .. method:: getSeriesEditors(self, press_id, series_id)
+
+      Get editors for the given series.
+
+
+
+   
+   .. method:: getLocalizedCategorySettings(self, category_id, setting_name, locale)
+
+      Get row for a given category
+
+
+
+   
+   .. method:: getLocalizedSeriesSettings(self, series_id, locale)
+
+      Get row for a given series id.
+
+
+
+   
+   .. method:: getSeriesSettings(self, series_id)
+
+      Get settings for a given series.
+
+
+
+   
+   .. method:: getChaptersBySubmission(self, submission_id)
+
+      Get all chapters associated with the given submission.
+
+
+
+   
+   .. method:: getChapter(self, chapter_id)
+
+      Get row for a given chapter id.
+
+
+
+   
+   .. method:: getChapterSettings(self, chapter_id)
+
+      Get settings for a given chapter id.
+
+
+
+   
+   .. method:: getPublicationFormatsBySubmission(self, submission_id, available=True, approved=True)
+
+      Get all approved and available publication formats for the given submission.
+
+
+
+   
+   .. method:: getAllPublicationFormatsBySubmission(self, submission_id, available=True, approved=True)
+
+      Get all approved and available publication formats for the given submission.
+
+
+
+   
+   .. method:: getPhysicalPublicationFormats(self, submission_id, available=True, approved=True)
+
+      Get all publication formats marked as physical format for the given submission.
+
+
+
+   
+   .. method:: getDigitalPublicationFormats(self, submission_id, available=True, approved=True)
+
+      Get all publication formats not marked as physical format for the given submission.
+
+
+
+   
+   .. method:: getPublicationFormat(self, publication_format_id)
+
+      Get row for a given publication format id.
+
+
+
+   
+   .. method:: getPublicationFormatByName(self, submission_id, name, available=True, approved=True)
+
+      Get publication format for the given submission where any of the settings for 'name' matches the given string
+      name.
+
+
+
+   
+   .. method:: getPublicationFormatSettings(self, publication_format_id)
+
+      Get settings for a given publication format id.
+
+
+
+   
+   .. method:: getLatestRevisionOfChapterFileByPublicationFormat(self, chapter_id, publication_format_id)
+
+      Get the latest revision of the file associated with a given chapter and publication format.
+
+
+
+   
+   .. method:: getLatestRevisionOfFullBookFileByPublicationFormat(self, submission_id, publication_format_id)
+
+      Get the latest revision of a file of genre "Book" for a given publication format.
+
+
+
+   
+   .. method:: getLatestRevisionOfEBook(self, submission_id, publication_format_id)
+
+      Get the latest revision of a file of genre "Book" for a given publication format.
+
+
+
+   
+   .. method:: getReviewFilesByPublicationFormat(self, submission_id, publication_format_id)
+
+      Get the latest revision of a file of a review for a given publication format.
+
+
+
+   
+   .. method:: getSubmissionFileBySubmission(self, submission_id)
+
+      Get files of a submission.
+
+
+
+   
+   .. method:: getSubmissionFileSettings(self, file_id)
+
+      Get settings for a given submission file.
+
+
+
+   
+   .. method:: getPublicationDatesByPublicationFormat(self, publication_format_id, role=None)
+
+      Get all publication dates associated with a given publication format.
+
+
+
+   
+   .. method:: getIdentificationCodesByPublicationFormat(self, publication_format_id)
+
+      Get the identification codes (ISBN) associated with a given publication format.
+
+
+
+   
+   .. method:: getRepresentativesBySubmission(self, submission_id, representative_id)
+
+      Get all representatives of a certain id for the given submission.
+
+
+
+   
+   .. method:: getMetaDataPublishedDates(self, submission_id)
+
+
+
+   
+   .. method:: getMarketsByPublicationFormat(self, publication_format_id)
+
+
+
+

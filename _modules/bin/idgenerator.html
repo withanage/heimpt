@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.idgenerator &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.idgenerator</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;idgenerator: a tool to append an ID to all elements in an NLM XML file</span>
+
+<span class="sd">Usage:</span>
+<span class="sd">    idgenerator.py &lt;input&gt; [options]</span>
+
+<span class="sd">Options:</span>
+<span class="sd">    -d, --debug                                     Enable debug output</span>
+<span class="sd">    -h, --help                                      Show this screen.</span>
+<span class="sd">    -v, --version                                   Show version.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">debug</span> <span class="k">import</span> <span class="n">Debuggable</span>
+<span class="kn">from</span> <span class="nn">nlmmanipulate</span> <span class="k">import</span> <span class="n">NlmManipulate</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">from</span> <span class="nn">bare_globals</span> <span class="k">import</span> <span class="n">GV</span>
+<span class="kn">from</span> <span class="nn">docopt</span> <span class="k">import</span> <span class="n">docopt</span>
+
+<div class="viewcode-block" id="__author__"><a class="viewcode-back" href="../../autoapi/bin/idgenerator/index.html#bin.idgenerator.__author__">[docs]</a><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Martin Paul Eve&quot;</span></div>
+<div class="viewcode-block" id="__email__"><a class="viewcode-back" href="../../autoapi/bin/idgenerator/index.html#bin.idgenerator.__email__">[docs]</a><span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;martin@martineve.com&quot;</span></div>
+
+<div class="viewcode-block" id="IdGenerator"><a class="viewcode-back" href="../../autoapi/bin/idgenerator/index.html#bin.idgenerator.IdGenerator">[docs]</a><span class="k">class</span> <span class="nc">IdGenerator</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_variables</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">global_variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="n">Debuggable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;ID Generator&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="IdGenerator.run"><a class="viewcode-back" href="../../autoapi/bin/idgenerator/index.html#bin.idgenerator.IdGenerator.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">elements</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;abbrev&#39;</span><span class="p">,</span> <span class="s1">&#39;abstract&#39;</span><span class="p">,</span> <span class="s1">&#39;ack&#39;</span><span class="p">,</span> <span class="s1">&#39;address&#39;</span><span class="p">,</span> <span class="s1">&#39;aff&#39;</span><span class="p">,</span> <span class="s1">&#39;alt-text&#39;</span><span class="p">,</span> <span class="s1">&#39;app&#39;</span><span class="p">,</span> <span class="s1">&#39;app-group&#39;</span><span class="p">,</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;article-title&#39;</span><span class="p">,</span> <span class="s1">&#39;attrib&#39;</span><span class="p">,</span> <span class="s1">&#39;author-comment&#39;</span><span class="p">,</span> <span class="s1">&#39;author-notes&#39;</span><span class="p">,</span> <span class="s1">&#39;award-group&#39;</span><span class="p">,</span> <span class="s1">&#39;bio&#39;</span><span class="p">,</span> <span class="s1">&#39;boxed-text&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;caption&#39;</span><span class="p">,</span> <span class="s1">&#39;chem-struct&#39;</span><span class="p">,</span> <span class="s1">&#39;chem-struct-wrap&#39;</span><span class="p">,</span> <span class="s1">&#39;col&#39;</span><span class="p">,</span> <span class="s1">&#39;colgroup&#39;</span><span class="p">,</span> <span class="s1">&#39;collab&#39;</span><span class="p">,</span> <span class="s1">&#39;compound-kwd&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;contrib&#39;</span><span class="p">,</span> <span class="s1">&#39;contrib-group&#39;</span><span class="p">,</span> <span class="s1">&#39;corresp&#39;</span><span class="p">,</span> <span class="s1">&#39;custom-meta&#39;</span><span class="p">,</span> <span class="s1">&#39;def&#39;</span><span class="p">,</span> <span class="s1">&#39;def-item&#39;</span><span class="p">,</span> <span class="s1">&#39;def-list&#39;</span><span class="p">,</span> <span class="s1">&#39;disp-formula&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;disp-formula-group&#39;</span><span class="p">,</span> <span class="s1">&#39;disp-quote&#39;</span><span class="p">,</span> <span class="s1">&#39;element-citation&#39;</span><span class="p">,</span> <span class="s1">&#39;ext-link&#39;</span><span class="p">,</span> <span class="s1">&#39;fig&#39;</span><span class="p">,</span> <span class="s1">&#39;fig-group&#39;</span><span class="p">,</span> <span class="s1">&#39;fn&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;fn-group&#39;</span><span class="p">,</span> <span class="s1">&#39;funding-source&#39;</span><span class="p">,</span> <span class="s1">&#39;glossary&#39;</span><span class="p">,</span> <span class="s1">&#39;glyph-data&#39;</span><span class="p">,</span> <span class="s1">&#39;graphic&#39;</span><span class="p">,</span> <span class="s1">&#39;inline-formula&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;inline-graphic&#39;</span><span class="p">,</span> <span class="s1">&#39;inline-supplementary-material&#39;</span><span class="p">,</span> <span class="s1">&#39;institution&#39;</span><span class="p">,</span> <span class="s1">&#39;kwd&#39;</span><span class="p">,</span> <span class="s1">&#39;kwd-group&#39;</span><span class="p">,</span> <span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;list-item&#39;</span><span class="p">,</span> <span class="s1">&#39;long-desc&#39;</span><span class="p">,</span> <span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="s1">&#39;milestone-end&#39;</span><span class="p">,</span> <span class="s1">&#39;milestone-start&#39;</span><span class="p">,</span> <span class="s1">&#39;mixed-citation&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;named-content&#39;</span><span class="p">,</span> <span class="s1">&#39;nlm-citation&#39;</span><span class="p">,</span> <span class="s1">&#39;note&#39;</span><span class="p">,</span> <span class="s1">&#39;notes&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;person-group&#39;</span><span class="p">,</span> <span class="s1">&#39;preformat&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;product&#39;</span><span class="p">,</span> <span class="s1">&#39;ref&#39;</span><span class="p">,</span> <span class="s1">&#39;ref-list&#39;</span><span class="p">,</span> <span class="s1">&#39;related-article&#39;</span><span class="p">,</span> <span class="s1">&#39;related-object&#39;</span><span class="p">,</span> <span class="s1">&#39;response&#39;</span><span class="p">,</span> <span class="s1">&#39;sec&#39;</span><span class="p">,</span> <span class="s1">&#39;sig&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;sig-block&#39;</span><span class="p">,</span> <span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="s1">&#39;speech&#39;</span><span class="p">,</span> <span class="s1">&#39;statement&#39;</span><span class="p">,</span> <span class="s1">&#39;sub-article&#39;</span><span class="p">,</span> <span class="s1">&#39;supplementary-material&#39;</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;table-wrap&#39;</span><span class="p">,</span> <span class="s1">&#39;table-wrap-group&#39;</span><span class="p">,</span> <span class="s1">&#39;tbody&#39;</span><span class="p">,</span> <span class="s1">&#39;td&#39;</span><span class="p">,</span> <span class="s1">&#39;term&#39;</span><span class="p">,</span> <span class="s1">&#39;tex-math&#39;</span><span class="p">,</span> <span class="s1">&#39;tfoot&#39;</span><span class="p">,</span> <span class="s1">&#39;th&#39;</span><span class="p">,</span> <span class="s1">&#39;thead&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;tr&#39;</span><span class="p">,</span> <span class="s1">&#39;trans-abstract&#39;</span><span class="p">,</span> <span class="s1">&#39;trans-source&#39;</span><span class="p">,</span> <span class="s1">&#39;trans-title&#39;</span><span class="p">,</span> <span class="s1">&#39;trans-title-group&#39;</span><span class="p">,</span> <span class="s1">&#39;verse-group&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;xref&#39;</span><span class="p">]</span>
+
+        <span class="n">manipulate</span> <span class="o">=</span> <span class="n">NlmManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Assigning ID to all </span><span class="si">{0}</span><span class="s1"> elements&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;//</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+                    <span class="n">item</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;ID</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+
+        <span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_file_path</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_temp_file_path</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../autoapi/bin/idgenerator/index.html#bin.idgenerator.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">docopt</span><span class="p">(</span><span class="vm">__doc__</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;meTypeset 0.1&#39;</span><span class="p">)</span>
+    <span class="n">bare_gv</span> <span class="o">=</span> <span class="n">GV</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;--debug&#39;</span><span class="p">]:</span>
+        <span class="n">bare_gv</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">enable_debug</span><span class="p">()</span>
+
+    <span class="n">id_gen_instance</span> <span class="o">=</span> <span class="n">IdGenerator</span><span class="p">(</span><span class="n">bare_gv</span><span class="p">)</span>
+    <span class="n">id_gen_instance</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

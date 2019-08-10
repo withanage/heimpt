@@ -1,0 +1,17 @@
+:mod:`heimpt.plugins.import.ojs`
+================================
+
+.. py:module:: heimpt.plugins.import.ojs
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   ojs/index.rst
+   ojs_tables/index.rst
+   ojsdal/index.rst
+
+

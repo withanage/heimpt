@@ -1,0 +1,136 @@
+:mod:`bin.referencelinker`
+==========================
+
+.. py:module:: bin.referencelinker
+
+.. autoapi-nested-parse::
+
+   referencelinker.py: a tool to link parenthetical references to ref-list elements in a JATS file
+
+   Usage:
+       referencelinker.py scan <input> [options]
+       referencelinker.py link <input> <source_id> <dest_id> [options]
+       referencelinker.py prune <input> [options]
+
+   Options:
+       -d, --debug                                     Enable debug output
+       --interactive                                   Prompt the user to assist in interactive tagging
+       -h, --help                                      Show this screen.
+       --nogit                                         Disable git debug filesystem (only of use with --debug)
+       -v, --version                                   Show version.
+       -z, --zotero                                    Enable Zotero integration for references.
+
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   A class that looks for references to link in an NLM file and joins them to the corresponding reference entry
+
+
+.. py:class:: ReplaceObject(global_variables, paragraph, reference_to_link)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. method:: link(self)
+
+
+
+
+.. py:class:: ReplaceStub(global_variables, paragraph, replace_text, tree, manipulate, link_text='TO_LINK', length_ignore=False)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. method:: replace_in_text(self, element, link_text)
+
+
+
+   
+   .. method:: replace_in_tail(self, element, link_text)
+
+
+
+   
+   .. method:: replace_in_text_and_update_others(self, object_list, link_text)
+
+
+
+   
+   .. method:: link(self, object_list=None)
+
+
+
+
+.. py:class:: ReferenceLinker(global_variables)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. method:: process_ibid_authors(self, ref_items)
+
+
+
+   
+   .. method:: clean_ref_items(self, tree, ref_items, manipulate)
+
+
+
+   
+   .. method:: run(self, interactive)
+
+
+
+   
+   .. method:: search_references(self, search_term, ref_items, manipulate, input_block)
+
+
+
+   
+   .. method:: link_items(self, source_id, dest_id, manipulate=None, tree=None)
+
+
+
+   
+   .. method:: handle_search(self, manipulate, opts, p, prompt, ref_items)
+
+
+
+   
+   .. method:: cleanup(self)
+
+
+
+   
+   .. method:: extract_contents(self, p)
+
+
+
+   
+   .. method:: handle_input(self, manipulate, opts, p, prompt, ref_items, sel, candidates=None, tree=None)
+
+
+
+   
+   .. method:: run_prompt(self)
+
+
+
+   
+   .. method:: prune(self)
+
+
+
+
+.. function:: main()
+
+

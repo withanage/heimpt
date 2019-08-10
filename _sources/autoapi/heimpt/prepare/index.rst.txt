@@ -1,0 +1,379 @@
+:mod:`heimpt.prepare`
+=====================
+
+.. py:module:: heimpt.prepare
+
+.. autoapi-nested-parse::
+
+   This  program is a utility file  which executes a set of specified functions on a element tree  of a xml file.
+
+   The current functions are limited to JATS and BITS XML Scheme of the Library of Congress. However the methods defined in
+   this program can be used to modify any element tree. Some of the  current available functions are sorting footnotes,
+   numbering elements of a certain type  or setting unique ids to a certain element types.
+
+   Usage:
+       prepare.py  <input_file>  <path> [options]
+   Options:
+       -c --citations-to-references
+       -d --debug   Enable debug output
+       -f --sort-footnotes=<tag list as comma seperated lists>
+       -h --help
+       -m --metadata=<file__name_schema.xml>
+       -n --set-numbering-tags=<elemennt types as comma seperated lists>
+       -r --clean-references
+       -s --sort-references=<tag list as comma seperated lists>
+       -t --stand-alone
+       -u --set-uuids=<element types as comma seperated list>
+       -v --set-numbering-values=<numbering values, additionaly roman numbers e.g.xref,ref-type,fn,{1:2} >
+
+
+
+   All the  are done  in the global element tree for performance reasons.
+
+
+   References
+   ----------
+   * Web : https://github.com/withanage/mpt
+   * Repository and issue-tracker: https://github.com/withanage/mpt/issues
+   * Licensed under terms of GPL 3  license (LICENSE.md)
+
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Dulip Withanage
+
+   
+
+.. data:: PYTHON_IMPORT_FAILED_LXML_MODULE
+   :annotation: = Failed to import python lxml module
+
+   
+
+.. py:class:: Prepare
+
+   Bases: :class:`debug.Debuggable`
+
+   Standalone Processing object to combine, clean and modify a JATS XML file and optionally inject BITS Metadata headers.
+
+   Features
+   --------
+   add Id numbering for any tag type, clean comments, remove unused references,
+   set numbering, add unique ids to certain tag types, sort references
+
+   
+   .. staticmethod:: read_command_line()
+
+      Reads and  generates a docopt dictionary from the command line parameters.
+
+      Returns
+      -------
+      docopt : dictionary
+        A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
+        elements.
+
+
+
+   
+   .. method:: citations_to_references(self)
+
+      Removes  mixed-citation block, adds as a <sec> Section element
+
+      Returns
+       -------
+       tr : elementtree
+
+
+
+   
+   .. method:: clean_references(self)
+
+      removes  references, which are not linked.
+
+      Parameters
+      -----------
+      tag : str
+         name of the XML tag
+
+      Returns
+      -------
+      tr : elementtree
+
+      See Also
+      --------
+      remove_element, remove_tags
+
+
+
+   
+   .. method:: remove_tags(self, e)
+
+      Takes an etree element and replaces it with its own text
+
+      Parameters
+      ----------
+      e : element
+          Element to be replaced
+
+
+
+   
+   .. method:: remove_element(self, e)
+
+      Remove any element only if it has a parent
+
+      Parameters
+      ----------
+      e : element
+          Element to be replaced
+
+
+
+   
+   .. method:: set_uuids_for_back_matter(self, tags)
+
+      Add unique id tags to  any of the sub-elements of the back matter
+
+      Parameters
+      ----------
+      tags: list
+       list of elements
+
+      Returns
+      -------
+      tr : elementtree
+
+
+
+   
+   .. method:: set_numbering_values(self, tag, attr, value, count, range_list)
+
+      Adds numerical values to  a  tag  in arguments list
+
+      Parameters
+      ---------
+      tag: str
+          xml tag name
+      attr: str
+          attribute name
+      value :str
+          value name
+      count : int
+          current sequence number
+      range_list : list
+         lower and upper level for the  numbering
+
+      See Also
+      --------
+      set_roman_numbers
+
+
+
+   
+   .. method:: convert_int_to_roman(self, i)
+
+      Converts an integer number into a roman number
+
+      Parameters
+      ---------
+      i : int
+          integer number
+
+      Returns
+      -------
+      result : str
+          Roman number
+
+
+
+   
+   .. method:: set_roman_numbers(self, count, r_count, range_list)
+
+      Converts a given set of elements defined by range_array into roman numbers
+
+      Parameters
+      ---------
+      count :int
+      r_count : int
+      range_list : list
+          lower and upper level for the  numbering
+
+      Returns
+      -------
+      val : str
+      r_count: int
+
+      See Also
+      --------
+      convert_int_to_roman
+
+
+
+   
+   .. method:: merge_metadata(self, metadata)
+
+      reads a metadata file path and  merge its content into the metadata section
+
+      Parameters
+      ----------
+      metadata : str
+           suffix  of the metadata files
+
+      Returns
+      -------
+      tr : elementTree
+          Element tree of the  current file
+
+      See Also
+      -------
+      create_metadata_path
+
+
+
+   
+   .. method:: create_metadata_path(self, metadata)
+
+      creates the correct folder path for the metadata file. Metadata files should be in a folder : metadata
+
+      Parameters
+      ----------
+      metadata : str
+          Suffix of the metadata  files
+
+      Returns
+      -------
+      pth : str
+          Correct path of the metadata file in the folder structure
+
+      Notes
+      -----
+      We assume that  metadata files are stored in a sub-folder named metadata
+
+
+
+   
+   .. method:: sort_by_tags(self, tag_list, elem)
+
+      Sorts  a   list  of elements alphabetically
+
+      Parameters
+      ----------
+      tag_list : list
+          A list of tag types
+      elem : Element
+          Element to be modified
+
+
+
+   
+   .. method:: sort_references(self, tag_list)
+
+      Sort references based on the  sub-elements list
+
+      Parameters
+      ----------
+      tag_list : list
+          A list of tag types
+
+
+      Returns
+      -------
+      tr : elementTree
+          Element tree of the  current file
+
+      See Also
+      --------
+      sort_by_tags
+
+
+
+   
+   .. method:: sort_footnotes(self, tag_list)
+
+      Sort footnotes based on the  sub-elements list
+
+      Parameters
+      ----------
+      tag_list : list
+          A list of tag types
+
+
+      Returns
+      -------
+      tr : elementTree
+          Element tree of the  current file
+
+      See Also
+      --------
+      sort_by_tags
+
+
+
+   
+   .. method:: process(self)
+
+      Process  JATS-XML file and do all transformations into the elementtree
+
+      See Also
+      --------
+      merge_metadata, set_numbering_tags,set_uuids_for_back_matter,sort_footnotes,sort_references,set_numbering_values
+
+
+
+   
+   .. method:: get_module_name(self)
+
+      Reads the name of the module for debugging and logging
+
+      Returns
+      -------
+      name string
+       Name of the Module
+
+
+
+   
+   .. method:: create_xml_file(self, pth)
+
+      Write the current elementTree into the file path
+
+      Parameters
+      ----------
+      pth : str
+          Correct path of the metadata file in the folder structure
+
+      Raises
+      ------
+      IOError
+          I/O operation fails
+
+      Notes
+      -----
+      Default configuration writes a normalized XML file with XML scheme
+
+
+
+   
+   .. method:: run(self)
+
+      Runs the configuration on the processing object
+
+      See Also
+      --------
+      process
+
+
+
+
+
+.. function:: main()
+
+   Initializes a processing object from  a xml file and   and runs it.
+
+   See Also
+   --------
+   run
+
+

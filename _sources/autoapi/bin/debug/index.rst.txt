@@ -1,0 +1,82 @@
+:mod:`bin.debug`
+================
+
+.. py:module:: bin.debug
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   
+
+.. py:class:: Debug
+
+   Bases: :class:`object`
+
+   
+   .. method:: enable_debug(self, nogit)
+
+
+
+   
+   .. method:: enable_prompt(self, prompt)
+
+
+
+   
+   .. method:: print_(self, module, message)
+
+
+
+   
+   .. method:: get_module_name(self)
+
+
+
+   
+   .. method:: mkdir(self, path)
+
+
+
+   
+   .. method:: print_debug(self, module, message)
+
+      This method prints debug information to stdout when the global debug flag is set
+      @param module: the calling module
+      @param message: the debug message to print
+
+
+
+   
+   .. method:: write_error(self, module, message, error_number)
+
+      This method writes parsing information to the error log
+      @param module: the calling module
+      @param message: the error message to print
+
+
+
+   
+   .. staticmethod:: fatal_error(module, message)
+
+
+
+
+.. py:class:: Debuggable(module_name)
+
+   Bases: :class:`object`
+
+   
+   .. method:: get_module_name(self)
+
+
+
+

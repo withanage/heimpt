@@ -1,0 +1,25 @@
+:mod:`bin.bare_globals`
+=======================
+
+.. py:module:: bin.bare_globals
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   A pared down globals class for non-transform launches
+
+
+.. py:class:: GV(args)
+
+   Bases: :class:`Debuggable`
+
+

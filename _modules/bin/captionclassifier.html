@@ -1,0 +1,626 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.captionclassifier &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.captionclassifier</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;captionclassfier: a tool to search for potential table titles and then link in-text entities</span>
+
+<span class="sd">Usage:</span>
+<span class="sd">   captionclassfier.py tables &lt;input&gt; [options]</span>
+<span class="sd">   captionclassfier.py graphics &lt;input&gt; [options]</span>
+<span class="sd">   captionclassfier.py all &lt;input&gt; [options]</span>
+
+<span class="sd">Options:</span>
+<span class="sd">    -d, --debug                                     Enable debug output</span>
+<span class="sd">    -h, --help                                      Show this screen.</span>
+<span class="sd">    -v, --version                                   Show version.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">docopt</span> <span class="k">import</span> <span class="n">docopt</span>
+<span class="kn">from</span> <span class="nn">bare_globals</span> <span class="k">import</span> <span class="n">GV</span>
+<span class="kn">from</span> <span class="nn">debug</span> <span class="k">import</span> <span class="n">Debuggable</span>
+<span class="kn">from</span> <span class="nn">nlmmanipulate</span> <span class="k">import</span> <span class="n">NlmManipulate</span>
+<span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">etree</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">editdistance</span>
+
+
+<div class="viewcode-block" id="CaptionClassifier"><a class="viewcode-back" href="../../autoapi/bin/captionclassifier/index.html#bin.captionclassifier.CaptionClassifier">[docs]</a><span class="k">class</span> <span class="nc">CaptionClassifier</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_variables</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">global_variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="n">Debuggable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Caption Classifier&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CaptionClassifier.replace_in_text"><a class="viewcode-back" href="../../autoapi/bin/captionclassifier/index.html#bin.captionclassifier.CaptionClassifier.replace_in_text">[docs]</a>    <span class="k">def</span> <span class="nf">replace_in_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">replace_text</span><span class="p">,</span> <span class="n">ref_type</span><span class="p">):</span>
+        <span class="n">before_after</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">replace_text</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">before_after</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">new_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;xref&#39;</span><span class="p">)</span>
+        <span class="n">new_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="n">new_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;ref-type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ref_type</span>
+        <span class="n">new_element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">replace_text</span>
+        <span class="n">new_element</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">before_after</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+        <span class="n">NlmManipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">new_element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CaptionClassifier.replace_in_tail"><a class="viewcode-back" href="../../autoapi/bin/captionclassifier/index.html#bin.captionclassifier.CaptionClassifier.replace_in_tail">[docs]</a>    <span class="k">def</span> <span class="nf">replace_in_tail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">replace_text</span><span class="p">,</span> <span class="n">ref_type</span><span class="p">):</span>
+
+        <span class="n">before_after</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">replace_text</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">new_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;xref&#39;</span><span class="p">)</span>
+        <span class="n">new_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="n">new_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;ref-type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ref_type</span>
+        <span class="n">new_element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">replace_text</span>
+        <span class="n">new_element</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">before_after</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+        <span class="n">element</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">new_element</span><span class="p">)</span>
+
+        <span class="n">element</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">before_after</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">new_element</span></div>
+
+<div class="viewcode-block" id="CaptionClassifier.link"><a class="viewcode-back" href="../../autoapi/bin/captionclassifier/index.html#bin.captionclassifier.CaptionClassifier.link">[docs]</a>    <span class="k">def</span> <span class="nf">link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table_ids</span><span class="p">,</span> <span class="n">replace_texts</span><span class="p">,</span> <span class="n">paragraphs</span><span class="p">,</span> <span class="n">ref_type</span><span class="p">):</span>
+        <span class="c1"># this procedure is more complex than desirable because the content can appear between tags (like italic)</span>
+        <span class="c1"># otherwise it would be a straight replace</span>
+
+        <span class="k">for</span> <span class="n">paragraph</span> <span class="ow">in</span> <span class="n">paragraphs</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">replace_text</span> <span class="ow">in</span> <span class="n">replace_texts</span><span class="p">:</span>
+                <span class="n">table_id</span> <span class="o">=</span> <span class="n">table_ids</span><span class="p">[</span><span class="n">replace_texts</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">replace_text</span><span class="p">)]</span>
+
+                <span class="k">if</span> <span class="n">paragraph</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">replace_text</span> <span class="ow">in</span> <span class="n">paragraph</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">replace_in_text</span><span class="p">(</span><span class="n">table_id</span><span class="p">,</span> <span class="n">paragraph</span><span class="p">,</span> <span class="n">replace_text</span><span class="p">,</span> <span class="n">ref_type</span><span class="p">)</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Successfully linked </span><span class="si">{0}</span><span class="s1"> to </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">replace_text</span><span class="p">,</span> <span class="n">table_id</span><span class="p">))</span>
+
+                <span class="k">for</span> <span class="n">sub_element</span> <span class="ow">in</span> <span class="n">paragraph</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">sub_element</span><span class="o">.</span><span class="n">tag</span> <span class="o">!=</span> <span class="s1">&#39;xref&#39;</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">sub_element</span><span class="o">.</span><span class="n">text</span> <span class="ow">and</span> <span class="n">replace_text</span> <span class="ow">in</span> <span class="n">sub_element</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">replace_in_text</span><span class="p">(</span><span class="n">table_id</span><span class="p">,</span> <span class="n">sub_element</span><span class="p">,</span> <span class="n">replace_text</span><span class="p">,</span> <span class="n">ref_type</span><span class="p">)</span>
+
+                            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                                   <span class="sa">u</span><span class="s1">&#39;Successfully linked </span><span class="si">{0}</span><span class="s1"> to &#39;</span>
+                                                   <span class="sa">u</span><span class="s1">&#39;</span><span class="si">{1}</span><span class="s1"> from sub-element&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">replace_text</span><span class="p">,</span> <span class="n">table_id</span><span class="p">))</span>
+
+                    <span class="k">if</span> <span class="n">sub_element</span><span class="o">.</span><span class="n">tail</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">replace_text</span> <span class="ow">in</span> <span class="n">sub_element</span><span class="o">.</span><span class="n">tail</span><span class="p">:</span>
+                        <span class="n">new_element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_in_tail</span><span class="p">(</span><span class="n">table_id</span><span class="p">,</span> <span class="n">sub_element</span><span class="p">,</span> <span class="n">replace_text</span><span class="p">,</span> <span class="n">ref_type</span><span class="p">)</span>
+
+                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                               <span class="sa">u</span><span class="s1">&#39;Successfully linked </span><span class="si">{0}</span><span class="s1"> to </span><span class="si">{1}</span><span class="s1"> from sub-tail&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">replace_text</span><span class="p">,</span>
+                                                                                                      <span class="n">table_id</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="CaptionClassifier.run_graphics_sibling"><a class="viewcode-back" href="../../autoapi/bin/captionclassifier/index.html#bin.captionclassifier.CaptionClassifier.run_graphics_sibling">[docs]</a>    <span class="k">def</span> <span class="nf">run_graphics_sibling</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># images are hard to handle because Word/OO puts them in different places</span>
+        <span class="c1"># for instance, the caption can come before or after;</span>
+        <span class="c1"># &lt;p&gt;Figure 1: Martin Eve at the pub&lt;graphic xlink:href=&quot;media/image1.jpeg&quot; position=&quot;float&quot;</span>
+        <span class="c1"># orientation=&quot;portrait&quot; xlink:type=&quot;simple&quot;/&gt;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Attempting to classify captions for graphics objects [sibling]&#39;</span><span class="p">)</span>
+
+        <span class="n">manipulate</span> <span class="o">=</span> <span class="n">NlmManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="n">graphics</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//graphic&#39;</span><span class="p">)</span>
+
+        <span class="n">graphic_titles</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">graphic_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">graphic_regex_dot</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^.+?\s*\d+\..+&#39;</span><span class="p">)</span>
+        <span class="n">graphic_regex_colon</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^.+?\s*\d+\:.+&#39;</span><span class="p">)</span>
+
+        <span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;:&#39;</span>
+
+        <span class="k">for</span> <span class="n">graphic</span> <span class="ow">in</span> <span class="n">graphics</span><span class="p">:</span>
+            <span class="n">use_next</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">use_previous</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="c1"># get the next sibling</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">graphic</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span>
+            <span class="n">pprev</span> <span class="o">=</span> <span class="n">graphic</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">getprevious</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;p&#39;</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">graphic_regex_colon</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+                    <span class="n">use_next</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;:&#39;</span>
+                <span class="k">elif</span> <span class="n">graphic_regex_dot</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+                    <span class="n">use_next</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">use_next</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">pprev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">pprev</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;p&#39;</span><span class="p">:</span>
+                    <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">pprev</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">graphic_regex_colon</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+                        <span class="n">use_previous</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;:&#39;</span>
+                    <span class="k">elif</span> <span class="n">graphic_regex_dot</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+                        <span class="n">use_previous</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">use_next</span> <span class="ow">or</span> <span class="n">use_previous</span><span class="p">:</span>
+                <span class="c1"># see if the title in this section potentially contains text we can match</span>
+                <span class="n">parent</span> <span class="o">=</span> <span class="n">graphic</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+
+                <span class="k">while</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">parent</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;sec&#39;</span><span class="p">):</span>
+                    <span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">titles</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">titles</span> <span class="o">=</span> <span class="p">[]</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">titles</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">p</span> <span class="o">=</span> <span class="n">titles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+                    <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">graphic_regex_colon</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+                        <span class="n">use_next</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;:&#39;</span>
+                    <span class="k">elif</span> <span class="n">graphic_regex_dot</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+                        <span class="n">use_next</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+
+            <span class="k">if</span> <span class="n">use_next</span> <span class="ow">or</span> <span class="n">use_previous</span><span class="p">:</span>
+
+                <span class="k">if</span> <span class="n">use_next</span><span class="p">:</span>
+                    <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">pprev</span><span class="p">)</span>
+                    <span class="n">p</span> <span class="o">=</span> <span class="n">pprev</span>
+
+                <span class="c1"># likely this is a table identifier</span>
+                <span class="n">split_title</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separator</span><span class="p">)</span>
+
+                <span class="n">title</span> <span class="o">=</span> <span class="n">split_title</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="n">caption</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">split_title</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Handling title and caption for &quot;</span><span class="si">{0}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">title</span><span class="p">))</span>
+
+                <span class="n">title_element</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="c1"># use an existing title element if one exists</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">title_element</span> <span class="o">=</span> <span class="n">graphic</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">title_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">)</span>
+                    <span class="n">graphic</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">title_element</span><span class="p">)</span>
+
+                <span class="n">title_element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">title</span>
+
+                <span class="n">caption_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;caption&#39;</span><span class="p">)</span>
+                <span class="n">new_p</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)</span>
+                <span class="n">new_p</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">caption</span>
+
+                <span class="n">NlmManipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">caption_element</span><span class="p">,</span> <span class="n">new_p</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                <span class="n">NlmManipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">graphic</span><span class="p">,</span> <span class="n">caption_element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">):</span>
+                    <span class="n">new_title</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)</span>
+                    <span class="n">new_title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">new_title</span><span class="p">)</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">graphic</span><span class="o">.</span><span class="n">tail</span><span class="p">:</span>
+                    <span class="n">graphic</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">graphic</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">title</span> <span class="o">+</span> <span class="n">separator</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                    <span class="n">graphic</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">graphic</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">caption</span> <span class="o">+</span> <span class="n">separator</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                    <span class="n">graphic</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">graphic</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">caption</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">graphic</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+                    <span class="n">graphic</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;ID</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+
+                <span class="n">graphic_titles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+                <span class="n">graphic_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">graphic</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+
+        <span class="n">paragraphs</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//p&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">graphic_ids</span><span class="p">,</span> <span class="n">graphic_titles</span><span class="p">,</span> <span class="n">paragraphs</span><span class="p">,</span> <span class="s1">&#39;fig&#39;</span><span class="p">)</span>
+
+        <span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_file_path</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_temp_file_path</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CaptionClassifier.run_graphics"><a class="viewcode-back" href="../../autoapi/bin/captionclassifier/index.html#bin.captionclassifier.CaptionClassifier.run_graphics">[docs]</a>    <span class="k">def</span> <span class="nf">run_graphics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># images are hard to handle because Word/OO puts them in different places</span>
+        <span class="c1"># for instance, the caption can come before or after;</span>
+        <span class="c1"># &lt;p&gt;Figure 1: Martin Eve at the pub&lt;graphic xlink:href=&quot;media/image1.jpeg&quot; position=&quot;float&quot;</span>
+        <span class="c1"># orientation=&quot;portrait&quot; xlink:type=&quot;simple&quot;/&gt;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Attempting to classify captions for graphics objects [plain]&#39;</span><span class="p">)</span>
+
+        <span class="n">manipulate</span> <span class="o">=</span> <span class="n">NlmManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="n">graphics</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//graphic&#39;</span><span class="p">)</span>
+
+        <span class="n">graphic_titles</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">graphic_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">graphic_regex_dot</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^.+?\s*\d+\..+&#39;</span><span class="p">)</span>
+        <span class="n">graphic_regex_colon</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^.+?\s*\d+\:.+&#39;</span><span class="p">)</span>
+
+        <span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;:&#39;</span>
+
+        <span class="k">for</span> <span class="n">graphic</span> <span class="ow">in</span> <span class="n">graphics</span><span class="p">:</span>
+            <span class="n">use_next</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="c1"># get the next sibling</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">graphic</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;p&#39;</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">graphic_regex_colon</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+                    <span class="n">use_next</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;:&#39;</span>
+                <span class="k">elif</span> <span class="n">graphic_regex_dot</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+                    <span class="n">use_next</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+
+            <span class="k">if</span> <span class="n">use_next</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+                <span class="c1"># likely this is a table identifier</span>
+                <span class="n">split_title</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separator</span><span class="p">)</span>
+
+                <span class="n">title</span> <span class="o">=</span> <span class="n">split_title</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="n">caption</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">split_title</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Handling title and caption for &quot;</span><span class="si">{0}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">title</span><span class="p">))</span>
+
+                <span class="n">title_element</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="c1"># use an existing title element if one exists</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">title_element</span> <span class="o">=</span> <span class="n">graphic</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">title_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">)</span>
+                    <span class="n">graphic</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">title_element</span><span class="p">)</span>
+
+                <span class="n">title_element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">title</span>
+
+                <span class="n">caption_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;caption&#39;</span><span class="p">)</span>
+                <span class="n">new_p</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)</span>
+                <span class="n">new_p</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">caption</span>
+
+                <span class="n">NlmManipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">caption_element</span><span class="p">,</span> <span class="n">new_p</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                <span class="n">NlmManipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">graphic</span><span class="p">,</span> <span class="n">caption_element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">graphic</span><span class="o">.</span><span class="n">tail</span><span class="p">:</span>
+                    <span class="n">graphic</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">graphic</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">title</span> <span class="o">+</span> <span class="n">separator</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                    <span class="n">graphic</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">graphic</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">caption</span> <span class="o">+</span> <span class="n">separator</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                    <span class="n">graphic</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">graphic</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">caption</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">graphic</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+                    <span class="n">graphic</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;ID</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+
+                <span class="n">graphic_titles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+                <span class="n">graphic_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">graphic</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+
+        <span class="n">paragraphs</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//p&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">graphic_ids</span><span class="p">,</span> <span class="n">graphic_titles</span><span class="p">,</span> <span class="n">paragraphs</span><span class="p">,</span> <span class="s1">&#39;fig&#39;</span><span class="p">)</span>
+
+        <span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_file_path</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_temp_file_path</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_graphics_sibling</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CaptionClassifier.run_tables"><a class="viewcode-back" href="../../autoapi/bin/captionclassifier/index.html#bin.captionclassifier.CaptionClassifier.run_tables">[docs]</a>    <span class="k">def</span> <span class="nf">run_tables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Attempting to classify captions for table objects&#39;</span><span class="p">)</span>
+
+        <span class="n">manipulate</span> <span class="o">=</span> <span class="n">NlmManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="n">tables</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//table-wrap&#39;</span><span class="p">)</span>
+
+        <span class="n">table_titles</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">table_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">table_regex_dot</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^.+?[\s\-]*\d+\..+&#39;</span><span class="p">)</span>
+        <span class="n">table_regex_colon</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^.+?[\s\-]*\d+\:.+&#39;</span><span class="p">)</span>
+
+        <span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;:&#39;</span>
+
+        <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">tables</span><span class="p">:</span>
+            <span class="n">caption_element</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">use_next</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">use_previous</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">used_title</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="c1"># get the next sibling</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span>
+            <span class="n">pprev</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">getprevious</span><span class="p">()</span>
+            <span class="n">old_title</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;p&#39;</span><span class="p">:</span>
+                <span class="n">cont</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="n">p</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">sub</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;graphic&#39;</span><span class="p">:</span>
+                        <span class="n">cont</span> <span class="o">=</span> <span class="kc">False</span>
+
+                <span class="k">if</span> <span class="n">cont</span><span class="p">:</span>
+                    <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">table_regex_colon</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+                        <span class="n">use_next</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;:&#39;</span>
+                    <span class="k">elif</span> <span class="n">table_regex_dot</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+                        <span class="n">use_next</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">use_next</span><span class="p">:</span>
+                <span class="n">cont</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="n">pprev</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">sub</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;graphic&#39;</span><span class="p">:</span>
+                        <span class="n">cont</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">if</span> <span class="n">cont</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">pprev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">pprev</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;p&#39;</span><span class="p">:</span>
+                        <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">pprev</span><span class="p">)</span>
+
+                        <span class="k">if</span> <span class="n">table_regex_colon</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+                            <span class="n">use_previous</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;:&#39;</span>
+                        <span class="k">elif</span> <span class="n">table_regex_dot</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+                            <span class="n">use_previous</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">use_next</span> <span class="ow">or</span> <span class="n">use_previous</span><span class="p">:</span>
+                <span class="c1"># see if the title in this section potentially contains text we can match</span>
+                <span class="n">parent</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+
+                <span class="n">titles</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">titles</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">p</span> <span class="o">=</span> <span class="n">titles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+                    <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">table_regex_colon</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+                        <span class="n">use_next</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;:&#39;</span>
+                        <span class="n">used_title</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">elif</span> <span class="n">table_regex_dot</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+                        <span class="n">use_next</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+                        <span class="n">used_title</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">if</span> <span class="n">use_next</span> <span class="ow">or</span> <span class="n">use_previous</span><span class="p">:</span>
+
+                <span class="k">if</span> <span class="n">use_next</span><span class="p">:</span>
+                    <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">pprev</span><span class="p">)</span>
+                    <span class="n">p</span> <span class="o">=</span> <span class="n">pprev</span>
+
+                <span class="c1"># likely this is a table identifier</span>
+                <span class="n">split_title</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separator</span><span class="p">)</span>
+
+                <span class="n">title</span> <span class="o">=</span> <span class="n">split_title</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="n">caption</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">split_title</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+                <span class="c1"># strip all formatting from caption for ease of parsing</span>
+                <span class="c1"># TODO: preserve formatting (far harder)</span>
+                <span class="n">new_p</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)</span>
+                <span class="n">new_p</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">caption</span>
+
+                <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">):</span>
+                    <span class="n">new_title</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)</span>
+                    <span class="n">new_title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                    <span class="n">old_title</span> <span class="o">=</span> <span class="n">new_title</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">new_title</span><span class="p">)</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+                <span class="n">p</span> <span class="o">=</span> <span class="n">new_p</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Handling title and caption for &quot;</span><span class="si">{0}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">title</span><span class="p">))</span>
+
+                <span class="n">title_element</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="c1"># use an existing title element if one exists</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">title_element</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">title_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">)</span>
+                    <span class="n">table</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">title_element</span><span class="p">)</span>
+
+                <span class="n">title_element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">title</span>
+
+                <span class="n">caption_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;caption&#39;</span><span class="p">)</span>
+                <span class="n">NlmManipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">caption_element</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                <span class="n">table</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">caption_element</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+                    <span class="n">table</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;ID</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+
+                <span class="n">table_titles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+                <span class="n">table_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+
+                <span class="k">if</span> <span class="n">used_title</span><span class="p">:</span>
+                    <span class="c1"># if we took the title out, then we should move the parent into its previous sibling and then</span>
+                    <span class="c1"># strip tags</span>
+                    <span class="n">old_title</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+
+                    <span class="n">etree</span><span class="o">.</span><span class="n">strip_elements</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s1">&#39;REMOVE&#39;</span><span class="p">)</span>
+
+                    <span class="n">section</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+
+                    <span class="n">previous</span> <span class="o">=</span> <span class="n">section</span><span class="o">.</span><span class="n">getprevious</span><span class="p">()</span>
+
+                    <span class="k">while</span> <span class="n">previous</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">previous</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;sec&#39;</span><span class="p">):</span>
+                        <span class="n">previous</span> <span class="o">=</span> <span class="n">previous</span><span class="o">.</span><span class="n">getprevious</span><span class="p">()</span>
+
+                    <span class="k">if</span> <span class="n">previous</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">previous</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+                        <span class="n">section</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+
+                        <span class="n">etree</span><span class="o">.</span><span class="n">strip_tags</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s1">&#39;REMOVE&#39;</span><span class="p">)</span>
+
+                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Moved table and siblings to previous section&#39;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">previous</span> <span class="o">=</span> <span class="n">section</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+
+                        <span class="k">if</span> <span class="n">previous</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">previous</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;sec&#39;</span><span class="p">):</span>
+                            <span class="n">previous</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+                            <span class="n">section</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+
+                            <span class="n">etree</span><span class="o">.</span><span class="n">strip_tags</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s1">&#39;REMOVE&#39;</span><span class="p">)</span>
+
+                            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Moved table and siblings to parent section&#39;</span><span class="p">)</span>
+
+            <span class="c1"># If none of that worked, try to find caption in table rows</span>
+            <span class="k">if</span> <span class="n">caption_element</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">table_rows</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()</span>
+
+                <span class="c1"># Check if first row has fewer columns than others</span>
+                <span class="c1"># Therefore not likely to be data or a header</span>
+                <span class="n">columns_count</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">first_column</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">row_number</span> <span class="o">=</span> <span class="mi">0</span>
+
+                <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">table_rows</span><span class="p">:</span>
+                    <span class="n">row_number</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">columns_count</span><span class="p">[</span><span class="n">row_number</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">getchildren</span><span class="p">())</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">first_column</span><span class="p">[</span><span class="n">row_number</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="n">first_column</span><span class="p">[</span><span class="n">row_number</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                    <span class="n">fewest_columns</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">columns_count</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">columns_count</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">columns_count</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">columns_count</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">fewest_columns</span> <span class="ow">and</span> <span class="n">columns_count</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="n">fewest_columns</span><span class="p">:</span>
+                    <span class="c1"># If it has fewest columns, also check Levenshtein distance</span>
+                    <span class="c1"># To ensure this row is unlike the others</span>
+                    <span class="k">if</span> <span class="n">editdistance</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">first_column</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">first_column</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">editdistance</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">first_column</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">first_column</span><span class="p">[</span><span class="mi">3</span><span class="p">]):</span>
+
+                        <span class="c1"># OK, we have something, move it</span>
+                        <span class="n">caption_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;caption&#39;</span><span class="p">)</span>
+                        <span class="n">caption_element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">first_column</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="n">NlmManipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">caption_element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                        <span class="n">table</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">table_rows</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+
+        <span class="n">paragraphs</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//p&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">table_ids</span><span class="p">,</span> <span class="n">table_titles</span><span class="p">,</span> <span class="n">paragraphs</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">)</span>
+
+        <span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_file_path</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_temp_file_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CaptionClassifier.run_ext_link_compliance"><a class="viewcode-back" href="../../autoapi/bin/captionclassifier/index.html#bin.captionclassifier.CaptionClassifier.run_ext_link_compliance">[docs]</a>    <span class="k">def</span> <span class="nf">run_ext_link_compliance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Attempting to correct any mis-nested graphics elements&#39;</span><span class="p">)</span>
+
+        <span class="n">manipulate</span> <span class="o">=</span> <span class="n">NlmManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+        <span class="n">bad_links</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//ext-link/graphic&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">bad_links</span><span class="p">:</span>
+            <span class="n">link_parent</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="n">link_parent</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+            <span class="n">parent</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">link_parent</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">link</span><span class="p">)</span>
+
+        <span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_file_path</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_temp_file_path</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../autoapi/bin/captionclassifier/index.html#bin.captionclassifier.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">docopt</span><span class="p">(</span><span class="vm">__doc__</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;meTypeset 0.1&#39;</span><span class="p">)</span>
+    <span class="n">bare_gv</span> <span class="o">=</span> <span class="n">GV</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;--debug&#39;</span><span class="p">]:</span>
+        <span class="n">bare_gv</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">enable_debug</span><span class="p">()</span>
+
+    <span class="n">table_classifier_instance</span> <span class="o">=</span> <span class="n">CaptionClassifier</span><span class="p">(</span><span class="n">bare_gv</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;tables&#39;</span><span class="p">]:</span>
+        <span class="n">table_classifier_instance</span><span class="o">.</span><span class="n">run_tables</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;graphics&#39;</span><span class="p">]:</span>
+        <span class="n">table_classifier_instance</span><span class="o">.</span><span class="n">run_graphics</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;enforce&#39;</span><span class="p">]:</span>
+        <span class="n">table_classifier_instance</span><span class="o">.</span><span class="n">run_ext_link_compliance</span><span class="p">()</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

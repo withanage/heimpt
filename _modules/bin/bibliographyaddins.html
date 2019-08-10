@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.bibliographyaddins &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.bibliographyaddins</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="__author__"><a class="viewcode-back" href="../../autoapi/bin/bibliographyaddins/index.html#bin.bibliographyaddins.__author__">[docs]</a><span></span><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Martin Paul Eve&quot;</span></div>
+<div class="viewcode-block" id="__email__"><a class="viewcode-back" href="../../autoapi/bin/bibliographyaddins/index.html#bin.bibliographyaddins.__email__">[docs]</a><span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;martin@martineve.com&quot;</span></div>
+
+<span class="kn">from</span> <span class="nn">debug</span> <span class="k">import</span> <span class="n">Debuggable</span>
+<span class="kn">from</span> <span class="nn">teimanipulate</span> <span class="k">import</span> <span class="n">TeiManipulate</span>
+
+
+<div class="viewcode-block" id="ZoteroHandler"><a class="viewcode-back" href="../../autoapi/bin/bibliographyaddins/index.html#bin.bibliographyaddins.ZoteroHandler">[docs]</a><span class="k">class</span> <span class="nc">ZoteroHandler</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gv</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">gv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">found_biblio</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">Debuggable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Zotero Handler&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ZoteroHandler.handle_bibliography"><a class="viewcode-back" href="../../autoapi/bin/bibliographyaddins/index.html#bin.bibliographyaddins.ZoteroHandler.handle_bibliography">[docs]</a>    <span class="k">def</span> <span class="nf">handle_bibliography</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tei_manipulator</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle Zotero bibliographies</span>
+<span class="sd">        @param tei_manipulator: a TEI Manipulator object to handle the XML</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># remove the Zotero marker</span>
+        <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">tag_bibliography</span><span class="p">(</span><span class="s1">&#39;//tei:p[@rend=&quot;Bibliography&quot;]/tei:ref&#39;</span><span class="p">,</span>
+                                         <span class="s1">&#39; ADDIN ZOTERO_BIBL {&quot;custom&quot;:[]} CSL_BIBLIOGRAPHY &#39;</span><span class="p">,</span>
+                                         <span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">tag_bibliography</span><span class="p">(</span><span class="s1">&#39;//tei:p[@rend=&quot;Bibliography&quot;]/tei:ref&#39;</span><span class="p">,</span>
+                                         <span class="s1">&#39; ADDIN ZOTERO_BIBL {&quot;custom&quot;:[]} &#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">tag_bibliography_non_csl</span><span class="p">(</span><span class="s1">&#39;//tei:p/tei:ref[@rend=&quot;ref&quot;]&#39;</span><span class="p">,</span> <span class="s1">&#39; ADDIN EN.REFLIST &#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># create a back/div[@type=&#39;bibliogr&#39;] section</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">found_biblio</span> <span class="o">=</span> <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">enclose_bibliography_tags</span><span class="p">(</span><span class="s1">&#39;//tei:p[@rend=&quot;Bibliography&quot;]&#39;</span><span class="p">,</span>
+                                                                      <span class="s1">&#39;back&#39;</span><span class="p">,</span> <span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;bibliogr&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">found_biblio</span><span class="p">:</span>
+            <span class="c1"># create a back/div[@type=&#39;bibliogr&#39;] section</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">found_biblio</span> <span class="o">=</span> <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">enclose_bibliography_tags</span><span class="p">(</span><span class="s1">&#39;//tei:p[@rend=&quot;Bibliography 1&quot;]&#39;</span><span class="p">,</span>
+                                                                          <span class="s1">&#39;back&#39;</span><span class="p">,</span> <span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;bibliogr&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ZoteroHandler.run"><a class="viewcode-back" href="../../autoapi/bin/bibliographyaddins/index.html#bin.bibliographyaddins.ZoteroHandler.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle Zotero in-line reference items</span>
+
+<span class="sd">        @return: a list of items handled</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tei_manipulator</span> <span class="o">=</span> <span class="n">TeiManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+        <span class="n">object_list</span> <span class="o">=</span> <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">get_object_list</span><span class="p">(</span><span class="s1">&#39;//tei:ref[@rend=&quot;ref&quot;]&#39;</span><span class="p">,</span> <span class="s1">&#39; ADDIN EN.CITE&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;zoterobiblio&#39;</span><span class="p">)</span>
+        <span class="n">object_list</span> <span class="o">+=</span> <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">get_object_list</span><span class="p">(</span><span class="s1">&#39;//tei:ref&#39;</span><span class="p">,</span> <span class="s1">&#39; ADDIN ZOTERO_ITEM CSL_CITATION&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;zoterobiblio&#39;</span><span class="p">)</span>
+
+        <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">drop_addin</span><span class="p">(</span><span class="s1">&#39;//tei:ref[@rend=&quot;ref&quot;]&#39;</span><span class="p">,</span> <span class="s1">&#39; ADDIN EN.CITE&#39;</span><span class="p">,</span> <span class="s1">&#39;EndNote&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;hi&#39;</span><span class="p">,</span> <span class="s1">&#39;reference_to_link&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;zoterobiblio&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">drop_addin_json</span><span class="p">(</span><span class="s1">&#39;//tei:ref&#39;</span><span class="p">,</span> <span class="s1">&#39; ADDIN ZOTERO_ITEM CSL_CITATION&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;hi&#39;</span><span class="p">,</span> <span class="s1">&#39;reference_to_link&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">drop_addin_json</span><span class="p">(</span><span class="s1">&#39;//tei:ref&#39;</span><span class="p">,</span> <span class="s1">&#39; ADDIN ZOTERO_ITEM&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;hi&#39;</span><span class="p">,</span> <span class="s1">&#39;reference_to_link&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># handle bibliography</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_bibliography</span><span class="p">(</span><span class="n">tei_manipulator</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">object_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Stashed </span><span class="si">{0}</span><span class="s1"> references for bibliography parsing&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">object_list</span><span class="p">)))</span>
+
+        <span class="k">return</span> <span class="n">object_list</span></div></div>
+
+
+<div class="viewcode-block" id="MendeleyHandler"><a class="viewcode-back" href="../../autoapi/bin/bibliographyaddins/index.html#bin.bibliographyaddins.MendeleyHandler">[docs]</a><span class="k">class</span> <span class="nc">MendeleyHandler</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gv</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">gv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="n">Debuggable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Mendeley Handler&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MendeleyHandler.handle_bibliography"><a class="viewcode-back" href="../../autoapi/bin/bibliographyaddins/index.html#bin.bibliographyaddins.MendeleyHandler.handle_bibliography">[docs]</a>    <span class="k">def</span> <span class="nf">handle_bibliography</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tei_manipulator</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process Mendeley bibliographies</span>
+
+<span class="sd">        @param tei_manipulator: a TEI Manipulator object to handle the XML</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">tag_bibliography</span><span class="p">(</span><span class="s1">&#39;//tei:cit/tei:quote/tei:p//tei:ref&#39;</span><span class="p">,</span>
+                                         <span class="s1">&#39;ADDIN Mendeley Bibliography CSL_BIBLIOGRAPHY &#39;</span><span class="p">,</span>
+                                         <span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;{http://www.tei-c.org/ns/1.0}p&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># create a back/div[@type=&#39;bibliogr&#39;] section</span>
+        <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">enclose_bibliography_tags</span><span class="p">(</span><span class="s1">&#39;//tei:p[@rend=&quot;Bibliography&quot;]&#39;</span><span class="p">,</span>
+                                                  <span class="s1">&#39;back&#39;</span><span class="p">,</span> <span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;bibliogr&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MendeleyHandler.run"><a class="viewcode-back" href="../../autoapi/bin/bibliographyaddins/index.html#bin.bibliographyaddins.MendeleyHandler.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle Mendeley reference tags, replacing them with NLM-spec references</span>
+
+<span class="sd">        @return: a list of processed tags</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tei_manipulator</span> <span class="o">=</span> <span class="n">TeiManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+        <span class="n">object_list</span> <span class="o">=</span> <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">get_object_list</span><span class="p">(</span><span class="s1">&#39;//tei:ref[@rend=&quot;ref&quot;]&#39;</span><span class="p">,</span> <span class="s1">&#39;ADDIN CSL_CITATION&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;zoterobiblio&#39;</span><span class="p">)</span>
+
+        <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">drop_addin_json</span><span class="p">(</span><span class="s1">&#39;//tei:ref&#39;</span><span class="p">,</span> <span class="s1">&#39;ADDIN CSL_CITATION&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;hi&#39;</span><span class="p">,</span> <span class="s1">&#39;reference_to_link&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_bibliography</span><span class="p">(</span><span class="n">tei_manipulator</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">object_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Stashed </span><span class="si">{0}</span><span class="s1"> references for bibliography parsing&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">object_list</span><span class="p">)))</span>
+
+        <span class="k">return</span> <span class="n">object_list</span></div></div>
+
+
+<div class="viewcode-block" id="OtherHandler"><a class="viewcode-back" href="../../autoapi/bin/bibliographyaddins/index.html#bin.bibliographyaddins.OtherHandler">[docs]</a><span class="k">class</span> <span class="nc">OtherHandler</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gv</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">gv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="n">Debuggable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Other Addin Handler&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="OtherHandler.run"><a class="viewcode-back" href="../../autoapi/bin/bibliographyaddins/index.html#bin.bibliographyaddins.OtherHandler.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle all unknown types of addin, stripping them from the output</span>
+
+<span class="sd">        @return: a list of tags that were removed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tei_manipulator</span> <span class="o">=</span> <span class="n">TeiManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+        <span class="n">object_list</span> <span class="o">=</span> <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">get_object_list</span><span class="p">(</span><span class="s1">&#39;//*&#39;</span><span class="p">,</span> <span class="s1">&#39; ADDIN&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;addin&#39;</span><span class="p">)</span>
+
+        <span class="n">drop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;drop-unknown-addins&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">tei_manipulator</span><span class="o">.</span><span class="n">drop_addin</span><span class="p">(</span><span class="s1">&#39;//*&#39;</span><span class="p">,</span> <span class="s1">&#39; ADDIN&#39;</span><span class="p">,</span> <span class="s1">&#39;EndNote&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;hi&#39;</span><span class="p">,</span> <span class="s1">&#39;unknown_addin_text&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;addin&#39;</span><span class="p">,</span>
+                                   <span class="n">drop</span> <span class="o">==</span> <span class="s1">&#39;True&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">object_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Handled </span><span class="si">{0}</span><span class="s1"> unknown addin tags&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">object_list</span><span class="p">)))</span>
+
+        <span class="k">return</span> <span class="n">object_list</span></div></div>
+
+
+<div class="viewcode-block" id="BibliographyAddins"><a class="viewcode-back" href="../../autoapi/bin/bibliographyaddins/index.html#bin.bibliographyaddins.BibliographyAddins">[docs]</a><span class="k">class</span> <span class="nc">BibliographyAddins</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gv</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">gv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zotero_items</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mendeley_items</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">other_items</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zotero_handler</span> <span class="o">=</span> <span class="n">ZoteroHandler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mendeley_handler</span> <span class="o">=</span> <span class="n">MendeleyHandler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">other_handler</span> <span class="o">=</span> <span class="n">OtherHandler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+        <span class="n">Debuggable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Bibliography Handler&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BibliographyAddins.run"><a class="viewcode-back" href="../../autoapi/bin/bibliographyaddins/index.html#bin.bibliographyaddins.BibliographyAddins.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run the procedure to process different types of bibliography</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--aggression&#39;</span><span class="p">])</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;bibliographyaddins&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span>
+                                                                                         <span class="n">domain</span><span class="o">=</span><span class="s1">&#39;aggression&#39;</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Aggression level too low: exiting module.&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">zotero_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">zotero_handler</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mendeley_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mendeley_handler</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">other_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_handler</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">zotero_items</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mendeley_items</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">zotero_handler</span><span class="o">.</span><span class="n">found_biblio</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

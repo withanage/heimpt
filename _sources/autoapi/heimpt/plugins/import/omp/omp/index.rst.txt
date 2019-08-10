@@ -1,0 +1,174 @@
+:mod:`heimpt.plugins.import.omp.omp`
+====================================
+
+.. py:module:: heimpt.plugins.import.omp.omp
+
+.. autoapi-nested-parse::
+
+   Usage:
+     heimpt.py import omp [options] [<submission_id>...]
+
+   Options:
+     -h --help
+     -t --project-template=<file>
+     -a --all-submissions
+
+
+
+Module Contents
+---------------
+
+.. data:: FILE_STAGE_TO_PATH
+   
+
+   
+
+.. data:: USER_GROUP_TO_CONTRIB_TYPE
+   
+
+   
+
+.. data:: PUBLICATION_FORMAT_MAPPING
+   
+
+   
+
+.. data:: LANG_ATTR
+   :annotation: = {http://www.w3.org/XML/1998/namespace}lang
+
+   
+
+.. function:: get_omp_filename(submission_file, revision=None, with_extension=True)
+
+   Gets  OMP file name
+   :param revision: If specified will be used as revision part in filename
+   :param submission_file: Row object of submission_file Table
+   :return: unique filename according to _generateFilename
+
+
+.. function:: path_to_omp_submission_file(submission_file, press_id, files_dir)
+
+
+.. function:: path_to_submission_output(submission_id, press_id, output_dir)
+
+
+.. function:: path_to_submission_metadata(submission_id, press_id, output_dir, filename='mpt.book-meta.bits2.xml')
+
+   Return the complete path to a metadata file.
+
+   :param submission_id: Identifier of the submission
+   :param press_id: Identifier of the press
+   :param output_dir: Base path to metadata files
+   :param filename: Name of the metadata file, defaults to 'mpt.book-meta.bits2.xml'
+   :return: 
+
+
+.. py:class:: OMPImport
+
+   Bases: :class:`ImportInterface.Import`
+
+   
+   .. method:: initialize(self, args, settings_override=None, settings_path='settings.json')
+
+
+
+   
+   .. method:: load_configured_presses(self)
+
+
+
+   
+   .. method:: run(self, args, settings)
+
+
+
+   
+   .. method:: get_submission_to_import(self, args)
+
+
+
+   
+   .. method:: copy_submission_files(self, file_paths, target_dir)
+
+
+
+   
+   .. method:: write_project_config(self, project_filename, project_config)
+
+
+
+   
+   .. method:: read_project_config(self, project_filename, template_path=None)
+
+
+
+   
+   .. method:: submission_files_exists(self, submission)
+
+
+
+   
+   .. method:: get_files_from_db(self, submission_id, genre_id)
+
+
+
+   
+   .. method:: get_chapter_files_from_db(self, chapter_id, genre_id)
+
+
+
+   
+   .. method:: read_submission_metadata(self, metadata_file_path)
+
+      Reads the submission metadata, either from an existing metadata file from a previous import or from a template.
+      :param metadata_file_path: Path to bits2 xml file with metadata.
+      :return: ElementTree object with bits2 metadata elements.
+
+
+
+   
+   .. method:: write_xml_to_file(self, bits_xml, file_path)
+
+
+
+   
+   .. method:: inject_submission_metadata(self, submission, book_xml)
+
+      Generate the metadata from omp db for the given submission 
+
+      :param book_xml: ElementTree object with bits2 metadata elements.
+      :param submission: submission Row from db
+      :return: ElementTree with metadata in BITS2 XML format
+
+
+
+   
+   .. method:: build_contrib_xml(self, contrib, contrib_group_xml, locale)
+
+
+
+   
+   .. method:: find_or_create_aff_xml(self, affiliation, contrib_group_xml)
+
+
+
+   
+   .. method:: inject_chapter_metadata(self, bits_xml, chapter, chapter_settings, submission, custom_meta=None)
+
+      Generates the metadata for the chapter
+
+      :param custom_meta: Dict containing entries which will be added as <custom-meta> tags.
+      :param bits_xml: ElementTree object containing bits2 meta-data for a submission chapter.
+      :param chapter: Chapter row object.
+      :param chapter_settings: OMPSettings object containing the chapter settings
+      :param submission: Submission row object, to which the chapter belongs.
+      :return: Updated ElementTree object with new metadata from OMP db.
+
+
+
+   
+   .. method:: read_chapter_metadata(self, metadata_file_path)
+
+
+
+

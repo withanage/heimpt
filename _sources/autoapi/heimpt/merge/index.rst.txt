@@ -1,0 +1,269 @@
+:mod:`heimpt.merge`
+===================
+
+.. py:module:: heimpt.merge
+
+.. autoapi-nested-parse::
+
+   This  program is a utility file to merge a JATS/BITS XML  section into a BIS-XML files
+
+   The current functions are limited to JATS and BITS XML Scheme of the Library of Congress. However the methods defined in
+   this program can be used to modify any element tree.
+
+
+
+   Usage:
+       merge.py  <input_file>  <path>  <scheme>  [options]
+
+       merge.py -h --help
+
+   Options:
+       -o --out-file=<output_file_name_without_escapes>
+       -d --debug   Enable debug output
+       -m --metadata=<file__name_schema.xml>
+       -n --set-numbering-tags=<elemennt types as comma seperated lists>
+
+
+
+   References
+   ----------
+   * Web : https://github.com/withanage/mpt
+   * Repository and issue-tracker: https://github.com/withanage/mpt/issues
+   * Licensed under terms of GPL 3  license (LICENSE.md)
+
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Dulip Withanage
+
+   
+
+.. data:: PYTHON_IMPORT_FAILED_LXML_MODULE
+   :annotation: = Failed to import python lxml module
+
+   
+
+.. py:class:: Merge
+
+   Bases: :class:`debug.Debuggable`
+
+   Standalone Processing object which merges current  JATS/BITS XML file in to the Body of a BITS-XML document.
+
+   
+   .. staticmethod:: read_command_line()
+
+      Reads and  generates a docopt dictionary from the command line parameters.
+
+      Returns
+      -------
+      docopt : dictionary
+        A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
+        elements.
+
+
+
+   
+   .. method:: create_output_bits(self)
+
+      Create bits output file, generates a new file, if no file is found.
+      Otherwise the current file is appended to the book body as a book-part.
+
+      See Also
+      --------
+      create_book_part_bits, create_book_bits, do_file_io
+
+
+
+   
+   .. method:: create_output_jats(self)
+
+      Create jats output file, generates a new file,
+
+      See Also
+      --------
+      create_book_part_bits, create_book_bits, do_file_io
+
+
+
+   
+   .. method:: process(self, tr)
+
+      Process  BITS-XML file and do all transformations into the elementtree
+
+      Parameters
+      ----------
+      tr : elementtree
+          element tree as input
+
+      Returns
+      -------
+      tr : elementtree
+          transformed element tree
+
+      See Also
+      --------
+      globals.set_numbering_tags(), set_book_part_attributes()
+
+
+
+   
+   .. method:: set_book_part_attributes(self, tr)
+
+      Add  specific attributes to book-part
+
+      Parameters
+      ----------
+      tr : elementtree
+          element tree as input
+
+
+      Returns
+      -------
+      tr : elementtree
+          transformed element tree
+
+
+
+
+   
+   .. method:: create_metadata_path(self, metadata)
+
+      creates the correct folder path for the metadata file. Metadata files should be in a folder : metadata
+
+      Parameters
+      ----------
+      metadata : str
+          Suffix of the metadata  files
+
+      Returns
+      -------
+      pth : str
+          Correct path of the metadata file in the folder structure
+
+      Notes
+      -----
+      We assume that  metadata files are stored in a sub-folder named metadata
+
+
+
+   
+   .. method:: get_module_name(self)
+
+      Reads the name of the module for debugging and logging
+
+      Returns
+      -------
+      name string
+       Name of the Module
+
+
+
+   
+   .. method:: create_book_bits(self)
+
+      creates a  full BITS XML book and optionally adds metadata
+
+      Returns
+      -------
+      book : elementtree
+          Elementtree which complies to BITS XML Scheme.
+
+      See Also
+      ---------
+      create_metadata_path, create_book_part_bits
+
+
+
+   
+   .. method:: create_journal_jats(self)
+
+      creates a  full JATS XML book and optionally adds metadata
+
+      Returns
+      -------
+      book : elementtree
+          Elementtree which complies to BITS XML Scheme.
+
+      See Also
+      ---------
+      create_metadata_path, create_book_part_bits
+
+
+
+   
+   .. method:: create_book_part_bits(self)
+
+      Reads a JATS XMl File and creates a book-part element tree according to BITS-XML.
+
+      Returns
+      -------
+      bp : elementtree
+          Book part elementTree
+
+
+
+   
+   .. method:: get_xml_parts(self)
+
+      Returns  the front-matter , body and back-matter of a JATS XML file in the above order
+
+      Returns
+      -------
+      f : elementtree
+          Front-matter of JATS elementTree
+      bd : elementtree
+          Body of JATS elementTree
+      bk : elementtree
+          Back-matter of JATS elementTree
+
+
+
+   
+   .. method:: do_file_io(self, s, mode, pth)
+
+      Executes read or write operations on a path
+
+      Parameters
+      ----------
+      s: str
+          Content to be written or None for read
+      mode: str
+          w for write , r for r
+      pth : str
+          Path to the file to be read or written
+
+      Raises
+      ------
+      IOError
+          I/O operation fails
+
+
+
+   
+   .. method:: run(self)
+
+      Runs the configuration on the processing object. Process  JATS-XML file and merges it into the full BITS-XML file
+
+      See Also
+      --------
+      create_output_bits
+
+      Warning
+      -------
+      function create_output_jats not yet used
+
+
+
+
+.. function:: main()
+
+   Initializes a processing object from  a xml file and   and runs it.
+
+   See Also
+   --------
+   run
+
+

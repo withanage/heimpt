@@ -1,0 +1,39 @@
+:mod:`bin.unoconvtodocx`
+========================
+
+.. py:module:: bin.unoconvtodocx
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Eve, Dulip Withanage
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   
+
+.. py:class:: UnoconvToDocx(gv)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. method:: unoconv_to_docx(self)
+
+      Creates the appropriate java command to run Saxon
+      @return: a string to run on the command line
+
+
+
+   
+   .. method:: run(self, input_format)
+
+      This method converts from an arbitrary input format into docx
+
+
+
+

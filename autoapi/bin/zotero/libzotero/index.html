@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.zotero.libzotero &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bin.zotero.libzotero">
+<span id="bin-zotero-libzotero"></span><h1><a class="reference internal" href="#module-bin.zotero.libzotero" title="bin.zotero.libzotero"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.zotero.libzotero</span></code></a><a class="headerlink" href="#module-bin.zotero.libzotero" title="Permalink to this headline">¶</a></h1>
+<p><p>Originally (c) Sebastiaan Mathot 2011
+Modifications (c) 2014, 2018 Martin Paul Eve</p>
+<blockquote>
+<div><p>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA</p>
+</div></blockquote>
+</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bin.zotero.libzotero.LibZotero">
+<em class="property">class </em><code class="sig-prename descclassname">bin.zotero.libzotero.</code><code class="sig-name descname">LibZotero</code><span class="sig-paren">(</span><em class="sig-param">zotero_path</em>, <em class="sig-param">global_variables</em>, <em class="sig-param">noteProvider=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bin/zotero/libzotero.html#LibZotero"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.zotero.libzotero.LibZotero" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">debug.Debuggable</span></code></p>
+<p>Libzotero provides access to the zotero database.
+This is an object oriented reimplementation of the
+original zoterotools.</p>
+<dl class="attribute">
+<dt id="bin.zotero.libzotero.LibZotero.attachment_query">
+<code class="sig-name descname">attachment_query</code><em class="property"> =
+select items.itemID, itemAttachments.path, itemAttachments.itemID
+from items, itemAttachments
+where items.itemID = itemAttachments.sourceItemID</em><a class="reference internal" href="../../../../_modules/bin/zotero/libzotero.html#LibZotero.attachment_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.zotero.libzotero.LibZotero.attachment_query" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bin.zotero.libzotero.LibZotero.info_query">
+<code class="sig-name descname">info_query</code><em class="property"> =
+select items.itemID, fields.fieldName, itemDataValues.value, items.key, itemTypes.typeName
+from items, itemData, fields, itemDataValues, itemTypes
+where
+        items.itemID = itemData.itemID
+        and itemData.fieldID = fields.fieldID
+        and itemData.valueID = itemDataValues.valueID
+        and itemTypes.itemTypeID = items.itemTypeID</em><a class="reference internal" href="../../../../_modules/bin/zotero/libzotero.html#LibZotero.info_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.zotero.libzotero.LibZotero.info_query" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bin.zotero.libzotero.LibZotero.collection_query">
+<code class="sig-name descname">collection_query</code><em class="property"> =
+select items.itemID, collections.collectionName
+from items, collections, collectionItems
+where
+        items.itemID = collectionItems.itemID
+        and collections.collectionID = collectionItems.collectionID
+order by collections.collectionName != &quot;To Read&quot;,
+        collections.collectionName</em><a class="reference internal" href="../../../../_modules/bin/zotero/libzotero.html#LibZotero.collection_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.zotero.libzotero.LibZotero.collection_query" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bin.zotero.libzotero.LibZotero.tag_query">
+<code class="sig-name descname">tag_query</code><em class="property"> =
+select items.itemID, tags.name
+from items, tags, itemTags
+where
+        items.itemID = itemTags.itemID
+        and tags.tagID = itemTags.tagID</em><a class="reference internal" href="../../../../_modules/bin/zotero/libzotero.html#LibZotero.tag_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.zotero.libzotero.LibZotero.tag_query" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bin.zotero.libzotero.LibZotero.deleted_query">
+<code class="sig-name descname">deleted_query</code><em class="property"> = select itemID from deletedItems</em><a class="reference internal" href="../../../../_modules/bin/zotero/libzotero.html#LibZotero.deleted_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.zotero.libzotero.LibZotero.deleted_query" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bin.zotero.libzotero.LibZotero.debug">
+<code class="sig-name descname">debug</code><a class="reference internal" href="../../../../_modules/bin/zotero/libzotero.html#LibZotero.debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.zotero.libzotero.LibZotero.debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intialize zotero.</p>
+<p>Arguments:
+zotero_path             –      A unicode string to the Zotero folder.</p>
+<p>Keyword arguments:
+noteProvider    –      A noteProvider object. (default=None)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bin.zotero.libzotero.LibZotero.creator_query">
+<em class="property">static </em><code class="sig-name descname">creator_query</code><span class="sig-paren">(</span><em class="sig-param">creator_type</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bin/zotero/libzotero.html#LibZotero.creator_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.zotero.libzotero.LibZotero.creator_query" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.zotero.libzotero.LibZotero.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">force=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bin/zotero/libzotero.html#LibZotero.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.zotero.libzotero.LibZotero.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the local copy of the zotero database is up to date. If not,
+the data is also indexed.</p>
+<p>Arguments:
+force           –      Indicates that the data should also be indexed, even</p>
+<blockquote>
+<div><p>if the local copy is up to date. (default=False)</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="bin.zotero.libzotero.LibZotero.parse_query">
+<code class="sig-name descname">parse_query</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">query</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bin/zotero/libzotero.html#LibZotero.parse_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.zotero.libzotero.LibZotero.parse_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses a text search query into a list of tuples, which are acceptable
+for zotero_item.match().</p>
+<p>Argument:
+query           –      A search query.</p>
+<p>Returns:
+A list of tuples.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bin.zotero.libzotero.LibZotero.search">
+<code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">query</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bin/zotero/libzotero.html#LibZotero.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.zotero.libzotero.LibZotero.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Searches the zotero database.</p>
+<p>Argument:
+query           –      A search query.</p>
+<p>Returns:
+A list of zotero_items.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="bin.zotero.libzotero.valid_location">
+<code class="sig-prename descclassname">bin.zotero.libzotero.</code><code class="sig-name descname">valid_location</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/bin/zotero/libzotero.html#valid_location"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.zotero.libzotero.valid_location" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if a given path is a valid Zotero folder, i.e., if it it contains
+zotero.sqlite.</p>
+<p>Arguments:
+path                –      The path to check.</p>
+<p>Returns:
+True if path is a valid Zotero folder, False otherwise.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.zotero.libzotero</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#bin.zotero.libzotero.LibZotero">LibZotero</a><ul>
+<li><a class="reference internal" href="#bin.zotero.libzotero.LibZotero.attachment_query">attachment_query</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.zotero.libzotero.LibZotero.info_query">info_query</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.zotero.libzotero.LibZotero.collection_query">collection_query</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.zotero.libzotero.LibZotero.tag_query">tag_query</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.zotero.libzotero.LibZotero.deleted_query">deleted_query</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.zotero.libzotero.LibZotero.debug">debug</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.zotero.libzotero.LibZotero.creator_query">creator_query</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.zotero.libzotero.LibZotero.update">update</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.zotero.libzotero.LibZotero.parse_query">parse_query</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.zotero.libzotero.LibZotero.search">search</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.zotero.libzotero.valid_location">valid_location</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../_sources/autoapi/bin/zotero/libzotero/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

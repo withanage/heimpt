@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.bibliographyaddins &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bin.bibliographyaddins">
+<span id="bin-bibliographyaddins"></span><h1><a class="reference internal" href="#module-bin.bibliographyaddins" title="bin.bibliographyaddins"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.bibliographyaddins</span></code></a><a class="headerlink" href="#module-bin.bibliographyaddins" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="bin.bibliographyaddins.__author__">
+<code class="sig-prename descclassname">bin.bibliographyaddins.</code><code class="sig-name descname">__author__</code><em class="property"> = Martin Paul Eve</em><a class="reference internal" href="../../../_modules/bin/bibliographyaddins.html#__author__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyaddins.__author__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="bin.bibliographyaddins.__email__">
+<code class="sig-prename descclassname">bin.bibliographyaddins.</code><code class="sig-name descname">__email__</code><em class="property"> = martin&#64;martineve.com</em><a class="reference internal" href="../../../_modules/bin/bibliographyaddins.html#__email__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyaddins.__email__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bin.bibliographyaddins.ZoteroHandler">
+<em class="property">class </em><code class="sig-prename descclassname">bin.bibliographyaddins.</code><code class="sig-name descname">ZoteroHandler</code><span class="sig-paren">(</span><em class="sig-param">gv</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/bibliographyaddins.html#ZoteroHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyaddins.ZoteroHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">debug.Debuggable</span></code></p>
+<dl class="method">
+<dt id="bin.bibliographyaddins.ZoteroHandler.handle_bibliography">
+<code class="sig-name descname">handle_bibliography</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tei_manipulator</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/bibliographyaddins.html#ZoteroHandler.handle_bibliography"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyaddins.ZoteroHandler.handle_bibliography" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle Zotero bibliographies
+&#64;param tei_manipulator: a TEI Manipulator object to handle the XML</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bin.bibliographyaddins.ZoteroHandler.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/bibliographyaddins.html#ZoteroHandler.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyaddins.ZoteroHandler.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle Zotero in-line reference items</p>
+<p>&#64;return: a list of items handled</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bin.bibliographyaddins.MendeleyHandler">
+<em class="property">class </em><code class="sig-prename descclassname">bin.bibliographyaddins.</code><code class="sig-name descname">MendeleyHandler</code><span class="sig-paren">(</span><em class="sig-param">gv</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/bibliographyaddins.html#MendeleyHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyaddins.MendeleyHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">debug.Debuggable</span></code></p>
+<dl class="method">
+<dt id="bin.bibliographyaddins.MendeleyHandler.handle_bibliography">
+<code class="sig-name descname">handle_bibliography</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tei_manipulator</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/bibliographyaddins.html#MendeleyHandler.handle_bibliography"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyaddins.MendeleyHandler.handle_bibliography" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process Mendeley bibliographies</p>
+<p>&#64;param tei_manipulator: a TEI Manipulator object to handle the XML</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bin.bibliographyaddins.MendeleyHandler.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/bibliographyaddins.html#MendeleyHandler.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyaddins.MendeleyHandler.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle Mendeley reference tags, replacing them with NLM-spec references</p>
+<p>&#64;return: a list of processed tags</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bin.bibliographyaddins.OtherHandler">
+<em class="property">class </em><code class="sig-prename descclassname">bin.bibliographyaddins.</code><code class="sig-name descname">OtherHandler</code><span class="sig-paren">(</span><em class="sig-param">gv</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/bibliographyaddins.html#OtherHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyaddins.OtherHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">debug.Debuggable</span></code></p>
+<dl class="method">
+<dt id="bin.bibliographyaddins.OtherHandler.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/bibliographyaddins.html#OtherHandler.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyaddins.OtherHandler.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle all unknown types of addin, stripping them from the output</p>
+<p>&#64;return: a list of tags that were removed</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bin.bibliographyaddins.BibliographyAddins">
+<em class="property">class </em><code class="sig-prename descclassname">bin.bibliographyaddins.</code><code class="sig-name descname">BibliographyAddins</code><span class="sig-paren">(</span><em class="sig-param">gv</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/bibliographyaddins.html#BibliographyAddins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyaddins.BibliographyAddins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">debug.Debuggable</span></code></p>
+<dl class="method">
+<dt id="bin.bibliographyaddins.BibliographyAddins.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/bibliographyaddins.html#BibliographyAddins.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyaddins.BibliographyAddins.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the procedure to process different types of bibliography</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.bibliographyaddins</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#bin.bibliographyaddins.__author__">__author__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.bibliographyaddins.__email__">__email__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.bibliographyaddins.ZoteroHandler">ZoteroHandler</a><ul>
+<li><a class="reference internal" href="#bin.bibliographyaddins.ZoteroHandler.handle_bibliography">handle_bibliography</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.bibliographyaddins.ZoteroHandler.run">run</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.bibliographyaddins.MendeleyHandler">MendeleyHandler</a><ul>
+<li><a class="reference internal" href="#bin.bibliographyaddins.MendeleyHandler.handle_bibliography">handle_bibliography</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.bibliographyaddins.MendeleyHandler.run">run</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.bibliographyaddins.OtherHandler">OtherHandler</a><ul>
+<li><a class="reference internal" href="#bin.bibliographyaddins.OtherHandler.run">run</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.bibliographyaddins.BibliographyAddins">BibliographyAddins</a><ul>
+<li><a class="reference internal" href="#bin.bibliographyaddins.BibliographyAddins.run">run</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/autoapi/bin/bibliographyaddins/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

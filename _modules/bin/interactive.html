@@ -1,0 +1,471 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.interactive &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.interactive</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<div class="viewcode-block" id="__author__"><a class="viewcode-back" href="../../autoapi/bin/interactive/index.html#bin.interactive.__author__">[docs]</a><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Martin Paul Eve&quot;</span></div>
+<div class="viewcode-block" id="__email__"><a class="viewcode-back" href="../../autoapi/bin/interactive/index.html#bin.interactive.__email__">[docs]</a><span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;martin@martineve.com&quot;</span></div>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A class to handle an interactive prompt.</span>
+
+<span class="sd">Portions of this file are Copyright 2014, Adrian Sampson.</span>
+<span class="sd">#</span>
+<span class="sd"># Permission is hereby granted, free of charge, to any person obtaining</span>
+<span class="sd"># a copy of this software and associated documentation files (the</span>
+<span class="sd"># &quot;Software&quot;), to deal in the Software without restriction, including</span>
+<span class="sd"># without limitation the rights to use, copy, modify, merge, publish,</span>
+<span class="sd"># distribute, sublicense, and/or sell copies of the Software, and to</span>
+<span class="sd"># permit persons to whom the Software is furnished to do so, subject to</span>
+<span class="sd"># the following conditions:</span>
+<span class="sd">#</span>
+<span class="sd"># The above copyright notice and this permission notice shall be</span>
+<span class="sd"># included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">debug</span> <span class="k">import</span> <span class="n">Debuggable</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">difflib</span> <span class="k">import</span> <span class="n">SequenceMatcher</span>
+<span class="kn">import</span> <span class="nn">locale</span>
+
+
+<div class="viewcode-block" id="Interactive"><a class="viewcode-back" href="../../autoapi/bin/interactive/index.html#bin.interactive.Interactive">[docs]</a><span class="k">class</span> <span class="nc">Interactive</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_variables</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">global_variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="n">Debuggable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Interactive Prompt Handler&#39;</span><span class="p">)</span>
+
+        <span class="c1"># ANSI terminal colorization code heavily inspired by pygments:</span>
+        <span class="c1"># http://dev.pocoo.org/hg/pygments-main/file/b2deea5b5030/pygments/console.py</span>
+        <span class="c1"># (pygments is by Tim Hatch, Armin Ronacher, et al.)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">COLOR_ESCAPE</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\x1b</span><span class="s2">[&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DARK_COLORS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;darkred&quot;</span><span class="p">,</span> <span class="s2">&quot;darkgreen&quot;</span><span class="p">,</span> <span class="s2">&quot;brown&quot;</span><span class="p">,</span> <span class="s2">&quot;darkblue&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;purple&quot;</span><span class="p">,</span> <span class="s2">&quot;teal&quot;</span><span class="p">,</span> <span class="s2">&quot;lightgray&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">LIGHT_COLORS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;darkgray&quot;</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="s2">&quot;yellow&quot;</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;fuchsia&quot;</span><span class="p">,</span> <span class="s2">&quot;turquoise&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">RESET_COLOR</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">COLOR_ESCAPE</span> <span class="o">+</span> <span class="s2">&quot;39;49;00m&quot;</span>
+
+<div class="viewcode-block" id="Interactive.input_options"><a class="viewcode-back" href="../../autoapi/bin/interactive/index.html#bin.interactive.Interactive.input_options">[docs]</a>    <span class="k">def</span> <span class="nf">input_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">require</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fallback_prompt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                      <span class="n">numrange</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_width</span><span class="o">=</span><span class="mi">72</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Prompts a user for input. The sequence of `options` defines the</span>
+<span class="sd">        choices the user has. A single-letter shortcut is inferred for each</span>
+<span class="sd">        option; the user&#39;s choice is returned as that single, lower-case</span>
+<span class="sd">        letter. The options should be provided as lower-case strings unless</span>
+<span class="sd">        a particular shortcut is desired; in that case, only that letter</span>
+<span class="sd">        should be capitalized.</span>
+
+<span class="sd">        By default, the first option is the default. `default` can be provided to</span>
+<span class="sd">        override this. If `require` is provided, then there is no default. The</span>
+<span class="sd">        prompt and fallback prompt are also inferred but can be overridden.</span>
+
+<span class="sd">        If numrange is provided, it is a pair of `(high, low)` (both ints)</span>
+<span class="sd">        indicating that, in addition to `options`, the user may enter an</span>
+<span class="sd">        integer in that inclusive range.</span>
+
+<span class="sd">        `max_width` specifies the maximum number of columns in the</span>
+<span class="sd">        automatically generated prompt string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Assign single letters to each option. Also capitalize the options</span>
+        <span class="c1"># to indicate the letter.</span>
+        <span class="n">letters</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">display_letters</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">capitalized</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+            <span class="c1"># Is a letter already capitalized?</span>
+            <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">option</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">letter</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="ow">and</span> <span class="n">letter</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="n">letter</span><span class="p">:</span>
+                    <span class="n">found_letter</span> <span class="o">=</span> <span class="n">letter</span>
+                    <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Infer a letter.</span>
+                <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">option</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">letter</span><span class="o">.</span><span class="n">isalpha</span><span class="p">():</span>
+                        <span class="k">continue</span> <span class="c1"># Don&#39;t use punctuation.</span>
+                    <span class="k">if</span> <span class="n">letter</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">letters</span><span class="p">:</span>
+                        <span class="n">found_letter</span> <span class="o">=</span> <span class="n">letter</span>
+                        <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;no unambiguous lettering found&#39;</span><span class="p">)</span>
+
+            <span class="n">letters</span><span class="p">[</span><span class="n">found_letter</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span> <span class="o">=</span> <span class="n">option</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">option</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">found_letter</span><span class="p">)</span>
+
+            <span class="c1"># Mark the option&#39;s shortcut letter for display.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">require</span> <span class="ow">and</span> <span class="p">((</span><span class="n">default</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">numrange</span> <span class="ow">and</span> <span class="n">first</span><span class="p">)</span> <span class="ow">or</span>
+                    <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span>
+                     <span class="n">found_letter</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">default</span><span class="o">.</span><span class="n">lower</span><span class="p">())):</span>
+                <span class="c1"># The first option is the default; mark it.</span>
+                <span class="n">show_letter</span> <span class="o">=</span> <span class="s1">&#39;[</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="n">found_letter</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+                <span class="n">is_default</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">show_letter</span> <span class="o">=</span> <span class="n">found_letter</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+                <span class="n">is_default</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="c1"># Colorize the letter shortcut.</span>
+            <span class="n">show_letter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">colorize</span><span class="p">(</span><span class="s1">&#39;green&#39;</span> <span class="k">if</span> <span class="n">is_default</span> <span class="k">else</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span>
+                                        <span class="n">show_letter</span><span class="p">)</span>
+
+            <span class="c1"># Insert the highlighted letter back into the word.</span>
+            <span class="n">capitalized</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">option</span><span class="p">[:</span><span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="n">show_letter</span> <span class="o">+</span> <span class="n">option</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+            <span class="p">)</span>
+            <span class="n">display_letters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">found_letter</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+
+            <span class="n">first</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># The default is just the first option if unspecified.</span>
+        <span class="k">if</span> <span class="n">require</span><span class="p">:</span>
+            <span class="n">default</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="n">default</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">numrange</span><span class="p">:</span>
+                <span class="n">default</span> <span class="o">=</span> <span class="n">numrange</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">default</span> <span class="o">=</span> <span class="n">display_letters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="c1"># Make a prompt if one is not provided.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">prompt</span><span class="p">:</span>
+            <span class="n">prompt_parts</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">prompt_part_lengths</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">numrange</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                    <span class="n">default_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+                    <span class="n">default_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">colorize</span><span class="p">(</span><span class="s1">&#39;turquoise&#39;</span><span class="p">,</span> <span class="n">default_name</span><span class="p">)</span>
+                    <span class="n">tmpl</span> <span class="o">=</span> <span class="s1">&#39;# selection (default </span><span class="si">%s</span><span class="s1">)&#39;</span>
+                    <span class="n">prompt_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmpl</span> <span class="o">%</span> <span class="n">default_name</span><span class="p">)</span>
+                    <span class="n">prompt_part_lengths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tmpl</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">default</span><span class="p">)))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">prompt_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;# selection&#39;</span><span class="p">)</span>
+                    <span class="n">prompt_part_lengths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prompt_parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="n">prompt_parts</span> <span class="o">+=</span> <span class="n">capitalized</span>
+            <span class="n">prompt_part_lengths</span> <span class="o">+=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">options</span><span class="p">]</span>
+
+            <span class="c1"># Wrap the query text.</span>
+            <span class="n">prompt</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="n">line_length</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">part</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">prompt_parts</span><span class="p">,</span>
+                                                   <span class="n">prompt_part_lengths</span><span class="p">)):</span>
+                <span class="c1"># Add punctuation.</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">prompt_parts</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">part</span> <span class="o">+=</span> <span class="s1">&#39;?&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">part</span> <span class="o">+=</span> <span class="s1">&#39;,&#39;</span>
+                <span class="n">length</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="c1"># Choose either the current line or the beginning of the next.</span>
+                <span class="k">if</span> <span class="n">line_length</span> <span class="o">+</span> <span class="n">length</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="n">max_width</span><span class="p">:</span>
+                    <span class="n">prompt</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+                    <span class="n">line_length</span> <span class="o">=</span> <span class="mi">0</span>
+
+                <span class="k">if</span> <span class="n">line_length</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="c1"># Not the beginning of the line; need a space.</span>
+                    <span class="n">part</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">part</span>
+                    <span class="n">length</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="n">prompt</span> <span class="o">+=</span> <span class="n">part</span>
+                <span class="n">line_length</span> <span class="o">+=</span> <span class="n">length</span>
+
+        <span class="c1"># Make a fallback prompt too. This is displayed if the user enters</span>
+        <span class="c1"># something that is not recognized.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">fallback_prompt</span><span class="p">:</span>
+            <span class="n">fallback_prompt</span> <span class="o">=</span> <span class="s1">&#39;Enter one of &#39;</span>
+            <span class="k">if</span> <span class="n">numrange</span><span class="p">:</span>
+                <span class="n">fallback_prompt</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">%i</span><span class="s1">-</span><span class="si">%i</span><span class="s1">, &#39;</span> <span class="o">%</span> <span class="n">numrange</span>
+            <span class="n">fallback_prompt</span> <span class="o">+=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">display_letters</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span>
+
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+            <span class="c1"># Try default option.</span>
+            <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">resp</span><span class="p">:</span>
+                <span class="n">resp</span> <span class="o">=</span> <span class="n">default</span>
+
+            <span class="c1"># Try an integer input if available.</span>
+            <span class="k">if</span> <span class="n">numrange</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">resp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">low</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="n">numrange</span>
+                    <span class="k">if</span> <span class="n">low</span> <span class="o">&lt;=</span> <span class="n">resp</span> <span class="o">&lt;=</span> <span class="n">high</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="n">resp</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">resp</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="c1"># Try a normal letter input.</span>
+            <span class="k">if</span> <span class="n">resp</span><span class="p">:</span>
+                <span class="n">resp</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">resp</span> <span class="ow">in</span> <span class="n">letters</span><span class="p">:</span>
+                    <span class="k">return</span>  <span class="n">resp</span>
+
+            <span class="c1"># Prompt for new input.</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_</span><span class="p">(</span><span class="n">fallback_prompt</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Interactive.input_"><a class="viewcode-back" href="../../autoapi/bin/interactive/index.html#bin.interactive.Interactive.input_">[docs]</a>    <span class="k">def</span> <span class="nf">input_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Like `raw_input`, but decodes the result to a Unicode string.</span>
+<span class="sd">        Raises a UserError if stdin is not available. The prompt is sent to</span>
+<span class="sd">        stdout rather than stderr. A printed between the prompt and the</span>
+<span class="sd">        input cursor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># raw_input incorrectly sends prompts to stderr, not stdout, so we</span>
+        <span class="c1"># use print() explicitly to display prompts.</span>
+        <span class="c1"># http://bugs.python.org/issue1927</span>
+        <span class="k">if</span> <span class="n">prompt</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="s1">&#39;stdin stream ended while input required&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">encoding</span> <span class="ow">or</span> <span class="s1">&#39;utf8&#39;</span><span class="p">,</span> <span class="s1">&#39;ignore&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Interactive._encoding"><a class="viewcode-back" href="../../autoapi/bin/interactive/index.html#bin.interactive.Interactive._encoding">[docs]</a>    <span class="k">def</span> <span class="nf">_encoding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Tries to guess the encoding used by the terminal.&quot;&quot;&quot;</span>
+        <span class="c1"># Determine from locale settings.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">locale</span><span class="o">.</span><span class="n">getdefaultlocale</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="s1">&#39;utf8&#39;</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="c1"># Invalid locale environment variable setting. To avoid</span>
+            <span class="c1"># failing entirely for no good reason, assume UTF-8.</span>
+            <span class="k">return</span> <span class="s1">&#39;utf8&#39;</span></div>
+
+<div class="viewcode-block" id="Interactive._colorize"><a class="viewcode-back" href="../../autoapi/bin/interactive/index.html#bin.interactive.Interactive._colorize">[docs]</a>    <span class="k">def</span> <span class="nf">_colorize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a string that prints the given text in the given color</span>
+<span class="sd">        in a terminal that is ANSI color-aware. The color must be something</span>
+<span class="sd">        in DARK_COLORS or LIGHT_COLORS.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">color</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">DARK_COLORS</span><span class="p">:</span>
+            <span class="n">escape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">COLOR_ESCAPE</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">%i</span><span class="s2">m&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DARK_COLORS</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">color</span><span class="p">)</span> <span class="o">+</span> <span class="mi">30</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">color</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">LIGHT_COLORS</span><span class="p">:</span>
+            <span class="n">escape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">COLOR_ESCAPE</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">%i</span><span class="s2">;01m&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">LIGHT_COLORS</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">color</span><span class="p">)</span> <span class="o">+</span> <span class="mi">30</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;no such color </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">escape</span> <span class="o">+</span> <span class="n">text</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">RESET_COLOR</span></div>
+
+
+<div class="viewcode-block" id="Interactive.colorize"><a class="viewcode-back" href="../../autoapi/bin/interactive/index.html#bin.interactive.Interactive.colorize">[docs]</a>    <span class="k">def</span> <span class="nf">colorize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Colorize text if colored output is enabled. (Like _colorize but</span>
+<span class="sd">        conditional.)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;True&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_colorize</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">text</span></div>
+
+<div class="viewcode-block" id="Interactive._colordiff"><a class="viewcode-back" href="../../autoapi/bin/interactive/index.html#bin.interactive.Interactive._colordiff">[docs]</a>    <span class="k">def</span> <span class="nf">_colordiff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">highlight</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">minor_highlight</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Given two values, return the same pair of strings except with</span>
+<span class="sd">        their differences highlighted in the specified color. Strings are</span>
+<span class="sd">        highlighted intelligently to show differences; other values are</span>
+<span class="sd">        stringified and highlighted in their entirety.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="c1"># Non-strings: use ordinary equality.</span>
+            <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">colorize</span><span class="p">(</span><span class="n">highlight</span><span class="p">,</span> <span class="n">a</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">colorize</span><span class="p">(</span><span class="n">highlight</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+            <span class="c1"># A path field.</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">displayable_path</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">displayable_path</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+        <span class="n">a_out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">b_out</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">matcher</span> <span class="o">=</span> <span class="n">SequenceMatcher</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">op</span><span class="p">,</span> <span class="n">a_start</span><span class="p">,</span> <span class="n">a_end</span><span class="p">,</span> <span class="n">b_start</span><span class="p">,</span> <span class="n">b_end</span> <span class="ow">in</span> <span class="n">matcher</span><span class="o">.</span><span class="n">get_opcodes</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;equal&#39;</span><span class="p">:</span>
+                <span class="c1"># In both strings.</span>
+                <span class="n">a_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">a_start</span><span class="p">:</span><span class="n">a_end</span><span class="p">])</span>
+                <span class="n">b_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">b_start</span><span class="p">:</span><span class="n">b_end</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;insert&#39;</span><span class="p">:</span>
+                <span class="c1"># Right only.</span>
+                <span class="n">b_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colorize</span><span class="p">(</span><span class="n">highlight</span><span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="n">b_start</span><span class="p">:</span><span class="n">b_end</span><span class="p">]))</span>
+            <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;delete&#39;</span><span class="p">:</span>
+                <span class="c1"># Left only.</span>
+                <span class="n">a_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colorize</span><span class="p">(</span><span class="n">highlight</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">a_start</span><span class="p">:</span><span class="n">a_end</span><span class="p">]))</span>
+            <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;replace&#39;</span><span class="p">:</span>
+                <span class="c1"># Right and left differ. Colorise with second highlight if</span>
+                <span class="c1"># it&#39;s just a case change.</span>
+                <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">a_start</span><span class="p">:</span><span class="n">a_end</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="n">b</span><span class="p">[</span><span class="n">b_start</span><span class="p">:</span><span class="n">b_end</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="n">color</span> <span class="o">=</span> <span class="n">highlight</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">color</span> <span class="o">=</span> <span class="n">minor_highlight</span>
+                <span class="n">a_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colorize</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">a_start</span><span class="p">:</span><span class="n">a_end</span><span class="p">]))</span>
+                <span class="n">b_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colorize</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="n">b_start</span><span class="p">:</span><span class="n">b_end</span><span class="p">]))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">assert</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a_out</span><span class="p">),</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">b_out</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Interactive.displayable_path"><a class="viewcode-back" href="../../autoapi/bin/interactive/index.html#bin.interactive.Interactive.displayable_path">[docs]</a>    <span class="k">def</span> <span class="nf">displayable_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;; &#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Attempts to decode a bytestring path to a unicode object for the</span>
+<span class="sd">        purpose of displaying it to the user. If the `path` argument is a</span>
+<span class="sd">        list or a tuple, the elements are joined with `separator`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">displayable_path</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">path</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="c1"># A non-string object: just get its unicode representation.</span>
+            <span class="k">return</span> <span class="n">path</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">path</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fsencoding</span><span class="p">(),</span> <span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">UnicodeError</span><span class="p">,</span> <span class="ne">LookupError</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">path</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span> <span class="s1">&#39;ignore&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Interactive._fsencoding"><a class="viewcode-back" href="../../autoapi/bin/interactive/index.html#bin.interactive.Interactive._fsencoding">[docs]</a>    <span class="k">def</span> <span class="nf">_fsencoding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the system&#39;s filesystem encoding. On Windows, this is always</span>
+<span class="sd">        UTF-8 (not MBCS).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">encoding</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">getfilesystemencoding</span><span class="p">()</span> <span class="ow">or</span> <span class="n">sys</span><span class="o">.</span><span class="n">getdefaultencoding</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">encoding</span> <span class="o">==</span> <span class="s1">&#39;mbcs&#39;</span><span class="p">:</span>
+            <span class="c1"># On Windows, a broken encoding known to Python as &quot;MBCS&quot; is</span>
+            <span class="c1"># used for the filesystem. However, we only use the Unicode API</span>
+            <span class="c1"># for Windows paths, so the encoding is actually immaterial so</span>
+            <span class="c1"># we can avoid dealing with this nastiness. We arbitrarily</span>
+            <span class="c1"># choose UTF-8.</span>
+            <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;utf8&#39;</span>
+        <span class="k">return</span> <span class="n">encoding</span></div>
+
+
+<div class="viewcode-block" id="Interactive.colordiff"><a class="viewcode-back" href="../../autoapi/bin/interactive/index.html#bin.interactive.Interactive.colordiff">[docs]</a>    <span class="k">def</span> <span class="nf">colordiff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">highlight</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Colorize differences between two values if color is enabled.</span>
+<span class="sd">    (Like _colordiff but conditional.)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;True&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_colordiff</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">highlight</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span></div>
+
+<div class="viewcode-block" id="Interactive.print_"><a class="viewcode-back" href="../../autoapi/bin/interactive/index.html#bin.interactive.Interactive.print_">[docs]</a>    <span class="k">def</span> <span class="nf">print_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">strings</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Like print, but rather than raising an error when a character</span>
+<span class="sd">        is not in the terminal&#39;s encoding&#39;s character set, just silently</span>
+<span class="sd">        replaces it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+                <span class="n">txt</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">txt</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="n">txt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_encoding</span><span class="p">(),</span> <span class="s1">&#39;replace&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">txt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Interactive.color_diff_suffix"><a class="viewcode-back" href="../../autoapi/bin/interactive/index.html#bin.interactive.Interactive.color_diff_suffix">[docs]</a>    <span class="k">def</span> <span class="nf">color_diff_suffix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">highlight</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Colorize the differing suffix between two strings.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;True&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span>
+
+        <span class="c1"># Fast path.</span>
+        <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span>
+
+        <span class="c1"># Find the longest common prefix.</span>
+        <span class="n">first_diff</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">))):</span>
+            <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="n">first_diff</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">first_diff</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+
+        <span class="c1"># Colorize from the first difference on.</span>
+        <span class="k">return</span> <span class="n">a</span><span class="p">[:</span><span class="n">first_diff</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">colorize</span><span class="p">(</span><span class="n">highlight</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">first_diff</span><span class="p">:]),</span> \
+               <span class="n">b</span><span class="p">[:</span><span class="n">first_diff</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">colorize</span><span class="p">(</span><span class="n">highlight</span><span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="n">first_diff</span><span class="p">:])</span></div>
+
+<div class="viewcode-block" id="Interactive.choose_candidate"><a class="viewcode-back" href="../../autoapi/bin/interactive/index.html#bin.interactive.Interactive.choose_candidate">[docs]</a>    <span class="k">def</span> <span class="nf">choose_candidate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidates</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">item</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">itemcount</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">print_</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;Candidates:&#39;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">match</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">candidates</span><span class="p">):</span>
+                <span class="c1"># Index, metadata, and distance.</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="sa">u</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+                    <span class="sa">u</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">reference_to_link</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">]</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">print_</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+
+            <span class="c1"># Ask the user for a choice.</span>
+            <span class="n">sel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_options</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span> <span class="n">numrange</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">)))</span>
+
+            <span class="k">return</span> <span class="n">sel</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

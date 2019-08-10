@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.zotero._noteProvider.gnoteProvider &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bin.zotero._noteProvider.gnoteProvider">
+<span id="bin-zotero-noteprovider-gnoteprovider"></span><h1><a class="reference internal" href="#module-bin.zotero._noteProvider.gnoteProvider" title="bin.zotero._noteProvider.gnoteProvider"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.zotero._noteProvider.gnoteProvider</span></code></a><a class="headerlink" href="#module-bin.zotero._noteProvider.gnoteProvider" title="Permalink to this headline">¶</a></h1>
+<p><p>Originally (c) Sebastiaan Mathot 2011
+This file is part of Gnotero.</p>
+<p>Gnotero is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>Gnotero is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with Gnotero.  If not, see &lt;<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</p>
+</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bin.zotero._noteProvider.gnoteProvider.GnoteProvider">
+<em class="property">class </em><code class="sig-prename descclassname">bin.zotero._noteProvider.gnoteProvider.</code><code class="sig-name descname">GnoteProvider</code><span class="sig-paren">(</span><em class="sig-param">qnotero</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bin/zotero/_noteProvider/gnoteProvider.html#GnoteProvider"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.zotero._noteProvider.gnoteProvider.GnoteProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>libgnote provides an interface to Gnote and is a replacement
+for the deprecated gnote.py module</p>
+<dl class="method">
+<dt id="bin.zotero._noteProvider.gnoteProvider.GnoteProvider.search">
+<code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">item</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bin/zotero/_noteProvider/gnoteProvider.html#GnoteProvider.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.zotero._noteProvider.gnoteProvider.GnoteProvider.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search gnote for a note matching an author and a year</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bin.zotero._noteProvider.gnoteProvider.GnoteNote">
+<em class="property">class </em><code class="sig-prename descclassname">bin.zotero._noteProvider.gnoteProvider.</code><code class="sig-name descname">GnoteNote</code><span class="sig-paren">(</span><em class="sig-param">preview</em>, <em class="sig-param">cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bin/zotero/_noteProvider/gnoteProvider.html#GnoteNote"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.zotero._noteProvider.gnoteProvider.GnoteNote" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class containing a note</p>
+<dl class="method">
+<dt id="bin.zotero._noteProvider.gnoteProvider.GnoteNote.matchScore">
+<code class="sig-name descname">matchScore</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">item</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bin/zotero/_noteProvider/gnoteProvider.html#GnoteNote.matchScore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.zotero._noteProvider.gnoteProvider.GnoteNote.matchScore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the best match</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bin.zotero._noteProvider.gnoteProvider.GnoteNote.open">
+<code class="sig-name descname">open</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/bin/zotero/_noteProvider/gnoteProvider.html#GnoteNote.open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.zotero._noteProvider.gnoteProvider.GnoteNote.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the note in Gnote</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.zotero._noteProvider.gnoteProvider</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#bin.zotero._noteProvider.gnoteProvider.GnoteProvider">GnoteProvider</a><ul>
+<li><a class="reference internal" href="#bin.zotero._noteProvider.gnoteProvider.GnoteProvider.search">search</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.zotero._noteProvider.gnoteProvider.GnoteNote">GnoteNote</a><ul>
+<li><a class="reference internal" href="#bin.zotero._noteProvider.gnoteProvider.GnoteNote.matchScore">matchScore</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.zotero._noteProvider.gnoteProvider.GnoteNote.open">open</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../../_sources/autoapi/bin/zotero/_noteProvider/gnoteProvider/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

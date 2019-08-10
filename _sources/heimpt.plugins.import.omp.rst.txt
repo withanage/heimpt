@@ -1,0 +1,38 @@
+heimpt.plugins.import.omp package
+=================================
+
+Submodules
+----------
+
+heimpt.plugins.import.omp.omp module
+------------------------------------
+
+.. automodule:: heimpt.plugins.import.omp.omp
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+heimpt.plugins.import.omp.ompdal module
+---------------------------------------
+
+.. automodule:: heimpt.plugins.import.omp.ompdal
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+heimpt.plugins.import.omp.omptables module
+------------------------------------------
+
+.. automodule:: heimpt.plugins.import.omp.omptables
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: heimpt.plugins.import.omp
+   :members:
+   :undoc-members:
+   :show-inheritance:

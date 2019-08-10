@@ -1,0 +1,52 @@
+:mod:`bin.frontmatterparser`
+============================
+
+.. py:module:: bin.frontmatterparser
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Dulip Withanage
+
+   
+
+.. data:: __email__
+   :annotation: = dulip.withanage@gmail.com
+
+   
+
+.. py:class:: FrontMatterParser(gv)
+
+   
+   .. method:: parse_authors(self, filestring)
+
+
+
+   
+   .. method:: parse_title(self, filestring)
+
+
+
+   
+   .. method:: get_file_text(self, filename)
+
+
+
+   
+   .. method:: update_tmp_file(self)
+
+
+
+   
+   .. method:: write_output(self, text)
+
+
+
+   
+   .. method:: run(self)
+
+
+
+

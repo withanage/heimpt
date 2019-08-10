@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.settingsconfiguration &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bin.settingsconfiguration">
+<span id="bin-settingsconfiguration"></span><h1><a class="reference internal" href="#module-bin.settingsconfiguration" title="bin.settingsconfiguration"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.settingsconfiguration</span></code></a><a class="headerlink" href="#module-bin.settingsconfiguration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="bin.settingsconfiguration.__author__">
+<code class="sig-prename descclassname">bin.settingsconfiguration.</code><code class="sig-name descname">__author__</code><em class="property"> = Martin Paul Eve, Dulip Withnage</em><a class="reference internal" href="../../../_modules/bin/settingsconfiguration.html#__author__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.settingsconfiguration.__author__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="bin.settingsconfiguration.__email__">
+<code class="sig-prename descclassname">bin.settingsconfiguration.</code><code class="sig-name descname">__email__</code><em class="property"> = martin&#64;martineve.com</em><a class="reference internal" href="../../../_modules/bin/settingsconfiguration.html#__email__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.settingsconfiguration.__email__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="bin.settingsconfiguration.Settings">
+<em class="property">class </em><code class="sig-prename descclassname">bin.settingsconfiguration.</code><code class="sig-name descname">Settings</code><span class="sig-paren">(</span><em class="sig-param">set_file</em>, <em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/settingsconfiguration.html#Settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.settingsconfiguration.Settings" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="bin.settingsconfiguration.Settings.setup_settings_file">
+<em class="property">static </em><code class="sig-name descname">setup_settings_file</code><span class="sig-paren">(</span><em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/settingsconfiguration.html#Settings.setup_settings_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.settingsconfiguration.Settings.setup_settings_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.settingsconfiguration.Settings.clean_path">
+<em class="property">static </em><code class="sig-name descname">clean_path</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/settingsconfiguration.html#Settings.clean_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.settingsconfiguration.Settings.clean_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.settingsconfiguration.Settings.concat_path">
+<em class="property">static </em><code class="sig-name descname">concat_path</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">child</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/settingsconfiguration.html#Settings.concat_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.settingsconfiguration.Settings.concat_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.settingsconfiguration.Settings.get_setting">
+<code class="sig-name descname">get_setting</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tag_name</em>, <em class="sig-param">caller</em>, <em class="sig-param">domain=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/settingsconfiguration.html#Settings.get_setting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.settingsconfiguration.Settings.get_setting" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.settingsconfiguration.Settings.check_settings_file_exists">
+<em class="property">static </em><code class="sig-name descname">check_settings_file_exists</code><span class="sig-paren">(</span><em class="sig-param">caller</em>, <em class="sig-param">set_file</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/settingsconfiguration.html#Settings.check_settings_file_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.settingsconfiguration.Settings.check_settings_file_exists" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.settingsconfiguration.Settings.get_settings_file">
+<em class="property">static </em><code class="sig-name descname">get_settings_file</code><span class="sig-paren">(</span><em class="sig-param">caller</em>, <em class="sig-param">settings_file_path</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/settingsconfiguration.html#Settings.get_settings_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.settingsconfiguration.Settings.get_settings_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.settingsconfiguration</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#bin.settingsconfiguration.__author__">__author__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.settingsconfiguration.__email__">__email__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.settingsconfiguration.Settings">Settings</a><ul>
+<li><a class="reference internal" href="#bin.settingsconfiguration.Settings.setup_settings_file">setup_settings_file</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.settingsconfiguration.Settings.clean_path">clean_path</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.settingsconfiguration.Settings.concat_path">concat_path</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.settingsconfiguration.Settings.get_setting">get_setting</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.settingsconfiguration.Settings.check_settings_file_exists">check_settings_file_exists</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.settingsconfiguration.Settings.get_settings_file">get_settings_file</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/autoapi/bin/settingsconfiguration/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

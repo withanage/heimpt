@@ -1,0 +1,151 @@
+:mod:`bin.interactive`
+======================
+
+.. py:module:: bin.interactive
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   A class to handle an interactive prompt.
+
+   Portions of this file are Copyright 2014, Adrian Sampson.
+   #
+   # Permission is hereby granted, free of charge, to any person obtaining
+   # a copy of this software and associated documentation files (the
+   # "Software"), to deal in the Software without restriction, including
+   # without limitation the rights to use, copy, modify, merge, publish,
+   # distribute, sublicense, and/or sell copies of the Software, and to
+   # permit persons to whom the Software is furnished to do so, subject to
+   # the following conditions:
+   #
+   # The above copyright notice and this permission notice shall be
+   # included in all copies or substantial portions of the Software.
+
+
+.. py:class:: Interactive(global_variables)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. method:: input_options(self, options, require=False, prompt=None, fallback_prompt=None, numrange=None, default=None, max_width=72)
+
+      Prompts a user for input. The sequence of `options` defines the
+      choices the user has. A single-letter shortcut is inferred for each
+      option; the user's choice is returned as that single, lower-case
+      letter. The options should be provided as lower-case strings unless
+      a particular shortcut is desired; in that case, only that letter
+      should be capitalized.
+
+      By default, the first option is the default. `default` can be provided to
+      override this. If `require` is provided, then there is no default. The
+      prompt and fallback prompt are also inferred but can be overridden.
+
+      If numrange is provided, it is a pair of `(high, low)` (both ints)
+      indicating that, in addition to `options`, the user may enter an
+      integer in that inclusive range.
+
+      `max_width` specifies the maximum number of columns in the
+      automatically generated prompt string.
+
+
+
+   
+   .. method:: input_(self, prompt=None)
+
+      Like `raw_input`, but decodes the result to a Unicode string.
+      Raises a UserError if stdin is not available. The prompt is sent to
+      stdout rather than stderr. A printed between the prompt and the
+      input cursor.
+
+
+
+   
+   .. method:: _encoding(self)
+
+      Tries to guess the encoding used by the terminal.
+
+
+
+   
+   .. method:: _colorize(self, color, text)
+
+      Returns a string that prints the given text in the given color
+      in a terminal that is ANSI color-aware. The color must be something
+      in DARK_COLORS or LIGHT_COLORS.
+
+
+
+   
+   .. method:: colorize(self, color, text)
+
+      Colorize text if colored output is enabled. (Like _colorize but
+      conditional.)
+
+
+
+   
+   .. method:: _colordiff(self, a, b, highlight='red', minor_highlight='lightgray')
+
+      Given two values, return the same pair of strings except with
+      their differences highlighted in the specified color. Strings are
+      highlighted intelligently to show differences; other values are
+      stringified and highlighted in their entirety.
+
+
+
+   
+   .. method:: displayable_path(self, path, separator='; ')
+
+      Attempts to decode a bytestring path to a unicode object for the
+      purpose of displaying it to the user. If the `path` argument is a
+      list or a tuple, the elements are joined with `separator`.
+
+
+
+   
+   .. method:: _fsencoding(self)
+
+      Get the system's filesystem encoding. On Windows, this is always
+      UTF-8 (not MBCS).
+
+
+
+   
+   .. method:: colordiff(self, a, b, highlight='red')
+
+      Colorize differences between two values if color is enabled.
+      (Like _colordiff but conditional.)
+
+
+
+   
+   .. method:: print_(self, *strings)
+
+      Like print, but rather than raising an error when a character
+      is not in the terminal's encoding's character set, just silently
+      replaces it.
+
+
+
+   
+   .. method:: color_diff_suffix(self, a, b, highlight='red')
+
+      Colorize the differing suffix between two strings.
+
+
+
+   
+   .. method:: choose_candidate(self, candidates, manipulate, opts, item=None, itemcount=None)
+
+
+
+

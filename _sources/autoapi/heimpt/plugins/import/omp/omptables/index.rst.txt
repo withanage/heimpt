@@ -1,0 +1,19 @@
+:mod:`heimpt.plugins.import.omp.omptables`
+==========================================
+
+.. py:module:: heimpt.plugins.import.omp.omptables
+
+.. autoapi-nested-parse::
+
+   Copyright (c) 2015 Heidelberg University Library
+   Distributed under the GNU GPL v3. For full terms see the file
+   LICENSE.md
+
+
+
+Module Contents
+---------------
+
+.. function:: define_tables(db)
+
+

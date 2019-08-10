@@ -1,0 +1,48 @@
+:mod:`heimpt.tools.scripts.endnotes2footnotes`
+==============================================
+
+.. py:module:: heimpt.tools.scripts.endnotes2footnotes
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   snd/index.rst
+
+
+Module Contents
+---------------
+
+.. data:: f
+   
+
+   
+
+.. data:: tree
+   
+
+   
+
+.. data:: root
+   
+
+   
+
+.. data:: chapters
+   :annotation: = []
+
+   
+
+.. data:: current_body
+   
+
+   
+
+.. data:: refs
+   
+
+   
+

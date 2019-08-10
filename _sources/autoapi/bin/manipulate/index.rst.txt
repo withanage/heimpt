@@ -1,0 +1,109 @@
+:mod:`bin.manipulate`
+=====================
+
+.. py:module:: bin.manipulate
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = martin
+
+   
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   
+
+.. py:class:: Manipulate(gv)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. staticmethod:: set_dom_tree(filename)
+
+
+
+   
+   .. staticmethod:: set_dom_tree_with_parser(filename, p)
+
+
+
+   
+   .. staticmethod:: update_tmp_file(fr, to)
+
+
+
+   
+   .. staticmethod:: get_file_text(filename)
+
+
+
+   
+   .. staticmethod:: xml_start(tag)
+
+
+
+   
+   .. staticmethod:: xml_end(tag)
+
+
+
+   
+   .. staticmethod:: append_safe(base, child, caller)
+
+
+
+   
+   .. method:: return_elements(self, xpath)
+
+
+
+   
+   .. staticmethod:: search_and_replace_dom(tree, search_section, search_element, surround_with)
+
+
+
+   
+   .. staticmethod:: write_output(f, text)
+
+
+
+   
+   .. staticmethod:: try_list_of_regex(file_string, *regex)
+
+
+
+   
+   .. staticmethod:: get_stripped_text(element)
+
+
+
+   
+   .. staticmethod:: replace_value_of_tag(text, new_value)
+
+
+
+   
+   .. method:: load_dom_read(self)
+
+
+
+   
+   .. method:: load_dom_tree(self)
+
+
+
+   
+   .. method:: replace(self, text, tag, *params)
+
+
+
+

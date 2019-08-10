@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>heimpt.plugins.import.omp.omp &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-heimpt.plugins.import.omp.omp">
+<span id="heimpt-plugins-import-omp-omp"></span><h1><a class="reference internal" href="#module-heimpt.plugins.import.omp.omp" title="heimpt.plugins.import.omp.omp"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heimpt.plugins.import.omp.omp</span></code></a><a class="headerlink" href="#module-heimpt.plugins.import.omp.omp" title="Permalink to this headline">¶</a></h1>
+<p><dl class="simple">
+<dt>Usage:</dt><dd><p>heimpt.py import omp [options] [&lt;submission_id&gt;…]</p>
+</dd>
+<dt>Options:</dt><dd><p>-h –help
+-t –project-template=&lt;file&gt;
+-a –all-submissions</p>
+</dd>
+</dl>
+</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="heimpt.plugins.import.omp.omp.FILE_STAGE_TO_PATH">
+<code class="sig-prename descclassname">heimpt.plugins.import.omp.omp.</code><code class="sig-name descname">FILE_STAGE_TO_PATH</code><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#FILE_STAGE_TO_PATH"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.FILE_STAGE_TO_PATH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="heimpt.plugins.import.omp.omp.USER_GROUP_TO_CONTRIB_TYPE">
+<code class="sig-prename descclassname">heimpt.plugins.import.omp.omp.</code><code class="sig-name descname">USER_GROUP_TO_CONTRIB_TYPE</code><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#USER_GROUP_TO_CONTRIB_TYPE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.USER_GROUP_TO_CONTRIB_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="heimpt.plugins.import.omp.omp.PUBLICATION_FORMAT_MAPPING">
+<code class="sig-prename descclassname">heimpt.plugins.import.omp.omp.</code><code class="sig-name descname">PUBLICATION_FORMAT_MAPPING</code><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#PUBLICATION_FORMAT_MAPPING"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.PUBLICATION_FORMAT_MAPPING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="heimpt.plugins.import.omp.omp.LANG_ATTR">
+<code class="sig-prename descclassname">heimpt.plugins.import.omp.omp.</code><code class="sig-name descname">LANG_ATTR</code><em class="property"> = {http://www.w3.org/XML/1998/namespace}lang</em><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#LANG_ATTR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.LANG_ATTR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="heimpt.plugins.import.omp.omp.get_omp_filename">
+<code class="sig-prename descclassname">heimpt.plugins.import.omp.omp.</code><code class="sig-name descname">get_omp_filename</code><span class="sig-paren">(</span><em class="sig-param">submission_file</em>, <em class="sig-param">revision=None</em>, <em class="sig-param">with_extension=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#get_omp_filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.get_omp_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets  OMP file name
+:param revision: If specified will be used as revision part in filename
+:param submission_file: Row object of submission_file Table
+:return: unique filename according to _generateFilename</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="heimpt.plugins.import.omp.omp.path_to_omp_submission_file">
+<code class="sig-prename descclassname">heimpt.plugins.import.omp.omp.</code><code class="sig-name descname">path_to_omp_submission_file</code><span class="sig-paren">(</span><em class="sig-param">submission_file</em>, <em class="sig-param">press_id</em>, <em class="sig-param">files_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#path_to_omp_submission_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.path_to_omp_submission_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="heimpt.plugins.import.omp.omp.path_to_submission_output">
+<code class="sig-prename descclassname">heimpt.plugins.import.omp.omp.</code><code class="sig-name descname">path_to_submission_output</code><span class="sig-paren">(</span><em class="sig-param">submission_id</em>, <em class="sig-param">press_id</em>, <em class="sig-param">output_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#path_to_submission_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.path_to_submission_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="heimpt.plugins.import.omp.omp.path_to_submission_metadata">
+<code class="sig-prename descclassname">heimpt.plugins.import.omp.omp.</code><code class="sig-name descname">path_to_submission_metadata</code><span class="sig-paren">(</span><em class="sig-param">submission_id</em>, <em class="sig-param">press_id</em>, <em class="sig-param">output_dir</em>, <em class="sig-param">filename='mpt.book-meta.bits2.xml'</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#path_to_submission_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.path_to_submission_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the complete path to a metadata file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>submission_id</strong> – Identifier of the submission</p></li>
+<li><p><strong>press_id</strong> – Identifier of the press</p></li>
+<li><p><strong>output_dir</strong> – Base path to metadata files</p></li>
+<li><p><strong>filename</strong> – Name of the metadata file, defaults to ‘mpt.book-meta.bits2.xml’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="heimpt.plugins.import.omp.omp.OMPImport">
+<em class="property">class </em><code class="sig-prename descclassname">heimpt.plugins.import.omp.omp.</code><code class="sig-name descname">OMPImport</code><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#OMPImport"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.OMPImport" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ImportInterface.Import</span></code></p>
+<dl class="method">
+<dt id="heimpt.plugins.import.omp.omp.OMPImport.initialize">
+<code class="sig-name descname">initialize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">args</em>, <em class="sig-param">settings_override=None</em>, <em class="sig-param">settings_path='settings.json'</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#OMPImport.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.OMPImport.initialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.omp.omp.OMPImport.load_configured_presses">
+<code class="sig-name descname">load_configured_presses</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#OMPImport.load_configured_presses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.OMPImport.load_configured_presses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.omp.omp.OMPImport.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">args</em>, <em class="sig-param">settings</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#OMPImport.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.OMPImport.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.omp.omp.OMPImport.get_submission_to_import">
+<code class="sig-name descname">get_submission_to_import</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#OMPImport.get_submission_to_import"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.OMPImport.get_submission_to_import" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.omp.omp.OMPImport.copy_submission_files">
+<code class="sig-name descname">copy_submission_files</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">file_paths</em>, <em class="sig-param">target_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#OMPImport.copy_submission_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.OMPImport.copy_submission_files" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.omp.omp.OMPImport.write_project_config">
+<code class="sig-name descname">write_project_config</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">project_filename</em>, <em class="sig-param">project_config</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#OMPImport.write_project_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.OMPImport.write_project_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.omp.omp.OMPImport.read_project_config">
+<code class="sig-name descname">read_project_config</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">project_filename</em>, <em class="sig-param">template_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#OMPImport.read_project_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.OMPImport.read_project_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.omp.omp.OMPImport.submission_files_exists">
+<code class="sig-name descname">submission_files_exists</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#OMPImport.submission_files_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.OMPImport.submission_files_exists" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.omp.omp.OMPImport.get_files_from_db">
+<code class="sig-name descname">get_files_from_db</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em>, <em class="sig-param">genre_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#OMPImport.get_files_from_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.OMPImport.get_files_from_db" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.omp.omp.OMPImport.get_chapter_files_from_db">
+<code class="sig-name descname">get_chapter_files_from_db</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">chapter_id</em>, <em class="sig-param">genre_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#OMPImport.get_chapter_files_from_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.OMPImport.get_chapter_files_from_db" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.omp.omp.OMPImport.read_submission_metadata">
+<code class="sig-name descname">read_submission_metadata</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">metadata_file_path</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#OMPImport.read_submission_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.OMPImport.read_submission_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the submission metadata, either from an existing metadata file from a previous import or from a template.
+:param metadata_file_path: Path to bits2 xml file with metadata.
+:return: ElementTree object with bits2 metadata elements.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.omp.omp.OMPImport.write_xml_to_file">
+<code class="sig-name descname">write_xml_to_file</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">bits_xml</em>, <em class="sig-param">file_path</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#OMPImport.write_xml_to_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.OMPImport.write_xml_to_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.omp.omp.OMPImport.inject_submission_metadata">
+<code class="sig-name descname">inject_submission_metadata</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission</em>, <em class="sig-param">book_xml</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#OMPImport.inject_submission_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.OMPImport.inject_submission_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate the metadata from omp db for the given submission</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>book_xml</strong> – ElementTree object with bits2 metadata elements.</p></li>
+<li><p><strong>submission</strong> – submission Row from db</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ElementTree with metadata in BITS2 XML format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.omp.omp.OMPImport.build_contrib_xml">
+<code class="sig-name descname">build_contrib_xml</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">contrib</em>, <em class="sig-param">contrib_group_xml</em>, <em class="sig-param">locale</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#OMPImport.build_contrib_xml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.OMPImport.build_contrib_xml" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.omp.omp.OMPImport.find_or_create_aff_xml">
+<code class="sig-name descname">find_or_create_aff_xml</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">affiliation</em>, <em class="sig-param">contrib_group_xml</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#OMPImport.find_or_create_aff_xml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.OMPImport.find_or_create_aff_xml" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.omp.omp.OMPImport.inject_chapter_metadata">
+<code class="sig-name descname">inject_chapter_metadata</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">bits_xml</em>, <em class="sig-param">chapter</em>, <em class="sig-param">chapter_settings</em>, <em class="sig-param">submission</em>, <em class="sig-param">custom_meta=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#OMPImport.inject_chapter_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.OMPImport.inject_chapter_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the metadata for the chapter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>custom_meta</strong> – Dict containing entries which will be added as &lt;custom-meta&gt; tags.</p></li>
+<li><p><strong>bits_xml</strong> – ElementTree object containing bits2 meta-data for a submission chapter.</p></li>
+<li><p><strong>chapter</strong> – Chapter row object.</p></li>
+<li><p><strong>chapter_settings</strong> – OMPSettings object containing the chapter settings</p></li>
+<li><p><strong>submission</strong> – Submission row object, to which the chapter belongs.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Updated ElementTree object with new metadata from OMP db.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.omp.omp.OMPImport.read_chapter_metadata">
+<code class="sig-name descname">read_chapter_metadata</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">metadata_file_path</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/omp/omp.html#OMPImport.read_chapter_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.omp.omp.OMPImport.read_chapter_metadata" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heimpt.plugins.import.omp.omp</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.FILE_STAGE_TO_PATH">FILE_STAGE_TO_PATH</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.USER_GROUP_TO_CONTRIB_TYPE">USER_GROUP_TO_CONTRIB_TYPE</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.PUBLICATION_FORMAT_MAPPING">PUBLICATION_FORMAT_MAPPING</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.LANG_ATTR">LANG_ATTR</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.get_omp_filename">get_omp_filename</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.path_to_omp_submission_file">path_to_omp_submission_file</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.path_to_submission_output">path_to_submission_output</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.path_to_submission_metadata">path_to_submission_metadata</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.OMPImport">OMPImport</a><ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.OMPImport.initialize">initialize</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.OMPImport.load_configured_presses">load_configured_presses</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.OMPImport.run">run</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.OMPImport.get_submission_to_import">get_submission_to_import</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.OMPImport.copy_submission_files">copy_submission_files</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.OMPImport.write_project_config">write_project_config</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.OMPImport.read_project_config">read_project_config</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.OMPImport.submission_files_exists">submission_files_exists</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.OMPImport.get_files_from_db">get_files_from_db</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.OMPImport.get_chapter_files_from_db">get_chapter_files_from_db</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.OMPImport.read_submission_metadata">read_submission_metadata</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.OMPImport.write_xml_to_file">write_xml_to_file</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.OMPImport.inject_submission_metadata">inject_submission_metadata</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.OMPImport.build_contrib_xml">build_contrib_xml</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.OMPImport.find_or_create_aff_xml">find_or_create_aff_xml</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.OMPImport.inject_chapter_metadata">inject_chapter_metadata</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.omp.omp.OMPImport.read_chapter_metadata">read_chapter_metadata</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../../../_sources/autoapi/heimpt/plugins/import/omp/omp/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

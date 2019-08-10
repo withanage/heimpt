@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>heimpt.tools.scripts.endnotes2footnotes &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for heimpt.tools.scripts.endnotes2footnotes</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">xml.etree</span> <span class="k">import</span> <span class="n">ElementTree</span>
+
+<div class="viewcode-block" id="f"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/scripts/endnotes2footnotes/index.html#heimpt.tools.scripts.endnotes2footnotes.f">[docs]</a><span class="n">f</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+<div class="viewcode-block" id="tree"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/scripts/endnotes2footnotes/index.html#heimpt.tools.scripts.endnotes2footnotes.tree">[docs]</a><span class="n">tree</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+<div class="viewcode-block" id="root"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/scripts/endnotes2footnotes/index.html#heimpt.tools.scripts.endnotes2footnotes.root">[docs]</a><span class="n">root</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="chapters"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/scripts/endnotes2footnotes/index.html#heimpt.tools.scripts.endnotes2footnotes.chapters">[docs]</a><span class="n">chapters</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+<span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">root</span><span class="p">:</span>
+	<span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;body&#39;</span><span class="p">:</span>
+<div class="viewcode-block" id="current_body"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/scripts/endnotes2footnotes/index.html#heimpt.tools.scripts.endnotes2footnotes.current_body">[docs]</a>		<span class="n">current_body</span> <span class="o">=</span> <span class="n">child</span></div>
+	<span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;back&#39;</span> <span class="ow">and</span> <span class="n">current_body</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="n">chapters</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current_body</span><span class="p">,</span> <span class="n">child</span><span class="p">))</span>
+		<span class="n">current_body</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="k">for</span> <span class="n">body</span><span class="p">,</span> <span class="n">back</span> <span class="ow">in</span> <span class="n">chapters</span><span class="p">:</span>
+<div class="viewcode-block" id="refs"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/scripts/endnotes2footnotes/index.html#heimpt.tools.scripts.endnotes2footnotes.refs">[docs]</a>	<span class="n">refs</span> <span class="o">=</span> <span class="p">{}</span></div>
+	<span class="n">rlist</span> <span class="o">=</span> <span class="n">back</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;ref-list&#39;</span><span class="p">)</span>
+	<span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">rlist</span><span class="p">:</span>
+		<span class="n">rid</span> <span class="o">=</span> <span class="n">ref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+		<span class="n">ec</span><span class="p">,</span> <span class="n">ac</span><span class="p">,</span> <span class="n">content</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+		<span class="n">ec</span> <span class="o">=</span> <span class="n">ref</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;element-citation&#39;</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">ec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="n">at</span> <span class="o">=</span> <span class="n">ec</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;article-title&#39;</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="n">content</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">)</span>
+			<span class="n">refs</span><span class="p">[</span><span class="n">rid</span><span class="p">]</span> <span class="o">=</span> <span class="n">content</span>
+
+	<span class="k">for</span> <span class="n">sec</span> <span class="ow">in</span> <span class="n">body</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="s1">&#39;sec&#39;</span><span class="p">):</span>
+		<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">sec</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">):</span>
+			<span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="s1">&#39;xref&#39;</span><span class="p">):</span>
+				<span class="k">if</span> <span class="n">ref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ref-type&#39;</span><span class="p">):</span>
+					<span class="n">rid</span> <span class="o">=</span> <span class="n">ref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rid&#39;</span><span class="p">)</span>
+					<span class="k">if</span> <span class="n">rid</span><span class="p">:</span>
+						<span class="c1"># make xref a footnote</span>
+						<span class="n">ref</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;footnote&#39;</span>
+						<span class="c1"># copy content from reference</span>
+						<span class="k">if</span> <span class="n">refs</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">rid</span><span class="p">):</span>
+							<span class="n">ref</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">refs</span><span class="p">[</span><span class="n">rid</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;[]0123456789 </span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+							<span class="n">ref</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">refs</span><span class="p">[</span><span class="n">rid</span><span class="p">]))</span>
+
+	<span class="c1">#remove reference list</span>
+	<span class="n">back</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">rlist</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">ElementTree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">root</span><span class="p">))</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

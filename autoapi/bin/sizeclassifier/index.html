@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.sizeclassifier &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bin.sizeclassifier">
+<span id="bin-sizeclassifier"></span><h1><a class="reference internal" href="#module-bin.sizeclassifier" title="bin.sizeclassifier"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.sizeclassifier</span></code></a><a class="headerlink" href="#module-bin.sizeclassifier" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="bin.sizeclassifier.__author__">
+<code class="sig-prename descclassname">bin.sizeclassifier.</code><code class="sig-name descname">__author__</code><em class="property"> = Martin Paul Eve</em><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#__author__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.__author__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="bin.sizeclassifier.__email__">
+<code class="sig-prename descclassname">bin.sizeclassifier.</code><code class="sig-name descname">__email__</code><em class="property"> = martin&#64;martineve.com</em><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#__email__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.__email__" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class that scans for meTypeset size fields in a TEI file.</p>
+<p>1.) Identifies a list of sizes
+2.) Ascertains the density and likelihood of the size being a heading
+3.) Returns a manipulator ready to implement all the changes to the TEI file</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="bin.sizeclassifier.SizeClassifier">
+<em class="property">class </em><code class="sig-prename descclassname">bin.sizeclassifier.</code><code class="sig-name descname">SizeClassifier</code><span class="sig-paren">(</span><em class="sig-param">global_variables</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">debug.Debuggable</span></code></p>
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.get_values">
+<em class="property">static </em><code class="sig-name descname">get_values</code><span class="sig-paren">(</span><em class="sig-param">tree</em>, <em class="sig-param">search_attribute</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.get_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.get_values" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.get_sizes_ordered">
+<em class="property">static </em><code class="sig-name descname">get_sizes_ordered</code><span class="sig-paren">(</span><em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.get_sizes_ordered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.get_sizes_ordered" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.set_dom_tree">
+<code class="sig-name descname">set_dom_tree</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.set_dom_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.set_dom_tree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.handle_bold_only_paragraph">
+<em class="property">static </em><code class="sig-name descname">handle_bold_only_paragraph</code><span class="sig-paren">(</span><em class="sig-param">manipulate</em>, <em class="sig-param">root_size</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.handle_bold_only_paragraph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.handle_bold_only_paragraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method looks for paragraphs that contain only bold text. It then transforms them to titles.
+&#64;param manipulate: a TeiManipulator object
+&#64;param root_size: the size styling to apply to these elements</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.handle_heading">
+<em class="property">static </em><code class="sig-name descname">handle_heading</code><span class="sig-paren">(</span><em class="sig-param">manipulate</em>, <em class="sig-param">attribute</em>, <em class="sig-param">root_size</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.handle_heading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.handle_heading" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method looks for paragraphs that contain the specified attribute in their rend tag.
+It then transforms them to titles.
+&#64;param manipulate: a TeiManipulator object
+&#64;param attribute: a string to search for in the rend attribute
+&#64;param root_size: the size styling to apply to these elements</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.get_sizes">
+<code class="sig-name descname">get_sizes</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.get_sizes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.get_sizes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.correlate_styled_headings">
+<code class="sig-name descname">correlate_styled_headings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">manipulate</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.correlate_styled_headings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.correlate_styled_headings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.convert_to_headings">
+<code class="sig-name descname">convert_to_headings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">sizes</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.convert_to_headings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.convert_to_headings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.encapsulate_headings">
+<code class="sig-name descname">encapsulate_headings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.encapsulate_headings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.encapsulate_headings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.nest_headings">
+<code class="sig-name descname">nest_headings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.nest_headings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.nest_headings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.verify_headings">
+<code class="sig-name descname">verify_headings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">stack</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.verify_headings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.verify_headings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.remove_empty_headings">
+<code class="sig-name descname">remove_empty_headings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.remove_empty_headings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.remove_empty_headings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.downgrade_oversize_headings">
+<code class="sig-name descname">downgrade_oversize_headings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.downgrade_oversize_headings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.downgrade_oversize_headings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.handle_capital_only_paragraph">
+<code class="sig-name descname">handle_capital_only_paragraph</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">new_size</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.handle_capital_only_paragraph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.handle_capital_only_paragraph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.handle_single_item_list">
+<code class="sig-name descname">handle_single_item_list</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">new_size</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.handle_single_item_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.handle_single_item_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.clean_introduction_headings">
+<code class="sig-name descname">clean_introduction_headings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">manipulate</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.clean_introduction_headings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.clean_introduction_headings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.clean_line_breaks">
+<code class="sig-name descname">clean_line_breaks</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">manipulate</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.clean_line_breaks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.clean_line_breaks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.renest_headings">
+<code class="sig-name descname">renest_headings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.renest_headings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.renest_headings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.final_headings">
+<code class="sig-name descname">final_headings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.final_headings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.final_headings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.sizeclassifier.SizeClassifier.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/sizeclassifier.html#SizeClassifier.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.sizeclassifier.SizeClassifier.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.sizeclassifier</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.__author__">__author__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.__email__">__email__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier">SizeClassifier</a><ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.get_values">get_values</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.get_sizes_ordered">get_sizes_ordered</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.set_dom_tree">set_dom_tree</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.handle_bold_only_paragraph">handle_bold_only_paragraph</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.handle_heading">handle_heading</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.get_sizes">get_sizes</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.correlate_styled_headings">correlate_styled_headings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.convert_to_headings">convert_to_headings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.encapsulate_headings">encapsulate_headings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.nest_headings">nest_headings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.verify_headings">verify_headings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.remove_empty_headings">remove_empty_headings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.downgrade_oversize_headings">downgrade_oversize_headings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.handle_capital_only_paragraph">handle_capital_only_paragraph</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.handle_single_item_list">handle_single_item_list</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.clean_introduction_headings">clean_introduction_headings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.clean_line_breaks">clean_line_breaks</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.renest_headings">renest_headings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.final_headings">final_headings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.sizeclassifier.SizeClassifier.run">run</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/autoapi/bin/sizeclassifier/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

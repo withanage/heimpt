@@ -1,0 +1,113 @@
+:mod:`bin.bibliographydatabase`
+===============================
+
+.. py:module:: bin.bibliographydatabase
+
+.. autoapi-nested-parse::
+
+   bibliographydatabase: a tool to match plaintext values inside NLM ref tags against a known database
+
+   Usage:
+       bibliographydatabase.py <input> [options]
+       bibliographydatabase.py zotero <query> [options]
+
+   Options:
+       -d, --debug                                     Enable debug output.
+       -h, --help                                      Show this screen.
+       -v, --version                                   Show version.
+       -z, --zotero                                    Enable Zotero integration for references.
+
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   A class that scans for, stores and retrieves NLM citations
+
+
+.. py:class:: Person(firstname='', lastname='')
+
+   
+   .. method:: get_citation(self)
+
+
+
+
+.. py:class:: Website(authors=None, title='', website_title='', year='', url='')
+
+   
+   .. staticmethod:: object_type()
+
+
+
+   
+   .. method:: get_citation(self)
+
+
+
+
+.. py:class:: BookChapter(authors=None, title='', book_title='', publisher='', place='', year='', fpage='', lpage='', editors=None, translators=None, doi='')
+
+   
+   .. staticmethod:: object_type()
+
+
+
+   
+   .. method:: get_citation(self)
+
+
+
+
+.. py:class:: Book(authors=None, title='', publisher='', place='', year='', editors=None, doi='', translators=None)
+
+   
+   .. staticmethod:: object_type()
+
+
+
+   
+   .. method:: get_citation(self)
+
+
+
+
+.. py:class:: JournalArticle(authors=None, title='', journal='', issue='', volume='', fpage='', lpage='', year='', doi='', translators=None)
+
+   
+   .. staticmethod:: object_type()
+
+
+
+   
+   .. method:: get_citation(self)
+
+
+
+
+.. py:class:: BibliographyDatabase(global_variables)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. method:: process_zotero(self)
+
+
+
+   
+   .. method:: run(self)
+
+
+
+
+.. function:: main()
+
+

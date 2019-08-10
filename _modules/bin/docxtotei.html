@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.docxtotei &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.docxtotei</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">distutils</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">errno</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">globals</span> <span class="k">as</span> <span class="nn">gv</span>
+
+<div class="viewcode-block" id="__author__"><a class="viewcode-back" href="../../autoapi/bin/docxtotei/index.html#bin.docxtotei.__author__">[docs]</a><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Dulip Withanage&quot;</span></div>
+<div class="viewcode-block" id="__email__"><a class="viewcode-back" href="../../autoapi/bin/docxtotei/index.html#bin.docxtotei.__email__">[docs]</a><span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;dulip.withanage@gmail.com&quot;</span></div>
+
+<span class="kn">from</span> <span class="nn">debug</span> <span class="k">import</span> <span class="n">Debuggable</span>
+<span class="kn">from</span> <span class="nn">teimanipulate</span> <span class="k">import</span> <span class="n">TeiManipulate</span>
+<span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">etree</span>
+
+<div class="viewcode-block" id="DocxToTei"><a class="viewcode-back" href="../../autoapi/bin/docxtotei/index.html#bin.docxtotei.DocxToTei">[docs]</a><span class="k">class</span> <span class="nc">DocxToTei</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gv</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">gv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="n">Debuggable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;DOCX to TEI&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DocxToTei.saxon_doc_to_tei"><a class="viewcode-back" href="../../autoapi/bin/docxtotei/index.html#bin.docxtotei.DocxToTei.saxon_doc_to_tei">[docs]</a>    <span class="k">def</span> <span class="nf">saxon_doc_to_tei</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates the appropriate java command to run Saxon</span>
+<span class="sd">        @return: a string to run on the command line</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;-classpath&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">java_class_path</span><span class="p">,</span>
+               <span class="s2">&quot;-Dxml.catalog.files=&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">runtime_catalog_path</span><span class="p">,</span>
+               <span class="s2">&quot;net.sf.saxon.Transform&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;-x&quot;</span><span class="p">,</span> <span class="s2">&quot;org.apache.xml.resolver.tools.ResolvingXMLReader&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;-y&quot;</span><span class="p">,</span> <span class="s2">&quot;org.apache.xml.resolver.tools.ResolvingXMLReader&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;-r&quot;</span><span class="p">,</span>  <span class="s2">&quot;org.apache.xml.resolver.tools.CatalogResolver&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">tei_file_path</span><span class="p">),</span>
+               <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">word_document_xml</span><span class="p">,</span>
+               <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">docx_to_tei_stylesheet</span>
+               <span class="p">]</span>
+        <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DocxToTei.saxon_omml_to_mml"><a class="viewcode-back" href="../../autoapi/bin/docxtotei/index.html#bin.docxtotei.DocxToTei.saxon_omml_to_mml">[docs]</a>    <span class="k">def</span> <span class="nf">saxon_omml_to_mml</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates the appropriate java command to run Saxon</span>
+<span class="sd">        @return: a string to run on the command line</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;-classpath&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">java_class_path</span><span class="p">,</span>
+               <span class="s2">&quot;-Dxml.catalog.files=&quot;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">runtime_catalog_path</span><span class="p">,</span>
+               <span class="s2">&quot;net.sf.saxon.Transform&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;-x&quot;</span><span class="p">,</span> <span class="s2">&quot;org.apache.xml.resolver.tools.ResolvingXMLReader&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;-y&quot;</span><span class="p">,</span> <span class="s2">&quot;org.apache.xml.resolver.tools.ResolvingXMLReader&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;-r&quot;</span><span class="p">,</span>  <span class="s2">&quot;org.apache.xml.resolver.tools.CatalogResolver&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">word_document_xml</span><span class="p">,</span>
+               <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">word_document_xml</span><span class="p">,</span>
+               <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">proprietary_style_sheet</span>
+               <span class="p">]</span>
+        <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DocxToTei.handle_wmf"><a class="viewcode-back" href="../../autoapi/bin/docxtotei/index.html#bin.docxtotei.DocxToTei.handle_wmf">[docs]</a>    <span class="k">def</span> <span class="nf">handle_wmf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calls unoconv to convert wmf images into png format. This method has a hard limit of 30 images.</span>
+
+<span class="sd">        @return: False if fails (more than 30 images), True otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">image_filenames</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">output_media_path</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">image_filenames</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Abandoning image conversion as there are over thirty images (DoS mitigation)&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">image_filenames</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;.+?\.(w|e)mf&#39;</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">image_name</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\.(w|e)mf&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+                <span class="n">imagemagick_command</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{3}</span><span class="s1">*DELIMITER*-d*DELIMITER*graphics*DELIMITER*-f*DELIMITER*png*DELIMITER*-o&#39;</span> \
+                                      <span class="s1">&#39;*DELIMITER*</span><span class="si">{0}</span><span class="s1">/</span><span class="si">{1}</span><span class="s1">.png*DELIMITER*&#39;</span> \
+                                      <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/</span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">output_media_path</span><span class="p">,</span> <span class="n">image_name</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span>
+                                                       <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;unoconv&#39;</span><span class="p">,</span>
+                                                                                      <span class="bp">self</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Calling: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">imagemagick_command</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;*DELIMITER*&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)))</span>
+
+                <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">imagemagick_command</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;*DELIMITER*&#39;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="DocxToTei.clean_proprietary"><a class="viewcode-back" href="../../autoapi/bin/docxtotei/index.html#bin.docxtotei.DocxToTei.clean_proprietary">[docs]</a>    <span class="k">def</span> <span class="nf">clean_proprietary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">XMLParser</span><span class="p">(</span><span class="n">remove_blank_text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">resolve_entities</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">word_document_xml</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+
+        <span class="n">omml</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//m:oMath&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;m&#39;</span><span class="p">:</span> <span class="s1">&#39;http://schemas.openxmlformats.org/officeDocument/2006/math&#39;</span><span class="p">})</span>
+
+        <span class="k">for</span> <span class="n">omml_paragraph</span> <span class="ow">in</span> <span class="n">omml</span><span class="p">:</span>
+            <span class="n">omml_paragraph</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;{http://www.w3.org/1998/Math/MathML}math&#39;</span>
+
+        <span class="n">etree</span><span class="o">.</span><span class="n">strip_tags</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s1">&#39;{http://schemas.openxmlformats.org/officeDocument/2006/math}oMathPara&#39;</span><span class="p">)</span>
+
+        <span class="n">omml</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//m:oMathParaPr&#39;</span><span class="p">,</span>
+                          <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;m&#39;</span><span class="p">:</span> <span class="s1">&#39;http://schemas.openxmlformats.org/officeDocument/2006/math&#39;</span><span class="p">})</span>
+
+        <span class="k">for</span> <span class="n">omml_paragraph</span> <span class="ow">in</span> <span class="n">omml</span><span class="p">:</span>
+            <span class="n">omml_paragraph</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">omml_paragraph</span><span class="p">)</span>
+
+        <span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">word_document_xml</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DocxToTei.run"><a class="viewcode-back" href="../../autoapi/bin/docxtotei/index.html#bin.docxtotei.DocxToTei.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extract</span><span class="p">,</span> <span class="n">run_proprietary</span><span class="p">,</span> <span class="n">tei</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method converts from docx to TEI. It creates the necessary output folders, optionally extracts the file and</span>
+<span class="sd">        runs the Saxon process necessary to conduct the transform</span>
+<span class="sd">        @param extract: whether or not to extract a docx file. True to extract, False to work on a pre-extracted folder</span>
+<span class="sd">        @param run_proprietary: whether or not to run proprietary math transforms</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># make output folders</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">mk_dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">docx_temp_folder_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">mk_dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">common2_temp_folder_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">mk_dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">tei_folder_path</span><span class="p">)</span>
+
+        <span class="c1">#copy folders</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">copy_folder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">common2_lib_path</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">common2_temp_folder_path</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">copy_folder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">docx_folder_path</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">docx_temp_folder_path</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">extract</span><span class="p">:</span>
+            <span class="c1"># decompress the docx</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Unzipping </span><span class="si">{0}</span><span class="s1"> to </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">input_file_path</span><span class="p">,</span>
+                                                                       <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">docx_temp_folder_path</span><span class="p">))</span>
+
+            <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">input_file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">z</span><span class="p">:</span>
+                <span class="n">z</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">docx_temp_folder_path</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">tei</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">copy_folder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">input_file_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">docx_temp_folder_path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">input_file_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">tei_file_path</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Looking for presence of media directory </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">docx_media_path</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">docx_media_path</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Ripping out media directory&#39;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">mk_dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">output_media_path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">copy_folder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">docx_media_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">output_media_path</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--noimageprocessing&#39;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle_wmf</span><span class="p">()</span>
+
+        <span class="c1"># copy input file into the docx subfolder</span>
+        <span class="k">if</span> <span class="n">extract</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">input_file_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">docx_temp_folder_path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+            <span class="c1">#self.gv.tei_file_path = self.gv.tei_file_path + &#39;tei.xml&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">tei</span><span class="p">:</span>
+            <span class="c1"># fix dud LibreOffice conversion</span>
+            <span class="n">doc_prop</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">docx_temp_folder_path</span><span class="p">,</span> <span class="s1">&#39;docProps&#39;</span><span class="p">,</span> <span class="s1">&#39;core.xml&#39;</span><span class="p">),</span> <span class="s1">&#39;r+&#39;</span><span class="p">)</span>
+            <span class="n">contents</span> <span class="o">=</span> <span class="n">doc_prop</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+            <span class="n">contents</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;\&amp;\s&#39;</span><span class="p">,</span> <span class="s1">&#39;\&amp;amp;\s&#39;</span><span class="p">,</span> <span class="n">contents</span><span class="p">)</span>
+
+            <span class="n">doc_prop</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">doc_prop</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">contents</span><span class="p">)</span>
+            <span class="n">doc_prop</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span>
+            <span class="n">doc_prop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">run_proprietary</span><span class="p">:</span>
+                <span class="c1"># run a transform on the copied docx to generate a new version of the Word XML that includes MML</span>
+                <span class="n">java_command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saxon_omml_to_mml</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Running saxon transform (DOCX-&gt;MML DOCX) [proprietary]&#39;</span><span class="p">)</span>
+                <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">java_command</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">clean_proprietary</span><span class="p">()</span>
+
+            <span class="c1"># saxon converter</span>
+            <span class="n">java_command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saxon_doc_to_tei</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Running saxon transform (DOCX-&gt;TEI)&#39;</span><span class="p">)</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">java_command</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="c1"># delete temp folders</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">docx_temp_folder_path</span><span class="p">)</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">common2_temp_folder_path</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">unoconv_folder_path</span><span class="p">):</span>
+                    <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">unoconv_folder_path</span><span class="p">)</span>
+
+            <span class="c1"># update path to TEI from normalized saxon output</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">tei_file_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">tei_file_path</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

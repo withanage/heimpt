@@ -1,0 +1,587 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>heimpt.plugins.import.omp.omptables &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for heimpt.plugins.import.omp.omptables</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright (c) 2015 Heidelberg University Library</span>
+<span class="sd">Distributed under the GNU GPL v3. For full terms see the file</span>
+<span class="sd">LICENSE.md</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="c1">########################################</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright (c) 2015 Heidelberg University Library</span>
+<span class="sd">Distributed under the GNU GPL v3. For full terms see the file</span>
+<span class="sd">LICENSE.md</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="c1">########################################</span>
+<span class="kn">from</span> <span class="nn">pydal</span> <span class="k">import</span> <span class="n">Field</span>
+
+
+<div class="viewcode-block" id="define_tables"><a class="viewcode-back" href="../../../../../autoapi/heimpt/plugins/import/omp/omptables/index.html#heimpt.plugins.import.omp.omptables.define_tables">[docs]</a><span class="k">def</span> <span class="nf">define_tables</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;announcements&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;announcement_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;assoc_type&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;assoc_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;type_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;date_expire&quot;</span><span class="p">,</span> <span class="s2">&quot;datetime&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;date_posted&quot;</span><span class="p">,</span> <span class="s2">&quot;datetime&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;announcement_id&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;announcement_settings&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;announcement_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;locale&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_value&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_type&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;announcement_id&#39;</span><span class="p">,</span> <span class="s1">&#39;locale&#39;</span><span class="p">,</span> <span class="s1">&#39;setting_name&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;announcement_types&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;type_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;assoc_type&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;assoc_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;type_id&quot;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;announcement_type_settings&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;type_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;locale&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_value&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_type&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;type_id&#39;</span><span class="p">,</span> <span class="s1">&#39;locale&#39;</span><span class="p">,</span> <span class="s1">&#39;setting_name&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;authors&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;author_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;submission_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;primary_contact&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;seq&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;first_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;middle_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;last_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;suffix&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;country&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;user_group_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;include_in_browse&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;author_id&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;author_settings&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;author_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;locale&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_value&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_type&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;author_id&#39;</span><span class="p">,</span> <span class="s1">&#39;locale&#39;</span><span class="p">,</span> <span class="s1">&#39;setting_name&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;categories&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;category_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;press_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;parent_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;path&quot;</span><span class="p">,</span><span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;image&quot;</span><span class="p">,</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;seq&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;category_id&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;category_settings&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;category_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;locale&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_value&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_type&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;category_id&#39;</span><span class="p">,</span> <span class="s1">&#39;locale&#39;</span><span class="p">,</span> <span class="s1">&#39;setting_name&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;event_log&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;log_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;assoc_type&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;assoc_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;date_logged&quot;</span><span class="p">,</span> <span class="s2">&quot;datetime&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;ip_address&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;event_type&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;is_translated&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;log_id&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;event_log_settings&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;log_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_value&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_type&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;log_id&#39;</span><span class="p">,</span> <span class="s1">&#39;setting_name&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;submission_chapters&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;chapter_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;submission_id&quot;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;chapter_seq&quot;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;chapter_id&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;submission_chapter_authors&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;author_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;chapter_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;submission_id&quot;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;primary_contact&quot;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;seq&quot;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;author_id&#39;</span><span class="p">,</span> <span class="s1">&#39;chapter_id&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;submission_chapter_settings&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;chapter_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;locale&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_value&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_type&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;chapter_id&#39;</span><span class="p">,</span> <span class="s1">&#39;locale&#39;</span><span class="p">,</span> <span class="s1">&#39;setting_name&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;markets&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;market_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;publication_format_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;countries_included&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;countries_excluded&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;regions_included&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;regions_excluded&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;market_date_role&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;market_date_format&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;market_date&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;price&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;discount&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;price_type_code&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;currency_code&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;tax_rate_code&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;tax_type_code&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;agent_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;supplier_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;press_settings&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;press_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;locale&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_value&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_type&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;press_id&#39;</span><span class="p">,</span> <span class="s1">&#39;locale&#39;</span><span class="p">,</span> <span class="s1">&#39;setting_name&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;presses&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;press_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;path&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;seq&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;primary_locale&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;enabled&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;press_id&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;publication_dates&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;publication_date_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;publication_format_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;role&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;date_format&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;publication_date_id&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;published_submissions&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;pub_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;submission_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span>
+                        <span class="s2">&quot;date_published&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;datetime&quot;</span><span class="p">,</span>
+                       <span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;audience&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;audience_range_qualifier&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;audience_range_from&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;audience_range_to&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;audience_range_exact&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;cover_image&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pub_id&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;publication_formats&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;publication_format_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;submission_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;physical_format&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;entry_key&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;seq&quot;</span><span class="p">,</span> <span class="s2">&quot;double&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;file_size&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;front_matter&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;back_matter&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;height_unit_code&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;width_unit_code&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;thickness&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;thickness_unit_code&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;weight&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;weight_unit_code&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;product_composition_code&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;product_form_detail_code&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;country_manufacture_code&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;imprint&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;product_availability_code&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;technical_protection_code&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;returnable_indicator_code&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;remote_url&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;is_approved&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;is_available&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;publication_format_id&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;publication_format_settings&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;publication_format_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;locale&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_value&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_type&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;publication_format_id&#39;</span><span class="p">,</span> <span class="s1">&#39;locale&#39;</span><span class="p">,</span> <span class="s1">&#39;setting_name&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;series&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;series_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;press_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;seq&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;featured&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;editor_restricted&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;path&quot;</span><span class="p">,</span><span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;image&quot;</span><span class="p">,</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;series_id&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;series_categories&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;series_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;category_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;series_id&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;series_editors&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;press_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;series_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;can_edit&quot;</span><span class="p">,</span> <span class="s2">&quot;boolean&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;can_review&quot;</span><span class="p">,</span> <span class="s2">&quot;boolean&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;series_id&#39;</span><span class="p">,</span> <span class="s1">&#39;press_id&#39;</span><span class="p">,</span> <span class="s1">&#39;user_id&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;series_settings&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;series_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;locale&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_value&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_type&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;series_id&#39;</span><span class="p">,</span> <span class="s1">&#39;locale&#39;</span><span class="p">,</span> <span class="s1">&#39;setting_name&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;representatives&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;representative_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;submission_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;role&quot;</span><span class="p">,</span><span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;representative_id_type&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;representative_id_value&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;phone&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;is_supplier&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;representative_id&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;submissions&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;submission_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;locale&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;context_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;series_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;series_position&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;edited_volume&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;language&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="c1">#Field(&quot;comments_to_ed&quot;, &quot;string&quot;),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;date_submitted&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;last_modified&quot;</span><span class="p">,</span><span class="s2">&quot;datetime&quot;</span><span class="p">,),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;date_status_modified&quot;</span><span class="p">,</span><span class="s2">&quot;datetime&quot;</span><span class="p">,),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;submission_progress&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;pages&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;fast_tracked&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;hide_author&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;stage_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;submission_id&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;submission_settings&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;submission_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;locale&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_value&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_type&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;submission_id&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;submission_categories&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;submission_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;category_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;submission_id&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;submission_file_settings&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;file_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;locale&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_value&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_type&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;file_id&#39;</span><span class="p">,</span> <span class="s1">&#39;locale&#39;</span><span class="p">,</span> <span class="s1">&#39;setting_name&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s1">&#39;submission_files&#39;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s1">&#39;file_id&#39;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s1">&#39;revision&#39;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s1">&#39;source_file_id&#39;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s1">&#39;source_revision&#39;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s1">&#39;submission_id&#39;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s1">&#39;file_type&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s1">&#39;genre_id&#39;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s1">&#39;file_size&#39;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s1">&#39;original_file_name&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s1">&#39;file_stage&#39;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s1">&#39;direct_sales_price&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s1">&#39;sales_type&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s1">&#39;viewable&#39;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s1">&#39;date_uploaded&#39;</span><span class="p">,</span> <span class="s1">&#39;datetime&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s1">&#39;date_modified&#39;</span><span class="p">,</span> <span class="s1">&#39;datetime&#39;</span><span class="p">),</span>
+                    <span class="c1">#Field(&#39;user_group_id&#39;, &#39;integer&#39;),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s1">&#39;uploader_user_id&#39;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s1">&#39;assoc_type&#39;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s1">&#39;assoc_id&#39;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;file_id&#39;</span><span class="p">,</span> <span class="s1">&#39;revision&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;identification_codes&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;identification_code_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;publication_format_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;identification_code_id&#39;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;user_group_settings&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;user_group_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;locale&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_value&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_type&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;users&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;salutation&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;first_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;middle_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;last_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;suffix&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="c1">#Field(&quot;gender&quot;, &quot;string&quot;),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;initials&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;phone&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;mailing_address&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;billing_address&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;country&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;locales&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;date_last_email&quot;</span><span class="p">,</span><span class="s2">&quot;datetime&quot;</span><span class="p">,),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;date_registered&quot;</span><span class="p">,</span><span class="s2">&quot;datetime&quot;</span><span class="p">,),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;date_validated&quot;</span><span class="p">,</span><span class="s2">&quot;datetime&quot;</span><span class="p">,),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;date_last_login&quot;</span><span class="p">,</span><span class="s2">&quot;datetime&quot;</span><span class="p">,),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;must_change_password&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;auth_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;auth_str&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;disabled_reason&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;inline_help&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s2">&quot;user_settings&quot;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;locale&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;assoc_type&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;assoc_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_value&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_type&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;locale&quot;</span><span class="p">,</span> <span class="s2">&quot;setting_name&quot;</span><span class="p">],</span>
+                    <span class="n">migrate</span><span class="o">=</span><span class="kc">False</span>
+                    <span class="p">)</span>
+
+
+
+    <span class="n">db</span><span class="o">.</span><span class="n">define_table</span><span class="p">(</span><span class="s1">&#39;t_license_settings&#39;</span><span class="p">,</span>
+                    <span class="n">Field</span><span class="p">(</span> <span class="s2">&quot;license_id&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;locale&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_name&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="n">length</span><span class="o">=</span><span class="mi">48</span><span class="p">),</span>
+                    <span class="n">Field</span><span class="p">(</span><span class="s2">&quot;setting_value&quot;</span><span class="p">,</span> <span class="s2">&quot;string&quot;</span><span class="p">),</span>
+                    <span class="n">migrate</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                    <span class="n">primarykey</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;license_id&quot;</span> <span class="p">,</span><span class="s2">&quot;locale&quot;</span><span class="p">,</span> <span class="s2">&quot;setting_name&quot;</span><span class="p">],</span></div>
+                    <span class="p">)</span>
+
+
+    <span class="c1">#</span>
+    <span class="c1"># request_client = &#39;&#39;</span>
+    <span class="c1"># if request.client:</span>
+    <span class="c1">#     rcs = request.client.split(&#39;.&#39;)</span>
+    <span class="c1">#     if len(rcs) == 4:</span>
+    <span class="c1">#         request_client = rcs[0] + &#39;.&#39; + rcs[1] + &#39;.&#39; + rcs[2] + &#39;.xxx&#39;</span>
+    <span class="c1">#</span>
+    <span class="c1"># db.define_table(&#39;t_usage_statistics&#39;,</span>
+    <span class="c1">#                 Field(&#39;time_stamp&#39;, &#39;datetime&#39;, default=request.now),</span>
+    <span class="c1">#                 Field(&#39;client_ip&#39;, &#39;string&#39;, default=request_client),</span>
+    <span class="c1">#                 Field(</span>
+    <span class="c1">#                     &#39;request_controller&#39;,</span>
+    <span class="c1">#                     &#39;string&#39;,</span>
+    <span class="c1">#                     default=request.controller),</span>
+    <span class="c1">#                 Field(&#39;request_function&#39;, &#39;string&#39;, default=request.function),</span>
+    <span class="c1">#                 Field(</span>
+    <span class="c1">#                     &#39;request_extension&#39;,</span>
+    <span class="c1">#                     &#39;string&#39;,</span>
+    <span class="c1">#                     default=request.extension),</span>
+    <span class="c1">#                 Field(&#39;request_ajax&#39;, &#39;string&#39;, default=request.ajax),</span>
+    <span class="c1">#                 Field(&#39;request_args&#39;, &#39;string&#39;, default=request.args),</span>
+    <span class="c1">#                 Field(&#39;request_vars&#39;, &#39;string&#39;, default=request.vars),</span>
+    <span class="c1">#                 Field(&#39;request_view&#39;, &#39;string&#39;, default=request.view),</span>
+    <span class="c1">#                 Field(&#39;request_http_user_agent&#39;, &#39;string&#39;,</span>
+    <span class="c1">#                       default=request.env.http_user_agent),</span>
+    <span class="c1">#                 Field(</span>
+    <span class="c1">#                     &#39;request_language&#39;,</span>
+    <span class="c1">#                     &#39;string&#39;,</span>
+    <span class="c1">#                     default=request.env.http_accept_language),</span>
+    <span class="c1">#                 Field(&#39;description&#39;, &#39;text&#39;),</span>
+    <span class="c1">#                 migrate=False,</span>
+    <span class="c1">#                 )</span>
+    <span class="c1">#</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

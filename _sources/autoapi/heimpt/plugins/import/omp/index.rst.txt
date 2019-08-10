@@ -1,0 +1,17 @@
+:mod:`heimpt.plugins.import.omp`
+================================
+
+.. py:module:: heimpt.plugins.import.omp
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   omp/index.rst
+   ompdal/index.rst
+   omptables/index.rst
+
+

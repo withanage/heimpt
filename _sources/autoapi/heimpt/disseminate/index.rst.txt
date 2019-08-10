@@ -1,0 +1,180 @@
+:mod:`heimpt.disseminate`
+=========================
+
+.. py:module:: heimpt.disseminate
+
+.. autoapi-nested-parse::
+
+   Reads a xml file , transforms it to a intermediate format (e.g. formatting objects: FO ) and converts  to PDF subsequently
+
+
+   Usage:
+       disseminate.py  <input_file>  <path>  --out-type=<FO_PDF> [options]
+   Options:
+       -d, --debug  Enable debug output
+       -f --formatter=<electronic_or_print>    Formatter
+       -m --medium=<filename>    Stylesheet file
+       -s --saxon=<location_of_the_saxon_jar_file>
+       -x --xsl=<filename>    Stylesheet file
+
+
+
+   Example
+   --------
+
+   python $BUILD_DIR/static/tools/disseminate.py
+
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Dulip Withanage
+
+   
+
+.. py:class:: Disseminate
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. staticmethod:: read_command_line()
+
+      Reads and  generates a docopt dictionary from the command line parameters.
+
+      Returns
+      -------
+      docopt : dictionary
+        A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
+        elements.
+
+
+
+   
+   .. method:: get_saxon_path(self)
+
+      Checks if saxon is available in the default path
+
+      Returns
+      --------
+      saxon : boolean
+          True, if saxon is available. False, if not.
+
+
+
+   
+   .. method:: get_module_name(self)
+
+      Reads the name of the module for debugging and logging
+
+      Returns
+      -------
+      name string
+       Name of the Module
+
+
+
+   
+   .. method:: process(self, args)
+
+      Runs  typesetter with given arguments
+
+      Creates the execution path for  the conversion process. Output,exit-code and  system error codes are captured and returned.
+
+
+      Parameters
+      ----------
+      args : list
+          application arguments in the correct oder.
+
+
+      Returns
+      -------
+      output :str
+          system standard output.
+      err :str
+          system standard error.
+      exit_code: str
+          system exit_code.
+
+      See Also
+      --------
+      subprocess.Popen()
+
+
+
+   
+   .. method:: run(self)
+
+      Runs converters
+
+      See Also
+      --------
+      create_output, create_pdf
+
+
+
+   
+   .. method:: create_output(self, out_type)
+
+      Create  FO output
+
+      Parameters
+      ----------
+      out_type: str
+          Output Type
+
+
+      See Also
+      -------
+      run_saxon(), get_saxon_path()
+
+
+
+   
+   .. method:: run_fop_processor(self, formatter, medium)
+
+
+
+   
+   .. method:: run_ah_fop(self, pth, formatter, medium)
+
+
+
+   
+   .. method:: run_apache_fop(self, pth, formatter, medium)
+
+
+
+   
+   .. method:: run_saxon(self, saxon_path, formatter, medium)
+
+      Creates the executable path for saxon
+
+      Parameters
+      ---------
+      saxon_path : str
+          absolute path  of the saxon binary jar file
+      formatter : str
+          name of the FO formatter
+      medium : str
+          name of the medium
+
+      Returns
+      ------
+      args:list
+          List of arguments for saxon execution path
+
+
+
+
+.. function:: main()
+
+   Calls the conversion process
+
+   See Also
+   --------
+   run
+
+

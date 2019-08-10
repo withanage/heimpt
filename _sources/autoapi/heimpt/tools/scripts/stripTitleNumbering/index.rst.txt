@@ -1,0 +1,29 @@
+:mod:`heimpt.tools.scripts.stripTitleNumbering`
+===============================================
+
+.. py:module:: heimpt.tools.scripts.stripTitleNumbering
+
+
+Module Contents
+---------------
+
+.. data:: f
+   
+
+   
+
+.. data:: tree
+   
+
+   
+
+.. data:: root
+   
+
+   
+
+.. data:: stripped
+   
+
+   
+

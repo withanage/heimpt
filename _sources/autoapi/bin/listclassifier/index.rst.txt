@@ -1,0 +1,73 @@
+:mod:`bin.listclassifier`
+=========================
+
+.. py:module:: bin.listclassifier
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   A class that looks for common list encodings and handles them properly.
+
+   1.) Identifies lists
+   2.) Converts them to proper TEI list format
+
+
+.. py:class:: ListClassifier(global_variables)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. staticmethod:: set_dom_tree(filename)
+
+
+
+   
+   .. method:: handle_reference_item(self, element, elements, in_list_run, iteration, list_element, offset, to_append)
+
+
+
+   
+   .. method:: handle_footnote_item(self, element, elements, in_list_run, iteration, list_element, offset, to_append)
+
+
+
+   
+   .. method:: process_enclosed_ref_list(self, tree, manipulate, treestring)
+
+
+
+   
+   .. method:: process_dash_list(self, tree, manipulate, treestring)
+
+
+
+   
+   .. method:: process_superscript_footnotes(self, tree, manipulate)
+
+
+
+   
+   .. method:: process_number_list(self, tree, manipulate, treestring)
+
+
+
+   
+   .. method:: int_to_roman(self, input)
+
+
+
+   
+   .. method:: run(self)
+
+
+
+

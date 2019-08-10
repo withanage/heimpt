@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>heimpt.disseminate &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-heimpt.disseminate">
+<span id="heimpt-disseminate"></span><h1><a class="reference internal" href="#module-heimpt.disseminate" title="heimpt.disseminate"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heimpt.disseminate</span></code></a><a class="headerlink" href="#module-heimpt.disseminate" title="Permalink to this headline">¶</a></h1>
+<p><p>Reads a xml file , transforms it to a intermediate format (e.g. formatting objects: FO ) and converts  to PDF subsequently</p>
+<dl>
+<dt>Usage:</dt><dd><p>disseminate.py  &lt;input_file&gt;  &lt;path&gt;  –out-type=&lt;FO_PDF&gt; [options]</p>
+</dd>
+<dt>Options:</dt><dd><dl class="option-list">
+<dt><kbd><span class="option">-d</span>, <span class="option">--debug</span></kbd></dt>
+<dd><p>Enable debug output</p>
+</dd>
+</dl>
+<p>-f –formatter=&lt;electronic_or_print&gt;    Formatter
+-m –medium=&lt;filename&gt;    Stylesheet file
+-s –saxon=&lt;location_of_the_saxon_jar_file&gt;
+-x –xsl=&lt;filename&gt;    Stylesheet file</p>
+</dd>
+</dl>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>python $BUILD_DIR/static/tools/disseminate.py</p>
+</div>
+</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="heimpt.disseminate.__author__">
+<code class="sig-prename descclassname">heimpt.disseminate.</code><code class="sig-name descname">__author__</code><em class="property"> = Dulip Withanage</em><a class="reference internal" href="../../../_modules/heimpt/disseminate.html#__author__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.disseminate.__author__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="heimpt.disseminate.Disseminate">
+<em class="property">class </em><code class="sig-prename descclassname">heimpt.disseminate.</code><code class="sig-name descname">Disseminate</code><a class="reference internal" href="../../../_modules/heimpt/disseminate.html#Disseminate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.disseminate.Disseminate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">debug.Debuggable</span></code></p>
+<dl class="method">
+<dt id="heimpt.disseminate.Disseminate.read_command_line">
+<em class="property">static </em><code class="sig-name descname">read_command_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/disseminate.html#Disseminate.read_command_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.disseminate.Disseminate.read_command_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads and  generates a docopt dictionary from the command line parameters.</p>
+<dl class="simple">
+<dt>docopt<span class="classifier">dictionary</span></dt><dd><p>A dictionary, where keys are names of command-line elements  such as  and values are theparsed values of those
+elements.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.disseminate.Disseminate.get_saxon_path">
+<code class="sig-name descname">get_saxon_path</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/disseminate.html#Disseminate.get_saxon_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.disseminate.Disseminate.get_saxon_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if saxon is available in the default path</p>
+<dl class="simple">
+<dt>saxon<span class="classifier">boolean</span></dt><dd><p>True, if saxon is available. False, if not.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.disseminate.Disseminate.get_module_name">
+<code class="sig-name descname">get_module_name</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/disseminate.html#Disseminate.get_module_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.disseminate.Disseminate.get_module_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the name of the module for debugging and logging</p>
+<dl class="simple">
+<dt>name string</dt><dd><p>Name of the Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.disseminate.Disseminate.process">
+<code class="sig-name descname">process</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/disseminate.html#Disseminate.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.disseminate.Disseminate.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs  typesetter with given arguments</p>
+<p>Creates the execution path for  the conversion process. Output,exit-code and  system error codes are captured and returned.</p>
+<dl class="simple">
+<dt>args<span class="classifier">list</span></dt><dd><p>application arguments in the correct oder.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>output :str</dt><dd><p>system standard output.</p>
+</dd>
+<dt>err :str</dt><dd><p>system standard error.</p>
+</dd>
+<dt>exit_code: str</dt><dd><p>system exit_code.</p>
+</dd>
+</dl>
+<p>subprocess.Popen()</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.disseminate.Disseminate.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/disseminate.html#Disseminate.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.disseminate.Disseminate.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs converters</p>
+<p>create_output, create_pdf</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.disseminate.Disseminate.create_output">
+<code class="sig-name descname">create_output</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">out_type</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/disseminate.html#Disseminate.create_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.disseminate.Disseminate.create_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create  FO output</p>
+<dl class="simple">
+<dt>out_type: str</dt><dd><p>Output Type</p>
+</dd>
+</dl>
+<p>run_saxon(), get_saxon_path()</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.disseminate.Disseminate.run_fop_processor">
+<code class="sig-name descname">run_fop_processor</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">formatter</em>, <em class="sig-param">medium</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/disseminate.html#Disseminate.run_fop_processor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.disseminate.Disseminate.run_fop_processor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.disseminate.Disseminate.run_ah_fop">
+<code class="sig-name descname">run_ah_fop</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">pth</em>, <em class="sig-param">formatter</em>, <em class="sig-param">medium</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/disseminate.html#Disseminate.run_ah_fop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.disseminate.Disseminate.run_ah_fop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.disseminate.Disseminate.run_apache_fop">
+<code class="sig-name descname">run_apache_fop</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">pth</em>, <em class="sig-param">formatter</em>, <em class="sig-param">medium</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/disseminate.html#Disseminate.run_apache_fop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.disseminate.Disseminate.run_apache_fop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.disseminate.Disseminate.run_saxon">
+<code class="sig-name descname">run_saxon</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">saxon_path</em>, <em class="sig-param">formatter</em>, <em class="sig-param">medium</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/disseminate.html#Disseminate.run_saxon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.disseminate.Disseminate.run_saxon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the executable path for saxon</p>
+<dl class="simple">
+<dt>saxon_path<span class="classifier">str</span></dt><dd><p>absolute path  of the saxon binary jar file</p>
+</dd>
+<dt>formatter<span class="classifier">str</span></dt><dd><p>name of the FO formatter</p>
+</dd>
+<dt>medium<span class="classifier">str</span></dt><dd><p>name of the medium</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>args:list</dt><dd><p>List of arguments for saxon execution path</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="heimpt.disseminate.main">
+<code class="sig-prename descclassname">heimpt.disseminate.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/disseminate.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.disseminate.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls the conversion process</p>
+<p>run</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heimpt.disseminate</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#heimpt.disseminate.__author__">__author__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.disseminate.Disseminate">Disseminate</a><ul>
+<li><a class="reference internal" href="#heimpt.disseminate.Disseminate.read_command_line">read_command_line</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.disseminate.Disseminate.get_saxon_path">get_saxon_path</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.disseminate.Disseminate.get_module_name">get_module_name</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.disseminate.Disseminate.process">process</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.disseminate.Disseminate.run">run</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.disseminate.Disseminate.create_output">create_output</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.disseminate.Disseminate.run_fop_processor">run_fop_processor</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.disseminate.Disseminate.run_ah_fop">run_ah_fop</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.disseminate.Disseminate.run_apache_fop">run_apache_fop</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.disseminate.Disseminate.run_saxon">run_saxon</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.disseminate.main">main</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/autoapi/heimpt/disseminate/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

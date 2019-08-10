@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.listclassifier &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bin.listclassifier">
+<span id="bin-listclassifier"></span><h1><a class="reference internal" href="#module-bin.listclassifier" title="bin.listclassifier"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.listclassifier</span></code></a><a class="headerlink" href="#module-bin.listclassifier" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="bin.listclassifier.__author__">
+<code class="sig-prename descclassname">bin.listclassifier.</code><code class="sig-name descname">__author__</code><em class="property"> = Martin Paul Eve</em><a class="reference internal" href="../../../_modules/bin/listclassifier.html#__author__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.listclassifier.__author__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="bin.listclassifier.__email__">
+<code class="sig-prename descclassname">bin.listclassifier.</code><code class="sig-name descname">__email__</code><em class="property"> = martin&#64;martineve.com</em><a class="reference internal" href="../../../_modules/bin/listclassifier.html#__email__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.listclassifier.__email__" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class that looks for common list encodings and handles them properly.</p>
+<p>1.) Identifies lists
+2.) Converts them to proper TEI list format</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="bin.listclassifier.ListClassifier">
+<em class="property">class </em><code class="sig-prename descclassname">bin.listclassifier.</code><code class="sig-name descname">ListClassifier</code><span class="sig-paren">(</span><em class="sig-param">global_variables</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/listclassifier.html#ListClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.listclassifier.ListClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">debug.Debuggable</span></code></p>
+<dl class="method">
+<dt id="bin.listclassifier.ListClassifier.set_dom_tree">
+<em class="property">static </em><code class="sig-name descname">set_dom_tree</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/listclassifier.html#ListClassifier.set_dom_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.listclassifier.ListClassifier.set_dom_tree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.listclassifier.ListClassifier.handle_reference_item">
+<code class="sig-name descname">handle_reference_item</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">element</em>, <em class="sig-param">elements</em>, <em class="sig-param">in_list_run</em>, <em class="sig-param">iteration</em>, <em class="sig-param">list_element</em>, <em class="sig-param">offset</em>, <em class="sig-param">to_append</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/listclassifier.html#ListClassifier.handle_reference_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.listclassifier.ListClassifier.handle_reference_item" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.listclassifier.ListClassifier.handle_footnote_item">
+<code class="sig-name descname">handle_footnote_item</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">element</em>, <em class="sig-param">elements</em>, <em class="sig-param">in_list_run</em>, <em class="sig-param">iteration</em>, <em class="sig-param">list_element</em>, <em class="sig-param">offset</em>, <em class="sig-param">to_append</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/listclassifier.html#ListClassifier.handle_footnote_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.listclassifier.ListClassifier.handle_footnote_item" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.listclassifier.ListClassifier.process_enclosed_ref_list">
+<code class="sig-name descname">process_enclosed_ref_list</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">treestring</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/listclassifier.html#ListClassifier.process_enclosed_ref_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.listclassifier.ListClassifier.process_enclosed_ref_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.listclassifier.ListClassifier.process_dash_list">
+<code class="sig-name descname">process_dash_list</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">treestring</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/listclassifier.html#ListClassifier.process_dash_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.listclassifier.ListClassifier.process_dash_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.listclassifier.ListClassifier.process_superscript_footnotes">
+<code class="sig-name descname">process_superscript_footnotes</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em>, <em class="sig-param">manipulate</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/listclassifier.html#ListClassifier.process_superscript_footnotes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.listclassifier.ListClassifier.process_superscript_footnotes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.listclassifier.ListClassifier.process_number_list">
+<code class="sig-name descname">process_number_list</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">treestring</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/listclassifier.html#ListClassifier.process_number_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.listclassifier.ListClassifier.process_number_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.listclassifier.ListClassifier.int_to_roman">
+<code class="sig-name descname">int_to_roman</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">input</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/listclassifier.html#ListClassifier.int_to_roman"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.listclassifier.ListClassifier.int_to_roman" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.listclassifier.ListClassifier.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/listclassifier.html#ListClassifier.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.listclassifier.ListClassifier.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.listclassifier</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#bin.listclassifier.__author__">__author__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.listclassifier.__email__">__email__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.listclassifier.ListClassifier">ListClassifier</a><ul>
+<li><a class="reference internal" href="#bin.listclassifier.ListClassifier.set_dom_tree">set_dom_tree</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.listclassifier.ListClassifier.handle_reference_item">handle_reference_item</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.listclassifier.ListClassifier.handle_footnote_item">handle_footnote_item</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.listclassifier.ListClassifier.process_enclosed_ref_list">process_enclosed_ref_list</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.listclassifier.ListClassifier.process_dash_list">process_dash_list</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.listclassifier.ListClassifier.process_superscript_footnotes">process_superscript_footnotes</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.listclassifier.ListClassifier.process_number_list">process_number_list</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.listclassifier.ListClassifier.int_to_roman">int_to_roman</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.listclassifier.ListClassifier.run">run</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/autoapi/bin/listclassifier/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

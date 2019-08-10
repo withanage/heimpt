@@ -1,0 +1,49 @@
+:mod:`bin`
+==========
+
+.. py:module:: bin
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   zotero/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   bare_globals/index.rst
+   bibliographyaddins/index.rst
+   bibliographyclassifier/index.rst
+   bibliographydatabase/index.rst
+   captionclassifier/index.rst
+   complianceenforcer/index.rst
+   debug/index.rst
+   docopt/index.rst
+   docxtotei/index.rst
+   frontmatterparser/index.rst
+   globals/index.rst
+   idgenerator/index.rst
+   interactive/index.rst
+   listclassifier/index.rst
+   manipulate/index.rst
+   meTypeset/index.rst
+   metadata/index.rst
+   nlmmanipulate/index.rst
+   nlmprocessor/index.rst
+   referencelinker/index.rst
+   settingsconfiguration/index.rst
+   sizeclassifier/index.rst
+   teimanipulate/index.rst
+   teitonlm/index.rst
+   unoconvtodocx/index.rst
+   xslchainer/index.rst
+
+

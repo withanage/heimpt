@@ -1,0 +1,90 @@
+:mod:`bin.bibliographyaddins`
+=============================
+
+.. py:module:: bin.bibliographyaddins
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   
+
+.. py:class:: ZoteroHandler(gv)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. method:: handle_bibliography(self, tei_manipulator)
+
+      Handle Zotero bibliographies
+      @param tei_manipulator: a TEI Manipulator object to handle the XML
+
+
+
+   
+   .. method:: run(self)
+
+      Handle Zotero in-line reference items
+
+      @return: a list of items handled
+
+
+
+
+.. py:class:: MendeleyHandler(gv)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. method:: handle_bibliography(self, tei_manipulator)
+
+      Process Mendeley bibliographies
+
+      @param tei_manipulator: a TEI Manipulator object to handle the XML
+
+
+
+   
+   .. method:: run(self)
+
+      Handle Mendeley reference tags, replacing them with NLM-spec references
+
+      @return: a list of processed tags
+
+
+
+
+.. py:class:: OtherHandler(gv)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. method:: run(self)
+
+      Handle all unknown types of addin, stripping them from the output
+
+      @return: a list of tags that were removed
+
+
+
+
+.. py:class:: BibliographyAddins(gv)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. method:: run(self)
+
+      Run the procedure to process different types of bibliography
+
+
+
+

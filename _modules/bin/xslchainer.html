@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.xslchainer &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.xslchainer</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<div class="viewcode-block" id="__author__"><a class="viewcode-back" href="../../autoapi/bin/xslchainer/index.html#bin.xslchainer.__author__">[docs]</a><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Martin Paul Eve&quot;</span></div>
+<div class="viewcode-block" id="__email__"><a class="viewcode-back" href="../../autoapi/bin/xslchainer/index.html#bin.xslchainer.__email__">[docs]</a><span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;martin@martineve.com&quot;</span></div>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">nlmmanipulate</span> <span class="k">import</span> <span class="n">NlmManipulate</span>
+<span class="kn">from</span> <span class="nn">debug</span> <span class="k">import</span> <span class="n">Debuggable</span>
+
+
+<div class="viewcode-block" id="XslChain"><a class="viewcode-back" href="../../autoapi/bin/xslchainer/index.html#bin.xslchainer.XslChain">[docs]</a><span class="k">class</span> <span class="nc">XslChain</span> <span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gv</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">gv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module_name</span> <span class="o">=</span> <span class="s2">&quot;XSL Post-Chainer&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+<div class="viewcode-block" id="XslChain.saxon_arbitrary_xsl"><a class="viewcode-back" href="../../autoapi/bin/xslchainer/index.html#bin.xslchainer.XslChain.saxon_arbitrary_xsl">[docs]</a>    <span class="k">def</span> <span class="nf">saxon_arbitrary_xsl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;-classpath&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">java_class_path</span><span class="p">,</span>
+                   <span class="s2">&quot;-Dxml.catalog.files=&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">runtime_catalog_path</span><span class="p">,</span>
+                   <span class="s2">&quot;net.sf.saxon.Transform&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;-x&quot;</span><span class="p">,</span> <span class="s2">&quot;org.apache.xml.resolver.tools.ResolvingXMLReader&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;-y&quot;</span><span class="p">,</span> <span class="s2">&quot;org.apache.xml.resolver.tools.ResolvingXMLReader&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;org.apache.xml.resolver.tools.CatalogResolver&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">xsl_file_path</span><span class="p">,</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_file_path</span><span class="p">,</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--chain&#39;</span><span class="p">],</span>
+                   <span class="s1">&#39;autoBlockQuote=true&#39;</span>
+                   <span class="p">]</span>
+            <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="XslChain.run_transform"><a class="viewcode-back" href="../../autoapi/bin/xslchainer/index.html#bin.xslchainer.XslChain.run_transform">[docs]</a>    <span class="k">def</span> <span class="nf">run_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">mk_dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">xsl_folder_path</span><span class="p">)</span>
+        <span class="n">java_command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saxon_arbitrary_xsl</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">java_command</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Running saxon transform (XSL CHAIN)&#39;</span><span class="p">)</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">java_command</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="XslChain.run"><a class="viewcode-back" href="../../autoapi/bin/xslchainer/index.html#bin.xslchainer.XslChain.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_transform</span><span class="p">()</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

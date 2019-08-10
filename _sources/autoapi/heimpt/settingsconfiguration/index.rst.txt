@@ -1,0 +1,22 @@
+:mod:`heimpt.settingsconfiguration`
+===================================
+
+.. py:module:: heimpt.settingsconfiguration
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Dulip Withanage
+
+   
+
+.. py:class:: Settings(args)
+
+   
+   .. method:: get_setting(self, tag_name, caller, domain=None)
+
+
+
+

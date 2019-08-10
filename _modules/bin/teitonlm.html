@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.teitonlm &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.teitonlm</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">#@Author Dulip Withanage</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">etree</span>
+<span class="kn">from</span> <span class="nn">nlmmanipulate</span> <span class="k">import</span> <span class="n">NlmManipulate</span>
+<span class="kn">from</span> <span class="nn">teimanipulate</span> <span class="k">import</span> <span class="n">TeiManipulate</span>
+<span class="kn">from</span> <span class="nn">debug</span> <span class="k">import</span> <span class="n">Debuggable</span>
+
+
+<div class="viewcode-block" id="TeiToNlm"><a class="viewcode-back" href="../../autoapi/bin/teitonlm/index.html#bin.teitonlm.TeiToNlm">[docs]</a><span class="k">class</span> <span class="nc">TeiToNlm</span> <span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gv</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">gv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module_name</span> <span class="o">=</span> <span class="s2">&quot;TEI to NLM&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+<div class="viewcode-block" id="TeiToNlm.saxon_tei2nlm"><a class="viewcode-back" href="../../autoapi/bin/teitonlm/index.html#bin.teitonlm.TeiToNlm.saxon_tei2nlm">[docs]</a>    <span class="k">def</span> <span class="nf">saxon_tei2nlm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;-classpath&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">java_class_path</span><span class="p">,</span>
+                   <span class="s2">&quot;-Dxml.catalog.files=&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">runtime_catalog_path</span><span class="p">,</span>
+                   <span class="s2">&quot;net.sf.saxon.Transform&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;-x&quot;</span><span class="p">,</span> <span class="s2">&quot;org.apache.xml.resolver.tools.ResolvingXMLReader&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;-y&quot;</span><span class="p">,</span> <span class="s2">&quot;org.apache.xml.resolver.tools.ResolvingXMLReader&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;org.apache.xml.resolver.tools.CatalogResolver&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_temp_file_path</span><span class="p">,</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">tei_file_path</span><span class="p">,</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_style_sheet_dir</span><span class="p">,</span>
+                   <span class="s1">&#39;autoBlockQuote=true&#39;</span>
+                   <span class="p">]</span>
+            <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TeiToNlm.run_quirks"><a class="viewcode-back" href="../../autoapi/bin/teitonlm/index.html#bin.teitonlm.TeiToNlm.run_quirks">[docs]</a>    <span class="k">def</span> <span class="nf">run_quirks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">process_ref_lists</span><span class="p">):</span>
+        <span class="n">manipulate</span> <span class="o">=</span> <span class="n">NlmManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;linebreaks-as-comments&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;False&#39;</span><span class="p">:</span>
+            <span class="c1"># we need to convert every instance of &lt;!--meTypeset:br--&gt; to a new paragraph</span>
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">close_and_open_tag</span><span class="p">(</span><span class="s1">&#39;comment()[. = &quot;meTypeset:br&quot;]&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">)</span>
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">close_and_open_tag_not_styled</span><span class="p">(</span><span class="s1">&#39;comment()[. = &quot;meTypeset:br&quot;]&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">)</span>
+
+        <span class="c1"># we will replace inside table cells and titles regardless because these are real JATS break tags</span>
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">insert_break</span><span class="p">(</span><span class="s1">&#39;comment()[. = &quot;meTypeset:br&quot;]&#39;</span><span class="p">,</span> <span class="s1">&#39;td&#39;</span><span class="p">)</span>
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">insert_break</span><span class="p">(</span><span class="s1">&#39;comment()[. = &quot;meTypeset:br&quot;]&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">)</span>
+
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">remove_empty_elements</span><span class="p">(</span><span class="s1">&#39;//sec//p&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">process_ref_lists</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Finding potential reference lists&#39;</span><span class="p">)</span>
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">find_reference_list</span><span class="p">()</span>
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">tag_bibliography_refs</span><span class="p">()</span>
+
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">remove_empty_elements</span><span class="p">(</span><span class="s1">&#39;//sec/list&#39;</span><span class="p">)</span>
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">remove_empty_elements</span><span class="p">(</span><span class="s1">&#39;//sec/disp-quote&#39;</span><span class="p">)</span>
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">remove_empty_elements</span><span class="p">(</span><span class="s1">&#39;//back/ref-list/ref&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TeiToNlm.pre_cleanup"><a class="viewcode-back" href="../../autoapi/bin/teitonlm/index.html#bin.teitonlm.TeiToNlm.pre_cleanup">[docs]</a>    <span class="k">def</span> <span class="nf">pre_cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">manipulate</span> <span class="o">=</span> <span class="n">TeiManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="c1"># make sure that head elements are not encapsulated within any elements that will stop them from being</span>
+        <span class="c1"># correctly transformed by the XSL</span>
+        <span class="n">allowed</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;{http://www.tei-c.org/ns/1.0}div&#39;</span><span class="p">,</span> <span class="s1">&#39;{http://www.tei-c.org/ns/1.0}body&#39;</span><span class="p">]</span>
+
+        <span class="n">head_elements</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:div[tei:head]&#39;</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">head_elements</span><span class="p">:</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">element</span>
+
+            <span class="k">while</span> <span class="n">current</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">current</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">tag</span> <span class="ow">and</span> <span class="n">current</span><span class="o">.</span><span class="n">tag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">allowed</span><span class="p">:</span>
+                        <span class="n">current</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+                        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">elif</span> <span class="n">current</span><span class="o">.</span><span class="n">tag</span> <span class="ow">and</span> <span class="n">current</span><span class="o">.</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">allowed</span><span class="p">:</span>
+                        <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+        <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">etree</span><span class="o">.</span><span class="n">strip_tags</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s1">&#39;REMOVE&#39;</span><span class="p">)</span>
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Extracted </span><span class="si">{0}</span><span class="s1"> headings from inside invalid elements&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+
+        <span class="c1"># split any p tags with sub-tags hi rend=&quot;Indent&quot; into new elements</span>
+
+        <span class="n">biblio_elements</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:p&#39;</span>
+                                     <span class="s1">&#39;[tei:hi[contains(@rend, &quot;Indent&quot;) or contains(@rend, &quot;Default Style&quot;) or &#39;</span>
+                                     <span class="s1">&#39;contains(@rend, &quot;Text Body&quot;)]]&#39;</span><span class="p">,</span>
+                                     <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+
+        <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">biblio_elements</span><span class="p">:</span>
+            <span class="n">add_position</span> <span class="o">=</span> <span class="n">parent</span>
+
+            <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">parent</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;tei:hi[contains(@rend, &quot;Indent&quot;) or contains(@rend, &quot;Default Style&quot;) or &#39;</span>
+                                        <span class="s1">&#39;contains(@rend, &quot;Text Body&quot;)]&#39;</span><span class="p">,</span>
+                                        <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}):</span>
+
+                <span class="n">new_p</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">&#39;rend&#39;</span> <span class="ow">in</span> <span class="n">parent</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+                    <span class="n">new_p</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span>
+
+                <span class="n">add_position</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">new_p</span><span class="p">)</span>
+                <span class="n">new_p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+                <span class="n">add_position</span> <span class="o">=</span> <span class="n">new_p</span>
+
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Separated out p </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">parent</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="TeiToNlm.run_transform"><a class="viewcode-back" href="../../autoapi/bin/teitonlm/index.html#bin.teitonlm.TeiToNlm.run_transform">[docs]</a>    <span class="k">def</span> <span class="nf">run_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pre_cleanup</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">mk_dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_folder_path</span><span class="p">)</span>
+        <span class="n">java_command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saxon_tei2nlm</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Running saxon transform (TEI-&gt;NLM)&#39;</span><span class="p">)</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">java_command</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_temp_file_path</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_file_path</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_temp_file_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_file_path</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TeiToNlm.run"><a class="viewcode-back" href="../../autoapi/bin/teitonlm/index.html#bin.teitonlm.TeiToNlm.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">process_ref_lists</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">transform</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">run_transform</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="s1">&#39;--purenlm&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--purenlm&#39;</span><span class="p">]:</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_quirks</span><span class="p">(</span><span class="n">process_ref_lists</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>heimpt.cmos2jats_citations &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for heimpt.cmos2jats_citations</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">etree</span>
+
+
+<div class="viewcode-block" id="cmos1"><a class="viewcode-back" href="../../autoapi/heimpt/cmos2jats_citations/index.html#heimpt.cmos2jats_citations.cmos1">[docs]</a><span class="n">cmos1</span> <span class="o">=</span> <span class="s1">&#39;Heilman, James M., and Andrew G. West &quot;Wikipedia and Medicine: Quantifying Readership, Editors, and the Significance of Natural Language.&quot; Journal of Medical Internet Research 17 no. 3 (2015) e62 doi:10.2196/jmir.4069&#39;</span></div>
+<div class="viewcode-block" id="cmos2"><a class="viewcode-back" href="../../autoapi/heimpt/cmos2jats_citations/index.html#heimpt.cmos2jats_citations.cmos2">[docs]</a><span class="n">cmos2</span> <span class="o">=</span> <span class="s1">&#39;Knaller, Susanne. 2012. &amp;#8220;The Ambiguousness of the Authentic:          Authenticity Between Reference, Fictionality, and Fake in Modern and Contemporary         Art.&amp;#8221; In &lt;italic&gt;Authenticity: Contemporary Perspectives on a Critical            Concept&lt;/italic&gt;, edited by Julia Straub, 51&amp;#8211;75. Bielefeld:          transcript.&#39;</span></div>
+<div class="viewcode-block" id="cmos3"><a class="viewcode-back" href="../../autoapi/heimpt/cmos2jats_citations/index.html#heimpt.cmos2jats_citations.cmos3">[docs]</a><span class="n">cmos3</span> <span class="o">=</span> <span class="s1">&#39;Susanne Knaller studied Romance and German Philology at the University of Graz. 2002 Habilitation (Romance Philology and General and Comparative Literature) at Johann-Wolfgang-Goethe-University Frankfurt. In 1999/2000 Fellow and in 2002/2003 Visiting Professor at Columbia University. Since 2002 Associate Professor at the University of Graz. Founder and Speaker of the Research Department General and Comparative Literature in Graz. Since 2013 Director of the Center of Cultural Studies at the University of Graz. A selection of recent publications includes: &lt;italic&gt;Ein Wort aus der Fremde. Geschichte und Theorie des Begriffs Authentizit&amp;#228;t&lt;/italic&gt; (2007); &lt;italic&gt;Realit&amp;#228;tsbegriffe in der Moderne. Beitr&amp;#228;ge zu Literatur, Kunst, Philosophie und Wissenschaft&lt;/italic&gt;. (2011), edited with Harro M&amp;#252;ller; &lt;italic&gt;Literaturwissenschaft heute &amp;#8211; Gegenstand, Positionen, Relevanz &lt;/italic&gt;(2013), edited with Doris Pichler; &lt;italic&gt;Realit&amp;#228;t und Wirklichkeit in der Moderne. Texte zu Literatur, Kunst, Film und Fotografie &lt;/italic&gt;(2013); and &lt;italic&gt;Die Realit&amp;#228;t der Kunst. Programme und Theorien zu Literatur, Kunst und Fotografie seit 1700&lt;/italic&gt; (2015); &lt;italic&gt;&amp;#196;sthetische Emotion. Formen und Figurationen zur Zeit des Umbruchs der Medien und Gattungen (1880 &amp;#8211; 1939)&lt;/italic&gt; (2016), edited with Rita Rieger.&#39;</span></div>
+
+
+<span class="c1">#article_title = re.findall(&#39;&lt;italic&gt;(.*)&lt;/italic&gt;&#39;,cmos2)</span>
+<span class="c1">#journal_title = re.findall(&#39;\&quot;(.*)\&quot;&#39;,cmos1)</span>
+<span class="c1">#person_group = re.split(&#39;^(\D+)&#39;,cmos2)</span>
+
+<div class="viewcode-block" id="clean"><a class="viewcode-back" href="../../autoapi/heimpt/cmos2jats_citations/index.html#heimpt.cmos2jats_citations.clean">[docs]</a><span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">s</span> <span class="k">else</span> <span class="n">s</span></div>
+
+
+<div class="viewcode-block" id="cre"><a class="viewcode-back" href="../../autoapi/heimpt/cmos2jats_citations/index.html#heimpt.cmos2jats_citations.cre">[docs]</a><span class="k">def</span> <span class="nf">cre</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="set_element_citations"><a class="viewcode-back" href="../../autoapi/heimpt/cmos2jats_citations/index.html#heimpt.cmos2jats_citations.set_element_citations">[docs]</a><span class="k">def</span> <span class="nf">set_element_citations</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="n">rl</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//mixed-citation&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rl</span><span class="p">:</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;element-citation&#39;</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;publication-type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;book&quot;</span>
+        <span class="n">pr</span> <span class="o">=</span> <span class="n">clean</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">athrs</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;^(\D+)&#39;</span><span class="p">,</span> <span class="n">pr</span><span class="p">)</span> <span class="k">if</span> <span class="n">pr</span> <span class="k">else</span> <span class="p">[]</span>
+        <span class="n">pg</span> <span class="o">=</span> <span class="n">cre</span><span class="p">(</span><span class="s1">&#39;person-group&#39;</span><span class="p">)</span>
+        <span class="n">pg</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;person-group-type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;author&quot;</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">cre</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">cre</span><span class="p">(</span><span class="s1">&#39;given-names&#39;</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">cre</span><span class="p">(</span><span class="s1">&#39;surname&#39;</span><span class="p">)</span>
+        <span class="n">n</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+        <span class="n">n</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="n">pg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pg</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//italic&#39;</span><span class="p">):</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;article-title&#39;</span>
+            <span class="n">tl</span> <span class="o">=</span> <span class="n">clean</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">tail</span><span class="p">)</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">cre</span><span class="p">(</span><span class="s1">&#39;source&#39;</span><span class="p">)</span>
+
+            <span class="n">s</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">tl</span>
+            <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
+
+            <span class="c1"># print etree.tostring(r)</span>
+
+
+<div class="viewcode-block" id="t"><a class="viewcode-back" href="../../autoapi/heimpt/cmos2jats_citations/index.html#heimpt.cmos2jats_citations.t">[docs]</a><span class="n">t</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="convert_citation2reference"><a class="viewcode-back" href="../../autoapi/heimpt/cmos2jats_citations/index.html#heimpt.cmos2jats_citations.convert_citation2reference">[docs]</a><span class="k">def</span> <span class="nf">convert_citation2reference</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="n">bd</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.//body&#39;</span><span class="p">)</span>
+    <span class="n">sc</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;sec&#39;</span><span class="p">)</span>
+    <span class="n">ttl</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)</span>
+    <span class="n">ttl</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;References&#39;</span>
+    <span class="n">sc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ttl</span><span class="p">)</span>
+    <span class="n">mc</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//mixed-citation&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mc</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">mc</span><span class="p">:</span>
+            <span class="n">r</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span>
+            <span class="n">sc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+        <span class="n">bd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sc</span><span class="p">)</span>
+        <span class="n">rlst</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.//ref-list&#39;</span><span class="p">)</span>
+        <span class="n">rlst</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">rlst</span><span class="p">)</span>
+        <span class="n">bck</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.//back&#39;</span><span class="p">)</span>
+        <span class="n">bck</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;ref-list&#39;</span><span class="p">))</span></div>
+
+
+<span class="n">convert_citation2reference</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+
+
+<span class="n">t</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;output.xml&#39;</span><span class="p">,</span> <span class="n">pretty_print</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">xml_declaration</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>   <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

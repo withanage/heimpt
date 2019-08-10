@@ -1,0 +1,157 @@
+:mod:`bin.zotero.libzotero`
+===========================
+
+.. py:module:: bin.zotero.libzotero
+
+.. autoapi-nested-parse::
+
+   Originally (c) Sebastiaan Mathot 2011
+   Modifications (c) 2014, 2018 Martin Paul Eve
+
+       This program is free software; you can redistribute it and/or modify
+       it under the terms of the GNU General Public License as published by
+       the Free Software Foundation; either version 2 of the License, or
+       (at your option) any later version.
+
+       This program is distributed in the hope that it will be useful,
+       but WITHOUT ANY WARRANTY; without even the implied warranty of
+       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+       GNU General Public License for more details.
+
+       You should have received a copy of the GNU General Public License
+       along with this program; if not, write to the Free Software
+       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+
+
+Module Contents
+---------------
+
+.. py:class:: LibZotero(zotero_path, global_variables, noteProvider=None)
+
+   Bases: :class:`debug.Debuggable`
+
+   Libzotero provides access to the zotero database.
+   This is an object oriented reimplementation of the
+   original zoterotools.
+
+   .. attribute:: attachment_query
+      :annotation: = 
+   		select items.itemID, itemAttachments.path, itemAttachments.itemID
+   		from items, itemAttachments
+   		where items.itemID = itemAttachments.sourceItemID
+   		
+
+      
+
+   .. attribute:: info_query
+      :annotation: = 
+   		select items.itemID, fields.fieldName, itemDataValues.value, items.key, itemTypes.typeName
+   		from items, itemData, fields, itemDataValues, itemTypes
+   		where
+   			items.itemID = itemData.itemID
+   			and itemData.fieldID = fields.fieldID
+   			and itemData.valueID = itemDataValues.valueID
+   			and itemTypes.itemTypeID = items.itemTypeID
+   		
+
+      
+
+   .. attribute:: collection_query
+      :annotation: = 
+   		select items.itemID, collections.collectionName
+   		from items, collections, collectionItems
+   		where
+   			items.itemID = collectionItems.itemID
+   			and collections.collectionID = collectionItems.collectionID
+   		order by collections.collectionName != "To Read",
+   			collections.collectionName
+   		
+
+      
+
+   .. attribute:: tag_query
+      :annotation: = 
+   		select items.itemID, tags.name
+   		from items, tags, itemTags
+   		where
+   			items.itemID = itemTags.itemID
+   			and tags.tagID = itemTags.tagID
+   		
+
+      
+
+   .. attribute:: deleted_query
+      :annotation: = select itemID from deletedItems
+
+      
+
+   .. attribute:: debug
+      
+
+      Intialize zotero.
+
+      Arguments:
+      zotero_path             --      A unicode string to the Zotero folder.
+
+      Keyword arguments:
+      noteProvider    --      A noteProvider object. (default=None)
+
+
+   
+   .. staticmethod:: creator_query(creator_type)
+
+
+
+   
+   .. method:: update(self, force=False)
+
+      Checks if the local copy of the zotero database is up to date. If not,
+      the data is also indexed.
+
+      Arguments:
+      force           --      Indicates that the data should also be indexed, even
+                      if the local copy is up to date. (default=False)
+
+
+
+   
+   .. method:: parse_query(self, query)
+
+      Parses a text search query into a list of tuples, which are acceptable
+      for zotero_item.match().
+
+      Argument:
+      query           --      A search query.
+
+      Returns:
+      A list of tuples.
+
+
+
+   
+   .. method:: search(self, query)
+
+      Searches the zotero database.
+
+      Argument:
+      query           --      A search query.
+
+      Returns:
+      A list of zotero_items.
+
+
+
+
+.. function:: valid_location(path)
+
+   Checks if a given path is a valid Zotero folder, i.e., if it it contains
+   zotero.sqlite.
+
+   Arguments:
+   path                --      The path to check.
+
+   Returns:
+   True if path is a valid Zotero folder, False otherwise.
+
+

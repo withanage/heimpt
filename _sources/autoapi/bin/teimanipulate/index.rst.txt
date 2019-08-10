@@ -1,0 +1,159 @@
+:mod:`bin.teimanipulate`
+========================
+
+.. py:module:: bin.teimanipulate
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve, Dulip Withanage
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   
+
+.. py:class:: TeiManipulate(gv)
+
+   Bases: :class:`manipulate.Manipulate`
+
+   
+   .. method:: save_tree(self, tree)
+
+
+
+   
+   .. method:: get_object_list(self, xpath, start_text, wrap_tag)
+
+
+
+   
+   .. method:: drop_addin_json(self, xpath, start_text, replace_tag, attribute, caller)
+
+
+
+   
+   .. method:: do_list_bibliography(self, xpath)
+
+
+
+   
+   .. method:: do_cit_bibliography(self, xpath)
+
+
+
+   
+   .. method:: find_reference_list_in_word_list(self, tree)
+
+
+
+   
+   .. method:: find_or_create_element(self, tree, element_tag, add_xpath, is_sibling)
+
+
+
+   
+   .. method:: enclose_bibliography_tags(self, xpath, top_tag, sub_tag, attrib, attribvalue)
+
+
+
+   
+   .. method:: contains_graphic(self, element)
+
+
+
+   
+   .. method:: check_for_continued_references(self, found_element, numeric_start_test, count, elements_to_parse, year_test, blank_text)
+
+
+
+   
+   .. method:: find_references_from_cue(self, cue, tree)
+
+
+
+   
+   .. method:: tag_bibliography(self, xpath, start_text, caller, parent_tag='{http://www.tei-c.org/ns/1.0}sec', classify_siblings=False, sibling_tag='{http://www.tei-c.org/ns/1.0}cit', sub_xpath='//tei:quote/tei:p | //tei:quote/tei:head')
+
+
+
+   
+   .. method:: tag_bibliography_non_csl(self, xpath, start_text, caller)
+
+
+
+   
+   .. method:: drop_addin(self, xpath, start_text, sub_tag, replace_tag, attribute, caller, wrap_tag, delete_original)
+
+
+
+   
+   .. method:: tag_headings(self)
+
+
+
+   
+   .. method:: check_for_disallowed_elements(self, allowed_elements, sub_element, exception_elements)
+
+
+
+   
+   .. method:: change_outer(self, outer_xpath, new_value, size_attribute)
+
+
+
+   
+   .. method:: change_self_size(self, outer_xpath, size_attribute)
+
+
+
+   
+   .. method:: enclose_and_change_self_size(self, outer_xpath, size_attribute, tag, change_tag)
+
+
+
+   
+   .. method:: move_size_div(self, heading_id, sibling_id)
+
+
+
+   
+   .. method:: resize_headings(self, old_size, new_size)
+
+
+
+   
+   .. method:: enclose(self, start_xpath, select_xpath)
+
+
+
+   
+   .. method:: enclose_all(self, start_xpath, new_enclose, start_index)
+
+
+
+   
+   .. method:: change_wmf_image_links(self)
+
+
+
+   
+   .. method:: cleanup(self)
+
+
+
+   
+   .. method:: handle_metypesetdeleted(self, keep)
+
+
+
+   
+   .. method:: run(self)
+
+
+
+

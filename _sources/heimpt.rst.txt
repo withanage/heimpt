@@ -1,0 +1,102 @@
+heimpt package
+==============
+
+Subpackages
+-----------
+
+.. toctree::
+
+   heimpt.plugins
+   heimpt.tools
+
+Submodules
+----------
+
+heimpt.cmos2jats\_citations module
+----------------------------------
+
+.. automodule:: heimpt.cmos2jats_citations
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+heimpt.debug module
+-------------------
+
+.. automodule:: heimpt.debug
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+heimpt.disseminate module
+-------------------------
+
+.. automodule:: heimpt.disseminate
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+heimpt.docopt module
+--------------------
+
+.. automodule:: heimpt.docopt
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+heimpt.globals module
+---------------------
+
+.. automodule:: heimpt.globals
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+heimpt.heimpt module
+--------------------
+
+.. automodule:: heimpt.heimpt
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+heimpt.interactive module
+-------------------------
+
+.. automodule:: heimpt.interactive
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+heimpt.merge module
+-------------------
+
+.. automodule:: heimpt.merge
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+heimpt.prepare module
+---------------------
+
+.. automodule:: heimpt.prepare
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+heimpt.settingsconfiguration module
+-----------------------------------
+
+.. automodule:: heimpt.settingsconfiguration
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: heimpt
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,6 @@
+:mod:`heimpt.plugins.import.ojs.ojs_tables`
+===========================================
+
+.. py:module:: heimpt.plugins.import.ojs.ojs_tables
+
+

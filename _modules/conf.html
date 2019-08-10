@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>conf &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for conf</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Configuration file for the Sphinx documentation builder.</span>
+<span class="c1">#</span>
+<span class="c1"># This file only contains a selection of the most common options. For a full</span>
+<span class="c1"># list see the documentation:</span>
+<span class="c1"># http://www.sphinx-doc.org/en/master/config</span>
+
+<span class="c1"># -- Path setup --------------------------------------------------------------</span>
+
+<span class="c1"># If extensions (or modules to document with autodoc) are in another directory,</span>
+<span class="c1"># add these directories to sys.path here. If the directory is relative to the</span>
+<span class="c1"># documentation root, use os.path.abspath to make it absolute, like shown here.</span>
+<span class="c1">#</span>
+<span class="c1"># import os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c1"># sys.path.insert(0, os.path.abspath(&#39;.&#39;))</span>
+
+
+<span class="c1"># -- Project information -----------------------------------------------------</span>
+
+<div class="viewcode-block" id="project"><a class="viewcode-back" href="../autoapi/conf/index.html#conf.project">[docs]</a><span class="n">project</span> <span class="o">=</span> <span class="s1">&#39;heiMPT&#39;</span></div>
+<div class="viewcode-block" id="copyright"><a class="viewcode-back" href="../autoapi/conf/index.html#conf.copyright">[docs]</a><span class="n">copyright</span> <span class="o">=</span> <span class="s1">&#39;2019, Dulip Withanage&#39;</span></div>
+<div class="viewcode-block" id="author"><a class="viewcode-back" href="../autoapi/conf/index.html#conf.author">[docs]</a><span class="n">author</span> <span class="o">=</span> <span class="s1">&#39;Dulip Withanage&#39;</span></div>
+
+<span class="c1"># The full version, including alpha/beta/rc tags</span>
+<div class="viewcode-block" id="release"><a class="viewcode-back" href="../autoapi/conf/index.html#conf.release">[docs]</a><span class="n">release</span> <span class="o">=</span> <span class="s1">&#39;1.0.0&#39;</span></div>
+
+
+<span class="c1"># -- General configuration ---------------------------------------------------</span>
+
+<span class="c1"># Add any Sphinx extension module names here, as strings. They can be</span>
+<span class="c1"># extensions coming with Sphinx (named &#39;sphinx.ext.*&#39;) or your custom</span>
+<span class="c1"># ones.</span>
+
+<div class="viewcode-block" id="extensions"><a class="viewcode-back" href="../autoapi/conf/index.html#conf.extensions">[docs]</a><span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sphinx.ext.viewcode&#39;</span><span class="p">,</span><span class="s1">&#39;sphinx.ext.autodoc&#39;</span><span class="p">]</span></div>
+<span class="n">extensions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;autoapi.extension&#39;</span><span class="p">)</span>
+
+<span class="c1"># Document Python Code</span>
+<div class="viewcode-block" id="autodoc_mock_imports"><a class="viewcode-back" href="../autoapi/conf/index.html#conf.autodoc_mock_imports">[docs]</a><span class="n">autodoc_mock_imports</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;heimpt.tools.archive&quot;</span><span class="p">]</span></div>
+<div class="viewcode-block" id="autoapi_type"><a class="viewcode-back" href="../autoapi/conf/index.html#conf.autoapi_type">[docs]</a><span class="n">autoapi_type</span> <span class="o">=</span> <span class="s1">&#39;python&#39;</span></div>
+<div class="viewcode-block" id="autoapi_dirs"><a class="viewcode-back" href="../autoapi/conf/index.html#conf.autoapi_dirs">[docs]</a><span class="n">autoapi_dirs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;../&#39;</span><span class="p">]</span></div>
+
+
+<span class="c1"># Add any paths that contain templates here, relative to this directory.</span>
+<div class="viewcode-block" id="templates_path"><a class="viewcode-back" href="../autoapi/conf/index.html#conf.templates_path">[docs]</a><span class="n">templates_path</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_templates&#39;</span><span class="p">]</span></div>
+
+<span class="c1"># List of patterns, relative to source directory, that match files and</span>
+<span class="c1"># directories to ignore when looking for source files.</span>
+<span class="c1"># This pattern also affects html_static_path and html_extra_path.</span>
+<div class="viewcode-block" id="exclude_patterns"><a class="viewcode-back" href="../autoapi/conf/index.html#conf.exclude_patterns">[docs]</a><span class="n">exclude_patterns</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+
+<span class="c1"># -- Options for HTML output -------------------------------------------------</span>
+
+<span class="c1"># The theme to use for HTML and HTML Help pages.  See the documentation for</span>
+<span class="c1"># a list of builtin themes.</span>
+<span class="c1">#</span>
+<div class="viewcode-block" id="html_theme"><a class="viewcode-back" href="../autoapi/conf/index.html#conf.html_theme">[docs]</a><span class="n">html_theme</span> <span class="o">=</span> <span class="s1">&#39;classic&#39;</span> <span class="c1"># use the theme in subdir &#39;theme&#39;</span></div>
+<div class="viewcode-block" id="html_theme_path"><a class="viewcode-back" href="../autoapi/conf/index.html#conf.html_theme_path">[docs]</a><span class="n">html_theme_path</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;.&#39;</span><span class="p">]</span> <span class="c1"># make sphinx search for themes in current dir</span></div>
+
+
+<span class="c1"># Add any paths that contain custom static files (such as style sheets) here,</span>
+<span class="c1"># relative to this directory. They are copied after the builtin static files,</span>
+<span class="c1"># so a file named &quot;default.css&quot; will overwrite the builtin &quot;default.css&quot;.</span>
+<div class="viewcode-block" id="html_static_path"><a class="viewcode-back" href="../autoapi/conf/index.html#conf.html_static_path">[docs]</a><span class="n">html_static_path</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_static&#39;</span><span class="p">]</span></div>
+
+
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

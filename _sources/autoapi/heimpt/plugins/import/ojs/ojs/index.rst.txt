@@ -1,0 +1,19 @@
+:mod:`heimpt.plugins.import.ojs.ojs`
+====================================
+
+.. py:module:: heimpt.plugins.import.ojs.ojs
+
+
+Module Contents
+---------------
+
+.. py:class:: OJSImport
+
+   Bases: :class:`ImportInterface.Import`
+
+   
+   .. method:: run(self)
+
+
+
+

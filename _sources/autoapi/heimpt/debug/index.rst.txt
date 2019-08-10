@@ -1,0 +1,116 @@
+:mod:`heimpt.debug`
+===================
+
+.. py:module:: heimpt.debug
+
+
+Module Contents
+---------------
+
+.. py:class:: Debuggable(module_name)
+
+   Bases: :class:`object`
+
+
+.. py:class:: Debug
+
+   Bases: :class:`object`
+
+   
+   .. method:: enable_debug(self)
+
+      Enables debugging. Is generally  set by Module initialisation
+
+
+
+   
+   .. method:: print_debug(self, module, message)
+
+      Print debug message
+
+      Parameters
+      ----------
+      module: python module
+           Returns the name of the module
+      message: str
+          message as a string
+
+      See Also
+      --------
+      print_()
+
+
+
+   
+   .. method:: print_console(self, module, message)
+
+      Print debug message
+
+      Parameters
+      ----------
+      module: python module
+           Returns the name of the module
+      message: str
+          message as a string
+
+      See Also
+      --------
+      print_()
+
+
+
+   
+   .. method:: print_(self, module, message)
+
+      Prints a formatted message
+
+      Parameters
+      ----------
+      module: python module
+           Returns the name of the module
+      message: str
+          message as a string
+
+      Returns
+      -------
+      message :str
+          Formatted Message , [Module name] message
+
+      See Also
+      --------
+      module.get_module_name()
+
+
+
+   
+   .. method:: get_module_name(self)
+
+      Reads the name of the module for debugging and logging
+
+      Returns
+      -------
+      name :string
+       Name of the Module
+
+
+
+   
+   .. staticmethod:: fatal_error(module, message)
+
+      Prints a formatted error message and exits
+
+      Parameters
+      ----------
+      module: python module
+           Returns the name of the module
+      message: str
+          Error message
+
+
+      See Also
+      --------
+      module.get_module_name()
+
+
+
+

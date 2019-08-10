@@ -1,0 +1,29 @@
+:mod:`bin.complianceenforcer`
+=============================
+
+.. py:module:: bin.complianceenforcer
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   
+
+.. py:class:: ComplianceEnforcer(global_variables)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. method:: run(self)
+
+
+
+

@@ -1,0 +1,157 @@
+:mod:`bin.nlmmanipulate`
+========================
+
+.. py:module:: bin.nlmmanipulate
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   
+
+.. py:class:: NlmManipulate(gv)
+
+   Bases: :class:`manipulate.Manipulate`
+
+   
+   .. method:: remove_reference_numbering(self)
+
+
+
+   
+   .. method:: remove_empty_elements(self, element)
+
+
+
+   
+   .. method:: double_p_compliance(self)
+
+
+
+   
+   .. staticmethod:: handle_nested_elements(iter_node, move_node, node, node_parent, outer_node, tag_name, tail_stack, tail_stack_objects)
+
+
+
+   
+   .. staticmethod:: search_and_copy(last_node, move_node, nested_sibling, new_element, node, node_parent)
+
+
+
+   
+   .. method:: process_node_for_tags(self, nested_sibling, node, search_xpath, tag_name, new_tag='SAME')
+
+
+
+   
+   .. staticmethod:: add_error_tag(node, error_number)
+
+
+
+   
+   .. method:: close_and_open_tag_not_styled(self, search_xpath, tag_name)
+
+      Opens and closes an XML tag within a document. This is primarily useful when we have a marker such as
+      meTypeset:br in comments which corresponds to no JATS/NLM equivalent. We use this function in certain
+      behavioural modes to close the preceding paragraph and open the next.
+
+      This variant only performs this action when the subsequent text does not look like a heading.
+
+      @param search_xpath: the node that serves as a marker
+      @param tag_name: the tag name that will be open and closed
+
+
+
+   
+   .. method:: close_and_open_tag(self, search_xpath, tag_name)
+
+      Opens and closes an XML tag within a document. This is primarily useful when we have a marker such as
+      meTypeset:br in comments which corresponds to no JATS/NLM equivalent. We use this function in certain
+      behavioural modes to close the preceding paragraph and open the next.
+
+      @param search_xpath: the node that serves as a marker
+      @param tag_name: the tag name that will be open and closed
+
+
+
+   
+   .. method:: save_tree(self, tree)
+
+
+
+   
+   .. method:: find_text(self, paragraph, text)
+
+
+
+   
+   .. method:: insert_break(self, search_xpath, tag_name)
+
+      Opens and closes an XML tag within a document. This is primarily useful when we have a marker such as
+      meTypeset:br in comments which corresponds to no JATS/NLM equivalent. We use this function in certain
+      behavioural modes to close the preceding paragraph and open the next.
+
+      @param search_xpath: the node that serves as a marker
+      @param tag_name: the tag name that will be open and closed
+
+
+
+   
+   .. method:: reflist_indent_method(self, tree)
+
+
+
+   
+   .. method:: reflist_year_match_method(self, tree, root, tolerance)
+
+
+
+   
+   .. method:: find_or_create_element(self, tree, element_tag, add_xpath, is_sibling)
+
+
+
+   
+   .. method:: delete_special_lines(self)
+
+
+
+   
+   .. method:: clean_refs(self)
+
+
+
+   
+   .. method:: final_clean(self)
+
+
+
+   
+   .. method:: find_reference_list(self)
+
+
+
+   
+   .. method:: handle_stranded_reference_titles_from_cues(self)
+
+
+
+   
+   .. method:: fuse_references(self)
+
+
+
+   
+   .. method:: tag_bibliography_refs(self)
+
+
+
+

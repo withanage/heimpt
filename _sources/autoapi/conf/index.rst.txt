@@ -1,0 +1,74 @@
+:mod:`conf`
+===========
+
+.. py:module:: conf
+
+
+Module Contents
+---------------
+
+.. data:: project
+   :annotation: = heiMPT
+
+   
+
+.. data:: copyright
+   :annotation: = 2019, Dulip Withanage
+
+   
+
+.. data:: author
+   :annotation: = Dulip Withanage
+
+   
+
+.. data:: release
+   :annotation: = 1.0.0
+
+   
+
+.. data:: extensions
+   :annotation: = ['sphinx.ext.viewcode', 'sphinx.ext.autodoc']
+
+   
+
+.. data:: autodoc_mock_imports
+   :annotation: = ['heimpt.tools.archive']
+
+   
+
+.. data:: autoapi_type
+   :annotation: = python
+
+   
+
+.. data:: autoapi_dirs
+   :annotation: = ['../']
+
+   
+
+.. data:: templates_path
+   :annotation: = ['_templates']
+
+   
+
+.. data:: exclude_patterns
+   :annotation: = []
+
+   
+
+.. data:: html_theme
+   :annotation: = classic
+
+   
+
+.. data:: html_theme_path
+   :annotation: = ['.']
+
+   
+
+.. data:: html_static_path
+   :annotation: = ['_static']
+
+   
+

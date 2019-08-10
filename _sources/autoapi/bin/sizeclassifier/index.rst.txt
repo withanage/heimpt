@@ -1,0 +1,139 @@
+:mod:`bin.sizeclassifier`
+=========================
+
+.. py:module:: bin.sizeclassifier
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   A class that scans for meTypeset size fields in a TEI file.
+
+   1.) Identifies a list of sizes
+   2.) Ascertains the density and likelihood of the size being a heading
+   3.) Returns a manipulator ready to implement all the changes to the TEI file
+
+
+.. py:class:: SizeClassifier(global_variables)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. staticmethod:: get_values(tree, search_attribute)
+
+
+
+   
+   .. staticmethod:: get_sizes_ordered(tree)
+
+
+
+   
+   .. method:: set_dom_tree(self, filename)
+
+
+
+   
+   .. staticmethod:: handle_bold_only_paragraph(manipulate, root_size)
+
+      This method looks for paragraphs that contain only bold text. It then transforms them to titles.
+      @param manipulate: a TeiManipulator object
+      @param root_size: the size styling to apply to these elements
+
+
+
+   
+   .. staticmethod:: handle_heading(manipulate, attribute, root_size)
+
+      This method looks for paragraphs that contain the specified attribute in their rend tag.
+      It then transforms them to titles.
+      @param manipulate: a TeiManipulator object
+      @param attribute: a string to search for in the rend attribute
+      @param root_size: the size styling to apply to these elements
+
+
+
+   
+   .. method:: get_sizes(self, tree)
+
+
+
+   
+   .. method:: correlate_styled_headings(self, manipulate)
+
+
+
+   
+   .. method:: convert_to_headings(self, manipulate, sizes, tree)
+
+
+
+   
+   .. method:: encapsulate_headings(self, manipulate, tree)
+
+
+
+   
+   .. method:: nest_headings(self, manipulate, tree)
+
+
+
+   
+   .. method:: verify_headings(self, stack, tree)
+
+
+
+   
+   .. method:: remove_empty_headings(self, manipulate, tree)
+
+
+
+   
+   .. method:: downgrade_oversize_headings(self, manipulate, tree)
+
+
+
+   
+   .. method:: handle_capital_only_paragraph(self, manipulate, new_size)
+
+
+
+   
+   .. method:: handle_single_item_list(self, manipulate, new_size)
+
+
+
+   
+   .. method:: clean_introduction_headings(self, manipulate)
+
+
+
+   
+   .. method:: clean_line_breaks(self, manipulate)
+
+
+
+   
+   .. method:: renest_headings(self, manipulate, tree)
+
+
+
+   
+   .. method:: final_headings(self, manipulate, tree)
+
+
+
+   
+   .. method:: run(self)
+
+
+
+

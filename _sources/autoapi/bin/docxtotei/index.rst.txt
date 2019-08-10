@@ -1,0 +1,64 @@
+:mod:`bin.docxtotei`
+====================
+
+.. py:module:: bin.docxtotei
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Dulip Withanage
+
+   
+
+.. data:: __email__
+   :annotation: = dulip.withanage@gmail.com
+
+   
+
+.. py:class:: DocxToTei(gv)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. method:: saxon_doc_to_tei(self)
+
+      Creates the appropriate java command to run Saxon
+      @return: a string to run on the command line
+
+
+
+   
+   .. method:: saxon_omml_to_mml(self)
+
+      Creates the appropriate java command to run Saxon
+      @return: a string to run on the command line
+
+
+
+   
+   .. method:: handle_wmf(self)
+
+      Calls unoconv to convert wmf images into png format. This method has a hard limit of 30 images.
+
+      @return: False if fails (more than 30 images), True otherwise
+
+
+
+   
+   .. method:: clean_proprietary(self)
+
+
+
+   
+   .. method:: run(self, extract, run_proprietary, tei=False)
+
+      This method converts from docx to TEI. It creates the necessary output folders, optionally extracts the file and
+      runs the Saxon process necessary to conduct the transform
+      @param extract: whether or not to extract a docx file. True to extract, False to work on a pre-extracted folder
+      @param run_proprietary: whether or not to run proprietary math transforms
+
+
+
+

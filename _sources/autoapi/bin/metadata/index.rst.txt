@@ -1,0 +1,44 @@
+:mod:`bin.metadata`
+===================
+
+.. py:module:: bin.metadata
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve, Dulip Withanage
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   
+
+.. py:class:: Metadata(gv)
+
+   Bases: :class:`manipulate.Manipulate`
+
+   
+   .. method:: attach_metadata(self)
+
+
+
+   
+   .. method:: run(self)
+
+
+
+   
+   .. method:: extract_metadata_fields(self)
+
+
+
+   
+   .. method:: pre_clean(self)
+
+
+
+

@@ -1,0 +1,83 @@
+:mod:`bin.meTypeset`
+====================
+
+.. py:module:: bin.meTypeset
+
+.. autoapi-nested-parse::
+
+   meTypeset: text parsing library to convert word documents to the JATS XML format
+
+   Usage:
+       meTypeset.py doc <input> <output_folder> [options]
+       meTypeset.py docx <input> <output_folder> [options]
+       meTypeset.py docxextracted <input> <output_folder> [options]
+       meTypeset.py odt <input> <output_folder> [options]
+       meTypeset.py other <input> <output_folder> [options]
+       meTypeset.py tei <input> <output_folder> [options]
+       meTypeset.py bibscan <input> [options]
+
+   Options:
+       -a, --aggression <aggression_level>             Parser aggression level 0-10 [default: 10]
+       --chain <xslt>                                  Specify a subsequent XSL transform to pass the NLM to
+       -c, --clean                                     Produce final XML, not intermediate markup with additional metadata
+       -d, --debug                                     Enable debug output
+       -i, --identifiers                               Generate unique identifiers for all supported NLM elements
+       --includedeleted                                Keep deleted text (track changes)
+       --interactive                                   Enable step-by-step interactive mode
+       -h, --help                                      Show this screen.
+       -m, --metadata <metadata_file>                  Metadata file
+       --nogit                                         Disable git debug filesystem (only of use with --debug)
+       --noimageprocessing                             Disable unoconv image processing
+       --nolink                                        Do not run reference linker
+       --nometa                                        Do not merge front matter
+       --purenlm                                       Die after performing NLM XSLT step
+       --puretei                                       Die after performing TEI XSLT step
+       --prettytei                                     Indent and format intermediary TEI
+       -p, --proprietary                               Enables proprietary math parsing. Requires omml2mml.xsl
+       -s, --settings <settings_file>                  Settings file
+       -v, --version                                   Show version.
+       -z, --zotero                                    Enable Zotero integration for references.
+
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve, Dulip Withnage
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   
+
+.. py:class:: MeTypeset
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. staticmethod:: read_command_line()
+
+
+
+   
+   .. method:: set_metadata_file(self)
+
+
+
+   
+   .. method:: run_modules(self)
+
+
+
+   
+   .. method:: run(self)
+
+
+
+
+.. function:: main()
+
+

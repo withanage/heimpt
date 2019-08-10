@@ -1,0 +1,694 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.listclassifier &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.listclassifier</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">from</span> <span class="nn">teimanipulate</span> <span class="k">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="__author__"><a class="viewcode-back" href="../../autoapi/bin/listclassifier/index.html#bin.listclassifier.__author__">[docs]</a><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Martin Paul Eve&quot;</span></div>
+<div class="viewcode-block" id="__email__"><a class="viewcode-back" href="../../autoapi/bin/listclassifier/index.html#bin.listclassifier.__email__">[docs]</a><span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;martin@martineve.com&quot;</span></div>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A class that looks for common list encodings and handles them properly.</span>
+
+<span class="sd">1.) Identifies lists</span>
+<span class="sd">2.) Converts them to proper TEI list format</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">debug</span> <span class="k">import</span> <span class="n">Debuggable</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">copy</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+
+<div class="viewcode-block" id="ListClassifier"><a class="viewcode-back" href="../../autoapi/bin/listclassifier/index.html#bin.listclassifier.ListClassifier">[docs]</a><span class="k">class</span> <span class="nc">ListClassifier</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_variables</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">global_variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skiplist</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">Debuggable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;List Classifier&#39;</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="ListClassifier.set_dom_tree"><a class="viewcode-back" href="../../autoapi/bin/listclassifier/index.html#bin.listclassifier.ListClassifier.set_dom_tree">[docs]</a>    <span class="k">def</span> <span class="nf">set_dom_tree</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">XMLParser</span><span class="p">(</span><span class="n">remove_blank_text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">resolve_entities</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ListClassifier.handle_reference_item"><a class="viewcode-back" href="../../autoapi/bin/listclassifier/index.html#bin.listclassifier.ListClassifier.handle_reference_item">[docs]</a>    <span class="k">def</span> <span class="nf">handle_reference_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span> <span class="n">in_list_run</span><span class="p">,</span> <span class="n">iteration</span><span class="p">,</span> <span class="n">list_element</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">to_append</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">element</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">skiplist</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">iteration</span>
+
+        <span class="n">manipulate</span> <span class="o">=</span> <span class="n">TeiManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+        <span class="n">iteration</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># treat as ref list</span>
+        <span class="n">next_text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Handling reference element </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">in_list_run</span><span class="p">:</span>
+            <span class="n">list_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;ref&#39;</span><span class="p">)</span>
+            <span class="n">list_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;None&#39;</span>
+            <span class="n">to_append</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">in_list_run</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">addprevious</span><span class="p">(</span><span class="n">list_element</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">next_text</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">next_text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;[&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">:</span>
+                <span class="c1"># this element is the last in this list</span>
+                <span class="n">in_list_run</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">to_append</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">next_text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;[&#39;</span><span class="p">):</span>
+
+                <span class="k">while</span> <span class="ow">not</span> <span class="n">next_text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;[&#39;</span><span class="p">):</span>
+                    <span class="c1"># anomalous ref</span>
+                    <span class="k">if</span> <span class="n">next_text</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Ref missing marker </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">next_text</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">skiplist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">())</span>
+                    <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;hi&#39;</span>
+                    <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">(),</span> <span class="bp">self</span><span class="p">)</span>
+
+                    <span class="n">next_text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">())</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># this can happen with italics</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Ref run/anomaly on </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">next_text</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">sub_element</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">():</span>
+                <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">sub_element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="n">in_list_run</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">to_append</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span>
+
+        <span class="n">element</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span>
+        <span class="n">element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;Bibliography&#39;</span>
+
+        <span class="n">element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">[(</span><span class="nb">int</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">iteration</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)))):]</span>
+        <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">list_element</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">in_list_run</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">to_append</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">to_append</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">to_append</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span>
+                    <span class="n">to_append</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;Bibliography&#39;</span>
+                    <span class="n">to_append</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">to_append</span><span class="o">.</span><span class="n">text</span><span class="p">[(</span><span class="nb">int</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">iteration</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)))):]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Appending ref element: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_append</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+                    <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">list_element</span><span class="p">,</span> <span class="n">to_append</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">iteration</span></div>
+
+<div class="viewcode-block" id="ListClassifier.handle_footnote_item"><a class="viewcode-back" href="../../autoapi/bin/listclassifier/index.html#bin.listclassifier.ListClassifier.handle_footnote_item">[docs]</a>    <span class="k">def</span> <span class="nf">handle_footnote_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span> <span class="n">in_list_run</span><span class="p">,</span> <span class="n">iteration</span><span class="p">,</span> <span class="n">list_element</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">to_append</span><span class="p">):</span>
+        <span class="n">iteration</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># treat as fn-list list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Handling footnote element </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">in_list_run</span><span class="p">:</span>
+            <span class="n">list_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;fn-group&#39;</span><span class="p">)</span>
+            <span class="n">to_append</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">in_list_run</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">addprevious</span><span class="p">(</span><span class="n">list_element</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;[&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">:</span>
+                <span class="c1"># this element is the last in this list</span>
+                <span class="n">in_list_run</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">to_append</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;[&#39;</span><span class="p">):</span>
+                <span class="c1"># anomalous ref</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Footnote missing marker </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+                <span class="n">element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">text</span> <span class="o">+</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span><span class="o">.</span><span class="n">text</span>
+                <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># this can happen with italics</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Footnote run/anomaly on </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()))</span>
+            <span class="k">for</span> <span class="n">sub_element</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">():</span>
+                <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">sub_element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="n">in_list_run</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">to_append</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span>
+        <span class="n">element</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;note&#39;</span>
+        <span class="n">element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;fn_from_list</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">iteration</span><span class="p">)</span>
+        <span class="n">element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">[(</span><span class="nb">int</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">iteration</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)))):]</span>
+        <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">list_element</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">in_list_run</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">to_append</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">to_append</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">to_append</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;note&#39;</span>
+                    <span class="n">to_append</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;fn_from_list</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">iteration</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="n">to_append</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">to_append</span><span class="o">.</span><span class="n">text</span><span class="p">[(</span><span class="nb">int</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">iteration</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)))):]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Appending fn element: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_append</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+                    <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">list_element</span><span class="p">,</span> <span class="n">to_append</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">iteration</span><span class="p">,</span> <span class="n">list_element</span></div>
+
+<div class="viewcode-block" id="ListClassifier.process_enclosed_ref_list"><a class="viewcode-back" href="../../autoapi/bin/listclassifier/index.html#bin.listclassifier.ListClassifier.process_enclosed_ref_list">[docs]</a>    <span class="k">def</span> <span class="nf">process_enclosed_ref_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">treestring</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="sa">u</span><span class="s1">&#39;&gt;[&#39;</span> <span class="ow">in</span> <span class="n">treestring</span> <span class="ow">and</span> <span class="ow">not</span> <span class="sa">u</span><span class="s1">&#39;&gt; [&#39;</span> <span class="ow">in</span> <span class="n">treestring</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Leaving enclosed reference processing&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># find it we have a list of enclosed references</span>
+        <span class="c1"># todo work with hi tags</span>
+        <span class="n">expression</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;//tei:div[last()]//tei:p[starts-with(.,&quot;[&quot;)][following-sibling::tei:p[starts-with(.,&quot;[&quot;)]]&#39;</span>
+
+        <span class="n">elements</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+        <span class="n">in_list_run</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">list_element</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">to_append</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">iteration</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">process</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">last_element</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">acted</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># ascertain if there are other document references. If so, this is probably a footnote</span>
+        <span class="n">footnote_test</span> <span class="o">=</span> <span class="s1">&#39;//text()[contains(self::text(), &quot;[1]&quot;)]&#39;</span>
+        <span class="n">footnotes</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">footnote_test</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+        <span class="n">is_footnote</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">footnotes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_footnote</span><span class="p">:</span>
+            <span class="n">footnote_test</span> <span class="o">=</span> <span class="s1">&#39;//text()[contains(self::text(), &quot;[1,&quot;)]&#39;</span>
+            <span class="n">footnotes</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">footnote_test</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+            <span class="n">is_footnote</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">footnotes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+
+        <span class="c1"># append an attribute to the preceding element to signal a return point for references if they were wrongly</span>
+        <span class="c1"># classified</span>
+
+        <span class="k">if</span> <span class="n">is_footnote</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Enclosed footnotes detected&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;No enclosed footnotes detected&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_footnote</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">elements</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">prev</span> <span class="o">=</span> <span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getprevious</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">prev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">prev</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;ref-list-before&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prev</span> <span class="o">=</span> <span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">prev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">prev</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;ref-list-parent&#39;</span>
+
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">iteration</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;[1] &#39;</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Reference list PANIC: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+                    <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">offset</span> <span class="o">=</span> <span class="mi">4</span>
+
+            <span class="k">if</span> <span class="n">is_footnote</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Found in-text footnotes: processing&#39;</span><span class="p">)</span>
+                <span class="n">iteration</span><span class="p">,</span> <span class="n">list_element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_footnote_item</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span>
+                                                                    <span class="n">in_list_run</span><span class="p">,</span> <span class="n">iteration</span><span class="p">,</span> <span class="n">list_element</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span>
+                                                                    <span class="n">to_append</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">acted</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="n">iteration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_reference_item</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">elements</span><span class="p">,</span> <span class="n">in_list_run</span><span class="p">,</span> <span class="n">iteration</span><span class="p">,</span> <span class="n">list_element</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span>
+                                                       <span class="n">to_append</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">acted</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">used_square_reference_method</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">enclose_bibliography_tags</span><span class="p">(</span><span class="s1">&#39;//tei:p[@rend=&quot;Bibliography&quot;]&#39;</span><span class="p">,</span> <span class="s1">&#39;back&#39;</span><span class="p">,</span> <span class="s1">&#39;div&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;bibliogr&#39;</span><span class="p">)</span>
+
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Enclosing bibliography&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">is_footnote</span><span class="p">:</span>
+            <span class="n">back</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">find_or_create_element</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s1">&#39;back&#39;</span><span class="p">,</span> <span class="s1">&#39;//tei:body&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">back</span><span class="p">,</span> <span class="n">list_element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+            <span class="n">new_element_list</span> <span class="o">=</span> <span class="n">list_element</span>
+
+            <span class="k">for</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">iteration</span> <span class="o">+</span> <span class="mi">2</span><span class="p">):</span>
+
+                <span class="n">footnote_test</span> <span class="o">=</span> <span class="s1">&#39;//tei:p//text()[contains(self::text(), &quot;[</span><span class="si">{0}</span><span class="s1">]&quot;)]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+                <span class="n">footnote</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">footnote_test</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})[</span><span class="mi">0</span><span class="p">]</span>
+
+                <span class="n">note</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">new_element_list</span><span class="p">[</span><span class="n">count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+
+                <span class="n">split</span> <span class="o">=</span> <span class="n">footnote</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">{0}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+                <span class="n">footnote</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">split</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">footnote</span><span class="o">.</span><span class="n">getparent</span><span class="p">(),</span> <span class="n">note</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                <span class="n">note</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">split</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="n">back</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">list_element</span><span class="p">)</span>
+
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ListClassifier.process_dash_list"><a class="viewcode-back" href="../../autoapi/bin/listclassifier/index.html#bin.listclassifier.ListClassifier.process_dash_list">[docs]</a>    <span class="k">def</span> <span class="nf">process_dash_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">treestring</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="sa">u</span><span class="s1">&#39;&gt;-&#39;</span> <span class="ow">in</span> <span class="n">treestring</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># select all p elements followed by another p element</span>
+        <span class="n">expression</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;//tei:p[starts-with(.,&quot;- &quot;)][following-sibling::tei:p[starts-with(.,&quot;- &quot;)]]&#39;</span>
+
+        <span class="n">elements</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+
+        <span class="n">in_list_run</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">list_element</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">to_append</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Handling list element </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">in_list_run</span><span class="p">:</span>
+                <span class="n">list_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;list&#39;</span><span class="p">)</span>
+                <span class="n">to_append</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">in_list_run</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">element</span><span class="o">.</span><span class="n">addprevious</span><span class="p">(</span><span class="n">list_element</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;- &#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">:</span>
+                    <span class="c1"># this element is the last in this list</span>
+                    <span class="n">in_list_run</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="n">to_append</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span>
+                <span class="k">elif</span> <span class="ow">not</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;- &#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">:</span>
+                    <span class="n">in_list_run</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="n">to_append</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># this element is the last in this list</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Ending list run on </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()))</span>
+                <span class="n">in_list_run</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">to_append</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">getnext</span><span class="p">()</span>
+
+            <span class="n">element</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;item&#39;</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+            <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">list_element</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">in_list_run</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">to_append</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">to_append</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">to_append</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;item&#39;</span>
+                        <span class="n">to_append</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">to_append</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Appending final list element: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_append</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+                        <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">list_element</span><span class="p">,</span> <span class="n">to_append</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ListClassifier.process_superscript_footnotes"><a class="viewcode-back" href="../../autoapi/bin/listclassifier/index.html#bin.listclassifier.ListClassifier.process_superscript_footnotes">[docs]</a>    <span class="k">def</span> <span class="nf">process_superscript_footnotes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Scanning for superscripted footnote entries&#39;</span><span class="p">)</span>
+
+        <span class="n">superscripts</span> <span class="o">=</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//*[@rend=&quot;superscript&quot;]&#39;</span><span class="p">))</span>
+
+        <span class="n">footnote_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">footnote_text</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">superscripts</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">is_number</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+                <span class="n">footnote_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                <span class="n">footnote_text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">footnote_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Found no superscripted footnote entries&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># if it doesn&#39;t work, this is an expensive operation</span>
+        <span class="c1"># however, once we&#39;ve found all we can stop, so it&#39;s worth doing</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">footnote</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">footnote_text</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">footnote_text</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Unable to parse last footnote as number. Leaving footnote classifier.&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">footnote_text</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">footnote</span>
+        <span class="n">failures</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">footnote_text</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">footnote_text</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()),</span> <span class="nb">int</span><span class="p">(</span><span class="n">footnote_text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())):</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">number</span> <span class="o">+</span> <span class="p">(</span><span class="n">offset</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span> <span class="ow">in</span> <span class="n">footnote_text</span> <span class="ow">and</span> \
+                    <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">footnote_text</span><span class="p">[</span><span class="n">count</span><span class="p">])</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">(</span><span class="n">number</span> <span class="o">+</span> <span class="p">(</span><span class="n">offset</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Expected footnote </span><span class="si">{0}</span><span class="s1">. Found </span><span class="si">{1}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">number</span> <span class="o">+</span> <span class="p">(</span><span class="n">offset</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)),</span>
+                                                                                         <span class="n">footnote_text</span><span class="p">[</span><span class="n">count</span><span class="p">]))</span>
+                <span class="n">failures</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="k">if</span> <span class="n">failures</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Found more than 1 misaligned footnote. Bailing.&#39;</span><span class="p">)</span>
+                    <span class="k">return</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># we need to try and find the number in some text, somewhere, then re-superscript it</span>
+                    <span class="c1"># it should occur twice only: once for the number itself and once for the paragraph that will be</span>
+                    <span class="c1"># made into a footnote. However, if the method is a list at the end of the document it will be</span>
+                    <span class="c1"># only a single occurrence</span>
+
+                    <span class="n">text_blocks</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//text()[contains(self::text()&#39;</span>
+                                             <span class="s1">&#39;, &quot;</span><span class="si">{0}</span><span class="s1">&quot;)]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">number</span> <span class="o">+</span> <span class="p">(</span><span class="n">offset</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))))</span>
+
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text_blocks</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">parsed</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="k">for</span> <span class="n">block_to_change</span> <span class="ow">in</span> <span class="n">text_blocks</span><span class="p">:</span>
+                            <span class="c1"># (1)[^\d]</span>
+                            <span class="n">ref_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^.*(?P&lt;number&gt;</span><span class="si">{0}</span><span class="s1">)[^\d].*&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">number</span> <span class="o">+</span> <span class="p">(</span><span class="n">offset</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))))</span>
+                            <span class="n">result</span> <span class="o">=</span> <span class="n">ref_match</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">block_to_change</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+                            <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Found potential point for footnote #</span><span class="si">{0}</span><span class="s1">.&#39;</span>
+                                                             <span class="sa">u</span><span class="s1">&#39; Superscripting&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">number</span> <span class="o">+</span> <span class="p">(</span><span class="n">offset</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))))</span>
+
+                                <span class="n">parent</span> <span class="o">=</span> <span class="n">block_to_change</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+
+                                <span class="n">before_after</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">number</span> <span class="o">+</span> <span class="p">(</span><span class="n">offset</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))))</span>
+
+                                <span class="n">parent</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">before_after</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+                                <span class="n">encapsulate</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;sup&#39;</span><span class="p">)</span>
+                                <span class="n">encapsulate</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">number</span> <span class="o">+</span> <span class="p">(</span><span class="n">offset</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
+                                <span class="n">encapsulate</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">before_after</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+                                <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">encapsulate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+                                <span class="n">footnote_list</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">encapsulate</span><span class="p">)</span>
+                                <span class="n">footnote_text</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">number</span> <span class="o">+</span> <span class="p">(</span><span class="n">offset</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))))</span>
+                                <span class="n">offset</span> <span class="o">+=</span> <span class="mi">1</span>
+                                <span class="n">parsed</span> <span class="o">=</span> <span class="kc">True</span>
+                                <span class="k">break</span>
+
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">parsed</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Unable to find footnote #</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">number</span> <span class="o">+</span> <span class="p">(</span><span class="n">offset</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))))</span>
+                            <span class="k">return</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Unable to find footnote #</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">number</span> <span class="o">+</span> <span class="p">(</span><span class="n">offset</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))))</span>
+                        <span class="k">return</span>
+                    <span class="k">pass</span>
+
+            <span class="n">count</span> <span class="o">-=</span> <span class="mi">1</span>
+
+        <span class="n">whole_document</span> <span class="o">=</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:p[@rend=&quot;Normal&quot; or not(@rend)]&#39;</span><span class="p">,</span>
+                                             <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}))</span>
+
+        <span class="n">found</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">footnote</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">footnote_text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">whole_document</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">footnote</span><span class="p">)):</span>
+                <span class="n">found</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+                <span class="n">footnote</span> <span class="o">-=</span> <span class="mi">1</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">found</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">footnote_list</span><span class="p">):</span>
+                    <span class="k">break</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">found</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># last ditch: see if there is an ordered list near the end of the document that has the same number of</span>
+            <span class="c1"># elements as the footnote list</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;No luck locating footnote text. Attempting list method.&#39;</span><span class="p">)</span>
+            <span class="n">lists</span> <span class="o">=</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//tei:list[@type=&quot;ordered&quot;]&#39;</span><span class="p">,</span>
+                                        <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">}))</span>
+            <span class="n">first</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">for</span> <span class="nb">list</span> <span class="ow">in</span> <span class="n">lists</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">first</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">first</span> <span class="o">=</span> <span class="kc">True</span>
+                    
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">:</span>
+                    <span class="n">found</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">found</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">footnote_list</span><span class="p">):</span>
+                        <span class="k">break</span>
+
+        <span class="c1"># note: all lists are reversed by this point (ie go from the back of the document upwards)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">found</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">footnote_list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Found </span><span class="si">{0}</span><span class="s1"> superscripted footnote entries&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">found</span><span class="p">)))</span>
+
+            <span class="n">current</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">footnote</span> <span class="ow">in</span> <span class="n">footnote_list</span><span class="p">:</span>
+                <span class="c1"># null the text (this will be generated automatically)</span>
+                <span class="k">if</span> <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">footnote</span><span class="p">,</span> <span class="n">found</span><span class="p">[</span><span class="n">current</span><span class="p">],</span> <span class="bp">self</span><span class="p">):</span>
+                    <span class="n">footnote</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+                    <span class="n">footnote</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;note&#39;</span>
+                    <span class="n">footnote</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;fn_from_list</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current</span><span class="p">)</span>
+
+                    <span class="n">replace_regex</span> <span class="o">=</span> <span class="s1">&#39;^(</span><span class="si">{0}</span><span class="s1">[\.\s\)]*)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">found</span><span class="p">)</span> <span class="o">-</span> <span class="n">current</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">found</span><span class="p">[</span><span class="n">current</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">found</span><span class="p">[</span><span class="n">current</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">found</span><span class="p">)</span> <span class="o">-</span> <span class="n">current</span><span class="p">)):</span>
+                        <span class="c1"># in this case the footnote text is inside a sub-element</span>
+                        <span class="k">for</span> <span class="n">sub_element</span> <span class="ow">in</span> <span class="n">found</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">sub_element</span><span class="o">.</span><span class="n">text</span> <span class="ow">and</span> <span class="n">sub_element</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">found</span><span class="p">)</span> <span class="o">-</span> <span class="n">current</span><span class="p">)):</span>
+                                <span class="n">sub_element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">replace_regex</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sub_element</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                                <span class="k">break</span>
+                        <span class="k">pass</span>
+                    <span class="k">elif</span> <span class="n">found</span><span class="p">[</span><span class="n">current</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+                        <span class="n">found</span><span class="p">[</span><span class="n">current</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">replace_regex</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">found</span><span class="p">[</span><span class="n">current</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+                    <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Processing footnote </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># failed to add a footnote</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Footnote failure. Aborting process.&#39;</span><span class="p">)</span>
+                    <span class="k">return</span>
+
+                <span class="n">current</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Found </span><span class="si">{0}</span><span class="s1"> superscripted footnote entries but could not correlate this with&#39;</span>
+                                         <span class="s1">&#39; </span><span class="si">{1}</span><span class="s1"> paragraph entries&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">footnote_list</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">found</span><span class="p">)))</span>
+
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ListClassifier.process_number_list"><a class="viewcode-back" href="../../autoapi/bin/listclassifier/index.html#bin.listclassifier.ListClassifier.process_number_list">[docs]</a>    <span class="k">def</span> <span class="nf">process_number_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">treestring</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="sa">u</span><span class="s1">&#39;&gt;1&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="sa">u</span><span class="s1">&#39;&gt;(&#39;</span> <span class="ow">in</span> <span class="n">treestring</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># select all p elements followed by another p element</span>
+        <span class="n">expression</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;//tei:p[contains(&quot;(0123456789ivxlcmdIVXLCMD&quot;, substring(., 1, 1)) and not(@rend=&quot;Bibliography&quot;)]&#39;</span>
+
+        <span class="n">elements</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tei&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.tei-c.org/ns/1.0&#39;</span><span class="p">})</span>
+
+        <span class="n">list_element</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">iteration</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">number</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">number_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^\s*(?P&lt;rn&gt;\(?\s*(?P&lt;number&gt;\d+)[\.\s\)]+).+&#39;</span><span class="p">)</span>
+        <span class="n">roman_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^(?P&lt;rn&gt;M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})[\.\s\)]+).+&#39;</span><span class="p">,</span>
+                                 <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="n">number_match</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">roman_result</span> <span class="o">=</span> <span class="n">roman_match</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">cont</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="k">if</span> <span class="n">match</span> <span class="ow">or</span> <span class="n">roman_result</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+                    <span class="n">number</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">(</span><span class="s1">&#39;rn&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">offset</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">(</span><span class="s1">&#39;rn&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">offset</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">roman_result</span><span class="o">.</span><span class="n">groups</span><span class="p">(</span><span class="s1">&#39;rn&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">iteration</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="n">roman</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">int_to_roman</span><span class="p">(</span><span class="n">iteration</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">number</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">iteration</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">roman</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
+                    <span class="k">if</span> <span class="n">iteration</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">old_it</span> <span class="o">=</span> <span class="n">iteration</span>
+                        <span class="n">iteration</span> <span class="o">=</span> <span class="mi">1</span>
+
+                        <span class="n">roman</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">int_to_roman</span><span class="p">(</span><span class="n">iteration</span><span class="p">)</span>
+
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">number</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">iteration</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">roman</span><span class="p">)</span> \
+                            <span class="ow">and</span> <span class="ow">not</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
+
+                            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;List element was misordered and did not start new list. &#39;</span>
+                                                         <span class="sa">u</span><span class="s1">&#39;Expected </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">iteration</span><span class="p">))</span>
+
+                            <span class="n">iteration</span> <span class="o">=</span> <span class="n">old_it</span> <span class="o">-</span> <span class="mi">1</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Starting new numeric list from cue: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+                            <span class="n">cont</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">cont</span> <span class="o">=</span> <span class="kc">True</span>
+
+                    <span class="k">if</span> <span class="n">iteration</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Handling list element </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">next_start</span> <span class="o">=</span> <span class="n">iteration</span> <span class="o">+</span> <span class="mi">1</span>
+                        <span class="n">next_element_index</span> <span class="o">=</span> <span class="n">elements</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+                        <span class="k">if</span> <span class="n">next_element_index</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">elements</span><span class="p">):</span>
+                            <span class="n">cont</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">next_element</span> <span class="o">=</span> <span class="n">elements</span><span class="p">[</span><span class="n">next_element_index</span><span class="p">]</span>
+
+                            <span class="n">next_text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">next_element</span><span class="p">)</span>
+                            <span class="n">next_match</span> <span class="o">=</span> <span class="n">number_match</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">next_text</span><span class="p">)</span>
+                            <span class="n">next_roman_result</span> <span class="o">=</span> <span class="n">roman_match</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">next_text</span><span class="p">)</span>
+                            <span class="n">next_number</span> <span class="o">=</span> <span class="kc">None</span>
+
+                            <span class="k">if</span> <span class="n">next_match</span> <span class="ow">or</span> <span class="n">next_roman_result</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="n">next_match</span><span class="p">:</span>
+                                    <span class="n">next_number</span> <span class="o">=</span> <span class="n">next_match</span><span class="o">.</span><span class="n">groups</span><span class="p">(</span><span class="s1">&#39;rn&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+                                <span class="n">next_roman</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">int_to_roman</span><span class="p">(</span><span class="n">iteration</span><span class="p">)</span>
+
+                                <span class="k">if</span> <span class="ow">not</span> <span class="n">next_number</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">iteration</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">next_text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">next_roman</span><span class="p">)</span>\
+                                    <span class="ow">and</span> <span class="ow">not</span> <span class="n">next_text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">next_roman</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
+                                    <span class="n">cont</span> <span class="o">=</span> <span class="kc">False</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">cont</span> <span class="o">=</span> <span class="kc">False</span>
+
+                        <span class="k">if</span> <span class="n">cont</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Starting new numeric list from cue: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Cannot start list on last element: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+
+                <span class="k">if</span> <span class="n">cont</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">iteration</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="c1"># start new list</span>
+                        <span class="n">list_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;list&#39;</span><span class="p">)</span>
+                        <span class="n">list_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="sa">u</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;ordered&#39;</span>
+                        <span class="n">element</span><span class="o">.</span><span class="n">addprevious</span><span class="p">(</span><span class="n">list_element</span><span class="p">)</span>
+
+                        <span class="n">element</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;item&#39;</span>
+                        <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+                            <span class="n">element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">[(</span><span class="nb">int</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">iteration</span><span class="o">/</span><span class="mi">10</span><span class="p">)))):]</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[(</span><span class="nb">int</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">iteration</span><span class="o">/</span><span class="mi">10</span><span class="p">)))):]</span>
+                        <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">list_element</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+                    <span class="k">elif</span> <span class="n">list_element</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">element</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;item&#39;</span>
+                        <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+                            <span class="n">element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">[(</span><span class="nb">int</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">iteration</span><span class="o">/</span><span class="mi">10</span><span class="p">)))):]</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[(</span><span class="nb">int</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">iteration</span><span class="o">/</span><span class="mi">10</span><span class="p">)))):]</span>
+                        <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">list_element</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Reference list PANIC: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ListClassifier.int_to_roman"><a class="viewcode-back" href="../../autoapi/bin/listclassifier/index.html#bin.listclassifier.ListClassifier.int_to_roman">[docs]</a>    <span class="k">def</span> <span class="nf">int_to_roman</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;expected integer, got </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="nb">input</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="nb">input</span> <span class="o">&lt;</span> <span class="mi">4000</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Argument must be between 1 and 3999&quot;</span><span class="p">)</span>
+
+        <span class="n">ints</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">900</span><span class="p">,</span>  <span class="mi">500</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span>  <span class="mi">90</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span>  <span class="mi">40</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>  <span class="mi">9</span><span class="p">,</span>   <span class="mi">5</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>   <span class="mi">1</span><span class="p">)</span>
+        <span class="n">nums</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;M&#39;</span><span class="p">,</span>  <span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;CD&#39;</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;XC&#39;</span><span class="p">,</span><span class="s1">&#39;L&#39;</span><span class="p">,</span><span class="s1">&#39;XL&#39;</span><span class="p">,</span><span class="s1">&#39;X&#39;</span><span class="p">,</span><span class="s1">&#39;IX&#39;</span><span class="p">,</span><span class="s1">&#39;V&#39;</span><span class="p">,</span><span class="s1">&#39;IV&#39;</span><span class="p">,</span><span class="s1">&#39;I&#39;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ints</span><span class="p">)):</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span> <span class="o">/</span> <span class="n">ints</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">count</span>
+            <span class="nb">input</span> <span class="o">-=</span> <span class="n">ints</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">count</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="ListClassifier.run"><a class="viewcode-back" href="../../autoapi/bin/listclassifier/index.html#bin.listclassifier.ListClassifier.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--aggression&#39;</span><span class="p">])</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;listclassifier&#39;</span><span class="p">,</span>
+                                                                                         <span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="s1">&#39;aggression&#39;</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Aggression level too low: exiting module.&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">dash_lists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;dash-lists&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span>
+        <span class="n">bracket_refs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;bracket-references-and-footnotes&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span>
+        <span class="n">superscripted_footnotes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;superscripted-footnotes&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dash_lists</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">bracket_refs</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">superscripted_footnotes</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># load the DOM</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_dom_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">tei_file_path</span><span class="p">)</span>
+
+        <span class="n">manipulate</span> <span class="o">=</span> <span class="n">TeiManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="n">string_version</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;unicode&quot;</span><span class="p">)</span>
+
+        <span class="c1"># look for dash separated list</span>
+        <span class="c1"># - Item 1</span>
+        <span class="c1"># - Item 2</span>
+        <span class="k">if</span> <span class="n">dash_lists</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process_dash_list</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">string_version</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--aggression&#39;</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mi">10</span> <span class="ow">and</span> <span class="n">bracket_refs</span><span class="p">:</span>
+            <span class="n">backup_tree</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># look for footnote list [1], [2] etc.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">process_enclosed_ref_list</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">string_version</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Error processing footnote or reference list. Reverting to backup tree&#39;</span><span class="p">)</span>
+                <span class="n">tree</span> <span class="o">=</span> <span class="n">backup_tree</span>
+                <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">superscripted_footnotes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process_superscript_footnotes</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">process_number_list</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">string_version</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

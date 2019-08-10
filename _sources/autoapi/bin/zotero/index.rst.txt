@@ -1,0 +1,25 @@
+:mod:`bin.zotero`
+=================
+
+.. py:module:: bin.zotero
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   _noteProvider/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   libzotero/index.rst
+   zotero_item/index.rst
+
+

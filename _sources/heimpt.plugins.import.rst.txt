@@ -1,0 +1,29 @@
+heimpt.plugins.import package
+=============================
+
+Subpackages
+-----------
+
+.. toctree::
+
+   heimpt.plugins.import.omp
+
+Submodules
+----------
+
+heimpt.plugins.import.ImportInterface module
+--------------------------------------------
+
+.. automodule:: heimpt.plugins.import.ImportInterface
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: heimpt.plugins.import
+   :members:
+   :undoc-members:
+   :show-inheritance:

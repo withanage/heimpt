@@ -1,0 +1,67 @@
+:mod:`bin.captionclassifier`
+============================
+
+.. py:module:: bin.captionclassifier
+
+.. autoapi-nested-parse::
+
+   captionclassfier: a tool to search for potential table titles and then link in-text entities
+
+   Usage:
+      captionclassfier.py tables <input> [options]
+      captionclassfier.py graphics <input> [options]
+      captionclassfier.py all <input> [options]
+
+   Options:
+       -d, --debug                                     Enable debug output
+       -h, --help                                      Show this screen.
+       -v, --version                                   Show version.
+
+
+
+Module Contents
+---------------
+
+.. py:class:: CaptionClassifier(global_variables)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. method:: replace_in_text(self, id, element, replace_text, ref_type)
+
+
+
+   
+   .. method:: replace_in_tail(self, id, element, replace_text, ref_type)
+
+
+
+   
+   .. method:: link(self, table_ids, replace_texts, paragraphs, ref_type)
+
+
+
+   
+   .. method:: run_graphics_sibling(self)
+
+
+
+   
+   .. method:: run_graphics(self)
+
+
+
+   
+   .. method:: run_tables(self)
+
+
+
+   
+   .. method:: run_ext_link_compliance(self)
+
+
+
+
+.. function:: main()
+
+

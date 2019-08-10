@@ -1,0 +1,490 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>heimpt.tools.archive.postProcess &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-heimpt.tools.archive.postProcess">
+<span id="heimpt-tools-archive-postprocess"></span><h1><a class="reference internal" href="#module-heimpt.tools.archive.postProcess" title="heimpt.tools.archive.postProcess"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heimpt.tools.archive.postProcess</span></code></a><a class="headerlink" href="#module-heimpt.tools.archive.postProcess" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="heimpt.tools.archive.postProcess.LOG_FILE">
+<code class="sig-prename descclassname">heimpt.tools.archive.postProcess.</code><code class="sig-name descname">LOG_FILE</code><em class="property"> = jatsPostProcess.log</em><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#LOG_FILE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.LOG_FILE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="heimpt.tools.archive.postProcess.numeral_map">
+<code class="sig-prename descclassname">heimpt.tools.archive.postProcess.</code><code class="sig-name descname">numeral_map</code><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#numeral_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.numeral_map" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="heimpt.tools.archive.postProcess.PostProcess">
+<em class="property">class </em><code class="sig-prename descclassname">heimpt.tools.archive.postProcess.</code><code class="sig-name descname">PostProcess</code><span class="sig-paren">(</span><em class="sig-param">cf</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess" title="Permalink to this definition">¶</a></dt>
+<dd><p>command line tool to clean, modify, delete, merge jats files</p>
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.print_unreferenced_figs">
+<code class="sig-name descname">print_unreferenced_figs</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tr</em>, <em class="sig-param">f</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.print_unreferenced_figs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.print_unreferenced_figs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.apply_transformations">
+<code class="sig-name descname">apply_transformations</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tr</em>, <em class="sig-param">context</em>, <em class="sig-param">f</em>, <em class="sig-param">chapter</em>, <em class="sig-param">order</em>, <em class="sig-param">count</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.apply_transformations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.apply_transformations" title="Permalink to this definition">¶</a></dt>
+<dd><p>main method to apply transformations</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.references_to_citations">
+<code class="sig-name descname">references_to_citations</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tr</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.references_to_citations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.references_to_citations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts References Block to real citations</p>
+<dl class="simple">
+<dt>Returns</dt><dd><p>tr : elementtree</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.create_automated_references">
+<code class="sig-name descname">create_automated_references</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tr</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.create_automated_references"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.create_automated_references" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.citations_to_references">
+<code class="sig-name descname">citations_to_references</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tr</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.citations_to_references"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.citations_to_references" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes  mixed-citation block, adds as a &lt;sec&gt; Section element</p>
+<dl class="simple">
+<dt>Returns</dt><dd><p>tr : elementtree</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.contains">
+<code class="sig-name descname">contains</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">a</em>, <em class="sig-param">v</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.contains"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.contains" title="Permalink to this definition">¶</a></dt>
+<dd><p>help method to compare references</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.convert_int_to_roman">
+<code class="sig-name descname">convert_int_to_roman</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">i</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.convert_int_to_roman"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.convert_int_to_roman" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.convert_roman_to_int">
+<code class="sig-name descname">convert_roman_to_int</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">n</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.convert_roman_to_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.convert_roman_to_int" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.create_files">
+<code class="sig-name descname">create_files</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">context</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.create_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.create_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>main method : creates zip, merges and transforms xml files</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.create_footnote_file">
+<code class="sig-name descname">create_footnote_file</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">cfb</em>, <em class="sig-param">back_fns</em>, <em class="sig-param">header_text</em>, <em class="sig-param">body_secs</em>, <em class="sig-param">elem_secs</em>, <em class="sig-param">elem_fns</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.create_footnote_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.create_footnote_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.create_merged_file">
+<code class="sig-name descname">create_merged_file</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">fullfile</em>, <em class="sig-param">body_secs</em>, <em class="sig-param">back_fns</em>, <em class="sig-param">back_refs</em>, <em class="sig-param">header_text</em>, <em class="sig-param">cfb</em>, <em class="sig-param">context</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.create_merged_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.create_merged_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.create_output">
+<code class="sig-name descname">create_output</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em>, <em class="sig-param">f</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.create_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.create_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>write element tree to f</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.create_refs_csv">
+<code class="sig-name descname">create_refs_csv</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dr</em>, <em class="sig-param">infile</em>, <em class="sig-param">outfile</em>, <em class="sig-param">types</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.create_refs_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.create_refs_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>write a csv f from the references</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.create_zip">
+<code class="sig-name descname">create_zip</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dr</em>, <em class="sig-param">files</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.create_zip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.create_zip" title="Permalink to this definition">¶</a></dt>
+<dd><p>create a zip file from a set of files and a directory path</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.get_etree">
+<code class="sig-name descname">get_etree</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">infile</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.get_etree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.get_etree" title="Permalink to this definition">¶</a></dt>
+<dd><p>reads a file and get the element tree</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.get_footnotes_back">
+<code class="sig-name descname">get_footnotes_back</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.get_footnotes_back"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.get_footnotes_back" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns footnotes in back</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.get_fig_refs_body">
+<code class="sig-name descname">get_fig_refs_body</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.get_fig_refs_body"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.get_fig_refs_body" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.get_fig_ids_body">
+<code class="sig-name descname">get_fig_ids_body</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.get_fig_ids_body"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.get_fig_ids_body" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.get_footnotes_body">
+<code class="sig-name descname">get_footnotes_body</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.get_footnotes_body"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.get_footnotes_body" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns footnotes in body</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.get_ref_ids_back">
+<code class="sig-name descname">get_ref_ids_back</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.get_ref_ids_back"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.get_ref_ids_back" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns references in back</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.get_ref_ids_body">
+<code class="sig-name descname">get_ref_ids_body</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.get_ref_ids_body"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.get_ref_ids_body" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns references in body</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.get_stringified_children">
+<code class="sig-name descname">get_stringified_children</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.get_stringified_children"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.get_stringified_children" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.get_refs_mixed_back">
+<code class="sig-name descname">get_refs_mixed_back</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.get_refs_mixed_back"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.get_refs_mixed_back" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns mixed citations in back</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.get_unreferenced_footnotes">
+<code class="sig-name descname">get_unreferenced_footnotes</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tr</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.get_unreferenced_footnotes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.get_unreferenced_footnotes" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns a list of footnotes, which are not in body</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.merge_repeating_neighbours">
+<code class="sig-name descname">merge_repeating_neighbours</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tr</em>, <em class="sig-param">etype</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.merge_repeating_neighbours"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.merge_repeating_neighbours" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.modify_files">
+<code class="sig-name descname">modify_files</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dr</em>, <em class="sig-param">files</em>, <em class="sig-param">context</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.modify_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.modify_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>merge  a set of xml files in a directory</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.stringify">
+<code class="sig-name descname">stringify</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.stringify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.stringify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.remove_all_elements_of_type">
+<code class="sig-name descname">remove_all_elements_of_type</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em>, <em class="sig-param">names</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.remove_all_elements_of_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.remove_all_elements_of_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>removes all the elements of a certain type in a element tree</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.remove_comments">
+<code class="sig-name descname">remove_comments</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.remove_comments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.remove_comments" title="Permalink to this definition">¶</a></dt>
+<dd><p>removes all the comments  in a element tree</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.remove_duplicate_http_links">
+<code class="sig-name descname">remove_duplicate_http_links</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tr</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.remove_duplicate_http_links"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.remove_duplicate_http_links" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.remove_duplicate_refs">
+<code class="sig-name descname">remove_duplicate_refs</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tr</em>, <em class="sig-param">tag_list</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.remove_duplicate_refs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.remove_duplicate_refs" title="Permalink to this definition">¶</a></dt>
+<dd><p>removes duplicate references</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.remove_name_duplicates_speech">
+<code class="sig-name descname">remove_name_duplicates_speech</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tr</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.remove_name_duplicates_speech"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.remove_name_duplicates_speech" title="Permalink to this definition">¶</a></dt>
+<dd><p>removes name duplication  in  speech tag</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.remove_not_used_in_back">
+<code class="sig-name descname">remove_not_used_in_back</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tr</em>, <em class="sig-param">tag</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.remove_not_used_in_back"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.remove_not_used_in_back" title="Permalink to this definition">¶</a></dt>
+<dd><p>removes  footnotes, references, which are not linked.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.remove_element">
+<code class="sig-name descname">remove_element</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">e</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.remove_element"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.remove_element" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.remove_table_references">
+<code class="sig-name descname">remove_table_references</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em>, <em class="sig-param">name</em>, <em class="sig-param">attr</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.remove_table_references"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.remove_table_references" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.set_enumeration">
+<code class="sig-name descname">set_enumeration</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tr</em>, <em class="sig-param">name</em>, <em class="sig-param">attr</em>, <em class="sig-param">value</em>, <em class="sig-param">context</em>, <em class="sig-param">f</em>, <em class="sig-param">chapter</em>, <em class="sig-param">order</em>, <em class="sig-param">count</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.set_enumeration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.set_enumeration" title="Permalink to this definition">¶</a></dt>
+<dd><p>set the count id for an attribute in a tag type</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.set_numbering">
+<code class="sig-name descname">set_numbering</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em>, <em class="sig-param">tags</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.set_numbering"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.set_numbering" title="Permalink to this definition">¶</a></dt>
+<dd><p>tags auto-numbering</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.set_roman_numbers">
+<code class="sig-name descname">set_roman_numbers</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">count</em>, <em class="sig-param">range_count</em>, <em class="sig-param">cf</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.set_roman_numbers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.set_roman_numbers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.set_uuid_fns">
+<code class="sig-name descname">set_uuid_fns</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tr</em>, <em class="sig-param">s</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.set_uuid_fns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.set_uuid_fns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.set_uuid_figs">
+<code class="sig-name descname">set_uuid_figs</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tr</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.set_uuid_figs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.set_uuid_figs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.tools.archive.postProcess.PostProcess.sort_references">
+<code class="sig-name descname">sort_references</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tr</em>, <em class="sig-param">parent</em>, <em class="sig-param">tag_list</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#PostProcess.sort_references"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.PostProcess.sort_references" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort all the references</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="heimpt.tools.archive.postProcess.main">
+<code class="sig-prename descclassname">heimpt.tools.archive.postProcess.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/heimpt/tools/archive/postProcess.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.tools.archive.postProcess.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heimpt.tools.archive.postProcess</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.LOG_FILE">LOG_FILE</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.numeral_map">numeral_map</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess">PostProcess</a><ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.print_unreferenced_figs">print_unreferenced_figs</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.apply_transformations">apply_transformations</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.references_to_citations">references_to_citations</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.create_automated_references">create_automated_references</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.citations_to_references">citations_to_references</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.contains">contains</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.convert_int_to_roman">convert_int_to_roman</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.convert_roman_to_int">convert_roman_to_int</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.create_files">create_files</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.create_footnote_file">create_footnote_file</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.create_merged_file">create_merged_file</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.create_output">create_output</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.create_refs_csv">create_refs_csv</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.create_zip">create_zip</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.get_etree">get_etree</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.get_footnotes_back">get_footnotes_back</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.get_fig_refs_body">get_fig_refs_body</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.get_fig_ids_body">get_fig_ids_body</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.get_footnotes_body">get_footnotes_body</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.get_ref_ids_back">get_ref_ids_back</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.get_ref_ids_body">get_ref_ids_body</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.get_stringified_children">get_stringified_children</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.get_refs_mixed_back">get_refs_mixed_back</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.get_unreferenced_footnotes">get_unreferenced_footnotes</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.merge_repeating_neighbours">merge_repeating_neighbours</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.modify_files">modify_files</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.stringify">stringify</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.remove_all_elements_of_type">remove_all_elements_of_type</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.remove_comments">remove_comments</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.remove_duplicate_http_links">remove_duplicate_http_links</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.remove_duplicate_refs">remove_duplicate_refs</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.remove_name_duplicates_speech">remove_name_duplicates_speech</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.remove_not_used_in_back">remove_not_used_in_back</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.remove_element">remove_element</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.remove_table_references">remove_table_references</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.set_enumeration">set_enumeration</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.set_numbering">set_numbering</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.set_roman_numbers">set_roman_numbers</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.set_uuid_fns">set_uuid_fns</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.set_uuid_figs">set_uuid_figs</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.PostProcess.sort_references">sort_references</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.tools.archive.postProcess.main">main</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../../_sources/autoapi/heimpt/tools/archive/postProcess/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

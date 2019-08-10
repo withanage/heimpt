@@ -1,0 +1,20 @@
+:mod:`heimpt.tools.archive.jats_requirements`
+=============================================
+
+.. py:module:: heimpt.tools.archive.jats_requirements
+
+
+Module Contents
+---------------
+
+.. data:: data
+   
+
+   
+
+.. function:: recurse(data)
+
+
+.. function:: print_row(a, b)
+
+

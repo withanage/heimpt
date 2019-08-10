@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.captionclassifier &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bin.captionclassifier">
+<span id="bin-captionclassifier"></span><h1><a class="reference internal" href="#module-bin.captionclassifier" title="bin.captionclassifier"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.captionclassifier</span></code></a><a class="headerlink" href="#module-bin.captionclassifier" title="Permalink to this headline">¶</a></h1>
+<p><p>captionclassfier: a tool to search for potential table titles and then link in-text entities</p>
+<dl>
+<dt>Usage:</dt><dd><p>captionclassfier.py tables &lt;input&gt; [options]
+captionclassfier.py graphics &lt;input&gt; [options]
+captionclassfier.py all &lt;input&gt; [options]</p>
+</dd>
+<dt>Options:</dt><dd><dl class="option-list">
+<dt><kbd><span class="option">-d</span>, <span class="option">--debug</span></kbd></dt>
+<dd><p>Enable debug output</p>
+</dd>
+<dt><kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></dt>
+<dd><p>Show this screen.</p>
+</dd>
+<dt><kbd><span class="option">-v</span>, <span class="option">--version</span></kbd></dt>
+<dd><p>Show version.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bin.captionclassifier.CaptionClassifier">
+<em class="property">class </em><code class="sig-prename descclassname">bin.captionclassifier.</code><code class="sig-name descname">CaptionClassifier</code><span class="sig-paren">(</span><em class="sig-param">global_variables</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/captionclassifier.html#CaptionClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.captionclassifier.CaptionClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">debug.Debuggable</span></code></p>
+<dl class="method">
+<dt id="bin.captionclassifier.CaptionClassifier.replace_in_text">
+<code class="sig-name descname">replace_in_text</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id</em>, <em class="sig-param">element</em>, <em class="sig-param">replace_text</em>, <em class="sig-param">ref_type</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/captionclassifier.html#CaptionClassifier.replace_in_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.captionclassifier.CaptionClassifier.replace_in_text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.captionclassifier.CaptionClassifier.replace_in_tail">
+<code class="sig-name descname">replace_in_tail</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">id</em>, <em class="sig-param">element</em>, <em class="sig-param">replace_text</em>, <em class="sig-param">ref_type</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/captionclassifier.html#CaptionClassifier.replace_in_tail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.captionclassifier.CaptionClassifier.replace_in_tail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.captionclassifier.CaptionClassifier.link">
+<code class="sig-name descname">link</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">table_ids</em>, <em class="sig-param">replace_texts</em>, <em class="sig-param">paragraphs</em>, <em class="sig-param">ref_type</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/captionclassifier.html#CaptionClassifier.link"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.captionclassifier.CaptionClassifier.link" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.captionclassifier.CaptionClassifier.run_graphics_sibling">
+<code class="sig-name descname">run_graphics_sibling</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/captionclassifier.html#CaptionClassifier.run_graphics_sibling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.captionclassifier.CaptionClassifier.run_graphics_sibling" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.captionclassifier.CaptionClassifier.run_graphics">
+<code class="sig-name descname">run_graphics</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/captionclassifier.html#CaptionClassifier.run_graphics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.captionclassifier.CaptionClassifier.run_graphics" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.captionclassifier.CaptionClassifier.run_tables">
+<code class="sig-name descname">run_tables</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/captionclassifier.html#CaptionClassifier.run_tables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.captionclassifier.CaptionClassifier.run_tables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.captionclassifier.CaptionClassifier.run_ext_link_compliance">
+<code class="sig-name descname">run_ext_link_compliance</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/captionclassifier.html#CaptionClassifier.run_ext_link_compliance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.captionclassifier.CaptionClassifier.run_ext_link_compliance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="bin.captionclassifier.main">
+<code class="sig-prename descclassname">bin.captionclassifier.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/captionclassifier.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.captionclassifier.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.captionclassifier</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#bin.captionclassifier.CaptionClassifier">CaptionClassifier</a><ul>
+<li><a class="reference internal" href="#bin.captionclassifier.CaptionClassifier.replace_in_text">replace_in_text</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.captionclassifier.CaptionClassifier.replace_in_tail">replace_in_tail</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.captionclassifier.CaptionClassifier.link">link</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.captionclassifier.CaptionClassifier.run_graphics_sibling">run_graphics_sibling</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.captionclassifier.CaptionClassifier.run_graphics">run_graphics</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.captionclassifier.CaptionClassifier.run_tables">run_tables</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.captionclassifier.CaptionClassifier.run_ext_link_compliance">run_ext_link_compliance</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.captionclassifier.main">main</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/autoapi/bin/captionclassifier/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

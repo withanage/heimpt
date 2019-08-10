@@ -1,0 +1,800 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.referencelinker &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.referencelinker</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;referencelinker.py: a tool to link parenthetical references to ref-list elements in a JATS file</span>
+
+<span class="sd">Usage:</span>
+<span class="sd">    referencelinker.py scan &lt;input&gt; [options]</span>
+<span class="sd">    referencelinker.py link &lt;input&gt; &lt;source_id&gt; &lt;dest_id&gt; [options]</span>
+<span class="sd">    referencelinker.py prune &lt;input&gt; [options]</span>
+
+<span class="sd">Options:</span>
+<span class="sd">    -d, --debug                                     Enable debug output</span>
+<span class="sd">    --interactive                                   Prompt the user to assist in interactive tagging</span>
+<span class="sd">    -h, --help                                      Show this screen.</span>
+<span class="sd">    --nogit                                         Disable git debug filesystem (only of use with --debug)</span>
+<span class="sd">    -v, --version                                   Show version.</span>
+<span class="sd">    -z, --zotero                                    Enable Zotero integration for references.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">teimanipulate</span> <span class="k">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="__author__"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.__author__">[docs]</a><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Martin Paul Eve&quot;</span></div>
+<div class="viewcode-block" id="__email__"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.__email__">[docs]</a><span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;martin@martineve.com&quot;</span></div>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A class that looks for references to link in an NLM file and joins them to the corresponding reference entry</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">debug</span> <span class="k">import</span> <span class="n">Debuggable</span>
+<span class="kn">from</span> <span class="nn">nlmmanipulate</span> <span class="k">import</span> <span class="n">NlmManipulate</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">lxml</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">from</span> <span class="nn">bare_globals</span> <span class="k">import</span> <span class="n">GV</span>
+<span class="kn">from</span> <span class="nn">docopt</span> <span class="k">import</span> <span class="n">docopt</span>
+<span class="kn">from</span> <span class="nn">interactive</span> <span class="k">import</span> <span class="n">Interactive</span>
+
+
+<div class="viewcode-block" id="ReplaceObject"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReplaceObject">[docs]</a><span class="k">class</span> <span class="nc">ReplaceObject</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_variables</span><span class="p">,</span> <span class="n">paragraph</span><span class="p">,</span> <span class="n">reference_to_link</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span> <span class="o">=</span> <span class="n">paragraph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reference_to_link</span> <span class="o">=</span> <span class="n">reference_to_link</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">global_variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="n">Debuggable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Reference Linker Object&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ReplaceObject.link"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReplaceObject.link">[docs]</a>    <span class="k">def</span> <span class="nf">link</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">bib_id</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">reference_to_link</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+            <span class="n">bib_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reference_to_link</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reference_to_link</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;ID</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+            <span class="n">bib_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reference_to_link</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bib_id</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Linked </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bib_id</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="ReplaceStub"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReplaceStub">[docs]</a><span class="k">class</span> <span class="nc">ReplaceStub</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_variables</span><span class="p">,</span> <span class="n">paragraph</span><span class="p">,</span> <span class="n">replace_text</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">link_text</span><span class="o">=</span><span class="s1">&#39;TO_LINK&#39;</span><span class="p">,</span>
+                 <span class="n">length_ignore</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span> <span class="o">=</span> <span class="n">paragraph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span> <span class="o">=</span> <span class="n">replace_text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">global_variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="n">tree</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">manipulate</span> <span class="o">=</span> <span class="n">manipulate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">link_text</span> <span class="o">=</span> <span class="n">link_text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length_ignore</span> <span class="o">=</span> <span class="n">length_ignore</span>
+        <span class="n">Debuggable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Reference Stub Linker Object&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ReplaceStub.replace_in_text"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReplaceStub.replace_in_text">[docs]</a>    <span class="k">def</span> <span class="nf">replace_in_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">link_text</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+            <span class="c1"># safety check: if not in the text, just return</span>
+            <span class="k">return</span> <span class="n">element</span>
+
+        <span class="n">before_after</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">encapsulate</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
+        <span class="n">encapsulate</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">before_after</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">new_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;xref&#39;</span><span class="p">)</span>
+        <span class="n">new_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">link_text</span>
+        <span class="n">new_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;ref-type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;bibr&#39;</span>
+        <span class="n">new_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;ID</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+        <span class="n">new_element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span>
+        <span class="n">new_element</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">before_after</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+        <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">encapsulate</span><span class="p">,</span> <span class="n">new_element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">sub_element</span> <span class="ow">in</span> <span class="n">element</span><span class="p">:</span>
+            <span class="n">Manipulate</span><span class="o">.</span><span class="n">append_safe</span><span class="p">(</span><span class="n">encapsulate</span><span class="p">,</span> <span class="n">sub_element</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">element</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">encapsulate</span><span class="p">)</span>
+        <span class="n">element</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">encapsulate</span></div>
+
+<div class="viewcode-block" id="ReplaceStub.replace_in_tail"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReplaceStub.replace_in_tail">[docs]</a>    <span class="k">def</span> <span class="nf">replace_in_tail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">link_text</span><span class="p">):</span>
+
+        <span class="n">before_after</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">new_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;xref&#39;</span><span class="p">)</span>
+        <span class="n">new_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">link_text</span>
+        <span class="n">new_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;ref-type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;bibr&#39;</span>
+        <span class="n">new_element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;ID</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+        <span class="n">new_element</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span>
+        <span class="n">new_element</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">before_after</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+        <span class="n">element</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">new_element</span><span class="p">)</span>
+
+        <span class="n">element</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">before_after</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">new_element</span></div>
+
+<div class="viewcode-block" id="ReplaceStub.replace_in_text_and_update_others"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReplaceStub.replace_in_text_and_update_others">[docs]</a>    <span class="k">def</span> <span class="nf">replace_in_text_and_update_others</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_list</span><span class="p">,</span> <span class="n">link_text</span><span class="p">):</span>
+        <span class="n">to_update</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">object_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">object_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">paragraph</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span><span class="p">:</span>
+                    <span class="n">to_update</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_in_text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">link_text</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">to_update</span><span class="p">:</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">paragraph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span></div>
+
+<div class="viewcode-block" id="ReplaceStub.link"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReplaceStub.link">[docs]</a>    <span class="k">def</span> <span class="nf">link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object_list</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># this procedure is more complex than desirable because the content can appear between tags (like italic)</span>
+        <span class="c1"># otherwise it would be a straight replace</span>
+        <span class="n">linked</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">in_xref</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Replace text is empty: bailing&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_ignore</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">attempt</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Replace text is too short: bailing&#39;</span><span class="p">)</span>
+                <span class="k">return</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span><span class="o">.</span><span class="n">text</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span><span class="o">.</span><span class="n">text</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">replace_in_text_and_update_others</span><span class="p">(</span><span class="n">object_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">link_text</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Successfully linked </span><span class="si">{0}</span><span class="s1"> stub with sub elements&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span><span class="p">))</span>
+            <span class="n">linked</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span><span class="o">.</span><span class="n">text</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span><span class="o">.</span><span class="n">text</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">replace_in_text_and_update_others</span><span class="p">(</span><span class="n">object_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">link_text</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_in_text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">link_text</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Successfully linked </span><span class="si">{0}</span><span class="s1"> stub&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span><span class="p">))</span>
+            <span class="n">linked</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">sub_element</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sub_element</span><span class="o">.</span><span class="n">tag</span> <span class="o">!=</span> <span class="s1">&#39;xref&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">sub_element</span><span class="o">.</span><span class="n">text</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span> <span class="ow">in</span> <span class="n">sub_element</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">replace_in_text</span><span class="p">(</span><span class="n">sub_element</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">link_text</span><span class="p">)</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                           <span class="sa">u</span><span class="s1">&#39;Successfully linked </span><span class="si">{0}</span><span class="s1"> stub from sub element&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span><span class="p">))</span>
+                    <span class="n">linked</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">in_xref</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">if</span> <span class="n">sub_element</span><span class="o">.</span><span class="n">tail</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span> <span class="ow">in</span> <span class="n">sub_element</span><span class="o">.</span><span class="n">tail</span><span class="p">:</span>
+                <span class="n">new_element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_in_tail</span><span class="p">(</span><span class="n">sub_element</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">link_text</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                       <span class="sa">u</span><span class="s1">&#39;Successfully linked </span><span class="si">{0}</span><span class="s1"> stub from sub element tail&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span><span class="p">))</span>
+                <span class="n">linked</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">linked</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">in_xref</span><span class="p">:</span>
+                <span class="c1"># likelihood here is that we have something like this:</span>
+                <span class="c1"># (&lt;italic&gt;Text Name&lt;/italic&gt; 354)</span>
+                <span class="c1"># or</span>
+                <span class="c1"># (text &lt;italic&gt;something&lt;/italic&gt;)</span>
+                <span class="c1"># this requires a more complex approach: we will fallback to the less safe method of using tostring</span>
+                <span class="c1"># doing a regex replace and then re-encapsulating with fromstring</span>
+
+                <span class="n">in_string</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;unicode&quot;</span><span class="p">)</span>
+
+                <span class="n">regex</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;\((?P&lt;text&gt;(?!.*xref).*?)\)&#39;</span>
+
+                <span class="n">xref_before</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;&lt;xref ref-type=&quot;bibr&quot; &#39;</span> \
+                              <span class="sa">u</span><span class="s1">&#39;id=&quot;</span><span class="si">{0}</span><span class="s1">&quot; rid=&quot;</span><span class="si">{1}</span><span class="s1">&quot;&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;ID</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()),</span> <span class="bp">self</span><span class="o">.</span><span class="n">link_text</span><span class="p">)</span>
+                <span class="n">xref_after</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;&lt;/xref&gt;&#39;</span>
+
+                <span class="n">new_text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;(</span><span class="si">{0}</span><span class="s1">\g&lt;text&gt;</span><span class="si">{1}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xref_before</span><span class="p">,</span> <span class="n">xref_after</span><span class="p">),</span> <span class="n">in_string</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">new_element</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">new_text</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">new_element</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;unicode&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">in_string</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Did not link </span><span class="si">{0}</span><span class="s1"> stub&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># a change has been made</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span><span class="o">.</span><span class="n">addnext</span><span class="p">(</span><span class="n">new_element</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">paragraph</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Linked </span><span class="si">{0}</span><span class="s1"> stub using regex method&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span><span class="p">))</span>
+
+                        <span class="bp">self</span><span class="o">.</span><span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Did not link </span><span class="si">{0}</span><span class="s1"> stub as &#39;</span>
+                                                 <span class="sa">u</span><span class="s1">&#39;had overlapping tags&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">replace_text</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="ReferenceLinker"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReferenceLinker">[docs]</a><span class="k">class</span> <span class="nc">ReferenceLinker</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_variables</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">global_variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">debug</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ibid</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">Debuggable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Reference Linker&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ReferenceLinker.process_ibid_authors"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReferenceLinker.process_ibid_authors">[docs]</a>    <span class="k">def</span> <span class="nf">process_ibid_authors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ref_items</span><span class="p">):</span>
+        <span class="n">parsed</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># this checks for items beginning with &quot;---.&quot; and replaces them with the real author name</span>
+        <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">ref_items</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ref</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">ord</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">8212</span> <span class="ow">and</span> <span class="nb">ord</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="mi">8212</span> <span class="ow">and</span> \
+                            <span class="nb">ord</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="mi">8212</span> <span class="ow">and</span> <span class="n">ref</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;.&#39;</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">ref</span>
+
+                    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                        <span class="n">previous</span> <span class="o">=</span> <span class="n">current</span>
+                        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">getprevious</span><span class="p">()</span>
+
+                        <span class="k">if</span> <span class="n">current</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="k">break</span>
+
+                        <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">ord</span><span class="p">(</span><span class="n">current</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">8212</span><span class="p">:</span>
+                            <span class="n">authorname</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+                            <span class="n">ref</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">authorname</span> <span class="o">+</span> <span class="n">ref</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
+                            <span class="n">parsed</span> <span class="o">+=</span> <span class="mi">1</span>
+                            <span class="k">break</span>
+
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">pass</span>
+
+            <span class="k">elif</span> <span class="n">ref</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ref</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">):</span>
+                <span class="n">ref</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">ref</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">ref</span>
+
+                    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                        <span class="n">previous</span> <span class="o">=</span> <span class="n">current</span>
+                        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">getprevious</span><span class="p">()</span>
+
+                        <span class="k">if</span> <span class="n">current</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="k">break</span>
+
+                        <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">ord</span><span class="p">(</span><span class="n">current</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">8212</span> <span class="ow">or</span> <span class="n">current</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;_&#39;</span><span class="p">:</span>
+                            <span class="n">authorname</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+                            <span class="n">ref</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">authorname</span> <span class="o">+</span> <span class="n">ref</span><span class="o">.</span><span class="n">text</span>
+                            <span class="n">parsed</span> <span class="o">+=</span> <span class="mi">1</span>
+                            <span class="k">break</span>
+
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">pass</span>
+
+        <span class="k">return</span> <span class="n">parsed</span></div>
+
+<div class="viewcode-block" id="ReferenceLinker.clean_ref_items"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReferenceLinker.clean_ref_items">[docs]</a>    <span class="k">def</span> <span class="nf">clean_ref_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">ref_items</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">):</span>
+        <span class="n">allowed_tags</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;italic&#39;</span><span class="p">,</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="s1">&#39;sup&#39;</span><span class="p">,</span> <span class="s1">&#39;sub&#39;</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">ref_items</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">ref</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">item</span><span class="o">.</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">allowed_tags</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">lxml</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">_Comment</span><span class="p">:</span>
+                    <span class="n">item</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+
+        <span class="n">etree</span><span class="o">.</span><span class="n">strip_tags</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s1">&#39;REMOVE&#39;</span><span class="p">)</span>
+
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Stripped disallowed tags from reference tree&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReferenceLinker.run"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReferenceLinker.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interactive</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">interactive</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">run_prompt</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="n">manipulate</span> <span class="o">=</span> <span class="n">NlmManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="c1"># pre-cleanup: remove all empty ext-links as these break the linker</span>
+        <span class="n">items_to_clean</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//ext-link&#39;</span><span class="p">)</span>
+
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items_to_clean</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;{http://www.w3.org/1999/xlink}href&#39;</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">attrib</span> <span class="ow">and</span> \
+                    <span class="n">item</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;{http://www.w3.org/1999/xlink}href&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+                <span class="n">etree</span><span class="o">.</span><span class="n">strip_tags</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">getparent</span><span class="p">(),</span> <span class="s1">&#39;REMOVE&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Removed </span><span class="si">{0}</span><span class="s1"> blank ext-link tags&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+
+        <span class="n">ref_items</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//back/ref-list/ref&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">clean_ref_items</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">ref_items</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">)</span>
+
+        <span class="c1"># handle numbered reference items</span>
+        <span class="n">references_and_numbers</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">ref_items</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+            <span class="n">ref_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^(?P&lt;number&gt;\d+)\.*&#39;</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">ref_match</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">references_and_numbers</span><span class="p">[</span><span class="n">result</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;number&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="n">ref</span>
+
+        <span class="n">parsed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_ibid_authors</span><span class="p">(</span><span class="n">ref_items</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">parsed</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Replace </span><span class="si">{0}</span><span class="s1"> instances of &quot;---.&quot; at start of references&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parsed</span><span class="p">))</span>
+
+        <span class="n">to_link</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">to_stub</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">square_bracket_count</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//sec//p[not(mml:math)] | //td&#39;</span><span class="p">,</span>
+                            <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;mml&#39;</span><span class="p">:</span> <span class="s1">&#39;http://www.w3.org/1998/Math/MathML&#39;</span><span class="p">}):</span>
+
+            <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+            <span class="n">reference_test</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;(?:\((?P&lt;text&gt;((?:[A-Z]</span><span class="si">{1}</span><span class="s1">[a-z\s,\.\d\;&amp;]+)*|(?:(?:\d</span><span class="si">{4}</span><span class="s1">\s)?[A-Z]+[\s\,](?:[A-Z]</span><span class="si">{1}</span><span class="s1">[a-z\s,\.\d\;&amp;]*)?(?:\d</span><span class="si">{4}</span><span class="s1">)?(?:[a-z\s,\.\d\;&amp;]+)*)|(?:p?P?\.?\s?\d+))|.+\&lt;ref\s.+)\))&#39;</span><span class="p">)</span>
+            <span class="n">matches</span> <span class="o">=</span> <span class="n">reference_test</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+            <span class="c1"># exclude any square brackets with numbers inside</span>
+            <span class="n">sub_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;\[(?P&lt;square&gt;\d*[,\-;\d\s]*)\]&#39;</span><span class="p">)</span>
+            <span class="n">smatch</span> <span class="o">=</span> <span class="n">sub_match</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">smatch</span><span class="p">:</span>
+                <span class="n">smatches</span> <span class="o">=</span> <span class="n">sub_match</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">smatch</span> <span class="ow">in</span> <span class="n">smatches</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Handling references in square &#39;</span>
+                                                 <span class="sa">u</span><span class="s1">&#39;brackets: [</span><span class="si">{0}</span><span class="s1">] &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">smatch</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;square&#39;</span><span class="p">)))</span>
+                    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;|,&#39;</span><span class="p">,</span> <span class="n">smatch</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;square&#39;</span><span class="p">)):</span>
+                        <span class="k">if</span> <span class="s1">&#39;-&#39;</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
+                            <span class="n">parent</span><span class="p">,</span> <span class="n">tail</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">find_text</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+
+                            <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                                <span class="n">new_string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+                                <span class="k">try</span><span class="p">:</span>
+                                    <span class="n">split_range</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+                                    <span class="k">for</span> <span class="n">no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">split_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">split_range</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                                        <span class="n">new_string</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">no</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span>
+                                <span class="k">except</span><span class="p">:</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Unable to parse reference &#39;</span>
+                                                                 <span class="sa">u</span><span class="s1">&#39;number in range </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+                                    <span class="k">break</span>
+
+                                <span class="k">if</span> <span class="n">new_string</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">item</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">):</span>
+                                    <span class="n">new_string</span> <span class="o">=</span> <span class="n">new_string</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">new_string</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+                                <span class="k">if</span> <span class="n">tail</span> <span class="ow">and</span> <span class="n">new_string</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                                    <span class="n">parent</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">new_string</span><span class="p">)</span>
+                                <span class="k">elif</span> <span class="ow">not</span> <span class="n">tail</span> <span class="ow">and</span> <span class="n">new_string</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                                    <span class="n">parent</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">new_string</span><span class="p">)</span>
+
+                                <span class="k">try</span><span class="p">:</span>
+                                    <span class="n">split_range</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+                                    <span class="k">for</span> <span class="n">no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">split_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">split_range</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Parsing reference &#39;</span>
+                                                                     <span class="sa">u</span><span class="s1">&#39;number in range </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">no</span><span class="p">)))</span>
+
+                                        <span class="n">to_stub</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReplaceStub</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">no</span><span class="p">),</span> <span class="n">tree</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span>
+                                                                   <span class="s1">&#39;TO_LINK_NUMBER&#39;</span><span class="p">,</span> <span class="n">length_ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+                                <span class="k">except</span><span class="p">:</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Unable to parse reference &#39;</span>
+                                                                 <span class="sa">u</span><span class="s1">&#39;number in range </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+                                    <span class="k">break</span>
+
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="c1"># just replace the components</span>
+                                <span class="n">split_range</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+                                <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">split_range</span><span class="p">:</span>
+                                    <span class="n">to_stub</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReplaceStub</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">link</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span>
+                                                               <span class="s1">&#39;TO_LINK_NUMBER&#39;</span><span class="p">,</span> <span class="n">length_ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">:</span>
+                                <span class="n">to_stub</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReplaceStub</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">tree</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="s1">&#39;TO_LINK_NUMBER&#39;</span><span class="p">,</span>
+                                                           <span class="n">length_ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+                        <span class="n">square_bracket_count</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">matches</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;;&#39;</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">:</span>
+                            <span class="n">to_stub</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReplaceStub</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">tree</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">to_stub</span><span class="p">:</span>
+            <span class="n">link</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">to_stub</span><span class="p">)</span>
+            <span class="c1">#pass</span>
+
+        <span class="n">etree</span><span class="o">.</span><span class="n">strip_elements</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s1">&#39;REMOVE&#39;</span><span class="p">)</span>
+
+        <span class="n">use_index_method</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">square_bracket_count</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">references_and_numbers</span><span class="p">):</span>
+            <span class="c1"># we found more than 3 [1], [2] style references but no reference elements beginning with numbers</span>
+            <span class="c1"># so, we will simply try to use the /index/ of the reference item (-1 for zero-based compensation)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Using indexical method for square bracket correlation&#39;</span><span class="p">)</span>
+            <span class="n">use_index_method</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ref_items</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Found no references to link&#39;</span><span class="p">)</span>
+
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//xref[@rid=&quot;TO_LINK_NUMBER&quot;]&#39;</span><span class="p">):</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">use_index_method</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">references_and_numbers</span><span class="p">:</span>
+                    <span class="n">ReplaceObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">references_and_numbers</span><span class="p">[</span><span class="n">text</span><span class="p">])</span><span class="o">.</span><span class="n">link</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;TO_LINK&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">ReplaceObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">ref_items</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">link</span><span class="p">()</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Failed to link to reference </span><span class="si">{0}</span><span class="s1"> + 1 using &#39;</span>
+                                                 <span class="sa">u</span><span class="s1">&#39;indexical method&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;TO_LINK&#39;</span>
+
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//xref[@rid=&quot;TO_LINK&quot;]&#39;</span><span class="p">):</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+            <span class="n">item</span> <span class="o">=</span> <span class="n">text</span>
+
+            <span class="n">bare_items</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">ref_items</span><span class="p">:</span>
+                <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="n">bare_ref</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+
+                <span class="n">bare_refs</span> <span class="o">=</span> <span class="n">bare_ref</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+
+                <span class="n">replace_chars</span> <span class="o">=</span> <span class="s1">&#39;[,\.\&lt;\&gt;\(\)\;\:\@</span><span class="se">\&#39;</span><span class="s1">\#\~\}\{\[\]</span><span class="se">\&quot;</span><span class="s1">]&#39;</span>
+
+                <span class="k">for</span> <span class="n">sub_item</span> <span class="ow">in</span> <span class="n">bare_items</span><span class="p">:</span>
+                    <span class="n">found_ref</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="k">for</span> <span class="n">sub_ref</span> <span class="ow">in</span> <span class="n">bare_refs</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">replace_chars</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sub_item</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="n">sub_ref</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">replace_chars</span><span class="p">):</span>
+                            <span class="n">found_ref</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="k">break</span>
+
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">found_ref</span><span class="p">:</span>
+                        <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bare_items</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">found</span><span class="p">:</span>
+                    <span class="n">to_link</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReplaceObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">ref</span><span class="p">))</span>
+
+                <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">bare_items</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">replace_chars</span> <span class="o">=</span> <span class="s1">&#39;[,\.\&lt;\&gt;\(\)\;\:\@</span><span class="se">\&#39;</span><span class="s1">\#\~\}\{\[\]</span><span class="se">\&quot;</span><span class="s1">\d]&#39;</span>
+                    <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+
+                    <span class="k">for</span> <span class="n">sub_item</span> <span class="ow">in</span> <span class="n">bare_items</span><span class="p">:</span>
+                        <span class="n">found_ref</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="n">subbed_text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">replace_chars</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sub_item</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                        <span class="k">for</span> <span class="n">sub_ref</span> <span class="ow">in</span> <span class="n">bare_refs</span><span class="p">:</span>
+                            <span class="n">sub_ref</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">replace_chars</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sub_ref</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+                            <span class="k">if</span> <span class="n">subbed_text</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">bare_items</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                                <span class="n">found_ref</span> <span class="o">=</span> <span class="kc">True</span>
+                                <span class="k">break</span>
+
+                            <span class="k">if</span> <span class="n">subbed_text</span> <span class="o">==</span> <span class="n">sub_ref</span> <span class="ow">and</span> <span class="n">subbed_text</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="n">sub_ref</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                                <span class="n">found_ref</span> <span class="o">=</span> <span class="kc">True</span>
+                                <span class="k">break</span>
+
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">found_ref</span><span class="p">:</span>
+                            <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+
+                    <span class="c1"># we don&#39;t allow linking to the last item here because it is almost universally wrong</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bare_items</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">found</span> <span class="ow">and</span> <span class="n">ref_items</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ref_items</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">to_link</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReplaceObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">ref</span><span class="p">))</span>
+
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">to_link</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Found no references to link&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">to_link</span><span class="p">:</span>
+            <span class="n">link</span><span class="o">.</span><span class="n">link</span><span class="p">()</span>
+            <span class="c1">#pass</span>
+
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReferenceLinker.search_references"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReferenceLinker.search_references">[docs]</a>    <span class="k">def</span> <span class="nf">search_references</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_term</span><span class="p">,</span> <span class="n">ref_items</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">input_block</span><span class="p">):</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">ref_items</span><span class="p">:</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="n">bare_ref</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+
+            <span class="n">bare_refs</span> <span class="o">=</span> <span class="n">bare_ref</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+
+            <span class="n">replace_chars</span> <span class="o">=</span> <span class="s1">&#39;,.&lt;&gt;\(\);:@</span><span class="se">\&#39;</span><span class="s1">\#~}{[]&quot;&#39;</span>
+
+            <span class="n">found_ref</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="k">for</span> <span class="n">sub_ref</span> <span class="ow">in</span> <span class="n">bare_refs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">search_term</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">replace_chars</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">sub_ref</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">replace_chars</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="n">found_ref</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">break</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">found_ref</span><span class="p">:</span>
+                <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="k">if</span> <span class="n">found</span><span class="p">:</span>
+                <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReplaceObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">,</span> <span class="n">input_block</span><span class="p">,</span> <span class="n">ref</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">results</span></div>
+
+<div class="viewcode-block" id="ReferenceLinker.link_items"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReferenceLinker.link_items">[docs]</a>    <span class="k">def</span> <span class="nf">link_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">dest_id</span><span class="p">,</span> <span class="n">manipulate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tree</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Attempting to link XREF </span><span class="si">{0}</span><span class="s1"> to REF </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source_id</span><span class="p">,</span> <span class="n">dest_id</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">manipulate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">manipulate</span> <span class="o">=</span> <span class="n">NlmManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">tree</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="n">source</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//xref[@id=&quot;</span><span class="si">{0}</span><span class="s1">&quot;]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source_id</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">dest</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//ref[@id=&quot;</span><span class="si">{0}</span><span class="s1">&quot;]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dest_id</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">ReplaceObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span><span class="o">.</span><span class="n">link</span><span class="p">()</span>
+
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReferenceLinker.handle_search"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReferenceLinker.handle_search">[docs]</a>    <span class="k">def</span> <span class="nf">handle_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">prompt</span><span class="p">,</span> <span class="n">ref_items</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">prompt</span><span class="o">.</span><span class="n">input_</span><span class="p">(</span><span class="s1">&#39;Enter search term:&#39;</span><span class="p">)</span>
+        <span class="n">result_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_references</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">ref_items</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+        <span class="n">sel</span> <span class="o">=</span> <span class="n">prompt</span><span class="o">.</span><span class="n">choose_candidate</span><span class="p">(</span><span class="n">result_list</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_input</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">prompt</span><span class="p">,</span> <span class="n">ref_items</span><span class="p">,</span> <span class="n">sel</span><span class="p">,</span> <span class="n">result_list</span><span class="p">)</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="ReferenceLinker.cleanup"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReferenceLinker.cleanup">[docs]</a>    <span class="k">def</span> <span class="nf">cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">manipulate</span> <span class="o">=</span> <span class="n">NlmManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">remove_reference_numbering</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ReferenceLinker.extract_contents"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReferenceLinker.extract_contents">[docs]</a>    <span class="k">def</span> <span class="nf">extract_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;REMOVE&#39;</span>
+
+        <span class="n">etree</span><span class="o">.</span><span class="n">strip_tags</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">getparent</span><span class="p">(),</span> <span class="s1">&#39;REMOVE&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReferenceLinker.handle_input"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReferenceLinker.handle_input">[docs]</a>    <span class="k">def</span> <span class="nf">handle_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manipulate</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">prompt</span><span class="p">,</span> <span class="n">ref_items</span><span class="p">,</span> <span class="n">sel</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tree</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">sel</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
+            <span class="n">prompt</span><span class="o">.</span><span class="n">print_</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;Leaving interactive mode on user command&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s2">&quot;abort&quot;</span>
+        <span class="k">elif</span> <span class="n">sel</span> <span class="o">==</span> <span class="s1">&#39;d&#39;</span><span class="p">:</span>
+            <span class="c1"># delete the surrounding xref</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Deleting reference </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">extract_contents</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ibid</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="n">sel</span> <span class="o">==</span> <span class="s1">&#39;e&#39;</span><span class="p">:</span>
+            <span class="c1"># let the user search references</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle_search</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">prompt</span><span class="p">,</span> <span class="n">ref_items</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">sel</span> <span class="o">==</span> <span class="s1">&#39;i&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ibid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Cannot ibid&#39;</span><span class="p">)</span>
+                <span class="n">sel</span> <span class="o">=</span> <span class="n">prompt</span><span class="o">.</span><span class="n">input_options</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle_input</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">prompt</span><span class="p">,</span> <span class="n">ref_items</span><span class="p">,</span> <span class="n">sel</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Linking to ibid ID </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ibid</span><span class="p">))</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">link_items</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">ibid</span><span class="p">,</span> <span class="n">manipulate</span><span class="o">=</span><span class="n">manipulate</span><span class="p">,</span> <span class="n">tree</span><span class="o">=</span><span class="n">tree</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">sel</span> <span class="o">==</span> <span class="s1">&#39;l&#39;</span><span class="p">:</span>
+            <span class="c1"># directly link the item</span>
+            <span class="n">ref_id</span> <span class="o">=</span> <span class="n">prompt</span><span class="o">.</span><span class="n">input_</span><span class="p">(</span><span class="s1">&#39;Enter reference ID:&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">link_items</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">ref_id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ibid</span> <span class="o">=</span> <span class="n">ref_id</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">sel</span> <span class="o">==</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">getparent</span><span class="p">())</span>
+            <span class="n">replace_text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">replace_text</span><span class="p">,</span> <span class="n">prompt</span><span class="o">.</span><span class="n">colorize</span><span class="p">(</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">replace_text</span><span class="p">))</span>
+
+            <span class="n">prompt</span><span class="o">.</span><span class="n">print_</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">sel</span> <span class="o">=</span> <span class="n">prompt</span><span class="o">.</span><span class="n">input_options</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_input</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">prompt</span><span class="p">,</span> <span class="n">ref_items</span><span class="p">,</span> <span class="n">sel</span><span class="p">,</span> <span class="n">tree</span><span class="o">=</span><span class="n">tree</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="k">elif</span> <span class="n">sel</span> <span class="o">==</span> <span class="s1">&#39;s&#39;</span><span class="p">:</span>
+            <span class="c1"># skip this item</span>
+            <span class="n">prompt</span><span class="o">.</span><span class="n">print_</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;Skipping this item&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ibid</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">sel</span> <span class="o">==</span> <span class="s1">&#39;t&#39;</span><span class="p">:</span>
+            <span class="c1"># delete all</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Deleting reference </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">extract_contents</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ibid</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="s2">&quot;delall&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># numerical input</span>
+            <span class="n">selected</span> <span class="o">=</span> <span class="n">candidates</span><span class="p">[</span><span class="n">sel</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># do link</span>
+            <span class="n">selected</span><span class="o">.</span><span class="n">link</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">ibid</span> <span class="o">=</span> <span class="n">selected</span><span class="o">.</span><span class="n">reference_to_link</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ReferenceLinker.run_prompt"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReferenceLinker.run_prompt">[docs]</a>    <span class="k">def</span> <span class="nf">run_prompt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Entering interactive mode&#39;</span><span class="p">)</span>
+
+        <span class="n">prompt</span> <span class="o">=</span> <span class="n">Interactive</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="n">manipulate</span> <span class="o">=</span> <span class="n">NlmManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="n">ref_items</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//back/ref-list/ref&#39;</span><span class="p">)</span>
+
+        <span class="c1"># note that we don&#39;t want to exit even if there are no references to link because the user may want to delete</span>
+        <span class="c1"># some</span>
+
+        <span class="n">delete_all</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//xref[@ref-type=&quot;bibr&quot;]&#39;</span><span class="p">):</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="n">prompt</span><span class="o">.</span><span class="n">print_</span><span class="p">(</span><span class="n">prompt</span><span class="o">.</span><span class="n">colorize</span><span class="p">(</span><span class="s1">&#39;green&#39;</span><span class="p">,(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)))</span>
+
+            <span class="k">if</span> <span class="s1">&#39;rid&#39;</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">attrib</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rid&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;TO_LINK&#39;</span><span class="p">:</span>
+                <span class="n">prompt</span><span class="o">.</span><span class="n">print_</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;Found an unhandled reference marker: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="s1">&#39;rid&#39;</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+                <span class="n">remote</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ref_items</span> <span class="k">if</span> <span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">attrib</span> <span class="ow">and</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">p</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rid&#39;</span><span class="p">])),</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">remote_text</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">get_stripped_text</span><span class="p">(</span><span class="n">remote</span><span class="p">)</span> <span class="k">if</span> <span class="n">remote</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+                <span class="n">prompt</span><span class="o">.</span><span class="n">print_</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;Found a handled reference marker: </span><span class="se">\&quot;</span><span class="si">{0}</span><span class="se">\&quot;</span><span class="s2"> which links to </span><span class="se">\&quot;</span><span class="si">{1}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">,</span>
+                                                                                                         <span class="n">remote_text</span><span class="p">))</span>
+
+            <span class="n">opts</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Skip&#39;</span><span class="p">,</span> <span class="s1">&#39;Delete&#39;</span><span class="p">,</span> <span class="s1">&#39;deleTe all&#39;</span><span class="p">,</span> <span class="s1">&#39;Enter search&#39;</span><span class="p">,</span> <span class="s1">&#39;Ibid&#39;</span><span class="p">,</span> <span class="s1">&#39;enter Link id&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;skip Rest&#39;</span><span class="p">,</span> <span class="s1">&#39;show Context&#39;</span><span class="p">)</span>
+
+            <span class="n">sel</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+            <span class="k">if</span> <span class="n">delete_all</span><span class="p">:</span>
+                <span class="n">sel</span> <span class="o">=</span> <span class="s1">&#39;d&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sel</span> <span class="o">=</span> <span class="n">prompt</span><span class="o">.</span><span class="n">input_options</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>
+
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_input</span><span class="p">(</span><span class="n">manipulate</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">prompt</span><span class="p">,</span> <span class="n">ref_items</span><span class="p">,</span> <span class="n">sel</span><span class="p">,</span> <span class="n">tree</span><span class="o">=</span><span class="n">tree</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="s1">&#39;abort&#39;</span><span class="p">:</span>
+                <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+                <span class="k">return</span>
+            <span class="k">elif</span> <span class="n">result</span> <span class="o">==</span> <span class="s1">&#39;delall&#39;</span><span class="p">:</span>
+                <span class="n">delete_all</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReferenceLinker.prune"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.ReferenceLinker.prune">[docs]</a>    <span class="k">def</span> <span class="nf">prune</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Deleting all stubs from article&#39;</span><span class="p">)</span>
+
+        <span class="n">manipulate</span> <span class="o">=</span> <span class="n">NlmManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">manipulate</span><span class="o">.</span><span class="n">load_dom_tree</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//xref[@ref-type=&quot;bibr&quot; and @rid=&quot;TO_LINK&quot;]&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">extract_contents</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+        <span class="n">manipulate</span><span class="o">.</span><span class="n">save_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../autoapi/bin/referencelinker/index.html#bin.referencelinker.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">docopt</span><span class="p">(</span><span class="vm">__doc__</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;meTypeset 0.1&#39;</span><span class="p">)</span>
+    <span class="n">bare_gv</span> <span class="o">=</span> <span class="n">GV</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;--debug&#39;</span><span class="p">]:</span>
+        <span class="n">bare_gv</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">enable_debug</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--nogit&#39;</span><span class="p">])</span>
+
+    <span class="n">rl_instance</span> <span class="o">=</span> <span class="n">ReferenceLinker</span><span class="p">(</span><span class="n">bare_gv</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;scan&#39;</span><span class="p">]:</span>
+        <span class="n">rl_instance</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--interactive&#39;</span><span class="p">])</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;link&#39;</span><span class="p">]:</span>
+        <span class="n">rl_instance</span><span class="o">.</span><span class="n">link_items</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;&lt;source_id&gt;&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;&lt;dest_id&gt;&quot;</span><span class="p">])</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;prune&#39;</span><span class="p">]:</span>
+        <span class="n">rl_instance</span><span class="o">.</span><span class="n">prune</span><span class="p">()</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

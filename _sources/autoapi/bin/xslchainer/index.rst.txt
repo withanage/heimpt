@@ -1,0 +1,39 @@
+:mod:`bin.xslchainer`
+=====================
+
+.. py:module:: bin.xslchainer
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   
+
+.. py:class:: XslChain(gv)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. method:: saxon_arbitrary_xsl(self)
+
+
+
+   
+   .. method:: run_transform(self)
+
+
+
+   
+   .. method:: run(self)
+
+
+
+

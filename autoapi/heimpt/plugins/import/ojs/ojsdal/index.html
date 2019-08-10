@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>heimpt.plugins.import.ojs.ojsdal &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-heimpt.plugins.import.ojs.ojsdal">
+<span id="heimpt-plugins-import-ojs-ojsdal"></span><h1><a class="reference internal" href="#module-heimpt.plugins.import.ojs.ojsdal" title="heimpt.plugins.import.ojs.ojsdal"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heimpt.plugins.import.ojs.ojsdal</span></code></a><a class="headerlink" href="#module-heimpt.plugins.import.ojs.ojsdal" title="Permalink to this headline">¶</a></h1>
+<p><p>Copyright (c) 2015 Heidelberg University Library
+Distributed under the GNU GPL v3. For full terms see the file
+LICENSE.md</p>
+</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPSettings">
+<em class="property">class </em><code class="sig-prename descclassname">heimpt.plugins.import.ojs.ojsdal.</code><code class="sig-name descname">OMPSettings</code><span class="sig-paren">(</span><em class="sig-param">rows=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPSettings" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPSettings.getLocalizedValue">
+<code class="sig-name descname">getLocalizedValue</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">setting_name</em>, <em class="sig-param">locale</em>, <em class="sig-param">fallback='en_US'</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPSettings.getLocalizedValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPSettings.getLocalizedValue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPSettings.getValues">
+<code class="sig-name descname">getValues</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">setting_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPSettings.getValues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPSettings.getValues" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPItem">
+<em class="property">class </em><code class="sig-prename descclassname">heimpt.plugins.import.ojs.ojsdal.</code><code class="sig-name descname">OMPItem</code><span class="sig-paren">(</span><em class="sig-param">row</em>, <em class="sig-param">settings=OMPSettings()</em>, <em class="sig-param">associated_items={}</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPItem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL">
+<em class="property">class </em><code class="sig-prename descclassname">heimpt.plugins.import.ojs.ojsdal.</code><code class="sig-name descname">OMPDAL</code><span class="sig-paren">(</span><em class="sig-param">db</em>, <em class="sig-param">conf</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL" title="Permalink to this definition">¶</a></dt>
+<dd><p>A rudimentary database abstraction layer for the OMP database.</p>
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPresses">
+<code class="sig-name descname">getPresses</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getPresses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPresses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all  enabled presses</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPress">
+<code class="sig-name descname">getPress</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">press_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getPress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get row for a given press id.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPressSettings">
+<code class="sig-name descname">getPressSettings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">press_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getPressSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPressSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get settings for a given press.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmission">
+<code class="sig-name descname">getSubmission</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getSubmission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get row for a given submission id.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionsByPress">
+<code class="sig-name descname">getSubmissionsByPress</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">press_id</em>, <em class="sig-param">ignored_submission_id=-1</em>, <em class="sig-param">status=3</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getSubmissionsByPress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionsByPress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all submissions in press with the given status (default: 3=published).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionsByCategory">
+<code class="sig-name descname">getSubmissionsByCategory</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">category_id</em>, <em class="sig-param">ignored_submission_id=-1</em>, <em class="sig-param">status=3</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getSubmissionsByCategory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionsByCategory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all submissions in a category with the given status (default: 3=published).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionsBySeries">
+<code class="sig-name descname">getSubmissionsBySeries</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">series_id</em>, <em class="sig-param">ignored_submission_id=-1</em>, <em class="sig-param">status=3</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getSubmissionsBySeries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionsBySeries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all submissions in a series with the given status (default: 3=published).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublishedSubmission">
+<code class="sig-name descname">getPublishedSubmission</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em>, <em class="sig-param">press_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getPublishedSubmission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublishedSubmission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get submission info for a given submission id, but only return, if the
+submission has been published and is associated with a certain press.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionSettings">
+<code class="sig-name descname">getSubmissionSettings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getSubmissionSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get settings for a given submission.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAuthorsBySubmission">
+<code class="sig-name descname">getAuthorsBySubmission</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em>, <em class="sig-param">filter_browse=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getAuthorsBySubmission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAuthorsBySubmission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all authors associated with the specified submission regardless of their role.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getActualAuthorsBySubmission">
+<code class="sig-name descname">getActualAuthorsBySubmission</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em>, <em class="sig-param">filter_browse=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getActualAuthorsBySubmission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getActualAuthorsBySubmission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all authors associated with the specified submission with chapter author role.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getEditorsBySubmission">
+<code class="sig-name descname">getEditorsBySubmission</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em>, <em class="sig-param">filter_browse=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getEditorsBySubmission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getEditorsBySubmission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all authors associated with the specified submission with editor role.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAuthorsByChapter">
+<code class="sig-name descname">getAuthorsByChapter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">chapter_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getAuthorsByChapter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAuthorsByChapter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get authors associated with a given chapter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAuthor">
+<code class="sig-name descname">getAuthor</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">author_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getAuthor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAuthor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get row for a given author id.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAuthorSettings">
+<code class="sig-name descname">getAuthorSettings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">author_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getAuthorSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAuthorSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get settings for a given author.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getUserSettings">
+<code class="sig-name descname">getUserSettings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">user_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getUserSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getUserSettings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesByPress">
+<code class="sig-name descname">getSeriesByPress</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">press_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getSeriesByPress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesByPress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all series published in the given press.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesByPathAndPress">
+<code class="sig-name descname">getSeriesByPathAndPress</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">series_path</em>, <em class="sig-param">press_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getSeriesByPathAndPress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesByPathAndPress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the series with the given pass in the given press (unique).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesBySubmissionId">
+<code class="sig-name descname">getSeriesBySubmissionId</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getSeriesBySubmissionId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesBySubmissionId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the series the given submission is assigned to.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategoryByPathAndPress">
+<code class="sig-name descname">getCategoryByPathAndPress</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">category_path</em>, <em class="sig-param">press_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getCategoryByPathAndPress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategoryByPathAndPress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the category by path in the given press (unique).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategoriesByPress">
+<code class="sig-name descname">getCategoriesByPress</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">press_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getCategoriesByPress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategoriesByPress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all categories in  press.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategoryBySubmissionId">
+<code class="sig-name descname">getCategoryBySubmissionId</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getCategoryBySubmissionId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategoryBySubmissionId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the assigned Category of submission</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategorySettings">
+<code class="sig-name descname">getCategorySettings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">category_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getCategorySettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategorySettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get settings for a given category</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategory">
+<code class="sig-name descname">getCategory</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">category_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getCategory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get row for a given series id.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeries">
+<code class="sig-name descname">getSeries</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">series_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getSeries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get row for a given series id.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesEditors">
+<code class="sig-name descname">getSeriesEditors</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">press_id</em>, <em class="sig-param">series_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getSeriesEditors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesEditors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get editors for the given series.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getLocalizedCategorySettings">
+<code class="sig-name descname">getLocalizedCategorySettings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">category_id</em>, <em class="sig-param">setting_name</em>, <em class="sig-param">locale</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getLocalizedCategorySettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getLocalizedCategorySettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get row for a given category</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getLocalizedSeriesSettings">
+<code class="sig-name descname">getLocalizedSeriesSettings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">series_id</em>, <em class="sig-param">locale</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getLocalizedSeriesSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getLocalizedSeriesSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get row for a given series id.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesSettings">
+<code class="sig-name descname">getSeriesSettings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">series_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getSeriesSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get settings for a given series.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getChaptersBySubmission">
+<code class="sig-name descname">getChaptersBySubmission</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getChaptersBySubmission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getChaptersBySubmission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all chapters associated with the given submission.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getChapter">
+<code class="sig-name descname">getChapter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">chapter_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getChapter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getChapter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get row for a given chapter id.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getChapterSettings">
+<code class="sig-name descname">getChapterSettings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">chapter_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getChapterSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getChapterSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get settings for a given chapter id.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationFormatsBySubmission">
+<code class="sig-name descname">getPublicationFormatsBySubmission</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em>, <em class="sig-param">available=True</em>, <em class="sig-param">approved=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getPublicationFormatsBySubmission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationFormatsBySubmission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all approved and available publication formats for the given submission.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAllPublicationFormatsBySubmission">
+<code class="sig-name descname">getAllPublicationFormatsBySubmission</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em>, <em class="sig-param">available=True</em>, <em class="sig-param">approved=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getAllPublicationFormatsBySubmission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAllPublicationFormatsBySubmission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all approved and available publication formats for the given submission.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPhysicalPublicationFormats">
+<code class="sig-name descname">getPhysicalPublicationFormats</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em>, <em class="sig-param">available=True</em>, <em class="sig-param">approved=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getPhysicalPublicationFormats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPhysicalPublicationFormats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all publication formats marked as physical format for the given submission.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getDigitalPublicationFormats">
+<code class="sig-name descname">getDigitalPublicationFormats</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em>, <em class="sig-param">available=True</em>, <em class="sig-param">approved=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getDigitalPublicationFormats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getDigitalPublicationFormats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all publication formats not marked as physical format for the given submission.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationFormat">
+<code class="sig-name descname">getPublicationFormat</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">publication_format_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getPublicationFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get row for a given publication format id.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationFormatByName">
+<code class="sig-name descname">getPublicationFormatByName</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em>, <em class="sig-param">name</em>, <em class="sig-param">available=True</em>, <em class="sig-param">approved=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getPublicationFormatByName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationFormatByName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get publication format for the given submission where any of the settings for ‘name’ matches the given string name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationFormatSettings">
+<code class="sig-name descname">getPublicationFormatSettings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">publication_format_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getPublicationFormatSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationFormatSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get settings for a given publication format id.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getLatestRevisionOfChapterFileByPublicationFormat">
+<code class="sig-name descname">getLatestRevisionOfChapterFileByPublicationFormat</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">chapter_id</em>, <em class="sig-param">publication_format_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getLatestRevisionOfChapterFileByPublicationFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getLatestRevisionOfChapterFileByPublicationFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the latest revision of the file associated with a given chapter and publication format.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getLatestRevisionOfFullBookFileByPublicationFormat">
+<code class="sig-name descname">getLatestRevisionOfFullBookFileByPublicationFormat</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em>, <em class="sig-param">publication_format_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getLatestRevisionOfFullBookFileByPublicationFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getLatestRevisionOfFullBookFileByPublicationFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the latest revision of a file of genre “Book” for a given publication format.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getReviewFilesByPublicationFormat">
+<code class="sig-name descname">getReviewFilesByPublicationFormat</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em>, <em class="sig-param">publication_format_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getReviewFilesByPublicationFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getReviewFilesByPublicationFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the latest revision of a file of a review for a given publication format.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionFileSettings">
+<code class="sig-name descname">getSubmissionFileSettings</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">file_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getSubmissionFileSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionFileSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get settings for a given submission file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationDatesByPublicationFormat">
+<code class="sig-name descname">getPublicationDatesByPublicationFormat</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">publication_format_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getPublicationDatesByPublicationFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationDatesByPublicationFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all publication dates associated with a given publication format.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getIdentificationCodesByPublicationFormat">
+<code class="sig-name descname">getIdentificationCodesByPublicationFormat</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">publication_format_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getIdentificationCodesByPublicationFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getIdentificationCodesByPublicationFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the identification codes (ISBN) associated with a given publication format.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getRepresentativesBySubmission">
+<code class="sig-name descname">getRepresentativesBySubmission</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em>, <em class="sig-param">representative_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getRepresentativesBySubmission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getRepresentativesBySubmission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all representatives of a certain id for the given submission.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.plugins.import.ojs.ojsdal.OMPDAL.getMetaDataPublishedDates">
+<code class="sig-name descname">getMetaDataPublishedDates</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">submission_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/heimpt/plugins/import/ojs/ojsdal.html#OMPDAL.getMetaDataPublishedDates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getMetaDataPublishedDates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heimpt.plugins.import.ojs.ojsdal</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPSettings">OMPSettings</a><ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPSettings.getLocalizedValue">getLocalizedValue</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPSettings.getValues">getValues</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPItem">OMPItem</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL">OMPDAL</a><ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPresses">getPresses</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPress">getPress</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPressSettings">getPressSettings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmission">getSubmission</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionsByPress">getSubmissionsByPress</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionsByCategory">getSubmissionsByCategory</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionsBySeries">getSubmissionsBySeries</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublishedSubmission">getPublishedSubmission</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionSettings">getSubmissionSettings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAuthorsBySubmission">getAuthorsBySubmission</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getActualAuthorsBySubmission">getActualAuthorsBySubmission</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getEditorsBySubmission">getEditorsBySubmission</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAuthorsByChapter">getAuthorsByChapter</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAuthor">getAuthor</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAuthorSettings">getAuthorSettings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getUserSettings">getUserSettings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesByPress">getSeriesByPress</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesByPathAndPress">getSeriesByPathAndPress</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesBySubmissionId">getSeriesBySubmissionId</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategoryByPathAndPress">getCategoryByPathAndPress</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategoriesByPress">getCategoriesByPress</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategoryBySubmissionId">getCategoryBySubmissionId</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategorySettings">getCategorySettings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getCategory">getCategory</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeries">getSeries</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesEditors">getSeriesEditors</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getLocalizedCategorySettings">getLocalizedCategorySettings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getLocalizedSeriesSettings">getLocalizedSeriesSettings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSeriesSettings">getSeriesSettings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getChaptersBySubmission">getChaptersBySubmission</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getChapter">getChapter</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getChapterSettings">getChapterSettings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationFormatsBySubmission">getPublicationFormatsBySubmission</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getAllPublicationFormatsBySubmission">getAllPublicationFormatsBySubmission</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPhysicalPublicationFormats">getPhysicalPublicationFormats</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getDigitalPublicationFormats">getDigitalPublicationFormats</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationFormat">getPublicationFormat</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationFormatByName">getPublicationFormatByName</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationFormatSettings">getPublicationFormatSettings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getLatestRevisionOfChapterFileByPublicationFormat">getLatestRevisionOfChapterFileByPublicationFormat</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getLatestRevisionOfFullBookFileByPublicationFormat">getLatestRevisionOfFullBookFileByPublicationFormat</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getReviewFilesByPublicationFormat">getReviewFilesByPublicationFormat</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getSubmissionFileSettings">getSubmissionFileSettings</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getPublicationDatesByPublicationFormat">getPublicationDatesByPublicationFormat</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getIdentificationCodesByPublicationFormat">getIdentificationCodesByPublicationFormat</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getRepresentativesBySubmission">getRepresentativesBySubmission</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.plugins.import.ojs.ojsdal.OMPDAL.getMetaDataPublishedDates">getMetaDataPublishedDates</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../../../_sources/autoapi/heimpt/plugins/import/ojs/ojsdal/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

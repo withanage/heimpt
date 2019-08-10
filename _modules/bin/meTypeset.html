@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.meTypeset &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.meTypeset</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;meTypeset: text parsing library to convert word documents to the JATS XML format</span>
+
+<span class="sd">Usage:</span>
+<span class="sd">    meTypeset.py doc &lt;input&gt; &lt;output_folder&gt; [options]</span>
+<span class="sd">    meTypeset.py docx &lt;input&gt; &lt;output_folder&gt; [options]</span>
+<span class="sd">    meTypeset.py docxextracted &lt;input&gt; &lt;output_folder&gt; [options]</span>
+<span class="sd">    meTypeset.py odt &lt;input&gt; &lt;output_folder&gt; [options]</span>
+<span class="sd">    meTypeset.py other &lt;input&gt; &lt;output_folder&gt; [options]</span>
+<span class="sd">    meTypeset.py tei &lt;input&gt; &lt;output_folder&gt; [options]</span>
+<span class="sd">    meTypeset.py bibscan &lt;input&gt; [options]</span>
+
+<span class="sd">Options:</span>
+<span class="sd">    -a, --aggression &lt;aggression_level&gt;             Parser aggression level 0-10 [default: 10]</span>
+<span class="sd">    --chain &lt;xslt&gt;                                  Specify a subsequent XSL transform to pass the NLM to</span>
+<span class="sd">    -c, --clean                                     Produce final XML, not intermediate markup with additional metadata</span>
+<span class="sd">    -d, --debug                                     Enable debug output</span>
+<span class="sd">    -i, --identifiers                               Generate unique identifiers for all supported NLM elements</span>
+<span class="sd">    --includedeleted                                Keep deleted text (track changes)</span>
+<span class="sd">    --interactive                                   Enable step-by-step interactive mode</span>
+<span class="sd">    -h, --help                                      Show this screen.</span>
+<span class="sd">    -m, --metadata &lt;metadata_file&gt;                  Metadata file</span>
+<span class="sd">    --nogit                                         Disable git debug filesystem (only of use with --debug)</span>
+<span class="sd">    --noimageprocessing                             Disable unoconv image processing</span>
+<span class="sd">    --nolink                                        Do not run reference linker</span>
+<span class="sd">    --nometa                                        Do not merge front matter</span>
+<span class="sd">    --purenlm                                       Die after performing NLM XSLT step</span>
+<span class="sd">    --puretei                                       Die after performing TEI XSLT step</span>
+<span class="sd">    --prettytei                                     Indent and format intermediary TEI</span>
+<span class="sd">    -p, --proprietary                               Enables proprietary math parsing. Requires omml2mml.xsl</span>
+<span class="sd">    -s, --settings &lt;settings_file&gt;                  Settings file</span>
+<span class="sd">    -v, --version                                   Show version.</span>
+<span class="sd">    -z, --zotero                                    Enable Zotero integration for references.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="__author__"><a class="viewcode-back" href="../../autoapi/bin/meTypeset/index.html#bin.meTypeset.__author__">[docs]</a><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Martin Paul Eve, Dulip Withnage&quot;</span></div>
+<div class="viewcode-block" id="__email__"><a class="viewcode-back" href="../../autoapi/bin/meTypeset/index.html#bin.meTypeset.__email__">[docs]</a><span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;martin@martineve.com&quot;</span></div>
+
+<span class="kn">from</span> <span class="nn">docxtotei</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">teitonlm</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">sizeclassifier</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">frontmatterparser</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">docopt</span> <span class="k">import</span> <span class="n">docopt</span>
+<span class="kn">from</span> <span class="nn">teimanipulate</span> <span class="k">import</span> <span class="n">TeiManipulate</span>
+<span class="kn">from</span> <span class="nn">globals</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">debug</span> <span class="k">import</span> <span class="n">Debuggable</span>
+<span class="kn">from</span> <span class="nn">bibliographyaddins</span> <span class="k">import</span> <span class="n">BibliographyAddins</span>
+<span class="kn">from</span> <span class="nn">bibliographydatabase</span> <span class="k">import</span> <span class="n">BibliographyDatabase</span>
+<span class="kn">from</span> <span class="nn">bibliographyclassifier</span> <span class="k">import</span> <span class="n">BibliographyClassifier</span>
+<span class="kn">from</span> <span class="nn">listclassifier</span> <span class="k">import</span> <span class="n">ListClassifier</span>
+<span class="kn">from</span> <span class="nn">metadata</span> <span class="k">import</span> <span class="n">Metadata</span>
+<span class="kn">from</span> <span class="nn">referencelinker</span> <span class="k">import</span> <span class="n">ReferenceLinker</span>
+<span class="kn">from</span> <span class="nn">xslchainer</span> <span class="k">import</span> <span class="n">XslChain</span>
+<span class="kn">from</span> <span class="nn">settingsconfiguration</span> <span class="k">import</span> <span class="n">Settings</span>
+<span class="kn">from</span> <span class="nn">idgenerator</span> <span class="k">import</span> <span class="n">IdGenerator</span>
+<span class="kn">from</span> <span class="nn">captionclassifier</span> <span class="k">import</span> <span class="n">CaptionClassifier</span>
+<span class="kn">from</span> <span class="nn">complianceenforcer</span> <span class="k">import</span> <span class="n">ComplianceEnforcer</span>
+<span class="kn">from</span> <span class="nn">interactive</span> <span class="k">import</span> <span class="n">Interactive</span>
+<span class="kn">from</span> <span class="nn">unoconvtodocx</span> <span class="k">import</span> <span class="n">UnoconvToDocx</span>
+
+
+<span class="c1"># check whether lxml is installed</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># noinspection PyUnresolvedReferences</span>
+    <span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">etree</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed to import lxml&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MeTypeset"><a class="viewcode-back" href="../../autoapi/bin/meTypeset/index.html#bin.meTypeset.MeTypeset">[docs]</a><span class="k">class</span> <span class="nc">MeTypeset</span> <span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># read  command line arguments</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_command_line</span><span class="p">()</span>
+
+        <span class="c1"># absolute first priority is to initialize debugger so that anything triggered here can be logged</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">Debug</span><span class="p">()</span>
+
+        <span class="n">Debuggable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Main&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--debug&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">enable_debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--nogit&#39;</span><span class="p">])</span>
+
+        <span class="c1"># read settings file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_file_path</span> <span class="o">=</span> <span class="s1">&#39;default&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tei_file_path</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_file_path</span> <span class="o">=</span> <span class="n">Settings</span><span class="o">.</span><span class="n">setup_settings_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="n">Settings</span><span class="p">(</span><span class="n">Settings</span><span class="o">.</span><span class="n">get_settings_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings_file_path</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">GV</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">enable_prompt</span><span class="p">(</span><span class="n">Interactive</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">))</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MeTypeset.read_command_line"><a class="viewcode-back" href="../../autoapi/bin/meTypeset/index.html#bin.meTypeset.MeTypeset.read_command_line">[docs]</a>    <span class="k">def</span> <span class="nf">read_command_line</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">docopt</span><span class="p">(</span><span class="vm">__doc__</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;meTypeset 0.1&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeTypeset.set_metadata_file"><a class="viewcode-back" href="../../autoapi/bin/meTypeset/index.html#bin.meTypeset.MeTypeset.set_metadata_file">[docs]</a>    <span class="k">def</span> <span class="nf">set_metadata_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">metadata_file_arg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--metadata&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">metadata_file_arg</span><span class="p">:</span>
+            <span class="n">metadata_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">script_dir</span><span class="p">,</span>
+                                                                            <span class="n">metadata_file_arg</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">metadata_file</span> <span class="o">=</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">concat_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">script_dir</span><span class="p">,</span>
+                                                 <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;default-metadata-file-path&#39;</span><span class="p">,</span>
+                                                                                <span class="bp">self</span><span class="p">)))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Metadata file wasn</span><span class="se">\&#39;</span><span class="s1">t specified. &#39;</span>
+                                         <span class="s1">&#39;Falling back to </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">metadata_file</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">metadata_file</span></div>
+
+<div class="viewcode-block" id="MeTypeset.run_modules"><a class="viewcode-back" href="../../autoapi/bin/meTypeset/index.html#bin.meTypeset.MeTypeset.run_modules">[docs]</a>    <span class="k">def</span> <span class="nf">run_modules</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ag</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--aggression&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                               <span class="sa">u</span><span class="s1">&#39;Running at aggression level </span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ag</span><span class="p">,</span>
+                                                                             <span class="s2">&quot;[grrr!]&quot;</span> <span class="k">if</span> <span class="n">ag</span> <span class="o">==</span> <span class="mi">10</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">ag</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;WARNING: safety bail-out features are disabled at aggression level 11&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;bibscan&#39;</span><span class="p">]:</span>
+
+            <span class="n">BibliographyDatabase</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">scan</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># check for stylesheets</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">check_file_exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">docx_style_sheet_dir</span><span class="p">)</span>
+            <span class="c1"># metadata file</span>
+            <span class="n">gv</span><span class="o">.</span><span class="n">metadata_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_metadata_file</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">mk_dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">output_folder_path</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;doc&#39;</span><span class="p">]:</span>
+                <span class="c1"># run doc to docx conversion</span>
+                <span class="c1"># then run docx to tei</span>
+                <span class="n">UnoconvToDocx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;doc&#39;</span><span class="p">)</span>
+                <span class="n">DocxToTei</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--proprietary&#39;</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;odt&#39;</span><span class="p">]:</span>
+                <span class="c1"># run odt to docx conversion</span>
+                <span class="c1"># then run docx to tei</span>
+                <span class="n">UnoconvToDocx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;odt&#39;</span><span class="p">)</span>
+                <span class="n">DocxToTei</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--proprietary&#39;</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;other&#39;</span><span class="p">]:</span>
+                <span class="c1"># run other unoconv-supported format to docx conversion</span>
+                <span class="c1"># then run docx to tei</span>
+                <span class="n">UnoconvToDocx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;unoconv&#39;</span><span class="p">)</span>
+                <span class="n">DocxToTei</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--proprietary&#39;</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;docx&#39;</span><span class="p">]:</span>
+                <span class="c1"># run docx to tei conversion</span>
+                <span class="c1"># includes hooks for proprietary transforms if enabled</span>
+                <span class="n">DocxToTei</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--proprietary&#39;</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;docxextracted&#39;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Skipping docx extraction&#39;</span><span class="p">)</span>
+                <span class="n">DocxToTei</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--proprietary&#39;</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;tei&#39;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Skipping docx extraction; processing TEI file&#39;</span><span class="p">)</span>
+                <span class="n">DocxToTei</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--proprietary&#39;</span><span class="p">],</span> <span class="n">tei</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--puretei&#39;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Exiting as TEI transform complete&#39;</span><span class="p">)</span>
+                <span class="k">return</span>
+
+            <span class="n">metadata</span> <span class="o">=</span> <span class="n">Metadata</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+            <span class="n">metadata</span><span class="o">.</span><span class="n">pre_clean</span><span class="p">()</span>
+
+            <span class="c1"># run size classifier</span>
+            <span class="c1"># aggression 5</span>
+            <span class="n">SizeClassifier</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+            <span class="c1"># run bibliographic addins handler</span>
+            <span class="c1"># aggression 4</span>
+            <span class="n">found_bibliography</span> <span class="o">=</span> <span class="n">BibliographyAddins</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+            <span class="c1"># run list classifier</span>
+            <span class="c1"># aggression 4</span>
+            <span class="n">ListClassifier</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+            <span class="n">bibliography_classifier</span> <span class="o">=</span> <span class="n">BibliographyClassifier</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">found_bibliography</span><span class="p">:</span>
+                <span class="c1"># run bibliographic classifier</span>
+                <span class="c1"># aggression 4</span>
+                <span class="n">bibliography_classifier</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+            <span class="c1"># tei</span>
+            <span class="c1"># aggression 3</span>
+            <span class="n">TeiManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+            <span class="c1"># run tei to nlm conversion</span>
+            <span class="n">TeiToNlm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="ow">not</span> <span class="n">found_bibliography</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--purenlm&#39;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Exiting as NLM transform complete&#39;</span><span class="p">)</span>
+                <span class="k">return</span>
+
+            <span class="n">manipulate</span> <span class="o">=</span> <span class="n">NlmManipulate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">used_list_method</span><span class="p">:</span>
+                <span class="n">manipulate</span><span class="o">.</span><span class="n">fuse_references</span><span class="p">()</span>
+
+            <span class="c1"># run reference linker</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--nolink&#39;</span><span class="p">]):</span>
+                <span class="n">rl</span> <span class="o">=</span> <span class="n">ReferenceLinker</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+                <span class="n">rl</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--interactive&#39;</span><span class="p">])</span>
+                <span class="n">rl</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
+
+            <span class="c1"># run table classifier</span>
+            <span class="n">cc</span> <span class="o">=</span> <span class="n">CaptionClassifier</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--aggression&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;tablecaptions&#39;</span><span class="p">,</span>
+                                                                                 <span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="s1">&#39;aggression&#39;</span><span class="p">)):</span>
+                <span class="n">cc</span><span class="o">.</span><span class="n">run_tables</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--aggression&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;graphiccaptions&#39;</span><span class="p">,</span>
+                                                                                 <span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="s1">&#39;aggression&#39;</span><span class="p">)):</span>
+                <span class="n">cc</span><span class="o">.</span><span class="n">run_graphics</span><span class="p">()</span>
+
+            <span class="n">cc</span><span class="o">.</span><span class="n">run_ext_link_compliance</span><span class="p">()</span>
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">double_p_compliance</span><span class="p">()</span>
+
+            <span class="c1"># run metadata merge</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--nometa&#39;</span><span class="p">]):</span>
+                <span class="n">metadata</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--interactive&#39;</span><span class="p">]:</span>
+                <span class="n">bibliography_classifier</span><span class="o">.</span><span class="n">run_prompt</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="c1"># process any bibliography entries that are possible</span>
+            <span class="n">BibliographyDatabase</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+            <span class="c1"># remove stranded titles and cleanup</span>
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">final_clean</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--identifiers&#39;</span><span class="p">]:</span>
+                <span class="n">IdGenerator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--chain&#39;</span><span class="p">]:</span>
+                <span class="c1"># construct and run an XSLT chainer</span>
+                <span class="n">XslChain</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--clean&#39;</span><span class="p">]:</span>
+                <span class="n">ComplianceEnforcer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MeTypeset.run"><a class="viewcode-back" href="../../autoapi/bin/meTypeset/index.html#bin.meTypeset.MeTypeset.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_modules</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">nlm_temp_file_path</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../autoapi/bin/meTypeset/index.html#bin.meTypeset.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">me_typeset_instance</span> <span class="o">=</span> <span class="n">MeTypeset</span><span class="p">()</span>
+    <span class="n">me_typeset_instance</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

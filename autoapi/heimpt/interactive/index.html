@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>heimpt.interactive &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-heimpt.interactive">
+<span id="heimpt-interactive"></span><h1><a class="reference internal" href="#module-heimpt.interactive" title="heimpt.interactive"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heimpt.interactive</span></code></a><a class="headerlink" href="#module-heimpt.interactive" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="heimpt.interactive.__author__">
+<code class="sig-prename descclassname">heimpt.interactive.</code><code class="sig-name descname">__author__</code><em class="property"> = Dulip Withanage</em><a class="reference internal" href="../../../_modules/heimpt/interactive.html#__author__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.interactive.__author__" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to handle an interactive prompt.</p>
+<p>Portions of this file are Copyright 2014, Adrian Sampson.
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# “Software”), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="heimpt.interactive.Interactive">
+<em class="property">class </em><code class="sig-prename descclassname">heimpt.interactive.</code><code class="sig-name descname">Interactive</code><span class="sig-paren">(</span><em class="sig-param">global_variables</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/interactive.html#Interactive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.interactive.Interactive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">debug.Debuggable</span></code></p>
+<dl class="method">
+<dt id="heimpt.interactive.Interactive.input_options">
+<code class="sig-name descname">input_options</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">options</em>, <em class="sig-param">require=False</em>, <em class="sig-param">prompt=None</em>, <em class="sig-param">fallback_prompt=None</em>, <em class="sig-param">numrange=None</em>, <em class="sig-param">default=None</em>, <em class="sig-param">max_width=72</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/interactive.html#Interactive.input_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.interactive.Interactive.input_options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prompts a user for input. The sequence of <cite>options</cite> defines the
+choices the user has. A single-letter shortcut is inferred for each
+option; the user’s choice is returned as that single, lower-case
+letter. The options should be provided as lower-case strings unless
+a particular shortcut is desired; in that case, only that letter
+should be capitalized.</p>
+<p>By default, the first option is the default. <cite>default</cite> can be provided to
+override this. If <cite>require</cite> is provided, then there is no default. The
+prompt and fallback prompt are also inferred but can be overridden.</p>
+<p>If numrange is provided, it is a pair of <cite>(high, low)</cite> (both ints)
+indicating that, in addition to <cite>options</cite>, the user may enter an
+integer in that inclusive range.</p>
+<p><cite>max_width</cite> specifies the maximum number of columns in the
+automatically generated prompt string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.interactive.Interactive.input_">
+<code class="sig-name descname">input_</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">prompt=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/interactive.html#Interactive.input_"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.interactive.Interactive.input_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like <cite>raw_input</cite>, but decodes the result to a Unicode string.
+Raises a UserError if stdin is not available. The prompt is sent to
+stdout rather than stderr. A printed between the prompt and the
+input cursor.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.interactive.Interactive._encoding">
+<code class="sig-name descname">_encoding</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/interactive.html#Interactive._encoding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.interactive.Interactive._encoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tries to guess the encoding used by the terminal.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.interactive.Interactive._colorize">
+<code class="sig-name descname">_colorize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">color</em>, <em class="sig-param">text</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/interactive.html#Interactive._colorize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.interactive.Interactive._colorize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a string that prints the given text in the given color
+in a terminal that is ANSI color-aware. The color must be something
+in DARK_COLORS or LIGHT_COLORS.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.interactive.Interactive.colorize">
+<code class="sig-name descname">colorize</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">color</em>, <em class="sig-param">text</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/interactive.html#Interactive.colorize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.interactive.Interactive.colorize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Colorize text if colored output is enabled. (Like _colorize but
+conditional.)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.interactive.Interactive._colordiff">
+<code class="sig-name descname">_colordiff</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">a</em>, <em class="sig-param">b</em>, <em class="sig-param">highlight='red'</em>, <em class="sig-param">minor_highlight='lightgray'</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/interactive.html#Interactive._colordiff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.interactive.Interactive._colordiff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given two values, return the same pair of strings except with
+their differences highlighted in the specified color. Strings are
+highlighted intelligently to show differences; other values are
+stringified and highlighted in their entirety.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.interactive.Interactive.displayable_path">
+<code class="sig-name descname">displayable_path</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">path</em>, <em class="sig-param">separator='; '</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/interactive.html#Interactive.displayable_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.interactive.Interactive.displayable_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attempts to decode a bytestring path to a unicode object for the
+purpose of displaying it to the user. If the <cite>path</cite> argument is a
+list or a tuple, the elements are joined with <cite>separator</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.interactive.Interactive._fsencoding">
+<code class="sig-name descname">_fsencoding</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/interactive.html#Interactive._fsencoding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.interactive.Interactive._fsencoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the system’s filesystem encoding. On Windows, this is always
+UTF-8 (not MBCS).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.interactive.Interactive.colordiff">
+<code class="sig-name descname">colordiff</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">a</em>, <em class="sig-param">b</em>, <em class="sig-param">highlight='red'</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/interactive.html#Interactive.colordiff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.interactive.Interactive.colordiff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Colorize differences between two values if color is enabled.
+(Like _colordiff but conditional.)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.interactive.Interactive.print_">
+<code class="sig-name descname">print_</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">*strings</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/interactive.html#Interactive.print_"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.interactive.Interactive.print_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like print, but rather than raising an error when a character
+is not in the terminal’s encoding’s character set, just silently
+replaces it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.interactive.Interactive.color_diff_suffix">
+<code class="sig-name descname">color_diff_suffix</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">a</em>, <em class="sig-param">b</em>, <em class="sig-param">highlight='red'</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/interactive.html#Interactive.color_diff_suffix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.interactive.Interactive.color_diff_suffix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Colorize the differing suffix between two strings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="heimpt.interactive.Interactive.choose_candidate">
+<code class="sig-name descname">choose_candidate</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">candidates</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">opts</em>, <em class="sig-param">item=None</em>, <em class="sig-param">itemcount=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/heimpt/interactive.html#Interactive.choose_candidate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#heimpt.interactive.Interactive.choose_candidate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heimpt.interactive</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#heimpt.interactive.__author__">__author__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.interactive.Interactive">Interactive</a><ul>
+<li><a class="reference internal" href="#heimpt.interactive.Interactive.input_options">input_options</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.interactive.Interactive.input_">input_</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.interactive.Interactive._encoding">_encoding</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.interactive.Interactive._colorize">_colorize</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.interactive.Interactive.colorize">colorize</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.interactive.Interactive._colordiff">_colordiff</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.interactive.Interactive.displayable_path">displayable_path</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.interactive.Interactive._fsencoding">_fsencoding</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.interactive.Interactive.colordiff">colordiff</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.interactive.Interactive.print_">print_</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.interactive.Interactive.color_diff_suffix">color_diff_suffix</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#heimpt.interactive.Interactive.choose_candidate">choose_candidate</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/autoapi/heimpt/interactive/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

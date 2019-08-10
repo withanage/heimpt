@@ -1,0 +1,807 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>heimpt.tools.archive.postProcess &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for heimpt.tools.archive.postProcess</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding: utf-8</span>
+<span class="c1"># !/usr/bin/env python</span>
+
+<span class="c1"># Copyright 08-May-2016, 14:51:07</span>
+<span class="c1">#</span>
+<span class="c1"># Author    : Dulip Withanage , University of Heidelberg</span>
+
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">chain</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">sets</span> <span class="k">import</span> <span class="n">Set</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">citation_parser</span> <span class="k">import</span> <span class="n">CitationParser</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pip install citation-parser&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pip install http://www.antlr3.org/download/Python/antlr_python_runtime-3.1.3.tar.gz&#39;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">etree</span>
+    <span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">objectify</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed to import ElementTree, plase install&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LOG_FILE"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.LOG_FILE">[docs]</a><span class="n">LOG_FILE</span> <span class="o">=</span> <span class="s1">&#39;jatsPostProcess.log&#39;</span></div>
+<div class="viewcode-block" id="numeral_map"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.numeral_map">[docs]</a><span class="n">numeral_map</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span>
+    <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">900</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;CM&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;CD&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;XC&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">,</span> <span class="s1">&#39;XL&#39;</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;IX&#39;</span><span class="p">,</span> <span class="s1">&#39;V&#39;</span><span class="p">,</span> <span class="s1">&#39;IV&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">)</span></div>
+<span class="p">))</span>
+
+
+<span class="c1"># logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG)</span>
+
+
+<div class="viewcode-block" id="PostProcess"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess">[docs]</a><span class="k">class</span> <span class="nc">PostProcess</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">     command line tool to clean, modify, delete, merge jats files</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cf</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">cf</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_data_file</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_data_file</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="nb">print</span>
+            <span class="s1">&#39;Please define&#39;</span><span class="p">,</span> <span class="n">cf</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">JATS_XML_HEADER</span> <span class="o">=</span> <span class="s1">&#39;&lt;article xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot;&gt;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">doc_type</span> <span class="o">=</span> <span class="s1">&#39;&lt;!DOCTYPE article PUBLIC &quot;-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN&quot; &quot;http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd&quot;&gt;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xml</span> <span class="o">=</span> <span class="s1">&#39;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#39;</span>
+
+<div class="viewcode-block" id="PostProcess.print_unreferenced_figs"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.print_unreferenced_figs">[docs]</a>    <span class="k">def</span> <span class="nf">print_unreferenced_figs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_fig_refs_body</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_fig_ids_body</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span>
+            <span class="n">f</span><span class="p">,</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+        <span class="k">return</span> <span class="n">tr</span></div>
+
+<div class="viewcode-block" id="PostProcess.apply_transformations"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.apply_transformations">[docs]</a>    <span class="k">def</span> <span class="nf">apply_transformations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">chapter</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; main method to apply transformations&#39;&#39;&#39;</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;createFull&quot;</span><span class="p">][</span><span class="n">context</span><span class="p">]</span>
+
+        <span class="c1"># tr = self.remove_not_used_in_back(tr, &quot;ref-list/ref&quot;)</span>
+        <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_not_used_in_back</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="s2">&quot;fn-group/fn&quot;</span><span class="p">)</span>
+        <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_uuid_figs</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;enumeration&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;enumeration&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;chapter-begin-reset&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;chapter-begin-reset&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">tr</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_enumeration</span><span class="p">(</span>
+                    <span class="n">tr</span><span class="p">,</span> <span class="s2">&quot;xref&quot;</span><span class="p">,</span> <span class="s2">&quot;ref-type&quot;</span><span class="p">,</span> <span class="s2">&quot;fn&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">chapter</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+        <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_name_duplicates_speech</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+        <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_numbering</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;speech&#39;</span><span class="p">,</span> <span class="s1">&#39;disp-quote&#39;</span><span class="p">,</span> <span class="s2">&quot;abstract&quot;</span><span class="p">])</span>
+        <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_unreferenced_footnotes</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+        <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_uuid_fns</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="s1">&#39;fn&#39;</span><span class="p">)</span>
+
+        <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_unreferenced_figs</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+        <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">merge_repeating_neighbours</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="s2">&quot;disp-quote&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;references&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+
+            <span class="k">if</span> <span class="s2">&quot;duplicates&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;references&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;references&quot;</span><span class="p">][</span><span class="s2">&quot;duplicates&quot;</span><span class="p">]:</span>
+                    <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_duplicate_refs</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;citations-to-references&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;citations-to-references&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">citations_to_references</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;references-to-citations&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;references-to-citations&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">references_to_citations</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;create-automated-references&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;create-automated-references&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_automated_references</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+
+        <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_duplicate_http_links</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">tr</span><span class="p">,</span> <span class="n">count</span></div>
+
+<div class="viewcode-block" id="PostProcess.references_to_citations"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.references_to_citations">[docs]</a>    <span class="k">def</span> <span class="nf">references_to_citations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Converts References Block to real citations</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">         -------</span>
+<span class="sd">         tr : elementtree</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">root</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+        <span class="n">titles</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//body/sec/sec/sec/title&#39;</span><span class="p">)</span>
+        <span class="n">rl</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.//ref-list&#39;</span><span class="p">)</span>
+        <span class="c1"># cp = CitationParser()</span>
+
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">titles</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="s1">&#39;References&#39;</span><span class="p">:</span>
+                <span class="n">children</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;p&#39;</span><span class="p">:</span>
+                        <span class="n">sc</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;ref&#39;</span><span class="p">)</span>
+                        <span class="n">cit</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+                        <span class="n">cit</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;mixed-citation&#39;</span>
+                        <span class="k">if</span> <span class="n">rl</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">sc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cit</span><span class="p">)</span>
+                            <span class="n">rl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sc</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tr</span></div>
+
+<div class="viewcode-block" id="PostProcess.create_automated_references"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.create_automated_references">[docs]</a>    <span class="k">def</span> <span class="nf">create_automated_references</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">):</span>
+        <span class="c1"># front</span>
+        <span class="n">xrefs</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//xref&#39;</span><span class="p">)</span>
+        <span class="c1"># cp = CitationParser()</span>
+
+        <span class="c1"># back</span>
+
+        <span class="n">rl</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//ref&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">xref</span> <span class="ow">in</span> <span class="n">xrefs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">xref</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;ref-type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;bibr&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">xref</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">t</span> <span class="o">=</span> <span class="n">xref</span><span class="o">.</span><span class="n">text</span>
+                    <span class="n">a_y</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">a_y</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">work</span> <span class="o">=</span> <span class="n">a_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">year</span> <span class="o">=</span> <span class="n">a_y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">rl</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">ref</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+                                <span class="k">try</span><span class="p">:</span>
+                                    <span class="n">cit</span> <span class="o">=</span> <span class="n">ref</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+                                    <span class="n">cit_year</span> <span class="o">=</span> <span class="n">cit</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                                    <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">cit_year</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">year</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">cit</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">work</span><span class="p">):</span>
+                                        <span class="n">idx</span> <span class="o">=</span> <span class="s1">&#39;refIDAuto&#39;</span> <span class="o">+</span> <span class="n">work</span> <span class="o">+</span> <span class="s1">&#39;&#39;</span> <span class="o">+</span> <span class="n">year</span>
+                                        <span class="n">xref</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;rid&#39;</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+                                        <span class="n">ref</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+                                <span class="k">except</span><span class="p">:</span>
+                                    <span class="k">pass</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="nb">print</span>
+        <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">| RefID (rid) | id |&#39;</span>
+        <span class="nb">print</span>
+        <span class="s1">&#39;| --- |  --- |&#39;</span>
+        <span class="k">for</span> <span class="n">xref</span> <span class="ow">in</span> <span class="n">xrefs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">xref</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;ref-type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;bibr&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">xref</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rid&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;ID&#39;</span><span class="p">):</span>
+                    <span class="nb">print</span>
+                    <span class="s1">&#39;| </span><span class="si">{}</span><span class="s1"> | </span><span class="si">{}</span><span class="s1"> | &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xref</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rid&#39;</span><span class="p">],</span> <span class="n">xref</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="nb">print</span>
+        <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="nb">print</span>
+        <span class="n">i</span><span class="p">,</span> <span class="s1">&#39;nicht automatisiert&#39;</span>
+        <span class="nb">print</span>
+        <span class="n">j</span><span class="p">,</span> <span class="s1">&#39; automatisiert&#39;</span>
+
+        <span class="k">return</span> <span class="n">tr</span></div>
+
+<div class="viewcode-block" id="PostProcess.citations_to_references"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.citations_to_references">[docs]</a>    <span class="k">def</span> <span class="nf">citations_to_references</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Removes  mixed-citation block, adds as a &lt;sec&gt; Section element</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">         -------</span>
+<span class="sd">         tr : elementtree</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">t</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+        <span class="n">bd</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.//body/sec&#39;</span><span class="p">)</span>
+        <span class="n">sc</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;sec&#39;</span><span class="p">)</span>
+        <span class="n">ttl</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)</span>
+        <span class="n">ttl</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;References&#39;</span>
+        <span class="n">sc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ttl</span><span class="p">)</span>
+        <span class="n">mc</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//mixed-citation&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mc</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">mc</span><span class="p">:</span>
+                <span class="n">cit</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+                <span class="n">cit</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span>
+                <span class="n">sc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cit</span><span class="p">)</span>
+        <span class="n">bd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sc</span><span class="p">)</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        # delete references </span>
+<span class="sd">                rlst = t.find(&#39;.//ref-list&#39;)</span>
+<span class="sd">                rlst.getparent().remove(rlst)</span>
+<span class="sd">                bck = t.find(&#39;.//back&#39;)</span>
+<span class="sd">                bck.append(etree.Element(&#39;ref-list&#39;))</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="n">tr</span></div>
+
+<div class="viewcode-block" id="PostProcess.contains"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.contains">[docs]</a>    <span class="k">def</span> <span class="nf">contains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; help method to compare references &#39;&#39;&#39;</span>
+        <span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">,</span> <span class="n">c4</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="k">if</span> <span class="n">c1</span> <span class="ow">and</span> <span class="n">c2</span><span class="p">:</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">v3</span><span class="p">,</span> <span class="n">v4</span><span class="p">)</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">v1</span> <span class="o">==</span> <span class="n">c1</span> <span class="ow">and</span> <span class="n">v2</span> <span class="o">==</span> <span class="n">c2</span> <span class="ow">and</span> <span class="n">v3</span> <span class="o">==</span> <span class="n">c3</span> <span class="ow">and</span> <span class="n">v4</span> <span class="o">==</span> <span class="n">c4</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="PostProcess.convert_int_to_roman"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.convert_int_to_roman">[docs]</a>    <span class="k">def</span> <span class="nf">convert_int_to_roman</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">integer</span><span class="p">,</span> <span class="n">numeral</span> <span class="ow">in</span> <span class="n">numeral_map</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="n">i</span> <span class="o">//</span> <span class="n">integer</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">numeral</span> <span class="o">*</span> <span class="n">count</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">-=</span> <span class="n">integer</span> <span class="o">*</span> <span class="n">count</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PostProcess.convert_roman_to_int"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.convert_roman_to_int">[docs]</a>    <span class="k">def</span> <span class="nf">convert_roman_to_int</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">integer</span><span class="p">,</span> <span class="n">numeral</span> <span class="ow">in</span> <span class="n">numeral_map</span><span class="p">:</span>
+            <span class="k">while</span> <span class="n">n</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">numeral</span><span class="p">)]</span> <span class="o">==</span> <span class="n">numeral</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="n">integer</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">numeral</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="PostProcess.create_files"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.create_files">[docs]</a>    <span class="k">def</span> <span class="nf">create_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; main method : creates zip, merges and transforms xml files &#39;&#39;&#39;</span>
+        <span class="n">cfb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;createFull&#39;</span><span class="p">][</span><span class="n">context</span><span class="p">]</span>
+
+        <span class="c1"># self.create_zip(cfb[&quot;dir&quot;], cfb[&quot;files&quot;])</span>
+
+        <span class="n">fullfile</span> <span class="o">=</span> <span class="n">cfb</span><span class="p">[</span><span class="s2">&quot;fullfile&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">header_text</span><span class="p">,</span> <span class="n">back_fns</span><span class="p">,</span> <span class="n">body_secs</span><span class="p">,</span> <span class="n">back_refs</span><span class="p">,</span> <span class="n">elem_secs</span><span class="p">,</span> <span class="n">elem_fns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">modify_files</span><span class="p">(</span>
+            <span class="n">cfb</span><span class="p">[</span><span class="s2">&quot;dir&quot;</span><span class="p">],</span> <span class="n">cfb</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">],</span> <span class="n">context</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_merged_file</span><span class="p">(</span>
+            <span class="n">fullfile</span><span class="p">,</span>
+            <span class="n">body_secs</span><span class="p">,</span>
+            <span class="n">back_fns</span><span class="p">,</span>
+            <span class="n">back_refs</span><span class="p">,</span>
+            <span class="n">header_text</span><span class="p">,</span>
+            <span class="n">cfb</span><span class="p">,</span>
+            <span class="n">context</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_footnote_file</span><span class="p">(</span>
+            <span class="n">cfb</span><span class="p">,</span>
+            <span class="n">back_fns</span><span class="p">,</span>
+            <span class="n">header_text</span><span class="p">,</span>
+            <span class="n">body_secs</span><span class="p">,</span>
+            <span class="n">elem_secs</span><span class="p">,</span>
+            <span class="n">elem_fns</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="PostProcess.create_footnote_file"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.create_footnote_file">[docs]</a>    <span class="k">def</span> <span class="nf">create_footnote_file</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">cfb</span><span class="p">,</span> <span class="n">back_fns</span><span class="p">,</span> <span class="n">header_text</span><span class="p">,</span> <span class="n">body_secs</span><span class="p">,</span> <span class="n">elem_secs</span><span class="p">,</span> <span class="n">elem_fns</span><span class="p">):</span>
+        <span class="c1"># print len(elem_secs) , len(elem_fns)</span>
+        <span class="k">if</span> <span class="s2">&quot;footnotes_file&quot;</span> <span class="ow">in</span> <span class="n">cfb</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">cfb</span><span class="p">[</span><span class="s2">&quot;footnotes_file&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">footnotes_file</span> <span class="o">=</span> <span class="n">cfb</span><span class="p">[</span><span class="s2">&quot;footnotes_file&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">fpfn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cfb</span><span class="p">[</span><span class="s2">&quot;dir&quot;</span><span class="p">],</span> <span class="n">footnotes_file</span><span class="p">)</span>
+                <span class="n">fns_p</span><span class="p">,</span> <span class="n">fnn</span><span class="p">,</span> <span class="n">range_count</span> <span class="o">=</span> <span class="p">[],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+                <span class="c1">###</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">elem_secs</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">elem_fns</span><span class="p">):</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="s2">&quot;each document must have  a section and a footnote&quot;</span><span class="p">)</span>
+                    <span class="c1"># sys.exit(1)</span>
+
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">elem_secs</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">elem_fns</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">fns_p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;sec&gt;&#39;</span><span class="p">)</span>
+                        <span class="n">fns_p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                            <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span>
+                                <span class="n">elem_secs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)))</span>
+                        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">elem_fns</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                            <span class="n">number</span><span class="p">,</span> <span class="n">range_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_roman_numbers</span><span class="p">(</span>
+                                <span class="n">fnn</span><span class="p">,</span> <span class="n">range_count</span><span class="p">,</span> <span class="n">cfb</span><span class="p">[</span><span class="s2">&quot;footnotes_file&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+                            <span class="n">b</span> <span class="o">=</span> <span class="s1">&#39;&lt;bold&gt;&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; &lt;/bold&gt;&#39;</span>
+                            <span class="n">s</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span>
+                                <span class="n">j</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                                <span class="s1">&#39;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;&#39;</span> <span class="o">+</span> <span class="n">b</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                            <span class="n">fns_p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+                            <span class="n">fnn</span> <span class="o">=</span> <span class="n">fnn</span> <span class="o">+</span> <span class="mi">1</span>
+                        <span class="n">fns_p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;/sec&gt;&#39;</span><span class="p">)</span>
+                <span class="c1">###</span>
+                <span class="c1"># for i in back_fns:</span>
+                <span class="c1">#  number, range_count = self.set_roman_numbers(fnn,range_count,cfb[&quot;footnotes_file&quot;].values()[0])</span>
+                <span class="c1">#  k = etree.XML(&#39;&lt;p&gt;&lt;bold&gt;&#39; + str(number) +&#39; &lt;/bold&gt;   &#39; +self.get_stringified_children(etree.fromstring(i).getchildren()[0]) + &#39;&lt;/p&gt;&#39;)</span>
+                <span class="c1">#  fns_p.append(etree.tostring(k))</span>
+
+                <span class="n">out_fn</span> <span class="o">=</span> <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s%s%%</span><span class="s2">s</span><span class="si">%s</span><span class="s2">&lt;body&gt;&lt;sec&gt;&lt;title&gt;</span><span class="si">%s</span><span class="s2">&lt;/title&gt;</span><span class="si">%s</span><span class="s2">&lt;/sec&gt;&lt;/body&gt;&lt;back&gt;&lt;/back&gt;&lt;/article&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">xml</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">doc_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">JATS_XML_HEADER</span><span class="p">,</span> <span class="n">header_text</span><span class="p">,</span> <span class="s1">&#39;Anmerkungen&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fns_p</span><span class="p">))</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fpfn</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">out_fn</span><span class="p">)</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;footnotes</span><span class="se">\t</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">footnotes_file</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="PostProcess.create_merged_file"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.create_merged_file">[docs]</a>    <span class="k">def</span> <span class="nf">create_merged_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullfile</span><span class="p">,</span> <span class="n">body_secs</span><span class="p">,</span>
+                           <span class="n">back_fns</span><span class="p">,</span> <span class="n">back_refs</span><span class="p">,</span> <span class="n">header_text</span><span class="p">,</span> <span class="n">cfb</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+
+        <span class="n">fp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cfb</span><span class="p">[</span><span class="s2">&quot;dir&quot;</span><span class="p">],</span> <span class="n">fullfile</span><span class="p">)</span>
+        <span class="n">body_text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">body_secs</span><span class="p">)</span>
+        <span class="n">fns</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">back_fns</span><span class="p">)</span>
+        <span class="n">refs</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">back_refs</span><span class="p">)</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s%s%s%s</span><span class="s2">&lt;body&gt;</span><span class="si">%s</span><span class="s2">&lt;/body&gt;&lt;back&gt;&lt;fn-group&gt;</span><span class="si">%s</span><span class="s2">&lt;/fn-group&gt;&lt;ref-list&gt;</span><span class="si">%s</span><span class="s2">&lt;/ref-list&gt;&lt;/back&gt;&lt;/article&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">xml</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">doc_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">JATS_XML_HEADER</span><span class="p">,</span> <span class="n">header_text</span><span class="p">,</span> <span class="n">body_text</span><span class="p">,</span> <span class="n">fns</span><span class="p">,</span> <span class="n">refs</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_transformations</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_etree</span><span class="p">(</span><span class="n">fp</span><span class="p">),</span> <span class="n">context</span><span class="p">,</span> <span class="n">fullfile</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_output</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PostProcess.create_output"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.create_output">[docs]</a>    <span class="k">def</span> <span class="nf">create_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; write element tree to f &#39;&#39;&#39;</span>
+        <span class="nb">print</span>
+        <span class="mi">100</span> <span class="o">*</span> <span class="s1">&#39;-&#39;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">etree</span><span class="o">.</span><span class="n">_ElementTree</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">etree</span><span class="o">.</span><span class="n">cleanup_namespaces</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">())</span>
+                <span class="kn">import</span> <span class="nn">xml.etree.cElementTree</span> <span class="k">as</span> <span class="nn">ElementTree</span>
+
+                <span class="n">tree</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="n">f</span><span class="p">,</span>
+                    <span class="n">pretty_print</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">xml_declaration</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;File written </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+
+
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;errors&#39;</span><span class="p">][</span><span class="s1">&#39;FILE_NOT_WRITTEN&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="PostProcess.create_refs_csv"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.create_refs_csv">[docs]</a>    <span class="k">def</span> <span class="nf">create_refs_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dr</span><span class="p">,</span> <span class="n">infile</span><span class="p">,</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">types</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; write a csv f from the references &#39;&#39;&#39;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span> <span class="n">infile</span><span class="p">)</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_etree</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">elem</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;./back/ref-list&#39;</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">elem</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">types</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.//&#39;</span> <span class="o">+</span> <span class="n">t</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">out</span> <span class="o">+=</span> <span class="n">e</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.//&#39;</span> <span class="o">+</span> <span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span>
+                <span class="n">out</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">tf</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">unicode</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="PostProcess.create_zip"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.create_zip">[docs]</a>    <span class="k">def</span> <span class="nf">create_zip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dr</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; create a zip file from a set of files and a directory path &#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;zip&quot;</span><span class="p">][</span><span class="s2">&quot;name-prefix&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span> <span class="s1">&#39;.zip&#39;</span><span class="p">])),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                <span class="n">z</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span> <span class="n">f</span><span class="p">),</span>
+                        <span class="n">compress_type</span><span class="o">=</span><span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_DEFLATED</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="PostProcess.get_etree"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.get_etree">[docs]</a>    <span class="k">def</span> <span class="nf">get_etree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">infile</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; reads a file and get the element tree &#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">tree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="nb">print</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;errors&#39;</span><span class="p">][</span><span class="s1">&#39;FILE_NOT_FOUND&#39;</span><span class="p">]</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tree</span></div>
+
+<div class="viewcode-block" id="PostProcess.get_footnotes_back"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.get_footnotes_back">[docs]</a>    <span class="k">def</span> <span class="nf">get_footnotes_back</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns footnotes in back &#39;&#39;&#39;</span>
+        <span class="n">back_fns</span> <span class="o">=</span> <span class="n">Set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">back</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//back/fn-group&quot;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">back</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.fn&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">fn</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">back_fns</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">back_fns</span></div>
+
+<div class="viewcode-block" id="PostProcess.get_fig_refs_body"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.get_fig_refs_body">[docs]</a>    <span class="k">def</span> <span class="nf">get_fig_refs_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="n">body_figs</span> <span class="o">=</span> <span class="n">Set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">body</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//body&quot;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">body</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//xref[@ref-type=&#39;fig&#39;]&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">fn</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">body_figs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rid&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">body_figs</span></div>
+
+<div class="viewcode-block" id="PostProcess.get_fig_ids_body"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.get_fig_ids_body">[docs]</a>    <span class="k">def</span> <span class="nf">get_fig_ids_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="n">back_refs</span> <span class="o">=</span> <span class="n">Set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">back</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//fig-group&quot;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">back</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.fig&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">ref</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">back_refs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">back_refs</span></div>
+
+<div class="viewcode-block" id="PostProcess.get_footnotes_body"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.get_footnotes_body">[docs]</a>    <span class="k">def</span> <span class="nf">get_footnotes_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns footnotes in body &#39;&#39;&#39;</span>
+        <span class="n">body_fns</span> <span class="o">=</span> <span class="n">Set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">body</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//body&quot;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">body</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//xref[@ref-type=&#39;fn&#39;]&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">fn</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">body_fns</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rid&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">body_fns</span></div>
+
+<div class="viewcode-block" id="PostProcess.get_ref_ids_back"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.get_ref_ids_back">[docs]</a>    <span class="k">def</span> <span class="nf">get_ref_ids_back</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns references in back &#39;&#39;&#39;</span>
+        <span class="n">back_refs</span> <span class="o">=</span> <span class="n">Set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">back</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//back/ref-list&quot;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">back</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.ref&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">ref</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">back_refs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">back_refs</span></div>
+
+<div class="viewcode-block" id="PostProcess.get_ref_ids_body"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.get_ref_ids_body">[docs]</a>    <span class="k">def</span> <span class="nf">get_ref_ids_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns references in body &#39;&#39;&#39;</span>
+        <span class="n">body_refs</span> <span class="o">=</span> <span class="n">Set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">body</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//body&quot;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">body</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//xref[@ref-type=&#39;bibr&#39;]&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">ref</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">body_refs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;rid&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">body_refs</span></div>
+
+<div class="viewcode-block" id="PostProcess.get_stringified_children"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.get_stringified_children">[docs]</a>    <span class="k">def</span> <span class="nf">get_stringified_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+
+        <span class="n">parts</span> <span class="o">=</span> <span class="p">([</span><span class="n">node</span><span class="o">.</span><span class="n">text</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="n">c</span><span class="o">.</span><span class="n">tail</span><span class="p">]</span>
+                                            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">getchildren</span><span class="p">())))</span> <span class="o">+</span> <span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">tail</span><span class="p">])</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">parts</span><span class="p">))</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="PostProcess.get_refs_mixed_back"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.get_refs_mixed_back">[docs]</a>    <span class="k">def</span> <span class="nf">get_refs_mixed_back</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;returns mixed citations in back &#39;&#39;&#39;</span>
+        <span class="n">back_refs</span> <span class="o">=</span> <span class="n">Set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">back</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//back/ref-list/ref&quot;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">back</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//mixed-citation&quot;</span><span class="p">):</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="s2">&quot;Mixed reference found&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stringify</span><span class="p">(</span><span class="n">back</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">back_refs</span></div>
+
+<div class="viewcode-block" id="PostProcess.get_unreferenced_footnotes"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.get_unreferenced_footnotes">[docs]</a>    <span class="k">def</span> <span class="nf">get_unreferenced_footnotes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; returns a list of footnotes, which are not in body &#39;&#39;&#39;</span>
+        <span class="n">body_fns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_footnotes_body</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+        <span class="n">back_fns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_footnotes_back</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">back_fns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">body_fns</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Footnote &quot;</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s2">&quot; is not used&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">tr</span></div>
+
+<div class="viewcode-block" id="PostProcess.merge_repeating_neighbours"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.merge_repeating_neighbours">[docs]</a>    <span class="k">def</span> <span class="nf">merge_repeating_neighbours</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">etype</span><span class="p">):</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//&#39;</span> <span class="o">+</span> <span class="n">etype</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="n">etype</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">getprevious</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">getprevious</span><span class="p">()</span><span class="o">.</span><span class="n">getchildren</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">getprevious</span><span class="p">()</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span>
+                            <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="n">etype</span><span class="p">:</span>
+                            <span class="n">i</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">getprevious</span><span class="p">()</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span>
+                                <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()[</span><span class="mi">0</span><span class="p">]))</span>
+                            <span class="n">i</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">getparent</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">tr</span></div>
+
+<div class="viewcode-block" id="PostProcess.modify_files"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.modify_files">[docs]</a>    <span class="k">def</span> <span class="nf">modify_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dr</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;  merge  a set of xml files in a directory&#39;&#39;&#39;</span>
+        <span class="n">back_fns</span><span class="p">,</span> <span class="n">body_secs</span><span class="p">,</span> <span class="n">back_refs</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">elem_secs</span><span class="p">,</span> <span class="n">elem_fns</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">header_text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">order</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Parsing file</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">f</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span> <span class="n">f</span><span class="p">))</span>
+            <span class="n">tr</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span> <span class="n">f</span><span class="p">))</span>
+            <span class="n">tr</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_transformations</span><span class="p">(</span>
+                <span class="n">tr</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">create_output</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span> <span class="n">f</span><span class="p">))</span>
+            <span class="n">root</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">header</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">header_text</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//front&quot;</span><span class="p">):</span>
+                    <span class="n">header_text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stringify</span><span class="p">(</span><span class="n">header_text</span><span class="p">))</span>
+                    <span class="n">header</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">for</span> <span class="n">sec</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//body/sec&quot;</span><span class="p">):</span>
+                <span class="n">body_secs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stringify</span><span class="p">(</span><span class="n">sec</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//back/fn-group/fn&quot;</span><span class="p">):</span>
+                <span class="n">back_fns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stringify</span><span class="p">(</span><span class="n">fn</span><span class="p">))</span>
+
+            <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//back/ref-list/ref&quot;</span><span class="p">):</span>
+                <span class="n">back_refs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stringify</span><span class="p">(</span><span class="n">ref</span><span class="p">))</span>
+
+            <span class="k">for</span> <span class="n">sec</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//body/sec&quot;</span><span class="p">):</span>
+                <span class="n">elem_secs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sec</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;.//back/fn-group&quot;</span><span class="p">):</span>
+                <span class="n">elem_fns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+
+            <span class="n">order</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">header_text</span><span class="p">,</span> <span class="n">back_fns</span><span class="p">,</span> <span class="n">body_secs</span><span class="p">,</span> <span class="n">back_refs</span><span class="p">,</span> <span class="n">elem_secs</span><span class="p">,</span> <span class="n">elem_fns</span></div>
+
+<div class="viewcode-block" id="PostProcess.stringify"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.stringify">[docs]</a>    <span class="k">def</span> <span class="nf">stringify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">pretty_print</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PostProcess.remove_all_elements_of_type"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.remove_all_elements_of_type">[docs]</a>    <span class="k">def</span> <span class="nf">remove_all_elements_of_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; removes all the elements of a certain type in a element tree &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//&#39;</span> <span class="o">+</span> <span class="n">name</span><span class="p">):</span>
+                <span class="n">elem</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tree</span></div>
+
+<div class="viewcode-block" id="PostProcess.remove_comments"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.remove_comments">[docs]</a>    <span class="k">def</span> <span class="nf">remove_comments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; removes all the comments  in a element tree &#39;&#39;&#39;</span>
+        <span class="n">comments</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//comment()&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">comments</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tree</span></div>
+
+<div class="viewcode-block" id="PostProcess.remove_duplicate_http_links"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.remove_duplicate_http_links">[docs]</a>    <span class="k">def</span> <span class="nf">remove_duplicate_http_links</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">):</span>
+        <span class="c1"># HYPERLINK          &quot;http://upload.wikimedia.org/wikipedia/commons/4/4b/%C3%9Altima_Cena_-Da_Vinci_5.jpg&quot;</span>
+        <span class="c1"># &lt;ext-link xlink:href=&quot;http://upload.wikimedia.org/wikipedia/commons/4/4b/%C3%9Altima_Cena_-Da_Vinci_5.jpg&quot;</span>
+        <span class="c1"># ext-link-type=&quot;uri&quot; xlink:type=&quot;simple&quot;&gt;http://upload.wikimedia.org/wikipedia/commons/4/4b/%C3%9Altima_Cena_-Da_Vinci_5.jpg&lt;/ext-link&gt;</span>
+        <span class="n">tr_str</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;xml&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">tr_str</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
+            <span class="s1">&#39;HYPERLINK(\W)*(http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&amp;+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F])))(\S)*&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">tr_str</span><span class="p">)</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">tr_str</span><span class="p">)</span>
+        <span class="n">tr</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">ElementTree</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tr</span></div>
+
+<div class="viewcode-block" id="PostProcess.remove_duplicate_refs"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.remove_duplicate_refs">[docs]</a>    <span class="k">def</span> <span class="nf">remove_duplicate_refs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">tag_list</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; removes duplicate references&#39;&#39;&#39;</span>
+        <span class="n">ref_list</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;./back/ref-list&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ref_list</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">drf</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">ref_list</span><span class="p">:</span>
+
+                <span class="n">vl</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tag_list</span><span class="p">:</span>
+                    <span class="n">vl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">findtext</span><span class="p">(</span><span class="s2">&quot;.//&quot;</span> <span class="o">+</span> <span class="n">tag</span><span class="p">))</span>
+                <span class="n">vl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">vl</span><span class="p">))</span>
+
+            <span class="n">data</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+            <span class="n">ref_list</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+            <span class="n">prev</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">last_id</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">prev</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">prev</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">prev</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+                        <span class="n">drf</span><span class="p">[</span><span class="n">last_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">prev</span> <span class="o">=</span> <span class="n">v</span>
+                        <span class="n">last_id</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+            <span class="c1"># replace refs</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">drf</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">xref</span> <span class="ow">in</span> <span class="n">tr</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span>
+                        <span class="s1">&#39;.//xref[@rid=&quot;&#39;</span> <span class="o">+</span> <span class="n">drf</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;&quot;]&#39;</span><span class="p">):</span>
+                    <span class="n">xref</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;rid&#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">tr</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//ref[@id=&quot;&#39;</span> <span class="o">+</span> <span class="n">drf</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;&quot;]&#39;</span><span class="p">):</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">ref</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tr</span></div>
+
+<div class="viewcode-block" id="PostProcess.remove_name_duplicates_speech"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.remove_name_duplicates_speech">[docs]</a>    <span class="k">def</span> <span class="nf">remove_name_duplicates_speech</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; removes name duplication  in  speech tag &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">tr</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//speech/p&#39;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">l</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">elem</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">tr</span></div>
+
+<div class="viewcode-block" id="PostProcess.remove_not_used_in_back"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.remove_not_used_in_back">[docs]</a>    <span class="k">def</span> <span class="nf">remove_not_used_in_back</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; removes  footnotes, references, which are not linked. &#39;&#39;&#39;</span>
+        <span class="n">body_refs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ref_ids_body</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+        <span class="n">back_refs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ref_ids_back</span><span class="p">(</span><span class="n">tr</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">back_refs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">body_refs</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">elm</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;.//back/&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="s1">&#39;/[@id=&quot;&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="s1">&#39;&quot;]&#39;</span><span class="p">])</span>
+                <span class="n">elems</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">elm</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">elems</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">remove_element</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="c1"># TODO remove without ids</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">tr</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;.//back/&#39;</span> <span class="o">+</span> <span class="n">tag</span> <span class="o">+</span> <span class="s1">&#39;[not(@id)]&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_element</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tr</span></div>
+
+<div class="viewcode-block" id="PostProcess.remove_element"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.remove_element">[docs]</a>    <span class="k">def</span> <span class="nf">remove_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">e</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PostProcess.remove_table_references"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.remove_table_references">[docs]</a>    <span class="k">def</span> <span class="nf">remove_table_references</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">searchTag</span> <span class="o">=</span> <span class="s1">&#39;.//&#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;[@&#39;</span> <span class="o">+</span> <span class="n">attr</span> <span class="o">+</span> <span class="s1">&#39;=&quot;&#39;</span> <span class="o">+</span> <span class="n">value</span> <span class="o">+</span> <span class="s1">&#39;&quot;]&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">TABLESTYLEFILE</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">xslt</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;errors&#39;</span><span class="p">][</span><span class="s1">&#39;FILE_NOT_FOUND&#39;</span><span class="p">])</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">xslt_doc</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">xslt</span><span class="p">))</span>
+        <span class="n">transform</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">XSLT</span><span class="p">(</span><span class="n">xslt_doc</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">transform</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PostProcess.set_enumeration"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.set_enumeration">[docs]</a>    <span class="k">def</span> <span class="nf">set_enumeration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">tr</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">attr</span><span class="p">,</span><span class="n">value</span><span class="p">,</span><span class="n">context</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">chapter</span><span class="p">,</span><span class="n">order</span><span class="p">,</span><span class="n">count</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; set the count id for an attribute in a tag type &#39;&#39;&#39;</span>
+        <span class="n">searchTag</span> <span class="o">=</span> <span class="s1">&#39;.//&#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;[@&#39;</span> <span class="o">+</span> <span class="n">attr</span> <span class="o">+</span> <span class="s1">&#39;=&quot;&#39;</span> <span class="o">+</span> <span class="n">value</span> <span class="o">+</span> <span class="s1">&#39;&quot;]&#39;</span>
+        <span class="n">elems</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">searchTag</span><span class="p">)</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;createFull&quot;</span><span class="p">][</span><span class="n">context</span><span class="p">]</span>
+        <span class="n">cf</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">][</span><span class="n">order</span><span class="p">][</span><span class="n">f</span><span class="p">]</span> <span class="k">if</span> <span class="n">chapter</span> <span class="k">else</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;fullfile&#39;</span><span class="p">][</span><span class="n">f</span><span class="p">]</span>
+
+        <span class="n">range_count</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">elems</span><span class="p">:</span>
+            <span class="n">elem</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">range_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_roman_numbers</span><span class="p">(</span>
+                <span class="n">count</span><span class="p">,</span> <span class="n">range_count</span><span class="p">,</span> <span class="n">cf</span><span class="p">)</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">tr</span><span class="p">,</span> <span class="n">count</span></div>
+
+<div class="viewcode-block" id="PostProcess.set_numbering"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.set_numbering">[docs]</a>    <span class="k">def</span> <span class="nf">set_numbering</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">tags</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; tags auto-numbering&#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+            <span class="n">sid</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//&#39;</span> <span class="o">+</span> <span class="n">tag</span><span class="p">):</span>
+                <span class="n">i</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sid</span><span class="p">))</span>
+                <span class="n">sid</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">tree</span></div>
+
+<div class="viewcode-block" id="PostProcess.set_roman_numbers"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.set_roman_numbers">[docs]</a>    <span class="k">def</span> <span class="nf">set_roman_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">range_count</span><span class="p">,</span> <span class="n">cf</span><span class="p">):</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;numbering&#39;</span> <span class="ow">in</span> <span class="n">cf</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">cf</span><span class="p">[</span><span class="s1">&#39;numbering&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;roman&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;range&#39;</span> <span class="ow">in</span> <span class="n">cf</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">j</span> <span class="o">=</span> <span class="n">cf</span><span class="p">[</span><span class="s1">&#39;range&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">and</span> <span class="n">count</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_int_to_roman</span><span class="p">(</span><span class="n">range_count</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                        <span class="n">range_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">val</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">count</span> <span class="o">-</span> <span class="n">range_count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_int_to_roman</span><span class="p">(</span><span class="n">count</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">val</span><span class="p">,</span> <span class="n">range_count</span></div>
+
+<div class="viewcode-block" id="PostProcess.set_uuid_fns"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.set_uuid_fns">[docs]</a>    <span class="k">def</span> <span class="nf">set_uuid_fns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+
+        <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">tr</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//fn&#39;</span><span class="p">):</span>
+            <span class="n">uid</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;fn_&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">]])</span>
+            <span class="n">fn_id</span> <span class="o">=</span> <span class="n">fn</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+            <span class="n">fn</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">uid</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">xref</span> <span class="ow">in</span> <span class="n">tr</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//xref/[@rid=&quot;&#39;</span> <span class="o">+</span> <span class="n">fn_id</span> <span class="o">+</span> <span class="s1">&#39;&quot;][@ref-type=&quot;fn&quot;]&#39;</span><span class="p">):</span>
+                <span class="n">xref</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;rid&#39;</span><span class="p">,</span> <span class="n">uid</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">tr</span></div>
+
+<div class="viewcode-block" id="PostProcess.set_uuid_figs"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.set_uuid_figs">[docs]</a>    <span class="k">def</span> <span class="nf">set_uuid_figs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">fig</span> <span class="ow">in</span> <span class="n">tr</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//fig&#39;</span><span class="p">):</span>
+            <span class="n">uid</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;fig_&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">]])</span>
+            <span class="n">fig_id</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">uid</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">xref</span> <span class="ow">in</span> <span class="n">tr</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;.//xref/[@rid=&quot;&#39;</span> <span class="o">+</span> <span class="n">fig_id</span> <span class="o">+</span> <span class="s1">&#39;&quot;][@ref-type=&quot;fig&quot;]&#39;</span><span class="p">):</span>
+                <span class="n">xref</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;rid&#39;</span><span class="p">,</span> <span class="n">uid</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">tr</span></div>
+
+<div class="viewcode-block" id="PostProcess.sort_references"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.PostProcess.sort_references">[docs]</a>    <span class="k">def</span> <span class="nf">sort_references</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">tag_list</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; sort all the references  &#39;&#39;&#39;</span>
+        <span class="n">elem</span> <span class="o">=</span> <span class="n">tr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;./back/ref-list&#39;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">elem</span><span class="p">:</span>
+            <span class="n">vl</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tag_list</span><span class="p">:</span>
+                <span class="n">vl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">findtext</span><span class="p">(</span><span class="s2">&quot;.//&quot;</span> <span class="o">+</span> <span class="n">tag</span><span class="p">))</span>
+            <span class="n">vl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">vl</span><span class="p">))</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="n">elem</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">tr</span></div></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../../autoapi/heimpt/tools/archive/postProcess/index.html#heimpt.tools.archive.postProcess.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">PostProcess</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;example&quot;</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">create_files</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="c1"># with open(LOG_FILE) as f:</span>
+        <span class="c1">#    print f.read()</span>
+        <span class="c1"># os.remove(LOG_FILE)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span>
+        <span class="s1">&#39;json file not defined, please define the path&#39;</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

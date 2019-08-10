@@ -1,0 +1,39 @@
+:mod:`heimpt.tools.scripts.endnotes2footnotes.snd`
+==================================================
+
+.. py:module:: heimpt.tools.scripts.endnotes2footnotes.snd
+
+
+Module Contents
+---------------
+
+.. data:: f
+   
+
+   
+
+.. data:: tree
+   
+
+   
+
+.. data:: root
+   
+
+   
+
+.. data:: chapters
+   :annotation: = []
+
+   
+
+.. data:: current_body
+   
+
+   
+
+.. data:: fns
+   
+
+   
+

@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.bibliographyclassifier &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bin.bibliographyclassifier">
+<span id="bin-bibliographyclassifier"></span><h1><a class="reference internal" href="#module-bin.bibliographyclassifier" title="bin.bibliographyclassifier"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.bibliographyclassifier</span></code></a><a class="headerlink" href="#module-bin.bibliographyclassifier" title="Permalink to this headline">¶</a></h1>
+<p><p>bibliographyclassfier.py: a tool to manipulate reference lists</p>
+<dl>
+<dt>Usage:</dt><dd><p>bibliographyclassifier.py confirm &lt;input&gt; [options]</p>
+</dd>
+<dt>Options:</dt><dd><dl class="option-list">
+<dt><kbd><span class="option">-d</span>, <span class="option">--debug</span></kbd></dt>
+<dd><p>Enable debug output</p>
+</dd>
+<dt><kbd><span class="option">--interactive</span></kbd></dt>
+<dd><p>Prompt the user to assist in interactive tagging</p>
+</dd>
+<dt><kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></dt>
+<dd><p>Show this screen.</p>
+</dd>
+<dt><kbd><span class="option">-v</span>, <span class="option">--version</span></kbd></dt>
+<dd><p>Show version.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="bin.bibliographyclassifier.__author__">
+<code class="sig-prename descclassname">bin.bibliographyclassifier.</code><code class="sig-name descname">__author__</code><em class="property"> = Martin Paul Eve</em><a class="reference internal" href="../../../_modules/bin/bibliographyclassifier.html#__author__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyclassifier.__author__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="bin.bibliographyclassifier.__email__">
+<code class="sig-prename descclassname">bin.bibliographyclassifier.</code><code class="sig-name descname">__email__</code><em class="property"> = martin&#64;martineve.com</em><a class="reference internal" href="../../../_modules/bin/bibliographyclassifier.html#__email__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyclassifier.__email__" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class that assists with bibliography classification.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="bin.bibliographyclassifier.BibliographyClassifier">
+<em class="property">class </em><code class="sig-prename descclassname">bin.bibliographyclassifier.</code><code class="sig-name descname">BibliographyClassifier</code><span class="sig-paren">(</span><em class="sig-param">global_variables</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/bibliographyclassifier.html#BibliographyClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyclassifier.BibliographyClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">debug.Debuggable</span></code></p>
+<dl class="method">
+<dt id="bin.bibliographyclassifier.BibliographyClassifier.linguistic_cues">
+<code class="sig-name descname">linguistic_cues</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/bibliographyclassifier.html#BibliographyClassifier.linguistic_cues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyclassifier.BibliographyClassifier.linguistic_cues" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.bibliographyclassifier.BibliographyClassifier.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/bibliographyclassifier.html#BibliographyClassifier.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyclassifier.BibliographyClassifier.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.bibliographyclassifier.BibliographyClassifier.unconfirm">
+<code class="sig-name descname">unconfirm</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">p</em>, <em class="sig-param">tree</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/bibliographyclassifier.html#BibliographyClassifier.unconfirm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyclassifier.BibliographyClassifier.unconfirm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.bibliographyclassifier.BibliographyClassifier.handle_input">
+<code class="sig-name descname">handle_input</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">opts</em>, <em class="sig-param">p</em>, <em class="sig-param">prompt</em>, <em class="sig-param">sel</em>, <em class="sig-param">tree</em>, <em class="sig-param">text</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/bibliographyclassifier.html#BibliographyClassifier.handle_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyclassifier.BibliographyClassifier.handle_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.bibliographyclassifier.BibliographyClassifier.run_prompt">
+<code class="sig-name descname">run_prompt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">interactive</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/bibliographyclassifier.html#BibliographyClassifier.run_prompt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyclassifier.BibliographyClassifier.run_prompt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="bin.bibliographyclassifier.main">
+<code class="sig-prename descclassname">bin.bibliographyclassifier.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/bibliographyclassifier.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.bibliographyclassifier.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.bibliographyclassifier</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#bin.bibliographyclassifier.__author__">__author__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.bibliographyclassifier.__email__">__email__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.bibliographyclassifier.BibliographyClassifier">BibliographyClassifier</a><ul>
+<li><a class="reference internal" href="#bin.bibliographyclassifier.BibliographyClassifier.linguistic_cues">linguistic_cues</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.bibliographyclassifier.BibliographyClassifier.run">run</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.bibliographyclassifier.BibliographyClassifier.unconfirm">unconfirm</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.bibliographyclassifier.BibliographyClassifier.handle_input">handle_input</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.bibliographyclassifier.BibliographyClassifier.run_prompt">run_prompt</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.bibliographyclassifier.main">main</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/autoapi/bin/bibliographyclassifier/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

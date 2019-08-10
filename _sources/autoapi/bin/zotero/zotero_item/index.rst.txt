@@ -1,0 +1,182 @@
+:mod:`bin.zotero.zotero_item`
+=============================
+
+.. py:module:: bin.zotero.zotero_item
+
+.. autoapi-nested-parse::
+
+   Originally (c) Sebastiaan Mathot 2011
+   Modifications (c) 2014 Martin Paul Eve
+
+       This program is free software; you can redistribute it and/or modify
+       it under the terms of the GNU General Public License as published by
+       the Free Software Foundation; either version 2 of the License, or
+       (at your option) any later version.
+
+       This program is distributed in the hope that it will be useful,
+       but WITHOUT ANY WARRANTY; without even the implied warranty of
+       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+       GNU General Public License for more details.
+
+       You should have received a copy of the GNU General Public License
+       along with this program; if not, write to the Free Software
+       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+
+
+Module Contents
+---------------
+
+.. data:: term_collection
+   :annotation: = [None, 'collection']
+
+   
+
+.. data:: term_tag
+   :annotation: = [None, 'tag']
+
+   
+
+.. data:: term_author
+   :annotation: = [None, 'author']
+
+   
+
+.. data:: term_date
+   :annotation: = [None, 'date', 'year']
+
+   
+
+.. data:: term_publication
+   :annotation: = [None, 'publication', 'journal']
+
+   
+
+.. data:: term_title
+   :annotation: = [None, 'title']
+
+   
+
+.. data:: cache
+   
+
+   
+
+.. py:class:: zoteroItem(init=None, noteProvider=None)
+
+   Bases: :class:`object`
+
+   Represents a single zotero item.
+
+   
+   .. method:: match(self, terms)
+
+      Matches the current item against a term.
+
+      Arguments:
+      terms   --      A list of (term_type, term) tuples.
+
+      Returns:
+      True if the current item matches the terms, False otherwise.
+
+
+
+   
+   .. method:: get_note(self)
+
+      Retrieves a note.
+
+      Returns:
+      A note for the current item.
+
+
+
+   
+   .. method:: format_single_author(self, author)
+
+
+
+   
+   .. method:: format_multiple_author(self, authors)
+
+
+
+   
+   .. method:: format_author(self)
+
+      Returns:
+      A pretty representation of the author.
+
+
+
+   
+   .. method:: format_date(self)
+
+      Returns:
+      A pretty representation of the date.
+
+
+
+   
+   .. method:: format_title(self)
+
+      Returns:
+      A pretty representation of the title.
+
+
+
+   
+   .. method:: format_publication(self)
+
+      Returns:
+      A pretty representation of the publication (journal).
+
+
+
+   
+   .. method:: format_tags(self)
+
+      Returns:
+      A pretty representation of the tags.
+
+
+
+   
+   .. method:: gnotero_format(self)
+
+      Returns:
+      A pretty apa-like representation of the item, which can be used as a
+      label in Qnotero.
+
+
+
+   
+   .. method:: full_format(self)
+
+      Returns:
+      A pretty, extensive representation of the current item.
+
+
+
+   
+   .. method:: simple_format(self)
+
+      Returns:
+      A pretty, simple representation of the current item.
+
+
+
+   
+   .. method:: JATS_format(self)
+
+
+
+   
+   .. method:: hashKey(self)
+
+      Returns:
+      A hash representation of the current object.
+
+
+
+

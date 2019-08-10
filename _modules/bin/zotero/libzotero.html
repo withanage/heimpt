@@ -1,0 +1,505 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.zotero.libzotero &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.zotero.libzotero</h1><div class="highlight"><pre>
+<span></span><span class="c1">#-*- coding:utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Originally (c) Sebastiaan Mathot 2011</span>
+<span class="sd">Modifications (c) 2014, 2018 Martin Paul Eve</span>
+
+<span class="sd">    This program is free software; you can redistribute it and/or modify</span>
+<span class="sd">    it under the terms of the GNU General Public License as published by</span>
+<span class="sd">    the Free Software Foundation; either version 2 of the License, or</span>
+<span class="sd">    (at your option) any later version.</span>
+
+<span class="sd">    This program is distributed in the hope that it will be useful,</span>
+<span class="sd">    but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="sd">    GNU General Public License for more details.</span>
+
+<span class="sd">    You should have received a copy of the GNU General Public License</span>
+<span class="sd">    along with this program; if not, write to the Free Software</span>
+<span class="sd">    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">zotero_item</span> <span class="k">import</span> <span class="n">zoteroItem</span> <span class="k">as</span> <span class="n">zotero_item</span>
+<span class="kn">from</span> <span class="nn">debug</span> <span class="k">import</span> <span class="n">Debuggable</span>
+
+
+<div class="viewcode-block" id="LibZotero"><a class="viewcode-back" href="../../../autoapi/bin/zotero/libzotero/index.html#bin.zotero.libzotero.LibZotero">[docs]</a><span class="k">class</span> <span class="nc">LibZotero</span><span class="p">(</span><span class="n">Debuggable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Libzotero provides access to the zotero database.</span>
+<span class="sd">    This is an object oriented reimplementation of the</span>
+<span class="sd">    original zoterotools.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="LibZotero.attachment_query"><a class="viewcode-back" href="../../../autoapi/bin/zotero/libzotero/index.html#bin.zotero.libzotero.LibZotero.attachment_query">[docs]</a>    <span class="n">attachment_query</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">		select items.itemID, itemAttachments.path, itemAttachments.itemID</span>
+<span class="s2">		from items, itemAttachments</span>
+<span class="s2">		where items.itemID = itemAttachments.sourceItemID</span>
+<span class="s2">		&quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="LibZotero.info_query"><a class="viewcode-back" href="../../../autoapi/bin/zotero/libzotero/index.html#bin.zotero.libzotero.LibZotero.info_query">[docs]</a>    <span class="n">info_query</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">		select items.itemID, fields.fieldName, itemDataValues.value, items.key, itemTypes.typeName</span>
+<span class="s2">		from items, itemData, fields, itemDataValues, itemTypes</span>
+<span class="s2">		where</span>
+<span class="s2">			items.itemID = itemData.itemID</span>
+<span class="s2">			and itemData.fieldID = fields.fieldID</span>
+<span class="s2">			and itemData.valueID = itemDataValues.valueID</span>
+<span class="s2">			and itemTypes.itemTypeID = items.itemTypeID</span>
+<span class="s2">		&quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="LibZotero.collection_query"><a class="viewcode-back" href="../../../autoapi/bin/zotero/libzotero/index.html#bin.zotero.libzotero.LibZotero.collection_query">[docs]</a>    <span class="n">collection_query</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">		select items.itemID, collections.collectionName</span>
+<span class="s2">		from items, collections, collectionItems</span>
+<span class="s2">		where</span>
+<span class="s2">			items.itemID = collectionItems.itemID</span>
+<span class="s2">			and collections.collectionID = collectionItems.collectionID</span>
+<span class="s2">		order by collections.collectionName != &quot;To Read&quot;,</span>
+<span class="s2">			collections.collectionName</span>
+<span class="s2">		&quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="LibZotero.tag_query"><a class="viewcode-back" href="../../../autoapi/bin/zotero/libzotero/index.html#bin.zotero.libzotero.LibZotero.tag_query">[docs]</a>    <span class="n">tag_query</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">		select items.itemID, tags.name</span>
+<span class="s2">		from items, tags, itemTags</span>
+<span class="s2">		where</span>
+<span class="s2">			items.itemID = itemTags.itemID</span>
+<span class="s2">			and tags.tagID = itemTags.tagID</span>
+<span class="s2">		&quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="LibZotero.deleted_query"><a class="viewcode-back" href="../../../autoapi/bin/zotero/libzotero/index.html#bin.zotero.libzotero.LibZotero.deleted_query">[docs]</a>    <span class="n">deleted_query</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;select itemID from deletedItems&quot;</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="LibZotero.creator_query"><a class="viewcode-back" href="../../../autoapi/bin/zotero/libzotero/index.html#bin.zotero.libzotero.LibZotero.creator_query">[docs]</a>    <span class="k">def</span> <span class="nf">creator_query</span><span class="p">(</span><span class="n">creator_type</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">u</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">		select items.itemID, creatorData.lastName, creatorData.firstName</span>
+<span class="s2">		from items, itemCreators, creators, creatorData, creatorTypes</span>
+<span class="s2">		where</span>
+<span class="s2">			items.itemID = itemCreators.itemID</span>
+<span class="s2">			and itemCreators.creatorID = creators.creatorID</span>
+<span class="s2">			and creators.creatorDataID = creatorData.creatorDataID</span>
+<span class="s2">			and itemCreators.creatorTypeID = creatorTypes.creatorTypeID</span>
+<span class="s2">			and creatorTypes.creatorType == &quot;</span><span class="si">{0}</span><span class="s2">&quot;</span>
+<span class="s2">		order by itemCreators.orderIndex</span>
+<span class="s2">		&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">creator_type</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zotero_path</span><span class="p">,</span> <span class="n">global_variables</span><span class="p">,</span> <span class="n">noteProvider</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">Debuggable</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;libZotero&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gv</span> <span class="o">=</span> <span class="n">global_variables</span>
+<div class="viewcode-block" id="LibZotero.debug"><a class="viewcode-back" href="../../../autoapi/bin/zotero/libzotero/index.html#bin.zotero.libzotero.LibZotero.debug">[docs]</a>        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gv</span><span class="o">.</span><span class="n">debug</span></div>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Intialize zotero.</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">        zotero_path		--	A unicode string to the Zotero folder.</span>
+
+<span class="sd">        Keyword arguments:</span>
+<span class="sd">        noteProvider	--	A noteProvider object. (default=None)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s2">&quot;zotero.__init__(): zotero_path = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">zotero_path</span><span class="p">)</span>
+
+        <span class="c1"># Set paths</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zotero_path</span> <span class="o">=</span> <span class="n">zotero_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">storage_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">zotero_path</span><span class="p">,</span> <span class="sa">u</span><span class="s2">&quot;storage&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zotero_database</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">zotero_path</span><span class="p">,</span> <span class="sa">u</span><span class="s2">&quot;zotero.sqlite&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">noteProvider</span> <span class="o">=</span> <span class="n">noteProvider</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="sa">u</span><span class="s2">&quot;nt&quot;</span><span class="p">:</span>
+            <span class="n">home_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="sa">u</span><span class="s2">&quot;USERPROFILE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span> \
+                <span class="n">sys</span><span class="o">.</span><span class="n">getfilesystemencoding</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="sa">u</span><span class="s2">&quot;posix&quot;</span><span class="p">:</span>
+            <span class="n">home_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="sa">u</span><span class="s2">&quot;HOME&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span> \
+                <span class="n">sys</span><span class="o">.</span><span class="n">getfilesystemencoding</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s2">&quot;zotero.__init__(): you appear to be running an unsupported OS&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gnotero_database</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">home_folder</span><span class="p">,</span> <span class="sa">u</span><span class="s2">&quot;.gnotero.sqlite&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Remember search results so results speed up over time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Check whether verbosity is turned on</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="s2">&quot;-v&quot;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
+
+        <span class="c1"># These dates are treated as special and are not parsed into a year</span>
+        <span class="c1"># representation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">special_dates</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;in press&quot;</span><span class="p">,</span> <span class="sa">u</span><span class="s2">&quot;submitted&quot;</span><span class="p">,</span> <span class="sa">u</span><span class="s2">&quot;in preparation&quot;</span><span class="p">,</span> \
+                             <span class="sa">u</span><span class="s2">&quot;unpublished&quot;</span>
+
+        <span class="c1"># These extensions are recognized as fulltext attachments</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attachment_ext</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;.pdf&quot;</span><span class="p">,</span> <span class="sa">u</span><span class="s2">&quot;.epub&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">collection_index</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tag_index</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># The notry parameter can be used to show errors which would</span>
+        <span class="c1"># otherwise be obscured by the try clause</span>
+        <span class="k">if</span> <span class="s2">&quot;--notry&quot;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;dummy&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Start by updating the database</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;dummy&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="LibZotero.update"><a class="viewcode-back" href="../../../autoapi/bin/zotero/libzotero/index.html#bin.zotero.libzotero.LibZotero.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if the local copy of the zotero database is up to date. If not,</span>
+<span class="sd">        the data is also indexed.</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">        force		--	Indicates that the data should also be indexed, even</span>
+<span class="sd">                        if the local copy is up to date. (default=False)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">stats</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">zotero_database</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s2">&quot;zotero.update(): </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Only update if necessary</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="n">stats</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span><span class="p">:</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">collection_index</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">search_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="c1"># Copy the zotero database to the gnotero copy</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">zotero_database</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gnotero_database</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gnotero_database</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+            <span class="c1"># First create a list of deleted items, so we can ignore those later</span>
+            <span class="n">deleted</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deleted_query</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
+                <span class="n">deleted</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="c1"># Retrieve information about date, publication, volume, issue and</span>
+            <span class="c1"># title</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info_query</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
+                <span class="n">item_id</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="n">item_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">deleted</span><span class="p">:</span>
+                    <span class="n">item_name</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+                    <span class="c1"># Parse date fields, because we only want a year or a #</span>
+                    <span class="c1"># &#39;special&#39; date</span>
+                    <span class="k">if</span> <span class="n">item_name</span> <span class="o">==</span> <span class="sa">u</span><span class="s2">&quot;date&quot;</span><span class="p">:</span>
+                        <span class="n">item_value</span> <span class="o">=</span> <span class="kc">None</span>
+                        <span class="k">for</span> <span class="n">sd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">special_dates</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">sd</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                                <span class="n">item_value</span> <span class="o">=</span> <span class="n">sd</span>
+                                <span class="k">break</span>
+
+                        <span class="c1"># Dates can have months, days, and years, or just a</span>
+                        <span class="c1"># year, and can be split by &#39;-&#39; and &#39;/&#39; characters.</span>
+                        <span class="k">if</span> <span class="n">item_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="c1"># Detect whether the date should be split</span>
+                            <span class="k">if</span> <span class="sa">u</span><span class="s1">&#39;/&#39;</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+                                <span class="n">split</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;/&#39;</span>
+                            <span class="k">elif</span> <span class="sa">u</span><span class="s1">&#39;-&#39;</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span>
+                                <span class="n">split</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;-&#39;</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">split</span> <span class="o">=</span> <span class="kc">None</span>
+                            <span class="c1"># If not, just use the last four characters</span>
+                            <span class="k">if</span> <span class="n">split</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                                <span class="n">item_value</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span>
+                            <span class="c1"># Else take the first slice that is four characters</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">l</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">split</span><span class="p">)</span>
+                                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+                                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+                                        <span class="n">item_value</span> <span class="o">=</span> <span class="n">i</span>
+                                        <span class="k">break</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">item_value</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+                    <span class="k">if</span> <span class="n">item_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">zotero_item</span><span class="p">(</span><span class="n">item_id</span><span class="p">,</span> <span class="n">noteProvider</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">noteProvider</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">item_type</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+
+                    <span class="k">if</span> <span class="n">item_name</span> <span class="o">==</span> <span class="sa">u</span><span class="s2">&quot;publicationTitle&quot;</span> <span class="ow">or</span> <span class="n">item_name</span> <span class="o">==</span> <span class="sa">u</span><span class="s1">&#39;bookTitle&#39;</span> <span class="ow">or</span> <span class="n">item_name</span> <span class="o">==</span> <span class="s1">&#39;websiteTitle&#39;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">publication</span> <span class="o">=</span> <span class="n">item_value</span>
+                    <span class="k">elif</span> <span class="n">item_name</span> <span class="o">==</span> <span class="sa">u</span><span class="s2">&quot;date&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">item_value</span>
+                    <span class="k">elif</span> <span class="n">item_name</span> <span class="o">==</span> <span class="sa">u</span><span class="s2">&quot;volume&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="n">item_value</span>
+                    <span class="k">elif</span> <span class="n">item_name</span> <span class="o">==</span> <span class="sa">u</span><span class="s2">&quot;issue&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">issue</span> <span class="o">=</span> <span class="n">item_value</span>
+                    <span class="k">elif</span> <span class="n">item_name</span> <span class="o">==</span> <span class="sa">u</span><span class="s2">&quot;title&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">item_value</span>
+                    <span class="k">elif</span> <span class="n">item_name</span> <span class="o">==</span> <span class="sa">u</span><span class="s2">&quot;DOI&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">doi</span> <span class="o">=</span> <span class="n">item_value</span>
+                    <span class="k">elif</span> <span class="n">item_name</span> <span class="o">==</span> <span class="sa">u</span><span class="s2">&quot;pages&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">pages</span> <span class="o">=</span> <span class="n">item_value</span>
+                    <span class="k">elif</span> <span class="n">item_name</span> <span class="o">==</span> <span class="sa">u</span><span class="s2">&quot;place&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">place</span> <span class="o">=</span> <span class="n">item_value</span>
+                    <span class="k">elif</span> <span class="n">item_name</span> <span class="o">==</span> <span class="sa">u</span><span class="s2">&quot;publisher&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">publisher</span> <span class="o">=</span> <span class="n">item_value</span>
+                    <span class="k">elif</span> <span class="n">item_name</span> <span class="o">==</span> <span class="sa">u</span><span class="s2">&quot;url&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">item_value</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;Unindexed field: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item_name</span><span class="p">))</span>
+
+            <span class="c1"># Retrieve author information</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">creator_query</span><span class="p">(</span><span class="s1">&#39;author&#39;</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
+                <span class="n">item_id</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">item_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">deleted</span><span class="p">:</span>
+                    <span class="c1"># slice tuple as first column is an integer index</span>
+                    <span class="c1"># next two columns represent lastname and firstname</span>
+                    <span class="n">new_authors</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">authors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_authors</span><span class="p">)</span>
+
+            <span class="c1"># Retrieve editor information</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">creator_query</span><span class="p">(</span><span class="s1">&#39;editor&#39;</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
+                <span class="n">item_id</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">item_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">deleted</span><span class="p">:</span>
+                    <span class="c1"># slice tuple as first column is an integer index</span>
+                    <span class="c1"># next two columns represent lastname and firstname</span>
+                    <span class="n">new_authors</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">editors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_authors</span><span class="p">)</span>
+
+            <span class="c1"># Retrieve translator information</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">creator_query</span><span class="p">(</span><span class="s1">&#39;translator&#39;</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
+                <span class="n">item_id</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">item_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">deleted</span><span class="p">:</span>
+                    <span class="c1"># slice tuple as first column is an integer index</span>
+                    <span class="c1"># next two columns represent lastname and firstname</span>
+                    <span class="n">new_authors</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">translators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_authors</span><span class="p">)</span>
+
+            <span class="c1"># Retrieve translator information</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">creator_query</span><span class="p">(</span><span class="s1">&#39;bookAuthor&#39;</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
+                <span class="n">item_id</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">item_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">deleted</span><span class="p">:</span>
+                    <span class="c1"># slice tuple as first column is an integer index</span>
+                    <span class="c1"># next two columns represent lastname and firstname</span>
+                    <span class="n">new_authors</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">book_authors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_authors</span><span class="p">)</span>
+
+            <span class="c1"># Retrieve collection information</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_query</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
+                <span class="n">item_id</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">item_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">deleted</span><span class="p">:</span>
+                    <span class="n">item_collection</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">item_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">zotero_item</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">collections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item_collection</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">item_collection</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">collection_index</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">collection_index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item_collection</span><span class="p">)</span>
+            <span class="c1"># Retrieve tag information</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tag_query</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
+                <span class="n">item_id</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">item_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">deleted</span><span class="p">:</span>
+                    <span class="n">item_tag</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">item_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">zotero_item</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item_tag</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">item_tag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag_index</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">tag_index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item_tag</span><span class="p">)</span>
+            <span class="c1"># Retrieve attachments</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attachment_query</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
+                <span class="n">item_id</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">item_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">deleted</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">att</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="c1"># If the attachment is stored in the Zotero folder, it is preceded</span>
+                        <span class="c1"># by &quot;storage:&quot;</span>
+                        <span class="k">if</span> <span class="n">att</span><span class="p">[:</span><span class="mi">8</span><span class="p">]</span> <span class="o">==</span> <span class="sa">u</span><span class="s2">&quot;storage:&quot;</span><span class="p">:</span>
+                            <span class="n">item_attachment</span> <span class="o">=</span> <span class="n">att</span><span class="p">[</span><span class="mi">8</span><span class="p">:]</span>
+                            <span class="n">attachment_id</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                            <span class="k">if</span> <span class="n">item_attachment</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> \
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">attachment_ext</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="n">item_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">zotero_item</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span> \
+                                    <span class="sa">u</span><span class="s2">&quot;select items.key from items where itemID = </span><span class="si">%d</span><span class="s2">&quot;</span> \
+                                    <span class="o">%</span> <span class="n">attachment_id</span><span class="p">)</span>
+                                <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">fulltext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> \
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">storage_path</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">item_attachment</span><span class="p">)</span>
+                        <span class="c1"># If the attachment is linked, it is simply the full</span>
+                        <span class="c1"># path to the attachment</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">item_id</span><span class="p">]</span><span class="o">.</span><span class="n">fulltext</span> <span class="o">=</span> <span class="n">att</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">print_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">u</span><span class="s2">&quot;zotero.update(): indexing completed in </span><span class="si">%.3f</span><span class="s2">s&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="LibZotero.parse_query"><a class="viewcode-back" href="../../../autoapi/bin/zotero/libzotero/index.html#bin.zotero.libzotero.LibZotero.parse_query">[docs]</a>    <span class="k">def</span> <span class="nf">parse_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parses a text search query into a list of tuples, which are acceptable</span>
+<span class="sd">        for zotero_item.match().</span>
+
+<span class="sd">        Argument:</span>
+<span class="sd">        query		--	A search query.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        A list of tuples.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Make sure that spaces are handled correctly after</span>
+        <span class="c1"># semicolons. E.g., Author: Mathot</span>
+        <span class="k">while</span> <span class="sa">u</span><span class="s2">&quot;: &quot;</span> <span class="ow">in</span> <span class="n">query</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;: &quot;</span><span class="p">,</span> <span class="sa">u</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+        <span class="c1"># Parse the terms into a suitable format</span>
+        <span class="n">terms</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Check if the criterium is type-specified, like &quot;author: doe&quot;</span>
+        <span class="kn">import</span> <span class="nn">shlex</span>
+
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">query</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">terms</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">terms</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="kc">None</span><span class="p">,</span> <span class="n">term</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="n">terms</span></div>
+
+<div class="viewcode-block" id="LibZotero.search"><a class="viewcode-back" href="../../../autoapi/bin/zotero/libzotero/index.html#bin.zotero.libzotero.LibZotero.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Searches the zotero database.</span>
+
+<span class="sd">        Argument:</span>
+<span class="sd">        query		--	A search query.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        A list of zotero_items.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">():</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">query</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_cache</span><span class="p">:</span>
+            <span class="c1">#self.debug.print_debug(self, u&quot;zotero.search(): retrieving results for &#39;%s&#39; from cache&quot; % query)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_cache</span><span class="p">[</span><span class="n">query</span><span class="p">]</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">terms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">item_id</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">terms</span><span class="p">):</span>
+                <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_cache</span><span class="p">[</span><span class="n">query</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span>
+        <span class="c1">#self.debug.print_debug(self, u&quot;zotero.search(): search for &#39;%s&#39; completed in %.3fs&quot; % (query, time.time() - t))</span>
+
+        <span class="k">return</span> <span class="n">results</span></div></div>
+
+
+<div class="viewcode-block" id="valid_location"><a class="viewcode-back" href="../../../autoapi/bin/zotero/libzotero/index.html#bin.zotero.libzotero.valid_location">[docs]</a><span class="k">def</span> <span class="nf">valid_location</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks if a given path is a valid Zotero folder, i.e., if it it contains</span>
+<span class="sd">    zotero.sqlite.</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">    path		--	The path to check.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    True if path is a valid Zotero folder, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="sa">u</span><span class="s2">&quot;zotero.sqlite&quot;</span><span class="p">))</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

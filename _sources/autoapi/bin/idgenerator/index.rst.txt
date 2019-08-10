@@ -1,0 +1,45 @@
+:mod:`bin.idgenerator`
+======================
+
+.. py:module:: bin.idgenerator
+
+.. autoapi-nested-parse::
+
+   idgenerator: a tool to append an ID to all elements in an NLM XML file
+
+   Usage:
+       idgenerator.py <input> [options]
+
+   Options:
+       -d, --debug                                     Enable debug output
+       -h, --help                                      Show this screen.
+       -v, --version                                   Show version.
+
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   
+
+.. py:class:: IdGenerator(global_variables)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. method:: run(self)
+
+
+
+
+.. function:: main()
+
+

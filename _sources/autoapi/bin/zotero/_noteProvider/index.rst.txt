@@ -1,0 +1,15 @@
+:mod:`bin.zotero._noteProvider`
+===============================
+
+.. py:module:: bin.zotero._noteProvider
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   gnoteProvider/index.rst
+
+

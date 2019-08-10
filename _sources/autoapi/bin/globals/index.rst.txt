@@ -1,0 +1,49 @@
+:mod:`bin.globals`
+==================
+
+.. py:module:: bin.globals
+
+
+Module Contents
+---------------
+
+.. py:class:: GV(settings, debug)
+
+   Bases: :class:`Debuggable`
+
+   
+   .. method:: handle_platform(self)
+
+
+
+   
+   .. method:: check_file_exists(self, file_path)
+
+
+
+   
+   .. method:: generate_path(self, settings, tag, path)
+
+
+
+   
+   .. method:: mk_dir(self, path)
+
+
+
+   
+   .. staticmethod:: copy_folder(src, dst, symlinks=False, ignore=None)
+
+
+
+   
+   .. method:: set_java_classpath(self)
+
+
+
+   
+   .. staticmethod:: is_number(s)
+
+
+
+

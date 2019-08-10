@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.nlmprocessor &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.nlmprocessor</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;nlmprocessor.py: a tool to run the NLM portions of meTypeset</span>
+
+<span class="sd">Usage:</span>
+<span class="sd">    nlmprocessor.py process &lt;input&gt; [options]</span>
+
+<span class="sd">Options:</span>
+<span class="sd">    -a, --aggression &lt;aggression_level&gt;             Parser aggression level 0-10 [default: 10]</span>
+<span class="sd">    --chain &lt;xslt&gt;                                  Specify a subsequent XSL transform to pass the NLM to</span>
+<span class="sd">    -c, --clean                                     Produce final XML, not intermediate markup with additional metadata</span>
+<span class="sd">    -d, --debug                                     Enable debug output</span>
+<span class="sd">    -h, --help                                      Show this screen.</span>
+<span class="sd">    -i, --identifiers                               Generate unique identifiers for all supported NLM elements</span>
+<span class="sd">    --interactive                                   Enable step-by-step interactive mode</span>
+<span class="sd">    --nogit                                         Disable git debug filesystem (only of use with --debug)</span>
+<span class="sd">    --noimageprocessing                             Disable unoconv image processing</span>
+<span class="sd">    -s, --settings &lt;settings_file&gt;                  Settings file</span>
+<span class="sd">    -v, --version                                   Show version.</span>
+<span class="sd">    -z, --zotero                                    Enable Zotero integration for references.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">teitonlm</span> <span class="k">import</span> <span class="n">TeiToNlm</span>
+<span class="kn">from</span> <span class="nn">docopt</span> <span class="k">import</span> <span class="n">docopt</span>
+<span class="kn">from</span> <span class="nn">bare_globals</span> <span class="k">import</span> <span class="n">GV</span>
+<span class="kn">from</span> <span class="nn">referencelinker</span> <span class="k">import</span> <span class="n">ReferenceLinker</span>
+<span class="kn">from</span> <span class="nn">captionclassifier</span> <span class="k">import</span> <span class="n">CaptionClassifier</span>
+<span class="kn">from</span> <span class="nn">metadata</span> <span class="k">import</span> <span class="n">Metadata</span>
+<span class="kn">from</span> <span class="nn">bibliographyclassifier</span> <span class="k">import</span> <span class="n">BibliographyClassifier</span>
+<span class="kn">from</span> <span class="nn">bibliographydatabase</span> <span class="k">import</span> <span class="n">BibliographyDatabase</span>
+<span class="kn">from</span> <span class="nn">idgenerator</span> <span class="k">import</span> <span class="n">IdGenerator</span>
+<span class="kn">from</span> <span class="nn">xslchainer</span> <span class="k">import</span> <span class="n">XslChain</span>
+<span class="kn">from</span> <span class="nn">complianceenforcer</span> <span class="k">import</span> <span class="n">ComplianceEnforcer</span>
+<span class="kn">from</span> <span class="nn">nlmmanipulate</span> <span class="k">import</span> <span class="n">NlmManipulate</span>
+
+<div class="viewcode-block" id="__author__"><a class="viewcode-back" href="../../autoapi/bin/nlmprocessor/index.html#bin.nlmprocessor.__author__">[docs]</a><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Martin Paul Eve&quot;</span></div>
+<div class="viewcode-block" id="__email__"><a class="viewcode-back" href="../../autoapi/bin/nlmprocessor/index.html#bin.nlmprocessor.__email__">[docs]</a><span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;martin@martineve.com&quot;</span></div>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A class that runs the NLM portions of meTypeset</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../autoapi/bin/nlmprocessor/index.html#bin.nlmprocessor.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">docopt</span><span class="p">(</span><span class="vm">__doc__</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;meTypeset 0.1&#39;</span><span class="p">)</span>
+    <span class="n">bare_gv</span> <span class="o">=</span> <span class="n">GV</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;--debug&#39;</span><span class="p">]:</span>
+        <span class="n">bare_gv</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">enable_debug</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--nogit&#39;</span><span class="p">])</span>
+
+    <span class="n">nlm_instance</span> <span class="o">=</span> <span class="n">TeiToNlm</span><span class="p">(</span><span class="n">bare_gv</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;process&#39;</span><span class="p">]:</span>
+            <span class="c1"># run non-transform portions of teitonlm</span>
+            <span class="n">TeiToNlm</span><span class="p">(</span><span class="n">bare_gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="c1"># run reference linker</span>
+            <span class="n">rl</span> <span class="o">=</span> <span class="n">ReferenceLinker</span><span class="p">(</span><span class="n">bare_gv</span><span class="p">)</span>
+            <span class="n">rl</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--interactive&#39;</span><span class="p">])</span>
+            <span class="n">rl</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
+
+            <span class="n">bibliography_classifier</span> <span class="o">=</span> <span class="n">BibliographyClassifier</span><span class="p">(</span><span class="n">bare_gv</span><span class="p">)</span>
+
+            <span class="c1"># run table classifier</span>
+            <span class="n">cc</span> <span class="o">=</span> <span class="n">CaptionClassifier</span><span class="p">(</span><span class="n">bare_gv</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--aggression&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">bare_gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;tablecaptions&#39;</span><span class="p">,</span>
+                                                                            <span class="kc">None</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="s1">&#39;aggression&#39;</span><span class="p">)):</span>
+                <span class="n">cc</span><span class="o">.</span><span class="n">run_tables</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;--aggression&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">bare_gv</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get_setting</span><span class="p">(</span><span class="s1">&#39;graphiccaptions&#39;</span><span class="p">,</span>
+                                                                            <span class="kc">None</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="s1">&#39;aggression&#39;</span><span class="p">)):</span>
+                <span class="n">cc</span><span class="o">.</span><span class="n">run_graphics</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;--interactive&#39;</span><span class="p">]:</span>
+                <span class="n">bibliography_classifier</span><span class="o">.</span><span class="n">run_prompt</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="c1"># process any bibliography entries that are possible</span>
+            <span class="n">BibliographyDatabase</span><span class="p">(</span><span class="n">bare_gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+            <span class="c1"># remove stranded titles</span>
+            <span class="n">manipulate</span> <span class="o">=</span> <span class="n">NlmManipulate</span><span class="p">(</span><span class="n">bare_gv</span><span class="p">)</span>
+            <span class="n">manipulate</span><span class="o">.</span><span class="n">final_clean</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;--identifiers&#39;</span><span class="p">]:</span>
+                <span class="n">IdGenerator</span><span class="p">(</span><span class="n">bare_gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;--chain&#39;</span><span class="p">]:</span>
+                <span class="c1"># construct and run an XSLT chainer</span>
+                <span class="n">XslChain</span><span class="p">(</span><span class="n">bare_gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;--clean&#39;</span><span class="p">]:</span>
+                <span class="n">ComplianceEnforcer</span><span class="p">(</span><span class="n">bare_gv</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

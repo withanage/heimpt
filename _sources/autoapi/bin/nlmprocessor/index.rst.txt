@@ -1,0 +1,45 @@
+:mod:`bin.nlmprocessor`
+=======================
+
+.. py:module:: bin.nlmprocessor
+
+.. autoapi-nested-parse::
+
+   nlmprocessor.py: a tool to run the NLM portions of meTypeset
+
+   Usage:
+       nlmprocessor.py process <input> [options]
+
+   Options:
+       -a, --aggression <aggression_level>             Parser aggression level 0-10 [default: 10]
+       --chain <xslt>                                  Specify a subsequent XSL transform to pass the NLM to
+       -c, --clean                                     Produce final XML, not intermediate markup with additional metadata
+       -d, --debug                                     Enable debug output
+       -h, --help                                      Show this screen.
+       -i, --identifiers                               Generate unique identifiers for all supported NLM elements
+       --interactive                                   Enable step-by-step interactive mode
+       --nogit                                         Disable git debug filesystem (only of use with --debug)
+       --noimageprocessing                             Disable unoconv image processing
+       -s, --settings <settings_file>                  Settings file
+       -v, --version                                   Show version.
+       -z, --zotero                                    Enable Zotero integration for references.
+
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   A class that runs the NLM portions of meTypeset
+
+
+.. function:: main()
+
+

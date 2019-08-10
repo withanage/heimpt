@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.settingsconfiguration &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for bin.settingsconfiguration</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="__author__"><a class="viewcode-back" href="../../autoapi/bin/settingsconfiguration/index.html#bin.settingsconfiguration.__author__">[docs]</a><span></span><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Martin Paul Eve, Dulip Withnage&quot;</span></div>
+<div class="viewcode-block" id="__email__"><a class="viewcode-back" href="../../autoapi/bin/settingsconfiguration/index.html#bin.settingsconfiguration.__email__">[docs]</a><span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;martin@martineve.com&quot;</span></div>
+
+<span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">etree</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">docxtotei</span>
+
+<div class="viewcode-block" id="Settings"><a class="viewcode-back" href="../../autoapi/bin/settingsconfiguration/index.html#bin.settingsconfiguration.Settings">[docs]</a><span class="k">class</span> <span class="nc">Settings</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">set_file</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">set_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="n">tree</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">script_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;METYPESET&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_file</span> <span class="o">=</span> <span class="n">set_file</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Settings.setup_settings_file"><a class="viewcode-back" href="../../autoapi/bin/settingsconfiguration/index.html#bin.settingsconfiguration.Settings.setup_settings_file">[docs]</a>    <span class="k">def</span> <span class="nf">setup_settings_file</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;--settings&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="n">settings</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;--settings&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">settings</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">settings</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Settings.clean_path"><a class="viewcode-back" href="../../autoapi/bin/settingsconfiguration/index.html#bin.settingsconfiguration.Settings.clean_path">[docs]</a>    <span class="k">def</span> <span class="nf">clean_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="c1"># TODO: cross-platform fix?</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;//&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Settings.concat_path"><a class="viewcode-back" href="../../autoapi/bin/settingsconfiguration/index.html#bin.settingsconfiguration.Settings.concat_path">[docs]</a>    <span class="k">def</span> <span class="nf">concat_path</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Settings.get_setting"><a class="viewcode-back" href="../../autoapi/bin/settingsconfiguration/index.html#bin.settingsconfiguration.Settings.get_setting">[docs]</a>    <span class="k">def</span> <span class="nf">get_setting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag_name</span><span class="p">,</span> <span class="n">caller</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span>
+
+        <span class="k">if</span> <span class="n">domain</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">expr</span> <span class="o">=</span> <span class="s2">&quot;//*[local-name() = $name]&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">expr</span> <span class="o">=</span> <span class="s2">&quot;//mt:</span><span class="si">{0}</span><span class="s2">/*[local-name() = $name]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">tag_name</span><span class="p">)</span>
+
+        <span class="n">tag</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">tag_name</span><span class="p">,</span> <span class="n">namespaces</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;mt&#39;</span><span class="p">:</span> <span class="s1">&#39;https://github.com/MartinPaulEve/meTypeset&#39;</span><span class="p">})</span>
+
+        <span class="k">return</span> <span class="n">settings</span><span class="o">.</span><span class="n">clean_path</span><span class="p">(</span><span class="n">tag</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="k">if</span> <span class="n">tag</span> \
+            <span class="k">else</span> <span class="n">caller</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">fatal_error</span><span class="p">(</span><span class="n">caller</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> is not defined in settings.xml&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag_name</span><span class="p">))</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Settings.check_settings_file_exists"><a class="viewcode-back" href="../../autoapi/bin/settingsconfiguration/index.html#bin.settingsconfiguration.Settings.check_settings_file_exists">[docs]</a>    <span class="k">def</span> <span class="nf">check_settings_file_exists</span><span class="p">(</span><span class="n">caller</span><span class="p">,</span> <span class="n">set_file</span><span class="p">):</span>
+        <span class="c1"># noinspection PyBroadException</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">set_file</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">caller</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">fatal_error</span><span class="p">(</span><span class="n">caller</span><span class="p">,</span> <span class="s1">&#39;Settings file </span><span class="si">{0}</span><span class="s1"> does not exist&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">set_file</span><span class="p">))</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Settings.get_settings_file"><a class="viewcode-back" href="../../autoapi/bin/settingsconfiguration/index.html#bin.settingsconfiguration.Settings.get_settings_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_settings_file</span><span class="p">(</span><span class="n">caller</span><span class="p">,</span> <span class="n">settings_file_path</span><span class="p">):</span>
+
+        <span class="c1"># read  the home folder, either from the path or from the settings file</span>
+        <span class="c1"># noinspection PyBroadException</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">script_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;METYPESET&#39;</span><span class="p">]</span>
+
+        <span class="k">except</span><span class="p">:</span>
+            <span class="c1"># noinspection PyBroadException</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">mod_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">docxtotei</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span>
+                <span class="n">script_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mod_path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">))</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;METYPESET&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">script_dir</span>
+
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">caller</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">fatal_error</span><span class="p">(</span><span class="n">caller</span><span class="p">,</span> <span class="s1">&#39;$METYPESET path not variable is not set &#39;</span>
+                                                 <span class="s1">&#39;and/or was unable to determine runtime path.&#39;</span><span class="p">)</span>
+
+                <span class="n">script_dir</span> <span class="o">=</span> <span class="s2">&quot;NONPATH&quot;</span>
+
+        <span class="k">if</span> <span class="n">settings_file_path</span> <span class="o">==</span> <span class="s1">&#39;default&#39;</span> <span class="ow">or</span> <span class="n">settings_file_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">script_dir</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="n">set_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">script_dir</span><span class="p">,</span> <span class="s1">&#39;bin&#39;</span><span class="p">,</span> <span class="s1">&#39;settings.xml&#39;</span><span class="p">)</span>
+                <span class="n">Settings</span><span class="o">.</span><span class="n">check_settings_file_exists</span><span class="p">(</span><span class="n">caller</span><span class="p">,</span> <span class="n">set_file</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                    <span class="n">set_file</span> <span class="o">=</span> <span class="s1">&#39;NOFILE&#39;</span>
+                    <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">set_file</span> <span class="o">=</span> <span class="n">settings_file_path</span>
+            <span class="n">Settings</span><span class="o">.</span><span class="n">check_settings_file_exists</span><span class="p">(</span><span class="n">caller</span><span class="p">,</span> <span class="n">set_file</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">set_file</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>

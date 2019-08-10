@@ -1,0 +1,67 @@
+:mod:`bin.bibliographyclassifier`
+=================================
+
+.. py:module:: bin.bibliographyclassifier
+
+.. autoapi-nested-parse::
+
+   bibliographyclassfier.py: a tool to manipulate reference lists
+
+   Usage:
+       bibliographyclassifier.py confirm <input> [options]
+
+   Options:
+       -d, --debug                                     Enable debug output
+       --interactive                                   Prompt the user to assist in interactive tagging
+       -h, --help                                      Show this screen.
+       -v, --version                                   Show version.
+
+
+
+Module Contents
+---------------
+
+.. data:: __author__
+   :annotation: = Martin Paul Eve
+
+   
+
+.. data:: __email__
+   :annotation: = martin@martineve.com
+
+   A class that assists with bibliography classification.
+
+
+.. py:class:: BibliographyClassifier(global_variables)
+
+   Bases: :class:`debug.Debuggable`
+
+   
+   .. method:: linguistic_cues(self, manipulate, tree)
+
+
+
+   
+   .. method:: run(self)
+
+
+
+   
+   .. method:: unconfirm(self, p, tree)
+
+
+
+   
+   .. method:: handle_input(self, manipulate, opts, p, prompt, sel, tree, text)
+
+
+
+   
+   .. method:: run_prompt(self, interactive)
+
+
+
+
+.. function:: main()
+
+

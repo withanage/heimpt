@@ -1,0 +1,34 @@
+:mod:`heimpt`
+=============
+
+.. py:module:: heimpt
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   plugins/index.rst
+   tools/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   cmos2jats_citations/index.rst
+   debug/index.rst
+   disseminate/index.rst
+   docopt/index.rst
+   globals/index.rst
+   heimpt/index.rst
+   interactive/index.rst
+   merge/index.rst
+   prepare/index.rst
+   settingsconfiguration/index.rst
+
+

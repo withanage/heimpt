@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>bin.referencelinker &#8212; heiMPT 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bin.referencelinker">
+<span id="bin-referencelinker"></span><h1><a class="reference internal" href="#module-bin.referencelinker" title="bin.referencelinker"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.referencelinker</span></code></a><a class="headerlink" href="#module-bin.referencelinker" title="Permalink to this headline">¶</a></h1>
+<p><p>referencelinker.py: a tool to link parenthetical references to ref-list elements in a JATS file</p>
+<dl>
+<dt>Usage:</dt><dd><p>referencelinker.py scan &lt;input&gt; [options]
+referencelinker.py link &lt;input&gt; &lt;source_id&gt; &lt;dest_id&gt; [options]
+referencelinker.py prune &lt;input&gt; [options]</p>
+</dd>
+<dt>Options:</dt><dd><dl class="option-list">
+<dt><kbd><span class="option">-d</span>, <span class="option">--debug</span></kbd></dt>
+<dd><p>Enable debug output</p>
+</dd>
+<dt><kbd><span class="option">--interactive</span></kbd></dt>
+<dd><p>Prompt the user to assist in interactive tagging</p>
+</dd>
+<dt><kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></dt>
+<dd><p>Show this screen.</p>
+</dd>
+<dt><kbd><span class="option">--nogit</span></kbd></dt>
+<dd><p>Disable git debug filesystem (only of use with –debug)</p>
+</dd>
+<dt><kbd><span class="option">-v</span>, <span class="option">--version</span></kbd></dt>
+<dd><p>Show version.</p>
+</dd>
+<dt><kbd><span class="option">-z</span>, <span class="option">--zotero</span></kbd></dt>
+<dd><p>Enable Zotero integration for references.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="bin.referencelinker.__author__">
+<code class="sig-prename descclassname">bin.referencelinker.</code><code class="sig-name descname">__author__</code><em class="property"> = Martin Paul Eve</em><a class="reference internal" href="../../../_modules/bin/referencelinker.html#__author__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.__author__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="bin.referencelinker.__email__">
+<code class="sig-prename descclassname">bin.referencelinker.</code><code class="sig-name descname">__email__</code><em class="property"> = martin&#64;martineve.com</em><a class="reference internal" href="../../../_modules/bin/referencelinker.html#__email__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.__email__" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class that looks for references to link in an NLM file and joins them to the corresponding reference entry</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="bin.referencelinker.ReplaceObject">
+<em class="property">class </em><code class="sig-prename descclassname">bin.referencelinker.</code><code class="sig-name descname">ReplaceObject</code><span class="sig-paren">(</span><em class="sig-param">global_variables</em>, <em class="sig-param">paragraph</em>, <em class="sig-param">reference_to_link</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReplaceObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReplaceObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">debug.Debuggable</span></code></p>
+<dl class="method">
+<dt id="bin.referencelinker.ReplaceObject.link">
+<code class="sig-name descname">link</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReplaceObject.link"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReplaceObject.link" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bin.referencelinker.ReplaceStub">
+<em class="property">class </em><code class="sig-prename descclassname">bin.referencelinker.</code><code class="sig-name descname">ReplaceStub</code><span class="sig-paren">(</span><em class="sig-param">global_variables</em>, <em class="sig-param">paragraph</em>, <em class="sig-param">replace_text</em>, <em class="sig-param">tree</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">link_text='TO_LINK'</em>, <em class="sig-param">length_ignore=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReplaceStub"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReplaceStub" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">debug.Debuggable</span></code></p>
+<dl class="method">
+<dt id="bin.referencelinker.ReplaceStub.replace_in_text">
+<code class="sig-name descname">replace_in_text</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">element</em>, <em class="sig-param">link_text</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReplaceStub.replace_in_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReplaceStub.replace_in_text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.referencelinker.ReplaceStub.replace_in_tail">
+<code class="sig-name descname">replace_in_tail</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">element</em>, <em class="sig-param">link_text</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReplaceStub.replace_in_tail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReplaceStub.replace_in_tail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.referencelinker.ReplaceStub.replace_in_text_and_update_others">
+<code class="sig-name descname">replace_in_text_and_update_others</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">object_list</em>, <em class="sig-param">link_text</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReplaceStub.replace_in_text_and_update_others"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReplaceStub.replace_in_text_and_update_others" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.referencelinker.ReplaceStub.link">
+<code class="sig-name descname">link</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">object_list=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReplaceStub.link"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReplaceStub.link" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bin.referencelinker.ReferenceLinker">
+<em class="property">class </em><code class="sig-prename descclassname">bin.referencelinker.</code><code class="sig-name descname">ReferenceLinker</code><span class="sig-paren">(</span><em class="sig-param">global_variables</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReferenceLinker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReferenceLinker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">debug.Debuggable</span></code></p>
+<dl class="method">
+<dt id="bin.referencelinker.ReferenceLinker.process_ibid_authors">
+<code class="sig-name descname">process_ibid_authors</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">ref_items</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReferenceLinker.process_ibid_authors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReferenceLinker.process_ibid_authors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.referencelinker.ReferenceLinker.clean_ref_items">
+<code class="sig-name descname">clean_ref_items</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">tree</em>, <em class="sig-param">ref_items</em>, <em class="sig-param">manipulate</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReferenceLinker.clean_ref_items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReferenceLinker.clean_ref_items" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.referencelinker.ReferenceLinker.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">interactive</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReferenceLinker.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReferenceLinker.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.referencelinker.ReferenceLinker.search_references">
+<code class="sig-name descname">search_references</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">search_term</em>, <em class="sig-param">ref_items</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">input_block</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReferenceLinker.search_references"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReferenceLinker.search_references" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.referencelinker.ReferenceLinker.link_items">
+<code class="sig-name descname">link_items</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">source_id</em>, <em class="sig-param">dest_id</em>, <em class="sig-param">manipulate=None</em>, <em class="sig-param">tree=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReferenceLinker.link_items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReferenceLinker.link_items" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.referencelinker.ReferenceLinker.handle_search">
+<code class="sig-name descname">handle_search</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">opts</em>, <em class="sig-param">p</em>, <em class="sig-param">prompt</em>, <em class="sig-param">ref_items</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReferenceLinker.handle_search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReferenceLinker.handle_search" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.referencelinker.ReferenceLinker.cleanup">
+<code class="sig-name descname">cleanup</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReferenceLinker.cleanup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReferenceLinker.cleanup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.referencelinker.ReferenceLinker.extract_contents">
+<code class="sig-name descname">extract_contents</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">p</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReferenceLinker.extract_contents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReferenceLinker.extract_contents" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.referencelinker.ReferenceLinker.handle_input">
+<code class="sig-name descname">handle_input</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">manipulate</em>, <em class="sig-param">opts</em>, <em class="sig-param">p</em>, <em class="sig-param">prompt</em>, <em class="sig-param">ref_items</em>, <em class="sig-param">sel</em>, <em class="sig-param">candidates=None</em>, <em class="sig-param">tree=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReferenceLinker.handle_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReferenceLinker.handle_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.referencelinker.ReferenceLinker.run_prompt">
+<code class="sig-name descname">run_prompt</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReferenceLinker.run_prompt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReferenceLinker.run_prompt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bin.referencelinker.ReferenceLinker.prune">
+<code class="sig-name descname">prune</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#ReferenceLinker.prune"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.ReferenceLinker.prune" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="bin.referencelinker.main">
+<code class="sig-prename descclassname">bin.referencelinker.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/bin/referencelinker.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bin.referencelinker.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bin.referencelinker</span></code></a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#bin.referencelinker.__author__">__author__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.referencelinker.__email__">__email__</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReplaceObject">ReplaceObject</a><ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReplaceObject.link">link</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReplaceStub">ReplaceStub</a><ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReplaceStub.replace_in_text">replace_in_text</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReplaceStub.replace_in_tail">replace_in_tail</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReplaceStub.replace_in_text_and_update_others">replace_in_text_and_update_others</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReplaceStub.link">link</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReferenceLinker">ReferenceLinker</a><ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReferenceLinker.process_ibid_authors">process_ibid_authors</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReferenceLinker.clean_ref_items">clean_ref_items</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReferenceLinker.run">run</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReferenceLinker.search_references">search_references</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReferenceLinker.link_items">link_items</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReferenceLinker.handle_search">handle_search</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReferenceLinker.cleanup">cleanup</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReferenceLinker.extract_contents">extract_contents</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReferenceLinker.handle_input">handle_input</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReferenceLinker.run_prompt">run_prompt</a></li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.referencelinker.ReferenceLinker.prune">prune</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a class="reference internal" href="#bin.referencelinker.main">main</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/autoapi/bin/referencelinker/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">heiMPT 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Dulip Withanage.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.
+    </div>
+  </body>
+</html>
