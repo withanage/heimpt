@@ -2,9 +2,9 @@
 
 Heidelberg Monograph Publication Tool **(heiMPT)** is a stand-alone platform, as well as a plug-in application for OMP, developed by staff of Heidelberg University Library in cooperation with external partners, with  funding of  German Research Foundation (DFG). 
 
-It enables a high degree of automation in **XML-first publication processes**.
+It enables a high degree of automation in **XML-first publication processes**
 
-heiMPT platform consists of independently executable modules for typesetting, xml-processing and output generation.
+heiMPT software consists of independently executable modules for typesetting, xml-processing and output generation.
 A  central module provides support for project specific configuration, tool setup and API integration.
 Documentation refers explicitly to **JATS** and **BITS** XML formats from National Library of Medicine, but this tool suite can be used for any publishing automation process.
  
