@@ -16,7 +16,7 @@ Documentation refers explicitly to **JATS** and **BITS** XML formats from Nation
 * **merge.py**      : merges  several JATS/BITS XML Files together in a pre-defined order. 
 * **disseminate.py**: XML documents are converted to desired output formats such as HTML, PDF, and ePub. Stylesheets are also available for further customizations.
 
-
+## Workflow
 
 ![doc2pdf Pipeline](https://raw.githubusercontent.com/withanage/heimpt/master/images/mpt.png)
 
